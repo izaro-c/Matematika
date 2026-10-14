@@ -3,14 +3,11 @@ export type DiagramInspectorSection = 'general' | 'geometry' | 'appearance' | 'a
 export type DiagramLeftPanel = 'objects' | 'organization' | 'diagram';
 
 export type DiagramDiagnosticCollection =
-  | 'points'
-  | 'elements'
-  | 'sliders'
-  | 'constraints'
+  | 'objects'
+  | 'relations'
   | 'steps'
   | 'groups'
-  | 'layers'
-  | 'objects';
+  | 'layers';
 
 export interface DiagramDiagnosticLocation {
   workspace: DiagramDiagnosticWorkspace;

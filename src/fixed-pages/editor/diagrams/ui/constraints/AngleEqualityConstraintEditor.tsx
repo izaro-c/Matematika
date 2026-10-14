@@ -8,6 +8,8 @@ import {
   setEqualAngleConstraint,
 } from '../../model';
 import { findPointLike } from '../../model/constraints/segmentLengthConstraints';
+import { equalAngleRoles, objectConstructionReferences } from '@/diagrams';
+import { findPositionedPoint } from '../../model/constraints/relationModel';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
 
@@ -23,17 +25,19 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
   onModelEdit,
 }) => {
   const existing = equalAngleConstraintForAngle(model, angle.id);
+  const existingRoles = existing?.type === 'equal-angle' ? equalAngleRoles(existing, model.objects) : undefined;
+  const angleRefs = objectConstructionReferences(angle);
   const endpoints = editableAngleEndpoints(model, angle.id);
-  const [movingEndpointId, setMovingEndpointId] = useState(existing?.refs[0] ?? endpoints[0]?.id ?? '');
+  const [movingEndpointId, setMovingEndpointId] = useState(existingRoles?.driven ?? endpoints[0]?.id ?? '');
   const candidates = referenceAngles(model, angle.id, movingEndpointId);
-  const [sourceAngleId, setSourceAngleId] = useState(existing?.refs[3] ?? candidates[0]?.id ?? '');
+  const [sourceAngleId, setSourceAngleId] = useState(existingRoles?.source ?? candidates[0]?.id ?? '');
   const [expanded, setExpanded] = useState(Boolean(existing));
   const effectiveSourceAngleId = candidates.some(candidate => candidate.id === sourceAngleId)
     ? sourceAngleId
     : candidates[0]?.id ?? '';
-  const movingEndpoint = model.points.find(point => point.id === movingEndpointId);
-  const vertex = findPointLike(model, angle.refs[1]);
-  const fixedEndpointId = angle.refs[0] === movingEndpointId ? angle.refs[2] : angle.refs[0];
+  const movingEndpoint = findPositionedPoint(model, movingEndpointId);
+  const vertex = findPointLike(model, angleRefs[1]);
+  const fixedEndpointId = angleRefs[0] === movingEndpointId ? angleRefs[2] : angleRefs[0];
   const fixedEndpoint = findPointLike(model, fixedEndpointId);
   const sourceAngle = candidates.find(candidate => candidate.id === effectiveSourceAngleId);
   const ready = Boolean(movingEndpoint && vertex && fixedEndpoint && sourceAngle);

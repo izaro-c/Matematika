@@ -4,130 +4,78 @@ import React from 'react';
 import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/workbench/DiagramWorkbench';
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import { deleteDiagramCascade } from '@/fixed-pages/editor/diagrams/model/tools/graphCommands';
-import { updatePoint } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
-import {
-  defaultConstraintRefs,
-  uniqueConstraintId,
-  withConstraintDependencies,
-} from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
-import { removeConstraintFromModel } from '@/fixed-pages/editor/diagrams/model/constraints/segmentLengthConstraints';
+import { element, point, updateObject } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { defaultConstraintRefs } from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
+import { assignRelationToPoint, removeConstraintFromModel, uniqueConstraintId } from '@/fixed-pages/editor/diagrams/model/constraints/relationModel';
+import { pointMode } from '@/fixed-pages/editor/diagrams/model';
 import { toolReferencesAreReady } from '@/fixed-pages/editor/diagrams/model/tools/toolReferences';
-import type { VisualDiagramModel, VisualPoint } from '@/fixed-pages/editor/diagrams/model/types';
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/diagrams';
+import type { PointConstraint, VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
+import { constrained, findById, pointById, relationFor, sceneSpec } from '../../../../helpers/diagramSpec';
 
 function baseModel(overrides: Partial<VisualDiagramModel> = {}): VisualDiagramModel {
-  return {
-    version: DIAGRAM_SPEC_V2_VERSION,
-    renderer: DIAGRAM_RENDERER_V2_ID,
+  return sceneSpec({
     title: 'Test',
     componentId: 'Test',
-    category: 'demostracion',
-    mode: 'simulation',
-    axis: false,
-    grid: false,
-    showLabels: true,
-    viewport: { bounds: [-5, 5, 5, -5], home: [-5, 5, 5, -5] },
+    viewport: { bounds: [-5, 5, 5, -5], home: [-5, 5, 5, -5], minZoom: 0.2, maxZoom: 12, padding: 0.16 },
     layers: [
       { id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false },
       { id: 'controls', label: 'Controles', order: 1, visible: true, locked: false },
     ],
-    groups: [],
-    points: [
-      { id: 'pA', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-      { id: 'pB', label: 'B', x: 2, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-      { id: 'pC', label: 'C', x: 1, y: 2, color: 'carbon', constraint: 'free', groupIds: [], target: true },
+    objects: [
+      point('pA', 'A', 0, 0, false, 'carbon'),
+      point('pB', 'B', 2, 0, false, 'carbon'),
+      point('pC', 'C', 1, 2, false, 'carbon'),
+      element('segAB', 'AB', 'segment', ['pA', 'pB'], 'pavo'),
     ],
-    elements: [
-      { id: 'segAB', label: 'AB', kind: 'segment', refs: ['pA', 'pB'], color: 'pavo', groupIds: [] },
-    ],
-    sliders: [],
     steps: [
-      { id: 'initial', label: 'Inicio', visibleTargets: ['pA', 'pB', 'pC', 'segAB'] },
+      { id: 'initial', label: 'Inicio', description: '', visibleTargets: ['pA', 'pB', 'pC', 'segAB'] },
     ],
-    constraints: [],
-    dependencies: [],
     ...overrides,
-  };
+  });
 }
 
-describe('Editor V2 remediation regressions', () => {
+describe('Editor remediation regressions', () => {
   it('deleteDiagramCascade removes dependents and cleans constraintIds', () => {
+    const base = baseModel();
     const model = baseModel({
-      constraints: [{
-        id: 'cOn',
-        label: 'Sobre',
-        kind: 'on',
-        refs: ['pC', 'segAB'],
-        enabled: true,
-      }],
-      points: [
-        { id: 'pA', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-        { id: 'pB', label: 'B', x: 2, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-        {
-          id: 'pC',
-          label: 'C',
-          x: 1,
-          y: 1,
-          color: 'carbon',
-          constraint: 'constrained',
-          constraintIds: ['cOn'],
-          groupIds: [],
-          target: true,
-        },
-      ],
-      dependencies: [
-        { sourceId: 'segAB', targetId: 'pC', relation: 'constraint', constraintId: 'cOn' },
-      ],
+      relations: [relationFor('on', 'cOn', 'Sobre', ['pC', 'segAB'])],
+      objects: base.objects.map(object => object.id === 'pC' ? constrained(pointById(base, 'pC'), ['cOn']) : object),
     });
 
     const { model: withoutPoint } = deleteDiagramCascade(model, 'pA');
-    expect(withoutPoint.points.find(p => p.id === 'pA')).toBeUndefined();
-    expect(withoutPoint.elements.find(e => e.id === 'segAB')).toBeUndefined();
+    expect(withoutPoint.objects.find(p => p.id === 'pA')).toBeUndefined();
+    expect(withoutPoint.objects.find(e => e.id === 'segAB')).toBeUndefined();
 
     const { model: withoutSeg } = deleteDiagramCascade(model, 'segAB');
-    expect(withoutSeg.elements.find(e => e.id === 'segAB')).toBeUndefined();
-    expect(withoutSeg.constraints?.find(c => c.id === 'cOn')).toBeUndefined();
-    const pointC = withoutSeg.points.find(p => p.id === 'pC');
-    if (pointC) {
-      expect(pointC.constraintIds?.includes('cOn') ?? false).toBe(false);
+    expect(withoutSeg.objects.find(e => e.id === 'segAB')).toBeUndefined();
+    expect(withoutSeg.relations.find(c => c.id === 'cOn')).toBeUndefined();
+    const pointC = withoutSeg.objects.find(p => p.id === 'pC');
+    if (pointC?.objectType === 'point') {
+      expect(pointC.mobility.type === 'constrained' && pointC.mobility.relationIds.includes('cOn')).toBe(false);
     }
   });
 
-  it('adding a constraint appends constraintIds via updatePoint', () => {
+  it('adding a relation assigns it to the point and removing it frees the point', () => {
     let model = baseModel();
     const target = 'pA';
-    const refs = defaultConstraintRefs(model, 'fixed', target);
+    const refs = defaultConstraintRefs(model, 'horizontal', target);
     const id = uniqueConstraintId(model);
-    model = {
-      ...model,
-      constraints: [...(model.constraints || []), {
-        id,
-        label: 'Fijo',
-        kind: 'fixed',
-        refs,
-        enabled: true,
-      }],
-    };
-    model = withConstraintDependencies(model, id, refs);
-    const point = model.points.find(p => p.id === target)!;
-    model = updatePoint(model, target, {
-      constraint: 'constrained',
-      constraintIds: [...(point.constraintIds || []), id],
-    });
-    expect(model.points.find(p => p.id === target)?.constraintIds).toContain(id);
+    model = assignRelationToPoint(model, target, relationFor('horizontal', id, 'Horizontal', refs));
+    const assigned = pointById(model, target);
+    expect(assigned.mobility.type === 'constrained' && assigned.mobility.relationIds).toContain(id);
 
     model = removeConstraintFromModel(model, id);
-    expect(model.constraints?.find(c => c.id === id)).toBeUndefined();
-    expect(model.points.find(p => p.id === target)?.constraint).toBe('free');
+    expect(model.relations.find(c => c.id === id)).toBeUndefined();
+    expect(pointMode(pointById(model, target))).toBe('free');
   });
 
-  it('rejects illegal point constraint modes through updatePoint legal set', () => {
-    const legal: VisualPoint['constraint'][] = [
+  it('rejects illegal point constraint modes through the legal mode set', () => {
+    const legal: PointConstraint[] = [
       'free', 'fixed', 'horizontal', 'vertical', 'glider', 'derived', 'constrained',
     ];
-    expect(legal).not.toContain('onSegment' as VisualPoint['constraint']);
-    expect(legal).not.toContain('midpoint' as VisualPoint['constraint']);
-    expect(legal).not.toContain('intersection' as VisualPoint['constraint']);
+    expect(legal).not.toContain('onSegment' as PointConstraint);
+    expect(legal).not.toContain('midpoint' as PointConstraint);
+    expect(legal).not.toContain('intersection' as PointConstraint);
   });
 
   it('polygon tool becomes ready at ≥3 vertices and stays open-ended until create', () => {
@@ -138,19 +86,12 @@ describe('Editor V2 remediation regressions', () => {
   });
 
   it('layer move+order can be applied atomically without stomping', () => {
-    const model = baseModel({
-      elements: [
-        { id: 'segAB', label: 'AB', kind: 'segment', refs: ['pA', 'pB'], color: 'pavo', groupIds: [], layerId: 'geometry', order: 1 },
-      ],
-    });
+    const model = updateObject(baseModel(), 'segAB', { layerId: 'geometry', order: 1 });
     const itemId = 'segAB';
     const newLayerId = 'controls';
     const orderDelta = 1;
-    const nextElements = model.elements.map(e =>
-      e.id === itemId ? { ...e, layerId: newLayerId, order: (e.order || 0) + orderDelta } : e,
-    );
-    const next = { ...model, elements: nextElements };
-    const moved = next.elements.find(e => e.id === itemId)!;
+    const next = updateObject(model, itemId, object => ({ ...object, layerId: newLayerId, order: (object.order || 0) + orderDelta }));
+    const moved = findById(next, itemId);
     expect(moved.layerId).toBe('controls');
     expect(moved.order).toBe(2);
   });

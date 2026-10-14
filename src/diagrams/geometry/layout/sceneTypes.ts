@@ -1,39 +1,13 @@
 import type {
   DiagramColorToken,
-  DiagramConstraint,
-  DiagramDependency,
-  DiagramElement,
-  DiagramGroup,
-  DiagramLayer,
-  DiagramPoint,
-  DiagramSceneItem,
-  DiagramSlider,
-  DiagramStep,
   DiagramStepObjectState,
-  DiagramViewport,
   DiagramVisualStyle,
 } from '@/diagrams/model/schema/types';
+import type { DiagramObject } from '@/diagrams/model/schema/v3';
+import type { DiagramDependencyEdge } from '@/diagrams/model/objects/references';
+import { objectStyle } from '@/diagrams/model/objects/style';
 
-/** Campos de escena V2 legibles (V2 o modelo de editor materializado). */
-export type DiagramSceneBag = {
-  points: DiagramPoint[];
-  elements: DiagramElement[];
-  sliders: DiagramSlider[];
-  constraints?: DiagramConstraint[];
-  dependencies?: DiagramDependency[];
-  viewport: DiagramViewport;
-  layers: DiagramLayer[];
-  groups: DiagramGroup[];
-  showLabels?: boolean;
-  steps: DiagramStep[];
-};
-
-export interface DiagramDependencyEdge {
-  sourceId: string;
-  targetId: string;
-  relation: 'construction' | 'expression' | 'constraint';
-  constraintId?: string;
-}
+export type { DiagramDependencyEdge };
 
 export interface DiagramDependencyGraph {
   nodes: string[];
@@ -41,7 +15,7 @@ export interface DiagramDependencyGraph {
 }
 
 export interface PlannedSceneItem {
-  item: DiagramSceneItem;
+  item: DiagramObject;
   visible: boolean;
   locked: boolean;
   highlighted: boolean;
@@ -62,7 +36,7 @@ export interface PlannedSceneItem {
 }
 
 export function resolveStepSceneAppearance(
-  item: DiagramSceneItem,
+  item: DiagramObject,
   objectState?: DiagramStepObjectState,
 ): Pick<PlannedSceneItem, 'color' | 'label' | 'stepShowLabel' | 'stepDashed' | 'style'> {
   return {
@@ -70,6 +44,6 @@ export function resolveStepSceneAppearance(
     label: objectState?.label || item.label,
     stepShowLabel: objectState?.showLabel,
     stepDashed: objectState?.dashed,
-    style: { ...item.style, ...objectState?.style },
+    style: { ...objectStyle(item), ...objectState?.style },
   };
 }

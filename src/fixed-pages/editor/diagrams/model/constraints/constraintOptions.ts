@@ -1,6 +1,8 @@
-import { cleanTargetId } from '../elements/diagramElements';
-import type { VisualConstraint, VisualDiagramModel } from '../types';
+import { isMeasurableAngle, objectConstructionReferences, objectKind, type AngleObject } from '@/diagrams';
+import type { VisualDiagramModel } from '../types';
 import { getConstraintConflictReason } from '../constraints/relationCompatibility';
+import { modelElements, modelPoints } from '../scene/objectLists';
+import type { RelationIntent } from './relationIntents';
 
 export interface ConstraintPresentation {
   label: string;
@@ -13,13 +15,13 @@ export type RelationScope = 'point' | 'segment' | 'angle';
 export type RelationSurface = 'point' | 'element';
 
 export interface RelationCatalogEntry extends ConstraintPresentation {
-  value: VisualConstraint['kind'];
+  value: RelationIntent;
   category: RelationCategory;
   scopes: RelationScope[];
   preferredSurface: RelationSurface;
 }
 
-export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualConstraint['kind'] }> = [
+export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: RelationIntent }> = [
   { value: 'fixed', label: 'Posición fija', description: 'El punto no puede moverse.', refs: 1 },
   { value: 'horizontal', label: 'Movimiento horizontal', description: 'Conserva la coordenada y (misma altura que el punto de referencia). Solo puede desplazarse en horizontal.', refs: 2 },
   { value: 'vertical', label: 'Movimiento vertical', description: 'Conserva la coordenada x (misma vertical que el punto de referencia). Solo puede desplazarse en vertical.', refs: 2 },
@@ -92,7 +94,7 @@ export const RELATION_CATEGORY_ORDER: RelationCategory[] = [
 
 const SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector']);
 
-export function getConstraintSlotLabel(kind: VisualConstraint['kind'], slotIndex: number): string {
+export function getConstraintSlotLabel(kind: RelationIntent, slotIndex: number): string {
   switch (kind) {
     case 'fixed':
       return 'Punto a fijar (x, y)';
@@ -129,7 +131,7 @@ export function getConstraintSlotLabel(kind: VisualConstraint['kind'], slotIndex
   }
 }
 
-export function constraintPresentation(kind: VisualConstraint['kind']): ConstraintPresentation {
+export function constraintPresentation(kind: RelationIntent): ConstraintPresentation {
   if (kind === 'equalAngle') {
     return {
       label: 'Misma amplitud que otro ángulo',
@@ -146,61 +148,61 @@ export function constraintPresentation(kind: VisualConstraint['kind']): Constrai
   };
 }
 
-export function defaultConstraintRefs(model: VisualDiagramModel, kind: VisualConstraint['kind'], targetId: string): string[] {
+function plainSegments(model: VisualDiagramModel) {
+  return modelElements(model).filter(item => objectKind(item) === 'segment');
+}
+
+function anglesWithSideEndpoint(model: VisualDiagramModel, pointId: string): AngleObject[] {
+  return model.objects.filter((item): item is AngleObject => (
+    isMeasurableAngle(item) && (item.points[0] === pointId || item.points[2] === pointId)
+  ));
+}
+
+export function defaultConstraintRefs(model: VisualDiagramModel, kind: RelationIntent, targetId: string): string[] {
   if (!targetId) return [];
   const presentation = constraintPresentation(kind);
   if (presentation.refs === 1) return [targetId];
+  const elements = modelElements(model);
+  const points = modelPoints(model);
   if (kind === 'on') {
-    const support = model.elements.find(item => SUPPORT_KINDS.has(item.kind));
+    const support = elements.find(item => SUPPORT_KINDS.has(objectKind(item)));
     return support ? [targetId, support.id] : [targetId];
   }
   if (kind === 'insideArea') {
-    const area = model.elements.find(item => (
-      ['halfPlane', 'polygon', 'circle', 'areaIntersection', 'areaDecomposition', 'grid'].includes(item.kind)
+    const area = elements.find(item => (
+      ['halfPlane', 'polygon', 'circle', 'areaIntersection', 'areaDecomposition', 'grid'].includes(objectKind(item))
     ));
     return area ? [targetId, area.id] : [targetId];
   }
   if (kind === 'reflection') {
-    const centerOrAxis = model.points.find(item => item.id !== targetId)
-      ?? model.elements.find(item => ['segment', 'line', 'ray', 'midpoint', 'intersection'].includes(item.kind) && item.id !== targetId);
+    const centerOrAxis = points.find(item => item.id !== targetId)
+      ?? elements.find(item => ['segment', 'line', 'ray', 'midpoint', 'intersection'].includes(objectKind(item)) && item.id !== targetId);
     if (!centerOrAxis) return [targetId];
-    const sourcePoint = model.points.find(item => item.id !== targetId && item.id !== centerOrAxis.id);
+    const sourcePoint = points.find(item => item.id !== targetId && item.id !== centerOrAxis.id);
     return sourcePoint ? [targetId, centerOrAxis.id, sourcePoint.id] : [targetId, centerOrAxis.id];
   }
   if (kind === 'equalLength') {
-    const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));
-    const anchorId = targetSegment?.refs.find(ref => ref !== targetId);
-    const sourceSegment = model.elements.find(item => item.kind === 'segment' && item.id !== targetSegment?.id);
+    const targetSegment = plainSegments(model).find(item => objectConstructionReferences(item).includes(targetId));
+    const anchorId = targetSegment ? objectConstructionReferences(targetSegment).find(ref => ref !== targetId) : undefined;
+    const sourceSegment = plainSegments(model).find(item => item.id !== targetSegment?.id);
     return anchorId && sourceSegment ? [targetId, anchorId, sourceSegment.id] : [targetId, ...(anchorId ? [anchorId] : [])];
   }
   if (kind === 'equalAngle') {
-    const targetAngle = model.elements.find(item => (
-      (item.kind === 'angle' || item.kind === 'nonReflexAngle')
-      && (item.refs[0] === targetId || item.refs[2] === targetId)
-    ));
+    const targetAngle = anglesWithSideEndpoint(model, targetId)[0];
     if (!targetAngle) return [targetId];
-    const fixedRayPointId = targetAngle.refs[0] === targetId ? targetAngle.refs[2] : targetAngle.refs[0];
-    const sourceAngle = model.elements.find(item => (
-      item.id !== targetAngle.id
-      && item.kind === targetAngle.kind
-      && !item.refs.includes(targetId)
+    const fixedRayPointId = targetAngle.points[0] === targetId ? targetAngle.points[2] : targetAngle.points[0];
+    const sourceAngle = model.objects.find((item): item is AngleObject => (
+      isMeasurableAngle(item)
+      && item.id !== targetAngle.id
+      && item.sweep === targetAngle.sweep
+      && !item.points.includes(targetId)
     ));
     return sourceAngle
-      ? [targetId, targetAngle.refs[1], fixedRayPointId, sourceAngle.id, targetAngle.id]
-      : [targetId, targetAngle.refs[1], fixedRayPointId];
+      ? [targetId, targetAngle.points[1], fixedRayPointId, sourceAngle.id, targetAngle.id]
+      : [targetId, targetAngle.points[1], fixedRayPointId];
   }
-  const otherPoints = model.points.filter(item => item.id !== targetId).map(item => item.id);
+  const otherPoints = points.filter(item => item.id !== targetId).map(item => item.id);
   return [targetId, ...otherPoints.slice(0, presentation.refs - 1)];
-}
-
-export function withConstraintDependencies(model: VisualDiagramModel, constraintId: string, refs: string[]): VisualDiagramModel {
-  return {
-    ...model,
-    dependencies: [
-      ...(model.dependencies || []).filter(dependency => dependency.constraintId !== constraintId),
-      ...refs.slice(1).map(sourceId => ({ sourceId, targetId: refs[0], relation: 'constraint' as const, constraintId })),
-    ],
-  };
 }
 
 export function relationsForScope(scope: RelationScope): RelationCatalogEntry[] {
@@ -213,31 +215,18 @@ export function relationsForPointPicker(): RelationCatalogEntry[] {
 
 export function combinedConstraintBlockReason(
   model: VisualDiagramModel,
-  kind: VisualConstraint['kind'],
+  kind: RelationIntent,
   targetId: string,
-  activeKinds: readonly VisualConstraint['kind'][],
-  options?: { ignoreKind?: VisualConstraint['kind'] },
+  activeKinds: readonly RelationIntent[],
+  options?: { ignoreKind?: RelationIntent },
 ): string | undefined {
   return getConstraintDisabledReason(model, kind, targetId)
     ?? getConstraintConflictReason(activeKinds, kind, options);
 }
 
-export function uniqueConstraintId(model: VisualDiagramModel, base?: string): string {
-  if (!base) {
-    let index = (model.constraints?.length ?? 0) + 1;
-    while (model.constraints?.some(item => item.id === `constraint${index}`)) index += 1;
-    return `constraint${index}`;
-  }
-  const cleanBase = cleanTargetId(base, `constraint${(model.constraints?.length ?? 0) + 1}`);
-  let candidate = cleanBase;
-  let index = 2;
-  while (model.constraints?.some(item => item.id === candidate)) candidate = `${cleanBase}_${index++}`;
-  return candidate;
-}
-
 export function getConstraintDisabledReason(
   model: VisualDiagramModel,
-  kind: VisualConstraint['kind'],
+  kind: RelationIntent,
   targetId: string,
 ): string | undefined {
   const presentation = constraintPresentation(kind);
@@ -246,14 +235,14 @@ export function getConstraintDisabledReason(
 
   switch (kind) {
     case 'equalLength': {
-      const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));
+      const targetSegment = plainSegments(model).find(item => objectConstructionReferences(item).includes(targetId));
       if (!targetSegment) return 'Este punto no forma parte de ningún segmento. Seleccione el segmento en el lienzo para igualar longitudes.';
-      const otherSegments = model.elements.filter(item => item.kind === 'segment' && item.id !== targetSegment.id);
+      const otherSegments = plainSegments(model).filter(item => item.id !== targetSegment.id);
       if (otherSegments.length === 0) return 'No existe otro segmento en el diagrama para tomar como referencia de longitud.';
       return 'Se requiere un segmento de referencia y un punto ancla para igualar la longitud.';
     }
     case 'equalAngle': {
-      const targetAngle = model.elements.find(item => (item.kind === 'angle' || item.kind === 'nonReflexAngle') && (item.refs[0] === targetId || item.refs[2] === targetId));
+      const targetAngle = anglesWithSideEndpoint(model, targetId)[0];
       if (!targetAngle) return 'Este punto no es extremo del lado de ningún ángulo. Seleccione el ángulo en el lienzo.';
       return 'No hay otro ángulo del mismo tipo en la escena para copiar su amplitud.';
     }

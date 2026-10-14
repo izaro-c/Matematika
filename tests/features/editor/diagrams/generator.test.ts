@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { createTemplateModel, setPointAttractors, step } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { createTemplateModel, element, setPointAttractors, step } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 
 describe('DiagramSpec v3 TSX adapter generator', () => {
-  it('migrates v2 input and reaches an exact v3 generate-parse-generate roundtrip', () => {
+  it('reaches an exact v3 generate-parse-generate roundtrip', () => {
     const base = createTemplateModel('circunferencia', 'Roundtrip completo', 'definicion');
     const model = {
       ...base,
@@ -21,8 +21,10 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
         id: 'circle-group', label: 'Circunferencia', memberIds: ['pO', 'pA', 'circle'], visible: true, locked: false,
         selection: { selectable: true, role: 'primary' as const },
       }],
-      points: base.points.map(point => ({ ...point, groupIds: ['circle-group'] })),
-      elements: base.elements.map(element => ({ ...element, groupIds: element.id === 'circle' ? ['circle-group'] : [] })),
+      objects: base.objects.map(object => ({
+        ...object,
+        groupIds: object.objectType === 'point' || object.id === 'circle' ? ['circle-group'] : [],
+      })),
     };
     const first = generateDiagramSource(model, 'RoundtripCompleto');
     expect(first.ok).toBe(true);
@@ -33,8 +35,7 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     expect(first.source).toContain('"version": 3');
     expect(first.source).toContain('"objectType": "point"');
     expect(parsed.model.componentId).toBe(model.componentId);
-    expect(parsed.model.points.map(point => point.id)).toEqual(model.points.map(point => point.id));
-    expect(parsed.model.elements.map(element => element.id)).toEqual(model.elements.map(element => element.id));
+    expect(parsed.model.objects.map(object => object.id)).toEqual(model.objects.map(object => object.id));
     const second = generateDiagramSource(parsed.model, 'RoundtripCompleto');
     expect(second.ok && second.source).toBe(first.source);
   });
@@ -55,7 +56,10 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     const reopened = parseDiagramSourceAST(generated.source);
     expect(reopened.status).toBe('visual-exact');
     if (reopened.status !== 'visual-exact') return;
-    expect(reopened.model.points.filter(point => ['A', 'B', 'C'].includes(point.id)).map(point => point.attractorIds)).toEqual([
+    expect(['A', 'B', 'C'].map(id => {
+      const point = reopened.model.objects.find(object => object.id === id);
+      return point?.objectType === 'point' ? point.interaction?.attractorIds : undefined;
+    })).toEqual([
       ['lineMediatrizBC'],
       ['lineMediatrizAC'],
       ['lineMediatrizAB'],
@@ -91,8 +95,7 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     const invalid = {
       ...valid,
       componentId: '',
-      points: [],
-      elements: [{ ...valid.elements[0], refs: ['missing-a', 'missing-b'] }],
+      objects: [element('broken', 'Roto', 'segment', ['missing-a', 'missing-b'], 'carbon')],
     };
     const result = generateDiagramSource(invalid, 'Invalido');
     expect(result.ok).toBe(false);

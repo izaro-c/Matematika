@@ -6,6 +6,8 @@ import {
   setReflectionConstraintForSegment,
 } from '../../model/constraints/reflectionConstraints';
 import type { VisualDiagramModel, VisualElement } from '../../model/types';
+import { objectKind } from '@/diagrams';
+import { modelElements } from '../../model/scene/objectLists';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
 
@@ -22,10 +24,11 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
 }) => {
   const existing = reflectionConstraintForSegment(model, segment.id);
   const candidates = editableReflectionCandidates(model, segment.id);
-  const otherSegments = model.elements.filter(e => e.kind === 'segment' && e.id !== segment.id);
+  const otherSegments = modelElements(model).filter(e => objectKind(e) === 'segment' && e.id !== segment.id);
 
-  const existingCenterOrAxisId = existing?.refs.length === 3 ? existing.refs[2] : existing?.refs[1];
-  const existingSourceSegmentId = existing?.refs.length === 3 ? existing.refs[1] : '';
+  const existingRefs = existing?.type === 'reflection' ? existing.refs : undefined;
+  const existingCenterOrAxisId = existingRefs?.length === 3 ? existingRefs[2] : existingRefs?.[1];
+  const existingSourceSegmentId = existingRefs?.length === 3 ? existingRefs[1] : '';
 
   const [selectedCenterOrAxis, setSelectedCenterOrAxis] = useState<string>(existingCenterOrAxisId || candidates[0]?.id || '');
   const [selectedSourceSegment, setSelectedSourceSegment] = useState<string>(existingSourceSegmentId || '');

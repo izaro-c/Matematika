@@ -1,4 +1,5 @@
 import React from 'react';
+import type { PointInteraction } from '@/diagrams';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/scene/pointMovement';
 import { InspectorExpandableBlock } from './inspector/InspectorExpandableBlock';
@@ -6,7 +7,7 @@ import { InspectorExpandableBlock } from './inspector/InspectorExpandableBlock';
 interface DiagramPointMovementAidsEditorProps {
   model: VisualDiagramModel;
   point: VisualPoint;
-  onPointChange: (update: Partial<VisualPoint>) => void;
+  onInteractionChange: (update: Partial<PointInteraction>) => void;
   onAttractorsChange: (attractorIds: string[]) => void;
 }
 
@@ -19,13 +20,14 @@ const sectionLabelClass = 'block text-[11px] font-bold text-carbon/70 mb-0.5';
 export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEditorProps> = ({
   model,
   point,
-  onPointChange,
+  onInteractionChange,
   onAttractorsChange,
 }) => {
+  const interaction = point.interaction ?? {};
   const supportsMovementAids = pointSupportsMovementAids(point);
   const attractors = movementAttractors(model).filter(attractor => attractor.id !== point.id);
-  const selectedAttractors = point.attractorIds ?? [];
-  const defaultOpen = Boolean(point.snapToGrid || selectedAttractors.length > 0);
+  const selectedAttractors = interaction.attractorIds ?? [];
+  const defaultOpen = Boolean(interaction.snapToGrid || selectedAttractors.length > 0);
   const moveAttractor = (attractorId: string, offset: -1 | 1) => {
     const index = selectedAttractors.indexOf(attractorId);
     const destination = index + offset;
@@ -49,13 +51,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
           <input
             type="checkbox"
             aria-label="Ajuste a cuadrícula"
-            checked={point.snapToGrid ?? false}
-            onChange={event => onPointChange({ snapToGrid: event.target.checked })}
+            checked={interaction.snapToGrid ?? false}
+            onChange={event => onInteractionChange({ snapToGrid: event.target.checked })}
             className={`h-3.5 w-3.5 ${inspectorCheckboxClass}`}
           />
           Ajuste a cuadrícula
         </label>
-        {point.snapToGrid && (
+        {interaction.snapToGrid && (
           <label className={sectionLabelClass}>
             Tamaño de celda
             <input
@@ -65,8 +67,8 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
               step="0.25"
               aria-label="Tamaño de celda para ajustar a la cuadrícula"
               className={inspectorInputClass}
-              value={point.snapSize ?? 0.5}
-              onChange={event => onPointChange({ snapSize: Math.max(0.01, Number(event.target.value)) })}
+              value={interaction.snapSize ?? 0.5}
+              onChange={event => onInteractionChange({ snapSize: Math.max(0.01, Number(event.target.value)) })}
             />
           </label>
         )}
@@ -113,7 +115,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
         )}
         <div className="max-h-40 space-y-1 overflow-y-auto">
           {attractors.map(element => {
-            const checked = point.attractorIds?.includes(element.id) ?? false;
+            const checked = interaction.attractorIds?.includes(element.id) ?? false;
             const createsCycle = !checked && movementAttractorCreatesCycle(model, point.id, element.id);
             return (
               <label
@@ -140,8 +142,8 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   onChange={event =>
                     onAttractorsChange(
                       event.target.checked
-                        ? [...(point.attractorIds ?? []), element.id]
-                        : (point.attractorIds ?? []).filter(id => id !== element.id),
+                        ? [...(interaction.attractorIds ?? []), element.id]
+                        : (interaction.attractorIds ?? []).filter(id => id !== element.id),
                     )
                   }
                 />
@@ -160,7 +162,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
             );
           })}
         </div>
-        {(point.attractorIds?.length ?? 0) > 0 && (
+        {(interaction.attractorIds?.length ?? 0) > 0 && (
           <div className="grid grid-cols-2 gap-2">
             <label className={sectionLabelClass}>
               Atracción
@@ -171,9 +173,9 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                 step="0.05"
                 aria-label="Distancia de atracción"
                 className={inspectorInputClass}
-                value={point.attractorDistance ?? 0.4}
+                value={interaction.attractorDistance ?? 0.4}
                 onChange={event =>
-                  onPointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })
+                  onInteractionChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })
                 }
               />
             </label>
@@ -186,9 +188,9 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                 step="0.05"
                 aria-label="Distancia de liberación"
                 className={inspectorInputClass}
-                value={point.snatchDistance ?? 0.6}
+                value={interaction.snatchDistance ?? 0.6}
                 onChange={event =>
-                  onPointChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })
+                  onInteractionChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })
                 }
               />
             </label>

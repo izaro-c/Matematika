@@ -7,7 +7,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
-import { type DiagramBounds, type DiagramSpecV2 } from '@/diagrams/model';
+import { type DiagramBounds, type DiagramSpec } from '@/diagrams/model';
 import {
   computeAutoFitBounds,
   fitVisibleItemsAtStep,
@@ -52,7 +52,7 @@ export {
 } from '@/diagrams/render/interaction/diagramViewportAnchors';
 
 export interface UseDiagramViewportOptions {
-  spec: DiagramSpecV2;
+  spec: DiagramSpec;
   mode?: 'runtime' | 'editor' | 'preview';
   effectiveStepId?: string;
   hasTopViewportPanel?: boolean;

@@ -1,41 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import type { DiagramSpecV2 } from '@/diagrams/model';
+import type { DiagramObject, DiagramSpec } from '@/diagrams/model';
 import { compactHeaderReadings, headerReadingText } from '@/diagrams/render/DiagramKatexOverlay';
+import { element, point } from '@/fixed-pages/editor/diagrams/model';
+import { sceneSpec } from '../helpers/diagramSpec';
+
+function dimension(id: string, label: string, refs: [string, string]): DiagramObject {
+  const base = element(id, label, 'dimensionLine', refs, 'mora');
+  return base.objectType === 'path' && base.geometry.type === 'dimension'
+    ? { ...base, geometry: { ...base.geometry, offset: 0.4, precision: 2, unit: 'cm' } }
+    : base;
+}
 
 describe('Header Readings Equality Behavior', () => {
-  const baseSpec: DiagramSpecV2 = {
-    id: 'test-diagram',
+  const dimensions = [dimension('dimAB', 'AB', ['A', 'B']), dimension('dimBC', 'BC', ['B', 'C'])];
+  const baseSpec: DiagramSpec = sceneSpec({
     title: 'Test Diagram',
     componentId: 'TestDiagram',
-    canvasSize: { width: 500, height: 400 },
-    viewport: { bounds: [-5, 5, 5, -5] },
-    points: [
-      { id: 'A', label: 'A', x: 0, y: 0, color: 'canela', selection: { selectable: true } },
-      { id: 'B', label: 'B', x: 4, y: 0, color: 'canela', selection: { selectable: true } },
-      { id: 'C', label: 'C', x: 4, y: 3, color: 'canela', selection: { selectable: true } },
-    ],
-    elements: [
-      {
-        id: 'dimAB',
-        kind: 'dimensionLine',
-        label: 'AB',
-        color: 'mora',
-        refs: ['A', 'B'],
-        selection: { selectable: true },
-        properties: { offset: 0.4, precision: 2, unit: 'cm' },
-      },
-      {
-        id: 'dimBC',
-        kind: 'dimensionLine',
-        label: 'BC',
-        color: 'mora',
-        refs: ['B', 'C'],
-        selection: { selectable: true },
-        properties: { offset: 0.4, precision: 2, unit: 'cm' },
-      },
-    ],
-    sliders: [],
-    steps: [],
+    objects: [point('A', 'A', 0, 0, false, 'canela'), point('B', 'B', 4, 0, false, 'canela'), point('C', 'C', 4, 3, false, 'canela'), ...dimensions],
     header: {
       readingsMode: 'custom',
       readings: [
@@ -46,7 +27,7 @@ describe('Header Readings Equality Behavior', () => {
         },
       ],
     },
-  };
+  });
 
   it('separates readings when values are different', () => {
     // AB = 4 cm, BC = 3 cm
@@ -55,7 +36,7 @@ describe('Header Readings Equality Behavior', () => {
       'B.x': 4, 'B.y': 0,
       'C.x': 4, 'C.y': 3,
     };
-    const entries = baseSpec.elements.map(item => ({
+    const entries = dimensions.map(item => ({
       item,
       text: headerReadingText(item, variables)!,
     })).filter(entry => Boolean(entry.text));
@@ -79,7 +60,7 @@ describe('Header Readings Equality Behavior', () => {
       'B.x': 4, 'B.y': 0,
       'C.x': 4, 'C.y': 3,
     };
-    const entries = baseSpec.elements.map(item => ({
+    const entries = dimensions.map(item => ({
       item,
       text: headerReadingText(item, variables)!,
     })).filter(entry => Boolean(entry.text));
@@ -96,7 +77,7 @@ describe('Header Readings Equality Behavior', () => {
   });
 
   it('handles label-value and value presentations', () => {
-    const specLabelValue: DiagramSpecV2 = {
+    const specLabelValue: DiagramSpec = {
       ...baseSpec,
       header: {
         readingsMode: 'custom',
@@ -111,7 +92,7 @@ describe('Header Readings Equality Behavior', () => {
       'B.x': 4, 'B.y': 0,
       'C.x': 4, 'C.y': 3,
     };
-    const entries = specLabelValue.elements.map(item => ({
+    const entries = dimensions.map(item => ({
       item,
       text: headerReadingText(item, variables)!,
     }));

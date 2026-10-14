@@ -1,6 +1,8 @@
-import { element, pointNameFromRef, reusableElement, uniqueElementId } from '../elements/diagramElements';
+import type { DiagramObject } from '@/diagrams';
+import { element, insertObjects, pointNameFromRef, reusableElement, uniqueElementId, type ElementOptions } from '../elements/diagramElements';
 import { CONSTRUCTION_OPTIONS } from '../tools/diagramOptions';
-import type { ColorToken, ConstructionKind, ConstructionRefKey, ElementKind, VisualDiagramModel, VisualElement, VisualPoint, VisualStep } from '../types';
+import { modelElements, modelPoints } from '../scene/objectLists';
+import type { ColorToken, ConstructionKind, ConstructionRefKey, ElementKind, VisualDiagramModel, VisualPoint, VisualStep } from '../types';
 
 export function constructionOption(kind: ConstructionKind) {
   return CONSTRUCTION_OPTIONS.find(item => item.value === kind) || CONSTRUCTION_OPTIONS[0];
@@ -32,14 +34,17 @@ export function appendTargetsToSteps(steps: VisualStep[], targetIds: string[]): 
 
 export function applyGuidedConstruction(model: VisualDiagramModel, kind: ConstructionKind, refs: Record<ConstructionRefKey, string>): { model: VisualDiagramModel; selectedId: string } {
   const { a, b, c } = refs;
-  const elements = [...model.elements];
+  const objects: DiagramObject[] = [...model.objects];
+  const added: DiagramObject[] = [];
   const addedTargetIds: string[] = [];
-  let selectedId = model.elements[0]?.id || model.points[0]?.id || '';
-  const addOrReuse = (baseId: string, label: string, elementKind: ElementKind, elementRefs: string[], color: ColorToken, unordered = false, extra: Partial<VisualElement> = {}) => {
-    const existing = reusableElement(elements, elementKind, elementRefs, unordered);
+  let selectedId = modelElements(model)[0]?.id || modelPoints(model)[0]?.id || '';
+  const addOrReuse = (baseId: string, label: string, elementKind: ElementKind, elementRefs: string[], color: ColorToken, unordered = false, extra: ElementOptions = {}) => {
+    const existing = reusableElement(objects, elementKind, elementRefs, unordered);
     if (existing) { selectedId = existing.id; return existing.id; }
-    const id = uniqueElementId(baseId, elements);
-    elements.push(element(id, label, elementKind, elementRefs, color, true, extra));
+    const id = uniqueElementId(baseId, objects);
+    const created = element(id, label, elementKind, elementRefs, color, true, extra);
+    objects.push(created);
+    added.push(created);
     addedTargetIds.push(id);
     selectedId = id;
     return id;
@@ -68,5 +73,5 @@ export function applyGuidedConstruction(model: VisualDiagramModel, kind: Constru
     addOrReuse(`bis${triple}`, `Bisectriz de ${triple}`, 'angleBisector', [a, b, c], 'pavo', false, { dashed: true });
   }
 
-  return { model: { ...model, elements, steps: appendTargetsToSteps(model.steps, addedTargetIds) }, selectedId };
+  return { model: { ...insertObjects(model, added), steps: appendTargetsToSteps(model.steps, addedTargetIds) }, selectedId };
 }

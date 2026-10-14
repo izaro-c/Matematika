@@ -9,14 +9,11 @@ export interface HumanizedDiagnostic {
 }
 
 const COLLECTION_LABELS: Record<string, string> = {
-  points: 'punto',
-  elements: 'elemento',
-  sliders: 'control',
-  constraints: 'restricción',
+  objects: 'objeto',
+  relations: 'restricción',
   steps: 'paso',
   groups: 'grupo',
   layers: 'capa',
-  objects: 'objeto',
 };
 
 function replaceTargetIds(text: string, targets: DiagramTarget[]): string {
@@ -70,7 +67,7 @@ function fieldHint(field: string | undefined, location: DiagramDiagnosticLocatio
   if (location.collection === 'steps') {
     return 'Abra la pestaña Secuencia y corrija el paso indicado.';
   }
-  if (location.collection === 'constraints') {
+  if (location.collection === 'relations') {
     return 'Revise las relaciones geométricas del objeto seleccionado en el inspector.';
   }
   if (location.workspace === 'source') {

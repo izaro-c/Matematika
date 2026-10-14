@@ -1,5 +1,5 @@
-import type { DiagramInfoPanelBlock, DiagramPanelBlockTranslation, DiagramTextRule, DiagramTranslation } from '@/diagrams/model/schema';
-import type { VisualDiagramModel, VisualElement, VisualPoint, VisualSlider, VisualStep } from '../types';
+import type { DiagramInfoPanelBlock, DiagramObject, DiagramPanelBlockTranslation, DiagramTextRule, DiagramTranslation } from '@/diagrams/model/schema';
+import type { VisualDiagramModel, VisualStep } from '../types';
 
 /**
  * Edición en una lengua distinta de la base (ES): el inspector trabaja sobre el modelo
@@ -81,41 +81,42 @@ function setRecord<V>(map: Record<string, V> | undefined, id: string, value: V |
   return Object.keys(next).length ? next : undefined;
 }
 
-function splitElement(base: VisualElement, localized: VisualElement, edited: VisualElement, tr: DiagramTranslation): VisualElement {
+function splitObject(base: DiagramObject, localized: DiagramObject, edited: DiagramObject, tr: DiagramTranslation): DiagramObject {
   tr.labels = setText(tr.labels, edited.id, edited.label, base.label);
-  let next: VisualElement = { ...edited, label: base.label };
-  if (edited.text !== localized.text) {
-    tr.texts = setText(tr.texts, edited.id, edited.text, base.text);
-    if (tr.annotations?.[edited.id] && edited.text !== tr.annotations[edited.id]) tr.annotations = setText(tr.annotations, edited.id, undefined, undefined);
-  }
-  next = withField(next, 'text', base.text);
+  const next = { ...edited, label: base.label } as DiagramObject;
 
-  const props = edited.properties;
-  if (props) {
-    const baseProps = base.properties ?? {};
-    const localizedProps = localized.properties ?? {};
-    let nextProps = { ...props };
-    if (props.title !== localizedProps.title) tr.titles = setText(tr.titles, edited.id, props.title, baseProps.title);
-    if (props.subtitle !== localizedProps.subtitle) tr.subtitles = setText(tr.subtitles, edited.id, props.subtitle, baseProps.subtitle);
-    nextProps = withField(withField(nextProps, 'title', baseProps.title), 'subtitle', baseProps.subtitle);
-    if (props.textRules) {
-      const rules = splitRules(baseProps.textRules, localizedProps.textRules, props.textRules);
-      tr.rules = setRecord(tr.rules, edited.id, rules.texts);
-      nextProps.textRules = rules.base;
+  if (next.objectType === 'path' && next.geometry.type === 'dimension'
+    && base.objectType === 'path' && base.geometry.type === 'dimension'
+    && localized.objectType === 'path' && localized.geometry.type === 'dimension') {
+    if (next.geometry.text !== localized.geometry.text) {
+      tr.texts = setText(tr.texts, edited.id, next.geometry.text, base.geometry.text);
+      if (tr.annotations?.[edited.id] && next.geometry.text !== tr.annotations[edited.id]) tr.annotations = setText(tr.annotations, edited.id, undefined, undefined);
     }
-    if (props.infoPanelBlocks) {
-      const blocks = splitBlocks(baseProps.infoPanelBlocks, localizedProps.infoPanelBlocks, props.infoPanelBlocks);
-      tr.blocks = setRecord(tr.blocks, edited.id, blocks.translations);
-      nextProps.infoPanelBlocks = blocks.base;
-    }
-    next = { ...next, properties: nextProps };
+    return { ...next, geometry: withField(next.geometry, 'text', base.geometry.text) };
   }
-  return next;
-}
 
-function splitLabelled<T extends VisualPoint | VisualSlider>(base: T, edited: T, tr: DiagramTranslation): T {
-  tr.labels = setText(tr.labels, edited.id, edited.label, base.label);
-  return { ...edited, label: base.label };
+  if (next.objectType !== 'annotation' || base.objectType !== 'annotation' || localized.objectType !== 'annotation') return next;
+  const content = next.content;
+  const baseContent = base.content;
+  const localizedContent = localized.content;
+  if (content.text !== localizedContent.text) {
+    tr.texts = setText(tr.texts, edited.id, content.text, baseContent.text);
+    if (tr.annotations?.[edited.id] && content.text !== tr.annotations[edited.id]) tr.annotations = setText(tr.annotations, edited.id, undefined, undefined);
+  }
+  if (content.title !== localizedContent.title) tr.titles = setText(tr.titles, edited.id, content.title, baseContent.title);
+  if (content.subtitle !== localizedContent.subtitle) tr.subtitles = setText(tr.subtitles, edited.id, content.subtitle, baseContent.subtitle);
+  let nextContent = withField(withField({ ...content, text: baseContent.text }, 'title', baseContent.title), 'subtitle', baseContent.subtitle);
+  if (content.rules) {
+    const rules = splitRules(baseContent.rules, localizedContent.rules, content.rules);
+    tr.rules = setRecord(tr.rules, edited.id, rules.texts);
+    nextContent = { ...nextContent, rules: rules.base };
+  }
+  if (content.blocks) {
+    const blocks = splitBlocks(baseContent.blocks, localizedContent.blocks, content.blocks);
+    tr.blocks = setRecord(tr.blocks, edited.id, blocks.translations);
+    nextContent = { ...nextContent, blocks: blocks.base };
+  }
+  return { ...next, content: nextContent };
 }
 
 function splitStep(base: VisualStep, localized: VisualStep, edited: VisualStep, tr: DiagramTranslation): VisualStep {
@@ -166,9 +167,7 @@ export function applyLocalizedModelEdit(
   if (edited.title !== localized.title) tr.title = edited.title && edited.title !== base.title ? edited.title : undefined;
   if (edited.note !== localized.note) tr.note = edited.note && edited.note !== base.note ? edited.note : undefined;
 
-  const elements = mergeById(base.elements, localized.elements, edited.elements, (b, l, e) => splitElement(b, l, e, tr));
-  const points = mergeById(base.points, localized.points, edited.points, (b, _l, e) => splitLabelled(b, e, tr));
-  const sliders = mergeById(base.sliders, localized.sliders, edited.sliders, (b, _l, e) => splitLabelled(b, e, tr));
+  const objects = mergeById(base.objects, localized.objects, edited.objects, (b, l, e) => splitObject(b, l, e, tr));
   const steps = mergeById(base.steps, localized.steps, edited.steps, (b, l, e) => splitStep(b, l, e, tr));
 
   const cleaned = Object.fromEntries(Object.entries(tr).filter(([, value]) => value !== undefined)) as DiagramTranslation;
@@ -180,10 +179,7 @@ export function applyLocalizedModelEdit(
     ...edited,
     title: base.title,
     note: base.note,
-    objects: edited.objects === localized.objects ? base.objects : edited.objects,
-    elements,
-    points,
-    sliders,
+    objects,
     steps,
     translations,
   };

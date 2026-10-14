@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   diagramPlaybackReducer,
   initialDiagramPlaybackState,
-  parseDiagramSpecV2,
+  objectConstructionReferences,
+  parseDiagramSpecV3,
+  type PointObject,
 } from '../../../../src/diagrams/model';
 import {
   createScenePlan,
@@ -11,7 +13,7 @@ import {
 import {
   createTemplateModel,
   duplicateStep,
-  workingScene,
+  modelPoints,
   moveStep,
   removeStep,
   renameDiagramId,
@@ -19,13 +21,14 @@ import {
 } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 import { classifyEmbeddedDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/parser';
+import { findById } from '../../../helpers/diagramSpec';
 
 function complexSequence() {
   const base = createTemplateModel('demostracion-pasos', 'Secuencia compleja', 'demostracion');
   const stable = {
     ...base,
     componentId: 'demo-compleja',
-    elements: base.elements.map(item => item.id === 'segAB' ? { ...item, targetId: 'base-estable' } : item),
+    objects: base.objects.map(item => item.id === 'segAB' ? { ...item, targetId: 'base-estable' } : item),
   };
   return {
     ...stable,
@@ -77,25 +80,26 @@ describe('Diagram step model and execution', () => {
   it('preserves the public target when the internal object is renamed', () => {
     const model = complexSequence();
     const renamed = renameDiagramId(model, 'segAB', 'segmentoInterno');
-    const item = renamed.elements.find(element => element.id === 'segmentoInterno');
-    expect(item?.targetId).toBe('base-estable');
+    const item = findById(renamed, 'segmentoInterno');
+    expect(item.targetId).toBe('base-estable');
     expect(renamed.steps.every(step => !step.visibleTargets.includes('segAB'))).toBe(true);
     expect(renamed.steps.some(step => step.visibleTargets.includes('segmentoInterno'))).toBe(true);
   });
 
   it('renames a geometric attractor without losing the point relationship', () => {
     const base = complexSequence();
-    const pointId = base.points.find(point => !base.elements.find(element => element.id === 'segAB')?.refs.includes(point.id))!.id;
+    const segmentRefs = objectConstructionReferences(findById(base, 'segAB'));
+    const pointId = modelPoints(base).find(point => !segmentRefs.includes(point.id))!.id;
     const model = {
       ...base,
-      points: base.points.map(point => point.id === pointId ? { ...point, attractorIds: ['segAB'] } : point),
-      dependencies: [...(base.dependencies ?? []), { sourceId: 'segAB', targetId: pointId, relation: 'constraint' as const }],
+      objects: base.objects.map(object => object.id === pointId && object.objectType === 'point'
+        ? { ...object, interaction: { ...object.interaction, attractorIds: ['segAB'] } }
+        : object),
     };
 
     const renamed = renameDiagramId(model, 'segAB', 'guiaBase');
 
-    expect(renamed.points.find(point => point.id === pointId)?.attractorIds).toEqual(['guiaBase']);
-    expect(renamed.dependencies).toContainEqual({ sourceId: 'guiaBase', targetId: pointId, relation: 'constraint' });
+    expect(findById<PointObject>(renamed, pointId).interaction?.attractorIds).toEqual(['guiaBase']);
   });
 
   it('navigates playback deterministically and pauses at the end', () => {
@@ -123,15 +127,15 @@ describe('Diagram step model and execution', () => {
     const model = complexSequence();
     const duplicateTarget = {
       ...model,
-      points: model.points.map((item, index) => index < 2 ? { ...item, targetId: 'duplicado' } : item),
+      objects: model.objects.map((item, index) => index < 2 ? { ...item, targetId: 'duplicado' } : item),
     };
-    expect(parseDiagramSpecV2(workingScene(duplicateTarget)).success).toBe(false);
+    expect(parseDiagramSpecV3((duplicateTarget)).success).toBe(false);
 
     const missing = {
       ...model,
       steps: model.steps.map((item, index) => index === 0 ? { ...item, visibleTargets: [...item.visibleTargets, 'no-existe'] } : item),
     };
-    expect(parseDiagramSpecV2(workingScene(missing)).success).toBe(false);
+    expect(parseDiagramSpecV3((missing)).success).toBe(false);
 
     const invalidOverlay = {
       ...model,
@@ -146,7 +150,7 @@ describe('Diagram step model and execution', () => {
         },
       } : item),
     };
-    const parsed = parseDiagramSpecV2(workingScene(invalidOverlay));
+    const parsed = parseDiagramSpecV3((invalidOverlay));
     expect(parsed.success).toBe(false);
     if (!parsed.success) expect(parsed.error.message).toContain('objetoFantasma.x');
   });

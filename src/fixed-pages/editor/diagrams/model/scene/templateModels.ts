@@ -1,18 +1,25 @@
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION, DEFAULT_DIAGRAM_LAYERS, type DiagramSpecV2 } from '@/diagrams';
+import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION, DEFAULT_DIAGRAM_LAYERS, type DiagramObject } from '@/diagrams';
 import { normalizeContentId } from '@/fixed-pages/editor/types/editorContracts';
-import { element, point, slider, step } from '../elements/diagramElements';
+import { element, insertObjects, point, slider, step } from '../elements/diagramElements';
 import { defaultCategory, defaultMode } from '../tools/diagramOptions';
-import { materializeEditorModel } from '../scene/editorModel';
-import type { TemplateKind, VisualDiagramModel, VisualSlider, VisualStep } from '../types';
+import type { TemplateKind, VisualDiagramModel, VisualElement, VisualPoint, VisualSlider } from '../types';
 
-function asModel(spec: DiagramSpecV2): VisualDiagramModel {
-  return materializeEditorModel(spec);
+type TemplateScene = Omit<VisualDiagramModel, 'objects'> & {
+  points: VisualPoint[];
+  elements: VisualElement[];
+  sliders: VisualSlider[];
+};
+
+/** Reúne puntos, construcciones y controles de una plantilla en la lista única de objetos V3. */
+function asModel({ points, elements, sliders, ...spec }: TemplateScene): VisualDiagramModel {
+  const objects: DiagramObject[] = [...points, ...elements, ...sliders];
+  return insertObjects({ ...spec, objects: [] }, objects);
 }
 
 export function createTemplateModel(kind: TemplateKind, title: string, metadataType: string): VisualDiagramModel {
   const base = {
-    version: DIAGRAM_SPEC_V2_VERSION,
-    renderer: DIAGRAM_RENDERER_V2_ID,
+    version: DIAGRAM_SPEC_VERSION,
+    renderer: DIAGRAM_RENDERER_ID,
     title,
     componentId: normalizeContentId(title || 'diagrama-interactivo'),
     category: defaultCategory(metadataType),
@@ -30,11 +37,9 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
     layers: DEFAULT_DIAGRAM_LAYERS.map(layer => ({ ...layer })),
     groups: [],
     sliders: [] as VisualSlider[],
-    steps: [] as VisualStep[],
-    constraints: [],
-    dependencies: [],
+    steps: [] as VisualDiagramModel['steps'],
+    relations: [],
     note: 'Arrastre los puntos para explorar la figura.',
-    extensions: {},
   };
 
   if (kind === 'lienzo-inicial') {

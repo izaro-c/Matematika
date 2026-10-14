@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextContentHelp } from '../../help';
 import type { ElementPanelProps } from '../../types';
-import { elementReferenceCandidates, handleRenameId, updateElementRef } from '../../utils';
+import { objectKind } from '@/diagrams';
+import { elementReferenceCandidates, elementRefs, handleRenameId, updateElementRef } from '../../utils';
 
 /** Propiedades: id, label, refs */
 export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
@@ -10,7 +11,10 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
   onUpdateModel,
   onSelectId,
-}) => (
+}) => {
+  const refs = elementRefs(model, element);
+  const kind = objectKind(element);
+  return (
   <div className="space-y-3">
     <div>
       <label className="block text-[11px] font-bold text-carbon/75 tracking-tight">
@@ -41,14 +45,14 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
       </label>
     </div>
 
-    {element.refs && element.refs.length > 0 && (
+    {refs.length > 0 && (
       <div className="space-y-2 pt-2 border-t border-carbon/10">
         <label className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-          Referencias del Elemento ({element.refs.length}):
+          Referencias del Elemento ({refs.length}):
         </label>
         <div className="space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-2.5 shadow-2xs">
-          {element.refs.map((rId, idx) => {
-            const candidates = elementReferenceCandidates(model, element.id, element.kind, idx);
+          {refs.map((rId, idx) => {
+            const candidates = elementReferenceCandidates(model, element.id, kind, idx);
             const options = candidates.some(c => c.id === rId)
               ? candidates
               : [{ id: rId, label: rId, type: '?' }, ...candidates];
@@ -57,7 +61,10 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
                 <span className="font-mono font-bold text-canela shrink-0 text-[11px]">Ref {idx + 1}:</span>
                 <select
                   value={rId}
-                  onChange={e => onUpdateElement(element.id, { refs: updateElementRef(element, idx, e.target.value) })}
+                  onChange={e => {
+                    const refId = e.target.value;
+                    onUpdateElement(element.id, current => updateElementRef(model, current, idx, refId));
+                  }}
                   className="flex-1 rounded-md border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
                 >
                   {options.map(cand => (
@@ -75,4 +82,5 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
 
     <TextContentHelp />
   </div>
-);
+  );
+};

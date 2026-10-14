@@ -1,42 +1,37 @@
 import { describe, expect, it } from 'vitest';
 import { clipPolygonToAreaElement, resolveAreaDisplayPolygon, resolveAreaDisplayPolygons, viewportPolygon } from '@/diagrams/geometry/areas/areaRegions';
 import { pointInHalfPlane, pointInPolygon } from '@/diagrams/geometry/areas/areaGeometry';
-import type { DiagramSpecV2 } from '@/diagrams/model/schema/types';
+import type { DiagramObject, DiagramSpec } from '@/diagrams';
+import { element, point } from '@/fixed-pages/editor/diagrams/model';
+import { curvePath, findById, sceneSpec } from '../helpers/diagramSpec';
 
-function baseSpec(): DiagramSpecV2 {
-  return {
-    version: 2,
-    renderer: 'matematika-diagram-renderer-v2',
-    title: 'Áreas',
-    componentId: 'areas',
-    category: 'Demos',
-    mode: 'simulation',
-    axis: false,
-    grid: false,
+const pointA = point('pA', 'A', -2, 0);
+const pointB = point('pB', 'B', 2, 0);
+const pointC = point('pC', 'C', 0, 2);
+const pointD = point('pD', 'D', 0, -2);
+const halfTop = element('halfTop', 'Superior', 'halfPlane', ['pA', 'pB', 'pC'], 'canela');
+const halfBottom = element('halfBottom', 'Inferior', 'halfPlane', ['pA', 'pB', 'pD'], 'canela');
+const strip = element('strip', 'Franja', 'areaIntersection', ['halfTop', 'halfBottom'], 'canela');
+
+function baseSpec(objects: DiagramObject[] = [pointA, pointB, pointC, pointD, halfTop, halfBottom, strip]): DiagramSpec {
+  return sceneSpec({
     viewport: { bounds: [-6, 6, 6, -6], home: [-6, 6, 6, -6], minZoom: 0.5, maxZoom: 4, padding: 0.08 },
-    layers: [{ id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false }],
-    groups: [],
-    points: [
-      { id: 'pA', label: 'A', x: -2, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pA', constraint: 'free', layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      { id: 'pB', label: 'B', x: 2, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pB', constraint: 'free', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      { id: 'pC', label: 'C', x: 0, y: 2, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pC', constraint: 'free', layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      { id: 'pD', label: 'D', x: 0, y: -2, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pD', constraint: 'free', layerId: 'geometry', order: 3, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-    ],
-    elements: [
-      { id: 'halfTop', label: 'Superior', kind: 'halfPlane', refs: ['pA', 'pB', 'pC'], color: 'canela', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfTop', selection: { selectable: true, role: 'secondary' } },
-      { id: 'halfBottom', label: 'Inferior', kind: 'halfPlane', refs: ['pA', 'pB', 'pD'], color: 'canela', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfBottom', selection: { selectable: true, role: 'secondary' } },
-      { id: 'strip', label: 'Franja', kind: 'areaIntersection', refs: ['halfTop', 'halfBottom'], color: 'canela', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'strip', selection: { selectable: true, role: 'secondary' } },
-    ],
-    sliders: [],
+    objects,
     steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: [], durationMs: 0 }],
-    note: '',
-    extensions: {},
-  };
+  });
 }
+
+const sinHalfPlane = (samples: number) => curvePath('sinArea', 'sin(x)', 'functionCurve', ['pSide'], {
+  expression: 'sin(x)',
+  variable: 'x',
+  domain: [-5, 5],
+  samples,
+  areaFill: 'half-plane',
+});
 
 describe('areaRegions', () => {
   it('resuelve la intersección de dos semiplanos como una franja visible', () => {
-    const polygon = resolveAreaDisplayPolygon(baseSpec(), baseSpec().elements[2]);
+    const polygon = resolveAreaDisplayPolygon(baseSpec(), strip);
     expect(polygon.length).toBeGreaterThanOrEqual(3);
     polygon.forEach(vertex => {
       expect(vertex.y).toBeGreaterThanOrEqual(-1e-6);
@@ -46,7 +41,7 @@ describe('areaRegions', () => {
   });
 
   it('resuelve un semiplano recortado al viewport', () => {
-    const polygon = resolveAreaDisplayPolygon(baseSpec(), baseSpec().elements[0]);
+    const polygon = resolveAreaDisplayPolygon(baseSpec(), halfTop);
     expect(polygon.length).toBeGreaterThanOrEqual(4);
     const lineA = { x: -2, y: 0 };
     const lineB = { x: 2, y: 0 };
@@ -56,21 +51,14 @@ describe('areaRegions', () => {
   });
 
   it('resuelve la intersección de un polígono con un semiplano', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        ...baseSpec().points,
-        { id: 'p1', label: '1', x: 0, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p1', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'p2', label: '2', x: 4, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p2', constraint: 'free', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'p3', label: '3', x: 2, y: 3, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p3', constraint: 'free', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        baseSpec().elements[0],
-        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'halfTop'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
-      ],
-    };
-    const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
+    const spec = baseSpec([
+      pointA, pointB, pointC, pointD,
+      point('p1', '1', 0, 0), point('p2', '2', 4, 0), point('p3', '3', 2, 3),
+      halfTop,
+      element('tri', 'Triángulo', 'polygon', ['p1', 'p2', 'p3'], 'canela'),
+      element('mix', 'Mezcla', 'areaIntersection', ['tri', 'halfTop'], 'canela'),
+    ]);
+    const polygon = resolveAreaDisplayPolygon(spec, findById(spec, 'mix'));
     expect(polygon.length).toBeGreaterThanOrEqual(3);
     const lineA = { x: -2, y: 0 };
     const lineB = { x: 2, y: 0 };
@@ -82,35 +70,23 @@ describe('areaRegions', () => {
   });
 
   it('recorta el viewport a un disco', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        { id: 'pO', label: 'O', x: 0, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pO', constraint: 'free', layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'pR', label: 'R', x: 3, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pR', constraint: 'free', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
-      ],
-    };
-    const clipped = clipPolygonToAreaElement(spec, viewportPolygon(spec.viewport.bounds), spec.elements[0]);
+    const spec = baseSpec([
+      point('pO', 'O', 0, 0), point('pR', 'R', 3, 0),
+      element('disk', 'Disco', 'circle', ['pO', 'pR'], 'canela'),
+    ]);
+    const clipped = clipPolygonToAreaElement(spec, viewportPolygon(spec.viewport.bounds), findById(spec, 'disk'));
     expect(clipped.length).toBeGreaterThanOrEqual(3);
   });
 
   it('resuelve la intersección de un disco con un semiplano', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        ...baseSpec().points,
-        { id: 'pO', label: 'O', x: 0, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pO', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'pR', label: 'R', x: 3, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pR', constraint: 'free', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        baseSpec().elements[0],
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['disk', 'halfTop'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
-      ],
-    };
-    const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
+    const spec = baseSpec([
+      pointA, pointB, pointC, pointD,
+      point('pO', 'O', 0, 0), point('pR', 'R', 3, 0),
+      halfTop,
+      element('disk', 'Disco', 'circle', ['pO', 'pR'], 'canela'),
+      element('mix', 'Mezcla', 'areaIntersection', ['disk', 'halfTop'], 'canela'),
+    ]);
+    const polygon = resolveAreaDisplayPolygon(spec, findById(spec, 'mix'));
     expect(polygon.length).toBeGreaterThanOrEqual(3);
     const center = { x: 0, y: 0 };
     polygon.forEach(vertex => {
@@ -120,59 +96,21 @@ describe('areaRegions', () => {
   });
 
   it('resuelve el semiplano de una función muestreada', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        ...baseSpec().points,
-        { id: 'pSide', label: 'S', x: 0, y: 4, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pSide', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        {
-          id: 'sinArea',
-          label: 'sin(x)',
-          kind: 'functionCurve',
-          refs: ['pSide'],
-          color: 'canela',
-          layerId: 'geometry',
-          order: 5,
-          visible: true,
-          locked: false,
-          groupIds: [],
-          target: true,
-          targetId: 'sinArea',
-          selection: { selectable: true, role: 'secondary' },
-          properties: {
-            expression: 'sin(x)',
-            parameter: 'x',
-            domain: [-5, 5],
-            samples: 32,
-            areaFill: 'half-plane',
-          },
-        },
-      ],
-    };
-    const polygon = resolveAreaDisplayPolygon(spec, spec.elements[0]);
+    const spec = baseSpec([pointA, pointB, pointC, pointD, point('pSide', 'S', 0, 4), sinHalfPlane(32)]);
+    const polygon = resolveAreaDisplayPolygon(spec, findById(spec, 'sinArea'));
     expect(polygon.length).toBeGreaterThan(10);
     expect(polygon.some(vertex => vertex.y >= 5.9)).toBe(true);
   });
 
   it('resuelve la intersección de un polígono con un disco', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        { id: 'p1', label: '1', x: -1, y: -1, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p1', constraint: 'free', layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'p2', label: '2', x: 4, y: -1, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p2', constraint: 'free', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'p3', label: '3', x: 1.5, y: 4, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'p3', constraint: 'free', layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'pO', label: 'O', x: 0, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pO', constraint: 'free', layerId: 'geometry', order: 3, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-        { id: 'pR', label: 'R', x: 3, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pR', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'canela', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'disk'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
-      ],
-    };
-    const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
+    const spec = baseSpec([
+      point('p1', '1', -1, -1), point('p2', '2', 4, -1), point('p3', '3', 1.5, 4),
+      point('pO', 'O', 0, 0), point('pR', 'R', 3, 0),
+      element('tri', 'Triángulo', 'polygon', ['p1', 'p2', 'p3'], 'canela'),
+      element('disk', 'Disco', 'circle', ['pO', 'pR'], 'canela'),
+      element('mix', 'Mezcla', 'areaIntersection', ['tri', 'disk'], 'canela'),
+    ]);
+    const polygon = resolveAreaDisplayPolygon(spec, findById(spec, 'mix'));
     expect(polygon.length).toBeGreaterThanOrEqual(3);
     const center = { x: 0, y: 0 };
     polygon.forEach(vertex => {
@@ -181,40 +119,13 @@ describe('areaRegions', () => {
   });
 
   it('resuelve la intersección de un semiplano funcional con un semiplano recto', () => {
-    const spec: DiagramSpecV2 = {
-      ...baseSpec(),
-      points: [
-        ...baseSpec().points,
-        { id: 'pSide', label: 'S', x: 0, y: 4, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pSide', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
-      ],
-      elements: [
-        baseSpec().elements[0],
-        {
-          id: 'sinArea',
-          label: 'sin(x)',
-          kind: 'functionCurve',
-          refs: ['pSide'],
-          color: 'canela',
-          layerId: 'geometry',
-          order: 5,
-          visible: true,
-          locked: false,
-          groupIds: [],
-          target: true,
-          targetId: 'sinArea',
-          selection: { selectable: true, role: 'secondary' },
-          properties: {
-            expression: 'sin(x)',
-            parameter: 'x',
-            domain: [-5, 5],
-            samples: 48,
-            areaFill: 'half-plane',
-          },
-        },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['halfTop', 'sinArea'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
-      ],
-    };
-    const polygons = resolveAreaDisplayPolygons(spec, spec.elements.find(item => item.id === 'mix')!);
+    const spec = baseSpec([
+      pointA, pointB, pointC, pointD, point('pSide', 'S', 0, 4),
+      halfTop,
+      sinHalfPlane(48),
+      element('mix', 'Mezcla', 'areaIntersection', ['halfTop', 'sinArea'], 'canela'),
+    ]);
+    const polygons = resolveAreaDisplayPolygons(spec, findById(spec, 'mix'));
     expect(polygons.length).toBeGreaterThan(0);
     const lineA = { x: -2, y: 0 };
     const lineB = { x: 2, y: 0 };

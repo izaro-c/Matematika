@@ -47,7 +47,7 @@ function unquote(value: string): string {
 /**
  * Extrae cálculos de una plantilla. La sintaxis nueva empieza por `=` para no
  * confundir llaves de KaTeX (`\\frac{1}{2}`) con valores reactivos. Se siguen
- * leyendo `{value}` y `{objeto.magnitud}` de DiagramSpec v2.
+ * leyendo `{value}` y `{objeto.magnitud}` de DiagramSpec v3.
  */
 export function diagramTemplateExpressions(
   template: string,

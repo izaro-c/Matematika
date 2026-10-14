@@ -1,5 +1,5 @@
 import type JXG from 'jsxgraph';
-import type { DiagramControlAction, DiagramControlEasing, DiagramControlEffect, DiagramSlider } from '@/diagrams/model';
+import type { ControlObject, DiagramControlAction, DiagramControlEasing, DiagramControlEffect } from '@/diagrams/model';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
 
@@ -47,7 +47,7 @@ export function nextButtonTarget(action: DiagramControlAction, min: number, curr
 
 export function createDiagramButton(
   board: JXG.Board,
-  item: DiagramSlider,
+  item: ControlObject,
   options: {
     labelHtml: string;
     theme: ThemeColors;
@@ -57,13 +57,13 @@ export function createDiagramButton(
     runEffect: (effect: DiagramControlEffect) => void;
   },
 ): DiagramButtonElement {
-  const action: DiagramControlAction = item.action ?? { to: item.max, durationMs: 1000, easing: 'ease-in-out', behavior: 'toggle' };
+  const action: DiagramControlAction = item.action ?? { to: item.range.max, durationMs: 1000, easing: 'ease-in-out', behavior: 'toggle' };
   let value = item.value;
-  let max = item.max;
+  let max = item.range.max;
   let frame: number | undefined;
   let animatingTo: number | undefined;
 
-  const clamp = (next: number) => Math.min(max, Math.max(item.min, next));
+  const clamp = (next: number) => Math.min(max, Math.max(item.range.min, next));
   const stop = () => {
     if (frame !== undefined) cancelAnimationFrame(frame);
     frame = undefined;
@@ -74,7 +74,7 @@ export function createDiagramButton(
   let element: DiagramButtonElement;
   const syncPressed = () => {
     const heading = animatingTo ?? value;
-    const pressed = Math.abs(heading - action.to) < Math.abs(heading - item.min);
+    const pressed = Math.abs(heading - action.to) < Math.abs(heading - item.range.min);
     element.rendNodeButton?.setAttribute('aria-pressed', String(pressed));
     element.rendNodeButton?.setAttribute('data-pressed', String(pressed));
     styleButton(element.rendNodeButton, options.theme, item);
@@ -88,9 +88,9 @@ export function createDiagramButton(
     stop();
     value = clamp(from);
     const target = clamp(to);
-    const returning = Math.abs(target - item.min) < Math.abs(target - action.to);
+    const returning = Math.abs(target - item.range.min) < Math.abs(target - action.to);
     const fullDuration = returning ? action.returnDurationMs ?? action.durationMs : action.durationMs;
-    const duration = Math.max(0, fullDuration * Math.abs(target - value) / Math.max(1e-9, Math.abs(action.to - item.min)));
+    const duration = Math.max(0, fullDuration * Math.abs(target - value) / Math.max(1e-9, Math.abs(action.to - item.range.min)));
     if (duration === 0 || typeof requestAnimationFrame !== 'function') {
       value = target;
       syncPressed();
@@ -122,13 +122,13 @@ export function createDiagramButton(
 
   const press = () => {
     if (options.disabled) return;
-    const { from, to } = nextButtonTarget(action, item.min, value, animatingTo);
-    const releasing = to === item.min && action.behavior === 'toggle';
+    const { from, to } = nextButtonTarget(action, item.range.min, value, animatingTo);
+    const releasing = to === item.range.min && action.behavior === 'toggle';
     runEffects(releasing ? 'release' : 'press');
     animateBetween(from, to, releasing ? undefined : () => runEffects('complete'));
   };
 
-  element = board.create('button', [item.x, item.y, options.labelHtml, press], {
+  element = board.create('button', [item.position[0], item.position[1], options.labelHtml, press], {
     fixed: true,
     layer: options.layer,
     cssClass: 'font-diagram diagram-control-button',
@@ -154,15 +154,15 @@ export function createDiagramButton(
     }
     // Un botón de reinicio modela un tiempo: nunca se rebobina, se reinicia y vuelve a correr.
     if (Math.abs(target - value) < 1e-9 && animatingTo === undefined) return;
-    if (target <= item.min) element.setValue(target);
-    else animateBetween(item.min, target);
+    if (target <= item.range.min) element.setValue(target);
+    else animateBetween(item.range.min, target);
   };
   element.resetValue = () => {
     stop();
     value = clamp(item.value);
     syncPressed();
   };
-  element.play = (from?: number) => animateBetween(from ?? item.min, action.to);
+  element.play = (from?: number) => animateBetween(from ?? item.range.min, action.to);
   element.press = press;
   const originalRemove = (element as { remove?: () => void }).remove;
   (element as { remove?: () => void }).remove = function removeButton(this: unknown) {
@@ -173,7 +173,7 @@ export function createDiagramButton(
   return element;
 }
 
-function styleButton(node: HTMLButtonElement | undefined, theme: ThemeColors, item: DiagramSlider): void {
+function styleButton(node: HTMLButtonElement | undefined, theme: ThemeColors, item: ControlObject): void {
   if (!node) return;
   // Forma, glifo, hover y foco: `.diagram-control-button` en mdx-prose.css. Aquí solo el acento del control.
   node.style.setProperty('--diagram-button-accent', theme[item.color]);

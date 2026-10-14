@@ -1,3 +1,5 @@
+import { objectKind } from '@/diagrams';
+import { modelElements, modelPoints, modelSliders } from '../../model/scene/objectLists';
 import React, { useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramLayer, DiagramGroup } from '@/diagrams';
@@ -49,22 +51,14 @@ function ensureSceneStack(model: VisualDiagramModel): VisualDiagramModel {
   return {
     ...model,
     layers: existing,
-    points: model.points.map(point => ({
-      ...point,
-      layerId: point.layerId && layerIds.has(point.layerId) ? point.layerId : fallbackLayer,
-      order: Number.isFinite(point.order) ? point.order : 0,
-    })),
-    elements: model.elements.map(element => ({
-      ...element,
-      layerId: element.layerId && layerIds.has(element.layerId) ? element.layerId : fallbackLayer,
-      order: Number.isFinite(element.order) ? element.order : 0,
-    })),
-    sliders: model.sliders.map(slider => ({
-      ...slider,
-      layerId: slider.layerId && layerIds.has(slider.layerId)
-        ? slider.layerId
-        : (existing.find(layer => layer.id === 'controls')?.id ?? fallbackLayer),
-      order: Number.isFinite(slider.order) ? slider.order : 0,
+    objects: model.objects.map(object => ({
+      ...object,
+      layerId: object.layerId && layerIds.has(object.layerId)
+        ? object.layerId
+        : object.objectType === 'control'
+          ? (existing.find(layer => layer.id === 'controls')?.id ?? fallbackLayer)
+          : fallbackLayer,
+      order: Number.isFinite(object.order) ? object.order : 0,
     })),
   };
 }
@@ -110,9 +104,9 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   const groups: DiagramGroup[] = model.groups || [];
 
   const allItems = [
-    ...stacked.points.map(p => ({ id: p.id, label: p.label || p.id, kind: 'punto', layerId: p.layerId, order: p.order })),
-    ...stacked.elements.map(e => ({ id: e.id, label: e.label || e.id, kind: e.kind, layerId: e.layerId, order: e.order })),
-    ...stacked.sliders.map(s => ({ id: s.id, label: s.label || s.id, kind: 'slider', layerId: s.layerId, order: s.order })),
+    ...modelPoints(stacked).map(p => ({ id: p.id, label: p.label || p.id, kind: 'punto', layerId: p.layerId, order: p.order })),
+    ...modelElements(stacked).map(e => ({ id: e.id, label: e.label || e.id, kind: String(objectKind(e)), layerId: e.layerId, order: e.order })),
+    ...modelSliders(stacked).map(s => ({ id: s.id, label: s.label || s.id, kind: 'slider', layerId: s.layerId, order: s.order })),
   ];
 
   const commit = (next: VisualDiagramModel, label: string) => {
@@ -285,20 +279,12 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
 
   const handleDeleteGroup = (groupId: string) => {
     const nextGroups = groups.filter(g => g.id !== groupId);
-    const nextPoints = model.points.map(p => ({
-      ...p,
-      groupIds: (p.groupIds || []).filter(gid => gid !== groupId),
-    }));
-    const nextElements = model.elements.map(e => ({
-      ...e,
-      groupIds: (e.groupIds || []).filter(gid => gid !== groupId),
-    }));
-    const nextSliders = model.sliders.map(s => ({
-      ...s,
-      groupIds: (s.groupIds || []).map(gid => (gid === groupId ? '' : gid)).filter(Boolean),
+    const nextObjects = model.objects.map(object => ({
+      ...object,
+      groupIds: (object.groupIds || []).filter(gid => gid !== groupId),
     }));
     onUpdateModel(
-      { ...model, groups: nextGroups, points: nextPoints, elements: nextElements, sliders: nextSliders },
+      { ...model, groups: nextGroups, objects: nextObjects },
       `Eliminar grupo ${groupId}`
     );
   };
@@ -348,35 +334,17 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
 
     const nextGroups = groups.map(g => (g.id === groupId ? { ...g, memberIds: nextMemberIds } : g));
 
-    const nextPoints = model.points.map(p => {
-      if (p.id !== itemId) return p;
-      const gIds = p.groupIds || [];
+    const nextObjects = model.objects.map(object => {
+      if (object.id !== itemId) return object;
+      const gIds = object.groupIds || [];
       return {
-        ...p,
-        groupIds: isMember ? gIds.filter(id => id !== groupId) : [...new Set([...gIds, groupId])],
-      };
-    });
-
-    const nextElements = model.elements.map(e => {
-      if (e.id !== itemId) return e;
-      const gIds = e.groupIds || [];
-      return {
-        ...e,
-        groupIds: isMember ? gIds.filter(id => id !== groupId) : [...new Set([...gIds, groupId])],
-      };
-    });
-
-    const nextSliders = model.sliders.map(s => {
-      if (s.id !== itemId) return s;
-      const gIds = s.groupIds || [];
-      return {
-        ...s,
+        ...object,
         groupIds: isMember ? gIds.filter(id => id !== groupId) : [...new Set([...gIds, groupId])],
       };
     });
 
     onUpdateModel(
-      { ...model, groups: nextGroups, points: nextPoints, elements: nextElements, sliders: nextSliders },
+      { ...model, groups: nextGroups, objects: nextObjects },
       `Modificar miembros de grupo ${groupId}`
     );
   };
@@ -397,9 +365,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
     onUpdateModel({
       ...model,
       groups: nextGroups,
-      points: updateGroupIds(model.points),
-      elements: updateGroupIds(model.elements),
-      sliders: updateGroupIds(model.sliders),
+      objects: updateGroupIds(model.objects),
     }, `Añadir seleccionados a grupo ${groupId}`);
   };
 
@@ -419,9 +385,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
     onUpdateModel({
       ...model,
       groups: nextGroups,
-      points: removeGroupIds(model.points),
-      elements: removeGroupIds(model.elements),
-      sliders: removeGroupIds(model.sliders),
+      objects: removeGroupIds(model.objects),
     }, `Quitar seleccionados de grupo ${groupId}`);
   };
 

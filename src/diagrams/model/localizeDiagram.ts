@@ -1,4 +1,4 @@
-import type { DiagramSpecV2, DiagramSpecV3, DiagramTranslation, DiagramObject, DiagramPanelBlockTranslation } from './schema';
+import type { DiagramSpecV3, DiagramTranslation, DiagramObject, DiagramPanelBlockTranslation } from './schema';
 
 type TextRule = { text: string };
 type PanelBlock = { id: string; title?: string; text: string; rules?: TextRule[] };
@@ -23,7 +23,7 @@ export function localizePanelBlocks<T extends PanelBlock>(blocks: T[] | undefine
   });
 }
 
-export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spec: T, lang?: string): T {
+export function localizeDiagramSpec<T extends DiagramSpecV3>(spec: T, lang?: string): T {
   if (!lang || !spec) return spec;
   const translations = (spec as { translations?: Record<string, DiagramTranslation> }).translations;
   if (!translations || !translations[lang]) return spec;
@@ -83,10 +83,9 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
     return newVal;
   };
 
-  // Localize v3 objects
-  if (localized.version === 3 && Array.isArray((localized as unknown as DiagramSpecV3).objects)) {
-    const v3 = localized as unknown as DiagramSpecV3;
-    v3.objects = v3.objects.map((obj: DiagramObject): DiagramObject => {
+  // Localize objects
+  if (Array.isArray(localized.objects)) {
+    localized.objects = localized.objects.map((obj: DiagramObject): DiagramObject => {
       const updatedObj = { ...obj } as any;
 
       if (tr.labels?.[obj.id] || tr.titles?.[obj.id]) {
@@ -120,6 +119,11 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
         };
       }
 
+      if (updatedObj.objectType === 'path' && updatedObj.geometry?.type === 'dimension' && updatedObj.geometry.text) {
+        const textVal = tr.texts?.[obj.id] ?? tr.annotations?.[obj.id];
+        if (textVal) updatedObj.geometry = { ...updatedObj.geometry, text: textVal };
+      }
+
       // Handle obj.properties
       if (updatedObj.properties && typeof updatedObj.properties === 'object') {
         const props = { ...updatedObj.properties };
@@ -132,68 +136,6 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
       }
 
       return updatedObj as DiagramObject;
-    });
-  }
-
-  // Localize v2 points, elements, and sliders
-  const anyLoc = localized as unknown as {
-    points?: Array<{ id: string; label?: string }>;
-    sliders?: Array<{ id: string; label?: string; name?: string; description?: string }>;
-    elements?: Array<{ id: string; kind?: string; label?: string; title?: string; subtitle?: string; text?: string; description?: string; properties?: Record<string, any> }>;
-  };
-
-  if (Array.isArray(anyLoc.points)) {
-    anyLoc.points = anyLoc.points.map(p => {
-      const label = tr.labels?.[p.id] ?? tr.titles?.[p.id];
-      return label ? { ...p, label } : p;
-    });
-  }
-
-  if (Array.isArray(anyLoc.sliders)) {
-    anyLoc.sliders = anyLoc.sliders.map(s => {
-      const label = tr.labels?.[s.id] ?? tr.titles?.[s.id];
-      const desc = tr.descriptions?.[s.id] ?? tr.annotations?.[s.id];
-      return {
-        ...s,
-        ...(label ? { label, name: label } : {}),
-        ...(desc ? { description: desc } : {}),
-      };
-    });
-  }
-
-  if (Array.isArray(anyLoc.elements)) {
-    anyLoc.elements = anyLoc.elements.map(el => {
-      const updated = { ...el };
-
-      if (tr.labels?.[el.id] || tr.titles?.[el.id]) {
-        updated.label = tr.labels?.[el.id] ?? tr.titles?.[el.id];
-      }
-      if (tr.titles?.[el.id]) {
-        updated.title = tr.titles[el.id];
-      }
-      if (tr.subtitles?.[el.id]) {
-        updated.subtitle = tr.subtitles[el.id];
-      }
-      if (tr.texts?.[el.id] || tr.annotations?.[el.id]) {
-        updated.text = tr.texts?.[el.id] ?? tr.annotations?.[el.id];
-      }
-      if (tr.descriptions?.[el.id]) {
-        updated.description = tr.descriptions[el.id];
-      }
-
-      if (updated.properties && typeof updated.properties === 'object') {
-        const props = { ...updated.properties };
-        for (const k of ['label', 'title', 'subtitle', 'text', 'description', 'caption'] as const) {
-          if (props[k] !== undefined) {
-            props[k] = getLocalizedProp(el.id, props[k], k);
-          }
-        }
-        if (props.textRules) props.textRules = localizeTextRules(props.textRules, tr.rules?.[el.id]);
-        if (props.infoPanelBlocks) props.infoPanelBlocks = localizePanelBlocks(props.infoPanelBlocks, tr.blocks?.[el.id]);
-        updated.properties = props;
-      }
-
-      return updated;
     });
   }
 

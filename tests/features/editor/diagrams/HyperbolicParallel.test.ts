@@ -3,20 +3,21 @@ import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
-import { withMovedPoint, type DiagramSpecV2 } from '../../../../src/diagrams/public';
+import { objectConstructionReferences, objectLabelVisible, resolvePointCoordinates, withMovedPoint, type DiagramSpec } from '../../../../src/diagrams/public';
+import { findById } from '../../../helpers/diagramSpec';
+import { modelPoints } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { createPoincareGeodesic } from '../../../../src/diagrams/jsxgraph/MathFactory';
 
 const SOURCE = 'content/diagrams/Axiomas/HyperbolicParallel.tsx';
 
-function readModel(): DiagramSpecV2 {
+function readModel(): DiagramSpec {
   const parsed = parseDiagramSourceAST(fs.readFileSync(SOURCE, 'utf8'));
   if (parsed.status !== 'visual-exact') throw new Error(`HyperbolicParallel debe ser visual-exact: ${JSON.stringify(parsed.diagnostics)}`);
   return parsed.model;
 }
 
-function sampleGeodesic(model: DiagramSpecV2, elementId: 'lineM' | 'lineN') {
-  const element = model.elements.find(item => item.id === elementId)!;
-  const coordinates = Object.fromEntries(model.points.map(point => [point.id, point]));
+function sampleGeodesic(model: DiagramSpec, elementId: 'lineM' | 'lineN') {
+  const refs = objectConstructionReferences(findById(model, elementId));
   let curveArgs: unknown[] = [];
   const board = {
     create: (kind: string, args: unknown[]) => {
@@ -24,10 +25,10 @@ function sampleGeodesic(model: DiagramSpecV2, elementId: 'lineM' | 'lineN') {
       return { setAttribute() {}, on() {}, rendNode: undefined, addParents() {} };
     },
   };
-  const point = (id: string) => ({ X: () => coordinates[id].x, Y: () => coordinates[id].y });
+  const point = (id: string) => ({ X: () => resolvePointCoordinates(model, id)!.x, Y: () => resolvePointCoordinates(model, id)!.y });
   createPoincareGeodesic(
     board,
-    [point(element.refs[0]), point(element.refs[1]), point(element.refs[2]), point(element.refs[3])],
+    [point(refs[0]), point(refs[1]), point(refs[2]), point(refs[3])],
     {},
     {} as never,
   );
@@ -56,8 +57,8 @@ describe('HyperbolicParallel', () => {
     const model = readModel();
     const targets = buildTargets(model).map(target => target.id);
     expect(targets).toEqual(expect.arrayContaining(['pP', 'lineM', 'lineN']));
-    expect(model.points.find(point => point.id === 'pP')?.showLabel).toBe(true);
-    expect(model.points.filter(point => point.id !== 'pP').every(point => point.showLabel === false)).toBe(true);
+    expect(objectLabelVisible(findById(model, 'pP'))).toBe(true);
+    expect(modelPoints(model).filter(point => point.id !== 'pP').every(point => objectLabelVisible(point) === false)).toBe(true);
   });
 
   it.each([
@@ -67,7 +68,7 @@ describe('HyperbolicParallel', () => {
     [20, -20],
   ])('mantiene P exterior a l y dentro del disco al moverlo a (%s, %s)', (x, y) => {
     const moved = withMovedPoint(readModel(), 'pP', x, y);
-    const point = moved.points.find(item => item.id === 'pP')!;
+    const point = resolvePointCoordinates(moved, 'pP')!;
     expect(point.y).toBeGreaterThan(0);
     expect(Math.hypot(point.x, point.y)).toBeLessThan(1);
 

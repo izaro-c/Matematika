@@ -40,7 +40,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     pageType = canonical;
   }
 
-  // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en editores (/editor, /editor_v2)
+  // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en editores (/editor)
   const isEditor = location.split('/').includes('editor');
 
   return (

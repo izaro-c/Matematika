@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import { diagramElementKinds } from '@/diagrams/model/schema/schema';
+import { diagramConstructionKinds as diagramElementKinds } from '@/diagrams';
 import { ELEMENT_INSPECTOR_CAPABILITIES } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 export function expectDiagramKindsAlignedWithInspector() {

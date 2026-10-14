@@ -1,4 +1,8 @@
-import type { AreaMembership, DiagramElement, DiagramSpecV2 } from '@/diagrams/model/schema/types';
+import type { AreaMembership } from '@/diagrams/model/schema/types';
+import type { DiagramObject, DiagramSpec } from '@/diagrams/model/schema/v3';
+import { objectKind, type DiagramObjectKind } from '@/diagrams/model/objects/kinds';
+import { findObject, isControlObject, isPositionedPoint, pointPosition } from '@/diagrams/model/objects/queries';
+import { objectConstructionReferences } from '@/diagrams/model/objects/references';
 import {
   clipPolygonByHalfPlane,
   intersectPolygons,
@@ -24,40 +28,46 @@ import {
   sampleCurveFromSpec,
 } from '@/diagrams/geometry/curves/curveGeometry';
 
-export type AreaPointResolver = (spec: DiagramSpecV2, id: string) => Coordinates | undefined;
+/** Escena mínima para resolver áreas: objetos y encuadre visible. */
+export type AreaScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport'>;
 
-function defaultResolvePoint(spec: DiagramSpecV2, id: string): Coordinates | undefined {
-  const point = spec.points.find(item => item.id === id);
-  return point ? { x: point.x, y: point.y } : undefined;
+export type AreaPointResolver = (spec: AreaScene, id: string) => Coordinates | undefined;
+
+function defaultResolvePoint(spec: AreaScene, id: string): Coordinates | undefined {
+  const point = findObject(spec, id);
+  return isPositionedPoint(point) ? pointPosition(point) : undefined;
 }
 
+const refsOf = (element: DiagramObject) => objectConstructionReferences(element);
+
 function curveVariablesFromResolver(
-  spec: DiagramSpecV2,
+  spec: AreaScene,
   resolver: AreaPointResolver,
 ): Record<string, number> {
   const variables: Record<string, number> = {};
-  spec.points.forEach(point => {
+  spec.objects.forEach(point => {
+    if (!isPositionedPoint(point)) return;
     const coordinates = resolver(spec, point.id);
     if (coordinates) {
       variables[`${point.id}.x`] = coordinates.x;
       variables[`${point.id}.y`] = coordinates.y;
     }
   });
-  spec.sliders.forEach(slider => {
-    variables[slider.id] = slider.value;
+  spec.objects.forEach(control => {
+    if (isControlObject(control)) variables[control.id] = control.value;
   });
   return variables;
 }
 
 function curveAreaPolygons(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[][] {
   if (!curveActsAsArea(element)) return [];
   const variables = curveVariablesFromResolver(spec, resolver);
   const curvePoints = sampleCurveFromSpec(spec, element, variables);
-  const sideRef = element.refs.find(ref => Boolean(ref));
+  const sideRef = element.geometry.areaSide;
   const side = sideRef ? resolveRef(spec, sideRef, resolver) : undefined;
   return resolveCurveAreaPolygons(element, curvePoints, side, spec.viewport.bounds, variables);
 }
@@ -80,14 +90,14 @@ function constrainToCurveAreaPolygons(polygons: Coordinates[][], point: Coordina
 }
 
 function resolveRef(
-  spec: DiagramSpecV2,
+  spec: AreaScene,
   id: string,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates | undefined {
   return resolver(spec, id);
 }
 
-export const AREA_ELEMENT_KINDS = new Set<DiagramElement['kind']>([
+export const AREA_ELEMENT_KINDS = new Set<DiagramObjectKind>([
   'polygon',
   'circle',
   'halfPlane',
@@ -96,11 +106,11 @@ export const AREA_ELEMENT_KINDS = new Set<DiagramElement['kind']>([
   'grid',
 ]);
 
-export function isAreaElement(element: DiagramElement): boolean {
-  return AREA_ELEMENT_KINDS.has(element.kind) || curveActsAsArea(element);
+export function isAreaElement(element: DiagramObject): boolean {
+  return AREA_ELEMENT_KINDS.has(objectKind(element)) || curveActsAsArea(element);
 }
 
-export function viewportPolygon(bounds: DiagramSpecV2['viewport']['bounds']): Coordinates[] {
+export function viewportPolygon(bounds: DiagramSpec['viewport']['bounds']): Coordinates[] {
   const [xMin, yMax, xMax, yMin] = bounds;
   return [
     { x: xMin, y: yMax },
@@ -111,12 +121,12 @@ export function viewportPolygon(bounds: DiagramSpecV2['viewport']['bounds']): Co
 }
 
 function polygonVertices(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[] | undefined {
-  if (!['polygon', 'areaDecomposition', 'grid'].includes(element.kind)) return undefined;
-  const vertices = element.refs
+  if (!['polygon', 'areaDecomposition', 'grid'].includes(objectKind(element))) return undefined;
+  const vertices = refsOf(element)
     .map(ref => resolveRef(spec, ref, resolver))
     .filter((coords): coords is Coordinates => Boolean(coords));
   return vertices.length >= 3 ? vertices : undefined;
@@ -183,24 +193,24 @@ function clipSubjectToCurveAreaPolygons(
 }
 
 export function resolveAreaElementPolygons(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[][] {
   if (curveActsAsArea(element)) {
     return curveAreaPolygons(spec, element, resolver);
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
-    const side = resolveRef(spec, element.refs[2], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
+    const side = resolveRef(spec, refsOf(element)[2], resolver);
     if (!lineA || !lineB || !side) return [];
     const polygon = clipPolygonByHalfPlane(viewportPolygon(spec.viewport.bounds), lineA, lineB, side);
     return polygon.length >= 3 ? [polygon] : [];
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     if (!center || !boundary) return [];
     const polygon = clipPolygonToDisk(viewportPolygon(spec.viewport.bounds), center, boundary);
     return polygon.length >= 3 ? [polygon] : [];
@@ -210,21 +220,21 @@ export function resolveAreaElementPolygons(
     const polygon = clipPolygonToConvexRegion(viewportPolygon(spec.viewport.bounds), vertices);
     return polygon.length >= 3 ? [polygon] : [];
   }
-  if (element.kind === 'areaIntersection') {
+  if (objectKind(element) === 'areaIntersection') {
     return resolveAreaDisplayPolygons(spec, element, resolver);
   }
   return [];
 }
 
 export function resolveAreaDisplayPolygons(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[][] {
-  if (element.kind === 'areaIntersection') {
-    const areas = element.refs
-      .map(ref => spec.elements.find(item => item.id === ref))
-      .filter((item): item is DiagramElement => Boolean(item));
+  if (objectKind(element) === 'areaIntersection') {
+    const areas = refsOf(element)
+      .map(ref => findObject(spec, ref))
+      .filter((item): item is DiagramObject => Boolean(item));
     if (areas.length === 0) return [];
     let regions: Coordinates[][] = [viewportPolygon(spec.viewport.bounds)];
     for (const area of areas) {
@@ -239,30 +249,30 @@ export function resolveAreaDisplayPolygons(
 }
 
 export function clipPolygonToAreaElement(
-  spec: DiagramSpecV2,
+  spec: AreaScene,
   polygon: Coordinates[],
-  element: DiagramElement,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[] {
   if (curveActsAsArea(element)) {
     return clipSubjectToCurveAreaPolygons(polygon, curveAreaPolygons(spec, element, resolver));
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
-    const side = resolveRef(spec, element.refs[2], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
+    const side = resolveRef(spec, refsOf(element)[2], resolver);
     if (!lineA || !lineB || !side) return polygon;
     return clipPolygonByHalfPlane(polygon, lineA, lineB, side);
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     if (!center || !boundary) return polygon;
     return clipPolygonToDisk(polygon, center, boundary);
   }
   const vertices = polygonVertices(spec, element, resolver);
   if (vertices) return clipPolygonToConvexRegion(polygon, vertices);
-  if (element.kind === 'areaIntersection') {
+  if (objectKind(element) === 'areaIntersection') {
     const regions = resolveAreaDisplayPolygons(spec, element, resolver);
     if (regions.length === 0) return [];
     if (regions.length === 1) return intersectPolygons(polygon, regions[0]);
@@ -278,8 +288,8 @@ export function clipPolygonToAreaElement(
 }
 
 export function resolveAreaDisplayPolygon(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates[] {
   const polygons = resolveAreaDisplayPolygons(spec, element, resolver);
@@ -291,30 +301,30 @@ export function resolveAreaDisplayPolygon(
 }
 
 export function pointInsideAreaElement(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): boolean {
   if (curveActsAsArea(element)) {
     return pointInCurveAreaPolygons(curveAreaPolygons(spec, element, resolver), point);
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
-    const side = resolveRef(spec, element.refs[2], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
+    const side = resolveRef(spec, refsOf(element)[2], resolver);
     return Boolean(lineA && lineB && side && pointInHalfPlane(lineA, lineB, side, point));
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     return Boolean(center && boundary && pointInDisk(center, boundary, point));
   }
   const polygon = polygonVertices(spec, element, resolver);
   if (polygon) return pointInPolygon(polygon, point);
-  if (element.kind === 'areaIntersection') {
-    return element.refs.every(ref => {
-      const area = spec.elements.find(item => item.id === ref);
+  if (objectKind(element) === 'areaIntersection') {
+    return refsOf(element).every(ref => {
+      const area = findObject(spec, ref);
       return area ? pointInsideAreaElement(spec, area, point, resolver) : false;
     });
   }
@@ -322,32 +332,32 @@ export function pointInsideAreaElement(
 }
 
 export function constrainPointToAreaElement(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates {
   if (curveActsAsArea(element)) {
     return constrainToCurveAreaPolygons(curveAreaPolygons(spec, element, resolver), point);
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
-    const side = resolveRef(spec, element.refs[2], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
+    const side = resolveRef(spec, refsOf(element)[2], resolver);
     if (lineA && lineB && side) return constrainToHalfPlane(lineA, lineB, side, point);
     return point;
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     if (center && boundary) return constrainToDisk(center, boundary, point);
     return point;
   }
   const polygon = polygonVertices(spec, element, resolver);
   if (polygon) return constrainToPolygon(polygon, point);
-  if (element.kind === 'areaIntersection') {
-    return element.refs.reduce((current, ref) => {
-      const area = spec.elements.find(item => item.id === ref);
+  if (objectKind(element) === 'areaIntersection') {
+    return refsOf(element).reduce((current, ref) => {
+      const area = findObject(spec, ref);
       return area ? constrainPointToAreaElement(spec, area, current, resolver) : current;
     }, point);
   }
@@ -355,8 +365,8 @@ export function constrainPointToAreaElement(
 }
 
 function pointOnSingleAreaBoundary(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): boolean {
@@ -365,14 +375,14 @@ function pointOnSingleAreaBoundary(
       polygon => polygon.length >= 3 && pointOnPolygonBoundary(polygon, point),
     );
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
     return Boolean(lineA && lineB && pointOnLine(lineA, lineB, point));
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     return Boolean(center && boundary && pointOnDiskBoundary(center, boundary, point));
   }
   const polygon = polygonVertices(spec, element, resolver);
@@ -381,8 +391,8 @@ function pointOnSingleAreaBoundary(
 }
 
 function constrainToSingleAreaBoundary(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates {
@@ -402,15 +412,15 @@ function constrainToSingleAreaBoundary(
     });
     return best;
   }
-  if (element.kind === 'halfPlane' && element.refs.length >= 3) {
-    const lineA = resolveRef(spec, element.refs[0], resolver);
-    const lineB = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'halfPlane' && refsOf(element).length >= 3) {
+    const lineA = resolveRef(spec, refsOf(element)[0], resolver);
+    const lineB = resolveRef(spec, refsOf(element)[1], resolver);
     if (lineA && lineB) return constrainToLine(lineA, lineB, point);
     return point;
   }
-  if (element.kind === 'circle' && element.refs.length >= 2) {
-    const center = resolveRef(spec, element.refs[0], resolver);
-    const boundary = resolveRef(spec, element.refs[1], resolver);
+  if (objectKind(element) === 'circle' && refsOf(element).length >= 2) {
+    const center = resolveRef(spec, refsOf(element)[0], resolver);
+    const boundary = resolveRef(spec, refsOf(element)[1], resolver);
     if (center && boundary) return constrainToDiskBoundary(center, boundary, point);
     return point;
   }
@@ -420,15 +430,15 @@ function constrainToSingleAreaBoundary(
 }
 
 export function pointOnAreaElementBoundary(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): boolean {
-  if (element.kind === 'areaIntersection') {
+  if (objectKind(element) === 'areaIntersection') {
     if (!pointInsideAreaElement(spec, element, point, resolver)) return false;
-    return element.refs.some(ref => {
-      const area = spec.elements.find(item => item.id === ref);
+    return refsOf(element).some(ref => {
+      const area = findObject(spec, ref);
       return area ? pointOnSingleAreaBoundary(spec, area, point, resolver) : false;
     });
   }
@@ -436,12 +446,12 @@ export function pointOnAreaElementBoundary(
 }
 
 export function constrainPointToAreaBoundary(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   resolver: AreaPointResolver = defaultResolvePoint,
 ): Coordinates {
-  if (element.kind === 'areaIntersection') {
+  if (objectKind(element) === 'areaIntersection') {
     let current = point;
     if (!pointInsideAreaElement(spec, element, current, resolver)) {
       current = constrainPointToAreaElement(spec, element, current, resolver);
@@ -449,8 +459,8 @@ export function constrainPointToAreaBoundary(
     if (pointOnAreaElementBoundary(spec, element, current, resolver)) return current;
     let best = current;
     let bestDistance = Number.POSITIVE_INFINITY;
-    element.refs.forEach(ref => {
-      const area = spec.elements.find(item => item.id === ref);
+    refsOf(element).forEach(ref => {
+      const area = findObject(spec, ref);
       if (!area) return;
       const candidate = constrainToSingleAreaBoundary(spec, area, current, resolver);
       if (!pointInsideAreaElement(spec, element, candidate, resolver)) return;
@@ -466,8 +476,8 @@ export function constrainPointToAreaBoundary(
 }
 
 export function constrainPointForAreaMembership(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: AreaScene,
+  element: DiagramObject,
   point: Coordinates,
   membership: AreaMembership = 'interior',
   resolver: AreaPointResolver = defaultResolvePoint,

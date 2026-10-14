@@ -8,27 +8,29 @@ import {
 import { parseDiagnosticPath } from '../../../../../src/fixed-pages/editor/diagrams/checks/locationParsing';
 import { resolveObjectId } from '../../../../../src/fixed-pages/editor/diagrams/checks/locationResolution';
 import type { DiagramDiagnostic } from '../../../../../src/fixed-pages/editor/diagrams/source/generator';
-import { createTemplateModel } from '../../../../../src/fixed-pages/editor/diagrams/model';
+import { createTemplateModel, isModelElement, modelPoints } from '../../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('enrichDiagramDiagnostics', () => {
   const model = createTemplateModel('triangulo', 'Triángulo', 'definicion');
+  const elementIndex = model.objects.findIndex(isModelElement);
+  const elementId = model.objects[elementIndex].id;
+  const pointIndex = model.objects.findIndex(object => object.id === modelPoints(model)[0].id);
 
   it('parses Zod paths into object locations', () => {
-    const parsed = parseDiagnosticPath(['elements', 0, 'refs']);
-    expect(parsed.collection).toBe('elements');
-    expect(parsed.index).toBe(0);
-    expect(parsed.field).toBe('refs');
-    expect(resolveObjectId(model, parsed)).toBe(model.elements[0]?.id);
+    const parsed = parseDiagnosticPath(['objects', elementIndex, 'geometry', 'points']);
+    expect(parsed.collection).toBe('objects');
+    expect(parsed.index).toBe(elementIndex);
+    expect(parsed.field).toBe('geometry.points');
+    expect(resolveObjectId(model, parsed)).toBe(elementId);
   });
 
   it('enriches atomic diagnostics with title, hint and navigation target', () => {
-    const elementId = model.elements[0]?.id ?? 'elemento';
     const diagnostics: DiagramDiagnostic[] = [{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'error',
       message: 'Required',
       source: 'model',
-      path: ['elements', 0, 'refs'],
+      path: ['objects', elementIndex, 'geometry', 'points'],
     }];
 
     const enriched = enrichDiagramDiagnostics(diagnostics, model);
@@ -44,9 +46,9 @@ describe('enrichDiagramDiagnostics', () => {
 
   it('splits legacy multiline diagnostic strings', () => {
     const diagnostics: DiagramDiagnostic[] = [{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'warning',
-      message: 'elements.0.refs: Error uno. elements.1.refs: Error dos.',
+      message: 'objects.0.geometry: Error uno. objects.1.geometry: Error dos.',
       source: 'model',
     }];
 
@@ -81,13 +83,12 @@ describe('enrichDiagramDiagnostics', () => {
   });
 
   it('maps field errors for the selected object', () => {
-    const elementId = model.elements[0]?.id ?? 'elemento';
     const enriched = enrichDiagramDiagnostics([{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'error',
       message: 'Required',
       source: 'model',
-      path: ['elements', 0, 'refs'],
+      path: ['objects', elementIndex, 'geometry', 'points'],
     }], model);
 
     const fieldErrors = fieldErrorsForObject(enriched, elementId);
@@ -97,27 +98,23 @@ describe('enrichDiagramDiagnostics', () => {
   it('routes derived-point object-level errors to geometry expressions', () => {
     const base = createTemplateModel('triangulo', 'Derivado', 'definicion');
     const derived = {
-      ...base.points[0],
+      ...modelPoints(base)[0],
       id: 'pDeriv',
       label: 'P',
-      constraint: 'derived' as const,
-      fixed: true,
-      xExpression: undefined,
-      yExpression: undefined,
-      dependencies: [] as string[],
+      definition: { type: 'expression' as const, x: '', y: '', fallback: [0, 0] as [number, number] },
     };
     const modelWithDerived = {
       ...base,
-      points: [...base.points, derived],
+      objects: [...base.objects, derived],
     };
-    const pointIndex = modelWithDerived.points.length - 1;
+    const derivedIndex = modelWithDerived.objects.length - 1;
 
     const enriched = enrichDiagramDiagnostics([{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'error',
       message: `El punto derivado ${derived.id} necesita expresiones x/y y dependencias explícitas.`,
       source: 'model',
-      path: ['points', pointIndex],
+      path: ['objects', derivedIndex],
     }], modelWithDerived);
 
     expect(enriched).toHaveLength(1);
@@ -128,11 +125,11 @@ describe('enrichDiagramDiagnostics', () => {
 
   it('routes explicit xExpression paths to geometry', () => {
     const enriched = enrichDiagramDiagnostics([{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'error',
       message: 'El punto derivado A necesita una expresión x.',
       source: 'model',
-      path: ['points', 0, 'xExpression'],
+      path: ['objects', pointIndex, 'definition', 'x'],
     }], model);
 
     expect(enriched[0].location.inspectorSection).toBe('geometry');
@@ -141,11 +138,11 @@ describe('enrichDiagramDiagnostics', () => {
 
   it('routes dependencies paths to geometry', () => {
     const enriched = enrichDiagramDiagnostics([{
-      code: 'invalid-diagram-spec-v2',
+      code: 'invalid-diagram-spec-v3',
       severity: 'error',
       message: 'El punto derivado A necesita dependencias explícitas.',
       source: 'model',
-      path: ['points', 0, 'dependencies'],
+      path: ['objects', pointIndex, 'dependencies'],
     }], model);
 
     expect(enriched[0].location.inspectorSection).toBe('geometry');

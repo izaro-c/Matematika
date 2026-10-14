@@ -1,8 +1,8 @@
-import { referenceSlotsForLegacyKind } from '@/diagrams';
+import { referenceSlotsForKind } from '@/diagrams';
 import type { CanvasTool, ElementKind } from '../types';
 
 export function minimumRefsForKind(kind: ElementKind): number {
-  const slots = referenceSlotsForLegacyKind(kind) ?? [];
+  const slots = referenceSlotsForKind(kind) ?? [];
   if (slots.length === 0) return 0;
   if (slots.every(slot => slot.optional)) return 0;
   if (slots.some(slot => slot.repeatable)) {
@@ -15,7 +15,7 @@ export function minimumRefsForKind(kind: ElementKind): number {
 }
 
 export function refsForKind(kind: ElementKind, refs: string[]): string[] {
-  const slots = referenceSlotsForLegacyKind(kind) ?? [];
+  const slots = referenceSlotsForKind(kind) ?? [];
   if (slots.length === 0) return [];
   if (slots.some(slot => slot.repeatable)) return refs;
   const requiredCount = slots.filter(slot => !slot.optional).length;

@@ -1,5 +1,7 @@
-import type { DiagramBounds, DiagramElement, DiagramSpecV2 } from '@/diagrams/model/schema/types';
+import type { DiagramBounds } from '@/diagrams/model/schema/types';
+import type { DiagramObject, DiagramSpec, PathObject } from '@/diagrams/model/schema/v3';
 import { evaluateMathExpression } from '@/diagrams/model/expressions/expressions';
+import { isControlObject, isPositionedPoint, pointPosition } from '@/diagrams/model/objects/queries';
 import {
   pointInPolygon,
   polygonSignedArea,
@@ -9,21 +11,28 @@ import { DEFAULT_CURVE_SAMPLES } from '@/diagrams/constants';
 
 export type CurveAreaFill = 'none' | 'interior' | 'half-plane';
 
+/** Curva muestreada: gráfica de función o curva paramétrica. */
+export type CurvePath = PathObject & { geometry: Extract<PathObject['geometry'], { type: 'function' | 'parametric' }> };
+
 export { DEFAULT_CURVE_SAMPLES } from '@/diagrams/constants';
 export const MAX_CURVE_SAMPLES = 256;
 export const MAX_CURVE_INTERIOR_LOOPS = 8;
 const EXTERIOR_LOOP_AREA_RATIO = 0.85;
 
-export function curveAreaFill(element: DiagramElement): CurveAreaFill {
-  const mode = element.properties?.areaFill;
+export function isCurveObject(object: DiagramObject | undefined): object is CurvePath {
+  return object?.objectType === 'path' && (object.geometry.type === 'function' || object.geometry.type === 'parametric');
+}
+
+export function curveAreaFill(object: DiagramObject): CurveAreaFill {
+  if (!isCurveObject(object)) return 'none';
+  const mode = object.geometry.areaFill;
   if (mode === 'half-plane') return 'half-plane';
-  if (mode === 'interior' && (element.kind === 'parametricCurve' || element.kind === 'functionCurve')) return 'interior';
+  if (mode === 'interior') return 'interior';
   return 'none';
 }
 
-export function curveActsAsArea(element: DiagramElement): boolean {
-  return (element.kind === 'functionCurve' || element.kind === 'parametricCurve')
-    && curveAreaFill(element) !== 'none';
+export function curveActsAsArea(object: DiagramObject): object is CurvePath {
+  return isCurveObject(object) && curveAreaFill(object) !== 'none';
 }
 
 function finiteSample(value: number): number | undefined {
@@ -31,27 +40,27 @@ function finiteSample(value: number): number | undefined {
 }
 
 export function sampleCurveElement(
-  element: DiagramElement,
+  element: DiagramObject,
   variables: Record<string, number>,
 ): Coordinates[] {
-  const properties = element.properties;
-  if (!properties?.domain) return [];
-  const [minimum, maximum] = properties.domain;
-  const requested = properties.samples ?? DEFAULT_CURVE_SAMPLES;
+  if (!isCurveObject(element)) return [];
+  const geometry = element.geometry;
+  const [minimum, maximum] = geometry.domain;
+  const requested = geometry.samples ?? DEFAULT_CURVE_SAMPLES;
   const samples = Math.min(MAX_CURVE_SAMPLES, Math.max(8, requested));
-  const parameter = properties.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
+  const parameter = (geometry.type === 'function' ? geometry.variable : geometry.parameter) ?? (geometry.type === 'function' ? 'x' : 't');
   const coordinates: Coordinates[] = [];
 
   for (let index = 0; index <= samples; index += 1) {
     const value = minimum + (maximum - minimum) * index / samples;
     const scope = { ...variables, [parameter]: value, x: value, t: value };
     try {
-      if (element.kind === 'functionCurve' && properties.expression) {
-        const y = finiteSample(evaluateMathExpression(properties.expression, scope));
+      if (geometry.type === 'function' && geometry.expression) {
+        const y = finiteSample(evaluateMathExpression(geometry.expression, scope));
         if (y !== undefined) coordinates.push({ x: value, y });
-      } else if (element.kind === 'parametricCurve' && properties.xExpression && properties.yExpression) {
-        const x = finiteSample(evaluateMathExpression(properties.xExpression, scope));
-        const y = finiteSample(evaluateMathExpression(properties.yExpression, scope));
+      } else if (geometry.type === 'parametric' && geometry.x && geometry.y) {
+        const x = finiteSample(evaluateMathExpression(geometry.x, scope));
+        const y = finiteSample(evaluateMathExpression(geometry.y, scope));
         if (x !== undefined && y !== undefined) coordinates.push({ x, y });
       }
     } catch {
@@ -62,22 +71,25 @@ export function sampleCurveElement(
 }
 
 export function sampleCurveFromSpec(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
+  spec: Pick<DiagramSpec, 'objects'>,
+  element: DiagramObject,
   variables?: Record<string, number>,
 ): Coordinates[] {
   const resolved = variables ?? buildStaticCurveVariables(spec);
   return sampleCurveElement(element, resolved);
 }
 
-export function buildStaticCurveVariables(spec: DiagramSpecV2): Record<string, number> {
+/** Variables persistidas (sin resolver construcciones) para muestrear curvas fuera del tablero. */
+export function buildStaticCurveVariables(spec: Pick<DiagramSpec, 'objects'>): Record<string, number> {
   const variables: Record<string, number> = {};
-  spec.points.forEach(point => {
-    variables[`${point.id}.x`] = point.x;
-    variables[`${point.id}.y`] = point.y;
+  spec.objects.forEach(object => {
+    if (!isPositionedPoint(object)) return;
+    const position = pointPosition(object)!;
+    variables[`${object.id}.x`] = position.x;
+    variables[`${object.id}.y`] = position.y;
   });
-  spec.sliders.forEach(slider => {
-    variables[slider.id] = slider.value;
+  spec.objects.forEach(object => {
+    if (isControlObject(object)) variables[object.id] = object.value;
   });
   return variables;
 }
@@ -123,13 +135,13 @@ function perimeterPointOnViewport(
 }
 
 export function prepareHalfPlaneCurvePoints(
-  element: DiagramElement,
+  element: CurvePath,
   curvePoints: readonly Coordinates[],
   _variables: Record<string, number>,
   _bounds: DiagramBounds,
 ): Coordinates[] {
   if (curvePoints.length < 2) return [...curvePoints];
-  if (element.kind === 'functionCurve') return [...curvePoints];
+  if (element.geometry.type === 'function') return [...curvePoints];
   return [...curvePoints];
 }
 
@@ -214,12 +226,12 @@ function appendDomainBoundedClosure(
 }
 
 export function resolveCurveHalfPlanePolygon(
-  element: DiagramElement,
+  element: CurvePath,
   curvePoints: readonly Coordinates[],
   sidePoint: Coordinates,
   bounds: DiagramBounds,
 ): Coordinates[] {
-  if (element.kind === 'functionCurve') {
+  if (element.geometry.type === 'function') {
     return resolveFunctionGraphHalfPlanePolygon(curvePoints, sidePoint, bounds);
   }
   return resolveParametricHalfPlanePolygon(curvePoints, sidePoint, bounds);
@@ -491,7 +503,7 @@ export function pointInCurveAreaPolygons(polygons: readonly Coordinates[][], poi
 }
 
 export function resolveCurveAreaPolygons(
-  element: DiagramElement,
+  element: CurvePath,
   curvePoints: readonly Coordinates[],
   sidePoint: Coordinates | undefined,
   bounds: DiagramBounds,
@@ -508,7 +520,7 @@ export function resolveCurveAreaPolygons(
 }
 
 export function resolveCurveAreaPolygon(
-  element: DiagramElement,
+  element: CurvePath,
   curvePoints: readonly Coordinates[],
   sidePoint: Coordinates | undefined,
   bounds: DiagramBounds,

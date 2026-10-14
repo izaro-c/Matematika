@@ -1,18 +1,13 @@
 import type {
-  DiagramConstraint,
-  DiagramDependency,
   DiagramGroup,
+  DiagramObject,
+  DiagramRelation,
   DiagramStepObjectState,
 } from '@/diagrams';
-import { renameDiagramTemplateIdentifiers } from '@/diagrams';
-import type {
-  VisualDiagramModel,
-  VisualElement,
-  VisualPoint,
-  VisualSlider,
-} from '../types';
+import { expressionSourceIds, isPositionedPoint, mapObjectExpressions, mapObjectReferences, mapRelationReferences, objectExpressions, objectReferences, omitKeys, pointPosition, relationReferences, renameDiagramTemplateIdentifiers, withPointPosition } from '@/diagrams';
+import type { VisualDiagramModel } from '../types';
 
-export const DIAGRAM_CLIPBOARD_KIND = 'matematika-diagram-clipboard-v1' as const;
+export const DIAGRAM_CLIPBOARD_KIND = 'matematika-diagram-clipboard-v3' as const;
 
 interface ClipboardStepState {
   stepId: string;
@@ -24,12 +19,9 @@ export interface DiagramClipboardPayload {
   kind: typeof DIAGRAM_CLIPBOARD_KIND;
   sourceComponentId: string;
   rootIds: string[];
-  points: VisualPoint[];
-  elements: VisualElement[];
-  sliders: VisualSlider[];
+  objects: DiagramObject[];
   groups: DiagramGroup[];
-  constraints: DiagramConstraint[];
-  dependencies: DiagramDependency[];
+  relations: DiagramRelation[];
   stepStates: ClipboardStepState[];
 }
 
@@ -41,10 +33,6 @@ export interface DiagramPasteResult {
 
 function clone<T>(value: T): T {
   return structuredClone(value);
-}
-
-function sceneIds(model: VisualDiagramModel): Set<string> {
-  return new Set([...model.points, ...model.elements, ...model.sliders].map(item => item.id));
 }
 
 function uniqueId(base: string, used: Set<string>): string {
@@ -72,30 +60,6 @@ function rewriteTemplate(source: string, idMap: ReadonlyMap<string, string>): st
   return result;
 }
 
-function remapProperties(properties: VisualElement['properties'], idMap: ReadonlyMap<string, string>): VisualElement['properties'] {
-  if (!properties) return properties;
-  return {
-    ...clone(properties),
-    expression: rewriteExpression(properties.expression, idMap),
-    xExpression: rewriteExpression(properties.xExpression, idMap),
-    yExpression: rewriteExpression(properties.yExpression, idMap),
-    tickDistanceExpression: rewriteExpression(properties.tickDistanceExpression, idMap),
-    visibleWhen: rewriteExpression(properties.visibleWhen, idMap),
-    textRules: properties.textRules?.map(rule => ({ ...rule, text: rewriteTemplate(rule.text, idMap), when: rewriteExpression(rule.when, idMap) ?? rule.when })),
-    infoPanelBlocks: properties.infoPanelBlocks?.map(block => ({
-      ...block,
-      text: rewriteTemplate(block.text, idMap),
-      expression: rewriteExpression(block.expression, idMap),
-      rules: block.rules?.map(rule => ({
-        ...rule,
-        text: rewriteTemplate(rule.text, idMap),
-        when: rewriteExpression(rule.when, idMap) ?? rule.when,
-        expression: rewriteExpression(rule.expression, idMap),
-      })),
-    })),
-  };
-}
-
 export function createDiagramClipboard(
   model: VisualDiagramModel,
   selectedIds: readonly string[],
@@ -105,38 +69,33 @@ export function createDiagramClipboard(
   const groups = model.groups.filter(group => selectedGroupIds.includes(group.id));
   groups.forEach(group => group.memberIds.forEach(id => selected.add(id)));
   const rootIds = [...selected];
+  const objectIds = new Set(model.objects.map(object => object.id));
   let closureChanged = true;
   while (closureChanged) {
     closureChanged = false;
     const add = (id: string | undefined) => {
-      if (id && !selected.has(id)) {
+      if (id && objectIds.has(id) && !selected.has(id)) {
         selected.add(id);
         closureChanged = true;
       }
     };
-    model.elements.filter(item => selected.has(item.id)).forEach(item => item.refs.forEach(add));
-    model.points.filter(item => selected.has(item.id)).forEach(item => {
-      add(item.gliderTarget);
-      item.dependencies?.forEach(add);
-      item.attractorIds?.forEach(add);
-      item.constraintIds?.forEach(constraintId => model.constraints?.find(constraint => constraint.id === constraintId)?.refs.forEach(add));
+    model.objects.filter(item => selected.has(item.id)).forEach(item => {
+      objectReferences(item).forEach(add);
+      objectExpressions(item).flatMap(expressionSourceIds).forEach(add);
+      if (item.objectType === 'point' && item.mobility.type === 'constrained') {
+        item.mobility.relationIds.forEach(relationId => {
+          const relation = model.relations.find(candidate => candidate.id === relationId);
+          if (relation) relationReferences(relation).forEach(add);
+        });
+      }
     });
-    (model.dependencies ?? []).filter(dependency => selected.has(dependency.targetId)).forEach(dependency => add(dependency.sourceId));
   }
 
-  const points = model.points.filter(item => selected.has(item.id));
-  const elements = model.elements.filter(item => selected.has(item.id));
-  const sliders = model.sliders.filter(item => selected.has(item.id));
-  const copiedIds = new Set([...points, ...elements, ...sliders].map(item => item.id));
+  const objects = model.objects.filter(item => selected.has(item.id));
+  const copiedIds = new Set(objects.map(item => item.id));
   if (copiedIds.size === 0) return null;
 
-  const constraints = (model.constraints ?? []).filter(constraint => constraint.refs.every(ref => copiedIds.has(ref)));
-  const constraintIds = new Set(constraints.map(constraint => constraint.id));
-  const dependencies = (model.dependencies ?? []).filter(dependency => (
-    copiedIds.has(dependency.sourceId)
-    && copiedIds.has(dependency.targetId)
-    && (!dependency.constraintId || constraintIds.has(dependency.constraintId))
-  ));
+  const relations = model.relations.filter(relation => relationReferences(relation).every(ref => copiedIds.has(ref)));
   const stepStates = model.steps.map(step => ({
     stepId: step.id,
     visibleIds: step.visibleTargets.filter(id => copiedIds.has(id)),
@@ -149,12 +108,9 @@ export function createDiagramClipboard(
     kind: DIAGRAM_CLIPBOARD_KIND,
     sourceComponentId: model.componentId,
     rootIds,
-    points,
-    elements,
-    sliders,
+    objects,
     groups,
-    constraints,
-    dependencies,
+    relations,
     stepStates,
   });
 }
@@ -170,13 +126,10 @@ export function parseDiagramClipboard(value: string): DiagramClipboardPayload | 
     const hasStringIds = (items: unknown): items is Array<{ id: string }> => Array.isArray(items) && items.every(item => typeof item === 'object' && item !== null && typeof (item as { id?: unknown }).id === 'string');
     const hasStringArray = (items: unknown): items is string[] => Array.isArray(items) && items.every(item => typeof item === 'string');
     if (typeof parsed.sourceComponentId !== 'string' || !hasStringArray(parsed.rootIds)) return null;
-    if (!hasStringIds(parsed.points) || !parsed.points.every(item => hasStringArray(item.groupIds))) return null;
-    if (!hasStringIds(parsed.elements) || !parsed.elements.every(item => hasStringArray(item.refs) && hasStringArray(item.groupIds))) return null;
-    if (!hasStringIds(parsed.sliders) || !parsed.sliders.every(item => hasStringArray(item.groupIds))) return null;
-    if (!Array.isArray(parsed.groups) || !Array.isArray(parsed.constraints) || !Array.isArray(parsed.dependencies) || !Array.isArray(parsed.stepStates)) return null;
+    if (!hasStringIds(parsed.objects) || !parsed.objects.every(item => typeof (item as { objectType?: unknown }).objectType === 'string' && hasStringArray(item.groupIds))) return null;
+    if (!Array.isArray(parsed.groups) || !Array.isArray(parsed.relations) || !Array.isArray(parsed.stepStates)) return null;
     if (!hasStringIds(parsed.groups) || !parsed.groups.every(group => hasStringArray(group.memberIds))) return null;
-    if (!hasStringIds(parsed.constraints) || !parsed.constraints.every(constraint => hasStringArray(constraint.refs))) return null;
-    if (!parsed.dependencies.every(dependency => typeof dependency?.sourceId === 'string' && typeof dependency?.targetId === 'string')) return null;
+    if (!hasStringIds(parsed.relations) || !parsed.relations.every(relation => typeof (relation as { type?: unknown }).type === 'string')) return null;
     if (!parsed.stepStates.every(state => typeof state?.stepId === 'string' && hasStringArray(state?.visibleIds) && typeof state?.objectStates === 'object' && state.objectStates !== null)) return null;
     return parsed as DiagramClipboardPayload;
   } catch {
@@ -184,21 +137,36 @@ export function parseDiagramClipboard(value: string): DiagramClipboardPayload | 
   }
 }
 
+function shiftedCopy(object: DiagramObject): DiagramObject {
+  if (isPositionedPoint(object)) {
+    const position = pointPosition(object)!;
+    return withPointPosition(object, { x: position.x + 0.5, y: position.y - 0.5 });
+  }
+  if (object.objectType === 'control') {
+    return { ...object, position: [object.position[0] + 0.5, object.position[1] - 0.5] };
+  }
+  if (object.objectType === 'annotation' && object.anchor.type === 'viewport') {
+    const [x, y] = object.anchor.position;
+    return { ...object, anchor: { ...object.anchor, position: [Math.min(1, x + 0.03), Math.min(1, y + 0.03)] } };
+  }
+  return object;
+}
+
 export function pasteDiagramClipboard(model: VisualDiagramModel, payload: DiagramClipboardPayload): DiagramPasteResult {
   const usedIds = new Set([
-    ...sceneIds(model),
+    ...model.objects.map(item => item.id),
     ...model.groups.map(group => group.id),
     ...model.steps.map(step => step.id),
-    ...(model.constraints ?? []).map(constraint => constraint.id),
+    ...model.relations.map(relation => relation.id),
   ]);
   const idMap = new Map<string, string>();
-  [...payload.points, ...payload.elements, ...payload.sliders].forEach(item => idMap.set(item.id, uniqueId(item.id, usedIds)));
+  payload.objects.forEach(item => idMap.set(item.id, uniqueId(item.id, usedIds)));
   payload.groups.forEach(group => idMap.set(group.id, uniqueId(group.id, usedIds)));
-  payload.constraints.forEach(constraint => idMap.set(constraint.id, uniqueId(constraint.id, usedIds)));
+  payload.relations.forEach(relation => idMap.set(relation.id, uniqueId(relation.id, usedIds)));
 
   const targetIds = new Set([
     ...model.steps.map(step => step.id),
-    ...[...model.points, ...model.elements, ...model.sliders].filter(item => item.target).map(item => item.targetId ?? item.id),
+    ...model.objects.filter(item => item.target).map(item => item.targetId ?? item.id),
     ...model.groups.filter(group => group.target).map(group => group.targetId ?? group.id),
   ]);
   const uniqueTargetId = (base: string) => uniqueId(base.replace(/_copy(?:_\d+)?$/, ''), targetIds);
@@ -206,62 +174,29 @@ export function pasteDiagramClipboard(model: VisualDiagramModel, payload: Diagra
     const mapped = idMap.get(groupId);
     return mapped ? [mapped] : [];
   });
-  const remapTarget = <T extends { id: string; target: boolean; targetId?: string }>(item: T, nextId: string): T => ({
-    ...item,
-    id: nextId,
-    targetId: item.target ? uniqueTargetId(item.targetId ?? item.id) : undefined,
-  });
+  const mapId = (id: string) => idMap.get(id) ?? id;
 
-  const points = payload.points.map(source => {
+  const objects = payload.objects.map(source => {
     const id = idMap.get(source.id)!;
-    const constraintIds = source.constraintIds?.map(constraintId => idMap.get(constraintId)).filter((value): value is string => Boolean(value));
-    const constraint = source.constraint === 'constrained' && !constraintIds?.length ? 'free' as const : source.constraint;
-    return remapTarget({
-      ...clone(source),
-      x: source.x + 0.5,
-      y: source.y - 0.5,
+    const remapped = mapObjectExpressions(
+      mapObjectReferences(clone(source), mapId),
+      expression => rewriteExpression(expression, idMap) ?? expression,
+      template => rewriteTemplate(template, idMap),
+    );
+    let copy: DiagramObject = {
+      ...shiftedCopy(remapped),
+      id,
       label: `${source.label} (copia)`,
       groupIds: remapGroupIds(source.groupIds),
-      gliderTarget: source.gliderTarget ? idMap.get(source.gliderTarget) ?? source.gliderTarget : undefined,
-      dependencies: source.dependencies?.map(dependency => idMap.get(dependency) ?? dependency),
-      attractorIds: source.attractorIds?.map(attractor => idMap.get(attractor) ?? attractor),
-      constraintIds: constraintIds?.length ? constraintIds : undefined,
-      constraint,
-      fixed: constraint === 'fixed' || constraint === 'derived',
-      xExpression: rewriteExpression(source.xExpression, idMap),
-      yExpression: rewriteExpression(source.yExpression, idMap),
       order: source.order + 1,
-    }, id);
-  });
-  const elements = payload.elements.map(source => {
-    const id = idMap.get(source.id)!;
-    const viewportPosition = source.properties?.viewportPosition
-      ? [Math.min(1, source.properties.viewportPosition[0] + 0.03), Math.min(1, source.properties.viewportPosition[1] + 0.03)] as [number, number]
-      : undefined;
-    return remapTarget({
-      ...clone(source),
-      label: `${source.label} (copia)`,
-      text: source.text ? rewriteTemplate(source.text, idMap) : source.text,
-      refs: source.refs.map(ref => idMap.get(ref) ?? ref),
-      groupIds: remapGroupIds(source.groupIds),
-      properties: {
-        ...remapProperties(source.properties, idMap),
-        ...(viewportPosition ? { viewportPosition } : {}),
-      },
-      order: source.order + 1,
-    }, id);
-  });
-  const sliders = payload.sliders.map(source => {
-    const id = idMap.get(source.id)!;
-    return remapTarget({
-      ...clone(source),
-      x: source.x + 0.5,
-      y: source.y - 0.5,
-      label: `${source.label} (copia)`,
-      groupIds: remapGroupIds(source.groupIds),
-      maxExpression: rewriteExpression(source.maxExpression, idMap),
-      order: source.order + 1,
-    }, id);
+    };
+    const withoutTarget = omitKeys(copy, 'targetId');
+    copy = (source.target ? { ...withoutTarget, targetId: uniqueTargetId(source.targetId ?? source.id) } : withoutTarget) as DiagramObject;
+    if (copy.objectType === 'point' && copy.mobility.type === 'constrained') {
+      const relationIds = copy.mobility.relationIds.filter(relationId => payload.relations.some(relation => idMap.get(relation.id) === relationId));
+      copy = { ...copy, mobility: relationIds.length > 0 ? { type: 'constrained', relationIds } : { type: 'free' } };
+    }
+    return copy;
   });
   const groups = payload.groups.map(source => ({
     ...clone(source),
@@ -270,19 +205,14 @@ export function pasteDiagramClipboard(model: VisualDiagramModel, payload: Diagra
     memberIds: source.memberIds.map(id => idMap.get(id)).filter((value): value is string => Boolean(value)),
     targetId: source.target ? uniqueTargetId(source.targetId ?? source.id) : undefined,
   }));
-  const constraints = payload.constraints.map(source => ({
-    ...clone(source),
-    id: idMap.get(source.id)!,
-    label: `${source.label} (copia)`,
-    refs: source.refs.map(ref => idMap.get(ref) ?? ref),
-    expression: rewriteExpression(source.expression, idMap),
-  }));
-  const dependencies = payload.dependencies.map(source => ({
-    ...clone(source),
-    sourceId: idMap.get(source.sourceId) ?? source.sourceId,
-    targetId: idMap.get(source.targetId) ?? source.targetId,
-    constraintId: source.constraintId ? idMap.get(source.constraintId) ?? source.constraintId : undefined,
-  }));
+  const relations = payload.relations.map(source => {
+    const remapped = mapRelationReferences(clone(source), mapId);
+    return {
+      ...remapped,
+      label: `${source.label} (copia)`,
+      ...(remapped.type === 'expression' ? { expression: rewriteExpression(remapped.expression, idMap) ?? remapped.expression } : {}),
+    } as DiagramRelation;
+  });
   const stepStateById = new Map(payload.stepStates.map(state => [state.stepId, state]));
   const steps = model.steps.map(step => {
     const copied = stepStateById.get(step.id);
@@ -303,17 +233,14 @@ export function pasteDiagramClipboard(model: VisualDiagramModel, payload: Diagra
     });
     return { ...step, visibleTargets: [...new Set(visibleTargets)], objectStates };
   });
-  const pastedIds = [...points, ...elements, ...sliders].map(item => item.id);
+  const pastedIds = objects.map(item => item.id);
 
   return {
     model: {
       ...model,
-      points: [...model.points, ...points],
-      elements: [...model.elements, ...elements],
-      sliders: [...model.sliders, ...sliders],
+      objects: [...model.objects, ...objects],
       groups: [...model.groups, ...groups],
-      constraints: [...(model.constraints ?? []), ...constraints],
-      dependencies: [...(model.dependencies ?? []), ...dependencies],
+      relations: [...model.relations, ...relations],
       steps,
     },
     selectedId: payload.rootIds.map(id => idMap.get(id)).find((id): id is string => Boolean(id)) ?? pastedIds[0] ?? '',

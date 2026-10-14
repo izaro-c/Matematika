@@ -1,6 +1,5 @@
-import { migrateDiagramSpecV2ToV3, parseDiagramSpecV3 } from '@/diagrams';
+import { parseDiagramSpecV3 } from '@/diagrams';
 import { z } from 'zod';
-import { workingScene } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {
@@ -52,10 +51,8 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
   }
   if (diagnostics.some(diagnostic => diagnostic.severity === 'error')) return { ok: false, diagnostics };
 
-  // Preferir objetos V3 del modelo cuando ya están canónicos; reify desde escena
-  // solo aporta el contrato validable sin pasar por resolve de runtime.
-  const currentSpec = migrateDiagramSpecV2ToV3(workingScene(model));
-  const currentParsed = parseDiagramSpecV3(currentSpec);
+  // El esquema V3 valida el modelo y fija el orden canónico de sus campos.
+  const currentParsed = parseDiagramSpecV3(model);
   if (!currentParsed.success) {
     return {
       ok: false,

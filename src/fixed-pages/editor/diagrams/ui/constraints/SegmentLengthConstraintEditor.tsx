@@ -7,6 +7,9 @@ import {
   removeConstraintFromModel,
   setEqualLengthConstraint,
 } from '../../model/constraints/segmentLengthConstraints';
+import { equalLengthRoles, objectConstructionReferences, objectKind } from '@/diagrams';
+import { findPositionedPoint } from '../../model/constraints/relationModel';
+import { modelElements } from '../../model/scene/objectLists';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
 
@@ -23,16 +26,17 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
 }) => {
   const existing = equalLengthConstraintForSegment(model, segment.id);
   const endpoints = editableSegmentEndpoints(model, segment.id);
-  const allReferenceSegments = model.elements.filter(element => element.kind === 'segment' && element.id !== segment.id);
+  const existingRoles = existing?.type === 'equal-length' ? equalLengthRoles(existing, model.objects) : undefined;
+  const allReferenceSegments = modelElements(model).filter(element => objectKind(element) === 'segment' && element.id !== segment.id);
   const [expanded, setExpanded] = useState(Boolean(existing));
-  const [movingEndpointId, setMovingEndpointId] = useState(existing?.refs[0] ?? endpoints[0]?.id ?? '');
-  const [sourceSegmentId, setSourceSegmentId] = useState(existing?.refs[2] ?? allReferenceSegments[0]?.id ?? '');
-  const referenceSegments = allReferenceSegments.filter(candidate => !candidate.refs.includes(movingEndpointId));
+  const [movingEndpointId, setMovingEndpointId] = useState(existingRoles?.driven ?? endpoints[0]?.id ?? '');
+  const [sourceSegmentId, setSourceSegmentId] = useState(existingRoles?.source ?? allReferenceSegments[0]?.id ?? '');
+  const referenceSegments = allReferenceSegments.filter(candidate => !objectConstructionReferences(candidate).includes(movingEndpointId));
   const effectiveSourceSegmentId = referenceSegments.some(candidate => candidate.id === sourceSegmentId)
     ? sourceSegmentId
     : referenceSegments[0]?.id ?? '';
-  const movingEndpoint = model.points.find(point => point.id === movingEndpointId);
-  const anchor = segment.refs
+  const movingEndpoint = findPositionedPoint(model, movingEndpointId);
+  const anchor = objectConstructionReferences(segment)
     .map(ref => findPointLike(model, ref))
     .find(point => point && point.id !== movingEndpointId);
   const sourceSegment = referenceSegments.find(candidate => candidate.id === effectiveSourceSegmentId);

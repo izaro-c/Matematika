@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { parseDiagramSpecV3 } from '../../../../src/diagrams';
-import { extractV2Json } from '../../../../src/fixed-pages/editor/diagrams/source/parser';
 
 const file = process.argv[2];
 if (!file) {

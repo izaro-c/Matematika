@@ -537,9 +537,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "AB = {value}",
-        "expression": "segAB.length",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingAB",
+            "text": "AB = {= segAB.length | precision: 2}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -568,9 +572,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "n = {value}",
-        "expression": "n",
-        "precision": 0
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingN",
+            "text": "n = {= n | precision: 0}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -599,9 +607,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "n · AB = {value}",
-        "expression": "n*segAB.length",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingProduct",
+            "text": "n · AB = {= n*segAB.length | precision: 2}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -630,9 +642,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "CD = {value}",
-        "expression": "segCD.length",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingCD",
+            "text": "CD = {= segCD.length | precision: 2}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -791,9 +807,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "n mínimo = {value}",
-        "expression": "floor(segCD.length/segAB.length+0.000000001)+1",
-        "precision": 0
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingRequired",
+            "text": "n mínimo = {= floor(segCD.length/segAB.length+0.000000001)+1 | precision: 0}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -874,9 +894,6 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     "eu": {
       "title": "Arkimedesen axioma",
       "note": "Arrastatu B AB nahi bezain txiki egiteko; n-ren maximoa berriz kalkulatzen da eta beti ahalbidetzen du CD gainditzea.",
-      "texts": {
-        "readingRequired": "n minimoa = {value}"
-      },
       "ariaLabels": {
         "pA": "Segmentu txikiaren A muturra",
         "pBMin": "B-ren muga minimoa",
@@ -901,14 +918,18 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "readingRequired": "CD gainditzen duen lehen zenbaki arrunta",
         "lineDThreshold": "Zuzena",
         "n": "Kopien n zenbaki arrunta"
+      },
+      "blocks": {
+        "readingRequired": {
+          "readingRequired": {
+            "text": "n minimoa = {= floor(segCD.length/segAB.length+0.000000001)+1 | precision: 0}"
+          }
+        }
       }
     },
     "en": {
       "title": "Archimedean Axiom",
       "note": "Drag B to make AB as small as desired; the maximum n is recalculated and always allows surpassing CD.",
-      "texts": {
-        "readingRequired": "minimum n = {value}"
-      },
       "ariaLabels": {
         "pA": "Endpoint A of the shorter segment",
         "pBMin": "Lower limit of B",
@@ -933,6 +954,13 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "readingRequired": "First natural number exceeding CD",
         "lineDThreshold": "Line",
         "n": "Natural number of copies n"
+      },
+      "blocks": {
+        "readingRequired": {
+          "readingRequired": {
+            "text": "minimum n = {= floor(segCD.length/segAB.length+0.000000001)+1 | precision: 0}"
+          }
+        }
       }
     }
   }

@@ -1,5 +1,4 @@
-import { DiagramSpecMigrationError, migrateDiagramSpec } from '@/diagrams';
-import { materializeEditorModel, workingScene } from '../model/scene/editorModel';
+import { DiagramSpecLoadError, loadDiagramSpec } from '@/diagrams';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
@@ -10,15 +9,12 @@ export type ParseDiagramSourceResult =
   | { status: 'code-preview'; previewModel?: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
   | { status: 'invalid'; diagnostics: DiagramDiagnostic[] };
 
-const LEGACY_MODEL_START = '/* @matematika-diagram-model';
-const LEGACY_MODEL_END = '*/';
-
 function exportedComponentName(source: string): string | null {
   const names = [...source.matchAll(/export\s+(?:const|function)\s+([A-Z]\w*)\b/g)].map(match => match[1]);
   return names.find(name => !name.endsWith('Spec')) ?? null;
 }
 
-function extractV2Json(source: string): string | null {
+function extractSpecJson(source: string): string | null {
   const start = source.indexOf(SPEC_START);
   const end = source.indexOf(SPEC_END, start + SPEC_START.length);
   if (start === -1 || end === -1) return null;
@@ -30,33 +26,21 @@ function extractV2Json(source: string): string | null {
   return callEnd > jsonStart ? envelope.slice(jsonStart, callEnd).trim() : null;
 }
 
-function extractLegacyJson(source: string): string | null {
-  const start = source.indexOf(LEGACY_MODEL_START);
-  if (start === -1) return null;
-  const jsonStart = start + LEGACY_MODEL_START.length;
-  const end = source.indexOf(LEGACY_MODEL_END, jsonStart);
-  return end === -1 ? null : source.slice(jsonStart, end).trim();
-}
-
-function migrationDiagnostic(error: unknown): DiagramDiagnostic {
+function loadDiagnostic(error: unknown): DiagramDiagnostic {
   return {
-    code: error instanceof DiagramSpecMigrationError ? error.code : 'invalid-embedded-spec',
+    code: error instanceof DiagramSpecLoadError ? error.code : 'invalid-embedded-spec',
     severity: 'error',
     message: error instanceof Error ? error.message : 'La especificación embebida no es válida.',
     source: 'model',
   };
 }
 
-function toWorkbenchModel(spec: ReturnType<typeof migrateDiagramSpec>['spec']): VisualDiagramModel {
-  return materializeEditorModel(workingScene(spec));
-}
-
 export function parseDiagramSourceLocally(source?: string, _metadataType = ''): VisualDiagramModel | null {
   if (!source) return null;
-  const json = extractV2Json(source) ?? extractLegacyJson(source);
+  const json = extractSpecJson(source);
   if (!json) return null;
   try {
-    return toWorkbenchModel(migrateDiagramSpec(JSON.parse(json)).spec);
+    return loadDiagramSpec(JSON.parse(json));
   } catch {
     return null;
   }
@@ -67,18 +51,17 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   if (security.length > 0) {
     return { status: 'invalid', diagnostics: security };
   }
-  const json = extractV2Json(source) ?? extractLegacyJson(source);
+  const json = extractSpecJson(source);
   if (!json) return null;
 
-  let migrated;
+  let editorModel: VisualDiagramModel;
   try {
-    migrated = migrateDiagramSpec(JSON.parse(json));
+    editorModel = loadDiagramSpec(JSON.parse(json));
   } catch (error) {
-    return { status: 'invalid', diagnostics: [migrationDiagnostic(error)] };
+    return { status: 'invalid', diagnostics: [loadDiagnostic(error)] };
   }
 
   const componentName = exportedComponentName(source);
-  const editorModel = toWorkbenchModel(migrated.spec);
   if (!componentName) {
     return {
       status: 'code-preview',
@@ -93,13 +76,13 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   }
 
   const generated = generateDiagramSource(editorModel, componentName);
-  const isLossless = generated.ok && generated.source === source && migrated.migratedFrom === null;
+  const isLossless = generated.ok && generated.source === source;
 
   // Flexibilidad: si la envoltura TSX externa es canónica limpia y no contiene
   // código arbitrario ni extensiones no representadas fuera del bloque spec,
   // permitimos 'visual-exact' sin exigir igualdad cosmética byte a byte en el JSON interno.
   const hasCleanEnvelope = (() => {
-    if (!generated.ok || migrated.migratedFrom !== null) return false;
+    if (!generated.ok) return false;
     const startIdx = source.indexOf(SPEC_START);
     const endIdx = source.indexOf(SPEC_END);
     if (startIdx === -1 || endIdx === -1) return false;
@@ -119,19 +102,12 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   return {
     status: 'code-preview',
     previewModel: editorModel,
-    diagnostics: migrated.migratedFrom === null
-      ? [{
-          code: 'embedded-spec-not-lossless',
-          severity: 'warning',
-          message: 'La especificación embebida no regenera el TSX byte por byte. El código manual conserva la autoridad.',
-          source: 'synchronization',
-        }]
-      : migrated.warnings.map((warningMessage, index) => ({
-          code: `embedded-spec-migrated-${index}`,
-          severity: 'warning',
-          message: warningMessage,
-          source: 'synchronization',
-        })),
+    diagnostics: [{
+      code: 'embedded-spec-not-lossless',
+      severity: 'warning',
+      message: 'La especificación embebida no regenera el TSX byte por byte. El código manual conserva la autoridad.',
+      source: 'synchronization',
+    }],
   };
 }
 

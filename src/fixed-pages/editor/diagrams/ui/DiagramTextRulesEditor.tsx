@@ -1,16 +1,17 @@
 import React from 'react';
-import type { VisualDiagramModel, VisualElement } from '../model/types';
+import type { DiagramObject, DiagramTextRule } from '@/diagrams';
+import type { VisualDiagramModel } from '../model/types';
 import { DiagramExpressionField } from './panels/DiagramExpressionField';
 import { DiagramTemplateField } from './DiagramTemplateField';
 
 interface DiagramTextRulesEditorProps {
   model: VisualDiagramModel;
-  element: VisualElement;
-  onChange: (textRules: NonNullable<VisualElement['properties']>['textRules']) => void;
+  element: DiagramObject;
+  onChange: (textRules: DiagramTextRule[] | undefined) => void;
 }
 
 export const DiagramTextRulesEditor: React.FC<DiagramTextRulesEditorProps> = ({ model, element, onChange }) => {
-  const rules = element.properties?.textRules ?? [];
+  const rules = element.objectType === 'annotation' ? element.content.rules ?? [] : [];
   return (
     <section className="border-t border-carbon/10 pt-3" aria-label="Variantes condicionales del contenido">
       <div className="flex items-start justify-between gap-2">
@@ -26,7 +27,7 @@ export const DiagramTextRulesEditor: React.FC<DiagramTextRulesEditorProps> = ({ 
           </div>
         ))}
       </div>
-      <button type="button" className="mt-2 min-h-10 w-full rounded bg-pavo/10 px-2 text-[10px] font-bold text-pavo hover:bg-pavo/15" onClick={() => onChange([...rules, { when: '1', text: element.text || element.label }])}>+ Añadir variante</button>
+      <button type="button" className="mt-2 min-h-10 w-full rounded bg-pavo/10 px-2 text-[10px] font-bold text-pavo hover:bg-pavo/15" onClick={() => onChange([...rules, { when: '1', text: (element.objectType === 'annotation' ? element.content.text : '') || element.label }])}>+ Añadir variante</button>
     </section>
   );
 };

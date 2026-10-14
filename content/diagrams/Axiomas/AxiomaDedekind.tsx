@@ -395,9 +395,13 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "P = {value}",
-        "expression": "pP.x",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "readingP",
+            "text": "P = {= pP.x | precision: 2}"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -426,9 +430,13 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "{value} ∈ L",
-        "expression": "pP.x-1",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "sampleL",
+            "text": "{= pP.x-1 | precision: 2} ∈ L"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",
@@ -457,9 +465,13 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "{value} ∈ R",
-        "expression": "pP.x+1",
-        "precision": 2
+        "text": "",
+        "blocks": [
+          {
+            "id": "sampleR",
+            "text": "{= pP.x+1 | precision: 2} ∈ R"
+          }
+        ]
       },
       "anchor": {
         "type": "viewport",

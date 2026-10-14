@@ -1,9 +1,10 @@
+import { withObjectStylePatch } from '@/diagrams';
+import { modelElements } from '../../model/scene/objectLists';
 import React, { useEffect, useRef, useState } from 'react';
 import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/diagrams/public';
 import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '@/fixed-pages/editor/diagrams/model/types';
 import {
-  applySceneMutation,
   nextLayerItemOrder,
   nextPointId,
   point,
@@ -93,7 +94,7 @@ export const BoardHost: React.FC<BoardHostProps> = ({
               onSelect([id], activeTool === 'select' && intent?.additive === true);
             }}
             onPointMove={(id, x, y) => onModelEdit(
-              applySceneMutation(model, scene => withMovedPoint(scene, id, Number(x.toFixed(2)), Number(y.toFixed(2)))),
+              withMovedPoint(model, id, Number(x.toFixed(2)), Number(y.toFixed(2))),
               { label: `Mover ${id}` },
             )}
             onSliderChange={(id, value) => onModelEdit(
@@ -101,20 +102,23 @@ export const BoardHost: React.FC<BoardHostProps> = ({
               { label: `Ajustar ${id}`, mergeKey: `slider:${id}` },
             )}
             onAnnotationMove={(id, placement) => {
-              const annotation = model.elements.find(item => item.id === id);
+              const annotation = modelElements(model).find(item => item.id === id);
               if (!annotation) return;
-              onModelEdit(updateElement(model, id, {
-                ...(placement.textOffset ? { style: { ...annotation.style, textOffset: placement.textOffset } } : {}),
-                ...(placement.viewportPosition ? { properties: { ...annotation.properties, viewportPosition: placement.viewportPosition } } : {}),
+              onModelEdit(updateElement(model, id, current => {
+                let next = placement.textOffset ? withObjectStylePatch(current, { textOffset: placement.textOffset }) : current;
+                if (placement.viewportPosition && next.objectType === 'annotation' && next.anchor.type === 'viewport') {
+                  next = { ...next, anchor: { ...next.anchor, position: placement.viewportPosition } };
+                }
+                return next;
               }), { label: `Mover ${id}`, mergeKey: `annotation:${id}` });
             }}
             onCanvasPointCreate={activeTool === 'point' ? (x, y) => {
               const snappedX = Math.round(x * 2) / 2;
               const snappedY = Math.round(y * 2) / 2;
-              const id = nextPointId(model.points);
+              const id = nextPointId(model.objects);
               onModelEdit({
                 ...model,
-                points: [...model.points, {
+                objects: [...model.objects, {
                   ...point(id, id.replace(/^p/, ''), snappedX, snappedY),
                   order: nextLayerItemOrder(model, 'geometry'),
                 }],

@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { DiagramInfoPanelBlock, DiagramInfoPanelRule, DiagramColorToken } from '@/diagrams/public';
-import type { VisualDiagramModel, VisualElement } from '../../model/types';
+import type { AnnotationObject } from '@/diagrams';
+import type { VisualDiagramModel } from '../../model/types';
+import { modelElements, modelPoints, modelSliders } from '../../model/scene/objectLists';
 import { DiagramExpressionField } from './DiagramExpressionField';
-import { DiagramTextRulesEditor } from '../DiagramTextRulesEditor';
 import { DiagramTemplateField } from '../DiagramTemplateField';
 import { COLOR_OPTIONS } from '../../model';
 import { DiagramButton, DiagramField, DiagramPanel, DiagramTabBar } from '../primitives';
 
 interface DiagramInfoPanelContentEditorProps {
   model: VisualDiagramModel;
-  panel: VisualElement;
-  onElementChange: (update: Partial<VisualElement>) => void;
-  onTextChange: (text: string) => void;
-  onPropertiesChange: (update: NonNullable<VisualElement['properties']>) => void;
+  panel: AnnotationObject;
+  onPanelChange: (update: (panel: AnnotationObject) => AnnotationObject) => void;
 }
+
+type PanelContentPatch = Partial<AnnotationObject['content']>;
 
 interface PanelBlockEditorProps {
   model: VisualDiagramModel;
@@ -34,10 +35,14 @@ function nextBlockId(blocks: readonly DiagramInfoPanelBlock[]): string {
   return `bloque-${index}`;
 }
 
-function panelAnchorReferences(model: VisualDiagramModel, element: VisualElement, anchorMode: 'reference' | 'viewport'): string[] {
-  if (anchorMode === 'viewport') return [];
-  if (element.refs.length > 0) return element.refs;
-  return model.points[0] ? [model.points[0].id] : [];
+/** Anclaje del panel al cambiar de modo: conserva el objeto seguido o la posición en la vista. */
+function panelAnchor(model: VisualDiagramModel, panel: AnnotationObject, anchorMode: 'reference' | 'viewport'): AnnotationObject['anchor'] {
+  if (anchorMode === 'viewport') {
+    return panel.anchor.type === 'viewport' ? panel.anchor : { type: 'viewport', position: [0.08, 0.22] };
+  }
+  if (panel.anchor.type === 'object') return panel.anchor;
+  const fallback = modelPoints(model)[0]?.id;
+  return fallback ? { type: 'object', object: fallback } : panel.anchor;
 }
 
 const ColorSelector = ({ value, onChange, label }: { value: DiagramColorToken | undefined, onChange: (v: DiagramColorToken | undefined) => void, label: string }) => (
@@ -161,12 +166,21 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
 export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEditorProps> = ({
   model,
   panel,
-  onElementChange,
-  onTextChange,
-  onPropertiesChange,
+  onPanelChange,
 }) => {
-  const blocks = panel.properties?.infoPanelBlocks ?? [];
-  const updateBlocks = (next: DiagramInfoPanelBlock[]) => onPropertiesChange({ infoPanelBlocks: next.length ? next : undefined });
+  const content = panel.content;
+  const anchorMode = panel.anchor.type === 'viewport' ? 'viewport' : 'reference';
+  const viewportPosition = panel.anchor.type === 'viewport' ? panel.anchor.position : undefined;
+  const patchContent = (patch: PanelContentPatch) => onPanelChange(current => {
+    const next = { ...current.content, ...patch };
+    (Object.keys(patch) as Array<keyof PanelContentPatch>).forEach(key => {
+      if (patch[key] === undefined) delete next[key];
+    });
+    return { ...current, content: next };
+  });
+  const setViewportPosition = (position: [number, number]) => onPanelChange(current => ({ ...current, anchor: { type: 'viewport', position } }));
+  const blocks = content.blocks ?? [];
+  const updateBlocks = (next: DiagramInfoPanelBlock[]) => patchContent({ blocks: next.length ? next : undefined });
   const patchBlock = (index: number, block: DiagramInfoPanelBlock) => updateBlocks(blocks.map((candidate, candidateIndex) => candidateIndex === index ? block : candidate));
   const moveBlock = (index: number, direction: -1 | 1) => {
     const target = index + direction;
@@ -228,42 +242,33 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             <select
               aria-label="Tipo de anclaje del panel"
               className="shadow-inner"
-              value={panel.properties?.anchorMode ?? 'reference'}
+              value={anchorMode}
               onChange={(event) => {
-                const anchorMode = event.target.value as 'reference' | 'viewport';
-                onElementChange({
-                  refs: panelAnchorReferences(model, panel, anchorMode),
-                  properties: {
-                    ...panel.properties,
-                    anchorMode,
-                    ...(anchorMode === 'viewport' && !panel.properties?.viewportPosition
-                      ? { viewportPosition: [0.08, 0.22] as [number, number] }
-                      : {}),
-                  },
-                });
+                const nextMode = event.target.value as 'reference' | 'viewport';
+                onPanelChange(current => ({ ...current, anchor: panelAnchor(model, current, nextMode) }));
               }}
             >
               <option value="reference">Acompañar a un objeto geométrico</option>
               <option value="viewport">Fijar a la vista (relativo al lienzo)</option>
             </select>
           </DiagramField>
-          {(panel.properties?.anchorMode ?? 'reference') === 'reference' && <>
+          {anchorMode === 'reference' && <>
             <DiagramField label="Objeto a seguir">
-              <select aria-label="Objeto de referencia del panel" className="shadow-inner" value={panel.refs[0] ?? ''} onChange={event => onElementChange({ refs: event.target.value ? [event.target.value] : [] })}>
+              <select aria-label="Objeto de referencia del panel" className="shadow-inner" value={panel.anchor.type === 'object' ? panel.anchor.object : ''} onChange={event => { const object = event.target.value; if (object) onPanelChange(current => ({ ...current, anchor: { ...(current.anchor.type === 'object' ? current.anchor : {}), type: 'object', object } })); }}>
                 <option value="">Seleccione un objeto…</option>
-                {[...model.points, ...model.elements.filter(item => item.id !== panel.id), ...model.sliders].map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+                {[...modelPoints(model), ...modelElements(model).filter(item => item.id !== panel.id), ...modelSliders(model)].map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
               </select>
             </DiagramField>
             <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">El panel se moverá en conjunto con este objeto.</span>
           </>}
-          {(panel.properties?.anchorMode ?? 'reference') === 'viewport' && (
+          {anchorMode === 'viewport' && (
             <div className="space-y-2">
               <DiagramButton
                 variant="danger"
                 fullWidth
                 className="border-carbon/15 bg-lienzo text-left text-xs font-semibold text-carbon shadow-sm hover:border-ocre/60 hover:bg-ocre/5"
                 aria-label="Alinear panel con el título"
-                onClick={() => onPropertiesChange({ viewportPosition: [0, 0] })}
+                onClick={() => setViewportPosition([0, 0])}
               >
                 Alinear con la esquina superior izquierda
               </DiagramButton>
@@ -276,10 +281,8 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
                     step="1"
                     aria-label="Posición horizontal del panel"
                     className="shadow-inner"
-                    value={Math.round((panel.properties?.viewportPosition?.[0] ?? 0.08) * 100)}
-                    onChange={(event) => onPropertiesChange({
-                      viewportPosition: [Number(event.target.value) / 100, panel.properties?.viewportPosition?.[1] ?? 0.22],
-                    })}
+                    value={Math.round((viewportPosition?.[0] ?? 0.08) * 100)}
+                    onChange={(event) => setViewportPosition([Number(event.target.value) / 100, viewportPosition?.[1] ?? 0.22])}
                   />
                 </DiagramField>
                 <DiagramField label="Margen Vertical (%)">
@@ -290,10 +293,8 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
                     step="1"
                     aria-label="Posición vertical del panel"
                     className="shadow-inner"
-                    value={Math.round((panel.properties?.viewportPosition?.[1] ?? 0.22) * 100)}
-                    onChange={(event) => onPropertiesChange({
-                      viewportPosition: [panel.properties?.viewportPosition?.[0] ?? 0.08, Number(event.target.value) / 100],
-                    })}
+                    value={Math.round((viewportPosition?.[1] ?? 0.22) * 100)}
+                    onChange={(event) => setViewportPosition([viewportPosition?.[0] ?? 0.08, Number(event.target.value) / 100])}
                   />
                 </DiagramField>
               </div>
@@ -305,12 +306,12 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
         <div className={editorTab === 'content' ? 'block' : 'hidden'}>
         <DiagramPanel title="Cabecera e Introducción" className="border-transparent bg-transparent">
           <DiagramField label="Título principal del panel">
-            <input aria-label="Título del panel" className="font-semibold shadow-inner" value={panel.properties?.title ?? ''} onChange={event => onPropertiesChange({ title: event.target.value || undefined })} placeholder="Ej. Clasificación de Triángulos" />
+            <input aria-label="Título del panel" className="font-semibold shadow-inner" value={content.title ?? ''} onChange={event => patchContent({ title: event.target.value || undefined })} placeholder="Ej. Clasificación de Triángulos" />
           </DiagramField>
           <DiagramField label="Subtítulo opcional">
-            <input aria-label="Subtítulo opcional del panel" className="italic shadow-inner" value={panel.properties?.subtitle ?? ''} onChange={event => onPropertiesChange({ subtitle: event.target.value || undefined })} placeholder="Ej. Según sus lados" />
+            <input aria-label="Subtítulo opcional del panel" className="italic shadow-inner" value={content.subtitle ?? ''} onChange={event => patchContent({ subtitle: event.target.value || undefined })} placeholder="Ej. Según sus lados" />
           </DiagramField>
-          <DiagramTemplateField richText model={model} label="Texto introductorio opcional" ariaLabel="Contenido del panel" value={panel.text || ''} onChange={onTextChange} placeholder="Texto explicativo común que se muestra antes de todos los bloques…" rows={3} />
+          <DiagramTemplateField richText model={model} label="Texto introductorio opcional" ariaLabel="Contenido del panel" value={content.text || ''} onChange={text => patchContent({ text })} placeholder="Texto explicativo común que se muestra antes de todos los bloques…" rows={3} />
         </DiagramPanel>
         </div>
 
@@ -318,7 +319,7 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
         <DiagramPanel title="Bloques Informativos" className="border-transparent bg-transparent">
           <div className="mb-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <DiagramField label="Diseño de presentación">
-              <select aria-label="Distribución de bloques" className="shadow-inner" value={panel.properties?.infoPanelLayout ?? 'stack'} onChange={event => onPropertiesChange({ infoPanelLayout: event.target.value as 'stack' | 'columns' })}>
+              <select aria-label="Distribución de bloques" className="shadow-inner" value={content.layout ?? 'stack'} onChange={event => patchContent({ layout: event.target.value as 'stack' | 'columns' })}>
                 <option value="stack">Lista vertical (uno tras otro)</option>
                 <option value="columns">Cuadrícula flexible de 2 column</option>
               </select>
@@ -365,21 +366,6 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
           <DiagramButton variant="primary" fullWidth onClick={addBlock}>
             + Añadir bloque
           </DiagramButton>
-        </DiagramPanel>
-
-        <DiagramPanel
-          title="Modo de Valor Único (Legado)"
-          collapsible
-          defaultOpen={blocks.length === 0 && Boolean(panel.properties?.expression || panel.properties?.textRules?.length)}
-          className="border-carbon/15 bg-carbon/[0.02]"
-        >
-          <p className="text-[9px] leading-relaxed text-carbon/50">Este modo se mantiene por compatibilidad. Para paneles nuevos o más ricos, utilice "Bloques Informativos".</p>
-          <DiagramExpressionField model={model} label="Valor numérico del panel" value={panel.properties?.expression || ''} onChange={value => onPropertiesChange({ expression: value || undefined })} optional />
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <DiagramField label="Unidad visual"><input aria-label="Unidad" className="shadow-inner" value={panel.properties?.unit || ''} onChange={event => onPropertiesChange({ unit: event.target.value || undefined })} /></DiagramField>
-            <DiagramField label="Precisión (decimales)"><input type="number" min="0" max="12" aria-label="Decimales" className="shadow-inner" value={panel.properties?.precision ?? 2} onChange={event => onPropertiesChange({ precision: Number(event.target.value) })} /></DiagramField>
-          </div>
-          <DiagramTextRulesEditor model={model} element={panel} onChange={textRules => onPropertiesChange({ textRules })} />
         </DiagramPanel>
         </div>
           </div>

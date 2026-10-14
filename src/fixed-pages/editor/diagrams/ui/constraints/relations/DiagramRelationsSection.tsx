@@ -1,3 +1,4 @@
+import { objectKind } from '@/diagrams';
 import React from 'react';
 import type { VisualDiagramModel, VisualElement, VisualPoint } from '../../../model/types';
 import { DiagramConstraintEditor } from '../../panels/DiagramConstraintEditor';
@@ -27,7 +28,7 @@ export const DiagramRelationsSection: React.FC<DiagramRelationsSectionProps> = (
     return <DiagramConstraintEditor model={model} point={point} onModelEdit={onModelEdit} />;
   }
 
-  if (scope === 'segment' && element?.kind === 'segment') {
+  if (scope === 'segment' && element && objectKind(element) === 'segment') {
     return (
       <section className="space-y-2" aria-label="Relaciones geométricas del segmento">
         <div className="flex items-start justify-between gap-3">
@@ -54,7 +55,7 @@ export const DiagramRelationsSection: React.FC<DiagramRelationsSectionProps> = (
     );
   }
 
-  if (scope === 'angle' && element && (element.kind === 'angle' || element.kind === 'nonReflexAngle')) {
+  if (scope === 'angle' && element && ['angle', 'nonReflexAngle'].includes(objectKind(element))) {
     return (
       <section className="space-y-2" aria-label="Relaciones geométricas del ángulo">
         <div className="flex items-start justify-between gap-3">

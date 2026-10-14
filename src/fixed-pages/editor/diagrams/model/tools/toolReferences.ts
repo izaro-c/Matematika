@@ -1,7 +1,7 @@
 import { refsNeededForTool } from '../elements/diagramElements';
 import {
-  legacyReferenceCandidates,
-  referenceSlotsForLegacyKind,
+  sceneReferenceCandidates,
+  referenceSlotsForKind,
   isAreaElement,
 } from '@/diagrams';
 import type { CanvasTool, VisualDiagramModel } from '../types';
@@ -11,7 +11,7 @@ const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del 
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
   const slotLabel = tool === 'select' || tool === 'point'
     ? undefined
-    : referenceSlotsForLegacyKind(tool)[index]?.label;
+    : referenceSlotsForKind(tool)[index]?.label;
   if (slotLabel) return slotLabel;
   if (tool === 'intersection') return `Soporte lineal ${index + 1}`;
   if (tool === 'measureTicks') return 'Segmento graduado';
@@ -63,26 +63,22 @@ export function toolReferencePurpose(tool: CanvasTool, index: number): string {
 
 export function toolReferenceCandidates(model: VisualDiagramModel, tool: CanvasTool) {
   if (tool === 'point' || tool === 'select') return [];
-  const firstSlot = referenceSlotsForLegacyKind(tool)[0];
-  const candidates = firstSlot ? legacyReferenceCandidates(model, firstSlot.capability) : [];
+  const firstSlot = referenceSlotsForKind(tool)[0];
+  const candidates = firstSlot ? sceneReferenceCandidates(model, firstSlot.capability) : [];
   if (tool === 'areaIntersection') {
-    return candidates.filter((item): item is VisualDiagramModel['elements'][number] => (
-      'kind' in item && isAreaElement(item)
-    ));
+    return candidates.filter(item => isAreaElement(item));
   }
   return candidates;
 }
 
 export function toolReferenceCandidatesForSlot(model: VisualDiagramModel, tool: CanvasTool, index: number) {
   if (tool === 'point' || tool === 'select') return [];
-  const slots = referenceSlotsForLegacyKind(tool);
+  const slots = referenceSlotsForKind(tool);
   if (slots.length === 0) return [];
   const slot = slots[index] ?? slots.find(candidate => candidate.repeatable) ?? slots[slots.length - 1];
-  const candidates = slot ? legacyReferenceCandidates(model, slot.capability) : [];
+  const candidates = slot ? sceneReferenceCandidates(model, slot.capability) : [];
   if (tool === 'areaIntersection') {
-    return candidates.filter((item): item is VisualDiagramModel['elements'][number] => (
-      'kind' in item && isAreaElement(item) && item.id !== undefined
-    ));
+    return candidates.filter(item => isAreaElement(item) && item.id !== undefined);
   }
   return candidates;
 }

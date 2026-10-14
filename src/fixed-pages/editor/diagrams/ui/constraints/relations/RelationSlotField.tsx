@@ -1,5 +1,5 @@
 import React from 'react';
-import type { DiagramSceneItem } from '@/diagrams';
+import type { DiagramObject } from '@/diagrams';
 import { diagramControlClassName } from '../../primitives';
 import { DiagramFormField } from '../../primitives/DiagramFormField';
 import { useReferencePick } from './useReferencePick';
@@ -7,7 +7,7 @@ import { useReferencePick } from './useReferencePick';
 interface RelationSlotFieldProps {
   label: string;
   value: string;
-  candidates: readonly DiagramSceneItem[];
+  candidates: readonly DiagramObject[];
   emptyHint: string;
   pickHint: string;
   ariaLabel: string;

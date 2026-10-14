@@ -1,18 +1,20 @@
-import type { DiagramBounds, DiagramSpecV2 } from '@/diagrams/model/schema/types';
-import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
+import type { DiagramBounds } from '@/diagrams/model/schema/types';
+import type { DiagramSpec } from '@/diagrams/model/schema/v3';
+import { isControlObject, isPositionedPoint, pointPosition } from '@/diagrams/model/objects/queries';
 import {
   boundsContain,
-  contentBounds,
   createScenePlan,
   padBounds,
-  prepareSceneSpec,
+  resolveDiagramScene,
+  resolvedSceneContentBounds,
+  sceneReferences,
   type PlannedSceneItem,
 } from '@/diagrams/geometry/layout/scene';
 
-type ViewportSpec = DiagramSpecV2 | DiagramSpecV3;
+type ViewportSpec = DiagramSpec;
 
-function viewportV2(spec: ViewportSpec): DiagramSpecV2 {
-  return spec.version === 3 ? prepareSceneSpec(spec) : spec;
+function resolvedViewportScene(spec: ViewportSpec): DiagramSpec {
+  return resolveDiagramScene(spec);
 }
 
 export interface ViewportChangeOptions {
@@ -32,14 +34,14 @@ export function normalizeViewportBounds(bounds: readonly number[]): DiagramBound
 }
 
 export function resolveHomeViewport(spec: ViewportSpec): DiagramBounds {
-  const v2 = viewportV2(spec);
-  return normalizeViewportBounds(v2.viewport.home) ?? normalizeViewportBounds(v2.viewport.bounds) ?? [-5, 5, 5, -5];
+  const resolved = resolvedViewportScene(spec);
+  return normalizeViewportBounds(resolved.viewport.home) ?? normalizeViewportBounds(resolved.viewport.bounds) ?? [-5, 5, 5, -5];
 }
 
 /** Autoridad de la vista configurada al cargar o tras editar límites manualmente. */
 export function resolveInitialCamera(spec: ViewportSpec): DiagramBounds {
-  const v2 = viewportV2(spec);
-  return normalizeViewportBounds(v2.viewport.bounds) ?? resolveHomeViewport(v2);
+  const resolved = resolvedViewportScene(spec);
+  return normalizeViewportBounds(resolved.viewport.bounds) ?? resolveHomeViewport(resolved);
 }
 
 export function unionBounds(boundsList: readonly DiagramBounds[]): DiagramBounds | null {
@@ -63,17 +65,22 @@ export function applyBoundsPadding(bounds: DiagramBounds, padding: number): Diag
 }
 
 /** Aplica valores temporales de sliders definidos en un paso. */
-export function specWithStepSliderValues(input: ViewportSpec, stepId: string): DiagramSpecV2 {
-  const spec = viewportV2(input);
+export function specWithStepSliderValues(input: ViewportSpec, stepId: string): DiagramSpec {
+  return withStepControlValues(resolvedViewportScene(input), stepId);
+}
+
+/** Valores temporales de controles sobre una escena ya resuelta (no vuelve a resolverla). */
+function withStepControlValues(spec: DiagramSpec, stepId: string): DiagramSpec {
   const step = spec.steps.find(item => item.id === stepId);
   if (!step?.objectStates) return spec;
-  const hasSliderOverride = spec.sliders.some(slider => step.objectStates?.[slider.id]?.value !== undefined);
+  const hasSliderOverride = spec.objects.some(object => isControlObject(object) && step.objectStates?.[object.id]?.value !== undefined);
   if (!hasSliderOverride) return spec;
   return {
     ...spec,
-    sliders: spec.sliders.map(slider => {
-      const value = step.objectStates?.[slider.id]?.value;
-      return value !== undefined ? { ...slider, value } : slider;
+    objects: spec.objects.map(object => {
+      if (!isControlObject(object)) return object;
+      const value = step.objectStates?.[object.id]?.value;
+      return value !== undefined ? { ...object, value } : object;
     }),
   };
 }
@@ -83,36 +90,42 @@ export function isEffectivelyVisible(entry: PlannedSceneItem): boolean {
 }
 
 export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string, stepId?: string): DiagramBounds | null {
-  const v2 = viewportV2(spec);
-  if (!stepId) return contentBounds(v2, [itemId]);
+  return elementBoundsAtStep(resolvedViewportScene(spec), itemId, stepId);
+}
 
-  const plan = createScenePlan(v2, { activeStepId: stepId });
+function elementBoundsAtStep(resolved: DiagramSpec, itemId: string, stepId?: string): DiagramBounds | null {
+  if (!stepId) return resolvedSceneContentBounds(resolved, [itemId]);
+
+  const plan = createScenePlan(resolved, { activeStepId: stepId });
   const targetEntry = plan.find(entry => entry.item.id === itemId);
   if (!targetEntry || !targetEntry.visible) return null;
 
+  const plannedPosition = (entry: PlannedSceneItem | undefined): { x: number; y: number } | null => {
+    if (!entry) return null;
+    if (isPositionedPoint(entry.item)) return pointPosition(entry.item) ?? null;
+    if (isControlObject(entry.item)) return { x: entry.item.position[0], y: entry.item.position[1] };
+    return null;
+  };
   const visiblePointIds = new Set(
-    plan.filter(entry => entry.visible && 'x' in entry.item).map(entry => entry.item.id)
+    plan.filter(entry => entry.visible && plannedPosition(entry)).map(entry => entry.item.id)
   );
 
-  if ('x' in targetEntry.item && 'constraint' in targetEntry.item) {
-    const coords = targetEntry.item;
+  const target = targetEntry.item;
+  if (isPositionedPoint(target)) {
+    const coords = pointPosition(target)!;
     return [coords.x, coords.y, coords.x, coords.y];
   }
 
-  if ('kind' in targetEntry.item) {
-    const element = targetEntry.item;
-    const refs = element.refs
+  if (!isControlObject(target)) {
+    const refs = sceneReferences(resolved, target)
       .filter(ref => visiblePointIds.has(ref))
-      .map(ref => {
-        const pointItem = plan.find(p => p.item.id === ref)?.item;
-        return pointItem && 'x' in pointItem ? { x: pointItem.x, y: pointItem.y } : null;
-      })
+      .map(ref => plannedPosition(plan.find(p => p.item.id === ref)))
       .filter((point): point is { x: number; y: number } => Boolean(point));
 
-    if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
-      return contentBounds(v2, [itemId]);
+    if (target.objectType === 'path' && (target.geometry.type === 'function' || target.geometry.type === 'parametric')) {
+      return resolvedSceneContentBounds(resolved, [itemId]);
     }
-    if (element.kind === 'circle' && refs.length >= 2) {
+    if (target.objectType === 'path' && target.geometry.type === 'circle' && refs.length >= 2) {
       const [center, edge] = refs;
       const radius = Math.hypot(edge.x - center.x, edge.y - center.y);
       return [center.x - radius, center.y + radius, center.x + radius, center.y - radius];
@@ -123,7 +136,7 @@ export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string, s
     return [Math.min(...xs), Math.max(...ys), Math.max(...xs), Math.min(...ys)];
   }
 
-  return contentBounds(v2, [itemId]);
+  return resolvedSceneContentBounds(resolved, [itemId]);
 }
 
 /**
@@ -134,7 +147,7 @@ export function computeAutoFitBounds(
   input: ViewportSpec,
   padding?: number,
 ): DiagramBounds | null {
-  const spec = viewportV2(input);
+  const spec = resolvedViewportScene(input);
   const pad = padding ?? spec.viewport.padding;
   const collected: DiagramBounds[] = [];
 
@@ -142,16 +155,16 @@ export function computeAutoFitBounds(
     const plan = createScenePlan(spec);
     for (const entry of plan) {
       if (!isEffectivelyVisible(entry)) continue;
-      const bounds = computeElementBoundsAtStep(spec, entry.item.id);
+      const bounds = elementBoundsAtStep(spec, entry.item.id);
       if (bounds) collected.push(bounds);
     }
   } else {
     for (const step of spec.steps) {
-      const stepSpec = specWithStepSliderValues(spec, step.id);
+      const stepSpec = withStepControlValues(spec, step.id);
       const plan = createScenePlan(stepSpec, { activeStepId: step.id });
       for (const entry of plan) {
         if (!isEffectivelyVisible(entry)) continue;
-        const bounds = computeElementBoundsAtStep(stepSpec, entry.item.id, step.id);
+        const bounds = elementBoundsAtStep(stepSpec, entry.item.id, step.id);
         if (bounds) collected.push(bounds);
       }
     }
@@ -163,15 +176,16 @@ export function computeAutoFitBounds(
 
 /** Elementos visibles en el paso actual que quedan fuera del viewport dado. */
 export function offscreenVisibleItemIds(
-  spec: ViewportSpec,
+  input: ViewportSpec,
   bounds: DiagramBounds,
   stepId?: string,
 ): string[] {
+  const spec = resolvedViewportScene(input);
   const plan = createScenePlan(spec, stepId ? { activeStepId: stepId } : {});
   return plan
     .filter(entry => isEffectivelyVisible(entry))
     .filter(entry => {
-      const itemBounds = computeElementBoundsAtStep(spec, entry.item.id);
+      const itemBounds = elementBoundsAtStep(spec, entry.item.id);
       return itemBounds ? !boundsContain(bounds, itemBounds) : false;
     })
     .map(entry => entry.item.id);
@@ -183,12 +197,12 @@ export function fitVisibleItemsAtStep(
   stepId?: string,
   padding?: number,
 ): DiagramBounds | null {
-  const spec = viewportV2(input);
+  const spec = resolvedViewportScene(input);
   const plan = createScenePlan(spec, stepId ? { activeStepId: stepId } : {});
   const collected = plan
     .filter(entry => isEffectivelyVisible(entry))
     .flatMap(entry => {
-      const bounds = computeElementBoundsAtStep(spec, entry.item.id);
+      const bounds = elementBoundsAtStep(spec, entry.item.id);
       return bounds ? [bounds] : [];
     });
   const united = unionBounds(collected);

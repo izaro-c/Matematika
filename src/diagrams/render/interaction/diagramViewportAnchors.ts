@@ -4,7 +4,8 @@
  * share them without pulling ResizeObserver state.
  */
 
-import type { DiagramBounds, DiagramSpecV2 } from '@/diagrams/model';
+import { findObject, isControlObject, isPositionedPoint, objectKind, objectStyle, type DiagramBounds, type DiagramSpec } from '@/diagrams/model';
+import { sceneReferences } from '@/diagrams/geometry/coordinates/sceneCoordinates';
 
 export function renderedCoordinates(element: any, parameter?: number): [number, number] | null {
   if (!element || typeof element.X !== 'function' || typeof element.Y !== 'function') return null;
@@ -25,35 +26,35 @@ export function referencedLabelAnchor(
   referenceId: string,
   parameter: number,
   elements: Record<string, any>,
-  spec: DiagramSpecV2,
+  spec: Pick<DiagramSpec, 'objects'>,
 ): [number, number] {
-  const referencedItem = [...spec.points, ...spec.elements, ...spec.sliders].find(item => item.id === referenceId);
+  const referencedItem = findObject(spec, referenceId);
   const rendered = elements[referenceId];
-  if (!referencedItem || !('kind' in referencedItem)) return renderedCoordinates(rendered) ?? [0, 0];
+  if (!referencedItem || isPositionedPoint(referencedItem) || isControlObject(referencedItem)) return renderedCoordinates(rendered) ?? [0, 0];
+  const kind = objectKind(referencedItem);
 
-  if (['poincareGeodesic', 'poincareArc', 'parametricCurve', 'functionCurve'].includes(referencedItem.kind)) {
-    const domain = referencedItem.kind === 'poincareGeodesic' || referencedItem.kind === 'poincareArc'
-      ? [0, 1]
-      : referencedItem.properties?.domain ?? (referencedItem.kind === 'functionCurve' ? [-5, 5] : [0, Math.PI * 2]);
+  if (referencedItem.objectType === 'path' && ['poincare-geodesic', 'poincare-arc', 'parametric', 'function'].includes(referencedItem.geometry.type)) {
+    const geometry = referencedItem.geometry;
+    const domain = geometry.type === 'function' || geometry.type === 'parametric' ? geometry.domain : [0, 1];
     const curveParameter = domain[0] + (domain[1] - domain[0]) * parameter;
     const curveCoordinates = renderedCoordinates(rendered, curveParameter);
     if (curveCoordinates) return curveCoordinates;
   }
 
-  const referenceCoordinates = referencedItem.refs
+  const referenceCoordinates = sceneReferences(spec, referencedItem)
     .map(id => renderedCoordinates(elements[id]))
     .filter((coordinates): coordinates is [number, number] => Boolean(coordinates));
-  if (referencedItem.kind === 'circle' && referenceCoordinates.length >= 2) {
+  if (kind === 'circle' && referenceCoordinates.length >= 2) {
     const [center, boundary] = referenceCoordinates;
     const radius = Math.hypot(boundary[0] - center[0], boundary[1] - center[1]);
     const angle = Math.PI * 2 * parameter;
     return [center[0] + radius * Math.cos(angle), center[1] + radius * Math.sin(angle)];
   }
-  if (['segment', 'line', 'ray'].includes(referencedItem.kind) && referenceCoordinates.length >= 2) {
+  if (['segment', 'line', 'ray'].includes(kind) && referenceCoordinates.length >= 2) {
     const [start, end] = referenceCoordinates;
     return [start[0] + (end[0] - start[0]) * parameter, start[1] + (end[1] - start[1]) * parameter];
   }
-  if (['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark'].includes(referencedItem.kind)) {
+  if (referencedItem.objectType === 'angle') {
     const labelCoordinates = renderedCoordinates(rendered?.label);
     if (labelCoordinates) return labelCoordinates;
 
@@ -63,10 +64,10 @@ export function referencedLabelAnchor(
       const b = Math.atan2(pB[1] - pO[1], pB[0] - pO[0]);
       const diff = (b - a + 2 * Math.PI) % (2 * Math.PI);
       let midAngle = a + diff / 2;
-      if (referencedItem.kind !== 'angle') {
+      if (kind !== 'angle') {
         if (diff > Math.PI) midAngle += Math.PI;
       }
-      const radius = (referencedItem.style?.angleRadius ?? 1) * 1.5;
+      const radius = (objectStyle(referencedItem)?.angleRadius ?? 1) * 1.5;
       return [pO[0] + radius * Math.cos(midAngle), pO[1] + radius * Math.sin(midAngle)];
     }
   }

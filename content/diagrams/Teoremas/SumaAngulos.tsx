@@ -538,8 +538,7 @@ export const SumaAngulosSpec = createDiagramSpec(
         "blocks": [
           {
             "id": "bloque-1",
-            "text": "${nonReflexAngleBAC.degrees}º + {nonReflexAngleABC.degrees}º + {nonReflexAngleACB.degrees}º = {value}º$",
-            "expression": "nonReflexAngleBAC.degrees + nonReflexAngleABC.degrees + nonReflexAngleACB.degrees",
+            "text": "${nonReflexAngleBAC.degrees}º + {nonReflexAngleABC.degrees}º + {nonReflexAngleACB.degrees}º = {= nonReflexAngleBAC.degrees + nonReflexAngleABC.degrees + nonReflexAngleACB.degrees | precision: 2}º$",
             "rules": []
           }
         ],

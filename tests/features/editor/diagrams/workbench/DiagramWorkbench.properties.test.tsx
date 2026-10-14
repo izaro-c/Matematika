@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { curveAreaFill } from '@/diagrams/geometry/curves/curveGeometry';
-import { defaultConstraintRefs, withConstraintDependencies } from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
-import { updatePoint } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { defaultConstraintRefs } from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
+import { assignRelationToPoint } from '@/fixed-pages/editor/diagrams/model/constraints/relationModel';
+import { relationDraft } from '@/fixed-pages/editor/diagrams/model/constraints/relationIntents';
+import { pointMode } from '@/fixed-pages/editor/diagrams/model';
+import { element, point } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import {
   congruenceMarkForSegment,
@@ -21,92 +24,64 @@ import {
   equalAngleConstraintForAngle,
   setEqualAngleConstraint,
 } from '@/fixed-pages/editor/diagrams/model/constraints/angleConstraints';
-import type { DiagramElement, VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
+import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
+import { curvePath, pointById, relationFor, sceneSpec } from '../../../../helpers/diagramSpec';
 
-describe('Editor V2 - Property Completeness & Correctness', () => {
+function freePoints(entries: Array<[string, number, number]>) {
+  return entries.map(([id, x, y]) => point(id, id, x, y, false, 'carbon'));
+}
+
+describe('Editor - Property Completeness & Correctness', () => {
   it('correctly identifies interior area fill for functionCurve', () => {
-    const fnElement: DiagramElement = {
-      id: 'fn1',
-      label: 'f(x)',
-      kind: 'functionCurve',
-      refs: [],
-      color: 'pavo',
-      properties: {
-        expression: 'sin(x)',
-        domain: [-5, 5],
-        areaFill: 'interior',
-      },
-    };
+    const fnElement = curvePath('fn1', 'f(x)', 'functionCurve', [], {
+      expression: 'sin(x)',
+      domain: [-5, 5],
+      areaFill: 'interior',
+    });
     expect(curveAreaFill(fnElement)).toBe('interior');
   });
 
   it('correctly sets target point constraint mode to constrained when equalLength is applied', () => {
-    let model: VisualDiagramModel = {
+    let model: VisualDiagramModel = sceneSpec({
       title: 'Test Model',
-      viewport: { bounds: [-5, 5, 5, -5] },
-      points: [
-        { id: 'A', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free', selection: { selectable: true } },
-        { id: 'B', label: 'B', x: 2, y: 0, color: 'carbon', constraint: 'free', selection: { selectable: true } },
-        { id: 'C', label: 'C', x: 0, y: 2, color: 'carbon', constraint: 'free', selection: { selectable: true } },
-        { id: 'D', label: 'D', x: 3, y: 2, color: 'carbon', constraint: 'free', selection: { selectable: true } },
+      objects: [
+        ...freePoints([['A', 0, 0], ['B', 2, 0], ['C', 0, 2], ['D', 3, 2]]),
+        element('segAB', 'AB', 'segment', ['A', 'B'], 'pavo'),
+        element('segCD', 'CD', 'segment', ['C', 'D'], 'pavo'),
       ],
-      elements: [
-        { id: 'segAB', label: 'AB', kind: 'segment', refs: ['A', 'B'], color: 'pavo' },
-        { id: 'segCD', label: 'CD', kind: 'segment', refs: ['C', 'D'], color: 'pavo' },
-      ],
-      sliders: [],
-      steps: [],
-    };
+    });
 
     const targetPointId = 'C';
     const refs = defaultConstraintRefs(model, 'equalLength', targetPointId);
     expect(refs).toEqual(['C', 'D', 'segAB']);
 
-    const newConstraint = {
-      id: 'c1',
-      label: 'Misma longitud que segAB',
-      kind: 'equalLength' as const,
-      refs,
-      enabled: true,
-    };
+    model = assignRelationToPoint(model, targetPointId, relationFor('equalLength', 'c1', 'Misma longitud que segAB', refs, model.objects));
 
-    model = { ...model, constraints: [newConstraint] };
-    model = withConstraintDependencies(model, 'c1', refs);
-    const targetPt = model.points.find(p => p.id === targetPointId);
-    const constraintIds = [...(targetPt?.constraintIds || []), 'c1'];
-    model = updatePoint(model, targetPointId, { constraint: 'constrained', constraintIds });
-
-    const targetPoint = model.points.find(p => p.id === targetPointId);
-    expect(targetPoint?.constraint).toBe('constrained');
-    expect(targetPoint?.constraintIds ?? []).toContain('c1');
+    const targetPoint = pointById(model, targetPointId);
+    expect(pointMode(targetPoint)).toBe('constrained');
+    expect(targetPoint.mobility.type === 'constrained' && targetPoint.mobility.relationIds).toContain('c1');
   });
 
   it('adds and updates segment marks: congruence (up to 4), parallel, dimension, and measurement', () => {
-    let model: VisualDiagramModel = {
+    let model: VisualDiagramModel = sceneSpec({
       title: 'Segment Marks Test',
-      viewport: { bounds: [-5, 5, 5, -5] },
-      points: [
-        { id: 'A', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'B', label: 'B', x: 4, y: 0, color: 'carbon', constraint: 'free' },
+      objects: [
+        ...freePoints([['A', 0, 0], ['B', 4, 0]]),
+        element('segAB', 'AB', 'segment', ['A', 'B'], 'pavo'),
       ],
-      elements: [
-        { id: 'segAB', label: 'AB', kind: 'segment', refs: ['A', 'B'], color: 'pavo' },
-      ],
-      sliders: [],
-      steps: [],
-    };
+    });
 
     // Congruencia (4 marcas)
     model = setSegmentCongruenceMark(model, 'segAB', 4);
     const congMark = congruenceMarkForSegment(model, 'segAB');
     expect(congMark).toBeDefined();
-    expect(congMark?.properties?.markCount).toBe(4);
+    expect(congMark?.objectType === 'mark' && congMark.count).toBe(4);
 
     // Paralelismo (2 flechas)
     model = setSegmentParallelMark(model, 'segAB', 2);
     const parMark = parallelMarkForSegment(model, 'segAB');
     expect(parMark).toBeDefined();
-    expect(parMark?.properties?.markCount).toBe(2);
+    expect(parMark?.objectType === 'mark' && parMark.count).toBe(2);
 
     // Cota
     model = toggleSegmentDimensionLine(model, 'segAB', true);
@@ -118,46 +93,34 @@ describe('Editor V2 - Property Completeness & Correctness', () => {
   });
 
   it('correctly sets equalLength on segment and equalAngle on angle', () => {
-    let model: VisualDiagramModel = {
+    let model: VisualDiagramModel = sceneSpec({
       title: 'Constraints Test',
-      viewport: { bounds: [-5, 5, 5, -5] },
-      points: [
-        { id: 'A', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'B', label: 'B', x: 2, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'C', label: 'C', x: 0, y: 2, color: 'carbon', constraint: 'free' },
-        { id: 'D', label: 'D', x: 4, y: 2, color: 'carbon', constraint: 'free' },
-        { id: 'O1', label: 'O1', x: 0, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'P1', label: 'P1', x: 1, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'Q1', label: 'Q1', x: 0, y: 1, color: 'carbon', constraint: 'free' },
-        { id: 'O2', label: 'O2', x: 3, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'P2', label: 'P2', x: 4, y: 0, color: 'carbon', constraint: 'free' },
-        { id: 'Q2', label: 'Q2', x: 3, y: 1, color: 'carbon', constraint: 'free' },
+      objects: [
+        ...freePoints([['A', 0, 0], ['B', 2, 0], ['C', 0, 2], ['D', 4, 2], ['O1', 0, 0], ['P1', 1, 0], ['Q1', 0, 1], ['O2', 3, 0], ['P2', 4, 0], ['Q2', 3, 1]]),
+        element('segAB', 'AB', 'segment', ['A', 'B'], 'pavo'),
+        element('segCD', 'CD', 'segment', ['C', 'D'], 'pavo'),
+        element('ang1', 'ang1', 'angle', ['P1', 'O1', 'Q1'], 'ocre'),
+        element('ang2', 'ang2', 'angle', ['P2', 'O2', 'Q2'], 'ocre'),
       ],
-      elements: [
-        { id: 'segAB', label: 'AB', kind: 'segment', refs: ['A', 'B'], color: 'pavo' },
-        { id: 'segCD', label: 'CD', kind: 'segment', refs: ['C', 'D'], color: 'pavo' },
-        { id: 'ang1', label: 'ang1', kind: 'angle', refs: ['P1', 'O1', 'Q1'], color: 'ocre' },
-        { id: 'ang2', label: 'ang2', kind: 'angle', refs: ['P2', 'O2', 'Q2'], color: 'ocre' },
-      ],
-      sliders: [],
-      steps: [],
-    };
+    });
 
     // Igualar longitud segCD con segAB haciéndose móvil D
     model = setEqualLengthConstraint(model, 'segCD', 'D', 'segAB');
     const eqLen = equalLengthConstraintForSegment(model, 'segCD');
     expect(eqLen).toBeDefined();
-    expect(eqLen?.kind).toBe('equalLength');
-    expect(eqLen?.refs[0]).toBe('D');
-    expect(eqLen?.refs[2]).toBe('segAB');
+    const lengthDraft = relationDraft(eqLen!, model.objects);
+    expect(lengthDraft.kind).toBe('equalLength');
+    expect(lengthDraft.refs[0]).toBe('D');
+    expect(lengthDraft.refs[2]).toBe('segAB');
 
     // Igualar amplitud ang2 con ang1 haciéndose móvil Q2
     model = setEqualAngleConstraint(model, 'ang2', 'Q2', 'ang1');
     const eqAng = equalAngleConstraintForAngle(model, 'ang2');
     expect(eqAng).toBeDefined();
-    expect(eqAng?.kind).toBe('equalAngle');
-    expect(eqAng?.refs[0]).toBe('Q2');
-    expect(eqAng?.refs[3]).toBe('ang1');
+    const angleDraft = relationDraft(eqAng!, model.objects);
+    expect(angleDraft.kind).toBe('equalAngle');
+    expect(angleDraft.refs[0]).toBe('Q2');
+    expect(angleDraft.refs[3]).toBe('ang1');
   });
 
   it('creates initial infoPanel with normalized viewport coordinates', () => {

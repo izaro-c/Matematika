@@ -1,14 +1,25 @@
-import { updatePoint } from '../elements/diagramElements';
-import { uniqueConstraintId, withConstraintDependencies } from '../constraints/constraintOptions';
-import { removeConstraintFromModel } from '../constraints/segmentLengthConstraints';
-import type { VisualConstraint, VisualDiagramModel, VisualElement, VisualPoint } from '../types';
-
-const ANGLE_KINDS = new Set(['angle', 'nonReflexAngle']);
+import {
+  equalAngleRoles,
+  isMeasurableAngle,
+  objectKind,
+  type AngleObject,
+  type DiagramRelation,
+} from '@/diagrams';
+import { buildRelation } from './relationIntents';
+import {
+  assignRelationToPoint,
+  findPositionedPoint,
+  pointAcceptsRelations,
+  removeConstraintFromModel,
+  uniqueConstraintId,
+} from './relationModel';
+import type { VisualDiagramModel, VisualPoint } from '../types';
 
 type EditableAngleKind = 'angle' | 'nonReflexAngle';
 
-function isEditableAngle(element: VisualElement): boolean {
-  return ANGLE_KINDS.has(element.kind) && element.refs.length >= 3;
+function editableAngle(model: VisualDiagramModel, angleId: string): AngleObject | undefined {
+  const angle = model.objects.find(object => object.id === angleId);
+  return isMeasurableAngle(angle) ? angle : undefined;
 }
 
 /**
@@ -20,20 +31,18 @@ export function convertAngleKind(
   angleId: string,
   kind: EditableAngleKind,
 ): VisualDiagramModel {
-  const source = model.elements.find(element => element.id === angleId && isEditableAngle(element));
-  if (!source || source.kind === kind) return model;
+  const source = editableAngle(model, angleId);
+  if (!source || objectKind(source) === kind) return model;
 
   const connectedIds = new Set([source.id]);
   let changed = true;
   while (changed) {
     changed = false;
-    (model.constraints ?? []).forEach(constraint => {
-      if (constraint.kind !== 'equalAngle') return;
-      const angleIds = constraint.refs.slice(3, 5);
-      if (!angleIds.some(id => connectedIds.has(id))) return;
-      angleIds.forEach(id => {
-        const angle = model.elements.find(element => element.id === id);
-        if (angle && isEditableAngle(angle) && !connectedIds.has(id)) {
+    model.relations.forEach(relation => {
+      if (relation.type !== 'equal-angle') return;
+      if (!relation.angles.some(id => connectedIds.has(id))) return;
+      relation.angles.forEach(id => {
+        if (editableAngle(model, id) && !connectedIds.has(id)) {
           connectedIds.add(id);
           changed = true;
         }
@@ -41,49 +50,45 @@ export function convertAngleKind(
     });
   }
 
+  const sweep = kind === 'angle' ? 'directed' : 'non-reflex';
   return {
     ...model,
-    elements: model.elements.map(element => connectedIds.has(element.id) ? { ...element, kind } : element),
+    objects: model.objects.map(object => (
+      connectedIds.has(object.id) && object.objectType === 'angle' ? { ...object, sweep } : object
+    )),
   };
-}
-
-function targetAngleForConstraint(model: VisualDiagramModel, constraint: VisualConstraint): VisualElement | undefined {
-  if (constraint.kind !== 'equalAngle' || constraint.refs.length < 5) return undefined;
-  return model.elements.find(element => element.id === constraint.refs[4] && isEditableAngle(element));
 }
 
 export function equalAngleConstraintForAngle(
   model: VisualDiagramModel,
   angleId: string,
-): VisualConstraint | undefined {
-  return model.constraints?.find(constraint => targetAngleForConstraint(model, constraint)?.id === angleId);
+): DiagramRelation | undefined {
+  return model.relations.find(relation => (
+    relation.type === 'equal-angle'
+    && editableAngle(model, equalAngleRoles(relation, model.objects).target)?.id === angleId
+  ));
 }
 
 export function editableAngleEndpoints(model: VisualDiagramModel, angleId: string): VisualPoint[] {
-  const angle = model.elements.find(element => element.id === angleId && isEditableAngle(element));
+  const angle = editableAngle(model, angleId);
   if (!angle) return [];
-  return [angle.refs[0], angle.refs[2]]
-    .map(ref => model.points.find(point => point.id === ref))
-    .filter((point): point is VisualPoint => Boolean(
-      point
-      && !point.fixed
-      && !point.locked
-      && ['free', 'glider', 'constrained'].includes(point.constraint),
-    ));
+  return [angle.points[0], angle.points[2]]
+    .map(ref => findPositionedPoint(model, ref))
+    .filter((point): point is VisualPoint => Boolean(point && pointAcceptsRelations(point)));
 }
 
 export function referenceAngles(
   model: VisualDiagramModel,
   targetAngleId: string,
   movingPointId: string,
-): VisualElement[] {
-  const target = model.elements.find(element => element.id === targetAngleId && isEditableAngle(element));
+): AngleObject[] {
+  const target = editableAngle(model, targetAngleId);
   if (!target) return [];
-  return model.elements.filter(element => (
-    element.id !== target.id
-    && element.kind === target.kind
-    && element.refs.length >= 3
-    && !element.refs.includes(movingPointId)
+  return model.objects.filter((object): object is AngleObject => (
+    isMeasurableAngle(object)
+    && object.id !== target.id
+    && object.sweep === target.sweep
+    && !object.points.includes(movingPointId)
   ));
 }
 
@@ -93,36 +98,29 @@ export function setEqualAngleConstraint(
   movingPointId: string,
   sourceAngleId: string,
 ): VisualDiagramModel {
-  const targetAngle = model.elements.find(element => element.id === targetAngleId && isEditableAngle(element));
-  const sourceAngle = model.elements.find(element => element.id === sourceAngleId && isEditableAngle(element));
-  const movingPoint = model.points.find(point => point.id === movingPointId);
-  if (!targetAngle || !sourceAngle || targetAngle.id === sourceAngle.id || targetAngle.kind !== sourceAngle.kind || !movingPoint) return model;
+  const targetAngle = editableAngle(model, targetAngleId);
+  const sourceAngle = editableAngle(model, sourceAngleId);
+  const movingPoint = findPositionedPoint(model, movingPointId);
+  if (!targetAngle || !sourceAngle || targetAngle.id === sourceAngle.id || targetAngle.sweep !== sourceAngle.sweep || !movingPoint) return model;
   if (!editableAngleEndpoints(model, targetAngleId).some(point => point.id === movingPointId)) return model;
-  if (sourceAngle.refs.includes(movingPointId)) return model;
+  if (sourceAngle.points.includes(movingPointId)) return model;
 
-  const vertexPointId = targetAngle.refs[1];
-  const fixedRayPointId = targetAngle.refs[0] === movingPointId ? targetAngle.refs[2] : targetAngle.refs[0];
+  const vertexPointId = targetAngle.points[1];
+  const fixedRayPointId = targetAngle.points[0] === movingPointId ? targetAngle.points[2] : targetAngle.points[0];
   if (!vertexPointId || !fixedRayPointId) return model;
 
   const existing = equalAngleConstraintForAngle(model, targetAngleId);
-  let next = existing ? removeConstraintFromModel(model, existing.id) : model;
+  const next = existing ? removeConstraintFromModel(model, existing.id) : model;
   const constraintId = existing?.id ?? uniqueConstraintId(next, `equalAngle${targetAngleId}`);
-  const constraint: VisualConstraint = {
-    id: constraintId,
-    label: `${targetAngle.label} tiene la misma amplitud que ${sourceAngle.label}`,
-    kind: 'equalAngle',
-    refs: [movingPointId, vertexPointId, fixedRayPointId, sourceAngleId, targetAngleId],
-    enabled: true,
-  };
-  const refreshedPoint = next.points.find(point => point.id === movingPointId);
-  if (!refreshedPoint) return model;
-
-  next = withConstraintDependencies({
-    ...next,
-    constraints: [...(next.constraints ?? []), constraint],
-  }, constraintId, constraint.refs.slice(0, 4));
-  return updatePoint(next, movingPointId, {
-    constraint: 'constrained',
-    constraintIds: [...(refreshedPoint.constraintIds ?? []), constraintId],
-  });
+  const relation = buildRelation(
+    'equalAngle',
+    constraintId,
+    `${targetAngle.label} tiene la misma amplitud que ${sourceAngle.label}`,
+    [movingPointId, vertexPointId, fixedRayPointId, sourceAngleId, targetAngleId],
+    next.objects,
+  );
+  if (!relation) return model;
+  // A diferencia de la igualdad de longitudes, el soporte de un punto deslizante
+  // no se conserva: la amplitud fija la dirección del lado.
+  return assignRelationToPoint(next, movingPointId, relation, { keepSupport: false });
 }

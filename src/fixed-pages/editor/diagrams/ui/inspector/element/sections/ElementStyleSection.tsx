@@ -11,6 +11,9 @@ import {
 } from '../../elementSections';
 import { DiagramNativeLabelEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramNativeLabelEditor';
 import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
+import { elementKind } from '@/fixed-pages/editor/diagrams/model';
+import { dashedPatch, stylePatch } from '../../elementSettings';
+import { curveAreaFill, objectDashed, objectStyle, withObjectLabelVisible, withObjectStylePatch } from '@/diagrams';
 
 /** Propiedades: color, strokeWidth, highlightStrokeWidth, fillOpacity, highlightFillOpacity, angleRadius, dashed, preserveColorOnHighlight, highlightable, layerId */
 export const ElementStyleSection: React.FC<ElementPanelProps> = ({
@@ -19,14 +22,17 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
 }) => {
   const layers = availableLayers(model);
-  const showStroke = showsStrokeControls(element.kind);
-  const showFill = showsFillOpacity(element.kind, element.properties?.areaFill);
-  const showAngleRadius = showsAngleRadius(element.kind);
-  const showDashed = showsDashed(element.kind);
-  const capabilities = elementInspectorCapabilities(element.kind);
-  const attachedLabel = element.kind === 'label'
+  const kind = elementKind(element);
+  const style = objectStyle(element);
+  const showStroke = showsStrokeControls(kind);
+  const showFill = showsFillOpacity(kind, curveAreaFill(element));
+  const showAngleRadius = showsAngleRadius(kind);
+  const showDashed = showsDashed(kind);
+  const capabilities = elementInspectorCapabilities(kind);
+  const attachedLabel = kind === 'label'
     ? undefined
-    : model.elements.find(item => item.kind === 'label' && item.refs[0] === element.id);
+    : model.objects.find(item => item.objectType === 'annotation' && item.variant === 'label' && item.anchor.type === 'object' && item.anchor.object === element.id);
+  const attachedStyle = attachedLabel ? objectStyle(attachedLabel) : undefined;
 
   return (
     <div className="space-y-3">
@@ -59,11 +65,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               min="0"
               max="10"
               aria-label="Grosor Trazo (px)"
-              value={element.style?.strokeWidth ?? 2.4}
+              value={style?.strokeWidth ?? 2.4}
               onChange={e =>
-                onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), strokeWidth: parseOptionalNumber(e.target.value, 2.4) },
-                })
+                onUpdateElement(element.id, stylePatch({ strokeWidth: parseOptionalNumber(e.target.value, 2.4) }))
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
             />
@@ -78,11 +82,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               min="0"
               max="30"
               aria-label="Grosor Trazo en Hover (px)"
-              value={element.style?.highlightStrokeWidth ?? 3}
+              value={style?.highlightStrokeWidth ?? 3}
               onChange={e =>
-                onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) },
-                })
+                onUpdateElement(element.id, stylePatch({ highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) }))
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
             />
@@ -102,11 +104,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               min="0"
               max="1"
               aria-label="Opacidad Relleno"
-              value={element.style?.fillOpacity ?? 0.2}
+              value={style?.fillOpacity ?? 0.2}
               onChange={e =>
-                onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), fillOpacity: parseOptionalNumber(e.target.value, 0) },
-                })
+                onUpdateElement(element.id, stylePatch({ fillOpacity: parseOptionalNumber(e.target.value, 0) }))
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
@@ -120,11 +120,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               step="0.05"
               min="0"
               max="1"
-              value={element.style?.highlightFillOpacity ?? 0.35}
+              value={style?.highlightFillOpacity ?? 0.35}
               onChange={e =>
-                onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), highlightFillOpacity: parseOptionalNumber(e.target.value, 0.35) },
-                })
+                onUpdateElement(element.id, stylePatch({ highlightFillOpacity: parseOptionalNumber(e.target.value, 0.35) }))
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
@@ -142,36 +140,29 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             step="0.1"
             min="0"
             max="80"
-            value={element.style?.angleRadius ?? 1}
+            value={style?.angleRadius ?? 1}
             onChange={e =>
-              onUpdateElement(element.id, {
-                style: { ...(element.style || {}), angleRadius: parseOptionalNumber(e.target.value, 1) },
-              })
+              onUpdateElement(element.id, stylePatch({ angleRadius: parseOptionalNumber(e.target.value, 1) }))
             }
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
         </div>
       )}
 
-      {['dimensionLine', 'measurement', 'label', 'text', 'formula'].includes(element.kind) ? (
+      {['dimensionLine', 'measurement', 'label', 'text', 'formula'].includes(kind) ? (
         <div className="pt-2 border-t border-carbon/10">
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            {element.kind === 'dimensionLine' ? 'Tamaño de la Cota (px)' : 'Tamaño de la Etiqueta (px)'}
+            {kind === 'dimensionLine' ? 'Tamaño de la Cota (px)' : 'Tamaño de la Etiqueta (px)'}
           </label>
           <input
             type="number"
             min="6"
             max="72"
             step="1"
-            aria-label={element.kind === 'dimensionLine' ? 'Tamaño de cota' : 'Tamaño de etiqueta'}
-            value={element.style?.labelSize ?? (element.kind === 'dimensionLine' ? 14 : 16)}
+            aria-label={kind === 'dimensionLine' ? 'Tamaño de cota' : 'Tamaño de etiqueta'}
+            value={style?.labelSize ?? (kind === 'dimensionLine' ? 14 : 16)}
             onChange={e =>
-              onUpdateElement(element.id, {
-                style: {
-                  ...(element.style || {}),
-                  labelSize: parseOptionalNumber(e.target.value, element.kind === 'dimensionLine' ? 14 : 16),
-                },
-              })
+              onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, kind === 'dimensionLine' ? 14 : 16), }))
             }
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
@@ -179,13 +170,13 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       ) : (capabilities.fontSize || capabilities.textOffset) ? (
         <DiagramNativeLabelEditor
           label={element.label}
-          visible={element.showLabel === true}
-          size={element.style?.labelSize ?? 16}
-          offset={element.style?.labelOffset}
-          position={element.style?.labelPosition}
-          alongPath={['segment', 'line', 'ray', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'].includes(element.kind)}
-          onVisibleChange={showLabel => onUpdateElement(element.id, { showLabel })}
-          onStyleChange={style => onUpdateElement(element.id, { style: { ...element.style, ...style } })}
+          visible={element.objectType !== 'region' && element.objectType !== 'area' && element.objectType !== 'mark' && element.appearance?.labelVisible === true}
+          size={style?.labelSize ?? 16}
+          offset={style?.labelOffset}
+          position={style?.labelPosition}
+          alongPath={['segment', 'line', 'ray', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'].includes(kind)}
+          onVisibleChange={showLabel => onUpdateElement(element.id, current => withObjectLabelVisible(current, showLabel))}
+          onStyleChange={update => onUpdateElement(element.id, current => withObjectStylePatch(current, update))}
         />
       ) : null}
 
@@ -212,14 +203,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                     max="72"
                     step="1"
                     aria-label="Tamaño de etiqueta vinculada"
-                    value={attachedLabel.style?.labelSize ?? 14}
+                    value={attachedStyle?.labelSize ?? 14}
                     onChange={e =>
-                      onUpdateElement(attachedLabel.id, {
-                        style: {
-                          ...(attachedLabel.style || {}),
-                          labelSize: parseOptionalNumber(e.target.value, 14),
-                        },
-                      })
+                      onUpdateElement(attachedLabel.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
                     }
                     className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                   />
@@ -238,8 +224,8 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             <input
               type="checkbox"
               id={`dashed-${element.id}`}
-              checked={element.dashed || false}
-              onChange={e => onUpdateElement(element.id, { dashed: e.target.checked })}
+              checked={objectDashed(element)}
+              onChange={e => onUpdateElement(element.id, dashedPatch(e.target.checked))}
               className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
             <label htmlFor={`dashed-${element.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
@@ -252,11 +238,9 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           <input
             type="checkbox"
             id={`preserveColor-${element.id}`}
-            checked={element.style?.preserveColorOnHighlight !== false}
+            checked={style?.preserveColorOnHighlight !== false}
             onChange={e =>
-              onUpdateElement(element.id, {
-                style: { ...(element.style || {}), preserveColorOnHighlight: e.target.checked },
-              })
+              onUpdateElement(element.id, stylePatch({ preserveColorOnHighlight: e.target.checked }))
             }
             className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
           />

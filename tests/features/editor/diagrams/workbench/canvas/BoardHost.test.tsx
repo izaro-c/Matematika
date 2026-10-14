@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model';
 import { BoardHost } from '@/fixed-pages/editor/diagrams/ui/canvas/BoardHost';
+import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
 
 const rendererState = vi.hoisted(() => ({ props: null as Record<string, unknown> | null }));
 
@@ -89,7 +90,8 @@ describe('BoardHost', () => {
     fireEvent.click(screen.getByTestId('trigger-create-point'));
     expect(onModelEdit).toHaveBeenCalled();
     const next = onModelEdit.mock.calls[0][0];
-    expect(next.points.some((p: { x: number; y: number }) => p.x === 1.5 && p.y === 2.5)).toBe(true);
+    expect((next as VisualDiagramModel).objects.some(object => object.objectType === 'point'
+      && object.definition.type === 'coordinates' && object.definition.x === 1.5 && object.definition.y === 2.5)).toBe(true);
     expect(onCompleteTool).toHaveBeenCalled();
   });
 });

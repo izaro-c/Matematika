@@ -8,8 +8,7 @@ import marksFixture from '../fixtures/diagrams/marks-angles.json';
 import measurementsFixture from '../fixtures/diagrams/measurements.json';
 import areasFixture from '../fixtures/diagrams/area-grids.json';
 import annotationsFixture from '../fixtures/diagrams/annotations-layers.json';
-import { migrateDiagramSpec, parseDiagramSpecV2 } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { objectKind, objectStyle, parseDiagramSpecV3, pointIsImmovable, withObjectLabelVisible, withObjectStylePatch, withPointPosition, type DiagramObject, type DiagramSpec } from '@/diagrams/public';
 import { MathProvider, useMathStore } from '@/lib/page-context/MathStoreContext';
 
 const rendererState = vi.hoisted(() => ({
@@ -140,9 +139,16 @@ import { PaschSpec } from '../../content/diagrams/Axiomas/Pasch';
 import { AxiomaArquimedesSpec } from '../../content/diagrams/Axiomas/AxiomaArquimedes';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
 
-const congruenceScene = toWorkingSceneV2(Congruence1Spec);
-const trianguloScene = toWorkingSceneV2(TrianguloSpec);
-import { addLabelToElement, setPointAttractors } from '../../src/fixed-pages/editor/diagrams/model';
+const congruenceScene = Congruence1Spec;
+const trianguloScene = TrianguloSpec;
+import { addLabelToElement, element, modelElements as elementsOf, modelPoints as pointsOf, setPointAttractors } from '../../src/fixed-pages/editor/diagrams/model';
+import { positionOf } from '../helpers/diagramSpec';
+
+const fixtureSpec = (fixture: unknown): DiagramSpec => structuredClone(fixture) as DiagramSpec;
+const updateObject = (spec: DiagramSpec, id: string, update: (object: DiagramObject) => DiagramObject): DiagramSpec => ({
+  ...spec,
+  objects: spec.objects.map(object => object.id === id ? update(object) : object),
+});
 
 afterEach(() => {
   cleanup();
@@ -176,8 +182,8 @@ function lastCommittedAttrs(geometry: { setAttribute: { mock: { calls: unknown[]
 
 describe('Shared geometry renderer', () => {
   it('keeps a point visibly selected after the pointer leaves it', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = spec.points.find(point => !point.fixed && point.selection.selectable)!;
+    const spec = fixtureSpec(primitivesFixture);
+    const target = pointsOf(spec).find(point => !pointIsImmovable(point) && point.selection.selectable)!;
 
     function SelectionHarness() {
       const [selection, setSelection] = React.useState<string[]>([]);
@@ -199,17 +205,17 @@ describe('Shared geometry renderer', () => {
     act(() => point.handlers.over[0]());
     act(() => point.handlers.down[0]());
     expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
-      size: target.style?.highlightPointSize ?? 10,
+      size: objectStyle(target)?.highlightPointSize ?? 10,
     }));
 
     act(() => point.handlers.out[0]());
     expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
-      size: target.style?.highlightPointSize ?? 10,
+      size: objectStyle(target)?.highlightPointSize ?? 10,
     }));
   });
 
   it('keeps constructed sides selectable but immovable so constraints cannot be bypassed', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     const onSelectionChange = vi.fn();
     render(
       <MathProvider>
@@ -228,18 +234,18 @@ describe('Shared geometry renderer', () => {
     rendererState.boardHandlers.down.at(-1)?.({ target: rendererState.nodes[segmentIndex], shiftKey: false });
     expect(onSelectionChange).toHaveBeenCalledWith('segAB', { additive: false });
 
-    const movablePoint = spec.points.find(point => !point.fixed && point.selection.selectable)!;
+    const movablePoint = pointsOf(spec).find(point => !pointIsImmovable(point) && point.selection.selectable)!;
     const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === movablePoint.id);
     expect(rendererState.createdOptions[pointIndex]?.options.fixed).toBe(false);
     expect(rendererState.geometries[pointIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ fixed: false }));
   });
 
   it('keeps local hover disabled while allowing explicit MDX emphasis', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => !point.fixed && point.target)!;
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => !pointIsImmovable(point) && point.target)!;
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === target.id
+      objects: base.objects.map(point => point.id === target.id
         ? { ...point, selection: { ...point.selection, selectable: true, highlightable: false } }
         : point),
     };
@@ -262,7 +268,7 @@ describe('Shared geometry renderer', () => {
       label: expect.objectContaining({ highlightStrokeColor: target.color }),
     });
     expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
-      size: target.style?.pointSize ?? 4,
+      size: objectStyle(target)?.pointSize ?? 4,
       fillColor: target.color,
       strokeColor: target.color,
       fillOpacity: 1,
@@ -276,7 +282,7 @@ describe('Shared geometry renderer', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
     expect(lastCommittedAttrs(point)).toMatchObject({
-      size: target.style?.highlightPointSize ?? 10,
+      size: objectStyle(target)?.highlightPointSize ?? 10,
       fillColor: 'ocre',
       strokeColor: 'ocre',
       fillOpacity: 1,
@@ -284,27 +290,10 @@ describe('Shared geometry renderer', () => {
   });
 
   it('renders exact intersections and keeps them on finite authored supports', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const line = {
-      ...base.elements.find(item => item.id === 'lineBC')!,
-      id: 'lineOC',
-      label: 'Recta OC',
-      refs: ['pO', 'pC'],
-      target: false,
-    };
-    const intersection = {
-      ...base.elements.find(item => item.id === 'segAB')!,
-      id: 'intQ',
-      label: 'Q',
-      kind: 'intersection' as const,
-      refs: ['lineOC', 'segAB'],
-      order: 80,
-      locked: true,
-      target: false,
-      properties: { restrictToSupports: true },
-      style: { pointSize: 5, highlightPointSize: 8 },
-    };
-    const spec = { ...base, elements: [...base.elements, line, intersection] };
+    const base = fixtureSpec(primitivesFixture);
+    const line = element('lineOC', 'Recta OC', 'line', ['pO', 'pC'], 'pavo', false);
+    const intersection = { ...element('intQ', 'Q', 'intersection', ['lineOC', 'segAB'], 'carbon', false), order: 80, locked: true, appearance: { size: 5, highlightSize: 8 } };
+    const spec = { ...base, objects: [...base.objects, line, intersection] };
 
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
 
@@ -315,18 +304,11 @@ describe('Shared geometry renderer', () => {
   });
 
   it('hides a restricted intersection when the carrier meets only the extension of a segment', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
-    const intersection = {
-      ...base.elements.find(item => item.id === 'segAB')!,
-      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
-      locked: true, target: false, properties: { restrictToSupports: true },
-    };
-    const spec = {
-      ...base,
-      points: base.points.map(point => point.id === 'pC' ? { ...point, y: 1 } : point),
-      elements: [...base.elements, line, intersection],
-    };
+    const base = fixtureSpec(primitivesFixture);
+    const line = element('lineOC', 'Recta OC', 'line', ['pO', 'pC'], 'pavo', false);
+    const intersection = { ...element('intQ', 'Q', 'intersection', ['lineOC', 'segAB'], 'carbon', false), order: 80, locked: true };
+    const moved = updateObject(base, 'pC', point => point.objectType === 'point' ? withPointPosition(point, { x: positionOf(base, 'pC').x, y: 1 }) : point);
+    const spec = { ...moved, objects: [...moved.objects, line, intersection] };
 
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
 
@@ -391,7 +373,7 @@ describe('Shared geometry renderer', () => {
   it('blocks direct interaction without making a point immovable for relations', () => {
     const spec = {
       ...congruenceScene,
-      points: congruenceScene.points.map(point => point.id === 'pD'
+      objects: congruenceScene.objects.map(point => point.id === 'pD'
         ? { ...point, selection: { ...point.selection, selectable: false, highlightable: true } }
         : point),
     };
@@ -442,14 +424,13 @@ describe('Shared geometry renderer', () => {
     // de disparar un board.update() por punto — ver useBoardLifecycle.ts.
     expect(pointD.geometry.setPosition).toHaveBeenCalled();
     expect(pointC.geometry.Dist(pointD.geometry)).toBeCloseTo(pointA.geometry.Dist(pointB.geometry));
-    expect(spec.points.find(point => point.id === 'pD')).toMatchObject({
-      fixed: false,
-      selection: { selectable: false, highlightable: true },
-    });
+    const pointDSpec = pointsOf(spec).find(point => point.id === 'pD')!;
+    expect(pointIsImmovable(pointDSpec)).toBe(false);
+    expect(pointDSpec).toMatchObject({ selection: { selectable: false, highlightable: true } });
   });
 
   it('uses the dedicated mathematical typography for diagram labels and headings', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
 
     const labelledPoint = rendererState.createdOptions.find(item => item.kind === 'point' && item.options.name);
@@ -470,7 +451,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('uses the current point-creation callback after the editor tool changes', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     const onCanvasPointCreate = vi.fn();
     const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} /></MathProvider>);
 
@@ -482,7 +463,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('uses the current selection callback while a multi-reference tool is active', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     const initialSelection = vi.fn();
     const toolSelection = vi.fn();
     const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={initialSelection} /></MathProvider>);
@@ -497,7 +478,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('highlights the corresponding MDX target when a published diagram object is hovered or focused', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /><HighlightProbe /></MathProvider>);
     const targetNode = rendererState.nodes.find(node => node.dataset.diagramTarget);
     expect(targetNode).toBeDefined();
@@ -508,9 +489,9 @@ describe('Shared geometry renderer', () => {
   });
 
   it('keeps local hover additive while MDX references dim the rest by default', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = spec.points.find(point => point.target)!;
-    const other = spec.points.find(point => point.id !== target.id)!;
+    const spec = fixtureSpec(primitivesFixture);
+    const target = pointsOf(spec).find(point => point.target)!;
+    const other = pointsOf(spec).find(point => point.id !== target.id)!;
     render(
       <MathProvider>
         <DiagramRenderer spec={spec} viewportControls={false} />
@@ -530,12 +511,12 @@ describe('Shared geometry renderer', () => {
   });
 
   it('supports additive highlighting for an MDX target when authored in the editor', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => point.target)!;
-    const other = base.points.find(point => point.id !== target.id)!;
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => point.target)!;
+    const other = pointsOf(base).find(point => point.id !== target.id)!;
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === target.id
+      objects: base.objects.map(point => point.id === target.id
         ? { ...point, selection: { ...point.selection, dimOthersOnHighlight: false } }
         : point),
     };
@@ -553,12 +534,12 @@ describe('Shared geometry renderer', () => {
   });
 
   it('keeps a native label interactive and visually synchronized with its point', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => point.target) ?? base.points[0];
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => point.target) ?? pointsOf(base)[0];
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === target.id
-        ? { ...point, style: { ...point.style, labelSize: 23, preserveColorOnHighlight: true } }
+      objects: base.objects.map(point => point.id === target.id
+        ? withObjectStylePatch(point, { labelSize: 23, preserveColorOnHighlight: true })
         : point),
     };
     const preservedColor = target.color;
@@ -605,7 +586,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('exposes movable points to the keyboard and reports their constrained coordinates', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = fixtureSpec(primitivesFixture);
     const onPointMove = vi.fn();
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
     const pointNode = rendererState.nodes.find(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama');
@@ -618,9 +599,9 @@ describe('Shared geometry renderer', () => {
   });
 
   it('reveals a hidden object while its highlight is previewed in the editor', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points[0];
-    const spec = { ...base, points: base.points.map(point => point.id === target.id ? { ...point, visible: false } : point) };
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base)[0];
+    const spec = { ...base, objects: base.objects.map(point => point.id === target.id ? { ...point, visible: false } : point) };
     render(<MathProvider><DiagramRenderer spec={spec} mode="editor" highlightedIds={[target.id]} viewportControls={false} /></MathProvider>);
     const nodeIndex = rendererState.nodes.findIndex(node => node.getAttribute('aria-label') === (target.selection.ariaLabel ?? target.label));
     expect(nodeIndex).toBeGreaterThanOrEqual(0);
@@ -629,12 +610,12 @@ describe('Shared geometry renderer', () => {
   });
 
   it('reveals a hidden runtime object only when its MDX target is highlighted', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => point.target)!;
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => point.target)!;
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === target.id
-        ? { ...point, visible: false, style: { ...point.style, highlightVisible: true } }
+      objects: base.objects.map(point => point.id === target.id
+        ? { ...withObjectStylePatch(point, { highlightVisible: true }), visible: false }
         : point),
     };
     render(
@@ -663,14 +644,14 @@ describe('Shared geometry renderer', () => {
   ] as const)('renders %s through MathFactory-backed JSXGraph elements', (_family, fixture, expectedKinds) => {
     render(
       <MathProvider>
-        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(fixture).spec)} viewportControls={false} />
+        <DiagramRenderer spec={fixtureSpec(fixture)} viewportControls={false} />
       </MathProvider>,
     );
     expectedKinds.forEach(kind => expect(rendererState.createdKinds).toContain(kind));
   });
 
   it('renders angles without an authored radius using the canonical default', () => {
-    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={fixtureSpec(marksFixture)} viewportControls={false} /></MathProvider>);
 
     const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
     const renderedNonReflexAngle = rendererState.createdOptions.find(({ kind }) => kind === 'nonreflexangle');
@@ -681,25 +662,14 @@ describe('Shared geometry renderer', () => {
   });
 
   it('uses degrees and radians from both angular types in live visibility conditions', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
+    const base = fixtureSpec(marksFixture);
     const spec = {
       ...base,
-      elements: base.elements.map(element => element.id === 'angleAVB'
-        ? {
-            ...element,
-            properties: {
-              ...element.properties,
-              visibleWhen: 'and(approx(angleAVB.degrees, 270), approx(nonReflexAngleAVB.radians, pi / 2))',
-            },
-          }
-        : element),
-      dependencies: [
-        ...(base.dependencies ?? []),
-        { sourceId: 'angleAVB', targetId: 'angleAVB', relation: 'expression' as const },
-        { sourceId: 'nonReflexAngleAVB', targetId: 'angleAVB', relation: 'expression' as const },
-      ],
+      objects: base.objects.map(object => object.id === 'angleAVB'
+        ? { ...object, visibleWhen: 'and(approx(angleAVB.degrees, 270), approx(nonReflexAngleAVB.radians, pi / 2))' }
+        : object),
     };
-    const parsed = parseDiagramSpecV2(spec);
+    const parsed = parseDiagramSpecV3(spec);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
 
@@ -723,7 +693,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {
-    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={fixtureSpec(marksFixture)} viewportControls={false} /></MathProvider>);
 
     const renderedTicks = rendererState.createdOptions.find(({ kind }) => kind === 'ticks');
     expect(renderedTicks?.args).toHaveLength(1);
@@ -750,7 +720,7 @@ describe('Shared geometry renderer', () => {
   });
 
   it('renders conventional parallel arrows separately from congruence ticks', () => {
-    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={fixtureSpec(marksFixture)} viewportControls={false} /></MathProvider>);
 
     const parallelSegments = rendererState.createdOptions.filter(({ kind, options }) => (
       kind === 'segment' && options.strokeColor === 'pavo'
@@ -760,13 +730,12 @@ describe('Shared geometry renderer', () => {
   });
 
   it('passes authored geometric attractors to a movable point after constructing their supports', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = fixtureSpec(primitivesFixture);
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === 'pA'
-        ? { ...point, attractorIds: ['lineBC'], attractorDistance: 0.4, snatchDistance: 0.6 }
+      objects: base.objects.map(point => point.id === 'pA'
+        ? { ...point, interaction: { attractorIds: ['lineBC'], attractorDistance: 0.4, snatchDistance: 0.6 } }
         : point),
-      dependencies: [...(base.dependencies ?? []), { sourceId: 'lineBC', targetId: 'pA', relation: 'constraint' as const }],
     };
 
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
@@ -786,8 +755,8 @@ describe('Shared geometry renderer', () => {
     };
     const pointA = geometryFor('A');
     const pointB = geometryFor('B');
-    const attractorA = geometryFor(trianguloScene.points.find(point => point.id === 'A')!.attractorIds![0]);
-    const attractorB = geometryFor(trianguloScene.points.find(point => point.id === 'B')!.attractorIds![0]);
+    const attractorA = geometryFor(pointsOf(trianguloScene).find(point => point.id === 'A')!.interaction!.attractorIds![0]);
+    const attractorB = geometryFor(pointsOf(trianguloScene).find(point => point.id === 'B')!.interaction!.attractorIds![0]);
     pointA.slideObject = attractorA;
     pointA.slideObjects = [attractorA];
     pointB.slideObject = attractorB;
@@ -839,11 +808,11 @@ describe('Shared geometry renderer', () => {
   });
 
   it('applies the dashed style to polygon borders', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const polygon = base.elements.find(item => item.kind === 'polygon');
+    const base = fixtureSpec(primitivesFixture);
+    const polygon = elementsOf(base).find(item => objectKind(item) === 'polygon');
     const spec = {
       ...base,
-      elements: base.elements.map(item => item.id === polygon?.id ? { ...item, dashed: true } : item),
+      objects: base.objects.map(item => item.id === polygon?.id && item.objectType === 'path' ? { ...item, appearance: { ...item.appearance, dashed: true } } : item),
     };
 
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
@@ -855,7 +824,7 @@ describe('Shared geometry renderer', () => {
   it('keeps information panels in their editorial hover style at rest and on hover', () => {
     render(
       <MathProvider>
-        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec)} viewportControls={false} />
+        <DiagramRenderer spec={fixtureSpec(annotationsFixture)} viewportControls={false} />
       </MathProvider>,
     );
     const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
@@ -867,11 +836,11 @@ describe('Shared geometry renderer', () => {
   });
 
   it('anchors an information panel to normalized viewport coordinates without a geometric reference', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
+    const spec = fixtureSpec(annotationsFixture);
     const viewportPanelSpec = {
       ...spec,
-      elements: spec.elements.map(item => item.id === 'panelA'
-        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.25, 0.2] as [number, number] } }
+      objects: spec.objects.map(item => item.id === 'panelA' && item.objectType === 'annotation'
+        ? { ...item, anchor: { type: 'viewport' as const, position: [0.25, 0.2] as [number, number] } }
         : item),
     };
     render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
@@ -883,11 +852,11 @@ describe('Shared geometry renderer', () => {
   });
 
   it('turns viewport panel anchors inward near the lower-right edge', () => {
-    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
+    const spec = fixtureSpec(annotationsFixture);
     const viewportPanelSpec = {
       ...spec,
-      elements: spec.elements.map(item => item.id === 'panelA'
-        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.9, 0.85] as [number, number] } }
+      objects: spec.objects.map(item => item.id === 'panelA' && item.objectType === 'annotation'
+        ? { ...item, anchor: { type: 'viewport' as const, position: [0.9, 0.85] as [number, number] } }
         : item),
     };
     render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
@@ -896,28 +865,29 @@ describe('Shared geometry renderer', () => {
   });
 
   it('anchors an authored label close to the referenced element at the chosen parameter', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const source = base.elements.find(item => item.kind === 'segment')!;
+    const base = fixtureSpec(primitivesFixture);
+    const source = elementsOf(base).find(item => objectKind(item) === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     const labelModel = {
       ...labelled.model,
-      elements: labelled.model.elements.map(item => item.id === labelled.labelId
-        ? { ...item, style: { ...item.style, labelSize: 17 }, properties: { ...item.properties, anchorParameter: 0.25 } }
+      objects: labelled.model.objects.map(item => item.id === labelled.labelId && item.objectType === 'annotation' && item.anchor.type === 'object'
+        ? withObjectStylePatch({ ...item, anchor: { ...item.anchor, parameter: 0.25 } }, { labelSize: 17 })
         : item),
     };
     render(<MathProvider><DiagramRenderer spec={labelModel} viewportControls={false} /></MathProvider>);
 
     const renderedLabel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
     expect(renderedLabel?.options.fontSize).toBe(17);
-    const start = base.points.find(point => point.id === source.refs[0])!;
-    const end = base.points.find(point => point.id === source.refs[1])!;
+    const [startId, endId] = source.objectType === 'path' && source.geometry.type === 'segment' ? source.geometry.points : ['', ''];
+    const start = positionOf(base, startId);
+    const end = positionOf(base, endId);
     expect((renderedLabel?.args[0] as () => number)()).toBeCloseTo(start.x + (end.x - start.x) * 0.25 + 0.04);
     expect((renderedLabel?.args[1] as () => number)()).toBeCloseTo(start.y + (end.y - start.y) * 0.25 + 0.04);
   });
 
   it('hides authored and native labels together when labels are disabled', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const source = base.elements.find(item => item.kind === 'segment')!;
+    const base = fixtureSpec(primitivesFixture);
+    const source = elementsOf(base).find(item => objectKind(item) === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     render(<MathProvider><DiagramRenderer spec={{ ...labelled.model, showLabels: false }} viewportControls={false} /></MathProvider>);
 
@@ -929,8 +899,8 @@ describe('Shared geometry renderer', () => {
   });
 
   it('persists direct annotation movement as an authored offset in editor mode', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const source = base.elements.find(item => item.kind === 'segment')!;
+    const base = fixtureSpec(primitivesFixture);
+    const source = elementsOf(base).find(item => objectKind(item) === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     const onAnnotationMove = vi.fn();
     render(<MathProvider><DiagramRenderer spec={labelled.model} mode="editor" viewportControls={false} onAnnotationMove={onAnnotationMove} /></MathProvider>);
@@ -947,11 +917,11 @@ describe('Shared geometry renderer', () => {
   });
 
   it('hides one point label without hiding the point or the other labels', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => point.visible)!;
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => point.visible)!;
     const spec = {
       ...base,
-      points: base.points.map(point => point.id === target.id ? { ...point, showLabel: false } : point),
+      objects: base.objects.map(point => point.id === target.id ? withObjectLabelVisible(point, false) : point),
     };
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
 
@@ -965,12 +935,12 @@ describe('Shared geometry renderer', () => {
   });
 
   it('applies native label position presets and restores automatic placement', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const target = base.points.find(point => point.id === 'pA')!;
+    const base = fixtureSpec(primitivesFixture);
+    const target = pointsOf(base).find(point => point.id === 'pA')!;
     const positioned = {
       ...base,
-      points: base.points.map(point => point.id === target.id
-        ? { ...point, style: { ...point.style, labelPosition: 'lft' } }
+      objects: base.objects.map(point => point.id === target.id
+        ? withObjectStylePatch(point, { labelPosition: 'lft' })
         : point),
     };
     const view = render(<MathProvider><DiagramRenderer spec={positioned} viewportControls={false} /></MathProvider>);
@@ -981,8 +951,8 @@ describe('Shared geometry renderer', () => {
 
     const automatic = {
       ...positioned,
-      points: positioned.points.map(point => point.id === target.id
-        ? { ...point, style: { ...point.style, labelPosition: undefined } }
+      objects: positioned.objects.map(point => point.id === target.id
+        ? withObjectStylePatch(point, { labelPosition: undefined })
         : point),
     };
     view.rerender(<MathProvider><DiagramRenderer spec={automatic} viewportControls={false} /></MathProvider>);
@@ -990,13 +960,13 @@ describe('Shared geometry renderer', () => {
   });
 
   it('updates native line label positioning along path and applies offsets dynamically', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const lineTarget = base.elements.find(el => el.kind === 'segment' || el.kind === 'line')!;
+    const base = fixtureSpec(primitivesFixture);
+    const lineTarget = elementsOf(base).find(el => objectKind(el) === 'segment' || objectKind(el) === 'line')!;
 
     const positionedLine = {
       ...base,
-      elements: base.elements.map(el => el.id === lineTarget.id
-        ? { ...el, label: 's_1', showLabel: true, style: { ...el.style, labelPosition: 0.75, labelOffset: [5, -10] } }
+      objects: base.objects.map(el => el.id === lineTarget.id
+        ? withObjectLabelVisible(withObjectStylePatch({ ...el, label: 's_1' }, { labelPosition: 0.75, labelOffset: [5, -10] }), true)
         : el),
     };
 
@@ -1012,10 +982,10 @@ describe('Shared geometry renderer', () => {
   });
 
   it('keeps step emphasis in the original color, supports an override and yields exclusively to MDX', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const primary = base.points[0];
-    const custom = base.points[1];
-    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const base = fixtureSpec(primitivesFixture);
+    const primary = pointsOf(base)[0];
+    const custom = pointsOf(base)[1];
+    const visibleTargets = base.objects.map(item => item.id);
     const spec = {
       ...base,
       steps: [{
@@ -1031,22 +1001,22 @@ describe('Shared geometry renderer', () => {
     const customIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === custom.id);
     const primaryGeometry = rendererState.geometries[primaryIndex];
     const customGeometry = rendererState.geometries[customIndex];
-    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: primary.color, size: primary.style?.highlightPointSize ?? 10 });
-    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: 'granada', size: custom.style?.highlightPointSize ?? 10 });
+    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: primary.color, size: objectStyle(primary)?.highlightPointSize ?? 10 });
+    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: 'granada', size: objectStyle(custom)?.highlightPointSize ?? 10 });
 
     view.rerender(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" highlightedIds={[custom.id]} viewportControls={false} /></MathProvider>);
     expect(lastCommittedAttrs(primaryGeometry)).toMatchObject({
       fillColor: primary.color,
       size: 10,
     });
-    expect(lastCommittedAttrs(customGeometry)).toMatchObject({ size: custom.style?.highlightPointSize ?? 10 });
+    expect(lastCommittedAttrs(customGeometry)).toMatchObject({ size: objectStyle(custom)?.highlightPointSize ?? 10 });
   });
 
   it('pulses primary step emphasis on line-like elements', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const segment = base.elements.find(element => element.id === 'segAB');
+    const base = fixtureSpec(primitivesFixture);
+    const segment = elementsOf(base).find(element => element.id === 'segAB');
     if (!segment) throw new Error('La fixture debe incluir segAB.');
-    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const visibleTargets = base.objects.map(item => item.id);
     const spec = {
       ...base,
       steps: [{
@@ -1061,16 +1031,16 @@ describe('Shared geometry renderer', () => {
     const segmentGeometry = rendererState.geometries[segmentIndex];
     expect(segmentGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({
       strokeColor: segment.color,
-      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.2,
+      strokeWidth: objectStyle(segment)?.highlightStrokeWidth ?? 3.2,
       strokeOpacity: 1,
     });
   });
 
   it('applies secondary step emphasis on line-like elements with hover highlight width', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
-    const segment = base.elements.find(element => element.id === 'segAB');
+    const base = fixtureSpec(primitivesFixture);
+    const segment = elementsOf(base).find(element => element.id === 'segAB');
     if (!segment) throw new Error('La fixture debe incluir segAB.');
-    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const visibleTargets = base.objects.map(item => item.id);
     const spec = {
       ...base,
       steps: [{
@@ -1085,16 +1055,16 @@ describe('Shared geometry renderer', () => {
     const segmentGeometry = rendererState.geometries[segmentIndex];
     expect(lastCommittedAttrs(segmentGeometry)).toMatchObject({
       strokeColor: 'granada',
-      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.6,
+      strokeWidth: objectStyle(segment)?.highlightStrokeWidth ?? 3.6,
       strokeOpacity: 1,
     });
   });
 
   it('pulses primary step emphasis on tick graduations', () => {
-    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
-    const ticks = base.elements.find(element => element.id === 'ticksAV');
+    const base = fixtureSpec(marksFixture);
+    const ticks = elementsOf(base).find(element => element.id === 'ticksAV');
     if (!ticks) throw new Error('La fixture de marcas debe incluir ticksAV.');
-    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const visibleTargets = base.objects.map(item => item.id);
     const spec = {
       ...base,
       steps: [{
@@ -1110,8 +1080,8 @@ describe('Shared geometry renderer', () => {
       .map(call => call[0])
       .find(attrs => attrs?.majorHeight !== undefined);
     expect(tickUpdate).toMatchObject({
-      majorHeight: ticks.style?.markHeight ?? 12,
-      minorHeight: (ticks.style?.markHeight ?? 12) * 0.4,
+      majorHeight: objectStyle(ticks)?.markHeight ?? 12,
+      minorHeight: (objectStyle(ticks)?.markHeight ?? 12) * 0.4,
       strokeWidth: 3.6,
     });
   });

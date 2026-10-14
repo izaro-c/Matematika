@@ -94,7 +94,7 @@ describe('useDiagramState safety policy', () => {
 
     act(() => result.current.handleVisualEdit({
       ...model,
-      points: [...model.points, { ...model.points[0] }],
+      objects: [...model.objects, { ...model.objects[0] }],
     }));
     expect(result.current.state.diagnostics).toContainEqual(expect.objectContaining({
       code: 'invalid-diagram-spec-v3-0',

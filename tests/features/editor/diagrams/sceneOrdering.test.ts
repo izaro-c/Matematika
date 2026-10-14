@@ -14,39 +14,29 @@ import {
   sendSceneItemToBack,
 } from '../../../../src/fixed-pages/editor/diagrams/model/scene/sceneOrdering';
 import { element, point } from '../../../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { sceneSpec } from '../../../helpers/diagramSpec';
 
 function sampleModel(): VisualDiagramModel {
-  return {
-    points: [
+  return sceneSpec({
+    objects: [
       point('pA', 'A', 0, 0),
       point('pB', 'B', 1, 0),
       point('pC', 'C', 0, 1),
-    ],
-    elements: [
       element('segAB', 'AB', 'segment', ['pA', 'pB'], 'carbon'),
       element('segBC', 'BC', 'segment', ['pB', 'pC'], 'pavo'),
     ],
-    sliders: [],
     layers: [
       { id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false },
       { id: 'annotations', label: 'Anotaciones', order: 1, visible: true, locked: false },
     ],
-    groups: [],
-    steps: [],
-    constraints: [],
-    dependencies: [],
-    viewport: { bounds: [-6, 6, 6, -6] },
-    showLabels: true,
-    note: '',
-  };
+  });
 }
 
 describe('sceneOrdering', () => {
   it('assigns compact sequential orders when normalizing a layer', () => {
     const model = normalizeLayerItemOrders({
       ...sampleModel(),
-      points: sampleModel().points.map((item, index) => ({ ...item, order: index * 10_000 })),
-      elements: sampleModel().elements.map((item, index) => ({ ...item, order: (index + 3) * 10_000 })),
+      objects: sampleModel().objects.map((item, index) => ({ ...item, order: index * 10_000 })),
     });
     expect(listLayerSceneItems(model, 'geometry').map(item => item.order)).toEqual([0, 1, 2, 3, 4]);
   });

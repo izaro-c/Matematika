@@ -42,7 +42,8 @@
  * lo hacía antes de la corrección y que ya no lo hace tras ella.
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { point, withPointMode } from '../../src/fixed-pages/editor/diagrams/model';
+import { diagramConstraint, sceneFromParts } from '../helpers/diagramSpec';
 import { resolvePointCoordinates, withMovedPoint } from '@/diagrams/geometry/layout/scene';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
 
@@ -57,9 +58,8 @@ function calibratedAux(b: typeof B, c: typeof C0, amount = 15): { x: number; y: 
 
 function rayExtensionModel(): VisualDiagramModel {
   const aux = calibratedAux(B, C0);
-  return {
-    version: 2,
-    renderer: 'matematika-diagram-renderer-v2',
+  return sceneFromParts({
+    version: 3,
     title: 'Prolongación de BC vía punto en el infinito (test)',
     componentId: 'ray-extension-test',
     category: 'Demos',
@@ -73,7 +73,7 @@ function rayExtensionModel(): VisualDiagramModel {
       point('pA', 'A', A.x, A.y),
       point('pB', 'B', B.x, B.y),
       point('pC', 'C', C0.x, C0.y),
-      { ...point('paux', 'Aux', aux.x, aux.y, false, 'terracota', 'constrained'), constraintIds: ['constraint1'] },
+      withPointMode(point('paux', 'Aux', aux.x, aux.y, false, 'terracota', 'constrained'), 'constrained', { relationIds: ['constraint1'] }),
     ],
     elements: [],
     sliders: [],
@@ -82,8 +82,7 @@ function rayExtensionModel(): VisualDiagramModel {
       diagramConstraint('constraint1', 'Sobre una paralela', 'parallel', ['paux', 'pB', 'pC']),
     ],
     note: '',
-    extensions: {},
-  };
+  });
 }
 
 /** Un único fotograma: mueve C y deja que se resuelvan las restricciones dependientes (paux). */

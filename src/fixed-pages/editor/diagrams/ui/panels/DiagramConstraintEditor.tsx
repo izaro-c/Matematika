@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import type { AreaMembership } from '@/diagrams/model/schema/types';
-import type { VisualConstraint, VisualDiagramModel, VisualPoint } from '../../model/types';
-import { updatePoint } from '../../model';
+import { pointPosition } from '@/diagrams';
+import type { VisualDiagramModel, VisualPoint } from '../../model/types';
 import {
   RELATION_CATEGORY_LABELS,
   RELATION_CATEGORY_ORDER,
   constraintPresentation,
   defaultConstraintRefs,
   relationsForPointPicker,
-  uniqueConstraintId,
-  withConstraintDependencies,
 } from '../../model/constraints/constraintOptions';
+import type { RelationDraft, RelationIntent } from '../../model/constraints/relationIntents';
+import {
+  addRelationDraftToPoint,
+  findPositionedPoint,
+  pointRelationDrafts,
+  uniqueConstraintId,
+  updateRelationDraft,
+} from '../../model/constraints/relationModel';
 import {
   candidatesForSlot,
   editableSlotsFor,
@@ -33,7 +39,10 @@ interface DiagramConstraintEditorProps {
 
 function computeSameSide(model: VisualDiagramModel, refs: string[]): 1 | -1 | undefined {
   if (refs.length < 3) return undefined;
-  const findXY = (id: string) => model.points.find(p => p.id === id);
+  const findXY = (id: string) => {
+    const point = findPositionedPoint(model, id);
+    return point ? pointPosition(point) : undefined;
+  };
   const p = findXY(refs[0]);
   const a = findXY(refs[1]);
   const b = findXY(refs[2]);
@@ -41,7 +50,7 @@ function computeSameSide(model: VisualDiagramModel, refs: string[]): 1 | -1 | un
   return computeHalfPlaneSide(a, b, p);
 }
 
-function emptyHintForKind(kind: VisualConstraint['kind']): string {
+function emptyHintForKind(kind: RelationIntent): string {
   switch (kind) {
     case 'distance':
     case 'coincident':
@@ -59,67 +68,50 @@ function emptyHintForKind(kind: VisualConstraint['kind']): string {
 }
 
 export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = ({ model, point, onModelEdit }) => {
-  const [newKind, setNewKind] = useState<VisualConstraint['kind']>('horizontal');
+  const [newKind, setNewKind] = useState<RelationIntent>('horizontal');
 
-  const assignedConstraints = (point.constraintIds || [])
-    .map(id => model.constraints?.find(item => item.id === id))
-    .filter((constraint): constraint is VisualConstraint => Boolean(constraint));
+  const assignedConstraints = pointRelationDrafts(model, point.id);
 
   const activeKinds = assignedConstraints
     .filter(constraint => constraint.enabled)
     .map(constraint => constraint.kind);
 
+  const editDraft = (constraintId: string, update: (draft: RelationDraft) => RelationDraft) => (
+    updateRelationDraft(model, constraintId, update)
+  );
+
   const changeRefs = (constraintId: string, refs: string[]) => {
-    const constraint = model.constraints?.find(item => item.id === constraintId);
-    const dependencyRefs = constraint?.kind === 'equalAngle' ? refs.slice(0, 4) : refs;
-    const next = withConstraintDependencies(model, constraintId, dependencyRefs);
-    const sameSide = constraint?.kind === 'sameSide'
-      ? computeSameSide(model, refs)
-      : undefined;
-    const updatedModel = {
-      ...next,
-      constraints: model.constraints?.map(c => c.id === constraintId
-        ? { ...c, refs, ...(sameSide !== undefined ? { side: sameSide } : {}) }
-        : c),
-    };
-    onModelEdit(withResolvedPointConstraints(updatedModel));
+    onModelEdit(withResolvedPointConstraints(editDraft(constraintId, draft => {
+      const sameSide = draft.kind === 'sameSide' ? computeSameSide(model, refs) : undefined;
+      return { ...draft, refs, ...(sameSide !== undefined ? { side: sameSide } : {}) };
+    })));
   };
 
-  const changeKind = (constraint: VisualConstraint, kind: VisualConstraint['kind']) => {
+  const changeKind = (constraint: RelationDraft, kind: RelationIntent) => {
     const availability = relationAvailability(model, kind, point.id, activeKinds, { ignoreKind: constraint.kind });
     if (availability.status === 'disabled') return;
     const refs = defaultConstraintRefs(model, kind, constraint.refs[0]);
-    const next = withConstraintDependencies(model, constraint.id, kind === 'equalAngle' ? refs.slice(0, 4) : refs);
     let expression: string | undefined;
     if (kind === 'expression') expression = constraint.expression ?? '1';
     else if (kind === 'distance') expression = constraint.expression;
     const sameSide = kind === 'sameSide' ? computeSameSide(model, refs) : undefined;
-    const updatedModel = {
-      ...next,
-      constraints: model.constraints?.map(item => item.id === constraint.id ? {
-        ...item,
-        kind,
-        label: constraintPresentation(kind).label,
-        refs,
-        value: kind === 'distance' ? item.value ?? 1 : undefined,
-        expression,
-        ...(kind === 'insideArea' ? { areaMembership: item.areaMembership ?? 'interior' } : { areaMembership: undefined }),
-        ...(sameSide !== undefined ? { side: sameSide } : { side: undefined }),
-      } : item),
-    };
-    onModelEdit(withResolvedPointConstraints(updatedModel));
+    onModelEdit(withResolvedPointConstraints(editDraft(constraint.id, item => ({
+      ...item,
+      kind,
+      label: constraintPresentation(kind).label,
+      refs,
+      value: kind === 'distance' ? item.value ?? 1 : undefined,
+      expression,
+      areaMembership: kind === 'insideArea' ? item.areaMembership ?? 'interior' : undefined,
+      side: sameSide,
+    }))));
   };
 
-  const changeAreaMembership = (constraint: VisualConstraint, membership: AreaMembership) => {
-    onModelEdit(withResolvedPointConstraints({
-      ...model,
-      constraints: model.constraints?.map(item => (
-        item.id === constraint.id ? { ...item, areaMembership: membership } : item
-      )),
-    }));
+  const changeAreaMembership = (constraint: RelationDraft, membership: AreaMembership) => {
+    onModelEdit(withResolvedPointConstraints(editDraft(constraint.id, item => ({ ...item, areaMembership: membership }))));
   };
 
-  const changeReference = (constraint: VisualConstraint, index: number, value: string) => {
+  const changeReference = (constraint: RelationDraft, index: number, value: string) => {
     const refs = [...constraint.refs];
     refs[index] = value;
     changeRefs(constraint.id, refs);
@@ -133,7 +125,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     if (refs.length < presentation.refs) return;
     const id = uniqueConstraintId(model);
     const sameSide = newKind === 'sameSide' ? computeSameSide(model, refs) : undefined;
-    const constraint: VisualConstraint = {
+    const constraint: RelationDraft = {
       id,
       label: presentation.label,
       kind: newKind,
@@ -142,16 +134,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
       ...(newKind === 'distance' ? { value: 1 } : {}),
       ...(sameSide !== undefined ? { side: sameSide } : {}),
     };
-    const next = withConstraintDependencies(model, id, newKind === 'equalAngle' ? refs.slice(0, 4) : refs);
-    const nextWithConstraint = {
-      ...next,
-      constraints: [...(model.constraints || []), constraint],
-    };
-    const updatedWithPoint = updatePoint(nextWithConstraint, point.id, {
-      constraint: 'constrained',
-      constraintIds: [...(point.constraintIds || []), id],
-    });
-    onModelEdit(withResolvedPointConstraints(updatedWithPoint));
+    onModelEdit(withResolvedPointConstraints(addRelationDraftToPoint(model, point.id, constraint)));
   };
 
   const deleteConstraint = (constraintId: string) => {
@@ -192,7 +175,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
 
   const addAvailability = relationAvailability(model, newKind, point.id, activeKinds);
 
-  const renderSlots = (constraint: VisualConstraint) => {
+  const renderSlots = (constraint: RelationDraft) => {
     const slots = editableSlotsFor(constraint.kind);
     return slots.map(slot => {
       if (constraint.kind === 'reflection' && slot.index === 2) {
@@ -271,12 +254,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                     aria-label={`Relación activa de ${constraint.id}`}
                     type="checkbox"
                     checked={constraint.enabled}
-                    onChange={event => onModelEdit({
-                      ...model,
-                      constraints: model.constraints?.map(item => item.id === constraint.id
-                        ? { ...item, enabled: event.target.checked }
-                        : item),
-                    })}
+                    onChange={event => onModelEdit(editDraft(constraint.id, item => ({ ...item, enabled: event.target.checked })))}
                   />
                   <span>Activa</span>
                 </label>
@@ -290,7 +268,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                   aria-label={`Tipo de ${constraint.id}`}
                   className={diagramInputClassName}
                   value={constraint.kind}
-                  onChange={event => changeKind(constraint, event.target.value as VisualConstraint['kind'])}
+                  onChange={event => changeKind(constraint, event.target.value as RelationIntent)}
                 >
                   {constraintOptions}
                 </select>
@@ -323,12 +301,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                     aria-label={`Distancia de ${constraint.id}`}
                     className={diagramInputClassName}
                     value={constraint.value ?? 1}
-                    onChange={event => onModelEdit({
-                      ...model,
-                      constraints: model.constraints?.map(item => item.id === constraint.id
-                        ? { ...item, value: Number(event.target.value), expression: undefined }
-                        : item),
-                    })}
+                    onChange={event => onModelEdit(editDraft(constraint.id, item => ({ ...item, value: Number(event.target.value), expression: undefined })))}
                   />
                 </DiagramFormField>
               )}
@@ -338,12 +311,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                   label="Expresión conservada"
                   ariaLabel={`Expresión de ${constraint.id}`}
                   value={constraint.expression ?? ''}
-                  onChange={value => onModelEdit({
-                    ...model,
-                    constraints: model.constraints?.map(item => item.id === constraint.id
-                      ? { ...item, expression: value }
-                      : item),
-                  })}
+                  onChange={value => onModelEdit(editDraft(constraint.id, item => ({ ...item, expression: value })))}
                   help="La relación usa el mismo lenguaje matemático seguro que fórmulas, curvas y condiciones de visibilidad."
                 />
               )}

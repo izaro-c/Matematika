@@ -1,11 +1,8 @@
+import { objectReferences, relationReferences } from '@/diagrams';
 import type { VisualDiagramModel, VisualStep } from '../model/types';
 
 export function allModelObjectIds(model: VisualDiagramModel): Set<string> {
-  return new Set([
-    ...model.points.map(p => p.id),
-    ...model.elements.map(e => e.id),
-    ...model.sliders.map(s => s.id),
-  ]);
+  return new Set(model.objects.map(object => object.id));
 }
 
 /**
@@ -48,28 +45,39 @@ export function syncStepObjectVisibility(
   return { ...step, visibleTargets, objectStates };
 }
 
+/**
+ * Elimina lo que quedó colgando tras borrar objetos: atractores ausentes,
+ * relaciones con referencias rotas y objetos que dependen de objetos ausentes.
+ */
 export function repairBrokenReferences(model: VisualDiagramModel): VisualDiagramModel {
-  const validIds = allModelObjectIds(model);
-  const elements = model.elements.map(elem => ({
-    ...elem,
-    refs: (elem.refs || []).filter(refId => validIds.has(refId)),
-  }));
-  const deadConstraintIds = new Set(
-    (model.constraints || [])
-      .filter(constraint => constraint.refs.some(refId => !validIds.has(refId)))
-      .map(c => c.id),
-  );
-  const constraints = (model.constraints || []).filter(c => !deadConstraintIds.has(c.id));
-  const points = model.points.map(p => ({
-    ...p,
-    constraintIds: (p.constraintIds || []).filter(id => !deadConstraintIds.has(id)),
-  }));
-  const dependencies = (model.dependencies || []).filter(dep => {
-    if (!validIds.has(dep.sourceId) || !validIds.has(dep.targetId)) return false;
-    if (dep.constraintId && deadConstraintIds.has(dep.constraintId)) return false;
-    return true;
+  let objects = model.objects;
+  for (;;) {
+    const validIds = new Set(objects.map(object => object.id));
+    const next = objects
+      .map(object => {
+        if (object.objectType !== 'point' || !object.interaction?.attractorIds) return object;
+        return { ...object, interaction: { ...object.interaction, attractorIds: object.interaction.attractorIds.filter(id => validIds.has(id)) } };
+      })
+      .filter(object => objectReferences(object).every(id => validIds.has(id)));
+    if (next.length === objects.length) {
+      objects = next;
+      break;
+    }
+    objects = next;
+  }
+  const validIds = new Set(objects.map(object => object.id));
+  const deadRelationIds = new Set(model.relations
+    .filter(relation => relationReferences(relation).some(refId => !validIds.has(refId)))
+    .map(relation => relation.id));
+  const relations = model.relations.filter(relation => !deadRelationIds.has(relation.id));
+  objects = objects.map(object => {
+    if (object.objectType !== 'point' || object.mobility.type !== 'constrained') return object;
+    const relationIds = object.mobility.relationIds.filter(id => !deadRelationIds.has(id));
+    return relationIds.length > 0
+      ? { ...object, mobility: { type: 'constrained', relationIds } }
+      : { ...object, mobility: { type: 'free' } };
   });
-  return { ...model, elements, constraints, points, dependencies };
+  return { ...model, objects, relations };
 }
 
 /** Parse number allowing explicit 0 (unlike `parseFloat(x) || fallback`). */

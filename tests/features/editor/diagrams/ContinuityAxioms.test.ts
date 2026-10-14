@@ -3,13 +3,20 @@ import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
-import { updateElement, updateSlider, workingScene } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { updateElement, updateSlider } from '../../../../src/fixed-pages/editor/diagrams/model';
 import {
   evaluateMathExpression,
   expressionVariables,
+  objectConstructionReferences,
+  objectExpressions,
+  expressionSourceIds,
   withMovedPoint,
-  type DiagramSpecV2,
+  withObjectStylePatch,
+  type ControlObject,
+  type DiagramSpec,
+  type PointObject,
 } from '../../../../src/diagrams/public';
+import { findById, positionOf } from '../../../helpers/diagramSpec';
 
 const CASES = [
   {
@@ -22,7 +29,7 @@ const CASES = [
   },
 ] as const;
 
-function readModel(source: string): DiagramSpecV2 {
+function readModel(source: string): DiagramSpec {
   const parsed = parseDiagramSourceAST(fs.readFileSync(source, 'utf8'));
   if (parsed.status !== 'visual-exact') {
     throw new Error(`${source} debe ser visual-exact: ${JSON.stringify(parsed.diagnostics)}`);
@@ -30,14 +37,9 @@ function readModel(source: string): DiagramSpecV2 {
   return parsed.model;
 }
 
-/** Compare editor payloads ignoring meta that may differ on reopen. */
-function editorPayload(model: DiagramSpecV2) {
-  const payload = { ...workingScene(model) } as Record<string, unknown>;
-  delete payload.version;
-  delete payload.renderer;
-  delete payload.dependencies;
-  delete payload.extensions;
-  return payload;
+/** El modelo del editor es la propia especificación V3: se compara completo. */
+function editorPayload(model: DiagramSpec) {
+  return model;
 }
 
 describe('axiomas de continuidad editables', () => {
@@ -52,30 +54,33 @@ describe('axiomas de continuidad editables', () => {
 
   it('recalcula el rango arquimediano y alcanza el primer natural suficiente incluso con AB pequeño', () => {
     const model = readModel(CASES[0].source);
-    const slider = model.sliders.find(item => item.id === 'n')!;
-    const pBMin = model.points.find(item => item.id === 'pBMin')!;
+    const slider = findById<ControlObject>(model, 'n');
+    const pBMin = positionOf(model, 'pBMin');
 
-    expect(slider).toMatchObject({
+    expect(slider.range).toMatchObject({
       min: 1,
       max: 7,
       step: 1,
       maxExpression: 'floor(segCD.length/segAB.length+0.000000001)+1',
     });
-    const accumulatedPoint = model.points.find(item => item.id === 'pAccumulated');
-    expect(accumulatedPoint).toMatchObject({
-      constraint: 'derived',
-      xExpression: 'pBase.x+n*abs(pB.x-pA.x)',
+    const accumulatedPoint = findById<PointObject>(model, 'pAccumulated');
+    expect(accumulatedPoint.definition).toMatchObject({
+      type: 'expression',
+      x: 'pBase.x+n*abs(pB.x-pA.x)',
     });
-    expect(accumulatedPoint?.dependencies).toHaveLength(4);
-    expect(accumulatedPoint?.dependencies).toEqual(expect.arrayContaining(['pBase', 'n', 'pA', 'pB']));
-    expect(model.elements.find(item => item.id === 'copyTicks')).toMatchObject({
-      kind: 'measureTicks',
-      properties: { tickDistanceExpression: 'abs(pB.x-pA.x)', minorTickCount: 0 },
+    const accumulatedSources = new Set(objectExpressions(accumulatedPoint).flatMap(expressionSourceIds));
+    expect([...accumulatedSources]).toHaveLength(4);
+    expect([...accumulatedSources]).toEqual(expect.arrayContaining(['pBase', 'n', 'pA', 'pB']));
+    expect(findById(model, 'copyTicks')).toMatchObject({
+      objectType: 'mark',
+      variant: 'graduation',
+      spacingExpression: 'abs(pB.x-pA.x)',
+      subdivisions: 0,
     });
 
     const withSmallAB = withMovedPoint(model, 'pB', pBMin.x, pBMin.y);
     const smallVariables = expressionVariables(withSmallAB);
-    const required = evaluateMathExpression(slider.maxExpression!, smallVariables);
+    const required = evaluateMathExpression(slider.range.maxExpression!, smallVariables);
     const ab = smallVariables['segAB.length'];
     const cd = smallVariables['segCD.length'];
     expect(required).toBeGreaterThan(40);
@@ -84,8 +89,8 @@ describe('axiomas de continuidad editables', () => {
 
     const atRequired = updateSlider(withSmallAB, 'n', { value: required });
     const variables = expressionVariables(atRequired);
-    const accumulated = atRequired.elements.find(item => item.id === 'accumulatedAfter')!;
-    expect(evaluateMathExpression(accumulated.properties!.visibleWhen!, variables)).toBe(1);
+    const accumulated = findById(atRequired, 'accumulatedAfter');
+    expect(evaluateMathExpression(accumulated.visibleWhen!, variables)).toBe(1);
 
     const targets = buildTargets(model).map(target => target.id);
     expect(targets).toEqual(expect.arrayContaining([
@@ -102,22 +107,15 @@ describe('axiomas de continuidad editables', () => {
 
   it('conserva una cortadura exhaustiva con frontera móvil única', () => {
     const model = readModel(CASES[1].source);
-    expect(model.points.find(item => item.id === 'pP')).toMatchObject({
-      constraint: 'glider',
-      gliderTarget: 'realLine',
+    expect(findById(model, 'pP')).toMatchObject({
+      mobility: { type: 'on-support', support: 'realLine' },
       targetId: 'pP',
       selection: { ariaLabel: 'Punto de corte móvil P' },
     });
-    expect(model.elements.find(item => item.id === 'rayL')).toMatchObject({
-      kind: 'ray',
-      refs: ['pP', 'pLeft'],
-      color: 'carbon',
-    });
-    expect(model.elements.find(item => item.id === 'rayR')).toMatchObject({
-      kind: 'ray',
-      refs: ['pP', 'pRight'],
-      color: 'canela',
-    });
+    expect(findById(model, 'rayL')).toMatchObject({ objectType: 'path', geometry: { type: 'ray' }, color: 'carbon' });
+    expect(objectConstructionReferences(findById(model, 'rayL'))).toEqual(['pP', 'pLeft']);
+    expect(findById(model, 'rayR')).toMatchObject({ objectType: 'path', geometry: { type: 'ray' }, color: 'canela' });
+    expect(objectConstructionReferences(findById(model, 'rayR'))).toEqual(['pP', 'pRight']);
     expect(model.groups.find(item => item.id === 'classL')).toMatchObject({ targetId: 'claseL', memberIds: ['rayL', 'labelL'] });
     expect(model.groups.find(item => item.id === 'classR')).toMatchObject({ targetId: 'claseR', memberIds: ['rayR', 'labelR'] });
     expect(buildTargets(model).map(target => target.id)).toEqual(expect.arrayContaining([
@@ -128,7 +126,7 @@ describe('axiomas de continuidad editables', () => {
     ]));
 
     const moved = withMovedPoint(model, 'pP', 2.25, 1.7);
-    expect(moved.points.find(item => item.id === 'pP')).toMatchObject({ x: 2.25, y: 0 });
+    expect(positionOf(moved, 'pP')).toMatchObject({ x: 2.25, y: 0 });
     const readings = expressionVariables(moved);
     expect(readings['pP.x']).toBe(2.25);
     expect(evaluateMathExpression('pP.x-1', readings)).toBe(1.25);
@@ -154,7 +152,7 @@ describe('axiomas de continuidad editables', () => {
     const dedekind = updateElement(
       withMovedPoint(readModel(CASES[1].source), 'pP', -1.75, 0),
       'rayR',
-      { style: { strokeWidth: 8, highlightStrokeWidth: 10, preserveColorOnHighlight: true } },
+      object => withObjectStylePatch(object, { strokeWidth: 8, highlightStrokeWidth: 10, preserveColorOnHighlight: true }),
     );
     const dedekindSource = generateDiagramSource(dedekind, 'AxiomaDedekind');
     expect(dedekindSource.ok).toBe(true);

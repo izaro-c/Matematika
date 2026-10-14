@@ -293,28 +293,35 @@ export const AnguloSpec = createDiagramSpec(
       "variant": "panel",
       "content": {
         "text": "",
-        "rules": [
+        "blocks": [
           {
-            "when": "and(gt(angleBOA.value, 0.05), lt(angleBOA.value, pi/2 - 0.05))",
-            "text": "$\\text{Agudo }(0<\\alpha<\\pi/2)$"
-          },
-          {
-            "when": "approx(angleBOA.value, pi/2, 0.05)",
-            "text": "$\\text{Recto }(\\alpha=\\pi/2)$"
-          },
-          {
-            "when": "and(gt(angleBOA.value, pi/2 + 0.05), lt(angleBOA.value, pi - 0.05))",
-            "text": "$\\text{Obtuso }(\\pi / 2<\\alpha<\\pi)$"
-          },
-          {
-            "when": "approx(angleBOA.value, pi, 0.05)",
-            "text": "$\\text{Llano }(\\alpha=\\pi)$"
-          },
-          {
-            "when": "and(gt(angleBOA.value, pi + 0.05), lt(angleBOA.value, 2*pi - 0.05))",
-            "text": "$\\text{Cóncavo }(\\pi <\\alpha<2\\pi)$"
+            "id": "clasificacion",
+            "text": "$\\text{Agudo }(0<\\alpha<\\pi/2)$",
+            "rules": [
+              {
+                "when": "and(gt(angleBOA.value, 0.05), lt(angleBOA.value, pi/2 - 0.05))",
+                "text": "$\\text{Agudo }(0<\\alpha<\\pi/2)$"
+              },
+              {
+                "when": "approx(angleBOA.value, pi/2, 0.05)",
+                "text": "$\\text{Recto }(\\alpha=\\pi/2)$"
+              },
+              {
+                "when": "and(gt(angleBOA.value, pi/2 + 0.05), lt(angleBOA.value, pi - 0.05))",
+                "text": "$\\text{Obtuso }(\\pi / 2<\\alpha<\\pi)$"
+              },
+              {
+                "when": "approx(angleBOA.value, pi, 0.05)",
+                "text": "$\\text{Llano }(\\alpha=\\pi)$"
+              },
+              {
+                "when": "and(gt(angleBOA.value, pi + 0.05), lt(angleBOA.value, 2*pi - 0.05))",
+                "text": "$\\text{Cóncavo }(\\pi <\\alpha<2\\pi)$"
+              }
+            ]
           }
-        ]
+        ],
+        "layout": "stack"
       },
       "anchor": {
         "type": "viewport",
@@ -414,14 +421,19 @@ export const AnguloSpec = createDiagramSpec(
         "lineBO": "Zuzena",
         "perpB4O": "Perpendikularra"
       },
-      "rules": {
-        "infoPanel4": [
-          "$\\text{Zorrotza }(0<\\alpha<\\pi/2)$",
-          "$\\text{Zuzena }(\\alpha=\\pi/2)$",
-          "$\\text{Kamutsa }(\\pi / 2<\\alpha<\\pi)$",
-          "$\\text{Laua }(\\alpha=\\pi)$",
-          "$\\text{Ahurra }(\\pi <\\alpha<2\\pi)$"
-        ]
+      "blocks": {
+        "infoPanel4": {
+          "clasificacion": {
+            "text": "$\\text{Zorrotza }(0<\\alpha<\\pi/2)$",
+            "rules": [
+              "$\\text{Zorrotza }(0<\\alpha<\\pi/2)$",
+              "$\\text{Zuzena }(\\alpha=\\pi/2)$",
+              "$\\text{Kamutsa }(\\pi / 2<\\alpha<\\pi)$",
+              "$\\text{Laua }(\\alpha=\\pi)$",
+              "$\\text{Ahurra }(\\pi <\\alpha<2\\pi)$"
+            ]
+          }
+        }
       }
     },
     "en": {
@@ -438,14 +450,19 @@ export const AnguloSpec = createDiagramSpec(
         "infoPanel4": "Information panel",
         "lineBO": "Line"
       },
-      "rules": {
-        "infoPanel4": [
-          "$\\text{Acute }(0<\\alpha<\\pi/2)$",
-          "$\\text{Right }(\\alpha=\\pi/2)$",
-          "$\\text{Obtuse }(\\pi / 2<\\alpha<\\pi)$",
-          "$\\text{Straight }(\\alpha=\\pi)$",
-          "$\\text{Reflex }(\\pi <\\alpha<2\\pi)$"
-        ]
+      "blocks": {
+        "infoPanel4": {
+          "clasificacion": {
+            "text": "$\\text{Acute }(0<\\alpha<\\pi/2)$",
+            "rules": [
+              "$\\text{Acute }(0<\\alpha<\\pi/2)$",
+              "$\\text{Right }(\\alpha=\\pi/2)$",
+              "$\\text{Obtuse }(\\pi / 2<\\alpha<\\pi)$",
+              "$\\text{Straight }(\\alpha=\\pi)$",
+              "$\\text{Reflex }(\\pi <\\alpha<2\\pi)$"
+            ]
+          }
+        }
       }
     }
   }

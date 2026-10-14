@@ -17,7 +17,7 @@ vi.mock('@/components/ui/KatexText', async (importOriginal) => {
 
 import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { DemoAnguloExternoSpec } from '@content/diagrams/Demos/DemoAnguloExterno';
-import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams';
+import type { DiagramSpec } from '@/diagrams';
 
 function stubSize(node: HTMLElement) {
   Object.defineProperty(node, 'clientWidth', { value: WIDTH, configurable: true });
@@ -28,7 +28,7 @@ function stubSize(node: HTMLElement) {
   }) as DOMRect;
 }
 
-function renderWithStubbedSizes(spec: DiagramSpecV2 | DiagramSpecV3) {
+function renderWithStubbedSizes(spec: DiagramSpec) {
   const originalCreateElement = document.createElement.bind(document);
   const spy = vi.spyOn(document, 'createElement').mockImplementation(((tag: string, options?: ElementCreationOptions) => {
     const node = originalCreateElement(tag, options);

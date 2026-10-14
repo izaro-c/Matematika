@@ -5,6 +5,8 @@ import { ElementInspectorPanel } from '../inspector/element/ElementInspectorPane
 import { PointInspector } from '../inspector/point/PointInspector';
 import { SliderInspector } from '../inspector/slider/SliderInspector';
 import type { ElementInspectorProps } from '../inspector/types';
+import { isControlObject, isPositionedPoint } from '@/diagrams';
+import { isModelElement } from '../../model/scene/objectLists';
 
 export { PALETTE_TOKENS } from '../inspector/paletteTokens';
 
@@ -24,9 +26,10 @@ export const WorkbenchElementInspector: React.FC<ElementInspectorProps> = ({
     return <InspectorEmptyState />;
   }
 
-  const pointObj = model.points.find(p => p.id === selectedId);
-  const elementObj = model.elements.find(e => e.id === selectedId);
-  const sliderObj = model.sliders.find(s => s.id === selectedId);
+  const selected = model.objects.find(object => object.id === selectedId);
+  const pointObj = isPositionedPoint(selected) ? selected : undefined;
+  const sliderObj = isControlObject(selected) ? selected : undefined;
+  const elementObj = isModelElement(selected) ? selected : undefined;
 
   const sharedProps = {
     model,

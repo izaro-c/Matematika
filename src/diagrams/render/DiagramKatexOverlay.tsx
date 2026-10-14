@@ -1,7 +1,7 @@
 import React from 'react';
-import type {DiagramColorToken, DiagramElement, DiagramSpecV2} from '@/diagrams/model';
-import {evaluateMathExpression, interpolateDiagramTemplate} from '@/diagrams/model'
-import {evaluateStepOverlayContent} from '@/diagrams/geometry';
+import type {DiagramColorToken, DiagramObject, DiagramSpec} from '@/diagrams/model';
+import {evaluateMathExpression, interpolateDiagramTemplate, isControlObject, isPositionedPoint, objectKind, pointIsImmovable} from '@/diagrams/model'
+import {evaluateStepOverlayContent, sceneReferences} from '@/diagrams/geometry';
 import { DiagramInfoPanel } from '@/components/ui/DiagramOverlay';
 import { KatexText } from '@/components/ui/KatexText';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
@@ -10,7 +10,15 @@ import {
   evaluatedValue,
   measurementText,
   reactiveText,
+  reactiveTextSource,
 } from '@/diagrams/render/diagramRuntimeUtils';
+
+type HeaderScene = Pick<DiagramSpec, 'objects' | 'header'>;
+
+/** Objetos que pueden aportar lecturas: cualquiera salvo puntos con posición propia y controles. */
+function readingCandidates(spec: Pick<DiagramSpec, 'objects'>): DiagramObject[] {
+  return spec.objects.filter(item => !isPositionedPoint(item) && !isControlObject(item));
+}
 
 export {
   annotationTextHtml,
@@ -31,37 +39,44 @@ export interface HeaderReadingPresentation {
   visibility: 'any' | 'all';
 }
 
-function automaticHeaderReadingItems(spec: DiagramSpecV2): DiagramElement[] {
-  const dynamicPanels = spec.elements.filter(item => item.kind === 'infoPanel' && item.properties?.expression);
+function automaticHeaderReadingItems(spec: HeaderScene): DiagramObject[] {
+  const candidates = readingCandidates(spec);
+  const dynamicPanels = candidates.filter(item => item.objectType === 'annotation' && item.variant === 'panel' && item.content.expression);
   if (dynamicPanels.length > 0) return dynamicPanels;
-  return spec.elements
-    .filter(item => (item.kind === 'measurement' || item.kind === 'dimensionLine') && (item.properties?.expression || item.refs.length >= 2))
+  return candidates
+    .filter(item => {
+      const kind = objectKind(item);
+      return (kind === 'measurement' || kind === 'dimensionLine')
+        && (reactiveTextSource(item).expression || sceneReferences(spec, item).length >= 2);
+    })
     .slice(0, 4);
 }
 
-export function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
+export function headerReadingItems(spec: HeaderScene): DiagramObject[] {
   if (spec.header?.readingsMode === 'hidden') return [];
   if (spec.header?.readingsMode !== 'custom') return automaticHeaderReadingItems(spec);
-  const byId = new Map(spec.elements.map(item => [item.id, item]));
+  const byId = new Map(readingCandidates(spec).map(item => [item.id, item]));
   return [...new Set(spec.header.readings.flatMap(reading => reading.sourceIds))]
     .map(id => byId.get(id))
-    .filter((item): item is DiagramElement => Boolean(item));
+    .filter((item): item is DiagramObject => Boolean(item));
 }
 
-export function headerReadingText(item: DiagramElement, variables: Record<string, number>): string | null {
+export function headerReadingText(item: DiagramObject, variables: Record<string, number>, spec?: Pick<DiagramSpec, 'objects'>): string | null {
+  const source = reactiveTextSource(item);
+  const refs = spec ? sceneReferences(spec, item) : sceneReferences({ objects: [item] }, item);
   let value: number | undefined;
   try {
-    if (item.properties?.expression) {
-      value = evaluateMathExpression(item.properties.expression, variables);
-    } else if (item.refs.length >= 2) {
-      const [a, b] = item.refs;
+    if (source.expression) {
+      value = evaluateMathExpression(source.expression, variables);
+    } else if (refs.length >= 2) {
+      const [a, b] = refs;
       const ax = variables[`${a}.x`];
       const ay = variables[`${a}.y`];
       const bx = variables[`${b}.x`];
       const by = variables[`${b}.y`];
       if ([ax, ay, bx, by].every(Number.isFinite)) value = Math.hypot(bx - ax, by - ay);
-    } else if (item.refs.length === 1) {
-      const refId = item.refs[0];
+    } else if (refs.length === 1) {
+      const refId = refs[0];
       if (Number.isFinite(variables[`${refId}.length`])) {
         value = variables[`${refId}.length`];
       }
@@ -70,23 +85,24 @@ export function headerReadingText(item: DiagramElement, variables: Record<string
     return null;
   }
   if (value === undefined || !Number.isFinite(value)) return null;
-  const precision = item.properties?.precision ?? 2;
-  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-  const displayLabel = item.label || item.properties?.title || item.id;
-  const template = item.text || `${displayLabel}: {value}`;
+  const precision = source.precision ?? 2;
+  const unit = source.unit ? ` ${source.unit}` : '';
+  const title = item.objectType === 'annotation' ? item.content.title : undefined;
+  const displayLabel = item.label || title || item.id;
+  const template = source.text || `${displayLabel}: {value}`;
   const rendered = interpolateDiagramTemplate(template, variables, {
-    expression: item.properties?.expression,
+    expression: source.expression,
     precision,
-    unit: item.properties?.unit,
+    unit: source.unit,
   });
   return rendered.split('{value}').join(`${value.toFixed(precision)}${unit}`);
 }
 
-export function movableCueLabels(spec: DiagramSpecV2): MovableCueLabel[] {
+export function movableCueLabels(spec: Pick<DiagramSpec, 'objects'>): MovableCueLabel[] {
   const labels = new Map<string, DiagramColorToken>();
   [
-    ...spec.points.filter(point => point.selection.selectable && !point.fixed && !point.locked && point.constraint !== 'derived'),
-    ...spec.sliders.filter(slider => slider.selection.selectable && !slider.locked),
+    ...spec.objects.filter(point => isPositionedPoint(point) && point.selection.selectable && !pointIsImmovable(point) && !point.locked),
+    ...spec.objects.filter(slider => isControlObject(slider) && slider.selection.selectable && !slider.locked),
   ].forEach(item => {
     const label = item.label.trim();
     if (label && !labels.has(label)) labels.set(label, item.color);
@@ -149,14 +165,14 @@ function readingValue(text: string): string {
 }
 
 function customHeaderReadings(
-  entries: Array<{ item: DiagramElement; text: string }>,
-  spec: DiagramSpecV2,
+  entries: Array<{ item: DiagramObject; text: string }>,
+  spec: HeaderScene,
 ): HeaderReadingPresentation[] {
   const entryById = new Map(entries.map(entry => [entry.item.id, entry]));
   return (spec.header?.readings ?? []).flatMap((reading): HeaderReadingPresentation[] => {
     const sources = reading.sourceIds
       .map(id => entryById.get(id))
-      .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry));
+      .filter((entry): entry is { item: DiagramObject; text: string } => Boolean(entry));
     if (sources.length === 0) return [];
 
     if (reading.presentation === 'value') {
@@ -206,15 +222,15 @@ function customHeaderReadings(
 }
 
 export function compactHeaderReadings(
-  entries: Array<{ item: DiagramElement; text: string }>,
-  spec?: DiagramSpecV2,
+  entries: Array<{ item: DiagramObject; text: string }>,
+  spec?: HeaderScene,
 ): HeaderReadingPresentation[] {
   if (spec?.header?.readingsMode === 'custom') return customHeaderReadings(entries, spec);
   const compacted: HeaderReadingPresentation[] = [];
   for (let index = 0; index < entries.length; index += 1) {
     const current = entries[index];
     const next = entries[index + 1];
-    if (current.item.kind === 'dimensionLine' && next?.item.kind === 'dimensionLine') {
+    if (objectKind(current.item) === 'dimensionLine' && next && objectKind(next.item) === 'dimensionLine') {
       const currentParts = current.text.split('=');
       const nextParts = next.text.split('=');
       const currentValue = currentParts.slice(1).join('=').trim();
@@ -240,7 +256,7 @@ export function StepOverlayPanels({
   activeStepId,
   variables,
 }: {
-  spec: DiagramSpecV2;
+  spec: DiagramSpec;
   activeStepId?: string;
   variables: Record<string, number>;
 }) {

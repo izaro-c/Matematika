@@ -9,9 +9,15 @@ import {
   evaluateMathExpression,
   expressionVariables,
   resolvePointCoordinates,
+  objectKind,
+  objectStyle,
   withMovedPoint,
-  type DiagramSpecV2,
+  type AnnotationObject,
+  type DiagramSpec,
+  type PointObject,
 } from '../../../../src/diagrams/public';
+import { modelElements, modelPoints } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { findById } from '../../../helpers/diagramSpec';
 import { createPoincareGeodesic } from '../../../../src/diagrams/jsxgraph/MathFactory';
 
 const CASES = [
@@ -41,28 +47,29 @@ const CASES = [
   },
 ] as const;
 
-function readModel(path: string): DiagramSpecV2 {
+function readModel(path: string): DiagramSpec {
   const parsed = parseDiagramSourceAST(fs.readFileSync(path, 'utf8'));
   expect(parsed.status).toBe('visual-exact');
   if (parsed.status !== 'visual-exact') throw new Error(`${path} no es editable visualmente sin pérdida.`);
   return parsed.model;
 }
 
-function kindCounts(model: DiagramSpecV2) {
+function kindCounts(model: DiagramSpec) {
+  const kinds = modelElements(model).map(objectKind);
   return Object.fromEntries(
-    [...new Set(model.elements.map(element => element.kind))]
+    [...new Set(kinds)]
       .sort()
-      .map(kind => [kind, model.elements.filter(element => element.kind === kind).length]),
+      .map(kind => [kind, kinds.filter(item => item === kind).length]),
   );
 }
 
-function visualFingerprint(model: DiagramSpecV2) {
+function visualFingerprint(model: DiagramSpec) {
   return {
     componentId: model.componentId,
     viewport: model.viewport.bounds,
     layers: model.layers.map(layer => layer.id),
-    points: model.points.length,
-    derived: model.points.filter(point => point.constraint === 'derived').length,
+    points: modelPoints(model).length,
+    derived: modelPoints(model).filter(point => point.definition.type === 'expression').length,
     kinds: kindCounts(model),
     steps: model.steps.map(step => step.id),
     targets: buildTargets(model).filter(target => target.kind !== 'step').map(target => target.id),
@@ -274,8 +281,8 @@ describe('Diagram acceptance migrations', () => {
       ...mdx.matchAll(/<VisualBind\b[^>]*\belement="([^"]+)"/g),
     ].map(match => match[1]);
 
-    expect(model.points.filter(point => point.visible).map(point => point.id)).toEqual(['O', 'P']);
-    expect(model.elements.filter(element => element.visible).map(element => element.id)).toEqual(['circunferenciaBase', 'radioOP']);
+    expect(modelPoints(model).filter(point => point.visible).map(point => point.id)).toEqual(['O', 'P']);
+    expect(modelElements(model).filter(element => element.visible).map(element => element.id)).toEqual(['circunferenciaBase', 'radioOP']);
     expect(model.groups.filter(group => group.target).map(group => group.targetId)).toEqual([
       'diametro',
       'cuerda',
@@ -284,15 +291,15 @@ describe('Diagram acceptance migrations', () => {
     ]);
     expect(references.length).toBeGreaterThan(0);
     references.forEach(target => expect(publicTargets.has(target), `${page}: target ${target}`).toBe(true));
-    [...model.points, ...model.elements]
+    [...modelPoints(model), ...modelElements(model)]
       .filter(item => !item.visible)
-      .forEach(item => expect(item.style?.highlightVisible, item.id).toBe(true));
+      .forEach(item => expect(objectStyle(item)?.highlightVisible, item.id).toBe(true));
   });
 
   it('projects Pitágoras gliders onto positive rays and changes area expressions reactively', () => {
     const model = readModel(CASES[0].source);
     const clamped = withMovedPoint(model, 'A', 0, -5);
-    expect(clamped.points.find(point => point.id === 'A')).toMatchObject({ x: 0, y: 0 });
+    expect(resolvePointCoordinates(clamped, 'A')).toMatchObject({ x: 0, y: 0 });
     const moved = withMovedPoint(model, 'B', 6, 0);
     const variables = expressionVariables(moved);
     expect(evaluateMathExpression('segBC.length^2', variables)).toBe(36);
@@ -302,7 +309,7 @@ describe('Diagram acceptance migrations', () => {
   it('keeps P inside the disk and constructs geodesics orthogonal to its boundary', () => {
     const model = readModel(CASES[1].source);
     const moved = withMovedPoint(model, 'P', 20, 0);
-    const point = moved.points.find(item => item.id === 'P')!;
+    const point = resolvePointCoordinates(moved, 'P')!;
     expect(Math.hypot(point.x, point.y)).toBeLessThan(1);
 
     let curveArgs: unknown[] = [];
@@ -334,9 +341,9 @@ describe('Diagram acceptance migrations', () => {
     expect(highlighted.find(entry => entry.item.id === 'segAB1')?.highlighted).toBe(true);
     expect(highlighted.find(entry => entry.item.id === 'segAB2')?.highlighted).toBe(true);
     expect(highlighted.find(entry => entry.item.id === 'segAC1')?.highlighted).toBe(false);
-    const constrained = withMovedPoint(model, 'C1', 2, -4).points.find(point => point.id === 'C1')!;
+    const constrained = resolvePointCoordinates(withMovedPoint(model, 'C1', 2, -4), 'C1')!;
     expect(constrained.y).toBeGreaterThan(0);
-    expect(model.elements.filter(element => element.kind === 'dimensionLine')).toHaveLength(2);
+    expect(model.objects.filter(object => objectKind(object) === 'dimensionLine')).toHaveLength(2);
   });
 
   it('classifies the parallelogram family and exposes only the marks justified by each shape', () => {
@@ -354,18 +361,20 @@ describe('Diagram acceptance migrations', () => {
     const graph = buildDependencyGraph(model);
     expect(graph.edges).toContainEqual({ sourceId: 'D', targetId: 'C', relation: 'expression' });
     expect(graph.edges).toContainEqual({ sourceId: 'guiaRectangulo', targetId: 'D', relation: 'constraint' });
-    expect(model.points.find(point => point.id === 'D')?.attractorIds).toEqual(['guiaRectangulo', 'guiaLadosIguales']);
-    const classificationPanel = model.elements.find(element => element.id === 'clasificacion');
-    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0, 0] });
-    const [squareRule, rectangleRule, rhombusRule] = classificationPanel?.properties?.textRules ?? [];
+    expect(findById<PointObject>(model, 'D').interaction?.attractorIds).toEqual(['guiaRectangulo', 'guiaLadosIguales']);
+    const classificationPanel = findById<AnnotationObject>(model, 'clasificacion');
+    expect(classificationPanel.anchor).toEqual({ type: 'viewport', position: [0, 0] });
+    const rules = classificationPanel.content.blocks?.[0]?.rules ?? classificationPanel.content.rules ?? [];
+    const [squareRule, rectangleRule, rhombusRule] = rules;
     expect(evaluateMathExpression(squareRule.when, expressionVariables(square))).toBe(1);
     const rectangle = withMovedPoint(model, 'D', -3, 2);
     expect(evaluateMathExpression(squareRule.when, expressionVariables(rectangle))).toBe(0);
     expect(evaluateMathExpression(rectangleRule.when, expressionVariables(rectangle))).toBe(1);
     const rhombus = withMovedPoint(model, 'D', -0.3, 2.1);
     expect(evaluateMathExpression(rhombusRule.when, expressionVariables(rhombus))).toBe(1);
-    expect(model.elements.filter(element => element.kind === 'parallelMark').every(element => element.visible)).toBe(true);
-    expect(model.elements.filter(element => element.kind === 'congruenceMark').every(element => element.properties?.visibleWhen)).toBe(true);
-    expect(model.elements.filter(element => element.kind === 'rightAngle').every(element => element.properties?.visibleWhen)).toBe(true);
+    const ofKind = (kind: string) => model.objects.filter(object => objectKind(object) === kind);
+    expect(ofKind('parallelMark').every(element => element.visible)).toBe(true);
+    expect(ofKind('congruenceMark').every(element => element.visibleWhen)).toBe(true);
+    expect(ofKind('rightAngle').every(element => element.visibleWhen)).toBe(true);
   });
 });

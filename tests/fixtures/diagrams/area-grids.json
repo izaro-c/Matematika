@@ -1,16 +1,196 @@
 {
-  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Cuadrículas y áreas", "componentId": "area-grids", "category": "Teoremas", "mode": "diagram", "axis": false, "grid": false,
-  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
-  "layers": [{ "id": "areas", "label": "Áreas", "order": 0, "visible": true, "locked": false }], "groups": [],
-  "points": [
-    { "id": "pA", "label": "A", "x": -2, "y": -2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 0, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "pB", "label": "B", "x": 2, "y": -2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "pC", "label": "C", "x": 2, "y": 2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 2, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "pD", "label": "D", "x": -2, "y": 2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 3, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Cuadrículas y áreas",
+  "componentId": "area-grids",
+  "category": "Teoremas",
+  "mode": "diagram",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -4,
+      4,
+      4,
+      -4
+    ],
+    "home": [
+      -4,
+      4,
+      4,
+      -4
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "areas",
+      "label": "Áreas",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    }
   ],
-  "elements": [
-    { "id": "squareGrid", "label": "Cuadrícula del cuadrado", "kind": "grid", "refs": ["pA", "pB", "pC", "pD"], "color": "carbon", "layerId": "areas", "order": 10, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 4, "columns": 4 } },
-    { "id": "areaSquare", "label": "Descomposición del cuadrado", "kind": "areaDecomposition", "refs": ["pA", "pB", "pC", "pD"], "color": "canela", "layerId": "areas", "order": 11, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 2, "columns": 2 } }
+  "groups": [],
+  "objects": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "areas",
+      "order": 0,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "areas",
+      "order": 1,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "areas",
+      "order": 2,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "carbon",
+      "layerId": "areas",
+      "order": 3,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "squareGrid",
+      "label": "Cuadrícula del cuadrado",
+      "color": "carbon",
+      "layerId": "areas",
+      "order": 10,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "region",
+      "geometry": {
+        "type": "grid-region",
+        "points": [
+          "pA",
+          "pB",
+          "pC",
+          "pD"
+        ],
+        "rows": 4,
+        "columns": 4
+      },
+      "appearance": {}
+    },
+    {
+      "id": "areaSquare",
+      "label": "Descomposición del cuadrado",
+      "color": "canela",
+      "layerId": "areas",
+      "order": 11,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "pA",
+          "pB",
+          "pC",
+          "pD"
+        ],
+        "rows": 2,
+        "columns": 2
+      },
+      "appearance": {}
+    }
   ],
-  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Fixture para cuadrados de Pitágoras y descomposición de área.", "extensions": { "acceptanceFamily": "area-grids" }
+  "relations": [],
+  "steps": [],
+  "note": "Fixture para cuadrados de Pitágoras y descomposición de área."
 }

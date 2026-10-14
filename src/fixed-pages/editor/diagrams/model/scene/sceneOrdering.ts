@@ -11,11 +11,7 @@ function compareSceneItems(left: OrderedSceneItem, right: OrderedSceneItem): num
 }
 
 export function listSceneItems(model: VisualDiagramModel): OrderedSceneItem[] {
-  return [
-    ...model.points.map(item => ({ id: item.id, layerId: item.layerId, order: item.order })),
-    ...model.elements.map(item => ({ id: item.id, layerId: item.layerId, order: item.order })),
-    ...model.sliders.map(item => ({ id: item.id, layerId: item.layerId, order: item.order })),
-  ];
+  return model.objects.map(item => ({ id: item.id, layerId: item.layerId, order: item.order }));
 }
 
 export function listLayerSceneItems(model: VisualDiagramModel, layerId: string): OrderedSceneItem[] {
@@ -48,15 +44,7 @@ export function nextLayerItemOrder(model: VisualDiagramModel, layerId: string): 
 function applyOrderMap(model: VisualDiagramModel, orderById: Map<string, { layerId: string; order: number }>): VisualDiagramModel {
   return {
     ...model,
-    points: model.points.map(item => {
-      const next = orderById.get(item.id);
-      return next ? { ...item, layerId: next.layerId, order: next.order } : item;
-    }),
-    elements: model.elements.map(item => {
-      const next = orderById.get(item.id);
-      return next ? { ...item, layerId: next.layerId, order: next.order } : item;
-    }),
-    sliders: model.sliders.map(item => {
+    objects: model.objects.map(item => {
       const next = orderById.get(item.id);
       return next ? { ...item, layerId: next.layerId, order: next.order } : item;
     }),

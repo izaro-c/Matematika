@@ -1,4 +1,6 @@
+import { objectKind } from '@/diagrams';
 import type { DiagramTarget, DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import { modelElements, modelPoints, modelSliders } from './objectLists';
 import type { VisualDiagramModel, ElementKind } from '../types';
 import type { DiagramState } from '@/fixed-pages/editor/diagrams/history/types';
 
@@ -38,19 +40,22 @@ export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
 }
 
 export function buildTargets(model: VisualDiagramModel): DiagramTargetRegistry {
-  const pointTargets = model.points
+  const pointTargets = modelPoints(model)
     .filter(item => item.target)
     .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: `Punto ${item.label}`, color: item.color, kind: 'point' as const }));
-  const elementTargets = model.elements
+  const elementTargets = modelElements(model)
     .filter(item => item.target)
-    .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: targetKind(item.kind) }));
-  const sliderTargets = model.sliders
+    .map(item => {
+      const kind = objectKind(item);
+      return { id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: kind === 'point' || kind === 'control' ? 'point' as const : targetKind(kind) };
+    });
+  const sliderTargets = modelSliders(model)
     .filter(item => item.target)
     .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: 'slider' as const }));
   const groupTargets = model.groups
     .filter(group => group.target)
     .map(group => {
-      const member = [...model.points, ...model.elements, ...model.sliders].find(item => group.memberIds.includes(item.id));
+      const member = [...modelPoints(model), ...modelElements(model), ...modelSliders(model)].find(item => group.memberIds.includes(item.id));
       const color = group.color ?? member?.color ?? 'ocre';
       return { id: group.targetId ?? group.id, objectId: group.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${group.targetId ?? group.id}`, label: group.label, color, kind: 'other' as const };
     });

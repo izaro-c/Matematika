@@ -23,15 +23,16 @@ vi.mock('@/components/ui/KatexText', async (importOriginal) => {
 import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { SemirrectaSpec } from '@content/diagrams/Definiciones/Semirrecta';
 import { BisectrizSpec } from '@content/diagrams/Definiciones/Bisectriz';
-import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams';
-import { diagramConstraint, element, point } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import type { DiagramSpec } from '@/diagrams';
+import { element, point, withPointMode } from '@/fixed-pages/editor/diagrams/model';
+import { diagramConstraint, sceneFromParts } from '../helpers/diagramSpec';
 
 /**
  * Construye un spec sintético con `dependentCount` puntos que dependen todos
  * de la longitud del segmento AB mediante `equalLength`: al arrastrar A, los
  * `dependentCount` puntos deben reposicionarse en el mismo fotograma.
  */
-function equalLengthFanoutSpec(dependentCount: number): DiagramSpecV2 {
+function equalLengthFanoutSpec(dependentCount: number): DiagramSpec {
   const anchor = point('O', 'O', 0, 0, true);
   const pA = point('A', 'A', 2, 0);
   const pB = point('B', 'B', 4, 0);
@@ -39,17 +40,13 @@ function equalLengthFanoutSpec(dependentCount: number): DiagramSpecV2 {
   const dependents = Array.from({ length: dependentCount }, (_, index) => {
     const angle = (index / Math.max(dependentCount, 1)) * Math.PI * 2;
     const id = `C${index}`;
-    return {
-      ...point(id, id, Math.cos(angle) * 2, Math.sin(angle) * 2),
-      constraintIds: [`equalLength-${id}`],
-    };
+    return withPointMode(point(id, id, Math.cos(angle) * 2, Math.sin(angle) * 2), 'constrained', { relationIds: [`equalLength-${id}`] });
   });
   const constraints = dependents.map((dependent) => (
     diagramConstraint(`equalLength-${dependent.id}`, `${dependent.id} a la misma longitud que AB`, 'equalLength', [dependent.id, 'O', 'segAB'])
   ));
-  return {
-    version: 2,
-    renderer: 'matematika-diagram-renderer-v2',
+  return sceneFromParts({
+    version: 3,
     title: 'Abanico de igualdad de longitud (test)',
     componentId: `equal-length-fanout-${dependentCount}`,
     category: 'Demos',
@@ -65,8 +62,7 @@ function equalLengthFanoutSpec(dependentCount: number): DiagramSpecV2 {
     steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: ['O', 'A', 'B', 'segAB', ...dependents.map(d => d.id)], durationMs: 0 }],
     constraints,
     note: '',
-    extensions: {},
-  };
+  });
 }
 
 function stubSize(node: HTMLElement) {
@@ -78,7 +74,7 @@ function stubSize(node: HTMLElement) {
   }) as DOMRect;
 }
 
-function renderWithStubbedSizes(spec: DiagramSpecV2 | DiagramSpecV3) {
+function renderWithStubbedSizes(spec: DiagramSpec) {
   const originalCreateElement = document.createElement.bind(document);
   const spy = vi.spyOn(document, 'createElement').mockImplementation(((tag: string, options?: ElementCreationOptions) => {
     const node = originalCreateElement(tag, options);
@@ -276,7 +272,7 @@ describe('reentrancia: resize del contenedor a mitad de un gesto de arrastre', (
   });
 });
 
-async function countUpdatesForOneDragStep(spec: DiagramSpecV2 | DiagramSpecV3, targetLabel: string): Promise<number> {
+async function countUpdatesForOneDragStep(spec: DiagramSpec, targetLabel: string): Promise<number> {
   renderWithStubbedSizes(spec);
   const board = await locateBoard();
 

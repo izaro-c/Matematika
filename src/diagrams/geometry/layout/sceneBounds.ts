@@ -1,17 +1,18 @@
 import type {
   DiagramBounds,
-  DiagramElement,
-  DiagramSpecV2,
   DiagramViewport,
 } from '@/diagrams/model/schema/types';
-import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
-import type { DiagramSceneBag } from '@/diagrams/geometry/layout/sceneTypes';
+import type { DiagramObject, DiagramSpec } from '@/diagrams/model/schema/v3';
+import { isControlObject, isPositionedPoint, pointPosition, findObject } from '@/diagrams/model/objects/queries';
 import {
   clampCurveCoordinatesForBounds,
+  isCurveObject,
   sampleCurveFromSpec,
 } from '@/diagrams/geometry/curves/curveGeometry';
-import { resolvePointCoordinates } from '@/diagrams/geometry/coordinates/sceneCoordinates';
-import { prepareSceneSpec } from '@/diagrams/geometry/coordinates/scenePointMotion';
+import { resolvePointCoordinates, sceneReferences } from '@/diagrams/geometry/coordinates/sceneCoordinates';
+import { resolveDiagramScene } from '@/diagrams/geometry/coordinates/scenePointMotion';
+
+type BoundsScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport'>;
 
 function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): DiagramBounds | null {
   if (coordinates.length === 0) return null;
@@ -20,30 +21,26 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
   return [Math.min(...xs), Math.max(...ys), Math.max(...xs), Math.min(...ys)];
 }
 
-function curveCoordinates(spec: DiagramSceneBag, element: DiagramElement): Array<{ x: number; y: number }> {
-  const samples = sampleCurveFromSpec(spec as DiagramSpecV2, element);
+function curveCoordinates(spec: BoundsScene, element: DiagramObject): Array<{ x: number; y: number }> {
+  const samples = sampleCurveFromSpec(spec, element);
   return clampCurveCoordinatesForBounds(samples, spec.viewport.home);
 }
 
-function elementCoordinates(spec: DiagramSceneBag, element: DiagramElement): Array<{ x: number; y: number }> {
-  if (element.kind === 'intersection') {
-    const point = spec.points.find(p => p.id === element.id);
-    if (point && point.visible === false) return [];
+function elementCoordinates(spec: BoundsScene, element: DiagramObject): Array<{ x: number; y: number }> {
+  if (element.objectType === 'point' && element.definition.type === 'intersection') {
     const intersection = resolvePointCoordinates(spec, element.id);
     return intersection ? [intersection] : [];
   }
-  const refs = element.refs
+  const refs = sceneReferences(spec, element)
     .filter(ref => {
-      const point = spec.points.find(p => p.id === ref);
-      return !point || point.visible !== false;
+      const point = findObject(spec, ref);
+      return !isPositionedPoint(point) || point.visible !== false;
     })
     .map(ref => resolvePointCoordinates(spec, ref))
     .filter((point): point is { x: number; y: number } => Boolean(point));
 
-  if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
-    return curveCoordinates(spec, element);
-  }
-  if (element.kind !== 'circle' || refs.length < 2) return refs;
+  if (isCurveObject(element)) return curveCoordinates(spec, element);
+  if (!(element.objectType === 'path' && element.geometry.type === 'circle') || refs.length < 2) return refs;
   const [center, edge] = refs;
   const radius = Math.hypot(edge.x - center.x, edge.y - center.y);
   return [
@@ -52,26 +49,22 @@ function elementCoordinates(spec: DiagramSceneBag, element: DiagramElement): Arr
   ];
 }
 
-export function contentBounds(input: DiagramSpecV2 | DiagramSpecV3, itemIds?: readonly string[]): DiagramBounds | null {
-  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
+/** Encuadre de una escena ya resuelta (sin volver a aplicar restricciones). */
+export function resolvedSceneContentBounds(spec: BoundsScene, itemIds?: readonly string[]): DiagramBounds | null {
   const filter = itemIds ? new Set(itemIds) : null;
   const coordinates: Array<{ x: number; y: number }> = [];
-  spec.points.forEach(point => {
-    if ((!filter || filter.has(point.id)) && point.visible !== false) {
-      coordinates.push({ x: point.x, y: point.y });
-    }
-  });
-  spec.elements.forEach(element => {
-    if ((!filter || filter.has(element.id)) && element.visible !== false) {
-      coordinates.push(...elementCoordinates(spec, element));
-    }
-  });
-  spec.sliders.forEach(slider => {
-    if ((!filter || filter.has(slider.id)) && slider.visible !== false) {
-      coordinates.push({ x: slider.x, y: slider.y }, { x: slider.x + 2.6, y: slider.y });
-    }
+  spec.objects.forEach(object => {
+    if ((filter && !filter.has(object.id)) || object.visible === false) return;
+    if (isPositionedPoint(object)) coordinates.push(pointPosition(object)!);
+    else if (isControlObject(object)) {
+      coordinates.push({ x: object.position[0], y: object.position[1] }, { x: object.position[0] + 2.6, y: object.position[1] });
+    } else coordinates.push(...elementCoordinates(spec, object));
   });
   return boundsFromCoordinates(coordinates);
+}
+
+export function contentBounds(input: BoundsScene, itemIds?: readonly string[]): DiagramBounds | null {
+  return resolvedSceneContentBounds(resolveDiagramScene(input), itemIds);
 }
 
 export function padBounds(bounds: DiagramBounds, padding: number): DiagramBounds {
@@ -82,16 +75,16 @@ export function padBounds(bounds: DiagramBounds, padding: number): DiagramBounds
 }
 
 export function fitViewport(
-  input: DiagramSpecV2 | DiagramSpecV3,
+  input: BoundsScene,
   itemIds?: readonly string[],
   padding?: number,
 ): DiagramBounds {
-  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
-  const bounds = contentBounds(spec, itemIds);
+  const spec = resolveDiagramScene(input);
+  const bounds = resolvedSceneContentBounds(spec, itemIds);
   return bounds ? padBounds(bounds, padding ?? spec.viewport.padding) : spec.viewport.home;
 }
 
-export function zoomViewport(spec: DiagramSpecV2, bounds: DiagramBounds, factor: number): DiagramBounds {
+export function zoomViewport(spec: Pick<DiagramSpec, 'viewport'>, bounds: DiagramBounds, factor: number): DiagramBounds {
   const [left, top, right, bottom] = bounds;
   const centerX = (left + right) / 2;
   const centerY = (top + bottom) / 2;
@@ -116,17 +109,19 @@ export function boundsContain(container: DiagramBounds, contained: DiagramBounds
     && contained[3] >= container[3];
 }
 
-export function offscreenItemIds(spec: DiagramSpecV2, bounds = spec.viewport.bounds): string[] {
-  return [...spec.points, ...spec.elements, ...spec.sliders]
+export function offscreenItemIds(input: BoundsScene, bounds = input.viewport.bounds): string[] {
+  const spec = resolveDiagramScene(input);
+  return spec.objects
     .filter(item => {
-      const itemBounds = contentBounds(spec, [item.id]);
+      const itemBounds = resolvedSceneContentBounds(spec, [item.id]);
       return itemBounds ? !boundsContain(bounds, itemBounds) : false;
     })
     .map(item => item.id);
 }
 
-export function recoverViewport(spec: DiagramSpecV2, selectedIds: readonly string[] = []): DiagramBounds {
-  const selectedBounds = selectedIds.length > 0 ? contentBounds(spec, selectedIds) : null;
+export function recoverViewport(input: BoundsScene, selectedIds: readonly string[] = []): DiagramBounds {
+  const spec = resolveDiagramScene(input);
+  const selectedBounds = selectedIds.length > 0 ? resolvedSceneContentBounds(spec, selectedIds) : null;
   if (selectedBounds && !boundsContain(spec.viewport.bounds, selectedBounds)) {
     return padBounds(selectedBounds, spec.viewport.padding);
   }
@@ -134,6 +129,6 @@ export function recoverViewport(spec: DiagramSpecV2, selectedIds: readonly strin
   return offscreen.length > 0 ? fitViewport(spec) : spec.viewport.bounds;
 }
 
-export function withViewportBounds<T extends DiagramSceneBag & { viewport: DiagramViewport }>(spec: T, bounds: DiagramBounds): T {
+export function withViewportBounds<T extends { viewport: DiagramViewport }>(spec: T, bounds: DiagramBounds): T {
   return { ...spec, viewport: { ...spec.viewport, bounds } };
 }

@@ -10,12 +10,10 @@ function modelWithPointsAndLine() {
   const base = createTemplateModel('lienzo-inicial', 'Test', 'test');
   return {
     ...base,
-    points: [
+    objects: [
       point('pA', 'A', 0, 0),
       point('pB', 'B', 1, 0),
       point('pC', 'C', 0, 1),
-    ],
-    elements: [
       element('lineAB', 'AB', 'line', ['pA', 'pB'], 'terracota'),
       element('segBC', 'BC', 'segment', ['pB', 'pC'], 'terracota'),
     ],
@@ -48,7 +46,7 @@ describe('relationSlots', () => {
 
   it('relationAvailability disables distance when only one point exists', () => {
     const base = createTemplateModel('lienzo-inicial', 'Solo', 'test');
-    const model = { ...base, points: [point('pA', 'A', 0, 0)], elements: [] };
+    const model = { ...base, objects: [point('pA', 'A', 0, 0)] };
     const availability = relationAvailability(model, 'distance', 'pA', []);
     expect(availability.status).toBe('disabled');
     expect(availability.reason).toMatch(/otro punto/i);

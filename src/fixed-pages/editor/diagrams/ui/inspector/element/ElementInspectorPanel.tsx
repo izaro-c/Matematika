@@ -1,4 +1,5 @@
 import React from 'react';
+import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { AccordionSection } from '../accordion';
 import { InspectorHeader } from '../WorkbenchInspectorHeader';
 import { PALETTE_TOKENS } from '../paletteTokens';
@@ -24,11 +25,12 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
 }> = (props) => {
   const { model, element, onDeleteSelected, openAccordion, onToggleAccordion } = props;
   const colorToken = PALETTE_TOKENS.find(c => c.id === element.color) || PALETTE_TOKENS[4];
+  const kind = elementKind(element);
 
   return (
     <div className="p-3 space-y-2 text-xs font-serif text-carbon">
       <InspectorHeader
-        title={`${element.kind}: ${element.id}`}
+        title={`${kind}: ${element.id}`}
         colorClass={colorToken.bgClass}
         onDelete={() => onDeleteSelected(element.id)}
       />
@@ -37,19 +39,19 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
         <ElementIdentitySection {...props} />
       </AccordionSection>
 
-      {showsMarksSection(element.kind) && (
+      {showsMarksSection(kind) && (
         <AccordionSection sec="marks_congruence" title="Marcas & Anotaciones Visuales" isOpen={openAccordion.marks_congruence} onToggle={onToggleAccordion}>
           <ElementMarksSection {...props} />
         </AccordionSection>
       )}
 
-      {showsCurveSection(element.kind) && (
+      {showsCurveSection(kind) && (
         <AccordionSection sec="geometry" title="Fórmula de la Curva, Dominio & Relleno de Área" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
           <ElementCurveSection {...props} />
         </AccordionSection>
       )}
 
-      {showsContentSection(element.kind) && (
+      {showsContentSection(kind) && (
         <AccordionSection sec="content" title="Contenido del Panel, Bloques & Posición" isOpen={openAccordion.content} onToggle={onToggleAccordion}>
           <ElementContentSection {...props} />
         </AccordionSection>
@@ -60,16 +62,15 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
       </AccordionSection>
 
       <AccordionSection sec="visibility_selection" title="Visibilidad Condicionada & Selección" isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
-        <ElementVisibilitySection {...props} />
+        <ElementVisibilitySection object={element} onUpdate={update => props.onUpdateElement(element.id, update)} />
         <DiagramElementBehaviorEditor
           model={model}
           element={element}
           onElementChange={updates => props.onUpdateElement(element.id, updates)}
-          onPropertiesChange={properties => props.onUpdateElement(element.id, { properties: { ...element.properties, ...properties } })}
         />
       </AccordionSection>
 
-      {showsConstraintsSection(element.kind) && (
+      {showsConstraintsSection(kind) && (
         <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
           <ElementConstraintsSection {...props} />
         </AccordionSection>

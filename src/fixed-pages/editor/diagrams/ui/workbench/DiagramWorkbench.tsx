@@ -8,8 +8,6 @@ import { useDiagramWorkbenchLoader, type DiagramWorkbenchMode } from '@/fixed-pa
 import type {
   CanvasTool,
   TemplateKind,
-  VisualPoint,
-  VisualElement,
   VisualSlider,
   VisualStep,
   VisualDiagramModel,
@@ -23,7 +21,10 @@ import {
   refsForKind,
   generatedElementId,
   elementColorForKind,
-  defaultElementProperties,
+  insertObjects,
+  modelPoints,
+  modelSliders,
+  modelElements,
   element,
   nextLayerItemOrder,
   deleteDiagramCascade,
@@ -35,6 +36,8 @@ import {
   supportElements,
   projectPointToSupport,
 } from '../../model';
+import { withPointPosition } from '@/diagrams';
+import type { ElementUpdate, PointUpdate, SliderUpdate } from '../inspector/types';
 import {
   confirmWorkbench,
   makeVisibleInEveryStep,
@@ -301,23 +304,9 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     (kind: ElementKind, explicitRefs: string[]) => {
       if (!model) return;
       const elementRefs = refsForKind(kind, explicitRefs);
-      const newId = generatedElementId(kind, elementRefs, model.elements);
-      const defaultProps = defaultElementProperties(kind) || {};
+      const newId = generatedElementId(kind, elementRefs, model.objects);
       const isAnnotation = ANNOTATION_KINDS.has(kind);
       const layerId = isAnnotation ? 'annotations' : 'geometry';
-
-      const extraProperties =
-        kind === 'infoPanel'
-          ? {
-              title: 'Panel Informativo',
-              anchorMode: 'viewport' as const,
-              viewportPosition: [0.08, 0.22] as [number, number],
-            }
-          : kind === 'text' || kind === 'label' || kind === 'formula'
-          ? {
-              text: 'Texto explicativo $A$',
-            }
-          : {};
 
       const workingModel = isAnnotation
         ? ensureLayer(model, 'annotations', 'Anotaciones & Texto', 20)
@@ -331,26 +320,20 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         elementColorForKind(kind),
         kind !== 'label',
         {
-          properties: { ...defaultProps, ...extraProperties },
-          text: kind === 'infoPanel' ? 'Explicación del teorema o propiedad matemática en KaTeX: $a^2 + b^2 = c^2$' : undefined,
+          text: kind === 'infoPanel'
+            ? 'Explicación del teorema o propiedad matemática en KaTeX: $a^2 + b^2 = c^2$'
+            : kind === 'text' || kind === 'label' || kind === 'formula' ? 'Texto explicativo $A$' : undefined,
         }
       );
+      const configuredElement = baseElement.objectType === 'annotation' && baseElement.variant === 'panel'
+        ? { ...baseElement, content: { ...baseElement.content, title: 'Panel Informativo' }, anchor: { type: 'viewport' as const, position: [0.08, 0.22] as [number, number] } }
+        : baseElement;
       const nextElement = {
-        ...baseElement,
+        ...configuredElement,
         layerId,
         order: nextLayerItemOrder(workingModel, layerId),
       };
-      const nextModel = makeVisibleInEveryStep(
-        {
-          ...workingModel,
-          elements: [...workingModel.elements, nextElement],
-          dependencies: [
-            ...(workingModel.dependencies || []),
-            ...elementRefs.map(sourceId => ({ sourceId, targetId: newId, relation: 'construction' as const })),
-          ],
-        },
-        newId
-      );
+      const nextModel = makeVisibleInEveryStep(insertObjects(workingModel, [nextElement]), newId);
 
       handleVisualEdit(nextModel, { label: `Añadir ${KIND_LABELS[kind] || kind}` });
       selectMany([newId]);
@@ -398,9 +381,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
             handleVisualEdit({
               ...model,
               groups: nextGroups,
-              points: updateGroupIds(model.points),
-              elements: updateGroupIds(model.elements),
-              sliders: updateGroupIds(model.sliders),
+              objects: updateGroupIds(model.objects),
             }, { label: `Modificar miembros de grupo ${pickingGroupId} desde lienzo` });
           }
         } else if (pickingStepIndex !== null && model.steps?.[pickingStepIndex]) {
@@ -463,13 +444,12 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     const newId = `slider${Date.now().toString(36).slice(-3)}`;
     const newSlider: VisualSlider = {
       id: newId,
+      objectType: 'control',
+      variant: 'slider',
       label: 'Parámetro k',
-      x: -4,
-      y: -4,
-      min: -5,
-      max: 5,
+      position: [-4, -4],
+      range: { min: -5, max: 5, step: 0.1 },
       value: 1,
-      step: 0.1,
       color: 'pavo',
       layerId: 'controls',
       order: nextLayerItemOrder(model, 'controls'),
@@ -480,7 +460,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       selection: { selectable: true, role: 'annotation' },
     };
     handleVisualEdit(
-      makeVisibleInEveryStep({ ...model, sliders: [...model.sliders, newSlider] }, newId),
+      makeVisibleInEveryStep(insertObjects(model, [newSlider]), newId),
       { label: 'Añadir deslizador' },
     );
     selectMany([newId]);
@@ -493,7 +473,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       const candidates = supportElements(model);
       const support = candidates.find(item => item.id === supportId) ?? candidates[0];
       if (!support) return;
-      const id = nextPointId(model.points);
+      const id = nextPointId(model.objects);
       const nextPoint = {
         ...point(id, id.replace(/^p/, ''), 0, 0, false, 'ocre', 'glider', support.id),
         order: nextLayerItemOrder(model, 'geometry'),
@@ -501,7 +481,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       const projected = projectPointToSupport(model, nextPoint, { x: 0, y: 0 });
       handleVisualEdit(
         makeVisibleInEveryStep(
-          { ...model, points: [...model.points, { ...nextPoint, ...projected }] },
+          insertObjects(model, [withPointPosition(nextPoint, projected)]),
           id,
         ),
         { label: `Añadir punto sobre ${support.id}` },
@@ -517,9 +497,9 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     if (!model) return;
     const nextIdx = (model.steps || []).length + 1;
     const allObjectIds = [
-      ...model.points.map((p: VisualPoint) => p.id),
-      ...model.elements.map((e: VisualElement) => e.id),
-      ...model.sliders.map((s: VisualSlider) => s.id),
+      ...modelPoints(model).map(p => p.id),
+      ...modelElements(model).map(e => e.id),
+      ...modelSliders(model).map(s => s.id),
     ];
     const newStep: VisualStep = {
       id: `step${nextIdx}`,
@@ -548,7 +528,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   );
 
   const handleUpdatePoint = useCallback(
-    (id: string, updates: Partial<VisualPoint>) => {
+    (id: string, updates: PointUpdate) => {
       if (!editingModel) return;
       commitEdit(updatePoint(editingModel, id, updates), { label: `Editar punto ${id}` });
     },
@@ -556,7 +536,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   );
 
   const handleUpdateElement = useCallback(
-    (id: string, updates: Partial<VisualElement>) => {
+    (id: string, updates: ElementUpdate) => {
       if (!editingModel) return;
       commitEdit(updateElement(editingModel, id, updates), { label: `Editar elemento ${id}` });
     },
@@ -564,7 +544,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   );
 
   const handleUpdateSlider = useCallback(
-    (id: string, updates: Partial<VisualSlider>) => {
+    (id: string, updates: SliderUpdate) => {
       if (!editingModel) return;
       commitEdit(updateSlider(editingModel, id, updates), { label: `Editar deslizador ${id}` });
     },
@@ -762,7 +742,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   });
 
   const objectCount = model
-    ? model.points.length + model.elements.length + model.sliders.length
+    ? model.objects.length
     : 0;
 
   return (

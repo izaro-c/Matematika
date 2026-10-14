@@ -534,20 +534,15 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "variant": "panel",
       "content": {
         "text": "",
-        "precision": 2,
         "blocks": [
           {
             "id": "bloque-1",
-            "text": "$a + b = {value}$",
-            "expression": "BC.length + CA.length",
-            "unit": "u",
+            "text": "$a + b = {= BC.length + CA.length | precision: 2 | unit: \"u\"}$",
             "rules": []
           },
           {
             "id": "bloque-2",
-            "text": "$c = {value}$",
-            "expression": "AB.length",
-            "unit": "u",
+            "text": "$c = {= AB.length | precision: 2 | unit: \"u\"}$",
             "rules": []
           },
           {

@@ -1,11 +1,19 @@
-import { element, generatedElementId, refsMatch } from '../elements/diagramElements';
+import { objectConstructionReferences, objectKind, objectStyle, segmentEndpoints, type DiagramObject, type MarkObject } from '@/diagrams';
+import { element, generatedElementId, refsMatch, removeDiagramElements, type ElementOptions } from '../elements/diagramElements';
 import { nextLayerItemOrder } from '../scene/sceneOrdering';
-import type { VisualDiagramModel, VisualElement } from '../types';
+import type { ElementKind, VisualDiagramModel, VisualElement } from '../types';
 
-function congruenceMarksForSegment(model: VisualDiagramModel, segment: VisualElement): VisualElement[] {
-  return model.elements.filter(candidate => (
-    candidate.kind === 'congruenceMark'
-    && refsMatch(candidate.refs, segment.refs, true)
+function plainSegment(model: VisualDiagramModel, segmentId: string): (DiagramObject & { objectType: 'path' }) | undefined {
+  const segment = model.objects.find(candidate => candidate.id === segmentId);
+  return segment?.objectType === 'path' && segmentEndpoints(segment) ? segment : undefined;
+}
+
+function marksForSegment(model: VisualDiagramModel, segment: DiagramObject, variant: MarkObject['variant']): MarkObject[] {
+  const endpoints = segmentEndpoints(segment) ?? [];
+  return model.objects.filter((candidate): candidate is MarkObject => (
+    candidate.objectType === 'mark'
+    && candidate.variant === variant
+    && refsMatch(objectConstructionReferences(candidate), endpoints, true)
   ));
 }
 
@@ -13,34 +21,85 @@ export function congruenceMarkForSegment(
   model: VisualDiagramModel,
   segmentId: string,
 ): VisualElement | undefined {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  return segment ? congruenceMarksForSegment(model, segment)[0] : undefined;
+  const segment = plainSegment(model, segmentId);
+  return segment ? marksForSegment(model, segment, 'congruence')[0] : undefined;
 }
 
-function removeSegmentMarks(model: VisualDiagramModel, removedIds: Set<string>): VisualDiagramModel {
-  if (removedIds.size === 0) return model;
+export function parallelMarkForSegment(
+  model: VisualDiagramModel,
+  segmentId: string,
+): VisualElement | undefined {
+  const segment = plainSegment(model, segmentId);
+  return segment ? marksForSegment(model, segment, 'parallel')[0] : undefined;
+}
+
+/** Añade un objeto ligado a un segmento en su misma capa y visible en todos los pasos. */
+function appendSegmentCompanion(
+  model: VisualDiagramModel,
+  segment: DiagramObject,
+  kind: ElementKind,
+  label: string,
+  color: VisualElement['color'],
+  options: ElementOptions,
+  configure: (object: VisualElement) => VisualElement = object => object,
+): VisualDiagramModel {
+  const endpoints = segmentEndpoints(segment) ?? [];
+  const id = generatedElementId(kind, [...endpoints], model.objects);
+  const companion = configure(element(id, label, kind, [...endpoints], color, true, {
+    ...options,
+    layerId: segment.layerId,
+    order: nextLayerItemOrder(model, segment.layerId),
+  }));
   return {
     ...model,
-    elements: model.elements.filter(candidate => !removedIds.has(candidate.id)),
+    objects: [...model.objects, companion],
     steps: model.steps.map(step => ({
       ...step,
-      visibleTargets: step.visibleTargets.filter(targetId => !removedIds.has(targetId)),
-      objectStates: step.objectStates
-        ? Object.fromEntries(Object.entries(step.objectStates).filter(([targetId]) => !removedIds.has(targetId)))
-        : undefined,
+      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
     })),
-    groups: model.groups.map(group => ({
-      ...group,
-      memberIds: group.memberIds.filter(memberId => !removedIds.has(memberId)),
-    })),
-    dependencies: model.dependencies?.filter(dependency => (
-      !removedIds.has(dependency.sourceId) && !removedIds.has(dependency.targetId)
-    )),
   };
 }
 
-function nextLayerOrder(model: VisualDiagramModel, layerId: string): number {
-  return nextLayerItemOrder(model, layerId);
+function setSegmentMark(
+  model: VisualDiagramModel,
+  segmentId: string,
+  variant: 'congruence' | 'parallel',
+  requestedCount: number,
+  requestedHeight: number | undefined,
+): VisualDiagramModel {
+  const segment = plainSegment(model, segmentId);
+  if (!segment) return model;
+
+  const existingMarks = marksForSegment(model, segment, variant);
+  if (requestedCount <= 0) {
+    return removeDiagramElements(model, existingMarks.map(mark => mark.id));
+  }
+
+  const maximum = variant === 'congruence' ? 4 : 3;
+  const defaultHeight = variant === 'congruence' ? 0.32 : 0.42;
+  const markCount = Math.max(1, Math.min(maximum, Math.round(requestedCount)));
+  const existing = existingMarks[0];
+  const markHeight = Math.max(0.05, requestedHeight ?? (existing ? objectStyle(existing)?.markHeight : undefined) ?? defaultHeight);
+  if (existing) {
+    return {
+      ...model,
+      objects: model.objects.map(candidate => candidate.id === existing.id && candidate.objectType === 'mark'
+        ? { ...candidate, count: markCount, height: markHeight }
+        : candidate),
+    };
+  }
+
+  const kind: ElementKind = variant === 'congruence' ? 'congruenceMark' : 'parallelMark';
+  const label = variant === 'congruence' ? `Marca de congruencia de ${segment.label}` : `Marca de paralelismo de ${segment.label}`;
+  return appendSegmentCompanion(
+    model,
+    segment,
+    kind,
+    label,
+    variant === 'congruence' ? 'ocre' : 'pavo',
+    { style: { strokeWidth: 2, markHeight } },
+    object => object.objectType === 'mark' ? { ...object, count: markCount } : object,
+  );
 }
 
 export function setSegmentCongruenceMark(
@@ -49,68 +108,7 @@ export function setSegmentCongruenceMark(
   requestedCount: number,
   requestedHeight?: number,
 ): VisualDiagramModel {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment || segment.refs.length < 2) return model;
-
-  const existingMarks = congruenceMarksForSegment(model, segment);
-  if (requestedCount <= 0) {
-    return removeSegmentMarks(model, new Set(existingMarks.map(mark => mark.id)));
-  }
-
-  const markCount = Math.max(1, Math.min(4, Math.round(requestedCount)));
-  const existing = existingMarks[0];
-  const markHeight = Math.max(0.05, requestedHeight ?? existing?.style?.markHeight ?? 0.32);
-  if (existing) {
-    return {
-      ...model,
-      elements: model.elements.map(candidate => candidate.id === existing.id
-        ? {
-            ...candidate,
-            properties: { ...candidate.properties, markCount },
-            style: { ...candidate.style, markHeight },
-          }
-        : candidate),
-    };
-  }
-
-  const id = generatedElementId('congruenceMark', segment.refs, model.elements);
-  const label = `Marca de congruencia de ${segment.label}`;
-  const mark = {
-    ...element(id, label, 'congruenceMark', [...segment.refs], 'ocre', true, {
-      properties: { markCount },
-      style: { strokeWidth: 2, markHeight },
-    }),
-    layerId: segment.layerId,
-    order: nextLayerOrder(model, segment.layerId),
-  };
-
-  return {
-    ...model,
-    elements: [...model.elements, mark],
-    steps: model.steps.map(step => ({
-      ...step,
-      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
-    })),
-    dependencies: [
-      ...(model.dependencies ?? []),
-      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-    ],
-  };
-}
-
-function parallelMarksForSegment(model: VisualDiagramModel, segment: VisualElement): VisualElement[] {
-  return model.elements.filter(candidate => (
-    candidate.kind === 'parallelMark'
-    && refsMatch(candidate.refs, segment.refs, true)
-  ));
-}
-
-export function parallelMarkForSegment(
-  model: VisualDiagramModel,
-  segmentId: string,
-): VisualElement | undefined {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  return segment ? parallelMarksForSegment(model, segment)[0] : undefined;
+  return setSegmentMark(model, segmentId, 'congruence', requestedCount, requestedHeight);
 }
 
 export function setSegmentParallelMark(
@@ -119,65 +117,25 @@ export function setSegmentParallelMark(
   requestedCount: number,
   requestedHeight?: number,
 ): VisualDiagramModel {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment || segment.refs.length < 2) return model;
+  return setSegmentMark(model, segmentId, 'parallel', requestedCount, requestedHeight);
+}
 
-  const existingMarks = parallelMarksForSegment(model, segment);
-  if (requestedCount <= 0) {
-    return removeSegmentMarks(model, new Set(existingMarks.map(mark => mark.id)));
-  }
-
-  const markCount = Math.max(1, Math.min(3, Math.round(requestedCount)));
-  const existing = existingMarks[0];
-  const markHeight = Math.max(0.05, requestedHeight ?? existing?.style?.markHeight ?? 0.42);
-  if (existing) {
-    return {
-      ...model,
-      elements: model.elements.map(candidate => candidate.id === existing.id
-        ? {
-            ...candidate,
-            properties: { ...candidate.properties, markCount },
-            style: { ...candidate.style, markHeight },
-          }
-        : candidate),
-    };
-  }
-
-  const id = generatedElementId('parallelMark', segment.refs, model.elements);
-  const label = `Marca de paralelismo de ${segment.label}`;
-  const mark = {
-    ...element(id, label, 'parallelMark', [...segment.refs], 'pavo', true, {
-      properties: { markCount },
-      style: { strokeWidth: 2, markHeight },
-    }),
-    layerId: segment.layerId,
-    order: nextLayerOrder(model, segment.layerId),
-  };
-
-  return {
-    ...model,
-    elements: [...model.elements, mark],
-    steps: model.steps.map(step => ({
-      ...step,
-      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
-    })),
-    dependencies: [
-      ...(model.dependencies ?? []),
-      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-    ],
-  };
+function companionForSegment(model: VisualDiagramModel, segmentId: string, kind: ElementKind): VisualElement | undefined {
+  const segment = plainSegment(model, segmentId);
+  const endpoints = segmentEndpoints(segment);
+  if (!endpoints) return undefined;
+  return model.objects.find((candidate): candidate is VisualElement => {
+    if (objectKind(candidate) !== kind) return false;
+    const refs = objectConstructionReferences(candidate);
+    return refsMatch(refs, [...endpoints], true) || refs[0] === segmentId;
+  });
 }
 
 export function dimensionLineForSegment(
   model: VisualDiagramModel,
   segmentId: string,
 ): VisualElement | undefined {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment) return undefined;
-  return model.elements.find(candidate => (
-    candidate.kind === 'dimensionLine'
-    && (refsMatch(candidate.refs, segment.refs, true) || candidate.refs[0] === segment.id)
-  ));
+  return companionForSegment(model, segmentId, 'dimensionLine');
 }
 
 export function toggleSegmentDimensionLine(
@@ -185,50 +143,33 @@ export function toggleSegmentDimensionLine(
   segmentId: string,
   enable: boolean,
 ): VisualDiagramModel {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment || segment.refs.length < 2) return model;
+  const segment = plainSegment(model, segmentId);
+  if (!segment) return model;
 
   const existing = dimensionLineForSegment(model, segmentId);
   if (!enable) {
-    return existing ? removeSegmentMarks(model, new Set([existing.id])) : model;
+    return existing ? removeDiagramElements(model, [existing.id]) : model;
   }
   if (existing) return model;
 
-  const id = generatedElementId('dimensionLine', segment.refs, model.elements);
-  const label = `Cota de ${segment.label}`;
-  const dim = {
-    ...element(id, label, 'dimensionLine', [...segment.refs], 'carbon', true, {
-      properties: { offset: 0.4, precision: 2 },
-      style: { strokeWidth: 1.5 },
-    }),
-    layerId: segment.layerId,
-    order: nextLayerOrder(model, segment.layerId),
-  };
-
-  return {
-    ...model,
-    elements: [...model.elements, dim],
-    steps: model.steps.map(step => ({
-      ...step,
-      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
-    })),
-    dependencies: [
-      ...(model.dependencies ?? []),
-      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-    ],
-  };
+  return appendSegmentCompanion(
+    model,
+    segment,
+    'dimensionLine',
+    `Cota de ${segment.label}`,
+    'carbon',
+    { style: { strokeWidth: 1.5 } },
+    object => object.objectType === 'path' && object.geometry.type === 'dimension'
+      ? { ...object, geometry: { ...object.geometry, offset: 0.4, precision: 2 } }
+      : object,
+  );
 }
 
 export function measurementForSegment(
   model: VisualDiagramModel,
   segmentId: string,
 ): VisualElement | undefined {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment) return undefined;
-  return model.elements.find(candidate => (
-    candidate.kind === 'measurement'
-    && (refsMatch(candidate.refs, segment.refs, true) || candidate.refs[0] === segment.id)
-  ));
+  return companionForSegment(model, segmentId, 'measurement');
 }
 
 export function toggleSegmentMeasurement(
@@ -236,37 +177,24 @@ export function toggleSegmentMeasurement(
   segmentId: string,
   enable: boolean,
 ): VisualDiagramModel {
-  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
-  if (!segment || segment.refs.length < 2) return model;
+  const segment = plainSegment(model, segmentId);
+  if (!segment) return model;
 
   const existing = measurementForSegment(model, segmentId);
   if (!enable) {
-    return existing ? removeSegmentMarks(model, new Set([existing.id])) : model;
+    return existing ? removeDiagramElements(model, [existing.id]) : model;
   }
   if (existing) return model;
 
-  const id = generatedElementId('measurement', segment.refs, model.elements);
-  const label = `Medida de ${segment.label}`;
-  const meas = {
-    ...element(id, label, 'measurement', [...segment.refs], 'carbon', true, {
-      properties: { precision: 2, unit: 'cm' },
-      style: { strokeWidth: 1.5 },
-    }),
-    layerId: segment.layerId,
-    order: nextLayerOrder(model, segment.layerId),
-  };
-
-  return {
-    ...model,
-    elements: [...model.elements, meas],
-    steps: model.steps.map(step => ({
-      ...step,
-      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
-    })),
-    dependencies: [
-      ...(model.dependencies ?? []),
-      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-    ],
-  };
+  return appendSegmentCompanion(
+    model,
+    segment,
+    'measurement',
+    `Medida de ${segment.label}`,
+    'carbon',
+    {},
+    object => object.objectType === 'annotation'
+      ? { ...object, content: { ...object.content, precision: 2, unit: 'cm' } }
+      : object,
+  );
 }
-

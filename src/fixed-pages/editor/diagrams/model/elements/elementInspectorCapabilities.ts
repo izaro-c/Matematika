@@ -1,4 +1,4 @@
-import type { DiagramElementKind } from '@/diagrams';
+import type { DiagramConstructionKind } from '@/diagrams';
 
 export type ElementContentEditor = 'none' | 'text' | 'label' | 'formula' | 'measurement' | 'infoPanel';
 
@@ -80,8 +80,8 @@ export const ELEMENT_INSPECTOR_CAPABILITIES = {
   label: annotation('label'),
   formula: annotation('formula'),
   infoPanel: annotation('infoPanel'),
-} satisfies Record<DiagramElementKind, ElementInspectorCapabilities>;
+} satisfies Record<DiagramConstructionKind, ElementInspectorCapabilities>;
 
-export function elementInspectorCapabilities(kind: DiagramElementKind): ElementInspectorCapabilities {
+export function elementInspectorCapabilities(kind: DiagramConstructionKind): ElementInspectorCapabilities {
   return ELEMENT_INSPECTOR_CAPABILITIES[kind];
 }

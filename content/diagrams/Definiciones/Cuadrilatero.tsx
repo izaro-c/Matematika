@@ -1797,36 +1797,43 @@ export const CuadrilateroSpec = createDiagramSpec(
       "variant": "panel",
       "content": {
         "text": "",
-        "rules": [
+        "blocks": [
           {
-            "when": "and(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04)),and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035)))",
-            "text": "Cuadrado · 4 lados iguales · 4 ángulos rectos"
-          },
-          {
-            "when": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
-            "text": "Rectángulo · 4 ángulos rectos"
-          },
-          {
-            "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
-            "text": "Rombo · 4 lados iguales"
-          },
-          {
-            "when": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
-            "text": "Paralelogramo · 2 pares de lados opuestos paralelos"
-          },
-          {
-            "when": "or(and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04)),and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04)))",
-            "text": "Cometa · 2 pares de lados consecutivos iguales"
-          },
-          {
-            "when": "or(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
-            "text": "Trapecio · 1 par de lados opuestos paralelos"
-          },
-          {
-            "when": "1",
-            "text": "Trapezoide · ningún par de lados opuestos paralelos"
+            "id": "clasificacion",
+            "text": "Trapezoide · ningún par de lados opuestos paralelos",
+            "rules": [
+              {
+                "when": "and(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04)),and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035)))",
+                "text": "Cuadrado · 4 lados iguales · 4 ángulos rectos"
+              },
+              {
+                "when": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
+                "text": "Rectángulo · 4 ángulos rectos"
+              },
+              {
+                "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
+                "text": "Rombo · 4 lados iguales"
+              },
+              {
+                "when": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
+                "text": "Paralelogramo · 2 pares de lados opuestos paralelos"
+              },
+              {
+                "when": "or(and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04)),and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04)))",
+                "text": "Cometa · 2 pares de lados consecutivos iguales"
+              },
+              {
+                "when": "or(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
+                "text": "Trapecio · 1 par de lados opuestos paralelos"
+              },
+              {
+                "when": "1",
+                "text": "Trapezoide · ningún par de lados opuestos paralelos"
+              }
+            ]
           }
-        ]
+        ],
+        "layout": "stack"
       },
       "anchor": {
         "type": "viewport",
@@ -2006,16 +2013,21 @@ export const CuadrilateroSpec = createDiagramSpec(
         "BD": "BD diagonala",
         "clasificacion": "Laukiaren sailkapen dinamikoa"
       },
-      "rules": {
-        "clasificacion": [
-          "Karratua · 4 alde berdin · 4 angelu zuzen",
-          "Laukizuzena · 4 angelu zuzen",
-          "Erronboa · 4 alde berdin",
-          "Paralelogramoa · aurkako alde paraleloen 2 pare",
-          "Deltoidea · ondoz ondoko alde berdinen 2 pare",
-          "Trapezioa · aurkako alde paraleloen pare 1",
-          "Trapezoidea · aurkako alde paralelorik ez"
-        ]
+      "blocks": {
+        "clasificacion": {
+          "clasificacion": {
+            "text": "Trapezoidea · aurkako alde paralelorik ez",
+            "rules": [
+              "Karratua · 4 alde berdin · 4 angelu zuzen",
+              "Laukizuzena · 4 angelu zuzen",
+              "Erronboa · 4 alde berdin",
+              "Paralelogramoa · aurkako alde paraleloen 2 pare",
+              "Deltoidea · ondoz ondoko alde berdinen 2 pare",
+              "Trapezioa · aurkako alde paraleloen pare 1",
+              "Trapezoidea · aurkako alde paralelorik ez"
+            ]
+          }
+        }
       }
     },
     "en": {
@@ -2064,16 +2076,21 @@ export const CuadrilateroSpec = createDiagramSpec(
         "anguloD": "Interior angle D",
         "clasificacion": "Live classification of the quadrilateral"
       },
-      "rules": {
-        "clasificacion": [
-          "Square · 4 equal sides · 4 right angles",
-          "Rectangle · 4 right angles",
-          "Rhombus · 4 equal sides",
-          "Parallelogram · 2 pairs of parallel opposite sides",
-          "Kite · 2 pairs of equal adjacent sides",
-          "Trapezoid · 1 pair of parallel opposite sides",
-          "Irregular quadrilateral · no pair of parallel opposite sides"
-        ]
+      "blocks": {
+        "clasificacion": {
+          "clasificacion": {
+            "text": "Irregular quadrilateral · no pair of parallel opposite sides",
+            "rules": [
+              "Square · 4 equal sides · 4 right angles",
+              "Rectangle · 4 right angles",
+              "Rhombus · 4 equal sides",
+              "Parallelogram · 2 pairs of parallel opposite sides",
+              "Kite · 2 pairs of equal adjacent sides",
+              "Trapezoid · 1 pair of parallel opposite sides",
+              "Irregular quadrilateral · no pair of parallel opposite sides"
+            ]
+          }
+        }
       }
     }
   }

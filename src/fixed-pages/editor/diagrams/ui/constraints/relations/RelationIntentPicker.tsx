@@ -1,5 +1,6 @@
 import React from 'react';
-import type { VisualConstraint, VisualDiagramModel } from '../../../model/types';
+import type { VisualDiagramModel } from '../../../model/types';
+import type { RelationIntent } from '../../../model/constraints/relationIntents';
 import {
   RELATION_CATEGORY_LABELS,
   RELATION_CATEGORY_ORDER,
@@ -15,10 +16,10 @@ interface RelationIntentPickerProps {
   model: VisualDiagramModel;
   scope: RelationScope;
   targetId: string;
-  value: VisualConstraint['kind'];
-  onChange: (kind: VisualConstraint['kind']) => void;
-  activeKinds?: readonly VisualConstraint['kind'][];
-  ignoreKind?: VisualConstraint['kind'];
+  value: RelationIntent;
+  onChange: (kind: RelationIntent) => void;
+  activeKinds?: readonly RelationIntent[];
+  ignoreKind?: RelationIntent;
 }
 
 export const RelationIntentPicker: React.FC<RelationIntentPickerProps> = ({
@@ -41,7 +42,7 @@ export const RelationIntentPicker: React.FC<RelationIntentPickerProps> = ({
           aria-label="Nueva restricción"
           className={diagramControlClassName}
           value={value}
-          onChange={event => onChange(event.target.value as VisualConstraint['kind'])}
+          onChange={event => onChange(event.target.value as RelationIntent)}
         >
           {RELATION_CATEGORY_ORDER.map(category => {
             const options = entries.filter(entry => entry.category === category);

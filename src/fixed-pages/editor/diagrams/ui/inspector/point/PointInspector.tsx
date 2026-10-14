@@ -1,5 +1,6 @@
 import React from 'react';
-import type { VisualPoint, VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
+import { objectKind, objectStyle, pointPosition, withObjectLabelVisible, withObjectStylePatch } from '@/diagrams';
+import type { PointConstraint } from '@/fixed-pages/editor/diagrams/model/types';
 import { KatexText } from '@/components/ui/KatexText';
 import { AccordionSection } from '../accordion';
 import { InspectorHeader } from '../WorkbenchInspectorHeader';
@@ -10,7 +11,7 @@ import { availableLayers, handleRenameId } from '../utils';
 import { DiagramDerivedPositionEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramDerivedPositionEditor';
 import { DiagramNativeLabelEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramNativeLabelEditor';
 import { DiagramPointMovementAidsEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramPointMovementAidsEditor';
-import { supportElements } from '@/fixed-pages/editor/diagrams/model';
+import { pointMode, setPointMode, supportElements, withEditedPosition, withPointMode } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
 import { ConstraintEditor } from '../../constraints/ConstraintEditor';
 import { ElementVisibilitySection } from '../element/sections/ElementVisibilitySection';
@@ -29,9 +30,18 @@ export const PointInspector: React.FC<PointPanelProps & {
   onToggleAccordion,
 }) => {
   const colorToken = PALETTE_TOKENS.find(c => c.id === point.color) || PALETTE_TOKENS[0];
-  const isFixed = point.fixed || point.constraint === 'fixed';
+  const mode = pointMode(point);
+  const isFixed = mode === 'fixed';
+  const position = pointPosition(point)!;
+  const style = objectStyle(point);
+  const gliderTarget = point.mobility.type === 'on-support' ? point.mobility.support : undefined;
   const layers = availableLayers(model);
   const gliderSupports = supportElements(model);
+  const changeMode = (nextMode: PointConstraint, options: { gliderTarget?: string } = {}) => {
+    if (onUpdateModel) onUpdateModel(setPointMode(model, point.id, nextMode, options), `Cambiar movilidad de ${point.id}`);
+    else onUpdatePoint(point.id, current => withPointMode(current, nextMode, options));
+  };
+  const updateStyle = (update: Parameters<typeof withObjectStylePatch>[1]) => onUpdatePoint(point.id, current => withObjectStylePatch(current, update));
 
   return (
     <div className="p-3 space-y-3 text-xs font-serif text-carbon">
@@ -81,12 +91,12 @@ export const PointInspector: React.FC<PointPanelProps & {
 
           <DiagramNativeLabelEditor
             label={point.label}
-            visible={point.showLabel !== false}
-            size={point.style?.labelSize ?? 19}
-            offset={point.style?.labelOffset}
-            position={point.style?.labelPosition}
-            onVisibleChange={showLabel => onUpdatePoint(point.id, { showLabel })}
-            onStyleChange={style => onUpdatePoint(point.id, { style: { ...point.style, ...style } })}
+            visible={point.appearance?.labelVisible !== false}
+            size={style?.labelSize ?? 19}
+            offset={style?.labelOffset}
+            position={style?.labelPosition}
+            onVisibleChange={showLabel => onUpdatePoint(point.id, current => withObjectLabelVisible(current, showLabel))}
+            onStyleChange={updateStyle}
           />
 
           <PointLabelHelp />
@@ -103,8 +113,11 @@ export const PointInspector: React.FC<PointPanelProps & {
               <input
                 type="number"
                 step="0.1"
-                value={point.x ?? 0}
-                onChange={e => onUpdatePoint(point.id, { x: parseOptionalNumber(e.target.value, point.x ?? 0) })}
+                value={position.x}
+                onChange={e => {
+                  const x = parseOptionalNumber(e.target.value, position.x);
+                  onUpdatePoint(point.id, current => withEditedPosition(current, { ...pointPosition(current)!, x }));
+                }}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
@@ -115,8 +128,11 @@ export const PointInspector: React.FC<PointPanelProps & {
               <input
                 type="number"
                 step="0.1"
-                value={point.y ?? 0}
-                onChange={e => onUpdatePoint(point.id, { y: parseOptionalNumber(e.target.value, point.y ?? 0) })}
+                value={position.y}
+                onChange={e => {
+                  const y = parseOptionalNumber(e.target.value, position.y);
+                  onUpdatePoint(point.id, current => withEditedPosition(current, { ...pointPosition(current)!, y }));
+                }}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
@@ -128,15 +144,12 @@ export const PointInspector: React.FC<PointPanelProps & {
                 Tipo de Punto & Soporte
               </label>
               <select
-                value={point.constraint || (isFixed ? 'fixed' : 'free')}
+                value={mode}
                 onChange={e => {
-                  const nextConstraint = e.target.value as VisualPoint['constraint'];
-                  onUpdatePoint(point.id, {
-                    constraint: nextConstraint,
-                    ...(nextConstraint === 'glider' && !point.gliderTarget && gliderSupports[0]
-                      ? { gliderTarget: gliderSupports[0].id }
-                      : {}),
-                  });
+                  const nextConstraint = e.target.value as PointConstraint;
+                  changeMode(nextConstraint, nextConstraint === 'glider' && !gliderTarget && gliderSupports[0]
+                    ? { gliderTarget: gliderSupports[0].id }
+                    : {});
                 }}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
               >
@@ -150,20 +163,20 @@ export const PointInspector: React.FC<PointPanelProps & {
               </select>
             </div>
 
-            {point.constraint === 'glider' && (
+            {mode === 'glider' && (
               <div className="space-y-1.5 rounded-lg border border-canela/20 bg-canela/5 p-2.5">
                 <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">
                   Objeto soporte (gliderTarget)
                 </label>
                 <select
-                  value={point.gliderTarget || ''}
-                  onChange={e => onUpdatePoint(point.id, { gliderTarget: e.target.value || undefined })}
+                  value={gliderTarget || ''}
+                  onChange={e => changeMode('glider', { gliderTarget: e.target.value || undefined })}
                   className="w-full rounded-lg border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
                 >
                   <option value="">-- Seleccionar soporte --</option>
                   {gliderSupports.map(e => (
                     <option key={e.id} value={e.id}>
-                      {e.label || e.id} ({e.id}) - {e.kind}
+                      {e.label || e.id} ({e.id}) - {objectKind(e)}
                     </option>
                   ))}
                 </select>
@@ -176,7 +189,7 @@ export const PointInspector: React.FC<PointPanelProps & {
               type="checkbox"
               id={`fixed-${point.id}`}
               checked={isFixed}
-              onChange={e => onUpdatePoint(point.id, { fixed: e.target.checked, constraint: e.target.checked ? 'fixed' : 'free' })}
+              onChange={e => changeMode(e.target.checked ? 'fixed' : 'free')}
               className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
             <label htmlFor={`fixed-${point.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
@@ -184,19 +197,26 @@ export const PointInspector: React.FC<PointPanelProps & {
             </label>
           </div>
 
-          {point.constraint === 'derived' && (
+          {mode === 'derived' && (
             <DiagramDerivedPositionEditor
               model={model}
               point={point}
-              onPointChange={updates => onUpdatePoint(point.id, updates)}
+              onExpressionChange={(axis, expression) => onUpdatePoint(point.id, current => (
+                current.definition.type === 'expression'
+                  ? { ...current, definition: { ...current.definition, [axis]: expression } }
+                  : current
+              ))}
             />
           )}
 
           <DiagramPointMovementAidsEditor
             model={model}
             point={point}
-            onPointChange={updates => onUpdatePoint(point.id, updates)}
-            onAttractorsChange={attractorIds => onUpdatePoint(point.id, { attractorIds })}
+            onInteractionChange={update => onUpdatePoint(point.id, current => ({ ...current, interaction: { ...current.interaction, ...update } }))}
+            onAttractorsChange={attractorIds => onUpdatePoint(point.id, current => ({
+              ...current,
+              interaction: { ...current.interaction, attractorIds: attractorIds.length ? attractorIds : undefined },
+            }))}
           />
         </div>
       </AccordionSection>
@@ -229,12 +249,8 @@ export const PointInspector: React.FC<PointPanelProps & {
                 type="number"
                 min="0"
                 max="20"
-                value={point.style?.pointSize ?? 7}
-                onChange={e =>
-                  onUpdatePoint(point.id, {
-                    style: { ...(point.style || {}), pointSize: parseOptionalNumber(e.target.value, 7) },
-                  })
-                }
+                value={style?.pointSize ?? 7}
+                onChange={e => updateStyle({ pointSize: parseOptionalNumber(e.target.value, 7) })}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
@@ -246,12 +262,8 @@ export const PointInspector: React.FC<PointPanelProps & {
                 type="number"
                 min="0"
                 max="24"
-                value={point.style?.highlightPointSize ?? 10}
-                onChange={e =>
-                  onUpdatePoint(point.id, {
-                    style: { ...(point.style || {}), highlightPointSize: parseOptionalNumber(e.target.value, 10) },
-                  })
-                }
+                value={style?.highlightPointSize ?? 10}
+                onChange={e => updateStyle({ highlightPointSize: parseOptionalNumber(e.target.value, 10) })}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
@@ -262,12 +274,8 @@ export const PointInspector: React.FC<PointPanelProps & {
               <input
                 type="checkbox"
                 id={`preserveColor-pt-${point.id}`}
-                checked={point.style?.preserveColorOnHighlight !== false}
-                onChange={e =>
-                  onUpdatePoint(point.id, {
-                    style: { ...(point.style || {}), preserveColorOnHighlight: e.target.checked },
-                  })
-                }
+                checked={style?.preserveColorOnHighlight !== false}
+                onChange={e => updateStyle({ preserveColorOnHighlight: e.target.checked })}
                 className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
               />
               <label htmlFor={`preserveColor-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
@@ -312,14 +320,8 @@ export const PointInspector: React.FC<PointPanelProps & {
 
       <AccordionSection sec="visibility_selection" title="Visibilidad Condicionada & Selección" isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
         <ElementVisibilitySection
-          model={model}
-          element={point as unknown as VisualElement}
-          onUpdatePoint={onUpdatePoint}
-          onUpdateElement={(id, updates) => onUpdatePoint(id, updates)}
-          onUpdateSlider={() => undefined}
-          onDeleteSelected={onDeleteSelected}
-          onUpdateModel={onUpdateModel}
-          onSelectId={onSelectId}
+          object={point}
+          onUpdate={update => onUpdatePoint(point.id, update as Parameters<typeof onUpdatePoint>[1])}
         />
       </AccordionSection>
 

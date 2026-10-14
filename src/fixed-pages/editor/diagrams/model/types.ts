@@ -1,3 +1,14 @@
+import type {
+  ControlObject,
+  DiagramColorToken,
+  DiagramConstructionKind,
+  DiagramObject,
+  DiagramRelation,
+  DiagramSpecV3,
+  DiagramStep,
+  PositionedPoint,
+} from '@/diagrams';
+
 export type TemplateKind =
   | 'lienzo-inicial'
   | 'triangulo-deformable'
@@ -9,24 +20,18 @@ export type TemplateKind =
   | 'modelo-estatico';
 
 export type ConstructionKind = 'mediatriz' | 'mediana' | 'altura' | 'bisectriz';
-import type {
-  DiagramColorToken,
-  DiagramElement,
-  DiagramElementKind,
-  DiagramPoint,
-  DiagramPointConstraint,
-  DiagramSlider,
-  DiagramStep,
-  DiagramConstraint,
-  DiagramDependency,
-  DiagramSpecV3,
-} from '@/diagrams';
 
 export type ColorToken = DiagramColorToken;
-export type ElementKind = DiagramElementKind;
+/** Herramienta de construcción: clase de objeto que se crea a partir de referencias. */
+export type ElementKind = DiagramConstructionKind;
 
 export type CanvasTool = 'select' | 'point' | ElementKind;
-export type PointConstraint = DiagramPointConstraint;
+
+/**
+ * Modo de movilidad que el editor ofrece para un punto con posición propia.
+ * Se traduce a `definition` + `mobility` de V3 (ver `pointMode`/`withPointMode`).
+ */
+export type PointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'derived' | 'constrained';
 
 export type ConstructionRefKey = 'a' | 'b' | 'c';
 
@@ -35,21 +40,13 @@ export interface ConstructionSlot {
   label: string;
 }
 
-export type VisualPoint = DiagramPoint;
-export type VisualElement = DiagramElement;
-export type VisualSlider = DiagramSlider;
+/** Punto con posición propia (coordenadas o expresión). */
+export type VisualPoint = PositionedPoint;
+/** Cualquier objeto que no es punto con posición propia ni control. */
+export type VisualElement = Exclude<DiagramObject, ControlObject>;
+export type VisualSlider = ControlObject;
 export type VisualStep = DiagramStep;
-export type VisualConstraint = DiagramConstraint;
+export type VisualConstraint = DiagramRelation;
 
-/**
- * Modelo del workbench: V3 canónico + escena V2 materializada (mutable).
- * Persistencia reifica vía generator (`workingScene` → V3); no stringify crudo.
- */
-export type VisualDiagramModel = DiagramSpecV3 & {
-  points: DiagramPoint[];
-  elements: DiagramElement[];
-  sliders: DiagramSlider[];
-  constraints?: DiagramConstraint[];
-  dependencies?: DiagramDependency[];
-  extensions: Record<string, unknown>;
-};
+/** Modelo del workbench: la especificación V3 canónica, sin proyecciones intermedias. */
+export type VisualDiagramModel = DiagramSpecV3;

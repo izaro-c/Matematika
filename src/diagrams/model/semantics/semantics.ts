@@ -1,5 +1,5 @@
-import type { DiagramElement, DiagramElementKind, DiagramPoint, DiagramSceneItem, DiagramSlider } from '@/diagrams/model/schema/types';
-import type { DiagramObject } from '@/diagrams/model/schema/v3';
+import type { DiagramObject, DiagramSpecV3 } from '@/diagrams/model/schema/v3';
+import { objectKind, type DiagramConstructionKind, type DiagramObjectKind } from '@/diagrams/model/objects/kinds';
 
 export type DiagramCapability = 'point' | 'linear-support' | 'support' | 'segment' | 'circle' | 'angle' | 'path' | 'area' | 'measurable' | 'annotatable' | 'control';
 
@@ -15,7 +15,7 @@ export interface DiagramReferenceSlot {
 
 const pointSlot = (key: string, label: string): DiagramReferenceSlot => ({ key, label, capability: 'point' });
 
-const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> = {
+const constructionSlots: Record<DiagramConstructionKind, readonly DiagramReferenceSlot[]> = {
   segment: [pointSlot('start', 'Extremo inicial'), pointSlot('end', 'Extremo final')],
   line: [pointSlot('first', 'Primer punto'), pointSlot('second', 'Segundo punto')],
   ray: [pointSlot('origin', 'Origen'), pointSlot('direction', 'Punto de dirección')],
@@ -56,11 +56,44 @@ const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> =
   infoPanel: [{ key: 'anchor', label: 'Objeto de referencia', capability: 'annotatable', optional: true }],
 };
 
-export function referenceSlotsForLegacyKind(kind: DiagramElementKind): readonly DiagramReferenceSlot[] {
-  return legacySlots[kind] ?? [];
+/** Referencias que pide cada herramienta de construcción, en orden. */
+export function referenceSlotsForKind(kind: DiagramObjectKind): readonly DiagramReferenceSlot[] {
+  return kind === 'point' || kind === 'control' ? [] : constructionSlots[kind] ?? [];
 }
 
-export function legacyElementCapabilities(kind: DiagramElementKind): ReadonlySet<DiagramCapability> {
+/** Capacidades semánticas de cada clase de construcción (editor y motor de escena). */
+export function constructionKindCapabilities(kind: DiagramObjectKind): ReadonlySet<DiagramCapability> {
+  if (kind === 'point') return new Set<DiagramCapability>(['point', 'measurable', 'annotatable']);
+  if (kind === 'control') return new Set<DiagramCapability>(['control', 'measurable', 'annotatable']);
+  return constructionCapabilities(kind);
+}
+
+export function sceneObjectHasCapability(object: DiagramObject, capability: DiagramCapability): boolean {
+  return constructionKindCapabilities(objectKind(object)).has(capability);
+}
+
+/**
+ * Objetos que pueden ocupar una referencia con la capacidad pedida. Conserva el
+ * orden de presentación del editor: puntos con posición propia, construcciones
+ * y, por último, controles.
+ */
+export function sceneReferenceCandidates(
+  spec: Pick<DiagramSpecV3, 'objects'>,
+  capability: DiagramCapability,
+): DiagramObject[] {
+  const rank = (object: DiagramObject) => {
+    const kind = objectKind(object);
+    if (kind === 'point') return 0;
+    return kind === 'control' ? 2 : 1;
+  };
+  return spec.objects
+    .map((object, index) => ({ object, index }))
+    .filter(({ object }) => sceneObjectHasCapability(object, capability))
+    .sort((left, right) => rank(left.object) - rank(right.object) || left.index - right.index)
+    .map(({ object }) => object);
+}
+
+function constructionCapabilities(kind: DiagramConstructionKind): ReadonlySet<DiagramCapability> {
   const capabilities = new Set<DiagramCapability>(['annotatable']);
   if (['intersection', 'midpoint', 'perpendicularFoot'].includes(kind)) capabilities.add('point');
   if (['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector'].includes(kind)) capabilities.add('linear-support');
@@ -74,22 +107,6 @@ export function legacyElementCapabilities(kind: DiagramElementKind): ReadonlySet
   if (['functionCurve', 'parametricCurve'].includes(kind)) capabilities.add('area');
   if (['segment', 'circle', 'angle', 'nonReflexAngle', 'measurement'].includes(kind)) capabilities.add('measurable');
   return capabilities;
-}
-
-export function legacyItemHasCapability(item: DiagramSceneItem, capability: DiagramCapability): boolean {
-  if (!('kind' in item)) {
-    if ('min' in item) return capability === 'control' || capability === 'measurable' || capability === 'annotatable';
-    return capability === 'point' || capability === 'measurable' || capability === 'annotatable';
-  }
-  return legacyElementCapabilities(item.kind).has(capability);
-}
-
-export function legacyReferenceCandidates(model: {
-  points: readonly DiagramPoint[];
-  elements: readonly DiagramElement[];
-  sliders: readonly DiagramSlider[];
-}, capability: DiagramCapability): Array<DiagramPoint | DiagramElement | DiagramSlider> {
-  return [...model.points, ...model.elements, ...model.sliders].filter(item => legacyItemHasCapability(item, capability));
 }
 
 export function objectCapabilities(object: DiagramObject): ReadonlySet<DiagramCapability> {

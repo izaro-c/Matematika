@@ -4,7 +4,6 @@ import {createSceneConstructionPlan,
   type DiagramObject,
   type DiagramSpecV3,
   type PointObject} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 
 const selection = { selectable: true } as const;
 
@@ -40,7 +39,7 @@ describe('large DiagramSpec v3 scenes', () => {
     const parsed = parseDiagramSpecV3(spec);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
-    const plan = createSceneConstructionPlan(toWorkingSceneV2(parsed.data));
+    const plan = createSceneConstructionPlan(parsed.data);
     const elapsed = performance.now() - started;
 
     expect(plan).toHaveLength(250);

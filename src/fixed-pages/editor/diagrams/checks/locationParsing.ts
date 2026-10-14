@@ -1,11 +1,11 @@
 import type { DiagramDiagnosticCollection } from './types';
 
 const MODEL_COLLECTIONS = new Set<DiagramDiagnosticCollection>([
-  'points', 'elements', 'sliders', 'constraints', 'steps', 'groups', 'layers', 'objects',
+  'objects', 'relations', 'steps', 'groups', 'layers',
 ]);
 
 export function parsePathFromMessage(message: string): { path: (string | number)[]; rest: string } | null {
-  const match = message.match(/^(points|elements|sliders|constraints|steps|groups|objects)\.(\d+)\.([^:]+):\s*(.*)$/);
+  const match = message.match(/^(objects|relations|steps|groups|layers)\.(\d+)\.([^:]+):\s*(.*)$/);
   if (!match) return null;
   return {
     path: [match[1], Number(match[2]), ...match[3].split('.')],
@@ -32,7 +32,7 @@ export function parseDiagnosticPath(path: readonly (string | number)[]): {
 }
 
 export function splitLegacyDiagnosticParts(message: string): string[] {
-  return message.split(/(?=\b(?:elements|points|objects|relations|constraints|steps|sliders|groups)\.\d+)/g)
+  return message.split(/(?=\b(?:objects|relations|steps|groups|layers)\.\d+)/g)
     .map(part => part.trim())
     .filter(Boolean);
 }

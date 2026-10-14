@@ -1,32 +1,27 @@
-import { buildDependencyGraph, dependencyDeterminesConstructionOrder } from '@/diagrams';
-import type { PointConstraint, VisualDiagramModel, VisualElement, VisualPoint } from '../types';
+import { buildDependencyGraph, dependencyDeterminesConstructionOrder, isPositionedPoint, objectKind, omitKeys, type DiagramObject } from '@/diagrams';
+import { pointMode, pointModeSupportsMovementAids } from '../elements/pointModes';
+import { modelElements, modelPoints } from './objectLists';
+import type { VisualDiagramModel, VisualPoint } from '../types';
 
-export type MovementAttractor = VisualElement | VisualPoint;
-
-const MOVEMENT_AID_CONSTRAINTS = new Set<PointConstraint>([
-  'free',
-  'horizontal',
-  'vertical',
-  'constrained',
-]);
+export type MovementAttractor = DiagramObject;
 
 /** Indica si el punto admite ayudas durante el arrastre directo. */
-export function pointSupportsMovementAids(point: Pick<VisualPoint, 'constraint'>): boolean {
-  return MOVEMENT_AID_CONSTRAINTS.has(point.constraint);
+export function pointSupportsMovementAids(point: VisualPoint): boolean {
+  return pointModeSupportsMovementAids(pointMode(point));
 }
 
-const MOVEMENT_ATTRACTOR_KINDS = new Set<VisualElement['kind']>([
+const MOVEMENT_ATTRACTOR_KINDS = new Set<string>([
   'line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve',
   'perpendicular', 'parallel', 'angleBisector', 'intersection', 'midpoint', 'perpendicularFoot',
 ]);
 
 export function isMovementAttractor(item: MovementAttractor): boolean {
-  return 'constraint' in item || MOVEMENT_ATTRACTOR_KINDS.has(item.kind);
+  return isPositionedPoint(item) || MOVEMENT_ATTRACTOR_KINDS.has(objectKind(item));
 }
 
 /** Devuelve todos los destinos magnéticos en el mismo orden estable que usa el editor. */
 export function movementAttractors(model: VisualDiagramModel): MovementAttractor[] {
-  return [...model.points, ...model.elements].filter(isMovementAttractor);
+  return [...modelPoints(model), ...modelElements(model)].filter(isMovementAttractor);
 }
 
 /** Detecta si añadir supportId → pointId cerraría un ciclo de construcción. */
@@ -53,25 +48,20 @@ export function movementAttractorCreatesCycle(model: VisualDiagramModel, pointId
 }
 
 /** Actualiza magnetismo y sus aristas declarativas como una única mutación válida. */
+/** Actualiza el magnetismo del punto; las aristas de dependencia se derivan del propio objeto. */
 export function setPointAttractors(model: VisualDiagramModel, pointId: string, requestedIds: string[]): VisualDiagramModel {
-  const point = model.points.find(item => item.id === pointId);
+  const point = modelPoints(model).find(item => item.id === pointId);
   if (!point) return model;
   const supportIds = new Set(movementAttractors(model).map(item => item.id));
   const nextIds = [...new Set(requestedIds)].filter(id => supportIds.has(id) && !movementAttractorCreatesCycle(model, pointId, id));
-  const previousIds = new Set(point.attractorIds ?? []);
-  const retainedDependencies = (model.dependencies ?? []).filter(dependency => !(
-    dependency.targetId === pointId
-    && dependency.relation === 'constraint'
-    && !dependency.constraintId
-    && previousIds.has(dependency.sourceId)
-  ));
-  const dependencyKeys = new Set(retainedDependencies.map(dependency => `${dependency.sourceId}:${dependency.targetId}:${dependency.relation}:${dependency.constraintId ?? ''}`));
-  const addedDependencies = nextIds
-    .map(sourceId => ({ sourceId, targetId: pointId, relation: 'constraint' as const }))
-    .filter(dependency => !dependencyKeys.has(`${dependency.sourceId}:${dependency.targetId}:${dependency.relation}:`));
+  const interaction = omitKeys(point.interaction ?? {}, 'attractorIds');
+  const nextInteraction = nextIds.length ? { ...interaction, attractorIds: nextIds } : interaction;
+  const pointWithoutInteraction = omitKeys(point, 'interaction');
+  const nextPoint: VisualPoint = Object.keys(nextInteraction).length > 0
+    ? { ...pointWithoutInteraction, interaction: nextInteraction }
+    : pointWithoutInteraction;
   return {
     ...model,
-    points: model.points.map(item => item.id === pointId ? { ...item, attractorIds: nextIds.length ? nextIds : undefined } : item),
-    dependencies: [...retainedDependencies, ...addedDependencies],
+    objects: model.objects.map(item => item.id === pointId ? nextPoint : item),
   };
 }

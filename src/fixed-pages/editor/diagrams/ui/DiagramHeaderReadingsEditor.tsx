@@ -1,3 +1,5 @@
+import { objectKind } from '@/diagrams';
+import { modelElements } from '../model/scene/objectLists';
 import React from 'react';
 import type { DiagramHeaderConfiguration, DiagramHeaderReading } from '@/diagrams/public';
 import type { VisualDiagramModel } from '../model/types';
@@ -7,19 +9,19 @@ interface DiagramHeaderReadingsEditorProps {
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string }) => void;
 }
 
-type ReadingCandidate = VisualDiagramModel['elements'][number];
+type ReadingCandidate = ReturnType<typeof modelElements>[number];
 
 function readingCandidates(model: VisualDiagramModel): ReadingCandidate[] {
-  return model.elements.filter(item => (
-    item.kind === 'measurement'
-    || item.kind === 'dimensionLine'
-    || (item.kind === 'infoPanel' && Boolean(item.properties?.expression))
+  return modelElements(model).filter(item => (
+    objectKind(item) === 'measurement'
+    || objectKind(item) === 'dimensionLine'
+    || (item.objectType === 'annotation' && item.variant === 'panel' && Boolean(item.content.expression))
   ));
 }
 
 function automaticReadings(model: VisualDiagramModel): DiagramHeaderReading[] {
   const candidates = readingCandidates(model);
-  const panels = candidates.filter(item => item.kind === 'infoPanel');
+  const panels = candidates.filter(item => objectKind(item) === 'infoPanel');
   return (panels.length > 0 ? panels : candidates.slice(0, 4)).map((item, index) => ({
     id: `header-reading-${index + 1}`,
     sourceIds: [item.id],

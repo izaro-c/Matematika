@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { withPointPosition } from '@/diagrams';
 import type { EditorDiagramReference } from '@/fixed-pages/editor/session/editorTypes';
 import type { CanvasTool, ConstructionKind, ElementKind, VisualDiagramModel } from '../../model/types';
 import { buildTargets } from '../../model/scene/selectors';
@@ -12,7 +13,11 @@ import {
   projectPointToSupport,
   generatedElementId,
   elementColorForKind,
-  defaultElementProperties,
+  insertObjects,
+  modelElements,
+  modelPoints,
+  modelSliders,
+  elementKind,
   addLabelToElement,
   removeDiagramElements,
   refsForKind,
@@ -41,14 +46,14 @@ export function makeVisibleInEveryStep(candidate: VisualDiagramModel, objectId: 
 }
 
 function addLabelsToEveryElement(model: VisualDiagramModel): VisualDiagramModel {
-  return model.elements.reduce((currentModel, diagramElement) => {
-    if (['label', 'text', 'formula', 'infoPanel', 'grid'].includes(diagramElement.kind)) return currentModel;
+  return modelElements(model).reduce((currentModel, diagramElement) => {
+    if (['label', 'text', 'formula', 'infoPanel', 'grid'].includes(elementKind(diagramElement))) return currentModel;
     return addLabelToElement(currentModel, diagramElement.id).model;
   }, model);
 }
 
 function removeEveryElementLabel(model: VisualDiagramModel): VisualDiagramModel | null {
-  const labelIds = new Set(model.elements.filter(item => item.kind === 'label').map(item => item.id));
+  const labelIds = new Set(modelElements(model).filter(item => elementKind(item) === 'label').map(item => item.id));
   return labelIds.size > 0 ? removeDiagramElements(model, labelIds) : null;
 }
 
@@ -65,8 +70,7 @@ export interface DeleteConfirmationRequest {
 function appendDiagramElement(model: VisualDiagramModel, kind: ElementKind, explicitRefs?: string[]): { model: VisualDiagramModel; id: string } {
   const refs = explicitRefs || toolReferenceCandidates(model, kind).map(item => item.id);
   const elementRefs = refsForKind(kind, refs);
-  const id = generatedElementId(kind, elementRefs, model.elements);
-  const properties = defaultElementProperties(kind);
+  const id = generatedElementId(kind, elementRefs, model.objects);
   const baseElement = element(
     id,
     KIND_LABELS[kind],
@@ -74,23 +78,13 @@ function appendDiagramElement(model: VisualDiagramModel, kind: ElementKind, expl
     elementRefs,
     elementColorForKind(kind),
     kind !== 'label',
-    {
-      ...(properties ? { properties } : {}),
-      ...(kind === 'label' ? { style: { textOffset: [0.04, 0.04] as [number, number], preserveColorOnHighlight: true } } : {}),
-    },
+    kind === 'label' ? { style: { textOffset: [0.04, 0.04], preserveColorOnHighlight: true } } : {},
   );
   const nextElement = {
     ...baseElement,
     order: nextLayerItemOrder(model, baseElement.layerId),
   };
-  const nextModel = makeVisibleInEveryStep({
-    ...model,
-    elements: [...model.elements, nextElement],
-    dependencies: [
-      ...(model.dependencies || []),
-      ...elementRefs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-    ],
-  }, id);
+  const nextModel = makeVisibleInEveryStep(insertObjects(model, [nextElement]), id);
   return { model: nextModel, id };
 }
 
@@ -226,15 +220,13 @@ export function useWorkbenchActions({
   };
 
   const handleAddSlider = () => {
-    const id = `slider${model.sliders.length + 1}`;
+    const sliderCount = modelSliders(model).length;
+    const id = `slider${sliderCount + 1}`;
     const newSlider = {
-      ...slider(id, `Control ${model.sliders.length + 1}`, -4, -4 + model.sliders.length * 0.45, 1),
+      ...slider(id, `Control ${sliderCount + 1}`, -4, -4 + sliderCount * 0.45, 1),
       order: nextLayerItemOrder(model, 'controls'),
     };
-    handleVisualEdit(makeVisibleInEveryStep({
-      ...model,
-      sliders: [...model.sliders, newSlider],
-    }, id), { label: `Añadir control ${id}` });
+    handleVisualEdit(makeVisibleInEveryStep(insertObjects(model, [newSlider]), id), { label: `Añadir control ${id}` });
     selectOnly(id);
     activateCanvasTool('select');
   };
@@ -243,17 +235,14 @@ export function useWorkbenchActions({
     const candidates = supportElements(model);
     const support = candidates.find(item => item.id === supportId) ?? candidates[0];
     if (!support) return;
-    const id = `p${model.points.length + 1}`;
+    const id = `p${modelPoints(model).length + 1}`;
     const initial = { x: 0, y: 0 };
     const nextPoint = {
       ...point(id, id.replace(/^p/, ''), initial.x, initial.y, false, 'ocre', 'glider', support.id),
       order: nextLayerItemOrder(model, 'geometry'),
     };
     const projected = projectPointToSupport(model, nextPoint, initial);
-    handleVisualEdit(makeVisibleInEveryStep({
-      ...model,
-      points: [...model.points, { ...nextPoint, ...projected }],
-    }, id), { label: `Añadir punto sobre ${support.id}` });
+    handleVisualEdit(makeVisibleInEveryStep(insertObjects(model, [withPointPosition(nextPoint, projected)]), id), { label: `Añadir punto sobre ${support.id}` });
     selectOnly(id);
     activateCanvasTool('select');
   };
@@ -288,7 +277,7 @@ export function useWorkbenchActions({
     });
   };
 
-  const normalizedRefs = normalizeConstructionRefs(model.points, constructionRefs);
+  const normalizedRefs = normalizeConstructionRefs(modelPoints(model), constructionRefs);
   const constructionReady = validConstructionRefs(constructionKind, normalizedRefs);
 
   const handleCreateGuidedConstruction = () => {

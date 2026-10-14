@@ -3,6 +3,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { WorkbenchElementInspector } from '../../../../src/fixed-pages/editor/diagrams/ui/workbench/WorkbenchElementInspector';
 import { element, createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
 import type { VisualDiagramModel, VisualElement } from '../../../../src/fixed-pages/editor/diagrams/model/types';
+import { objectLabelVisible, objectStyle, type DiagramObject } from '../../../../src/diagrams';
+import { elementText, setting, withSetting, type SettingKey } from '../../../../src/fixed-pages/editor/diagrams/ui/inspector/elementSettings';
 
 afterEach(cleanup);
 
@@ -16,7 +18,7 @@ function setupInspectorWithElement(el: VisualElement, baseModel?: VisualDiagramM
   const base = baseModel ?? createTemplateModel('estatico', 'Escena', 'diagram');
   const model: VisualDiagramModel = {
     ...base,
-    elements: [...base.elements.filter(item => item.id !== el.id), el],
+    objects: [...base.objects.filter(item => item.id !== el.id), el],
   };
 
   render(
@@ -34,66 +36,69 @@ function setupInspectorWithElement(el: VisualElement, baseModel?: VisualDiagramM
   return { onUpdateElement, onUpdatePoint, onUpdateModel, el, model };
 }
 
+/** Aplica la última actualización (parche o transformación) recibida por el inspector. */
+function lastUpdate(onUpdateElement: ReturnType<typeof vi.fn>, el: VisualElement): DiagramObject {
+  const [id, update] = onUpdateElement.mock.calls.at(-1)!;
+  expect(id).toBe(el.id);
+  return typeof update === 'function' ? update(el) : { ...el, ...update };
+}
+
+function withSettings(el: VisualElement, values: Partial<Record<SettingKey, number | string>>): VisualElement {
+  return Object.entries(values).reduce((current, [key, value]) => withSetting(current, key as SettingKey, value!), el);
+}
+
+function settingsOf(object: DiagramObject, keys: SettingKey[]) {
+  return Object.fromEntries(keys.map(key => [key, setting(object, key)]));
+}
+
 describe('Dimension and Measurement Inspector Editability', () => {
   describe('dimensionLine (Cotas)', () => {
     it('allows editing reference offset, precision, unit, and text template', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
+      const dimLine = withSettings(element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         text: 'AB: {value}',
-        properties: { offset: 0.35, precision: 2, unit: 'cm' },
-      });
+      }), { offset: 0.35, precision: 2, unit: 'cm' });
+      const keys: SettingKey[] = ['offset', 'precision', 'unit'];
 
       const { onUpdateElement } = setupInspectorWithElement(dimLine);
 
       // Distancia de referencia
       const offsetInput = screen.getByLabelText(/Distancia u offset de cota/i);
       fireEvent.change(offsetInput, { target: { value: '0.8' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        properties: { offset: 0.8, precision: 2, unit: 'cm' },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, dimLine), keys)).toEqual({ offset: 0.8, precision: 2, unit: 'cm' });
 
       // Precisión
       const precisionInput = screen.getByLabelText(/Precisión decimal/i);
       fireEvent.change(precisionInput, { target: { value: '3' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        properties: { offset: 0.35, precision: 3, unit: 'cm' },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, dimLine), keys)).toEqual({ offset: 0.35, precision: 3, unit: 'cm' });
 
       // Unidad
       const unitInput = screen.getByLabelText(/Unidad de cota/i);
       fireEvent.change(unitInput, { target: { value: 'm' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        properties: { offset: 0.35, precision: 2, unit: 'm' },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, dimLine), keys)).toEqual({ offset: 0.35, precision: 2, unit: 'm' });
 
       // Texto / Plantilla
       const textInput = screen.getByLabelText(/Título o texto/i);
       fireEvent.change(textInput, { target: { value: 'd = {value}' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        label: 'd = {value}',
-        text: 'd = {value}',
-        properties: { offset: 0.35, precision: 2, unit: 'cm', title: 'd = {value}' },
-      });
+      const titled = lastUpdate(onUpdateElement, dimLine);
+      expect(titled.label).toBe('d = {value}');
+      expect(elementText(titled)).toBe('d = {value}');
+      expect(settingsOf(titled, keys)).toEqual({ offset: 0.35, precision: 2, unit: 'cm' });
     });
 
     it('allows toggling label visibility in canvas', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
+      const dimLine = withSettings(element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         showLabel: true,
-        properties: { offset: 0.35, precision: 2 },
-      });
+      }), { offset: 0.35, precision: 2 });
 
       const { onUpdateElement } = setupInspectorWithElement(dimLine);
 
       const labelVisibleCheckbox = screen.getByLabelText(/Mostrar etiqueta en el lienzo/i);
       fireEvent.click(labelVisibleCheckbox);
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        showLabel: false,
-      });
+      expect(objectLabelVisible(lastUpdate(onUpdateElement, dimLine))).toBe(false);
     });
 
     it('allows adding and removing dimension line to header subtitle readings', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
-        properties: { offset: 0.35, precision: 2 },
-      });
+      const dimLine = withSettings(element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true), { offset: 0.35, precision: 2 });
 
       const { onUpdateModel } = setupInspectorWithElement(dimLine);
 
@@ -115,15 +120,11 @@ describe('Dimension and Measurement Inspector Editability', () => {
 
       const offsetXInput = screen.getByLabelText(/Desplazamiento X respecto al padre/i);
       fireEvent.change(offsetXInput, { target: { value: '0.5' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        style: expect.objectContaining({ textOffset: [0.5, 0.2] }),
-      });
+      expect(objectStyle(lastUpdate(onUpdateElement, dimLine))?.textOffset).toEqual([0.5, 0.2]);
 
       const offsetYInput = screen.getByLabelText(/Desplazamiento Y respecto al padre/i);
       fireEvent.change(offsetYInput, { target: { value: '-0.3' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        style: expect.objectContaining({ textOffset: [0.1, -0.3] }),
-      });
+      expect(objectStyle(lastUpdate(onUpdateElement, dimLine))?.textOffset).toEqual([0.1, -0.3]);
     });
 
     it('allows changing font size (labelSize) of dimensionLine', () => {
@@ -136,40 +137,31 @@ describe('Dimension and Measurement Inspector Editability', () => {
       const sizeInputs = screen.getAllByLabelText(/Tamaño de cota/i);
       expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
       fireEvent.change(sizeInputs[0], { target: { value: '20' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
-        style: expect.objectContaining({ labelSize: 20 }),
-      });
+      expect(objectStyle(lastUpdate(onUpdateElement, dimLine))?.labelSize).toBe(20);
     });
   });
 
   describe('measurement (Medidas)', () => {
     it('allows editing position along parent, unit, precision, and subtitle status', () => {
-      const meas = element('meas-1', 'm_1', 'measurement', ['seg-1'], 'terracota', true, {
-        properties: { anchorParameter: 0.5, unit: 'cm', precision: 2 },
-      });
+      const meas = withSettings(element('meas-1', 'm_1', 'measurement', ['seg-1'], 'terracota', true), { anchorParameter: 0.5, unit: 'cm', precision: 2 });
+      const keys: SettingKey[] = ['anchorParameter', 'unit', 'precision'];
 
       const { onUpdateElement } = setupInspectorWithElement(meas);
 
       // Posición a lo largo del elemento
       const positionSlider = screen.getByLabelText(/Posición a lo largo del elemento padre/i);
       fireEvent.change(positionSlider, { target: { value: '0.75' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
-        properties: { anchorParameter: 0.75, unit: 'cm', precision: 2 },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, meas), keys)).toEqual({ anchorParameter: 0.75, unit: 'cm', precision: 2 });
 
       // Unidad
       const unitInput = screen.getByLabelText(/Unidad de medida/i);
       fireEvent.change(unitInput, { target: { value: 'mm' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
-        properties: { anchorParameter: 0.5, unit: 'mm', precision: 2 },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, meas), keys)).toEqual({ anchorParameter: 0.5, unit: 'mm', precision: 2 });
 
       // Precisión
       const precisionInput = screen.getByLabelText(/Precisión de medida/i);
       fireEvent.change(precisionInput, { target: { value: '1' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
-        properties: { anchorParameter: 0.5, unit: 'cm', precision: 1 },
-      });
+      expect(settingsOf(lastUpdate(onUpdateElement, meas), keys)).toEqual({ anchorParameter: 0.5, unit: 'cm', precision: 1 });
     });
 
     it('allows changing font size (labelSize) of measurement', () => {
@@ -182,9 +174,7 @@ describe('Dimension and Measurement Inspector Editability', () => {
       const sizeInputs = screen.getAllByLabelText(/Tamaño de medida/i);
       expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
       fireEvent.change(sizeInputs[0], { target: { value: '18' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
-        style: expect.objectContaining({ labelSize: 18 }),
-      });
+      expect(objectStyle(lastUpdate(onUpdateElement, meas))?.labelSize).toBe(18);
     });
   });
 
@@ -200,9 +190,7 @@ describe('Dimension and Measurement Inspector Editability', () => {
       const sizeInputs = screen.getAllByLabelText(/Tamaño de etiqueta/i);
       expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
       fireEvent.change(sizeInputs[0], { target: { value: '22' } });
-      expect(onUpdateElement).toHaveBeenCalledWith('lbl-1', {
-        style: expect.objectContaining({ labelSize: 22 }),
-      });
+      expect(objectStyle(lastUpdate(onUpdateElement, lbl))?.labelSize).toBe(22);
     });
   });
 });

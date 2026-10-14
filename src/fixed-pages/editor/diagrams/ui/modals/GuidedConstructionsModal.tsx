@@ -1,3 +1,4 @@
+import { modelPoints } from '../../model/scene/objectLists';
 import React, { useState } from 'react';
 import type { ConstructionKind, ConstructionRefKey, VisualDiagramModel } from '../../model/types';
 import { CONSTRUCTION_OPTIONS } from '../../model';
@@ -101,7 +102,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
                 className="w-full bg-carbon/5 border border-carbon/20 rounded-lg p-2 text-xs text-carbon"
               >
                 <option value="">Seleccione un punto del diagrama...</option>
-                {model.points.map(p => (
+                {modelPoints(model).map(p => (
                   <option key={p.id} value={p.id}>
                     {p.label || p.id} ({p.id})
                   </option>

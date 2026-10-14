@@ -1,3 +1,5 @@
+import { isPositionedPoint, objectConstructionReferences, objectKind } from '@/diagrams';
+import { relationDraft } from '../model/constraints/relationIntents';
 import type { DiagramDiagnostic } from '../source/generator';
 import type { VisualDiagramModel } from '../model/types';
 import type {
@@ -12,7 +14,9 @@ export function resolveInspectorSection(
   field?: string,
   collection?: DiagramDiagnosticCollection,
 ): DiagramInspectorSection {
-  if (collection === 'constraints' || field === 'refs' || field === 'gliderTarget' || field === 'kind') return 'geometry';
+  if (collection === 'relations' || field === 'refs' || field === 'gliderTarget' || field === 'kind') return 'geometry';
+  if (field?.startsWith('definition') || field?.startsWith('mobility') || field?.startsWith('geometry') || field === 'points' || field?.startsWith('anchor')) return 'geometry';
+  if (field?.startsWith('appearance')) return 'appearance';
   if (field === 'dependencies' || field === 'xExpression' || field === 'yExpression') return 'geometry';
   if (field?.includes('constraint') || field === 'x' || field === 'y' || field?.includes('Expression')) return 'geometry';
   if (field === 'expression' || field === 'properties') return 'geometry';
@@ -22,8 +26,15 @@ export function resolveInspectorSection(
 }
 
 export function resolveFieldKey(field?: string, collection?: DiagramDiagnosticCollection): string | undefined {
-  if (collection === 'constraints') return 'constraints';
+  if (collection === 'relations') return 'constraints';
   if (!field) return undefined;
+  if (field === 'definition.x' || field === 'geometry.x') return 'xExpression';
+  if (field === 'definition.y' || field === 'geometry.y') return 'yExpression';
+  if (field === 'geometry.expression') return 'expression';
+  if (field === 'mobility.support') return 'gliderTarget';
+  if (field.startsWith('mobility.relationIds')) return 'constraints';
+  if (field.startsWith('definition') || field.startsWith('geometry') || field === 'points' || field.startsWith('points.')) return 'refs';
+  if (field.startsWith('appearance.')) return 'style';
   if (field === 'refs' || field.startsWith('refs.')) return 'refs';
   if (field.includes('constraint')) return 'constraints';
   if (field === 'gliderTarget') return 'gliderTarget';
@@ -52,12 +63,9 @@ export function resolveObjectId(
 ): string | undefined {
   if (!model || location.collection === undefined || location.index === undefined) return undefined;
 
-  const collection = location.collection === 'objects' ? 'elements' : location.collection;
-  switch (collection) {
-    case 'points': return itemIdAt(model.points, location.index);
-    case 'elements': return itemIdAt(model.elements, location.index);
-    case 'sliders': return itemIdAt(model.sliders, location.index);
-    case 'constraints': return itemIdAt(model.constraints, location.index);
+  switch (location.collection) {
+    case 'objects': return itemIdAt(model.objects, location.index);
+    case 'relations': return itemIdAt(model.relations, location.index);
     case 'steps': return itemIdAt(model.steps, location.index);
     case 'groups': return itemIdAt(model.groups, location.index);
     default: return undefined;
@@ -66,21 +74,22 @@ export function resolveObjectId(
 
 function segmentIdForConstraint(
   model: VisualDiagramModel,
-  constraint: NonNullable<VisualDiagramModel['constraints']>[number],
+  relation: VisualDiagramModel['relations'][number],
 ): string | undefined {
-  if (constraint.kind === 'equalLength' && constraint.refs.length >= 2) {
-    const [first, second] = constraint.refs;
-    const segment = model.elements.find(element => (
-      element.kind === 'segment'
-      && element.refs.includes(first)
-      && element.refs.includes(second)
-    ));
+  const refs = relationDraft(relation, model.objects).refs;
+  if (relation.type === 'equal-length' && refs.length >= 2) {
+    const [first, second] = refs;
+    const segment = model.objects.find(object => {
+      if (objectKind(object) !== 'segment') return false;
+      const endpoints = objectConstructionReferences(object);
+      return endpoints.includes(first) && endpoints.includes(second);
+    });
     if (segment) return segment.id;
   }
 
-  const lastRef = constraint.refs[constraint.refs.length - 1];
+  const lastRef = refs[refs.length - 1];
   if (lastRef) {
-    const segment = model.elements.find(element => element.id === lastRef && element.kind === 'segment');
+    const segment = model.objects.find(object => object.id === lastRef && objectKind(object) === 'segment');
     if (segment) return segment.id;
   }
 
@@ -105,17 +114,18 @@ export function resolveNavigationObjectId(
 ): string | undefined {
   if (!model) return undefined;
 
-  if (location.collection === 'constraints' && location.index !== undefined) {
-    const constraint = model.constraints?.[location.index];
-    if (!constraint) return undefined;
+  if (location.collection === 'relations' && location.index !== undefined) {
+    const relation = model.relations[location.index];
+    if (!relation) return undefined;
 
-    const segmentId = segmentIdForConstraint(model, constraint);
+    const segmentId = segmentIdForConstraint(model, relation);
     if (segmentId) return segmentId;
 
-    const pointOwner = constraint.refs.find(ref => model.points.some(point => point.id === ref));
+    const refs = relationDraft(relation, model.objects).refs;
+    const pointOwner = refs.find(ref => model.objects.some(object => object.id === ref && isPositionedPoint(object)));
     if (pointOwner) return pointOwner;
 
-    return constraint.refs[0] ?? constraint.id;
+    return refs[0] ?? relation.id;
   }
 
   return resolveObjectId(model, location);
@@ -138,10 +148,10 @@ export function refinePointLocation(
   model: VisualDiagramModel | null,
   diagnostic: DiagramDiagnostic,
 ): DiagramDiagnosticLocation {
-  if (!model || location.collection !== 'points' || location.index === undefined) return location;
+  if (!model || location.collection !== 'objects' || location.index === undefined) return location;
 
-  const point = model.points[location.index];
-  if (!point) return location;
+  const point = model.objects[location.index];
+  if (!isPositionedPoint(point)) return location;
 
   if (location.field) {
     return {
@@ -153,14 +163,13 @@ export function refinePointLocation(
   }
 
   const mentionsDerived = /derivad|expresion/i.test(diagnostic.message);
-  if (point.constraint === 'derived' || mentionsDerived) {
-    const field = !point.xExpression
+  const derived = point.definition.type === 'expression' ? point.definition : undefined;
+  if (derived || mentionsDerived) {
+    const field = !derived?.x
       ? 'xExpression'
-      : !point.yExpression
+      : !derived.y
         ? 'yExpression'
-        : !point.dependencies?.length
-          ? 'dependencies'
-          : 'xExpression';
+        : 'xExpression';
     return {
       ...location,
       field,
@@ -170,7 +179,7 @@ export function refinePointLocation(
     };
   }
 
-  if (point.constraint === 'glider' && !point.gliderTarget) {
+  if (point.mobility.type === 'on-support' && !point.mobility.support) {
     return {
       ...location,
       field: 'gliderTarget',
@@ -180,7 +189,7 @@ export function refinePointLocation(
     };
   }
 
-  if (point.constraint === 'constrained' && !point.constraintIds?.length) {
+  if (point.mobility.type === 'constrained' && point.mobility.relationIds.length === 0) {
     return {
       ...location,
       field: 'constraints',
@@ -211,8 +220,8 @@ export function buildDiagnosticLocation(
     field: parsed.field,
     collection: parsed.collection,
   });
-  const constraintId = parsed.collection === 'constraints' && model && parsed.index !== undefined
-    ? model.constraints?.[parsed.index]?.id
+  const constraintId = parsed.collection === 'relations' && model && parsed.index !== undefined
+    ? model.relations[parsed.index]?.id
     : undefined;
 
   return {

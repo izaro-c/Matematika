@@ -210,7 +210,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
           />
         )}
         <p className="px-1 font-mono text-[9px] text-carbon/50 select-none">
-          {spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX
+          {spec.objects.length} objetos · {spec.steps.length} pasos · {spec.objects.filter(item => item.target && item.objectType !== 'control').length + spec.groups.filter(item => item.target).length} vínculos MDX
         </p>
       </div>
     );

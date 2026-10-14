@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { parseDiagramSpecV2, resolveInfoPanelBlock } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { parseDiagramSpecV3, resolveInfoPanelBlock, type AnnotationObject } from '@/diagrams/public';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
 
-const triangulo = toWorkingSceneV2(TrianguloSpec);
+const triangulo = TrianguloSpec;
 
 function triangleVariables(
   points: { A: [number, number]; B: [number, number]; C: [number, number] },
@@ -24,8 +23,8 @@ function triangleVariables(
 }
 
 describe('composite information panels', () => {
-  const panel = triangulo.elements.find(element => element.id === 'infoPanel26')!;
-  const [sides, angles] = panel.properties!.infoPanelBlocks!;
+  const panel = triangulo.objects.find((object): object is AnnotationObject => object.id === 'infoPanel26' && object.objectType === 'annotation')!;
+  const [sides, angles] = panel.content.blocks!;
 
   it('classifies exact geometric cases without using display rounding', () => {
     const right = triangleVariables({ A: [0, 0], B: [3, 0], C: [0, 4] }, { ABC: 53.1301023542, BAC: 90, ACB: 36.8698976458 });
@@ -57,18 +56,18 @@ describe('composite information panels', () => {
   it('validates every nested condition and alternative expression', () => {
     const invalid = {
       ...triangulo,
-      elements: triangulo.elements.map(element => element.id === panel.id
+      objects: triangulo.objects.map(object => object.id === panel.id
         ? {
-            ...element,
-            properties: {
-              ...element.properties,
-              infoPanelBlocks: [{ id: 'lectura', text: '{value}', rules: [{ when: '1', text: '{value}', expression: 'window.alert(1)' }] }],
+            ...panel,
+            content: {
+              ...panel.content,
+              blocks: [{ id: 'lectura', text: '{value}', rules: [{ when: '1', text: '{value}', expression: 'window.alert(1)' }] }],
             },
           }
-        : element),
+        : object),
     };
-    const parsed = parseDiagramSpecV2(invalid);
+    const parsed = parseDiagramSpecV3(invalid);
     expect(parsed.success).toBe(false);
-    if (!parsed.success) expect(parsed.error.message).toContain('infoPanelBlocks');
+    if (!parsed.success) expect(parsed.error.message).toContain('blocks');
   });
 });

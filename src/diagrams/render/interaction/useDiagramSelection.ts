@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import type {DiagramPoint, DiagramSceneItem, DiagramSpecV2} from '@/diagrams/model';
+import { isAnnotationObject, isPositionedPoint, objectKind, objectStyle } from '@/diagrams/model';
+import type { DiagramObject, DiagramSpec, PointObject } from '@/diagrams/model';
 import { useDiagramTargetRegistry } from '@/lib/page-context/DiagramTargetRegistryContext';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import type { DiagramHoverController } from '@/diagrams/render/interaction/diagramHover';
@@ -16,7 +17,7 @@ export interface DiagramSelectionIntent {
 }
 
 export interface UseDiagramSelectionOptions {
-  spec: DiagramSpecV2;
+  spec: Pick<DiagramSpec, 'objects' | 'groups' | 'steps' | 'componentId'>;
   mode?: 'runtime' | 'editor' | 'preview';
   readOnly?: boolean;
   onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
@@ -36,7 +37,7 @@ export function diagramPointerSelectionWasHandled(event: unknown): boolean {
 
 function attachTargetInteraction(
   node: HTMLElement | undefined,
-  item: DiagramSceneItem,
+  item: DiagramObject,
   onTargetHighlight?: (target: string | null) => void,
 ): void {
   if (!node || !item.target) return;
@@ -52,16 +53,16 @@ function attachTargetInteraction(
 
 function attachKeyboardAdjustment(
   node: HTMLElement | undefined,
-  item: DiagramSceneItem,
+  item: DiagramObject,
   onKeyboardAdjust?: (key: KeyboardAdjustmentKey, largeStep: boolean) => void,
 ): void {
   if (!node || !onKeyboardAdjust) return;
   node.setAttribute('tabindex', '0');
   node.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home End');
-  if ('min' in item) {
+  if (item.objectType === 'control') {
     node.setAttribute('role', 'slider');
-    node.setAttribute('aria-valuemin', String(item.min));
-    node.setAttribute('aria-valuemax', String(item.max));
+    node.setAttribute('aria-valuemin', String(item.range.min));
+    node.setAttribute('aria-valuemax', String(item.range.max));
     node.setAttribute('aria-valuenow', String(item.value));
   } else {
     node.setAttribute('role', 'button');
@@ -76,7 +77,7 @@ function attachKeyboardAdjustment(
 
 export function attachSelection(
   element: JxgElementAdapter | undefined,
-  item: DiagramSceneItem,
+  item: DiagramObject,
   mode: UseDiagramSelectionOptions['mode'],
   onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void,
   onTargetHighlight?: (target: string | null) => void,
@@ -85,11 +86,12 @@ export function attachSelection(
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
   node?.setAttribute('data-diagram-object-id', item.id);
-  node?.setAttribute('data-diagram-kind', 'kind' in item ? item.kind : 'point');
+  const kind = objectKind(item);
+  node?.setAttribute('data-diagram-kind', kind === 'control' ? 'point' : kind);
   node?.setAttribute('data-diagram-highlightable', String(item.selection.highlightable !== false));
   node?.setAttribute('data-diagram-selectable', String(item.selection.selectable !== false));
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
-  if (item.style?.preserveColorOnHighlight !== false) node?.setAttribute('data-diagram-preserve-color', 'true');
+  if (objectStyle(item)?.preserveColorOnHighlight !== false) node?.setAttribute('data-diagram-preserve-color', 'true');
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
   attachTargetInteraction(node, item, onTargetHighlight);
   if (!item.selection.selectable) {
@@ -108,9 +110,9 @@ export function attachSelection(
     onSelectionChange?.(item.id, { additive: event.shiftKey });
   });
   const selectObject = (event?: Event) => onSelectionChange?.(item.id, { additive: Boolean(event && 'shiftKey' in event && event.shiftKey) });
-  const directlyManipulable = 'constraint' in item
-    || 'min' in item
-    || ('kind' in item && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(item.kind));
+  const directlyManipulable = isPositionedPoint(item)
+    || item.objectType === 'control'
+    || isAnnotationObject(item);
   const isStillSelectable = () => {
     const host = element.rendNode as HTMLElement | undefined;
     return host?.getAttribute('data-diagram-selectable') !== 'false';
@@ -153,7 +155,7 @@ export function nativeElementLabel(element: JxgElementAdapter | undefined): JxgE
 
 export function attachLabelSelection(
   element: JxgElementAdapter | undefined,
-  item: DiagramSceneItem,
+  item: DiagramObject,
   mode: UseDiagramSelectionOptions['mode'],
   onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void,
   onTargetHighlight?: (target: string | null) => void,
@@ -169,7 +171,7 @@ export function attachLabelSelection(
 
 export function attachDiagramHoverHandlers(
   element: JxgElementAdapter | undefined,
-  item: DiagramSceneItem,
+  item: DiagramObject,
   hover: DiagramHoverController,
   requestSceneUpdate: () => void,
 ) {
@@ -183,10 +185,10 @@ export function attachDiagramHoverHandlers(
   label?.on?.('out', deactivate);
 }
 
-export function releaseAuthoredAttraction(point: DiagramPoint, elements: JxgElementMap): boolean {
+export function releaseAuthoredAttraction(point: PointObject, elements: JxgElementMap): boolean {
   const renderedPoint = elements[point.id];
   if (!renderedPoint || typeof renderedPoint.popSlideObject !== 'function') return false;
-  const authoredAttractors = (point.attractorIds ?? []).map(id => elements[id]).filter(Boolean);
+  const authoredAttractors = (point.interaction?.attractorIds ?? []).map(id => elements[id]).filter(Boolean);
   if (authoredAttractors.length === 0) return false;
   let released = false;
   let remaining = authoredAttractors.length + 1;
@@ -198,14 +200,14 @@ export function releaseAuthoredAttraction(point: DiagramPoint, elements: JxgElem
   return released;
 }
 
-export function releaseInactiveAttractions(spec: DiagramSpecV2, elements: JxgElementMap, activePointId: string): boolean {
-  return spec.points.reduce((released, point) => (
+export function releaseInactiveAttractions(spec: Pick<DiagramSpec, 'objects'>, elements: JxgElementMap, activePointId: string): boolean {
+  return spec.objects.filter(isPositionedPoint).reduce((released, point) => (
     point.id === activePointId ? released : releaseAuthoredAttraction(point, elements) || released
   ), false);
 }
 
-export function suspendInactiveAttractors(spec: DiagramSpecV2, elements: JxgElementMap, activePointId: string): () => void {
-  const suspended = spec.points.flatMap(point => {
+export function suspendInactiveAttractors(spec: Pick<DiagramSpec, 'objects'>, elements: JxgElementMap, activePointId: string): () => void {
+  const suspended = spec.objects.filter(isPositionedPoint).flatMap(point => {
     const renderedPoint = elements[point.id];
     if (point.id === activePointId || !renderedPoint?.visProp) return [];
     const visualProperties = renderedPoint.visProp;
@@ -244,13 +246,13 @@ export function useDiagramSelection({
   }, [setVariable, spec.componentId]);
 
   const registeredTargets = useMemo(() => [
-    ...[...spec.points, ...spec.elements, ...spec.sliders]
+    ...spec.objects
       .filter(item => item.target)
       .map(item => ({ targetId: item.targetId ?? item.id, objectId: item.id, label: item.label, kind: 'object' as const })),
     ...spec.groups.filter(group => group.target)
       .map(group => ({ targetId: group.targetId ?? group.id, objectId: group.id, label: group.label, kind: 'object' as const })),
     ...spec.steps.map(step => ({ targetId: step.id, objectId: step.id, label: step.label, kind: 'step' as const })),
-  ], [spec.elements, spec.groups, spec.points, spec.sliders, spec.steps]);
+  ], [spec.objects, spec.groups, spec.steps]);
 
   useEffect(() => {
     targetRegistry.register(spec.componentId, registeredTargets);

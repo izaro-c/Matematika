@@ -17,7 +17,7 @@ describe('step object appearance', () => {
     };
 
     const appearance = resolveStepSceneAppearance(
-      model.elements.find(item => item.id === 'segAB')!,
+      model.objects.find(item => item.id === 'segAB')!,
       model.steps[1].objectStates?.segAB,
     );
     expect(appearance).toMatchObject({

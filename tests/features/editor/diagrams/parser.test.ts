@@ -3,7 +3,8 @@ import { afterEach, vi } from 'vitest';
 import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../../../../src/fixed-pages/editor/diagrams/source/parser';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
-import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { createTemplateModel, element, modelElements, modelPoints } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { withObjectStylePatch } from '../../../../src/diagrams';
 
 describe('Diagram TSX Parser (Local & AST)', () => {
   afterEach(() => {
@@ -19,7 +20,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
       const parsed = parseDiagramSourceLocally(gen.source, 'definicion');
       expect(parsed).not.toBeNull();
       expect(parsed?.title).toBe('Test');
-      expect(parsed?.points).toHaveLength(2);
+      expect(parsed && modelPoints(parsed)).toHaveLength(2);
     }
   });
 
@@ -61,8 +62,8 @@ describe('Diagram TSX Parser (Local & AST)', () => {
       expect(parsed.model.title).toBe('Test');
       expect(parsed.model.version).toBe(3);
       expect(parsed.model.viewport.bounds).toEqual([-5, 5, 5, -5]);
-      expect(parsed.model.points).toHaveLength(2);
-      expect(parsed.model.elements).toHaveLength(3);
+      expect(modelPoints(parsed.model)).toHaveLength(2);
+      expect(modelElements(parsed.model)).toHaveLength(3);
       const regenerated = generateDiagramSource(parsed.model, 'Test');
       expect(regenerated.ok && regenerated.source).toBe(gen.source);
     }
@@ -125,22 +126,11 @@ describe('Diagram TSX Parser (Local & AST)', () => {
 
   it('classifies canonical embedded specs locally without consulting a stale dev-server parser', async () => {
     const model = createTemplateModel('triangulo-deformable', 'MarcasMedida', 'definicion');
-    model.elements.push({
-      id: 'ticks-segmento',
-      label: 'Marcas de medida',
-      kind: 'measureTicks',
-      refs: ['segAB'],
-      color: 'ocre',
-      layerId: 'geometry',
-      order: 30,
-      visible: true,
-      locked: false,
-      groupIds: [],
-      selection: { selectable: true, role: 'secondary' },
-      target: false,
-      properties: { tickDistance: 1.5 },
-      style: { strokeWidth: 2, markHeight: 12 },
-    });
+    const ticks = element('ticks-segmento', 'Marcas de medida', 'measureTicks', ['segAB'], 'ocre', false);
+    model.objects.push(withObjectStylePatch(
+      { ...ticks, order: 30, selection: { selectable: true, role: 'secondary' }, ...(ticks.objectType === 'mark' ? { spacing: 1.5 } : {}) },
+      { strokeWidth: 2, markHeight: 12 },
+    ));
     const generated = generateDiagramSource(model, 'MarcasMedida');
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
@@ -150,11 +140,12 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     await expect(parseDiagramSourceOnServer(generated.source)).resolves.toMatchObject({
       status: 'visual-exact',
       model: {
-        elements: expect.arrayContaining([
+        objects: expect.arrayContaining([
           expect.objectContaining({
-            kind: 'measureTicks',
-            properties: { tickDistance: 1.5 },
-            style: expect.objectContaining({ markHeight: 12 }),
+            id: 'ticks-segmento',
+            objectType: 'mark',
+            variant: 'graduation',
+            spacing: 1.5,
           }),
         ]),
       },
@@ -182,7 +173,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     expect(fetchSpy).toHaveBeenCalledOnce();
   });
 
-  it('never grants visual editing because a partial AST contains a point', () => {
+  it('never grants visual editing to TSX without an embedded spec', () => {
     const manual = `
       import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
       import { createPoint } from '@/diagrams/jsxgraph/MathFactory';
@@ -203,7 +194,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     const parsed = parseDiagramSourceAST(manual);
     expect(parsed.status).toBe('code-preview');
     expect('model' in parsed).toBe(false);
-    expect(parsed.status === 'code-preview' && parsed.previewModel?.points).toHaveLength(1);
+    expect(parsed.diagnostics.some(item => item.code === 'diagram-without-spec')).toBe(true);
   });
 
   it('blocks visual regeneration when exact generated code gains an unrepresented overlay', () => {

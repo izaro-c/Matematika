@@ -1,20 +1,23 @@
 import { describe, expect, it } from 'vitest';
+import { objectConstructionReferences, objectReferences } from '../../../../src/diagrams';
 import { createTemplateModel, deleteDiagramCascade, element, renameDiagramId } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { elementText, withElementText } from '../../../../src/fixed-pages/editor/diagrams/ui/inspector/elementSettings';
+import { findById } from '../../../helpers/diagramSpec';
 
 describe('diagram graph commands', () => {
   it('renames globally and rewrites references plus expressions through the expression AST', () => {
     const base = createTemplateModel('circunferencia', 'Grafo', 'definicion');
     const model = {
       ...base,
-      elements: base.elements.map(item => item.id === 'measRadio'
-        ? { ...item, text: 'Mitad: {= pA.x / 2 | precision: 2}', properties: { ...item.properties, visibleWhen: 'gt(pA.x, pO.x)' } }
+      objects: base.objects.map(item => item.id === 'measRadio'
+        ? { ...withElementText(item, 'Mitad: {= pA.x / 2 | precision: 2}'), visibleWhen: 'gt(pA.x, pO.x)' }
         : item),
     };
     const renamed = renameDiagramId(model, 'pA', 'pB');
-    expect(renamed.points.some(point => point.id === 'pB')).toBe(true);
-    expect(renamed.elements.find(item => item.id === 'circle')?.refs).toContain('pB');
-    expect(renamed.elements.find(item => item.id === 'measRadio')?.properties?.visibleWhen).toContain('pB.x');
-    expect(renamed.elements.find(item => item.id === 'measRadio')?.text).toContain('{= pB.x / 2 | precision: 2}');
+    expect(renamed.objects.some(object => object.id === 'pB')).toBe(true);
+    expect(objectConstructionReferences(findById(renamed, 'circle'))).toContain('pB');
+    expect(findById(renamed, 'measRadio').visibleWhen).toContain('pB.x');
+    expect(elementText(findById(renamed, 'measRadio'))).toContain('{= pB.x / 2 | precision: 2}');
     expect(renameDiagramId(renamed, 'pB', 'circle')).toBe(renamed);
   });
 
@@ -23,7 +26,7 @@ describe('diagram graph commands', () => {
     const annotation = element('derivedText', 'Lectura', 'text', ['pO'], 'carbon', true, {
       text: 'Doble: {= pA.x * 2 | precision: 1}',
     });
-    const result = deleteDiagramCascade({ ...base, elements: [...base.elements, annotation] }, 'pA');
+    const result = deleteDiagramCascade({ ...base, objects: [...base.objects, annotation] }, 'pA');
     expect(result.impact.dependentIds).toContain('derivedText');
   });
 
@@ -31,8 +34,8 @@ describe('diagram graph commands', () => {
     const base = createTemplateModel('circunferencia', 'Cascada', 'definicion');
     const model = {
       ...base,
-      elements: [
-        ...base.elements,
+      objects: [
+        ...base.objects,
         element('child', 'Dependiente', 'segment', ['pO', 'pA'], 'carbon'),
         element('grandchild', 'Dependiente transitivo', 'label', ['child'], 'carbon'),
       ],
@@ -41,7 +44,7 @@ describe('diagram graph commands', () => {
     };
     const result = deleteDiagramCascade(model, 'pA');
     expect(result.impact.dependentIds).toEqual(expect.arrayContaining(['circle', 'segOA', 'child', 'grandchild']));
-    expect(result.model.elements.some(item => item.refs.includes('pA') || item.refs.includes('child'))).toBe(false);
+    expect(result.model.objects.some(item => objectReferences(item).includes('pA') || objectReferences(item).includes('child'))).toBe(false);
     expect(result.model.steps[0].visibleTargets).not.toContain('grandchild');
     expect(result.model.groups[0].memberIds).toEqual([]);
   });
@@ -51,15 +54,15 @@ describe('diagram graph commands', () => {
     const withGroup = {
       ...base,
       groups: [{ id: 'group', label: 'Grupo', memberIds: ['pA'], visible: true, locked: false, selection: { selectable: true }, target: true, targetId: 'group' }],
-      points: base.points.map(item => item.id === 'pA' ? { ...item, groupIds: ['group'] } : item),
+      objects: base.objects.map(item => item.id === 'pA' ? { ...item, groupIds: ['group'] } : item),
     };
     const groupRenamed = renameDiagramId(withGroup, 'group', 'renamedGroup');
     expect(groupRenamed.groups[0]).toMatchObject({ id: 'renamedGroup', targetId: 'renamedGroup' });
-    expect(groupRenamed.points.find(item => item.id === 'pA')?.groupIds).toContain('renamedGroup');
+    expect(findById(groupRenamed, 'pA').groupIds).toContain('renamedGroup');
 
-    const layerId = groupRenamed.points[0]?.layerId ?? groupRenamed.layers[0].id;
+    const layerId = groupRenamed.objects[0]?.layerId ?? groupRenamed.layers[0].id;
     const layerRenamed = renameDiagramId(groupRenamed, layerId, 'renamedLayer');
-    expect([...layerRenamed.points, ...layerRenamed.elements, ...layerRenamed.sliders]
+    expect(layerRenamed.objects
       .filter(item => item.layerId === 'renamedLayer').length).toBeGreaterThan(0);
   });
 

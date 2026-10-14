@@ -18,6 +18,8 @@ import {
 import type { VisualDiagramModel, VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
 import type { ElementPanelProps } from '../../types';
 import { constraintScopeForKind } from '../../elementSections';
+import { objectConstructionReferences, objectKind } from '@/diagrams';
+import { elementKind, modelElements, relationDraft } from '@/fixed-pages/editor/diagrams/model';
 
 const fieldClass =
   'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none';
@@ -33,10 +35,11 @@ const SegmentReflectionCard: React.FC<{
   onUpdateModel: (next: VisualDiagramModel, label: string) => void;
 }> = ({ model, element, onUpdateModel }) => {
   const reflection = reflectionConstraintForSegment(model, element.id);
+  const reflectionRefs = reflection?.type === 'reflection' ? reflection.refs : [];
   const reflectionCandidates = editableReflectionCandidates(model, element.id);
-  const otherSegments = model.elements.filter(e => e.kind === 'segment' && e.id !== element.id);
-  const existingCenter = reflection?.refs.length === 3 ? reflection.refs[2] : reflection?.refs[1];
-  const existingSource = reflection?.refs.length === 3 ? reflection.refs[1] : '';
+  const otherSegments = modelElements(model).filter(e => objectKind(e) === 'segment' && e.id !== element.id);
+  const existingCenter = reflectionRefs.length === 3 ? reflectionRefs[2] : reflectionRefs[1];
+  const existingSource = reflectionRefs.length === 3 ? reflectionRefs[1] : '';
   const [centerId, setCenterId] = useState(existingCenter || reflectionCandidates[0]?.id || '');
   const [sourceId, setSourceId] = useState(existingSource);
 
@@ -103,21 +106,21 @@ const SegmentReflectionCard: React.FC<{
   );
 };
 
-/** UI V2 unificado de restricciones de elemento (segment / angle). */
+/** UI unificado de restricciones de elemento (segment / angle). */
 export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   model,
   element,
   onUpdateModel,
 }) => {
-  const scope = constraintScopeForKind(element.kind);
+  const scope = constraintScopeForKind(elementKind(element));
   if (!scope || !onUpdateModel) return null;
 
   if (scope === 'segment') {
     const lengthConstraint = equalLengthConstraintForSegment(model, element.id);
-    const otherSegments = model.elements.filter(e => e.kind === 'segment' && e.id !== element.id);
+    const otherSegments = modelElements(model).filter(e => objectKind(e) === 'segment' && e.id !== element.id);
     const editablePts = editableSegmentEndpoints(model, element.id);
-    const movingPtId = lengthConstraint ? lengthConstraint.refs[0] : (editablePts[0]?.id || element.refs[0] || '');
-    const sourceSegId = lengthConstraint ? lengthConstraint.refs[2] : (otherSegments[0]?.id || '');
+    const movingPtId = lengthConstraint ? relationDraft(lengthConstraint, model.objects).refs[0] : (editablePts[0]?.id || objectConstructionReferences(element)[0] || '');
+    const sourceSegId = lengthConstraint ? relationDraft(lengthConstraint, model.objects).refs[2] : (otherSegments[0]?.id || '');
 
     return (
       <div className="space-y-3">
@@ -141,7 +144,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                 }}
                 className={fieldClass}
               >
-                {(editablePts.length ? editablePts.map(p => p.id) : element.refs).map(r => (
+                {(editablePts.length ? editablePts.map(p => p.id) : objectConstructionReferences(element)).map(r => (
                   <option key={r} value={r}>Punto {r}</option>
                 ))}
               </select>
@@ -200,11 +203,11 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   }
 
   const constraint = equalAngleConstraintForAngle(model, element.id);
-  const otherAngles = model.elements.filter(e =>
-    (e.kind === 'angle' || e.kind === 'nonReflexAngle') && e.id !== element.id,
+  const otherAngles = modelElements(model).filter(e =>
+    (objectKind(e) === 'angle' || objectKind(e) === 'nonReflexAngle') && e.id !== element.id,
   );
-  const movingPtId = constraint ? constraint.refs[0] : (element.refs[0] || '');
-  const sourceAngleId = constraint ? constraint.refs[3] : (otherAngles[0]?.id || '');
+  const movingPtId = constraint ? relationDraft(constraint, model.objects).refs[0] : (objectConstructionReferences(element)[0] || '');
+  const sourceAngleId = constraint ? relationDraft(constraint, model.objects).refs[3] : (otherAngles[0]?.id || '');
 
   return (
     <div className="space-y-3">
@@ -228,7 +231,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               }}
               className={fieldClass}
             >
-              {element.refs.map(r => (
+              {objectConstructionReferences(element).map(r => (
                 <option key={r} value={r}>Punto {r}</option>
               ))}
             </select>

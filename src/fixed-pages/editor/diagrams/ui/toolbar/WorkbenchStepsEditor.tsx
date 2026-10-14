@@ -1,3 +1,5 @@
+import { objectKind } from '@/diagrams';
+import { modelElements, modelPoints, modelSliders } from '../../model/scene/objectLists';
 import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualStep } from '../../model/types';
 import type { DiagramStepEmphasis } from '@/diagrams';
@@ -50,17 +52,17 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
 
   const steps = model.steps || [];
   const allObjects = [
-    ...model.points.map(p => ({ id: p.id, label: p.label || p.id, type: 'Punto' })),
-    ...model.elements.map(e => ({ id: e.id, label: e.label || e.id, type: e.kind })),
-    ...model.sliders.map(s => ({ id: s.id, label: s.label || s.id, type: 'Deslizador' })),
+    ...modelPoints(model).map(p => ({ id: p.id, label: p.label || p.id, type: 'Punto' })),
+    ...modelElements(model).map(e => ({ id: e.id, label: e.label || e.id, type: String(objectKind(e)) })),
+    ...modelSliders(model).map(s => ({ id: s.id, label: s.label || s.id, type: 'Deslizador' })),
   ];
   const effectiveBulkId = bulkObjectId && allObjects.some(o => o.id === bulkObjectId)
     ? bulkObjectId
     : (allObjects[0]?.id || '');
   const selectedObjectId = selectedIds[0] ?? '';
-  const selectedObject = model.points.find(point => point.id === selectedObjectId)
-    ?? model.elements.find(element => element.id === selectedObjectId)
-    ?? model.sliders.find(slider => slider.id === selectedObjectId);
+  const selectedObject = modelPoints(model).find(point => point.id === selectedObjectId)
+    ?? modelElements(model).find(element => element.id === selectedObjectId)
+    ?? modelSliders(model).find(slider => slider.id === selectedObjectId);
 
   const syncActiveAfterReorder = (nextSteps: VisualStep[], previousId?: string) => {
     const id = previousId ?? (activeStepIndex !== null ? steps[activeStepIndex]?.id : undefined);
@@ -393,13 +395,13 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                   </div>
                 </div>
 
-                {model.sliders.length > 0 && (
+                {modelSliders(model).length > 0 && (
                   <div className="mt-2 p-2 bg-lienzo/50 rounded-lg border border-carbon/10 space-y-1.5">
                     <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
                       Valores de deslizadores en este paso
                     </label>
                     <div className="space-y-1.5">
-                      {model.sliders.map(sl => {
+                      {modelSliders(model).map(sl => {
                         const stepVal = st.objectStates?.[sl.id]?.value;
                         const isOverridden = stepVal !== undefined;
                         return (
@@ -407,15 +409,15 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                             <span className="font-mono text-carbon truncate flex-1" title={sl.label || sl.id}>
                               {sl.label || sl.id}
                               <span className="text-[10px] text-carbon/40 ml-1">
-                                ({sl.min}..{sl.max})
+                                ({sl.range.min}..{sl.range.max})
                               </span>
                             </span>
                             <div className="flex items-center gap-1.5">
                               <input
                                 type="number"
-                                min={sl.min}
-                                max={sl.max}
-                                step={sl.step || 0.01}
+                                min={sl.range.min}
+                                max={sl.range.max}
+                                step={sl.range.step || 0.01}
                                 value={stepVal ?? ''}
                                 placeholder={String(sl.value)}
                                 onChange={e => {

@@ -1,3 +1,5 @@
+import { objectKind } from '@/diagrams';
+import { modelElements, modelPoints, modelSliders } from '../../model/scene/objectLists';
 import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider } from '../../model/types';
 import { DiagramReferencesPanel } from '../DiagramReferencesPanel';
@@ -34,7 +36,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
   if (!isOpen || !model) return null;
 
   const targets = [
-    ...model.points.map(p => ({
+    ...modelPoints(model).map(p => ({
       id: p.id,
       label: p.label || p.id,
       type: 'Punto',
@@ -43,16 +45,16 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
       groupIds: p.groupIds || [],
       kind: 'point' as const,
     })),
-    ...model.elements.map(e => ({
+    ...modelElements(model).map(e => ({
       id: e.id,
       label: e.label || e.id,
-      type: e.kind,
+      type: objectKind(e),
       color: e.color || 'canela',
       target: e.target !== false,
       groupIds: e.groupIds || [],
       kind: 'element' as const,
     })),
-    ...model.sliders.map(s => ({
+    ...modelSliders(model).map(s => ({
       id: s.id,
       label: s.label || s.id,
       type: 'Deslizador',

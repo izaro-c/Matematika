@@ -1,3 +1,4 @@
+import { modelPoints } from '../model/scene/objectLists';
 import type { DiagramState, DiagramAction, DiagramSyncStatus, DiagramParseStatus } from './types';
 import {
   createCommandHistory,
@@ -49,7 +50,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         parseStatus,
         expectedVersion: action.expectedVersion ?? null,
         diagnostics,
-        selectedId: model?.points[0]?.id || '',
+        selectedId: (model ? modelPoints(model) : [])[0]?.id || '',
         activeStepId: model?.steps[0]?.id || '',
         canvasTool: 'select',
         modelHistory: createCommandHistory(model),
@@ -70,7 +71,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         parseStatus: 'visual-exact',
         expectedVersion: null,
         diagnostics,
-        selectedId: action.model.points[0]?.id || '',
+        selectedId: modelPoints(action.model)[0]?.id || '',
         activeStepId: action.model.steps[0]?.id || '',
         canvasTool: 'select',
         modelHistory: createCommandHistory(action.model),
@@ -91,7 +92,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         parseStatus: 'visual-exact',
         expectedVersion: action.expectedVersion,
         diagnostics,
-        selectedId: action.model.points[0]?.id || '',
+        selectedId: modelPoints(action.model)[0]?.id || '',
         activeStepId: action.model.steps[0]?.id || '',
         canvasTool: 'select',
         modelHistory: createCommandHistory(action.model),

@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
+import { modelPoints } from '@/fixed-pages/editor/diagrams/model';
 import { GroupsAndLayersManager } from '@/fixed-pages/editor/diagrams/ui/scene/GroupsAndLayersManager';
 
 describe('GroupsAndLayersManager layer moves', () => {
@@ -19,11 +20,7 @@ describe('GroupsAndLayersManager layer moves', () => {
 
     expect(onUpdateModel).toHaveBeenCalled();
     const next = onUpdateModel.mock.calls.at(-1)?.[0];
-    const moved = [
-      ...next.points,
-      ...next.elements,
-      ...next.sliders,
-    ].filter((item: { layerId: string }) => item.layerId === 'annotations');
+    const moved = next.objects.filter((item: { layerId: string }) => item.layerId === 'annotations');
     expect(moved.length).toBeGreaterThan(0);
     expect(next.layers.some((l: { id: string }) => l.id === 'annotations')).toBe(true);
   });
@@ -39,14 +36,14 @@ describe('GroupsAndLayersManager layer moves', () => {
 
     expect(onUpdateModel).toHaveBeenCalled();
     const next = onUpdateModel.mock.calls.at(-1)?.[0];
-    const before = [...model.points]
+    const before = modelPoints(model)
       .filter(p => p.layerId === 'geometry')
       .sort((a, b) => b.order - a.order)
       .map(p => p.id);
-    const after = [...next.points]
-      .filter((p: { layerId: string }) => p.layerId === 'geometry')
-      .sort((a: { order: number }, b: { order: number }) => b.order - a.order)
-      .map((p: { id: string }) => p.id);
+    const after = modelPoints(next)
+      .filter(p => p.layerId === 'geometry')
+      .sort((a, b) => b.order - a.order)
+      .map(p => p.id);
     expect(after).not.toEqual(before);
   });
 });

@@ -1,7 +1,8 @@
+import { isControlObject, isPositionedPoint, objectDashed, objectKind, objectStyle } from '@/diagrams';
 import React from 'react';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '@/diagrams/public';
 import type { DiagramStepObjectState, DiagramStepVisualStyle } from '@/diagrams';
-import type { VisualElement, VisualPoint, VisualSlider } from '../model/types';
+import type { ElementKind, VisualElement, VisualPoint, VisualSlider } from '../model/types';
 import { COLOR_OPTIONS } from '../model';
 import { elementInspectorCapabilities } from '../model/elements/elementInspectorCapabilities';
 import { DiagramField } from './primitives';
@@ -15,22 +16,22 @@ interface DiagramStepObjectAppearanceEditorProps {
 }
 
 function isPoint(object: StepSceneItem): object is VisualPoint {
-  return 'constraint' in object;
+  return isPositionedPoint(object);
 }
 
 function isSlider(object: StepSceneItem): object is VisualSlider {
-  return 'min' in object && 'max' in object && 'value' in object;
+  return isControlObject(object);
 }
 
 function angleRadiusFallback(element: VisualElement): number {
-  return element.kind === 'angle' || element.kind === 'nonReflexAngle'
+  return element.objectType === 'angle' && element.marker === 'arc'
     ? DEFAULT_ANGLE_RADIUS
     : DEFAULT_RIGHT_ANGLE_RADIUS;
 }
 
 function markHeightFallback(element: VisualElement): number {
-  if (element.kind === 'measureTicks') return 10;
-  if (element.kind === 'parallelMark') return 0.42;
+  if (element.objectType === 'mark' && element.variant === 'graduation') return 10;
+  if (element.objectType === 'mark' && element.variant === 'parallel') return 0.42;
   return 0.32;
 }
 
@@ -52,8 +53,8 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
     ? { stroke: false, fill: false, dashed: false, pointSize: true, angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true }
     : isSlider(object)
       ? { stroke: false, fill: false, dashed: false, pointSize: false, angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true }
-      : elementInspectorCapabilities(object.kind);
-  const baseStyle = object.style ?? {};
+      : elementInspectorCapabilities(objectKind(object) as ElementKind);
+  const baseStyle = objectStyle(object) ?? {};
   const stepStyle = state.style ?? {};
   const hasAppearanceControls = capabilities.stroke || capabilities.fill || capabilities.pointSize
     || capabilities.angleRadius || capabilities.markHeight || capabilities.fontSize || capabilities.dashed;
@@ -159,9 +160,9 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
             <div className="flex items-center gap-2">
               <input
                 type="range"
-                min={object.min}
-                max={object.max}
-                step={object.step || 0.01}
+                min={object.range.min}
+                max={object.range.max}
+                step={object.range.step || 0.01}
                 value={state.value !== undefined ? state.value : object.value}
                 onChange={event => onStateChange(
                   { value: Number(event.target.value) },
@@ -171,9 +172,9 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
               />
               <input
                 type="number"
-                min={object.min}
-                max={object.max}
-                step={object.step || 0.01}
+                min={object.range.min}
+                max={object.range.max}
+                step={object.range.step || 0.01}
                 value={state.value !== undefined ? state.value : ''}
                 placeholder={String(object.value)}
                 onChange={event => onStateChange(
@@ -352,7 +353,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
             <label className="flex items-center gap-2 text-xs font-bold text-carbon">
               <input
                 type="checkbox"
-                checked={state.dashed ?? Boolean(object.dashed)}
+                checked={state.dashed ?? objectDashed(object)}
                 onChange={event => onStateChange({ dashed: event.target.checked }, 'Cambiar trazo discontinuo temporal')}
               />
               Línea discontinua en este paso

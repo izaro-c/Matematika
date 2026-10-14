@@ -1,16 +1,16 @@
-import type { VisualConstraint } from '../types';
+import type { RelationIntent } from './relationIntents';
 
 /** Relaciones que solo pueden existir una vez en el mismo punto. */
-const SINGLETON_KINDS = new Set<VisualConstraint['kind']>(['coincident', 'midpoint', 'reflection']);
+const SINGLETON_KINDS = new Set<RelationIntent>(['coincident', 'midpoint', 'reflection']);
 
-const SINGLETON_LABELS: Partial<Record<VisualConstraint['kind'], string>> = {
+const SINGLETON_LABELS: Partial<Record<RelationIntent, string>> = {
   coincident: 'Coincidir con un punto',
   midpoint: 'Punto medio',
   reflection: 'Reflejo simétrico',
 };
 
 /** Pares de relaciones que no pueden coexistir en el mismo punto. */
-const INCOMPATIBLE_PAIRS: Array<[VisualConstraint['kind'], VisualConstraint['kind'], string]> = [
+const INCOMPATIBLE_PAIRS: Array<[RelationIntent, RelationIntent, string]> = [
   ['midpoint', 'distance', 'El punto medio ya fija la posición; no puede añadirse además una distancia fija.'],
   ['midpoint', 'coincident', 'El punto medio ya fija la posición; no puede coincidir con otro punto a la vez.'],
   ['coincident', 'distance', 'Si el punto coincide con otro, la distancia fija es redundante e incompatible.'],
@@ -19,7 +19,7 @@ const INCOMPATIBLE_PAIRS: Array<[VisualConstraint['kind'], VisualConstraint['kin
   ['distance', 'coincident', 'La distancia fija entra en conflicto con coincidir con otro punto.'],
 ];
 
-function pairKey(a: VisualConstraint['kind'], b: VisualConstraint['kind']): string {
+function pairKey(a: RelationIntent, b: RelationIntent): string {
   return [a, b].sort().join('|');
 }
 
@@ -29,9 +29,9 @@ for (const [a, b, message] of INCOMPATIBLE_PAIRS) {
 }
 
 export function getConstraintConflictReason(
-  activeKinds: readonly VisualConstraint['kind'][],
-  candidate: VisualConstraint['kind'],
-  options?: { ignoreKind?: VisualConstraint['kind'] },
+  activeKinds: readonly RelationIntent[],
+  candidate: RelationIntent,
+  options?: { ignoreKind?: RelationIntent },
 ): string | undefined {
   const ignore = options?.ignoreKind;
   const active = activeKinds.filter(kind => kind !== ignore);

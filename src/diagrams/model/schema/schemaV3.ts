@@ -1,11 +1,24 @@
 import { z } from 'zod';
 import { DiagramExpressionError, extractMathExpressionIdentifiers, parseMathExpression } from '@/diagrams/model/expressions/expressions';
 import { diagramTemplateExpressions } from '@/diagrams/model/semantics/infoPanels';
-import { DiagramSpecValidationError } from '@/diagrams/model/schema/schema';
 import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from '@/diagrams/model/schema/types';
 import type { DiagramObject, DiagramRelation, DiagramSpecV3, PointObject } from '@/diagrams/model/schema/v3';
-import { objectReferences } from '@/diagrams/model/schema/v3Compatibility';
+import { objectConstructionReferences, objectReferences } from '@/diagrams/model/objects/references';
 import { objectHasCapability } from '@/diagrams/model/semantics/semantics';
+
+export class DiagramSpecValidationError extends Error {
+  readonly issues: z.core.$ZodIssue[];
+
+  constructor(issues: z.core.$ZodIssue[]) {
+    super(formatDiagramSpecIssues(issues));
+    this.name = 'DiagramSpecValidationError';
+    this.issues = issues;
+  }
+}
+
+export function formatDiagramSpecIssues(issues: readonly z.core.$ZodIssue[]): string {
+  return issues.map(issue => `${issue.path.length > 0 ? issue.path.join('.') : 'spec'}: ${issue.message}`).join('\n');
+}
 
 const id = z.string().min(1).regex(/^[A-Za-z][A-Za-z0-9_-]*$/, 'Debe empezar por una letra y usar solo letras, números, _ o -.');
 const number = z.number().finite();
@@ -261,6 +274,56 @@ function createValidationIndex(spec: DiagramSpecV3, context: z.RefinementCtx): V
   };
 }
 
+/** Referencias que fijan el orden de construcción de un objeto (no la presentación). */
+function constructionSources(object: DiagramObject): string[] {
+  const expressionRoots = (sources: Array<string | undefined>) => sources.flatMap(source => {
+    if (!source) return [];
+    try { return extractMathExpressionIdentifiers(source).map(identifier => identifier.split('.')[0]); }
+    catch { return []; }
+  });
+  if (object.objectType === 'point') {
+    const definition = object.definition;
+    return [
+      ...objectConstructionReferences(object),
+      ...(object.mobility.type === 'on-support' ? [object.mobility.support] : []),
+      ...(definition.type === 'expression' ? expressionRoots([definition.x, definition.y]) : []),
+    ];
+  }
+  if (object.objectType === 'control') return expressionRoots([object.range.maxExpression]);
+  const expressions = object.objectType === 'path' && object.geometry.type === 'function'
+    ? [object.geometry.expression]
+    : object.objectType === 'path' && object.geometry.type === 'parametric'
+      ? [object.geometry.x, object.geometry.y]
+      : object.objectType === 'mark' ? [object.spacingExpression] : [];
+  return [...objectConstructionReferences(object), ...expressionRoots(expressions)];
+}
+
+function validateConstructionCycles(spec: DiagramSpecV3, context: z.RefinementCtx): void {
+  const ids = new Set(spec.objects.map(object => object.id));
+  const sources = new Map(spec.objects.map(object => [
+    object.id,
+    constructionSources(object).filter(source => ids.has(source) && source !== object.id),
+  ]));
+  const state = new Map<string, 'visiting' | 'done'>();
+  const reported = new Set<string>();
+  const visit = (id: string, path: string[]): void => {
+    if (state.get(id) === 'done') return;
+    if (state.get(id) === 'visiting') {
+      const cycle = [...path.slice(path.indexOf(id)), id];
+      const key = [...new Set(cycle)].sort().join('|');
+      if (!reported.has(key)) {
+        reported.add(key);
+        addIssue(context, ['objects', spec.objects.findIndex(object => object.id === id)], `La dependencia ${cycle.join(' → ')} forma un ciclo de construcción.`);
+      }
+      return;
+    }
+    state.set(id, 'visiting');
+    (sources.get(id) ?? []).forEach(source => visit(source, [...path, id]));
+    state.set(id, 'done');
+  };
+  spec.objects.forEach(object => visit(object.id, []));
+}
+
 function validateUniqueIds(spec: DiagramSpecV3, context: z.RefinementCtx): void {
   const allIds = [
     ...spec.layers.map(item => item.id), ...spec.groups.map(item => item.id),
@@ -405,9 +468,15 @@ function validateRelation(item: DiagramRelation, index: number, validation: Vali
     const object = validation.objectMap.get(ref);
     if (object?.objectType !== 'path' || object.geometry.type !== 'segment') addIssue(context, ['relations', index, 'segments', refIndex], `${ref} debe ser un segmento.`);
   });
-  if (item.type === 'equal-angle') item.angles.forEach((ref, refIndex) => {
-    if (validation.objectMap.get(ref)?.objectType !== 'angle') addIssue(context, ['relations', index, 'angles', refIndex], `${ref} debe ser un ángulo.`);
-  });
+  if (item.type === 'equal-angle') {
+    item.angles.forEach((ref, refIndex) => {
+      if (validation.objectMap.get(ref)?.objectType !== 'angle') addIssue(context, ['relations', index, 'angles', refIndex], `${ref} debe ser un ángulo.`);
+    });
+    const [first, second] = item.angles.map(ref => validation.objectMap.get(ref));
+    if (first?.objectType === 'angle' && second?.objectType === 'angle' && first.sweep !== second.sweep) {
+      addIssue(context, ['relations', index, 'angles'], 'La igualdad de amplitudes necesita dos ángulos del mismo tipo.');
+    }
+  }
   if (item.type === 'inside-disk') {
     validation.requirePoint(item.point, ['relations', index, 'point']);
     if (typeof item.disk === 'string') {
@@ -459,6 +528,7 @@ export const diagramSpecV3Schema = z.object({
   const current = spec as DiagramSpecV3;
   validateUniqueIds(current, context);
   validatePublicIds(current, context);
+  validateConstructionCycles(current, context);
   const validation = createValidationIndex(current, context);
   const readableIds = new Set(current.objects.filter(object => (
     (object.objectType === 'path' && object.geometry.type === 'dimension')
@@ -473,6 +543,23 @@ export const diagramSpecV3Schema = z.object({
   }));
   current.steps.forEach((item, index) => [...item.visibleTargets, ...Object.keys(item.objectStates ?? {})].forEach(target => {
     if (!validation.objectMap.has(target)) addIssue(context, ['steps', index], `El paso ${item.id} referencia ${target}, que no existe.`);
+  }));
+  current.steps.forEach((item, index) => Object.entries(item.objectStates ?? {}).forEach(([objectId, state]) => {
+    const overlay = state.overlay;
+    if (!overlay) return;
+    const sources = [
+      ...(overlay.expression ? [overlay.expression] : []),
+      ...diagramTemplateExpressions(overlay.content, overlay.expression).map(entry => entry.expression),
+    ];
+    sources.forEach(source => {
+      try {
+        extractMathExpressionIdentifiers(source).forEach(identifier => {
+          if (!validation.objectMap.has(identifier.split('.')[0])) {
+            addIssue(context, ['steps', index, 'objectStates', objectId, 'overlay', 'expression'], `La expresión ${identifier} del paso ${item.id} no corresponde a un objeto.`);
+          }
+        });
+      } catch { /* El campo de expresión ya contiene el diagnóstico sintáctico. */ }
+    });
   }));
   current.relations.forEach((item, index) => validateRelation(item, index, validation, context));
 });

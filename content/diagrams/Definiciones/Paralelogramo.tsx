@@ -1285,24 +1285,31 @@ export const ParalelogramoSpec = createDiagramSpec(
       "variant": "panel",
       "content": {
         "text": "",
-        "rules": [
+        "blocks": [
           {
-            "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035))",
-            "text": "Cuadrado $\\\\$ 4 lados iguales · 4 ángulos rectos"
-          },
-          {
-            "when": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
-            "text": "Rectángulo $\\\\$ 4 ángulos rectos"
-          },
-          {
-            "when": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
-            "text": "Rombo $\\\\$ 4 lados iguales"
-          },
-          {
-            "when": "1",
-            "text": "Paralelogramo $\\\\$ 2 pares de lados opuestos paralelos"
+            "id": "clasificacion",
+            "text": "Paralelogramo $\\\\$ 2 pares de lados opuestos paralelos",
+            "rules": [
+              {
+                "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035))",
+                "text": "Cuadrado $\\\\$ 4 lados iguales · 4 ángulos rectos"
+              },
+              {
+                "when": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
+                "text": "Rectángulo $\\\\$ 4 ángulos rectos"
+              },
+              {
+                "when": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
+                "text": "Rombo $\\\\$ 4 lados iguales"
+              },
+              {
+                "when": "1",
+                "text": "Paralelogramo $\\\\$ 2 pares de lados opuestos paralelos"
+              }
+            ]
           }
-        ]
+        ],
+        "layout": "stack"
       },
       "anchor": {
         "type": "viewport",
@@ -1432,13 +1439,18 @@ export const ParalelogramoSpec = createDiagramSpec(
         "M": "M erdiko puntu komuna",
         "clasificacion": "Paralelogramoaren sailkapen dinamikoa"
       },
-      "rules": {
-        "clasificacion": [
-          "Karratua $\\\\$ 4 alde berdin · 4 angelu zuzen",
-          "Laukizuzena $\\\\$ 4 angelu zuzen",
-          "Erronboa $\\\\$ 4 alde berdin",
-          "Paralelogramoa $\\\\$ aurkako alde paraleloen 2 pare"
-        ]
+      "blocks": {
+        "clasificacion": {
+          "clasificacion": {
+            "text": "Paralelogramoa $\\\\$ aurkako alde paraleloen 2 pare",
+            "rules": [
+              "Karratua $\\\\$ 4 alde berdin · 4 angelu zuzen",
+              "Laukizuzena $\\\\$ 4 angelu zuzen",
+              "Erronboa $\\\\$ 4 alde berdin",
+              "Paralelogramoa $\\\\$ aurkako alde paraleloen 2 pare"
+            ]
+          }
+        }
       }
     },
     "en": {
@@ -1475,13 +1487,18 @@ export const ParalelogramoSpec = createDiagramSpec(
         "M": "Common midpoint M",
         "clasificacion": "Live classification of the parallelogram"
       },
-      "rules": {
-        "clasificacion": [
-          "Square $\\\\$ 4 equal sides · 4 right angles",
-          "Rectangle $\\\\$ 4 right angles",
-          "Rhombus $\\\\$ 4 equal sides",
-          "Parallelogram $\\\\$ 2 pairs of parallel opposite sides"
-        ]
+      "blocks": {
+        "clasificacion": {
+          "clasificacion": {
+            "text": "Parallelogram $\\\\$ 2 pairs of parallel opposite sides",
+            "rules": [
+              "Square $\\\\$ 4 equal sides · 4 right angles",
+              "Rectangle $\\\\$ 4 right angles",
+              "Rhombus $\\\\$ 4 equal sides",
+              "Parallelogram $\\\\$ 2 pairs of parallel opposite sides"
+            ]
+          }
+        }
       }
     }
   }

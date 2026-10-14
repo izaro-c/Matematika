@@ -1,9 +1,8 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import v2Fixture from '../fixtures/diagrams/diagram-spec-v2.json';
-import { migrateDiagramSpec } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import fixture from '../fixtures/diagrams/diagram-spec.json';
+import type { DiagramSpec } from '@/diagrams/public';
 import { MathProvider } from '@/lib/page-context/MathStoreContext';
 
 vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
@@ -16,10 +15,9 @@ import { Pitagoras, PitagorasSpec } from '../../content/diagrams/Teoremas/Pitago
 describe('DiagramRenderer shared runtime', () => {
   beforeEach(() => vi.clearAllMocks());
 
-  it('renders a pure V3 spec without the test harness projecting to V2 first', () => {
-    const v3 = migrateDiagramSpec(v2Fixture).spec;
+  it('renders a pure V3 spec', () => {
+    const v3 = (fixture as DiagramSpec);
     expect(v3.version).toBe(3);
-    expect(Object.prototype.propertyIsEnumerable.call(v3, 'points')).toBe(false);
     expect(() => render(
       <MathProvider>
         <DiagramRenderer spec={v3} mode="preview" viewportControls={false} />
@@ -33,7 +31,7 @@ describe('DiagramRenderer shared runtime', () => {
     const onViewportChange = vi.fn();
     render(
       <MathProvider>
-        <DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} mode="preview" onViewportChange={onViewportChange} />
+        <DiagramRenderer spec={(fixture as DiagramSpec)} mode="preview" onViewportChange={onViewportChange} />
       </MathProvider>,
     );
     expect(screen.getByTestId('math-board')).toBeTruthy();
@@ -65,12 +63,11 @@ describe('DiagramRenderer shared runtime', () => {
       ['A', 'canela'],
       ['B', 'pavo'],
     ]);
-    const pitagoras = toWorkingSceneV2(PitagorasSpec);
     const spec = {
-      ...pitagoras,
-      points: pitagoras.points.map(point => {
-        const color = movableColors.get(point.id);
-        return color ? { ...point, color } : point;
+      ...PitagorasSpec,
+      objects: PitagorasSpec.objects.map(object => {
+        const color = object.objectType === 'point' ? movableColors.get(object.id) : undefined;
+        return color ? { ...object, color } : object;
       }),
     };
 
@@ -88,7 +85,7 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
-    const baseSpec = migrateDiagramSpec(v2Fixture).spec;
+    const baseSpec = (fixture as DiagramSpec);
     const spec = {
       ...baseSpec,
       steps: [
@@ -109,7 +106,7 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('provides accessible, consistently sized viewport and fit buttons with centered icons', () => {
-    render(<DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} activeStepId="step1" />);
+    render(<DiagramRenderer spec={(fixture as DiagramSpec)} activeStepId="step1" />);
     const fitButton = screen.getByRole('button', { name: /Ajustar.*contenido/ });
     expect(fitButton).toBeTruthy();
     expect(fitButton.textContent).toContain('⌖');

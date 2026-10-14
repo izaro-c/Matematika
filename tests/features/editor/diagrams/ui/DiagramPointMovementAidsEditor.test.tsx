@@ -3,62 +3,19 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { DiagramPointMovementAidsEditor } from '../../../../../src/fixed-pages/editor/diagrams/ui/DiagramPointMovementAidsEditor';
 import type { VisualDiagramModel, VisualPoint } from '../../../../../src/fixed-pages/editor/diagrams/model/types';
+import { element, point as createPoint } from '../../../../../src/fixed-pages/editor/diagrams/model';
+import { sceneSpec } from '../../../../helpers/diagramSpec';
 
-const point = (overrides: Partial<VisualPoint> = {}): VisualPoint => ({
-  id: 'pA',
-  label: 'A',
-  x: 0,
-  y: 0,
-  showLabel: true,
-  fixed: false,
-  color: 'terracota',
-  constraint: 'free',
-  layerId: 'geometry',
-  order: 0,
-  visible: true,
-  locked: false,
-  groupIds: [],
-  selection: { selectable: true },
-  target: true,
-  ...overrides,
+const point = (interaction: VisualPoint['interaction'] = undefined): VisualPoint => ({
+  ...createPoint('pA', 'A', 0, 0),
+  ...(interaction ? { interaction } : {}),
 });
 
-const model = (p: VisualPoint): VisualDiagramModel => ({
-  version: '2.0',
-  renderer: 'matematika-diagram-renderer-v2',
+const model = (p: VisualPoint): VisualDiagramModel => sceneSpec({
   title: 'Snap style',
   componentId: 'snap-style',
-  category: 'Demos',
-  mode: 'simulation',
-  axis: false,
-  grid: false,
-  showLabels: true,
   viewport: { bounds: [-5, 5, 5, -5], home: [-5, 5, 5, -5], minZoom: 0.2, maxZoom: 12, padding: 0.16 },
-  layers: [{ id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false }],
-  groups: [],
-  points: [p],
-  elements: [
-    {
-      id: 'segAB',
-      label: 'AB',
-      kind: 'segment',
-      refs: ['pA', 'pB'],
-      color: 'carbon',
-      layerId: 'geometry',
-      order: 1,
-      visible: true,
-      locked: false,
-      groupIds: [],
-      selection: { selectable: true },
-      target: true,
-    },
-  ],
-  sliders: [],
-  steps: [],
-  constraints: [],
-  dependencies: [],
-  note: '',
-  extensions: {},
+  objects: [p, createPoint('pB', 'B', 1, 0), { ...element('segAB', 'AB', 'segment', ['pA', 'pB'], 'carbon'), order: 1 }],
 });
 
 describe('DiagramPointMovementAidsEditor style', () => {
@@ -68,7 +25,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
       <DiagramPointMovementAidsEditor
         model={model(p)}
         point={p}
-        onPointChange={vi.fn()}
+        onInteractionChange={vi.fn()}
         onAttractorsChange={vi.fn()}
       />,
     );
@@ -86,7 +43,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
       <DiagramPointMovementAidsEditor
         model={model(p)}
         point={p}
-        onPointChange={vi.fn()}
+        onInteractionChange={vi.fn()}
         onAttractorsChange={vi.fn()}
       />,
     );
@@ -105,7 +62,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
       <DiagramPointMovementAidsEditor
         model={model(p)}
         point={p}
-        onPointChange={vi.fn()}
+        onInteractionChange={vi.fn()}
         onAttractorsChange={vi.fn()}
       />,
     );
@@ -119,7 +76,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
       <DiagramPointMovementAidsEditor
         model={model(p)}
         point={p}
-        onPointChange={vi.fn()}
+        onInteractionChange={vi.fn()}
         onAttractorsChange={vi.fn()}
       />,
     );
@@ -135,7 +92,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
       <DiagramPointMovementAidsEditor
         model={model(p)}
         point={p}
-        onPointChange={vi.fn()}
+        onInteractionChange={vi.fn()}
         onAttractorsChange={vi.fn()}
       />,
     );

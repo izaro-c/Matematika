@@ -7,8 +7,10 @@ import {
   type AreaIntersectionComposite,
   updateStaticAreaPolygon,
 } from '@/diagrams/jsxgraph/MathFactory';
-import {type DiagramBounds, type DiagramElement, type DiagramSpecV2} from '@/diagrams/model'
-import {resolveAreaDisplayPolygons, resolveCurveAreaPolygons, resolvePointCoordinates, sampleCurveElement, type AreaPointResolver} from '@/diagrams/geometry';
+import {findObject, isPositionedPoint, objectConstructionReferences, pointPosition, type DiagramBounds, type DiagramObject, type DiagramSpec} from '@/diagrams/model'
+import {resolveAreaDisplayPolygons, resolveCurveAreaPolygons, resolvePointCoordinates, sampleCurveElement, type AreaPointResolver, type CurvePath} from '@/diagrams/geometry';
+
+type BoardScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport'>;
 import { liveVariables } from '@/diagrams/render/diagramRuntimeUtils';
 
 export function createLiveAreaPointResolver(
@@ -17,8 +19,8 @@ export function createLiveAreaPointResolver(
   return (model, id) => {
     const live = elements[id];
     if (live && typeof live.X === 'function') return { x: live.X(), y: live.Y() };
-    const point = model.points.find(candidate => candidate.id === id);
-    return point ? { x: point.x, y: point.y } : undefined;
+    const point = findObject(model, id);
+    return isPositionedPoint(point) ? pointPosition(point) : undefined;
   };
 }
 export function resolveBoardViewportBounds(
@@ -30,18 +32,18 @@ export function resolveBoardViewportBounds(
   return fallbackBounds;
 }
 function curveAreaSidePoint(
-  spec: DiagramSpecV2,
-  item: DiagramElement,
+  spec: BoardScene,
+  item: CurvePath,
   elements: Record<string, any>,
 ): ReturnType<typeof resolvePointCoordinates> {
-  const sideRef = item.refs.find(ref => Boolean(ref));
+  const sideRef = item.geometry.areaSide;
   if (!sideRef) return undefined;
   const live = elements[sideRef];
   if (live && typeof live.X === 'function') return { x: live.X(), y: live.Y() };
   return resolvePointCoordinates(spec, sideRef);
 }
 
-function resolveCurveAreaBounds(board: JXG.Board, spec: DiagramSpecV2): DiagramBounds {
+function resolveCurveAreaBounds(board: JXG.Board, spec: Pick<DiagramSpec, 'viewport'>): DiagramBounds {
   const bbox = board.getBoundingBox?.();
   if (bbox && bbox.length >= 4) {
     const [xMin, yMax, xMax, yMin] = bbox;
@@ -51,8 +53,8 @@ function resolveCurveAreaBounds(board: JXG.Board, spec: DiagramSpecV2): DiagramB
 }
 
 function curveAreaUpdateSignature(
-  spec: DiagramSpecV2,
-  item: DiagramElement,
+  spec: BoardScene,
+  item: CurvePath,
   elements: Record<string, any>,
   board: JXG.Board,
   variables: Record<string, number>,
@@ -62,20 +64,14 @@ function curveAreaUpdateSignature(
     side,
     bounds: resolveCurveAreaBounds(board, spec),
     variables,
-    areaFill: item.properties?.areaFill,
-    domain: item.properties?.domain,
-    samples: item.properties?.samples,
-    expression: item.properties?.expression,
-    xExpression: item.properties?.xExpression,
-    yExpression: item.properties?.yExpression,
-    refs: item.refs,
+    geometry: item.geometry,
   });
 }
 
 export function updateCurveAreaFills(
   composite: CurveAreaComposite,
-  spec: DiagramSpecV2,
-  item: DiagramElement,
+  spec: BoardScene,
+  item: CurvePath,
   elements: Record<string, any>,
   board: JXG.Board,
   variables: Record<string, number>,
@@ -100,8 +96,8 @@ export function updateCurveAreaFills(
 
 export function updateAreaIntersectionFills(
   composite: AreaIntersectionComposite,
-  spec: DiagramSpecV2,
-  item: DiagramElement,
+  spec: BoardScene,
+  item: DiagramObject,
   elements: Record<string, any>,
   board: JXG.Board,
 ): void {
@@ -111,15 +107,8 @@ export function updateAreaIntersectionFills(
   const bounds = resolveCurveAreaBounds(board, spec);
   const signature = JSON.stringify({
     bounds,
-    refs: item.refs,
-    elements: spec.elements.map(element => ({
-      id: element.id,
-      kind: element.kind,
-      refs: element.refs,
-      properties: element.properties,
-    })),
-    points: spec.points.map(point => ({ id: point.id, x: point.x, y: point.y })),
-    sliders: spec.sliders.map(slider => ({ id: slider.id, value: slider.value })),
+    refs: objectConstructionReferences(item),
+    objects: spec.objects,
   });
   if (areaState.lastSignature === signature) return;
   const polygons = resolveAreaDisplayPolygons(
@@ -137,8 +126,8 @@ export function updateAreaIntersectionFills(
 export function createCurveAreaElement(
   board: JXG.Board,
   elements: Record<string, any>,
-  item: DiagramElement,
-  spec: DiagramSpecV2,
+  item: CurvePath,
+  spec: BoardScene,
   curve: JXG.Curve,
   fillOptions: Record<string, unknown>,
   theme: ThemeColors,

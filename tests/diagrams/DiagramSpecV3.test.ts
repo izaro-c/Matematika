@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import fixture from '../fixtures/diagrams/diagram-spec-v2.json';
-import {migrateDiagramSpec,
+import fixture from '../fixtures/diagrams/diagram-spec.json';
+import {
+  diagramConstructionKinds,
+  objectConstructionReferences,
   parseDiagramSpecV3,
-  referenceSlotsForLegacyKind,
-  type DiagramElementKind,
+  referenceSlotsForKind,
   type DiagramSpecV3,
   type PointObject} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 
 function migrated(): DiagramSpecV3 {
-  return structuredClone(migrateDiagramSpec(fixture).spec);
+  return structuredClone(fixture) as DiagramSpecV3;
 }
 
 describe('DiagramSpec v3 semantic contract', () => {
@@ -29,8 +29,8 @@ describe('DiagramSpec v3 semantic contract', () => {
     const parsed = parseDiagramSpecV3(spec);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
-    const projected = toWorkingSceneV2(parsed.data);
-    expect(projected.elements.find(element => element.id === 'fromMidpoint')?.refs).toEqual(['midAB', 'pA']);
+    const fromMidpoint = parsed.data.objects.find(object => object.id === 'fromMidpoint')!;
+    expect(objectConstructionReferences(fromMidpoint)).toEqual(['midAB', 'pA']);
   });
 
   it('rejects incompatible reference capabilities and nonsensical properties', () => {
@@ -60,22 +60,13 @@ describe('DiagramSpec v3 semantic contract', () => {
     if (!parsed.success) expect(parsed.error.message).toContain('relación explícita de perpendicularidad');
   });
 
-  it('migrates deterministically and persists neither dependencies nor opaque extensions', () => {
-    const first = migrateDiagramSpec(fixture).spec;
-    const second = migrateDiagramSpec(fixture).spec;
-    expect(JSON.stringify(first)).toBe(JSON.stringify(second));
-    expect(JSON.stringify(first)).not.toContain('"dependencies"');
-    expect(JSON.stringify(first)).not.toContain('"extensions"');
-    expect(first.version).toBe(3);
+  it('persists neither dependencies nor opaque extensions', () => {
+    expect(JSON.stringify(fixture)).not.toContain('"dependencies"');
+    expect(JSON.stringify(fixture)).not.toContain('"extensions"');
+    expect(fixture.version).toBe(3);
   });
 
-  it('defines typed slots for every legacy variant during the compatibility window', () => {
-    const kinds: DiagramElementKind[] = [
-      'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc',
-      'intersection', 'midpoint', 'perpendicularFoot', 'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
-      'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement', 'grid',
-      'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula', 'infoPanel',
-    ];
-    kinds.forEach(kind => expect(referenceSlotsForLegacyKind(kind), kind).toBeDefined());
+  it('defines typed reference slots for every construction kind', () => {
+    diagramConstructionKinds.forEach(kind => expect(referenceSlotsForKind(kind).length, kind).toBeGreaterThan(0));
   });
 });

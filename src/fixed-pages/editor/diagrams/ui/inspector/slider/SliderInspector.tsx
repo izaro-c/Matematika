@@ -3,8 +3,9 @@ import { AccordionSection } from '../accordion';
 import { InspectorHeader } from '../WorkbenchInspectorHeader';
 import { PALETTE_TOKENS } from '../paletteTokens';
 import type { SliderPanelProps } from '../types';
-import type { DiagramControlAction, DiagramControlEasing, DiagramControlEffect } from '@/diagrams/model';
+import { omitKeys, type DiagramControlAction, type DiagramControlEasing, type DiagramControlEffect } from '@/diagrams/model';
 import { handleRenameId } from '../utils';
+import { modelSliders } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
 
 export const SliderInspector: React.FC<SliderPanelProps & {
@@ -23,11 +24,13 @@ export const SliderInspector: React.FC<SliderPanelProps & {
   const colorToken = PALETTE_TOKENS.find(c => c.id === slider.color) || PALETTE_TOKENS[5];
   const isButton = slider.variant === 'button';
   const action: DiagramControlAction = slider.action ?? defaultControlAction(slider);
-  const otherControls = model.sliders.filter(item => item.id !== slider.id);
+  const otherControls = modelSliders(model).filter(item => item.id !== slider.id);
   const updateAction = (update: Partial<DiagramControlAction>) => onUpdateSlider(slider.id, { action: { ...action, ...update } });
-  const setVariant = (variant: 'slider' | 'button') => onUpdateSlider(slider.id, variant === 'button'
-    ? { variant, action }
-    : { variant: undefined, action: undefined });
+  const setVariant = (variant: 'slider' | 'button') => onUpdateSlider(slider.id, current => {
+    if (variant === 'button') return { ...current, variant, action };
+    return { ...omitKeys(current, 'action'), variant };
+  });
+  const updateRange = (update: Partial<typeof slider.range>) => onUpdateSlider(slider.id, current => ({ ...current, range: { ...current.range, ...update } }));
   const effects = action.effects ?? [];
   const setEffects = (next: DiagramControlEffect[]) => updateAction({ effects: next.length > 0 ? next : undefined });
   const updateEffect = (index: number, update: Partial<DiagramControlEffect>) => setEffects(effects.map((effect, effectIndex) => {
@@ -86,9 +89,9 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               <button
                 key={variant}
                 type="button"
-                aria-pressed={(slider.variant ?? 'slider') === variant}
+                aria-pressed={slider.variant === variant}
                 onClick={() => setVariant(variant)}
-                className={`rounded-md px-2 py-1 text-xs font-bold transition-colors ${(slider.variant ?? 'slider') === variant ? 'bg-canela/15 text-canela' : 'text-carbon/60 hover:text-carbon'}`}
+                className={`rounded-md px-2 py-1 text-xs font-bold transition-colors ${slider.variant === variant ? 'bg-canela/15 text-canela' : 'text-carbon/60 hover:text-carbon'}`}
               >
                 {variant === 'slider' ? 'Deslizador' : 'Botón animado'}
               </button>
@@ -97,14 +100,14 @@ export const SliderInspector: React.FC<SliderPanelProps & {
           {isButton ? (
             <div className="space-y-3">
               <p className="text-[11px] leading-snug text-carbon/60">
-                Al pulsarlo, el valor viaja de {slider.min} a «Destino» en el tiempo indicado. Las expresiones que usan <span className="font-mono">{slider.id}</span> se recalculan en cada fotograma.
+                Al pulsarlo, el valor viaja de {slider.range.min} a «Destino» en el tiempo indicado. Las expresiones que usan <span className="font-mono">{slider.id}</span> se recalculan en cada fotograma.
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Destino</label>
                   <input
                     type="number"
-                    step={slider.step ?? 0.1}
+                    step={slider.range.step ?? 0.1}
                     value={action.to}
                     onChange={e => updateAction({ to: parseOptionalNumber(e.target.value, action.to) })}
                     className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
@@ -256,9 +259,9 @@ export const SliderInspector: React.FC<SliderPanelProps & {
             </div>
             <input
               type="range"
-              min={slider.min ?? -10}
-              max={slider.max ?? 10}
-              step={slider.step ?? 0.1}
+              min={slider.range.min ?? -10}
+              max={slider.range.max ?? 10}
+              step={slider.range.step ?? 0.1}
               value={slider.value ?? 0}
               onChange={e => onUpdateSlider(slider.id, { value: parseOptionalNumber(e.target.value, slider.value ?? 0) })}
               className="w-full cursor-pointer accent-canela"
@@ -272,8 +275,8 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               </label>
               <input
                 type="number"
-                value={slider.min ?? -5}
-                onChange={e => onUpdateSlider(slider.id, { min: parseOptionalNumber(e.target.value, slider.min ?? -5) })}
+                value={slider.range.min ?? -5}
+                onChange={e => updateRange({ min: parseOptionalNumber(e.target.value, slider.range.min ?? -5) })}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
@@ -283,8 +286,8 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               </label>
               <input
                 type="number"
-                value={slider.max ?? 5}
-                onChange={e => onUpdateSlider(slider.id, { max: parseOptionalNumber(e.target.value, slider.max ?? 5) })}
+                value={slider.range.max ?? 5}
+                onChange={e => updateRange({ max: parseOptionalNumber(e.target.value, slider.range.max ?? 5) })}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
@@ -295,8 +298,8 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               <input
                 type="number"
                 step="0.01"
-                value={slider.step ?? 0.1}
-                onChange={e => onUpdateSlider(slider.id, { step: parseOptionalNumber(e.target.value, slider.step ?? 0.1) })}
+                value={slider.range.step ?? 0.1}
+                onChange={e => updateRange({ step: parseOptionalNumber(e.target.value, slider.range.step ?? 0.1) })}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
@@ -321,5 +324,5 @@ export const SliderInspector: React.FC<SliderPanelProps & {
 };
 
 function defaultControlAction(slider: SliderPanelProps['slider']): DiagramControlAction {
-  return { to: slider.max, durationMs: 1200, easing: 'ease-in-out', behavior: 'toggle' };
+  return { to: slider.range.max, durationMs: 1200, easing: 'ease-in-out', behavior: 'toggle' };
 }

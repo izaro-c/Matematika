@@ -14,8 +14,27 @@ import {
 import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import { createDiagramButton, isDiagramButton } from '@/diagrams/render/elements/diagramButton';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
-import {DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
-import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
+import {
+  DEFAULT_RIGHT_ANGLE_RADIUS,
+  annotationAnchorParameter,
+  annotationAnchorRefs,
+  annotationViewportPosition,
+  evaluateMathExpression,
+  findObject,
+  isAnnotationObject,
+  isControlObject,
+  isPositionedPoint,
+  objectConstructionReferences,
+  objectDashed,
+  objectKind,
+  objectLabelVisible,
+  objectStyle,
+  pointPosition,
+  withPointPosition,
+  type DiagramBounds,
+  type DiagramSpec,
+} from '@/diagrams/model'
+import {createSceneConstructionPlan, createScenePlan, isCurveObject, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
 import {
   attachLabelSelection,
   attachSelection,
@@ -85,35 +104,32 @@ export {
 
 
 /** Punto → extremos del soporte `on`/glider (p. ej. D → [B, C] en rayo BC). */
-function supportParentsByPointId(spec: DiagramSpecV2): Map<string, readonly string[]> {
+function supportParentsByPointId(spec: DiagramSpec): Map<string, readonly string[]> {
   const parents = new Map<string, readonly string[]>();
-  spec.points.forEach(point => {
+  spec.objects.forEach(point => {
+    if (!isPositionedPoint(point)) return;
     const supportId = onSupportTargetId(spec, point);
     if (!supportId) return;
-    const support = spec.elements.find(element => element.id === supportId);
-    if (!support?.refs.length) return;
-    parents.set(point.id, support.refs);
+    const support = findObject(spec, supportId);
+    const refs = support && support.objectType !== 'point' ? objectConstructionReferences(support) : [];
+    if (!refs.length) return;
+    parents.set(point.id, refs);
   });
   return parents;
 }
 
-function pointLikeIdsFromSpec(spec: DiagramSpecV2): Set<string> {
-  return new Set([
-    ...spec.points.map(point => point.id),
-    ...spec.elements
-      .filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind))
-      .map(item => item.id),
-  ]);
+function pointLikeIdsFromSpec(spec: DiagramSpec): Set<string> {
+  return new Set(spec.objects.filter(item => item.objectType === 'point').map(item => item.id));
 }
 
 function installDiagramHitTesting(
-  spec: DiagramSpecV2,
+  spec: DiagramSpec,
   elements: Record<string, any>,
   plan: ReturnType<typeof createScenePlan>,
   getHoveredId?: () => string | null | undefined,
 ): void {
   const selectableIds = new Set(
-    [...spec.points, ...spec.elements, ...spec.sliders]
+    spec.objects
       .filter(item => item.selection.selectable)
       .map(item => item.id),
   );
@@ -322,31 +338,41 @@ type ResolvedDragCoords = Map<string, { x: number; y: number }>;
  * deslizar al re-proyectarse.
  */
 function buildLiveDragSpec(
-  spec: DiagramSpecV2,
+  spec: DiagramSpec,
   elements: Record<string, JXG.GeometryElement | undefined>,
   draggedPointId: string,
   resolvedCoords: ResolvedDragCoords,
-): DiagramSpecV2 {
+): DiagramSpec {
   return {
     ...spec,
-    points: spec.points.map(point => {
-      const rendered = elements[point.id] as JXG.Point | undefined;
-      if (point.id !== draggedPointId && onSupportTargetId(spec, point) && rendered) {
-        return { ...point, x: rendered.X(), y: rendered.Y() };
+    objects: spec.objects.map(object => {
+      if (isControlObject(object)) {
+        const rendered = elements[object.id] as JXG.Slider | undefined;
+        return rendered?.Value ? { ...object, value: rendered.Value() } : object;
       }
-      const resolved = resolvedCoords.get(point.id);
-      if (resolved) return { ...point, ...resolved };
-      return rendered ? { ...point, x: rendered.X(), y: rendered.Y() } : point;
-    }),
-    sliders: spec.sliders.map(slider => {
-      const rendered = elements[slider.id] as JXG.Slider | undefined;
-      return rendered?.Value ? { ...slider, value: rendered.Value() } : slider;
+      if (!isPositionedPoint(object)) return object;
+      const rendered = elements[object.id] as JXG.Point | undefined;
+      if (object.id !== draggedPointId && onSupportTargetId(spec, object) && rendered) {
+        return withPointPosition(object, { x: rendered.X(), y: rendered.Y() });
+      }
+      const resolved = resolvedCoords.get(object.id);
+      if (resolved) return withPointPosition(object, resolved);
+      return rendered ? withPointPosition(object, { x: rendered.X(), y: rendered.Y() }) : object;
     }),
   };
 }
 
+/** Posiciones de los puntos con posición propia de una escena resuelta. */
+function positionedCoordinates(spec: DiagramSpec): Array<{ id: string; x: number; y: number }> {
+  return spec.objects.flatMap(object => {
+    if (!isPositionedPoint(object)) return [];
+    const position = pointPosition(object)!;
+    return [{ id: object.id, x: position.x, y: position.y }];
+  });
+}
+
 export interface UseBoardLifecycleOptions {
-  spec: DiagramSpecV2;
+  spec: DiagramSpec;
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
   highlightedIds?: readonly string[];
@@ -423,7 +449,7 @@ export function useBoardLifecycle({
         const objects = board.getAllObjectsUnderMouse?.(event);
         if (!diagramPointerSelectionWasHandled(event) && Array.isArray(objects)) {
           const liveSpec = specRef.current;
-          const selectableIds = new Set([...liveSpec.points, ...liveSpec.elements, ...liveSpec.sliders]
+          const selectableIds = new Set(liveSpec.objects
             .filter(item => item.selection.selectable)
             .map(item => item.id));
           const pointerEvent = event as { target?: EventTarget | null; shiftKey?: boolean };
@@ -463,34 +489,38 @@ export function useBoardLifecycle({
       const sceneItem = entry.item;
       const directInteractionLocked = readOnly || entry.locked || !sceneItem.selection.selectable;
       const highlightable = sceneItem.selection.highlightable !== false;
-      const hoverColor = !highlightable || preservesOwnColorOnHighlight(sceneItem.style) ? theme[sceneItem.color] : theme.ocre;
+      const sceneStyle = objectStyle(sceneItem);
+      const hoverColor = !highlightable || preservesOwnColorOnHighlight(sceneStyle) ? theme[sceneItem.color] : theme.ocre;
       const pointLabelOptions = {
-        visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
-        ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
-        ...('constraint' in sceneItem
-          ? nativeLabelPlacementOptions(sceneItem.style?.labelPosition, sceneItem.style?.labelOffset)
+        visible: spec.showLabels !== false && objectLabelVisible(sceneItem) !== false,
+        ...(isPositionedPoint(sceneItem) && sceneStyle?.labelSize !== undefined ? { fontSize: sceneStyle.labelSize } : {}),
+        ...(isPositionedPoint(sceneItem)
+          ? nativeLabelPlacementOptions(sceneStyle?.labelPosition, sceneStyle?.labelOffset)
           : {}),
         highlightStrokeColor: hoverColor,
       };
-      if ('constraint' in sceneItem) {
-        const authoredPointSize = sceneItem.style?.pointSize ?? 4;
-        const authoredHighlightPointSize = sceneItem.style?.highlightPointSize ?? 6;
+      if (isPositionedPoint(sceneItem)) {
+        const position = pointPosition(sceneItem)!;
+        const derivedDefinition = sceneItem.definition.type === 'expression' ? sceneItem.definition : undefined;
+        const interaction = sceneItem.interaction;
+        const authoredPointSize = sceneStyle?.pointSize ?? 4;
+        const authoredHighlightPointSize = sceneStyle?.highlightPointSize ?? 6;
         const gliderTarget = onSupportTargetId(spec, sceneItem);
-        const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
+        const attractors = interaction?.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
         const attractionOptions = !directInteractionLocked
           ? {
             attractors,
-            attractorDistance: sceneItem.attractorDistance ?? 0.4,
-            snatchDistance: sceneItem.snatchDistance ?? 0.6,
+            attractorDistance: interaction?.attractorDistance ?? 0.4,
+            snatchDistance: interaction?.snatchDistance ?? 0.6,
           }
           : {};
-        const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
+        const item = derivedDefinition
           ? createPoint(board, [
             () => {
-              try { return evaluateMathExpression(sceneItem.xExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.x; }
+              try { return evaluateMathExpression(derivedDefinition.x, liveVariables(elements, spec)); } catch { return position.x; }
             },
             () => {
-              try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
+              try { return evaluateMathExpression(derivedDefinition.y, liveVariables(elements, spec)); } catch { return position.y; }
             },
           ], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
@@ -505,7 +535,7 @@ export function useBoardLifecycle({
             layer: itemLayerNumber(spec, sceneItem),
           }, 'point'), theme)
           : gliderTarget && elements[gliderTarget]
-          ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], withDiagramHoverTransition({
+          ? createGlider(board, [position.x, position.y, elements[gliderTarget]], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             size: authoredPointSize,
@@ -517,7 +547,7 @@ export function useBoardLifecycle({
             label: pointLabelOptions,
             layer: itemLayerNumber(spec, sceneItem),
           }, 'point'), theme)
-          : createPoint(board, [sceneItem.x, sceneItem.y], withDiagramHoverTransition({
+          : createPoint(board, [position.x, position.y], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             size: authoredPointSize,
@@ -529,14 +559,14 @@ export function useBoardLifecycle({
             label: pointLabelOptions,
             layer: itemLayerNumber(spec, sceneItem),
             ...attractionOptions,
-            ...(sceneItem.snapToGrid && !directInteractionLocked ? {
+            ...(interaction?.snapToGrid && !directInteractionLocked ? {
               snapToGrid: true,
-              snapSizeX: sceneItem.snapSize ?? 0.5,
-              snapSizeY: sceneItem.snapSize ?? 0.5,
+              snapSizeX: interaction.snapSize ?? 0.5,
+              snapSizeY: interaction.snapSize ?? 0.5,
             } : {}),
           }, 'point'), theme);
         elements[sceneItem.id] = item;
-        if (!directInteractionLocked && sceneItem.constraint !== 'derived') {
+        if (!directInteractionLocked && !derivedDefinition) {
           let enforcing = false;
           item.on('drag', () => {
             if (enforcing) return;
@@ -548,7 +578,8 @@ export function useBoardLifecycle({
             // JSXGraph (varios puntos arrastrados a la vez en el mismo gesto).
             const liveSpec = buildLiveDragSpec(spec, elements, sceneItem.id, resolvedDragCoordsRef);
             const nextSpec = withMovedPoint(liveSpec, sceneItem.id, item.X(), item.Y());
-            nextSpec.points.forEach(point => {
+            const nextPoints = positionedCoordinates(nextSpec);
+            nextPoints.forEach(point => {
               resolvedDragCoordsRef.set(point.id, { x: point.x, y: point.y });
             });
             enforcing = true;
@@ -564,7 +595,7 @@ export function useBoardLifecycle({
               // sobre ella, pudiendo redondearla de vuelta al lado equivocado de
               // un límite (p. ej. deshaciendo el recorte de sameSide).
               let anyMoved = false;
-              nextSpec.points.forEach(nextPoint => {
+              nextPoints.forEach(nextPoint => {
                 const renderedPoint = elements[nextPoint.id];
                 if (!renderedPoint) return;
                 if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
@@ -578,7 +609,7 @@ export function useBoardLifecycle({
             }
           });
         }
-        if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => {
+        if (!directInteractionLocked && !derivedDefinition) item.on('up', () => {
           resolvedDragCoordsRef.clear();
           const finalX = item.X();
           const finalY = item.Y();
@@ -587,7 +618,8 @@ export function useBoardLifecycle({
           if (released || releasedOthers) safeBoardUpdate(board);
           interactionCallbacksRef.current.onPointMove?.(sceneItem.id, finalX, finalY);
         });
-      } else if ('kind' in sceneItem) {
+      } else if (!isControlObject(sceneItem)) {
+        const annotation = isAnnotationObject(sceneItem) ? sceneItem : undefined;
         elements[sceneItem.id] = createElement(
           board,
           elements,
@@ -596,21 +628,21 @@ export function useBoardLifecycle({
           itemLayerNumber(spec, sceneItem),
           spec,
           mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
-          mode === 'editor' && !directInteractionLocked && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(sceneItem.kind),
+          mode === 'editor' && !directInteractionLocked && Boolean(annotation),
         );
-        if (!directInteractionLocked && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(sceneItem.kind)) {
+        if (!directInteractionLocked && annotation) {
           elements[sceneItem.id]?.on?.('up', () => {
             const rendered = elements[sceneItem.id];
             const x = rendered?.X?.();
             const y = rendered?.Y?.();
             if (!Number.isFinite(x) || !Number.isFinite(y)) return;
-            if (sceneItem.kind === 'infoPanel' && sceneItem.properties?.anchorMode === 'viewport') {
+            if (annotation.variant === 'panel' && annotationViewportPosition(annotation)) {
               interactionCallbacksRef.current.onAnnotationMove?.(sceneItem.id, {
                 viewportPosition: coordinatesToViewportPosition(board, [x, y], bounds),
               });
               return;
             }
-            const anchor = referencedLabelAnchor(sceneItem.refs[0], sceneItem.properties?.anchorParameter ?? 0.5, elements, spec);
+            const anchor = referencedLabelAnchor(annotationAnchorRefs(annotation)[0], annotationAnchorParameter(annotation) ?? 0.5, elements, spec);
             interactionCallbacksRef.current.onAnnotationMove?.(sceneItem.id, {
               textOffset: [x - anchor[0], y - anchor[1]],
             });
@@ -631,7 +663,8 @@ export function useBoardLifecycle({
                 if (isDiagramButton(control)) control.play(effect.from ? evaluate(effect.from) : undefined);
               } else if (isDiagramButton(control)) control.resetValue();
               else {
-                const initial = spec.sliders.find(slider => slider.id === effect.control)?.value;
+                const initialControl = findObject(spec, effect.control);
+                const initial = isControlObject(initialControl) ? initialControl.value : undefined;
                 if (initial !== undefined) control?.setValue?.(initial);
               }
               safeBoardUpdate(board);
@@ -643,9 +676,10 @@ export function useBoardLifecycle({
       } else {
         const maximum = sliderMaximum(sceneItem, elements, spec);
         const sliderWidth = sceneItem.width ?? 2.6;
-        elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + sliderWidth, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], withDiagramHoverTransition({
+        const [sliderX, sliderY] = sceneItem.position;
+        elements[sceneItem.id] = createSlider(board, [[sliderX, sliderY], [sliderX + sliderWidth, sliderY]], [sceneItem.range.min, Math.min(sceneItem.value, maximum), maximum], withDiagramHoverTransition({
           name: renderKatexTextToHtml(sceneItem.label),
-          snapWidth: sceneItem.step,
+          snapWidth: sceneItem.range.step,
           fillColor: theme[sceneItem.color],
           strokeColor: theme[sceneItem.color],
           highlightFillColor: hoverColor,
@@ -669,7 +703,7 @@ export function useBoardLifecycle({
         }
       }
       const element = elements[sceneItem.id];
-      const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
+      const keyboardAdjust = isPositionedPoint(sceneItem) && !directInteractionLocked && sceneItem.definition.type !== 'expression'
         ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
           if (key === 'Home' || key === 'End') return;
           releaseInactiveAttractions(spec, elements, sceneItem.id);
@@ -679,7 +713,8 @@ export function useBoardLifecycle({
           const requested = { x: element.X() + dx, y: element.Y() + dy };
           const liveSpec = buildLiveDragSpec(spec, elements, sceneItem.id, resolvedDragCoordsRef);
           const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
-          nextSpec.points.forEach(point => {
+          const nextPoints = positionedCoordinates(nextSpec);
+          nextPoints.forEach(point => {
             resolvedDragCoordsRef.set(point.id, { x: point.x, y: point.y });
           });
           const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
@@ -688,7 +723,7 @@ export function useBoardLifecycle({
             // disparar un board.update() por punto, reconciliar una sola vez,
             // y usar `setExactPointPosition` para que snapToGrid/attractToGrid
             // no redondeen la coordenada ya resuelta por las restricciones.
-            nextSpec.points.forEach(nextPoint => {
+            nextPoints.forEach(nextPoint => {
               const renderedPoint = elements[nextPoint.id];
               if (!renderedPoint) return;
               setExactPointPosition(renderedPoint, JXG.COORDS_BY_USER, [nextPoint.x, nextPoint.y]);
@@ -702,16 +737,16 @@ export function useBoardLifecycle({
           const node = element.rendNode as HTMLElement | undefined;
           node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
         }
-        : 'min' in sceneItem && !directInteractionLocked && sceneItem.variant !== 'button'
+        : isControlObject(sceneItem) && !directInteractionLocked && sceneItem.variant !== 'button'
           ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
-            const delta = sceneItem.step * (largeStep ? 10 : 1);
+            const delta = sceneItem.range.step * (largeStep ? 10 : 1);
             const current = element.Value?.() ?? sceneItem.value;
             const maximum = sliderMaximum(sceneItem, elements, spec);
             const next = key === 'Home'
-              ? sceneItem.min
+              ? sceneItem.range.min
               : key === 'End'
                 ? maximum
-                : Math.min(maximum, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
+                : Math.min(maximum, Math.max(sceneItem.range.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
             element.setValue?.(next);
             safeBoardUpdate(board);
             interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, next);
@@ -729,7 +764,7 @@ export function useBoardLifecycle({
         setTargetHighlight,
         keyboardAdjust,
       );
-      if ('min' in sceneItem && sceneItem.maxExpression) {
+      if (isControlObject(sceneItem) && sceneItem.range.maxExpression) {
         element.rendNode?.setAttribute('aria-valuemax', String(sliderMaximum(sceneItem, elements, spec)));
       }
       attachLabelSelection(
@@ -742,7 +777,8 @@ export function useBoardLifecycle({
       attachDiagramHoverHandlers(element, sceneItem, hoverController, requestSceneUpdate);
     });
 
-    spec.points.forEach(point => {
+    spec.objects.forEach(point => {
+      if (!isPositionedPoint(point)) return;
       const element = elements[point.id];
       if (!element) return;
       const directInteractionLocked = readOnly || point.locked || !point.selection.selectable;
@@ -752,10 +788,10 @@ export function useBoardLifecycle({
         }
         return;
       }
-      const attractors = point.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
+      const attractors = point.interaction?.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
       element.setAttribute({
-        attractorDistance: point.attractorDistance ?? 0.4,
-        snatchDistance: point.snatchDistance ?? 0.6,
+        attractorDistance: point.interaction?.attractorDistance ?? 0.4,
+        snatchDistance: point.interaction?.snatchDistance ?? 0.6,
       });
       if (element.visProp) {
         element.visProp.attractors = attractors;
@@ -793,7 +829,8 @@ export function useBoardLifecycle({
       pulseAmount: primaryPulseAmount,
     };
     const sceneStyle = entry.style;
-    const effectiveDashed = entry.stepDashed ?? ('dashed' in item ? Boolean(item.dashed) : false);
+    const kind = objectKind(item);
+    const effectiveDashed = entry.stepDashed ?? objectDashed(item);
     const opacity = externalActive || !sceneShouldDimOthers ? 1 : 0.28;
     const hoverOnly = hoverActive && !sceneHighlighted;
     const primaryHighlight = highlightedIdsRef.current.includes(item.id)
@@ -823,15 +860,15 @@ export function useBoardLifecycle({
       ? true
       : conditionAllows(item, sceneElements, spec);
     const visible = sceneVisible && conditionVisible
-      && (('kind' in item && item.kind === 'segmentExtension')
-        ? outsideSegmentExtension(sceneElements[item.refs[0]], sceneElements[item.refs[1]], sceneElements[item.refs[2]])
+      && ((item.objectType === 'path' && item.geometry.type === 'segment' && item.geometry.construction)
+        ? outsideSegmentExtension(sceneElements[item.geometry.points[0]], sceneElements[item.geometry.points[1]], sceneElements[item.geometry.construction.foot])
         : true)
-      && (('kind' in item && item.kind === 'intersection')
+      && (kind === 'intersection'
         ? intersectionBelongsToSupports(item, element, sceneElements, spec)
         : true);
     const base = {
       visible,
-      fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
+      fixed: isPositionedPoint(item) || isControlObject(item) ? entry.locked || !item.selection.selectable : true,
     };
     const hoverColor = item.selection.highlightable === false || preservesOwnColorOnHighlight(sceneStyle) ? sceneTheme[entry.color] : sceneTheme.ocre;
     const selectable = item.selection.selectable !== false;
@@ -844,11 +881,12 @@ export function useBoardLifecycle({
       border.rendNode?.setAttribute('data-diagram-selectable', String(selectable));
       if (border.rendNode) border.rendNode.style.cursor = selectable && mode === 'editor' ? 'pointer' : '';
     });
-    const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind));
+    const defaultShowLabel = item.objectType === 'point';
+    const ownLabelVisible = objectLabelVisible(item);
     const nativeLabelVisible = visible && spec.showLabels !== false
       && (entry.stepShowLabel !== undefined
         ? entry.stepShowLabel
-        : ('showLabel' in item && item.showLabel !== undefined ? item.showLabel : defaultShowLabel));
+        : (ownLabelVisible !== undefined ? ownLabelVisible : defaultShowLabel));
     const dimmed = opacity < 1;
     const transitionKey = diagramVisualTransitionKey({
       hoverActive,
@@ -877,14 +915,14 @@ export function useBoardLifecycle({
         element.__matematikaStepLabel = entry.label;
       }
     }
-    if ('constraint' in item || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
+    if (item.objectType === 'point') {
       commitElementVisuals(element, base, {
         size: resolveStepEmphasisPointSize(sceneStyle, emphasisState),
         fillColor: color,
         strokeColor: color,
         fillOpacity: resolveStepEmphasisPointFillOpacity(opacity, emphasisState),
       }, shouldAnimate);
-    } else if ('min' in item && isDiagramButton(element)) {
+    } else if (item.objectType === 'control' && isDiagramButton(element)) {
       if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
         const animated = typeof options.durationMs === 'number' && options.durationMs > 0;
         if (animated) element.animateTo(entry.stepValue);
@@ -899,12 +937,12 @@ export function useBoardLifecycle({
         element.__matematikaVisible = base.visible;
       }
       if (element.rendNode) element.rendNode.style.opacity = String(opacity);
-    } else if ('min' in item) {
+    } else if (item.objectType === 'control') {
       const maximum = sliderMaximum(item, sceneElements, spec);
       if (element.__matematikaMaximum !== maximum) {
         const current = element.Value?.() ?? item.value;
         element.setMax?.(maximum);
-        element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
+        element.setValue?.(Math.min(maximum, Math.max(item.range.min, current)));
         element.__matematikaMaximum = maximum;
       }
       const currentStepDuration = options.durationMs;
@@ -915,7 +953,7 @@ export function useBoardLifecycle({
         if (shouldSmoothAnimate) {
           const p1 = element.point1;
           const p2 = element.point2;
-          const min = typeof element._smin === 'number' ? element._smin : item.min;
+          const min = typeof element._smin === 'number' ? element._smin : item.range.min;
           const max = typeof element._smax === 'number' ? element._smax : maximum;
           const ratio = max > min ? Math.max(0, Math.min(1, (targetVal - min) / (max - min))) : 0;
           const targetX = p1.X() + ratio * (p2.X() - p1.X());
@@ -938,7 +976,7 @@ export function useBoardLifecycle({
         secondary: 2.6,
       });
       commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, sliderLine, shouldAnimate);
-    } else if ((item.kind === 'functionCurve' || item.kind === 'parametricCurve') && curveActsAsArea(item)) {
+    } else if (curveActsAsArea(item)) {
       const composite = element as CurveAreaComposite;
       const fills = composite.__matematikaCurveArea?.fills
         ?? (Array.isArray(composite.elements)
@@ -969,7 +1007,7 @@ export function useBoardLifecycle({
         secondary: 2.6,
       });
       commitElementVisuals(curve, { ...base, dash: effectiveDashed ? 2 : 0 }, lineAttrs, shouldAnimate);
-    } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition' || item.kind === 'halfPlane' || item.kind === 'areaIntersection') {
+    } else if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'halfPlane' || kind === 'areaIntersection') {
       const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
         fill: { normal: 0.1, highlight: 0.24 },
         stroke: { normal: 1.5, primary: 2.4, highlight: 3.2, secondary: 2 },
@@ -990,8 +1028,8 @@ export function useBoardLifecycle({
           strokeColor: dashedBorder.strokeColor as string | undefined,
         },
       );
-    } else if (item.kind === 'angle' || item.kind === 'nonReflexAngle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
-      const isPolygonAngle = item.kind === 'rightAngle' || item.kind === 'perpendicularMark';
+    } else if (item.objectType === 'angle') {
+      const isPolygonAngle = item.marker === 'square';
       if (isPolygonAngle) {
         const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
           fill: { normal: 0.1, highlight: 0.28 },
@@ -1037,7 +1075,7 @@ export function useBoardLifecycle({
           shouldAnimate,
         );
       }
-    } else if (item.kind === 'measureTicks') {
+    } else if (item.objectType === 'mark' && item.variant === 'graduation') {
       const tickHeights = resolveStepEmphasisTickHeights(sceneStyle, emphasisState, sceneStyle?.markHeight ?? 10);
       const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
       commitElementVisuals(
@@ -1055,8 +1093,8 @@ export function useBoardLifecycle({
         },
         shouldAnimate,
       );
-    } else if (item.kind === 'congruenceMark' || item.kind === 'parallelMark') {
-      const defaultHeight = item.style?.markHeight ?? (item.kind === 'parallelMark' ? 0.42 : 0.32);
+    } else if (item.objectType === 'mark') {
+      const defaultHeight = objectStyle(item)?.markHeight ?? (item.variant === 'parallel' ? 0.42 : 0.32);
       syncMarkLayoutEmphasis(element, sceneStyle, emphasisState, defaultHeight);
       const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
       commitElementVisuals(
@@ -1069,7 +1107,7 @@ export function useBoardLifecycle({
         },
         shouldAnimate,
       );
-    } else if (item.kind === 'dimensionLine') {
+    } else if (kind === 'dimensionLine') {
       const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
       commitElementVisuals(
         element,
@@ -1080,7 +1118,7 @@ export function useBoardLifecycle({
         },
         shouldAnimate,
       );
-    } else if (item.kind === 'grid') {
+    } else if (kind === 'grid') {
       const gridLine = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
         normal: 0.8,
         primary: 2,
@@ -1088,9 +1126,9 @@ export function useBoardLifecycle({
         secondary: 1.2,
       });
       commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, gridLine, shouldAnimate);
-    } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
+    } else if (item.objectType === 'annotation') {
       const liftedIntoHeader = mode === 'runtime' && allHeaderItemIds.has(item.id);
-      const isAuthoredLabelHidden = item.kind === 'label' && spec.showLabels === false;
+      const isAuthoredLabelHidden = item.variant === 'label' && spec.showLabels === false;
       const sceneOpacity = resolveStepEmphasisSceneOpacity(emphasisState, opacity);
       const annotationVisible = entry.stepShowLabel !== undefined
         ? entry.stepShowLabel
@@ -1102,7 +1140,7 @@ export function useBoardLifecycle({
         { opacity: sceneOpacity, ...(fontSize !== undefined ? { fontSize } : {}) },
         shouldAnimate,
       );
-      if (item.kind !== 'label') {
+      if (item.variant !== 'label') {
         const textContent = annotationTextHtml(item, sceneElements, spec);
         if (element.__matematikaLastText !== textContent) {
           if (typeof element.setText === 'function') {
@@ -1111,7 +1149,7 @@ export function useBoardLifecycle({
           element.__matematikaLastText = textContent;
         }
       }
-    } else if (item.kind === 'circle') {
+    } else if (kind === 'circle') {
       const polygonAttrs = buildPolygonEmphasisAttributes(sceneTheme[entry.color], sceneStyle, emphasisState, opacity, {
         fill: { normal: 0, highlight: 0.2 },
         stroke: { normal: 2, primary: 3.2, highlight: 3.6, secondary: 2.6 },
@@ -1174,7 +1212,7 @@ export function useBoardLifecycle({
 
     const storeStep = spec.steps.find(step => isStep(step.id))?.id;
     const effectiveStep = effectiveStepId ?? storeStep;
-    const items = [...spec.points, ...spec.elements, ...spec.sliders];
+    const items = spec.objects;
     const highlightSources = [...items, ...spec.groups];
     const propHighlights = highlightSources
       .filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id))
@@ -1242,8 +1280,8 @@ export function useBoardLifecycle({
     const nextLiveVariables = liveVariables(elements, spec);
     const signature = JSON.stringify(nextLiveVariables);
     if (signature !== liveVariablesSignatureRef.current) {
-      spec.elements.forEach(sceneItem => {
-        if (sceneItem.kind !== 'functionCurve' && sceneItem.kind !== 'parametricCurve') return;
+      spec.objects.forEach(sceneItem => {
+        if (!isCurveObject(sceneItem)) return;
         const rendered = elements[sceneItem.id];
         if (!rendered) return;
         const samples = sampleCurveElement(sceneItem, nextLiveVariables);
@@ -1257,16 +1295,15 @@ export function useBoardLifecycle({
       setLiveSceneVariables(nextLiveVariables);
     }
 
-    spec.elements.forEach(sceneItem => {
-      if (sceneItem.kind !== 'functionCurve' && sceneItem.kind !== 'parametricCurve') return;
+    spec.objects.forEach(sceneItem => {
       if (!curveActsAsArea(sceneItem)) return;
       const rendered = elements[sceneItem.id] as CurveAreaComposite;
       if (!rendered) return;
       updateCurveAreaFills(rendered, spec, sceneItem, elements, _board, nextLiveVariables);
     });
 
-    spec.elements.forEach(sceneItem => {
-      if (sceneItem.kind !== 'areaIntersection') return;
+    spec.objects.forEach(sceneItem => {
+      if (objectKind(sceneItem) !== 'areaIntersection') return;
       const rendered = elements[sceneItem.id] as AreaIntersectionComposite;
       if (!rendered?.__matematikaAreaIntersection) return;
       updateAreaIntersectionFills(rendered, spec, sceneItem, elements, _board);

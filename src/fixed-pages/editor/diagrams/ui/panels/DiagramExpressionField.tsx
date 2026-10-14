@@ -95,7 +95,6 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
     }
   }, [model]);
   const variableGroups = useMemo(() => {
-    const sceneItems = [...model.points, ...model.elements, ...model.sliders];
     const searchTerms = normalizeSearch(variableSearch.trim()).split(/\s+/).filter(Boolean);
     const grouped = new Map<string, Array<{ variable: string; label: string }>>();
     const candidates = [
@@ -104,7 +103,7 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
     ];
     candidates.forEach(variable => {
       const root = variable.split('.')[0];
-      const item = sceneItems.find(candidate => candidate.id === root);
+      const item = model.objects.find(candidate => candidate.id === root);
       let group = 'Otras variables';
       if (variable === parameter) group = 'Variable de la curva';
       else if (item) group = `${item.label} — ${item.id}`;
@@ -114,7 +113,7 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
       grouped.set(group, [...(grouped.get(group) ?? []), { variable, label }]);
     });
     return [...grouped.entries()].map(([group, options]) => ({ group, options }));
-  }, [model.elements, model.points, model.sliders, parameter, variableSearch, variables]);
+  }, [model.objects, parameter, variableSearch, variables]);
   const availableVariableCount = variableGroups.reduce((total, group) => total + group.options.length, 0);
 
   const validation = useMemo(() => {

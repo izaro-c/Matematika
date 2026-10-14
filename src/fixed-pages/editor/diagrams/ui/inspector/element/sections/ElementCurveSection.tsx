@@ -1,15 +1,49 @@
 import React from 'react';
+import { isCurveObject, type CurvePath } from '@/diagrams';
 import type { ElementPanelProps } from '../../types';
 import { parseOptionalNumber } from '../../../workbenchSelection';
+import { modelPoints } from '@/fixed-pages/editor/diagrams/model';
+
+type CurveGeometryPatch = Partial<{
+  expression: string;
+  x: string;
+  y: string;
+  domain: [number, number];
+  areaFill: 'none' | 'interior' | 'half-plane';
+  areaSide: string | undefined;
+}>;
+
+/** Aplica un parche a la geometría de una curva; las claves ajenas a su tipo se ignoran. */
+function withCurveGeometry(curve: CurvePath, patch: CurveGeometryPatch): CurvePath {
+  const geometry = curve.geometry;
+  const { areaSide, ...rest } = patch;
+  const next = { ...geometry } as Record<string, unknown>;
+  Object.entries(rest).forEach(([key, value]) => {
+    if (geometry.type === 'function' && (key === 'x' || key === 'y')) return;
+    if (geometry.type === 'parametric' && key === 'expression') return;
+    next[key] = value;
+  });
+  if ('areaSide' in patch) {
+    if (areaSide) next.areaSide = areaSide;
+    else delete next.areaSide;
+  }
+  return { ...curve, geometry: next as CurvePath['geometry'] };
+}
 
 /** Propiedades: expression, xExpression, yExpression, domain, areaFill, refs[0] para semiplano */
 export const ElementCurveSection: React.FC<ElementPanelProps> = ({
   model,
   element,
   onUpdateElement,
-}) => (
+}) => {
+  if (!isCurveObject(element)) return null;
+  const geometry = element.geometry;
+  const update = (patch: CurveGeometryPatch) => onUpdateElement(element.id, current => (
+    isCurveObject(current) ? withCurveGeometry(current, patch) : current
+  ));
+  return (
   <div className="space-y-3">
-    {element.kind === 'functionCurve' && (
+    {geometry.type === 'function' && (
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
           Expresión <code className="font-mono text-[10px] text-canela">f(x)</code>
@@ -17,11 +51,9 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
         <input
           type="text"
           aria-label="Expresión $f(x)$"
-          value={element.properties?.expression || ''}
+          value={geometry.type === 'function' ? geometry.expression : ''}
           onChange={e =>
-            onUpdateElement(element.id, {
-              properties: { ...(element.properties || {}), expression: e.target.value },
-            })
+            update({ expression: e.target.value })
           }
           placeholder="ej. sin(x) o x^2 - 2*x + 1"
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
@@ -29,7 +61,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       </div>
     )}
 
-    {element.kind === 'parametricCurve' && (
+    {geometry.type === 'parametric' && (
       <div className="grid grid-cols-2 gap-2.5">
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
@@ -38,11 +70,9 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           <input
             type="text"
             aria-label="Expresión $x(t)$"
-            value={element.properties?.xExpression || ''}
+            value={geometry.type === 'parametric' ? geometry.x : ''}
             onChange={e =>
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), xExpression: e.target.value },
-              })
+              update({ x: e.target.value })
             }
             placeholder="ej. cos(t)"
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
@@ -55,11 +85,9 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           <input
             type="text"
             aria-label="Expresión $y(t)$"
-            value={element.properties?.yExpression || ''}
+            value={geometry.type === 'parametric' ? geometry.y : ''}
             onChange={e =>
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), yExpression: e.target.value },
-              })
+              update({ y: e.target.value })
             }
             placeholder="ej. sin(t)"
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
@@ -77,13 +105,11 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           type="number"
           step="0.5"
           aria-label="Mínimo Dominio"
-          value={element.properties?.domain?.[0] ?? -5}
+          value={geometry.domain[0]}
           onChange={e => {
             const minVal = parseOptionalNumber(e.target.value, -5);
-            const maxVal = element.properties?.domain?.[1] ?? 5;
-            onUpdateElement(element.id, {
-              properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
-            });
+            const maxVal = geometry.domain[1];
+            update({ domain: [minVal, maxVal] });
           }}
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
         />
@@ -96,13 +122,11 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           type="number"
           step="0.5"
           aria-label="Máximo Dominio"
-          value={element.properties?.domain?.[1] ?? 5}
+          value={geometry.domain[1]}
           onChange={e => {
-            const minVal = element.properties?.domain?.[0] ?? -5;
+            const minVal = geometry.domain[0];
             const maxVal = parseOptionalNumber(e.target.value, 5);
-            onUpdateElement(element.id, {
-              properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
-            });
+            update({ domain: [minVal, maxVal] });
           }}
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
         />
@@ -113,14 +137,9 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Relleno de Área bajo la Curva</label>
         <select
-          value={element.properties?.areaFill || 'none'}
+          value={geometry.areaFill || 'none'}
           onChange={e =>
-            onUpdateElement(element.id, {
-              properties: {
-                ...(element.properties || {}),
-                areaFill: e.target.value as 'none' | 'interior' | 'half-plane',
-              },
-            })
+            update({ areaFill: e.target.value as 'none' | 'interior' | 'half-plane', })
           }
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
         >
@@ -130,19 +149,16 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
         </select>
       </div>
 
-      {element.properties?.areaFill === 'half-plane' && (
+      {geometry.areaFill === 'half-plane' && (
         <div className="p-2.5 rounded-lg border border-canela/20 bg-canela/5 space-y-1">
           <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">Punto de Referencia del Semiplano</label>
           <select
-            value={element.refs[0] || ''}
-            onChange={e => {
-              const nextRefs = [e.target.value, ...element.refs.slice(1)];
-              onUpdateElement(element.id, { refs: nextRefs });
-            }}
+            value={geometry.areaSide || ''}
+            onChange={e => update({ areaSide: e.target.value || undefined })}
             className="w-full rounded-md border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
           >
             <option value="">-- Seleccionar punto --</option>
-            {model.points.map(p => (
+            {modelPoints(model).map(p => (
               <option key={p.id} value={p.id}>
                 Punto {p.label || p.id} ({p.id})
               </option>
@@ -152,4 +168,5 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       )}
     </div>
   </div>
-);
+  );
+};

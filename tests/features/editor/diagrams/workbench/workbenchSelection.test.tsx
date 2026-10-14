@@ -10,35 +10,23 @@ import {
   toggleAdditiveSelection,
 } from '@/fixed-pages/editor/diagrams/ui/workbenchSelection';
 import type { VisualDiagramModel, VisualStep } from '@/fixed-pages/editor/diagrams/model/types';
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/diagrams';
+import { element, modelPoints, point } from '@/fixed-pages/editor/diagrams/model';
+import { constrained, pointById, relationFor, sceneSpec } from '../../../../helpers/diagramSpec';
 
 function miniModel(overrides: Partial<VisualDiagramModel> = {}): VisualDiagramModel {
-  return {
-    version: DIAGRAM_SPEC_V2_VERSION,
-    renderer: DIAGRAM_RENDERER_V2_ID,
+  return sceneSpec({
     title: 'Test',
     componentId: 'Test',
-    category: 'demostracion',
-    mode: 'simulation',
-    axis: false,
-    grid: false,
-    showLabels: true,
-    viewport: { bounds: [-5, 5, 5, -5], home: [-5, 5, 5, -5] },
+    viewport: { bounds: [-5, 5, 5, -5], home: [-5, 5, 5, -5], minZoom: 0.2, maxZoom: 12, padding: 0.16 },
     layers: [{ id: 'geometry', label: 'G', order: 0, visible: true, locked: false }],
-    groups: [],
-    points: [
-      { id: 'pA', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-      { id: 'pB', label: 'B', x: 1, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
+    objects: [
+      point('pA', 'A', 0, 0, false, 'carbon'),
+      point('pB', 'B', 1, 0, false, 'carbon'),
+      element('segAB', 'AB', 'segment', ['pA', 'pB'], 'pavo'),
     ],
-    elements: [
-      { id: 'segAB', label: 'AB', kind: 'segment', refs: ['pA', 'pB'], color: 'pavo', groupIds: [] },
-    ],
-    sliders: [],
-    steps: [{ id: 'initial', label: 'Inicio', visibleTargets: ['pA', 'pB', 'segAB'] }],
-    constraints: [],
-    dependencies: [],
+    steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: ['pA', 'pB', 'segAB'] }],
     ...overrides,
-  };
+  });
 }
 
 describe('workingSceneSelection helpers', () => {
@@ -66,32 +54,20 @@ describe('workingSceneSelection helpers', () => {
     expect(shown.objectStates?.pA?.visible).toBe(true);
   });
 
-  it('repairBrokenReferences drops dead deps and constraintIds', () => {
+  it('repairBrokenReferences drops dangling objects and relations', () => {
     const model = miniModel({
-      elements: [
-        { id: 'segAB', label: 'AB', kind: 'segment', refs: ['pA', 'missing'], color: 'pavo', groupIds: [] },
+      objects: [
+        constrained(point('pA', 'A', 0, 0, false, 'carbon'), ['cBad']),
+        point('pB', 'B', 1, 0, false, 'carbon'),
+        element('segAB', 'AB', 'segment', ['pA', 'missing'], 'pavo'),
+        element('segBA', 'BA', 'segment', ['pB', 'pA'], 'pavo'),
       ],
-      constraints: [{ id: 'cBad', label: 'Bad', kind: 'on', refs: ['pA', 'gone'], enabled: true }],
-      points: [
-        {
-          id: 'pA', label: 'A', x: 0, y: 0, color: 'carbon', constraint: 'constrained',
-          constraintIds: ['cBad'], groupIds: [], target: true,
-        },
-        { id: 'pB', label: 'B', x: 1, y: 0, color: 'carbon', constraint: 'free', groupIds: [], target: true },
-      ],
-      dependencies: [
-        { sourceId: 'gone', targetId: 'pA', relation: 'construction' },
-        { sourceId: 'pB', targetId: 'pA', relation: 'constraint', constraintId: 'cBad' },
-        { sourceId: 'pB', targetId: 'segAB', relation: 'construction' },
-      ],
+      relations: [relationFor('on', 'cBad', 'Bad', ['pA', 'gone'])],
     });
     const next = repairBrokenReferences(model);
-    expect(next.elements[0].refs).toEqual(['pA']);
-    expect(next.constraints).toEqual([]);
-    expect(next.points.find(p => p.id === 'pA')?.constraintIds).toEqual([]);
-    expect(next.dependencies).toEqual([
-      { sourceId: 'pB', targetId: 'segAB', relation: 'construction' },
-    ]);
+    expect(next.objects.map(object => object.id)).toEqual(['pA', 'pB', 'segBA']);
+    expect(next.relations).toEqual([]);
+    expect(pointById(next, 'pA').mobility).toEqual({ type: 'free' });
   });
 
   it('parseOptionalNumber preserves zero', () => {
@@ -107,6 +83,6 @@ describe('workingSceneSelection helpers', () => {
 
   it('template still boots for sandbox', () => {
     const t = createTemplateModel('triangulo-deformable', 'T', 'demostración');
-    expect(t.points.length).toBeGreaterThan(0);
+    expect(modelPoints(t).length).toBeGreaterThan(0);
   });
 });

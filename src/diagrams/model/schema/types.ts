@@ -3,7 +3,7 @@ import type { DiagramPaletteColorId } from '@/design';
 export const DEFAULT_ANGLE_RADIUS = 0.55;
 export const DEFAULT_RIGHT_ANGLE_RADIUS = 0.45;
 
-/** Viewport por defecto al migrar specs legacy. */
+/** Límites de zoom y margen por defecto del viewport. */
 export const DEFAULT_VIEWPORT_MIN_ZOOM = 0.2;
 export const DEFAULT_VIEWPORT_MAX_ZOOM = 12;
 export const DEFAULT_VIEWPORT_PADDING = 0.16;
@@ -11,10 +11,6 @@ export const DEFAULT_VIEWPORT_PADDING = 0.16;
 export const DEFAULT_LAYER_ID = 'geometry';
 export const DEFAULT_CURVE_SAMPLES = 64;
 
-/** @deprecated Solo para leer fuentes históricas. */
-export const DIAGRAM_SPEC_V2_VERSION = 2 as const;
-/** @deprecated Solo para leer fuentes históricas. */
-export const DIAGRAM_RENDERER_V2_ID = 'matematika-diagram-renderer-v2' as const;
 export const DIAGRAM_SPEC_VERSION = 3 as const;
 export const DIAGRAM_RENDERER_ID = 'matematika-diagram-renderer-v3' as const;
 
@@ -23,43 +19,6 @@ export type DiagramBounds = [number, number, number, number];
 /** Alineado con pigmentos de `shared/design` (sin lienzo). */
 export type DiagramColorToken = DiagramPaletteColorId;
 
-export type DiagramElementKind =
-  | 'segment'
-  | 'line'
-  | 'ray'
-  | 'polygon'
-  | 'circle'
-  | 'arc'
-  | 'functionCurve'
-  | 'parametricCurve'
-  | 'poincareGeodesic'
-  | 'poincareArc'
-  | 'intersection'
-  | 'midpoint'
-  | 'perpendicularFoot'
-  | 'segmentExtension'
-  | 'perpendicular'
-  | 'parallel'
-  | 'angleBisector'
-  | 'angle'
-  | 'nonReflexAngle'
-  | 'rightAngle'
-  | 'congruenceMark'
-  | 'parallelMark'
-  | 'measureTicks'
-  | 'perpendicularMark'
-  | 'dimensionLine'
-  | 'measurement'
-  | 'grid'
-  | 'areaDecomposition'
-  | 'halfPlane'
-  | 'areaIntersection'
-  | 'text'
-  | 'label'
-  | 'formula'
-  | 'infoPanel';
-
-export type DiagramPointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'derived' | 'constrained';
 export type DiagramMode = 'simulation' | 'diagram' | 'inline';
 
 export interface DiagramTextRule {
@@ -107,94 +66,8 @@ export interface DiagramHeaderConfiguration {
   readings: DiagramHeaderReading[];
 }
 
-export interface DiagramElementProperties {
-  expression?: string;
-  xExpression?: string;
-  yExpression?: string;
-  parameter?: string;
-  domain?: [number, number];
-  samples?: number;
-  unit?: string;
-  precision?: number;
-  offset?: number;
-  markCount?: number;
-  /** Distancia entre graduaciones repetidas a lo largo de un segmento. */
-  tickDistance?: number;
-  /** Distancia reactiva entre graduaciones, calculada a partir de la escena. */
-  tickDistanceExpression?: string;
-  /** Subdivisiones menores entre dos graduaciones principales. */
-  minorTickCount?: number;
-  /** Relleno de área asociado a una curva muestreada. */
-  areaFill?: 'none' | 'interior' | 'half-plane';
-  rows?: number;
-  columns?: number;
-  title?: string;
-  /** Subtítulo de un panel informativo (cursiva bajo el título). */
-  subtitle?: string;
-  /** Define si una anotación sigue un objeto geométrico o una posición estable del viewport. */
-  anchorMode?: 'reference' | 'viewport';
-  /** Posición normalizada [x, y] desde la esquina superior izquierda del viewport. */
-  viewportPosition?: [number, number];
-  /** Posición normalizada [0, 1] de una etiqueta a lo largo del objeto referenciado. */
-  anchorParameter?: number;
-  clockwise?: boolean;
-  /** Oculta la intersección cuando cae fuera de un segmento o semirrecta referenciado. */
-  restrictToSupports?: boolean;
-  visibleWhen?: string;
-  textRules?: DiagramTextRule[];
-  /** Bloques reactivos independientes dentro de un único panel informativo. */
-  infoPanelBlocks?: DiagramInfoPanelBlock[];
-  /** Una columna prioriza lectura secuencial; dos columnas compactan paneles anchos. */
-  infoPanelLayout?: 'stack' | 'columns';
-}
-
-export type DiagramConstraintKind =
-  | 'fixed'
-  | 'horizontal'
-  | 'vertical'
-  | 'coincident'
-  | 'on'
-  | 'distance'
-  | 'equalLength'
-  | 'equalAngle'
-  | 'midpoint'
-  | 'perpendicular'
-  | 'parallel'
-  | 'insideDisk'
-  | 'sameSide'
-  | 'insideArea'
-  | 'reflection'
-  | 'expression';
-
 /** Pertinencia a un área: interior cerrado o frontera topológica. */
 export type AreaMembership = 'interior' | 'boundary';
-
-export interface DiagramConstraint {
-  id: string;
-  label: string;
-  kind: DiagramConstraintKind;
-  refs: string[];
-  expression?: string;
-  value?: number;
-  /** Solo para `insideArea`: interior (por defecto) o perímetro/frontera. */
-  areaMembership?: AreaMembership;
-  /**
-   * Solo para `sameSide`: signo del producto vectorial cross(A→B, A→P) calculado
-   * en el momento de crear la restricción. Al persistirlo, el semiplano es
-   * invariante ante movimientos posteriores de los puntos de frontera (refs[1], refs[2]).
-   * Cuando falta (specs antiguas), `applySameSideConstraint` lo recalcula desde
-   * la posición base del punto como fallback.
-   */
-  side?: 1 | -1;
-  enabled: boolean;
-}
-
-export interface DiagramDependency {
-  sourceId: string;
-  targetId: string;
-  relation: 'construction' | 'expression' | 'constraint';
-  constraintId?: string;
-}
 
 export interface DiagramSelectionMetadata {
   selectable: boolean;
@@ -230,77 +103,6 @@ export interface DiagramVisualStyle {
   highlightVisible?: boolean;
   /** Conserva el color semántico del objeto cuando recibe énfasis desde MDX. */
   preserveColorOnHighlight?: boolean;
-}
-
-export interface DiagramSceneItemBase {
-  id: string;
-  label: string;
-  color: DiagramColorToken;
-  layerId: string;
-  order: number;
-  visible: boolean;
-  /** Condición declarativa de visibilidad compartida por todas las familias. */
-  visibleWhen?: string;
-  locked: boolean;
-  groupIds: string[];
-  selection: DiagramSelectionMetadata;
-  /** Indica si el objeto se publica como target de InteractiveElement/MathStore. */
-  target: boolean;
-  /** ID público estable. Permite renombrar el objeto interno sin romper MDX. */
-  targetId?: string;
-  style?: DiagramVisualStyle;
-  extensions?: Record<string, unknown>;
-}
-
-export interface DiagramPoint extends DiagramSceneItemBase {
-  x: number;
-  y: number;
-  /** Conserva el nombre semántico del punto, pero permite ocultar su etiqueta nativa. */
-  showLabel?: boolean;
-  fixed: boolean;
-  constraint: DiagramPointConstraint;
-  gliderTarget?: string;
-  dependencies?: string[];
-  xExpression?: string;
-  yExpression?: string;
-  constraintIds?: string[];
-  /** Activa el ajuste a la cuadrícula al arrastrar un punto móvil, incluidas las combinaciones de restricciones. */
-  snapToGrid?: boolean;
-  /** Tamaño de celda de la cuadrícula de ajuste, en unidades del sistema de coordenadas. Por defecto 0.5. */
-  snapSize?: number;
-  /** Objetos geométricos ordenados que atraen temporalmente al punto durante su arrastre. */
-  attractorIds?: string[];
-  /** Distancia, en unidades del tablero, a partir de la que comienza la atracción. */
-  attractorDistance?: number;
-  /** Distancia necesaria para separarse del atractor durante el mismo arrastre. */
-  snatchDistance?: number;
-}
-
-export interface DiagramElement extends DiagramSceneItemBase {
-  kind: DiagramElementKind;
-  refs: string[];
-  dashed?: boolean;
-  text?: string;
-  properties?: DiagramElementProperties;
-  /** Permite ocultar la etiqueta nativa sin eliminar el nombre semántico del elemento. */
-  showLabel?: boolean;
-}
-
-export interface DiagramSlider extends DiagramSceneItemBase {
-  x: number;
-  y: number;
-  min: number;
-  max: number;
-  /** Límite superior reactivo; `max` se conserva como fallback editable. */
-  maxExpression?: string;
-  value: number;
-  step: number;
-  /** Longitud o anchura visual del slider en unidades del sistema de coordenadas (por defecto 2.6). */
-  width?: number;
-  /** Representación del control: deslizador (por defecto) o botón que anima su valor. */
-  variant?: DiagramControlVariant;
-  /** Animación que dispara un control de tipo botón; obligatoria cuando `variant` es `button`. */
-  action?: DiagramControlAction;
 }
 
 export type DiagramControlVariant = 'slider' | 'button';
@@ -455,37 +257,6 @@ export interface DiagramTranslation {
   /** Bloques de paneles informativos por id de objeto y id de bloque. */
   blocks?: Record<string, Record<string, DiagramPanelBlockTranslation>>;
 }
-
-export interface DiagramSpecV2 {
-  version: typeof DIAGRAM_SPEC_V2_VERSION;
-  renderer: typeof DIAGRAM_RENDERER_V2_ID;
-  title: string;
-  componentId: string;
-  category: string;
-  mode: DiagramMode;
-  axis: boolean;
-  grid: boolean;
-  /** Permite ocultar en conjunto las etiquetas sin eliminar sus objetos editables. */
-  showLabels?: boolean;
-  /** Controla la visibilidad del título y subtítulo en la cabecera. */
-  showHeader?: boolean;
-  /** Configuración explícita de las lecturas situadas bajo el título. */
-  header?: DiagramHeaderConfiguration;
-  viewport: DiagramViewport;
-  layers: DiagramLayer[];
-  groups: DiagramGroup[];
-  points: DiagramPoint[];
-  elements: DiagramElement[];
-  sliders: DiagramSlider[];
-  steps: DiagramStep[];
-  constraints?: DiagramConstraint[];
-  dependencies?: DiagramDependency[];
-  note: string;
-  extensions: Record<string, unknown>;
-  translations?: Record<string, DiagramTranslation>;
-}
-
-export type DiagramSceneItem = DiagramPoint | DiagramElement | DiagramSlider;
 
 export interface DiagramSceneState {
   activeStepId?: string;

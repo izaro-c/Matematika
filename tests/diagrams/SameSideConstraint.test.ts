@@ -9,39 +9,27 @@
  * JSXGraph) antes de invocar `withMovedPoint`.
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
-import { materializeSameSideConstraints, withMovedPoint } from '@/diagrams/geometry/layout/scene';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { point, withPointMode } from '../../src/fixed-pages/editor/diagrams/model';
+import { materializeSameSideRelations, withMovedPoint } from '@/diagrams/geometry/layout/scene';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
 import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
+import { positionOf, relationFor, sceneSpec } from '../helpers/diagramSpec';
 
 function sameSideModel(side?: 1 | -1): VisualDiagramModel {
-  return {
-    version: 2,
-    renderer: 'matematika-diagram-renderer-v2',
+  return sceneSpec({
     title: 'Semiplano (test)',
     componentId: 'sameside-test',
-    category: 'Demos',
-    mode: 'simulation',
-    axis: false,
-    grid: false,
     viewport: { bounds: [-6, 6, 6, -6], home: [-6, 6, 6, -6], minZoom: 0.5, maxZoom: 4, padding: 0.08 },
-    layers: [{ id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false }],
-    groups: [],
-    points: [
-      { ...point('pA', 'A', 0, 2), constraintIds: ['sameA'] },
+    objects: [
+      withPointMode(point('pA', 'A', 0, 2), 'constrained', { relationIds: ['sameA'] }),
       point('pB', 'B', -2, -2),
       point('pC', 'C', 2, -2),
     ],
-    elements: [],
-    sliders: [],
     steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: ['pA', 'pB', 'pC'], durationMs: 0 }],
-    constraints: [
-      diagramConstraint('sameA', 'A no cruza la recta BC', 'sameSide', ['pA', 'pB', 'pC'], side !== undefined ? { side } : {}),
+    relations: [
+      relationFor('sameSide', 'sameA', 'A no cruza la recta BC', ['pA', 'pB', 'pC'], [], side !== undefined ? { side } : {}),
     ],
-    note: '',
-    extensions: {},
-  };
+  });
 }
 
 /**
@@ -64,14 +52,14 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
   it('recorta correctamente cuando se invoca de forma aislada sobre la posición confirmada anterior', () => {
     const model = sameSideModel();
     const next = withMovedPoint(model, 'pA', 0, -5);
-    const moved = next.points.find(item => item.id === 'pA')!;
+    const moved = positionOf(next, 'pA');
     expect(moved.y).toBeGreaterThan(-2);
   });
 
   it('impide que el punto cruce la recta en un único fotograma reproduciendo la construcción real de liveSpec', () => {
     const model = sameSideModel();
     const next = simulateDragFrame(model, 'pA', 0, -5);
-    const moved = next.points.find(item => item.id === 'pA')!;
+    const moved = positionOf(next, 'pA');
     expect(moved.y).toBeGreaterThan(-2);
   });
 
@@ -82,14 +70,14 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
       return [0, 2 - t * 7];
     });
     const final = simulateDragGesture(model, 'pA', path);
-    const finalA = final.points.find(item => item.id === 'pA')!;
+    const finalA = positionOf(final, 'pA');
     expect(finalA.y).toBeGreaterThan(-2 - 1e-6);
   });
 
   it('permite moverse libremente dentro del mismo semiplano', () => {
     const model = sameSideModel();
     const next = simulateDragFrame(model, 'pA', 3, 4);
-    const moved = next.points.find(item => item.id === 'pA')!;
+    const moved = positionOf(next, 'pA');
     expect(moved.x).toBeCloseTo(3, 5);
     expect(moved.y).toBeCloseTo(4, 5);
   });
@@ -104,7 +92,7 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
     const model = sameSideModel(1);
     // Mover B al otro lado del eje; la recta BC rota significativamente
     const after = simulateDragFrame(model, 'pB', -2, 4);
-    const A = after.points.find(p => p.id === 'pA')!;
+    const A = positionOf(after, 'pA');
     // A (0,2) sigue siendo accesible: no debe ser proyectado ni flipear
     expect(A.y).toBeCloseTo(2, 4);
   });
@@ -114,7 +102,7 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
     const model = sameSideModel(1);
     // Mover C; la dirección de la recta cambia notablemente
     const after = simulateDragFrame(model, 'pC', 2, 4);
-    const A = after.points.find(p => p.id === 'pA')!;
+    const A = positionOf(after, 'pA');
     expect(A.y).toBeCloseTo(2, 4);
   });
 
@@ -124,7 +112,7 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
     const model = sameSideModel(1);
     const after1 = simulateDragFrame(model, 'pB', 2, 2);
     const after2 = simulateDragFrame(after1, 'pC', -2, 2);
-    const A = after2.points.find(p => p.id === 'pA')!;
+    const A = positionOf(after2, 'pA');
     // La nueva recta pasa por y=2, por lo que A queda sobre la frontera
     // (proyectado + offset submilimétrico hacia side=1). Sin side persistido,
     // A flipearía al semiplano opuesto (y << 0). Con side persistido, A
@@ -138,7 +126,7 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
     // siendo contenido; el bug solo aparece al mover también la frontera.
     const model = sameSideModel(); // sin side
     const next = simulateDragFrame(model, 'pA', 0, -5);
-    const A = next.points.find(p => p.id === 'pA')!;
+    const A = positionOf(next, 'pA');
     expect(A.y).toBeGreaterThan(-2);
   });
 
@@ -182,30 +170,29 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
       steps: [],
       note: '',
     };
-    // La proyección v3 -> v2 debe permanecer libre de cálculo: `side` solo se
-    // materializa cuando `materializeSameSideConstraints` lo necesita, para
-    // que `generateDiagramSource` pueda reproducir el TSX byte a byte.
-    const v2 = toWorkingSceneV2(v3Spec);
-    const projectedSameA = v2.constraints.find(constraint => constraint.id === 'sameA');
-    expect(projectedSameA?.side).toBeUndefined();
+    // La escena persistida no calcula `side`: solo se materializa cuando el
+    // motor lo necesita, para que `generateDiagramSource` reproduzca el TSX.
+    const sameA = v3Spec.relations.find(relation => relation.id === 'sameA');
+    expect(sameA?.type === 'same-half-plane' && sameA.side).toBeUndefined();
 
-    const materialized = materializeSameSideConstraints(v2);
-    const materializedSameA = materialized.constraints.find(constraint => constraint.id === 'sameA');
-    expect(materializedSameA?.side).toBe(1);
+    const materialized = materializeSameSideRelations(v3Spec);
+    const materializedSameA = materialized.relations.find(relation => relation.id === 'sameA');
+    expect(materializedSameA?.type === 'same-half-plane' && materializedSameA.side).toBe(1);
   });
 
   it('empuja el punto restringido cuando la frontera gira tras materializar side', () => {
-    const model = materializeSameSideConstraints({
+    const model = materializeSameSideRelations({
       ...sameSideModel(),
-      points: [
-        { ...point('pA', 'A', 0, 0), constraint: 'constrained', constraintIds: ['sameA'] },
+      objects: [
+        withPointMode(point('pA', 'A', 0, 0), 'constrained', { relationIds: ['sameA'] }),
         point('pB', 'B', -2, -2),
         point('pC', 'C', 2, -2),
       ],
     });
-    expect(model.constraints?.[0]?.side).toBe(1);
+    const first = model.relations[0];
+    expect(first?.type === 'same-half-plane' && first.side).toBe(1);
     const after = simulateDragFrame(model, 'pB', -2, 4);
-    const A = after.points.find(p => p.id === 'pA')!;
+    const A = positionOf(after, 'pA');
     expect(A.y).toBeGreaterThan(0);
   });
 });

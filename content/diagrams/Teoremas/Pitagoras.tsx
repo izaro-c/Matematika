@@ -796,8 +796,15 @@ export const PitagorasSpec = createDiagramSpec(
       "objectType": "annotation",
       "variant": "panel",
       "content": {
-        "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
-        "unit": "u²"
+        "text": "",
+        "blocks": [
+          {
+            "id": "identidad",
+            "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
+            "unit": "u²"
+          }
+        ],
+        "layout": "stack"
       },
       "anchor": {
         "type": "viewport",

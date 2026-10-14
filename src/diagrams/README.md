@@ -8,7 +8,7 @@
 
 | Folder | Role |
 |---|---|
-| `model/` | Contract: types, Zod schemas, migrations, expressions, semantics |
+| `model/` | Contract: types, Zod schema (DiagramSpec v3), object queries, expressions, semantics |
 | `geometry/` | Pure scene math: coordinates, curves, areas, layout/viewport |
 | `jsxgraph/` | Low-level JSXGraph adapters (`MathBoard`, `MathFactory`) |
 | `render/` | Paint + lifecycle (`DiagramRenderer`, board hooks) |

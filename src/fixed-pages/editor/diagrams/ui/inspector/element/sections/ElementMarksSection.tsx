@@ -19,6 +19,10 @@ import {
 } from '../../elementSections';
 import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 import { parseOptionalNumber } from '../../../workbenchSelection';
+import { objectStyle, withObjectStylePatch } from '@/diagrams';
+import { setting, settingPatch, stylePatch } from '../../elementSettings';
+import { elementKind } from '@/fixed-pages/editor/diagrams/model';
+
 
 /** Propiedades: congruence/parallel marks, dimension line, measurement, markCount, markHeight, tickDistance, minorTickCount */
 export const ElementMarksSection: React.FC<ElementPanelProps> = ({
@@ -27,21 +31,22 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
   onUpdateModel,
 }) => {
-  const cap = elementInspectorCapabilities(element.kind);
-  const dimLine = element.kind === 'segment' ? dimensionLineForSegment(model, element.id) : undefined;
-  const meas = element.kind === 'segment' ? measurementForSegment(model, element.id) : undefined;
+  const kind = elementKind(element);
+  const cap = elementInspectorCapabilities(kind);
+  const dimLine = kind === 'segment' ? dimensionLineForSegment(model, element.id) : undefined;
+  const meas = kind === 'segment' ? measurementForSegment(model, element.id) : undefined;
 
   return (
     <div className="space-y-3">
-      {showsSegmentMarks(element.kind) && (
+      {showsSegmentMarks(kind) && (
         <>
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
-              Marcas de Congruencia ({congruenceMarkForSegment(model, element.id)?.properties?.markCount ?? 0})
+              Marcas de Congruencia ({(setting(congruenceMarkForSegment(model, element.id), 'markCount') ?? 0)})
             </label>
             <div className="grid grid-cols-5 gap-1.5">
               {[0, 1, 2, 3, 4].map(cnt => {
-                const currentCount = congruenceMarkForSegment(model, element.id)?.properties?.markCount ?? 0;
+                const currentCount = (setting(congruenceMarkForSegment(model, element.id), 'markCount') ?? 0);
                 return (
                   <button
                     key={cnt}
@@ -67,11 +72,11 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
 
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
-              Marcas de Paralelismo ({parallelMarkForSegment(model, element.id)?.properties?.markCount ?? 0})
+              Marcas de Paralelismo ({(setting(parallelMarkForSegment(model, element.id), 'markCount') ?? 0)})
             </label>
             <div className="grid grid-cols-4 gap-1.5">
               {[0, 1, 2, 3].map(cnt => {
-                const currentCount = parallelMarkForSegment(model, element.id)?.properties?.markCount ?? 0;
+                const currentCount = (setting(parallelMarkForSegment(model, element.id), 'markCount') ?? 0);
                 return (
                   <button
                     key={cnt}
@@ -120,11 +125,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         type="number"
                         step="0.05"
                         aria-label="Distancia de cota"
-                        value={dimLine.properties?.offset ?? 0.4}
+                        value={setting(dimLine, 'offset') ?? 0.4}
                         onChange={e =>
-                          onUpdateElement(dimLine.id, {
-                            properties: { ...(dimLine.properties || {}), offset: parseOptionalNumber(e.target.value, 0.4) },
-                          })
+                          onUpdateElement(dimLine.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.4)))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -136,11 +139,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         min="0"
                         max="12"
                         aria-label="Precisión de cota"
-                        value={dimLine.properties?.precision ?? 2}
+                        value={setting(dimLine, 'precision') ?? 2}
                         onChange={e =>
-                          onUpdateElement(dimLine.id, {
-                            properties: { ...(dimLine.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
-                          })
+                          onUpdateElement(dimLine.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -153,11 +154,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         type="text"
                         placeholder="ej. cm"
                         aria-label="Unidad de cota"
-                        value={dimLine.properties?.unit ?? ''}
+                        value={setting(dimLine, 'unit') ?? ''}
                         onChange={e =>
-                          onUpdateElement(dimLine.id, {
-                            properties: { ...(dimLine.properties || {}), unit: e.target.value },
-                          })
+                          onUpdateElement(dimLine.id, settingPatch('unit', e.target.value))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -170,14 +169,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         max="72"
                         step="1"
                         aria-label="Tamaño de cota"
-                        value={dimLine.style?.labelSize ?? 14}
+                        value={objectStyle(dimLine)?.labelSize ?? 14}
                         onChange={e =>
-                          onUpdateElement(dimLine.id, {
-                            style: {
-                              ...(dimLine.style || {}),
-                              labelSize: parseOptionalNumber(e.target.value, 14),
-                            },
-                          })
+                          onUpdateElement(dimLine.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -213,11 +207,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         min="0"
                         max="1"
                         aria-label="Posición de medida"
-                        value={meas.properties?.anchorParameter ?? 0.5}
+                        value={setting(meas, 'anchorParameter') ?? 0.5}
                         onChange={e =>
-                          onUpdateElement(meas.id, {
-                            properties: { ...(meas.properties || {}), anchorParameter: parseOptionalNumber(e.target.value, 0.5) },
-                          })
+                          onUpdateElement(meas.id, settingPatch('anchorParameter', parseOptionalNumber(e.target.value, 0.5)))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -229,11 +221,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         min="0"
                         max="12"
                         aria-label="Precisión de medida"
-                        value={meas.properties?.precision ?? 2}
+                        value={setting(meas, 'precision') ?? 2}
                         onChange={e =>
-                          onUpdateElement(meas.id, {
-                            properties: { ...(meas.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
-                          })
+                          onUpdateElement(meas.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
                         }
                         className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
@@ -244,11 +234,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     <input
                       type="text"
                       aria-label="Unidad de medida"
-                      value={meas.properties?.unit ?? 'cm'}
+                      value={setting(meas, 'unit') ?? 'cm'}
                       onChange={e =>
-                        onUpdateElement(meas.id, {
-                          properties: { ...(meas.properties || {}), unit: e.target.value },
-                        })
+                        onUpdateElement(meas.id, settingPatch('unit', e.target.value))
                       }
                       className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                     />
@@ -260,7 +248,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         </>
       )}
 
-      {showsDimensionProps(element.kind) && (
+      {showsDimensionProps(kind) && (
         <div className="space-y-2.5">
           <div className="grid grid-cols-2 gap-2.5">
             <div>
@@ -271,11 +259,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 type="number"
                 step="0.05"
                 aria-label="Distancia u offset de cota"
-                value={element.properties?.offset ?? 0.35}
+                value={setting(element, 'offset') ?? 0.35}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), offset: parseOptionalNumber(e.target.value, 0.35) },
-                  })
+                  onUpdateElement(element.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.35)))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -289,11 +275,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 min="0"
                 max="12"
                 aria-label="Precisión decimal"
-                value={element.properties?.precision ?? 2}
+                value={setting(element, 'precision') ?? 2}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
-                  })
+                  onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -307,11 +291,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
               <input
                 type="text"
                 aria-label="Unidad de cota"
-                value={element.properties?.unit ?? ''}
+                value={setting(element, 'unit') ?? ''}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), unit: e.target.value },
-                  })
+                  onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
                 placeholder="ej. cm, m, °"
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
@@ -327,14 +309,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 max="72"
                 step="1"
                 aria-label="Tamaño de cota"
-                value={element.style?.labelSize ?? 14}
+                value={objectStyle(element)?.labelSize ?? 14}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    style: {
-                      ...(element.style || {}),
-                      labelSize: parseOptionalNumber(e.target.value, 14),
-                    },
-                  })
+                  onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -343,7 +320,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         </div>
       )}
 
-      {showsMeasurementProps(element.kind) && (
+      {showsMeasurementProps(kind) && (
         <div className="space-y-2.5">
           <div className="grid grid-cols-3 gap-2">
             <div>
@@ -356,11 +333,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 min="0"
                 max="1"
                 aria-label="Posición a lo largo del objeto padre"
-                value={element.properties?.anchorParameter ?? 0.5}
+                value={setting(element, 'anchorParameter') ?? 0.5}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), anchorParameter: parseOptionalNumber(e.target.value, 0.5) },
-                  })
+                  onUpdateElement(element.id, settingPatch('anchorParameter', parseOptionalNumber(e.target.value, 0.5)))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -372,11 +347,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
               <input
                 type="text"
                 aria-label="Unidad de medida"
-                value={element.properties?.unit ?? 'cm'}
+                value={setting(element, 'unit') ?? 'cm'}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), unit: e.target.value },
-                  })
+                  onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -391,14 +364,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 max="72"
                 step="1"
                 aria-label="Tamaño de medida"
-                value={element.style?.labelSize ?? 16}
+                value={objectStyle(element)?.labelSize ?? 16}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    style: {
-                      ...(element.style || {}),
-                      labelSize: parseOptionalNumber(e.target.value, 16),
-                    },
-                  })
+                  onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 16), }))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -413,17 +381,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 type="number"
                 step="0.05"
                 aria-label="Desplazamiento horizontal"
-                value={element.style?.textOffset?.[0] ?? 0.25}
+                value={objectStyle(element)?.textOffset?.[0] ?? 0.25}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    style: {
-                      ...(element.style || {}),
-                      textOffset: [
+                  onUpdateElement(element.id, stylePatch({ textOffset: [
                         parseOptionalNumber(e.target.value, 0.25),
-                        element.style?.textOffset?.[1] ?? 0.35,
-                      ],
-                    },
-                  })
+                        objectStyle(element)?.textOffset?.[1] ?? 0.35,
+                      ], }))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -436,17 +399,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 type="number"
                 step="0.05"
                 aria-label="Desplazamiento vertical"
-                value={element.style?.textOffset?.[1] ?? 0.35}
+                value={objectStyle(element)?.textOffset?.[1] ?? 0.35}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    style: {
-                      ...(element.style || {}),
-                      textOffset: [
-                        element.style?.textOffset?.[0] ?? 0.25,
+                  onUpdateElement(element.id, stylePatch({ textOffset: [
+                        objectStyle(element)?.textOffset?.[0] ?? 0.25,
                         parseOptionalNumber(e.target.value, 0.35),
-                      ],
-                    },
-                  })
+                      ], }))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -455,7 +413,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         </div>
       )}
 
-      {showsDirectMarkCount(element.kind) && (
+      {showsDirectMarkCount(kind) && (
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
             Número de Marcas
@@ -465,11 +423,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             min="1"
             max="12"
             aria-label="Número de Marcas"
-            value={element.properties?.markCount ?? 1}
+            value={setting(element, 'markCount') ?? 1}
             onChange={e =>
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), markCount: parseOptionalNumber(e.target.value, 1) },
-              })
+              onUpdateElement(element.id, settingPatch('markCount', parseOptionalNumber(e.target.value, 1)))
             }
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
@@ -487,19 +443,17 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             min="0"
             max="100"
             aria-label="Tamaño / Longitud Marca"
-            value={element.style?.markHeight ?? 0.32}
+            value={objectStyle(element)?.markHeight ?? 0.32}
             onChange={e => {
               const val = parseOptionalNumber(e.target.value, 0.32);
-              onUpdateElement(element.id, {
-                style: { ...(element.style || {}), markHeight: val },
-              });
+              onUpdateElement(element.id, current => withObjectStylePatch(current, { markHeight: val }));
             }}
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
         </div>
       )}
 
-      {showsMeasureTicksProps(element.kind) && (
+      {showsMeasureTicksProps(kind) && (
         <div className="space-y-2.5 pt-2 border-t border-carbon/10">
           <div className="grid grid-cols-2 gap-2.5">
             <div>
@@ -511,11 +465,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 step="0.1"
                 min="0.1"
                 max="100"
-                value={element.properties?.tickDistance ?? 2}
+                value={setting(element, 'tickDistance') ?? 2}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), tickDistance: parseOptionalNumber(e.target.value, 2) },
-                  })
+                  onUpdateElement(element.id, settingPatch('tickDistance', parseOptionalNumber(e.target.value, 2)))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
@@ -528,11 +480,9 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 type="number"
                 min="0"
                 max="10"
-                value={element.properties?.minorTickCount ?? 4}
+                value={setting(element, 'minorTickCount') ?? 4}
                 onChange={e =>
-                  onUpdateElement(element.id, {
-                    properties: { ...(element.properties || {}), minorTickCount: parseOptionalNumber(e.target.value, 0) },
-                  })
+                  onUpdateElement(element.id, settingPatch('minorTickCount', parseOptionalNumber(e.target.value, 0)))
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />

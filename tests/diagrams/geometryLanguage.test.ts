@@ -12,12 +12,17 @@ import {
   evaluateMathExpression,
   expressionVariables,
   extractMathExpressionIdentifiers,
-  parseDiagramSpecV2,
+  objectKind,
+  parseDiagramSpecV3,
   parseMathExpression,
   resolvePointCoordinates,
   withMovedPoint,
+  type AngleObject,
+  type DiagramSpec,
 } from '@/diagrams/public';
+import { element, point, withPointMode } from '@/fixed-pages/editor/diagrams/model';
 import { Congruence1Spec } from '../../content/diagrams/Axiomas/Congruence1';
+import { findById, positionOf, relationFor } from '../helpers/diagramSpec';
 
 const fixtures = [
   pointsFixture,
@@ -28,104 +33,62 @@ const fixtures = [
   measurementsFixture,
   areasFixture,
   annotationsFixture,
-];
+] as unknown as DiagramSpec[];
 
-function modelWithIntersection() {
-  const model = structuredClone(primitivesFixture);
-  model.elements.push({
-    ...model.elements[1],
-    id: 'lineOC',
-    label: 'Recta OC',
-    kind: 'line',
-    refs: ['pO', 'pC'],
-    target: false,
-  });
-  model.elements.push({
-    ...model.elements[0],
-    id: 'intQ',
-    label: 'Q',
-    kind: 'intersection',
-    refs: ['lineOC', 'segAB'],
-    order: 80,
-    locked: true,
-    target: true,
-    properties: { restrictToSupports: true },
-    style: { pointSize: 5, highlightPointSize: 8 },
-  });
+function clone(fixture: unknown): DiagramSpec {
+  return structuredClone(fixture) as DiagramSpec;
+}
+
+function modelWithIntersection(): DiagramSpec {
+  const model = clone(primitivesFixture);
+  model.objects.push(
+    { ...element('lineOC', 'Recta OC', 'line', ['pO', 'pC'], 'pavo', false) },
+    { ...element('intQ', 'Q', 'intersection', ['lineOC', 'segAB'], 'terracota'), order: 80, locked: true, appearance: { size: 5, highlightSize: 8 } },
+  );
   return model;
 }
 
-function modelWithLengthConstraint() {
-  const model = structuredClone(primitivesFixture);
-  model.points = model.points.map(point => point.id === 'pC'
-    ? { ...point, constraint: 'constrained', constraintIds: ['equalOCAB'] }
-    : point);
-  model.elements.push({
-    ...model.elements[0],
-    id: 'segOC',
-    label: 'Segmento OC',
-    refs: ['pO', 'pC'],
-    order: 20,
-  });
-  model.constraints = [{
-    id: 'equalOCAB',
-    label: 'OC tiene la misma longitud que AB',
-    kind: 'equalLength',
-    refs: ['pC', 'pO', 'segAB'],
-    enabled: true,
-  }];
-  model.dependencies = [
-    { sourceId: 'pO', targetId: 'pC', relation: 'constraint', constraintId: 'equalOCAB' },
-    { sourceId: 'segAB', targetId: 'pC', relation: 'constraint', constraintId: 'equalOCAB' },
-  ];
+function modelWithLengthConstraint(): DiagramSpec {
+  const model = clone(primitivesFixture);
+  model.objects = model.objects.map(object => object.id === 'pC' && object.objectType === 'point'
+    ? withPointMode(object as never, 'constrained', { relationIds: ['equalOCAB'] })
+    : object);
+  model.objects.push({ ...element('segOC', 'Segmento OC', 'segment', ['pO', 'pC'], 'carbon'), order: 20 });
+  model.relations = [relationFor('equalLength', 'equalOCAB', 'OC tiene la misma longitud que AB', ['pC', 'pO', 'segAB'], model.objects)];
   return model;
 }
 
-function modelWithAngleConstraint() {
-  const model = structuredClone(marksFixture);
-  const pointTemplate = model.points[0];
-  const targetAngle = model.elements.find(element => element.kind === 'nonReflexAngle')!;
-  model.points = [
-    { ...pointTemplate, id: 'pA', label: 'A', x: 2, y: 0, order: 0 },
-    { ...pointTemplate, id: 'pV', label: 'V', x: 0, y: 0, fixed: true, constraint: 'fixed', locked: true, order: 1 },
-    { ...pointTemplate, id: 'pB', label: 'B', x: 0, y: 2, constraint: 'constrained', constraintIds: ['equalAVBCWD'], order: 2 },
-    { ...pointTemplate, id: 'pC', label: 'C', x: 5, y: 0, order: 3 },
-    { ...pointTemplate, id: 'pW', label: 'W', x: 4, y: 0, fixed: true, constraint: 'fixed', locked: true, order: 4 },
-    { ...pointTemplate, id: 'pD', label: 'D', x: 4.5, y: Math.sqrt(3) / 2, order: 5 },
+function modelWithAngleConstraint(): DiagramSpec {
+  const model = clone(marksFixture);
+  const targetAngle = model.objects.find((object): object is AngleObject => object.objectType === 'angle' && object.sweep === 'non-reflex' && object.marker === 'arc')!;
+  model.objects = [
+    { ...point('pA', 'A', 2, 0), order: 0 },
+    { ...point('pV', 'V', 0, 0, true), locked: true, order: 1 },
+    { ...withPointMode(point('pB', 'B', 0, 2), 'constrained', { relationIds: ['equalAVBCWD'] }), order: 2 },
+    { ...point('pC', 'C', 5, 0), order: 3 },
+    { ...point('pW', 'W', 4, 0, true), locked: true, order: 4 },
+    { ...point('pD', 'D', 4.5, Math.sqrt(3) / 2), order: 5 },
+    { ...targetAngle, id: 'angleAVB', label: 'Ángulo AVB', points: ['pA', 'pV', 'pB'], order: 10 },
+    { ...targetAngle, id: 'angleCWD', label: 'Ángulo CWD', points: ['pC', 'pW', 'pD'], color: 'pavo', order: 11 },
   ];
-  model.elements = [
-    { ...targetAngle, id: 'angleAVB', label: 'Ángulo AVB', refs: ['pA', 'pV', 'pB'], order: 10 },
-    { ...targetAngle, id: 'angleCWD', label: 'Ángulo CWD', refs: ['pC', 'pW', 'pD'], color: 'pavo', order: 11 },
-  ];
-  model.constraints = [{
-    id: 'equalAVBCWD',
-    label: 'AVB tiene la misma amplitud que CWD',
-    kind: 'equalAngle',
-    refs: ['pB', 'pV', 'pA', 'angleCWD', 'angleAVB'],
-    enabled: true,
-  }];
-  model.dependencies = [
-    { sourceId: 'pV', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
-    { sourceId: 'pA', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
-    { sourceId: 'angleCWD', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
-  ];
+  model.relations = [relationFor('equalAngle', 'equalAVBCWD', 'AVB tiene la misma amplitud que CWD', ['pB', 'pV', 'pA', 'angleCWD', 'angleAVB'], model.objects)];
   return model;
 }
 
 describe('Declarative geometry language', () => {
-  it.each(fixtures.map(fixture => [fixture.extensions.acceptanceFamily, fixture] as const))('validates and serializes the %s family without loss', (_family, fixture) => {
-    const parsed = parseDiagramSpecV2(fixture);
+  it.each(fixtures.map(fixture => [fixture.componentId, fixture] as const))('validates and serializes the %s family without loss', (_family, fixture) => {
+    const parsed = parseDiagramSpecV3(fixture);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
     expect(JSON.parse(JSON.stringify(parsed.data))).toEqual(fixture);
   });
 
   it('covers every required object family with a canonical acceptance fixture', () => {
-    const kinds = new Set(fixtures.flatMap(fixture => fixture.elements.map(element => element.kind)));
+    const kinds = new Set(fixtures.flatMap(fixture => fixture.objects.map(object => objectKind(object))));
     [
       'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-      'poincareGeodesic', 'poincareArc', 'angle', 'nonReflexAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',
-      'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'label', 'formula', 'infoPanel',
+      'poincareGeodesic', 'poincareArc', 'angle', 'nonReflexAngle', 'congruenceMark', 'parallelMark', 'measureTicks',
+      'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'label', 'formula', 'infoPanel', 'rightAngle',
     ].forEach(kind => expect(kinds.has(kind)).toBe(true));
   });
 
@@ -146,7 +109,7 @@ describe('Declarative geometry language', () => {
   });
 
   it('exports radians and degrees for oriented and non-reflex angles', () => {
-    const parsed = parseDiagramSpecV2(marksFixture);
+    const parsed = parseDiagramSpecV3(marksFixture);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
     const variables = expressionVariables(parsed.data);
@@ -163,27 +126,27 @@ describe('Declarative geometry language', () => {
   });
 
   it('resolves derived points and enforces explicit point constraints', () => {
-    const parsed = parseDiagramSpecV2(pointsFixture);
+    const parsed = parseDiagramSpecV3(pointsFixture);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
     expect(resolvePointCoordinates(parsed.data, 'pB')).toEqual({ x: 0, y: 1 });
     const moved = withMovedPoint(parsed.data, 'pC', 4, 3);
-    expect(moved.points.find(point => point.id === 'pC')).toMatchObject({ x: 4, y: 0 });
+    expect(positionOf(moved, 'pC')).toMatchObject({ x: 4, y: 0 });
     const graph = buildDependencyGraph(parsed.data);
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pB', relation: 'expression' });
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pC', relation: 'constraint', constraintId: 'horizontalC' });
   });
 
   it('keeps one authored segment equal in length to another when either source endpoint moves', () => {
-    const parsed = parseDiagramSpecV2(modelWithLengthConstraint());
+    const parsed = parseDiagramSpecV3(modelWithLengthConstraint());
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
 
     const moved = withMovedPoint(parsed.data, 'pA', 4, 0);
-    const pointO = moved.points.find(point => point.id === 'pO')!;
-    const pointC = moved.points.find(point => point.id === 'pC')!;
-    const pointA = moved.points.find(point => point.id === 'pA')!;
-    const pointB = moved.points.find(point => point.id === 'pB')!;
+    const pointO = positionOf(moved, 'pO');
+    const pointC = positionOf(moved, 'pC');
+    const pointA = positionOf(moved, 'pA');
+    const pointB = positionOf(moved, 'pB');
 
     expect(Math.hypot(pointC.x - pointO.x, pointC.y - pointO.y))
       .toBeCloseTo(Math.hypot(pointB.x - pointA.x, pointB.y - pointA.y));
@@ -196,17 +159,17 @@ describe('Declarative geometry language', () => {
   });
 
   it('keeps one authored angle equal to another when the source angle changes', () => {
-    const parsed = parseDiagramSpecV2(modelWithAngleConstraint());
+    const parsed = parseDiagramSpecV3(modelWithAngleConstraint());
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
 
     const initiallyResolved = withMovedPoint(parsed.data, 'pB', 0, 2);
-    const pointB = initiallyResolved.points.find(point => point.id === 'pB')!;
+    const pointB = positionOf(initiallyResolved, 'pB');
     expect(pointB.x).toBeCloseTo(1);
     expect(pointB.y).toBeCloseTo(Math.sqrt(3));
 
     const movedSource = withMovedPoint(initiallyResolved, 'pD', 4, 2);
-    const updatedB = movedSource.points.find(point => point.id === 'pB')!;
+    const updatedB = positionOf(movedSource, 'pB');
     expect(updatedB.x).toBeCloseTo(0);
     expect(updatedB.y).toBeCloseTo(2);
     expect(buildDependencyGraph(movedSource).edges).toContainEqual({
@@ -219,20 +182,20 @@ describe('Declarative geometry language', () => {
 
   it('rejects equal-angle relations that mix oriented and non-reflex angles', () => {
     const model = modelWithAngleConstraint();
-    const sourceAngle = model.elements.find(element => element.id === 'angleCWD');
-    if (sourceAngle) sourceAngle.kind = 'angle';
-    const parsed = parseDiagramSpecV2(model);
+    const sourceAngle = findById<AngleObject>(model, 'angleCWD');
+    sourceAngle.sweep = 'directed';
+    const parsed = parseDiagramSpecV3(model);
     expect(parsed.success).toBe(false);
     if (!parsed.success) expect(parsed.error.message).toContain('ángulos del mismo tipo');
   });
 
   it('keeps D on the ray and at distance AB when D itself is moved', () => {
     const moved = withMovedPoint(Congruence1Spec, 'pD', 2, 4);
-    const pointA = moved.points.find(point => point.id === 'pA')!;
-    const pointB = moved.points.find(point => point.id === 'pB')!;
-    const pointC = moved.points.find(point => point.id === 'pC')!;
-    const pointD = moved.points.find(point => point.id === 'pD')!;
-    const pointDir = moved.points.find(point => point.id === 'pDir')!;
+    const pointA = positionOf(moved, 'pA');
+    const pointB = positionOf(moved, 'pB');
+    const pointC = positionOf(moved, 'pC');
+    const pointD = positionOf(moved, 'pD');
+    const pointDir = positionOf(moved, 'pDir');
     const rayX = pointDir.x - pointC.x;
     const rayY = pointDir.y - pointC.y;
     const cdX = pointD.x - pointC.x;
@@ -244,32 +207,19 @@ describe('Declarative geometry language', () => {
   });
 
   it('keeps an authored point at the midpoint of two moving endpoints', () => {
-    const model = structuredClone(pointsFixture);
-    model.points = model.points.map(point => point.id === 'pC'
-      ? { ...point, constraint: 'constrained', constraintIds: ['midpointC'] }
-      : point);
-    model.constraints = [{
-      id: 'midpointC',
-      label: 'C es el punto medio de A y B',
-      kind: 'midpoint',
-      refs: ['pC', 'pA', 'pB'],
-      enabled: true,
-    }];
-    model.dependencies = [
-      { sourceId: 'pA', targetId: 'pB', relation: 'expression' },
-      { sourceId: 'pA', targetId: 'pC', relation: 'constraint', constraintId: 'midpointC' },
-      { sourceId: 'pB', targetId: 'pC', relation: 'constraint', constraintId: 'midpointC' },
-      { sourceId: 'pA', targetId: 'segAC', relation: 'construction' },
-      { sourceId: 'pC', targetId: 'segAC', relation: 'construction' },
-    ];
-    const parsed = parseDiagramSpecV2(model);
+    const model = clone(pointsFixture);
+    model.objects = model.objects.map(object => object.id === 'pC' && object.objectType === 'point'
+      ? { ...object, definition: { type: 'midpoint', points: ['pA', 'pB'] }, mobility: { type: 'fixed' } }
+      : object);
+    model.relations = [];
+    const parsed = parseDiagramSpecV3(model);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
 
     const moved = withMovedPoint(parsed.data, 'pA', 2, 3);
-    const pointA = moved.points.find(point => point.id === 'pA')!;
+    const pointA = positionOf(moved, 'pA');
     const pointB = resolvePointCoordinates(moved, 'pB')!;
-    const pointC = moved.points.find(point => point.id === 'pC')!;
+    const pointC = resolvePointCoordinates(moved, 'pC')!;
     expect(pointC).toMatchObject({
       x: (pointA.x + pointB.x) / 2,
       y: (pointA.y + pointB.y) / 2,
@@ -277,7 +227,7 @@ describe('Declarative geometry language', () => {
   });
 
   it('validates and resolves an exact intersection between two authored supports', () => {
-    const parsed = parseDiagramSpecV2(modelWithIntersection());
+    const parsed = parseDiagramSpecV3(modelWithIntersection());
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
     const coordinates = resolvePointCoordinates(parsed.data, 'intQ');
@@ -287,48 +237,44 @@ describe('Declarative geometry language', () => {
 
   it('rejects intersection references that are not compatible supports', () => {
     const model = modelWithIntersection();
-    const intersection = model.elements.find(element => element.id === 'intQ');
-    if (intersection) intersection.refs = ['pO', 'segAB'];
-    const parsed = parseDiagramSpecV2(model);
+    const intersection = findById(model, 'intQ');
+    if (intersection.objectType === 'point' && intersection.definition.type === 'intersection') intersection.definition.supports = ['pO', 'segAB'];
+    const parsed = parseDiagramSpecV3(model);
     expect(parsed.success).toBe(false);
-    if (!parsed.success) expect(parsed.error.message).toContain('solo admite rectas, segmentos, semirrectas');
+    if (!parsed.success) expect(parsed.error.message).toContain('debe ser un soporte lineal');
   });
 
   it('keeps constrained Poincaré points inside the represented disk', () => {
-    const parsed = parseDiagramSpecV2(poincareFixture);
+    const parsed = parseDiagramSpecV3(poincareFixture);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
     const moved = withMovedPoint(parsed.data, 'pA', 20, 0);
-    const point = moved.points.find(item => item.id === 'pA')!;
-    expect(Math.hypot(point.x, point.y)).toBeLessThan(3);
+    const moved_A = positionOf(moved, 'pA');
+    expect(Math.hypot(moved_A.x, moved_A.y)).toBeLessThan(3);
   });
 
   it('rejects unsafe expressions and dependency cycles with field-level diagnostics', () => {
-    const unsafe = structuredClone(curvesFixture);
-    unsafe.elements[0].properties!.expression = 'Math.sin(x)';
-    const unsafeResult = parseDiagramSpecV2(unsafe);
+    const unsafe = clone(curvesFixture);
+    const curve = unsafe.objects.find(object => object.id === 'functionSin');
+    if (curve?.objectType === 'path' && curve.geometry.type === 'function') curve.geometry.expression = 'Math.sin(x)';
+    const unsafeResult = parseDiagramSpecV3(unsafe);
     expect(unsafeResult.success).toBe(false);
-    if (!unsafeResult.success) expect(unsafeResult.error.message).toContain('elements.0.properties.expression');
+    if (!unsafeResult.success) expect(unsafeResult.error.message).toContain('geometry.expression');
 
-    const cyclic = structuredClone(pointsFixture);
-    cyclic.points[0].fixed = true;
-    cyclic.points[0].constraint = 'derived';
-    cyclic.points[0].dependencies = ['pB'];
-    cyclic.points[0].xExpression = 'pB.x - 2';
-    cyclic.points[0].yExpression = 'pB.y - 1';
-    cyclic.dependencies.push({ sourceId: 'pB', targetId: 'pA', relation: 'expression' });
-    const cyclicResult = parseDiagramSpecV2(cyclic);
+    const cyclic = clone(pointsFixture);
+    cyclic.objects = cyclic.objects.map(object => object.id === 'pA' && object.objectType === 'point'
+      ? { ...object, definition: { type: 'expression', x: 'pB.x - 2', y: 'pB.y - 1', fallback: [0, 0] }, mobility: { type: 'fixed' } }
+      : object);
+    const cyclicResult = parseDiagramSpecV3(cyclic);
     expect(cyclicResult.success).toBe(false);
-    if (!cyclicResult.success) expect(cyclicResult.error.message).toContain('forma un ciclo');
+    if (!cyclicResult.success) expect(cyclicResult.error.message).toContain('ciclo');
   });
 
   it('does not treat angular visibility as a geometric dependency cycle', () => {
-    const model = structuredClone(marksFixture);
-    const angle = model.elements.find(element => element.id === 'angleAVB')!;
-    angle.properties = { visibleWhen: 'gt(angleAVB.degrees, 180)' };
-    model.dependencies.push({ sourceId: angle.id, targetId: angle.id, relation: 'expression' });
+    const model = clone(marksFixture);
+    findById(model, 'angleAVB').visibleWhen = 'gt(angleAVB.degrees, 180)';
 
-    const parsed = parseDiagramSpecV2(model);
+    const parsed = parseDiagramSpecV3(model);
 
     expect(parsed.success).toBe(true);
   });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { AreaMembership } from '@/diagrams/model/schema/types';
-import type { VisualDiagramModel, VisualConstraint } from '../../model/types';
+import type { VisualDiagramModel } from '../../model/types';
 import {
   RELATION_CATALOG,
   RELATION_CATEGORY_LABELS,
@@ -12,13 +12,21 @@ import {
   relationsForScope,
   RelationScope,
   uniqueConstraintId,
-  withConstraintDependencies,
-  updatePoint,
   removeConstraintFromModel,
+  modelRelationDrafts,
+  updateRelationDraft,
+  addRelationDraftToPoint,
+  draftToRelation,
+  findPositionedPoint,
+  modelPoints,
+  modelElements,
+  type RelationDraft,
+  type RelationIntent,
   candidatesForSlot,
   editableSlotsFor,
 } from '../../model';
 import { withResolvedPointConstraints } from '@/diagrams/geometry/layout/scene';
+import { objectKind } from '@/diagrams';
 import { IconClose, IconPlus, IconTrash } from '../toolbar/WorkbenchIcons';
 
 interface ConstraintEditorProps {
@@ -33,25 +41,24 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
   onUpdateModel,
 }) => {
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newKind, setNewKind] = useState<VisualConstraint['kind']>('fixed');
+  const [newKind, setNewKind] = useState<RelationIntent>('fixed');
   const [newTargetId, setNewTargetId] = useState<string>('');
 
   if (!model) return null;
 
-  const constraints = model.constraints || [];
-  const points = model.points || [];
-  const elements = model.elements || [];
+  const constraints = modelRelationDrafts(model);
+  const points = modelPoints(model);
+  const elements = modelElements(model);
+  const selectedPoint = selectedId ? findPositionedPoint(model, selectedId) : undefined;
+  const selectedRelationIds = selectedPoint?.mobility.type === 'constrained' ? selectedPoint.mobility.relationIds : [];
 
   const activeConstraints = selectedId
-    ? constraints.filter(c => c.refs.includes(selectedId) || points.find(p => p.id === selectedId)?.constraintIds?.includes(c.id))
+    ? constraints.filter(c => c.refs.includes(selectedId) || selectedRelationIds.includes(c.id))
     : constraints;
 
   const handleToggleConstraint = (id: string) => {
-    const nextConstraints = constraints.map(c =>
-      c.id === id ? { ...c, enabled: c.enabled === false ? true : false } : c
-    );
     onUpdateModel(
-      withResolvedPointConstraints({ ...model, constraints: nextConstraints }),
+      withResolvedPointConstraints(updateRelationDraft(model, id, c => ({ ...c, enabled: c.enabled === false }))),
       `Alternar restricción ${id}`,
     );
   };
@@ -61,28 +68,20 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
   };
 
   const handleUpdateSlotRef = (constraintId: string, slotIndex: number, newRefId: string) => {
-    const target = constraints.find(c => c.id === constraintId);
-    if (!target) return;
-    const nextRefs = [...target.refs];
-    nextRefs[slotIndex] = newRefId;
-
-    const nextConstraints = constraints.map(c =>
-      c.id === constraintId ? { ...c, refs: nextRefs } : c
-    );
-    let nextModel: VisualDiagramModel = { ...model, constraints: nextConstraints };
-    nextModel = withConstraintDependencies(nextModel, constraintId, nextRefs);
+    const nextModel = updateRelationDraft(model, constraintId, c => {
+      const nextRefs = [...c.refs];
+      nextRefs[slotIndex] = newRefId;
+      return { ...c, refs: nextRefs };
+    });
     onUpdateModel(withResolvedPointConstraints(nextModel), `Actualizar referencia de restricción ${constraintId}`);
   };
 
   const handleUpdateConstraintField = (
     constraintId: string,
-    patch: Partial<VisualConstraint>,
+    patch: Partial<RelationDraft>,
   ) => {
-    const nextConstraints = constraints.map(c =>
-      c.id === constraintId ? { ...c, ...patch } : c
-    );
     onUpdateModel(
-      withResolvedPointConstraints({ ...model, constraints: nextConstraints }),
+      withResolvedPointConstraints(updateRelationDraft(model, constraintId, c => ({ ...c, ...patch }))),
       `Actualizar restricción ${constraintId}`,
     );
   };
@@ -96,7 +95,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
     const presentation = constraintPresentation(newKind);
     const point = points.find(p => p.id === target);
 
-    const newConstraint: VisualConstraint = {
+    const newConstraint: RelationDraft = {
       id,
       label: presentation.label,
       kind: newKind,
@@ -105,20 +104,12 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
       ...(newKind === 'distance' ? { value: 1 } : {}),
     };
 
-    let nextModel: VisualDiagramModel = {
-      ...model,
-      constraints: [...(model.constraints || []), newConstraint],
-    };
-    nextModel = withConstraintDependencies(
-      nextModel,
-      id,
-      newKind === 'equalAngle' ? refs.slice(0, 4) : refs,
-    );
+    let nextModel: VisualDiagramModel = model;
     if (point) {
-      nextModel = updatePoint(nextModel, point.id, {
-        constraint: 'constrained',
-        constraintIds: [...(point.constraintIds || []), id],
-      });
+      nextModel = addRelationDraftToPoint(model, point.id, newConstraint);
+    } else {
+      const relation = draftToRelation(newConstraint, model.objects);
+      if (relation) nextModel = { ...model, relations: [...model.relations, relation] };
     }
     onUpdateModel(withResolvedPointConstraints(nextModel), `Añadir restricción ${presentation.label}`);
     setShowAddModal(false);
@@ -331,7 +322,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                 <optgroup label="Elementos / Segmentos">
                   {elements.map(e => (
                     <option key={e.id} value={e.id}>
-                      {e.label || e.id} ({e.kind})
+                      {e.label || e.id} ({objectKind(e)})
                     </option>
                   ))}
                 </optgroup>
@@ -342,15 +333,15 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
               <label className="block text-xs font-bold text-carbon/80 mb-1">Tipo de Restricción</label>
               <select
                 value={newKind}
-                onChange={e => setNewKind(e.target.value as VisualConstraint['kind'])}
+                onChange={e => setNewKind(e.target.value as RelationIntent)}
                 className="w-full bg-carbon/5 border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon"
               >
                 {(() => {
                   const targetScope: RelationScope | undefined = points.some(p => p.id === (newTargetId || selectedId))
                     ? 'point'
-                    : elements.some(e => e.id === (newTargetId || selectedId) && e.kind === 'segment')
+                    : elements.some(e => e.id === (newTargetId || selectedId) && objectKind(e) === 'segment')
                     ? 'segment'
-                    : elements.some(e => e.id === (newTargetId || selectedId) && ['angle', 'nonReflexAngle', 'rightAngle'].includes(e.kind))
+                    : elements.some(e => e.id === (newTargetId || selectedId) && ['angle', 'nonReflexAngle', 'rightAngle'].includes(objectKind(e)))
                     ? 'angle'
                     : undefined;
 

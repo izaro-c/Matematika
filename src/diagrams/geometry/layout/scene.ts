@@ -1,5 +1,4 @@
 export type {
-  DiagramSceneBag,
   DiagramDependencyEdge,
   DiagramDependencyGraph,
   PlannedSceneItem,
@@ -13,11 +12,13 @@ export {
   supportElements,
   onSupportTargetId,
   projectPointToSupport,
+  sceneReferences,
+  type DiagramScene,
 } from '@/diagrams/geometry/coordinates/sceneCoordinates';
 
 export {
-  materializeSameSideConstraints,
-  prepareSceneSpec,
+  materializeSameSideRelations,
+  resolveDiagramScene,
   withMovedPoint,
   constrainPointCoordinates,
   withResolvedPointConstraints,
@@ -25,6 +26,7 @@ export {
 
 export {
   contentBounds,
+  resolvedSceneContentBounds,
   padBounds,
   fitViewport,
   zoomViewport,

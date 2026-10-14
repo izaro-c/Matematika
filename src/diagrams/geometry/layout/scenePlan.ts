@@ -1,22 +1,30 @@
 import type {
-  DiagramDependency,
-  DiagramPoint,
-  DiagramSceneItem,
   DiagramSceneState,
-  DiagramSpecV2,
   DiagramStepOverlay,
 } from '@/diagrams/model/schema/types';
-import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
+import type { DiagramObject, DiagramSpec } from '@/diagrams/model/schema/v3';
 import type {
   DiagramDependencyEdge,
   DiagramDependencyGraph,
-  DiagramSceneBag,
   PlannedSceneItem,
 } from '@/diagrams/geometry/layout/sceneTypes';
 import { resolveStepSceneAppearance } from '@/diagrams/geometry/layout/sceneTypes';
 import { evaluateMathExpression, extractMathExpressionIdentifiers } from '@/diagrams/model/expressions/expressions';
 import { interpolateDiagramTemplate } from '@/diagrams/model/semantics/infoPanels';
-import { prepareSceneSpec } from '@/diagrams/geometry/coordinates/scenePointMotion';
+import {
+  findObject,
+  isExpressionPoint,
+  isPositionedPoint,
+  pointGliderSupportId,
+  pointIsImmovable,
+  type PositionedPoint,
+} from '@/diagrams/model/objects/queries';
+import { diagramDependencies } from '@/diagrams/model/objects/references';
+import { relationParticipants, sceneRelations } from '@/diagrams/model/objects/relations';
+import { sceneReferences } from '@/diagrams/geometry/coordinates/sceneCoordinates';
+
+/** Escena que necesita la planificación: objetos, relaciones, capas, grupos y pasos. */
+export type DiagramPlanScene = Pick<DiagramSpec, 'objects' | 'relations' | 'layers' | 'groups' | 'steps'> & { componentId?: string };
 
 function expressionUsesSource(source: string | undefined, sourceId: string): boolean {
   if (!source) return false;
@@ -34,35 +42,34 @@ function expressionUsesSource(source: string | undefined, sourceId: string): boo
  * visibleWhen y las reglas de texto no introducen ciclos geométricos.
  */
 export function dependencyDeterminesConstructionOrder(
-  spec: DiagramSceneBag,
-  dependency: DiagramDependency,
+  spec: Pick<DiagramSpec, 'objects' | 'relations'>,
+  dependency: DiagramDependencyEdge,
 ): boolean {
   if (dependency.relation === 'construction') return true;
-  const targetPoint = spec.points.find(point => point.id === dependency.targetId);
+  const target = findObject(spec, dependency.targetId);
   if (dependency.relation === 'constraint') {
     if (dependency.constraintId) {
-      const constraint = spec.constraints?.find(c => c.id === dependency.constraintId);
-      return constraint?.kind === 'on';
+      const relation = spec.relations.find(item => item.id === dependency.constraintId);
+      return relation?.type === 'on-support';
     }
-    return targetPoint?.constraint === 'glider' && targetPoint.gliderTarget === dependency.sourceId;
+    return isPositionedPoint(target) && pointGliderSupportId(target) === dependency.sourceId;
   }
-  if (targetPoint) {
-    return expressionUsesSource(targetPoint.xExpression, dependency.sourceId)
-      || expressionUsesSource(targetPoint.yExpression, dependency.sourceId);
+  if (!target) return false;
+  if (target.objectType === 'point') {
+    return target.definition.type === 'expression'
+      && (expressionUsesSource(target.definition.x, dependency.sourceId)
+        || expressionUsesSource(target.definition.y, dependency.sourceId));
   }
-  const targetSlider = spec.sliders.find(slider => slider.id === dependency.targetId);
-  if (targetSlider) return expressionUsesSource(targetSlider.maxExpression, dependency.sourceId);
-  const targetElement = spec.elements.find(element => element.id === dependency.targetId);
-  if (!targetElement) return false;
-  if (targetElement.kind === 'functionCurve') {
-    return expressionUsesSource(targetElement.properties?.expression, dependency.sourceId);
+  if (target.objectType === 'control') return expressionUsesSource(target.range.maxExpression, dependency.sourceId);
+  if (target.objectType === 'path' && target.geometry.type === 'function') {
+    return expressionUsesSource(target.geometry.expression, dependency.sourceId);
   }
-  if (targetElement.kind === 'parametricCurve') {
-    return expressionUsesSource(targetElement.properties?.xExpression, dependency.sourceId)
-      || expressionUsesSource(targetElement.properties?.yExpression, dependency.sourceId);
+  if (target.objectType === 'path' && target.geometry.type === 'parametric') {
+    return expressionUsesSource(target.geometry.x, dependency.sourceId)
+      || expressionUsesSource(target.geometry.y, dependency.sourceId);
   }
-  if (targetElement.kind === 'measureTicks') {
-    return expressionUsesSource(targetElement.properties?.tickDistanceExpression, dependency.sourceId);
+  if (target.objectType === 'mark' && target.variant === 'graduation') {
+    return expressionUsesSource(target.spacingExpression, dependency.sourceId);
   }
   return false;
 }
@@ -84,14 +91,14 @@ export function evaluateStepOverlayContent(overlay: DiagramStepOverlay, variable
   }
 }
 
-function compareSceneItemOrder(left: DiagramSceneItem, right: DiagramSceneItem): number {
+function compareSceneItemOrder(left: DiagramObject, right: DiagramObject): number {
   return left.order - right.order || left.id.localeCompare(right.id);
 }
 
-function buildSceneItemVisualRanks(spec: DiagramSceneBag): Map<string, number> {
+function buildSceneItemVisualRanks(spec: Pick<DiagramSpec, 'objects'>): Map<string, number> {
   const ranks = new Map<string, number>();
-  const itemsByLayer = new Map<string, DiagramSceneItem[]>();
-  [...spec.points, ...spec.elements, ...spec.sliders].forEach(item => {
+  const itemsByLayer = new Map<string, DiagramObject[]>();
+  spec.objects.forEach(item => {
     const layerItems = itemsByLayer.get(item.layerId) ?? [];
     layerItems.push(item);
     itemsByLayer.set(item.layerId, layerItems);
@@ -102,8 +109,7 @@ function buildSceneItemVisualRanks(spec: DiagramSceneBag): Map<string, number> {
   return ranks;
 }
 
-export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: DiagramSceneState = {}): PlannedSceneItem[] {
-  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
+export function createScenePlan(spec: DiagramPlanScene, state: DiagramSceneState = {}): PlannedSceneItem[] {
   const highlighted = new Set(state.highlightedIds ?? []);
   const selected = new Set(state.selectedIds ?? []);
   const activeStep = state.activeStepId ? spec.steps.find(step => step.id === state.activeStepId) : undefined;
@@ -152,7 +158,7 @@ export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: Dia
     return false;
   };
 
-  return [...spec.points, ...spec.elements, ...spec.sliders]
+  return spec.objects
     .map(item => {
       const objectState = objectStates[item.id];
       const layer = layers.get(item.layerId);
@@ -163,7 +169,7 @@ export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: Dia
         && itemGroups.every(group => group?.visible !== false)
         && (objectState?.visible ?? (item.visible && (!stepTargets || stepTargets.has(item.id))));
       const interactive = objectState?.interactive ?? true;
-      const fixedPoint = 'constraint' in item && (item.fixed || item.constraint === 'fixed' || item.constraint === 'derived');
+      const fixedPoint = isPositionedPoint(item) && pointIsImmovable(item);
       const locked = !interactive || fixedPoint || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
       const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && (isTargetHighlighted(group?.id) || isTargetHighlighted(group?.targetId)));
@@ -191,23 +197,35 @@ export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: Dia
     .sort((left, right) => left.visualOrder - right.visualOrder || left.item.id.localeCompare(right.item.id));
 }
 
-function creationDependencies(item: DiagramSceneItem): string[] {
-  if ('constraint' in item) return [
-    ...(item.constraint === 'glider' && item.gliderTarget ? [item.gliderTarget] : []),
-    ...(item.dependencies ?? []),
-  ];
-  if ('kind' in item) return item.refs;
-  return [];
+function expressionPointDependencies(point: PositionedPoint, dependencies: readonly DiagramDependencyEdge[]): string[] {
+  return dependencies.filter(edge => edge.targetId === point.id).map(edge => edge.sourceId);
 }
 
-export function createSceneConstructionPlan(spec: DiagramSpecV2 | DiagramSpecV3): PlannedSceneItem[] {
+function creationDependencies(
+  spec: Pick<DiagramSpec, 'objects'>,
+  item: DiagramObject,
+  dependencies: readonly DiagramDependencyEdge[],
+): string[] {
+  if (isPositionedPoint(item)) {
+    const glider = pointGliderSupportId(item);
+    return [
+      ...(glider ? [glider] : []),
+      ...(isExpressionPoint(item) ? expressionPointDependencies(item, dependencies) : []),
+    ];
+  }
+  if (item.objectType === 'control') return [];
+  return sceneReferences(spec, item);
+}
+
+/** Orden de creación: cada objeto aparece después de los objetos de los que depende. */
+export function createSceneConstructionPlan(spec: DiagramPlanScene): PlannedSceneItem[] {
   const scene = createScenePlan(spec);
   const itemIds = new Set(scene.map(entry => entry.item.id));
-  const bag = prepareSceneSpec(spec);
-  const graphEdges = buildDependencyGraph(bag).edges.filter(dependency => dependencyDeterminesConstructionOrder(bag, dependency));
+  const declared = diagramDependencies(spec.objects);
+  const graphEdges = buildDependencyGraph(spec).edges.filter(dependency => dependencyDeterminesConstructionOrder(spec, dependency));
   const entries = new Map(scene.map(entry => [entry.item.id, entry]));
   const dependencies = new Map(scene.map(entry => [entry.item.id, new Set(
-    creationDependencies(entry.item).filter(sourceId => itemIds.has(sourceId)),
+    creationDependencies(spec, entry.item, declared).filter(sourceId => itemIds.has(sourceId)),
   )]));
   graphEdges.forEach(edge => {
     if (!itemIds.has(edge.targetId) || !itemIds.has(edge.sourceId)) return;
@@ -246,62 +264,62 @@ export function createSceneConstructionPlan(spec: DiagramSpecV2 | DiagramSpecV3)
     : [...ordered, ...scene.filter(entry => !created.has(entry.item.id))];
 }
 
-export function buildDependencyGraph(spec: DiagramSceneBag): DiagramDependencyGraph {
+export function buildDependencyGraph(spec: Pick<DiagramSpec, 'objects' | 'relations'>): DiagramDependencyGraph {
+  const declared = diagramDependencies(spec.objects);
   const edges: DiagramDependencyEdge[] = [];
-  spec.points.forEach(point => {
-    if (point.constraint === 'glider' && point.gliderTarget) edges.push({ sourceId: point.gliderTarget, targetId: point.id, relation: 'constraint' });
-    point.dependencies?.forEach(sourceId => edges.push({ sourceId, targetId: point.id, relation: 'expression' }));
+  spec.objects.forEach(object => {
+    if (isPositionedPoint(object)) {
+      const glider = pointGliderSupportId(object);
+      if (glider) edges.push({ sourceId: glider, targetId: object.id, relation: 'constraint' });
+      if (isExpressionPoint(object)) {
+        expressionPointDependencies(object, declared).forEach(sourceId => edges.push({ sourceId, targetId: object.id, relation: 'expression' }));
+      }
+      return;
+    }
+    if (object.objectType === 'control') return;
+    sceneReferences(spec, object).forEach(sourceId => edges.push({ sourceId, targetId: object.id, relation: 'construction' }));
   });
-  spec.elements.forEach(element => element.refs.forEach(sourceId => edges.push({ sourceId, targetId: element.id, relation: 'construction' })));
-  (spec.constraints ?? []).forEach(constraint => {
-    const targetId = constraint.refs[0];
-    const sourceIds = constraint.kind === 'equalAngle' ? constraint.refs.slice(1, 4) : constraint.refs.slice(1);
-    sourceIds.forEach(sourceId => edges.push({ sourceId, targetId, relation: 'constraint', constraintId: constraint.id }));
+  sceneRelations(spec).forEach(relation => {
+    const { target, sources } = relationParticipants(relation, spec.objects);
+    if (!target) return;
+    sources.forEach(sourceId => edges.push({ sourceId, targetId: target, relation: 'constraint', constraintId: relation.id }));
   });
-  edges.push(...(spec.dependencies ?? []));
+  edges.push(...declared);
   const unique = new Map(edges.map(edge => [`${edge.sourceId}:${edge.targetId}:${edge.relation}:${edge.constraintId ?? ''}`, edge]));
   return {
-    nodes: [...spec.points, ...spec.elements, ...spec.sliders].map(item => item.id),
+    nodes: spec.objects.map(item => item.id),
     edges: [...unique.values()],
   };
 }
 
-export function sceneRevision(spec: DiagramSpecV2): string {
+type RevisionScene = Pick<DiagramSpec, 'objects' | 'relations' | 'layers' | 'showLabels'>;
+
+export function sceneRevision(spec: RevisionScene): string {
   return JSON.stringify({
-    points: spec.points,
-    elements: spec.elements,
-    sliders: spec.sliders,
+    objects: spec.objects,
     layers: spec.layers.map(({ id, order }) => [id, order]),
     showLabels: spec.showLabels,
-    constraints: spec.constraints,
-    dependencies: spec.dependencies,
+    relations: spec.relations,
   });
 }
 
-/** Revisión sin campos de apilamiento: evita reiniciar el lienzo al reordenar o cambiar de capa. */
-export function sceneGeometryRevision(spec: DiagramSpecV2): string {
-  const stripStackFields = <T extends { order: number; layerId: string }>(item: T) => {
-    const {...rest } = item;
-    return rest;
-  };
+/** Revisión geométrica del lienzo: cambia cuando hay que reconstruir los objetos JSXGraph. */
+export function sceneGeometryRevision(spec: RevisionScene): string {
   return JSON.stringify({
-    points: spec.points.map(stripStackFields),
-    elements: spec.elements.map(stripStackFields),
-    sliders: spec.sliders.map(stripStackFields),
+    objects: spec.objects,
     layers: spec.layers.map(({ id, label, visible, locked }) => ({ id, label, visible, locked })),
     showLabels: spec.showLabels,
-    constraints: spec.constraints,
-    dependencies: spec.dependencies,
+    relations: spec.relations,
   });
 }
 
-export function sceneStackRevision(spec: DiagramSpecV2): string {
+export function sceneStackRevision(spec: DiagramPlanScene): string {
   return JSON.stringify(createScenePlan(spec).map(entry => [entry.item.id, entry.item.layerId, entry.visualOrder]));
 }
 
 const itemLayerNumberCache = new Map<string, Map<string, number>>();
 
-export function itemLayerNumber(spec: DiagramSpecV2, item: DiagramSceneItem): number {
+export function itemLayerNumber(spec: DiagramPlanScene & RevisionScene, item: DiagramObject): number {
   const revision = sceneRevision(spec);
   let lookup = itemLayerNumberCache.get(revision);
   if (!lookup) {
@@ -323,6 +341,7 @@ export function itemLayerNumber(spec: DiagramSpecV2, item: DiagramSceneItem): nu
   return lookup.get(item.id) ?? 10;
 }
 
-export function isPointItem(item: DiagramSceneItem): item is DiagramPoint {
-  return 'x' in item && 'constraint' in item && 'fixed' in item;
+/** Punto con posición propia (coordenadas o expresión). */
+export function isPointItem(item: DiagramObject): item is PositionedPoint {
+  return isPositionedPoint(item);
 }

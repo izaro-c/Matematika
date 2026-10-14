@@ -1,11 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { validateEditorDocument } from '@/fixed-pages/editor/session/validation';
 import type { Block } from '@/fixed-pages/editor/session/parser';
-import {
-  diagramElementKinds,
-  diagramMinimumRefs,
-  diagramPointConstraints,
-} from '@/diagrams/model/schema/schema';
+import type { DiagramSpec } from '@/diagrams';
+import diagramFixture from '../../fixtures/diagrams/diagram-spec.json';
 import { expectDiagramKindsAlignedWithInspector } from '../../helpers/assertions';
 
 const validDefinitionMetadata = {
@@ -105,253 +102,45 @@ describe('editor validation', () => {
     ]));
   });
 
+  function diagramResult(visualModel: unknown) {
+    return validateEditorDocument({
+      metadata: validDefinitionMetadata,
+      imports: '',
+      exports: '',
+      blocks: [{ id: 'diagram-1', type: 'diagram', content: 'TrianguloEditor', metadata: { visualModel } }],
+    });
+  }
+
+  it('accepts a valid DiagramSpec v3 visual model', () => {
+    const result = diagramResult(diagramFixture);
+    expect(result.issues.filter(issue => issue.severity === 'error')).toEqual([]);
+  });
+
+  it('rejects visual models that are not DiagramSpec v3', () => {
+    const result = diagramResult({ points: [{ id: 'pA', constraint: 'diagonal' }], elements: [] });
+    expect(result.canSave).toBe(false);
+    expect(result.issues.map(issue => issue.id)).toContain('diagram-diagram-1-spec-version');
+  });
+
   it('blocks broken visual diagram references before saving', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-1',
-          type: 'diagram',
-          content: 'TrianguloEditor',
-          metadata: {
-            visualModel: {
-              points: [{ id: 'pA', constraint: 'diagonal' }],
-              elements: [
-                { id: 'segAB', kind: 'segment', refs: ['pA', 'pB'] },
-                { id: 'perpAB', kind: 'perpendicular', refs: ['pA', 'pA'] },
-                { id: 'weird', kind: 'bezier', refs: ['pA'] },
-              ],
-              sliders: [{ id: 'slider1', min: 2, max: 1 }],
-              steps: [{ id: 'step1', visibleTargets: ['segAB', 'missingTarget'] }],
-            },
-          },
-        },
+    const spec = diagramFixture as unknown as DiagramSpec;
+    const broken = {
+      ...spec,
+      objects: [
+        ...spec.objects,
+        { ...spec.objects.find(object => object.id === 'segAB')!, id: 'segAX', geometry: { type: 'segment', points: ['pA', 'pMissing'] } },
       ],
-    });
-
+      steps: [{ id: 'step1', label: 'Paso', description: '', visibleTargets: ['segAB', 'missingTarget'] }],
+    };
+    const result = diagramResult(broken);
     expect(result.canSave).toBe(false);
-    expect(result.issues.map(issue => issue.id)).toEqual(expect.arrayContaining([
-      'diagram-diagram-1-pA-constraint',
-      'diagram-diagram-1-segAB-ref-pB',
-      'diagram-diagram-1-perpAB-refs-min',
-      'diagram-diagram-1-weird-kind',
-      'diagram-diagram-1-slider1-range',
-      'diagram-diagram-1-step1-target-missingTarget',
-    ]));
+    const messages = result.issues.map(issue => issue.message).join('\n');
+    expect(messages).toContain('pMissing');
+    expect(messages).toContain('missingTarget');
   });
 
-  it('allows glider points on valid visual supports and derived midpoint references', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-glider',
-          type: 'diagram',
-          content: 'LugarGeometricoEditor',
-          metadata: {
-            visualModel: {
-              points: [
-                { id: 'pA', constraint: 'fixed' },
-                { id: 'pB', constraint: 'fixed' },
-                { id: 'pP', constraint: 'glider', gliderTarget: 'lineMediatriz' },
-              ],
-              elements: [
-                { id: 'midAB', kind: 'midpoint', refs: ['pA', 'pB'] },
-                { id: 'lineMediatriz', kind: 'perpendicular', refs: ['pA', 'pB', 'midAB'] },
-                { id: 'segPA', kind: 'segment', refs: ['pP', 'pA'] },
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-glider-lineMediatriz-ref-midAB');
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-glider-pP-glider-target-missing');
-  });
-
-  it('allows angle bisectors as visual targets and glider supports', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-bisector',
-          type: 'diagram',
-          content: 'BisectrizEditor',
-          metadata: {
-            visualModel: {
-              points: [
-                { id: 'pA', constraint: 'free' },
-                { id: 'pB', constraint: 'free' },
-                { id: 'pC', constraint: 'free' },
-                { id: 'pP', constraint: 'glider', gliderTarget: 'bisABC' },
-              ],
-              elements: [
-                { id: 'bisABC', kind: 'angleBisector', refs: ['pA', 'pB', 'pC'] },
-                { id: 'segBP', kind: 'segment', refs: ['pB', 'pP'] },
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.canSave).toBe(true);
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-bisector-bisABC-kind');
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-bisector-pP-glider-target-missing');
-  });
-
-  it('allows guided geometric constructions with derived targets', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-guided-constructions',
-          type: 'diagram',
-          content: 'ConstruccionesGuiadasEditor',
-          metadata: {
-            visualModel: {
-              points: [
-                { id: 'pA', constraint: 'free' },
-                { id: 'pB', constraint: 'free' },
-                { id: 'pC', constraint: 'free' },
-              ],
-              elements: [
-                { id: 'midAB', kind: 'midpoint', refs: ['pA', 'pB'] },
-                { id: 'lineMediatrizAB', kind: 'perpendicular', refs: ['pA', 'pB', 'midAB'] },
-                { id: 'segMedianaCAB', kind: 'segment', refs: ['pC', 'midAB'] },
-                { id: 'footCAB', kind: 'perpendicularFoot', refs: ['pA', 'pB', 'pC'] },
-                { id: 'extAlturaCAB', kind: 'segmentExtension', refs: ['pA', 'pB', 'footCAB'] },
-                { id: 'lineAlturaCAB', kind: 'perpendicular', refs: ['pA', 'pB', 'pC'] },
-                { id: 'segAlturaCAB', kind: 'segment', refs: ['pC', 'footCAB'] },
-                { id: 'rightAngleAlturaCAB', kind: 'rightAngle', refs: ['pA', 'footCAB', 'pC'] },
-                { id: 'angleABC', kind: 'angle', refs: ['pA', 'pB', 'pC'] },
-                { id: 'nonReflexAngleABC', kind: 'nonReflexAngle', refs: ['pA', 'pB', 'pC'] },
-                { id: 'bisABC', kind: 'angleBisector', refs: ['pA', 'pB', 'pC'] },
-              ],
-              steps: [
-                { id: 'step1', visibleTargets: ['midAB', 'lineMediatrizAB', 'segMedianaCAB', 'footCAB', 'extAlturaCAB', 'lineAlturaCAB', 'segAlturaCAB', 'rightAngleAlturaCAB', 'angleABC', 'nonReflexAngleABC', 'bisABC'] },
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.canSave).toBe(true);
-    expect(result.errorCount).toBe(0);
-  });
-
-  it('blocks glider points without a compatible support', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-bad-glider',
-          type: 'diagram',
-          content: 'LugarGeometricoEditor',
-          metadata: {
-            visualModel: {
-              points: [{ id: 'pP', constraint: 'glider', gliderTarget: 'missingLine' }],
-              elements: [],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.canSave).toBe(false);
-    expect(result.issues.map(issue => issue.id)).toContain('diagram-diagram-bad-glider-pP-glider-target-missing');
-  });
-
-  it('recognizes every diagram element kind declared in the schema', () => {
-    const pointIds = ['pA', 'pB', 'pC', 'pD', 'pE'];
-    const points = pointIds.map(id => ({ id, constraint: 'fixed' as const }));
-    const linearSupports = [
-      { id: 'segAB', kind: 'segment' as const, refs: ['pA', 'pB'] },
-      { id: 'lineAB', kind: 'line' as const, refs: ['pA', 'pB'] },
-    ];
-    const elements = diagramElementKinds.map(kind => {
-      const minRefs = diagramMinimumRefs[kind] ?? 1;
-      if (kind === 'intersection') {
-        return { id: 'ixAB', kind, refs: ['segAB', 'lineAB'] };
-      }
-      if (kind === 'measureTicks') {
-        return { id: 'ticksAB', kind, refs: ['segAB'] };
-      }
-      return {
-        id: `el-${kind}`,
-        kind,
-        refs: Array.from({ length: minRefs }, (_, index) => pointIds[index % pointIds.length]),
-      };
-    });
-
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-kinds',
-          type: 'diagram',
-          content: 'KindsEditor',
-          metadata: {
-            visualModel: {
-              points,
-              elements: [...linearSupports, ...elements],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.issues.map(issue => issue.id).filter(id => id.endsWith('-kind'))).toEqual([]);
-    expectDiagramKindsAlignedWithInspector();
-  });
-
-  it('accepts derived and constrained point mobility from the schema', () => {
-    const result = validateEditorDocument({
-      metadata: validDefinitionMetadata,
-      imports: '',
-      exports: '',
-      blocks: [
-        {
-          id: 'diagram-derived',
-          type: 'diagram',
-          content: 'DerivedEditor',
-          metadata: {
-            visualModel: {
-              points: [
-                { id: 'pA', constraint: 'fixed' },
-                {
-                  id: 'pDerived',
-                  constraint: 'derived',
-                  xExpression: 'pA.x + 1',
-                  yExpression: 'pA.y',
-                  dependencies: ['pA'],
-                },
-                { id: 'pGlider', constraint: 'glider', gliderTarget: 'segAB' },
-              ],
-              elements: [{ id: 'segAB', kind: 'segment', refs: ['pA', 'pDerived'] }],
-            },
-          },
-        },
-      ],
-    });
-
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-derived-pDerived-constraint');
-    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-derived-pGlider-glider-target-missing');
-    expect(diagramPointConstraints).toEqual(expect.arrayContaining(['derived', 'constrained']));
+  it('keeps every construction kind aligned with the inspector', () => {
+    expect(() => expectDiagramKindsAlignedWithInspector()).not.toThrow();
   });
 
   it('allows saving MDX documents containing unresolved ConceptLink and metadata references', () => {

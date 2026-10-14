@@ -1,39 +1,64 @@
-import type {
-  DiagramConstraint,
-  DiagramElement,
-  DiagramPoint,
-} from '@/diagrams/model/schema/types';
-import type { DiagramSceneBag } from '@/diagrams/geometry/layout/sceneTypes';
+import type { DiagramSpec } from '@/diagrams/model/schema/v3';
+import type { DiagramObject, DiagramRelation, PointObject } from '@/diagrams/model/schema/v3';
 import { evaluateMathExpression } from '@/diagrams/model/expressions/expressions';
-import { legacyElementCapabilities } from '@/diagrams/model/semantics/semantics';
+import { sceneObjectHasCapability } from '@/diagrams/model/semantics/semantics';
+import { objectKind, type DiagramObjectKind } from '@/diagrams/model/objects/kinds';
+import {
+  findObject,
+  isControlObject,
+  isMeasurableAngle,
+  isPositionedPoint,
+  pointGliderSupportId,
+  pointPosition,
+  angleSweep,
+  type PositionedPoint,
+} from '@/diagrams/model/objects/queries';
+import {
+  expressionSourceIds,
+  objectConstructionReferences,
+  objectExpressions,
+  projectionSupportPoints,
+} from '@/diagrams/model/objects/references';
+import { pointActiveRelations, sceneRelations } from '@/diagrams/model/objects/relations';
 
 export type Coordinates = { x: number; y: number };
 
-function resolveExpressionPoint(spec: DiagramSceneBag, point: DiagramPoint, visiting: Set<string>): Coordinates {
+/** Escena mínima que necesitan los cálculos geométricos. */
+export type DiagramScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport'>;
+
+function resolveExpressionPoint(spec: DiagramScene, point: PositionedPoint, visiting: Set<string>): Coordinates {
   const variables: Record<string, number> = {};
-  for (const dependencyId of point.dependencies ?? []) {
+  const sourceIds = new Set([
+    ...objectExpressions(point).flatMap(expressionSourceIds),
+    ...(point.interaction?.attractorIds ?? []),
+  ]);
+  sourceIds.delete(point.id);
+  for (const dependencyId of sourceIds) {
     const coordinates = resolvePointCoordinates(spec, dependencyId, new Set(visiting));
     if (coordinates) {
       variables[`${dependencyId}.x`] = coordinates.x;
       variables[`${dependencyId}.y`] = coordinates.y;
     }
-    const slider = spec.sliders.find(item => item.id === dependencyId);
-    if (slider) variables[dependencyId] = slider.value;
+    const control = findObject(spec, dependencyId);
+    if (isControlObject(control)) variables[dependencyId] = control.value;
   }
+  const fallback = pointPosition(point)!;
+  if (point.definition.type !== 'expression') return fallback;
   try {
     return {
-      x: evaluateMathExpression(point.xExpression!, variables),
-      y: evaluateMathExpression(point.yExpression!, variables),
+      x: evaluateMathExpression(point.definition.x, variables),
+      y: evaluateMathExpression(point.definition.y, variables),
     };
   } catch {
-    return { x: point.x, y: point.y };
+    return fallback;
   }
 }
 
-function resolveConstructedPoint(spec: DiagramSceneBag, derived: DiagramElement, visiting: Set<string>): Coordinates | undefined {
-  if (derived.kind === 'intersection') {
-    const first = linearSupportCarrier(spec, derived.refs[0], visiting);
-    const second = linearSupportCarrier(spec, derived.refs[1], visiting);
+function resolveConstructedPoint(spec: DiagramScene, derived: PointObject, visiting: Set<string>): Coordinates | undefined {
+  const definition = derived.definition;
+  if (definition.type === 'intersection') {
+    const first = linearSupportCarrier(spec, definition.supports[0], visiting);
+    const second = linearSupportCarrier(spec, definition.supports[1], visiting);
     if (!first || !second) return undefined;
     const firstDx = first.b.x - first.a.x;
     const firstDy = first.b.y - first.a.y;
@@ -46,15 +71,18 @@ function resolveConstructedPoint(spec: DiagramSceneBag, derived: DiagramElement,
     const parameter = (offsetX * secondDy - offsetY * secondDx) / denominator;
     return { x: first.a.x + parameter * firstDx, y: first.a.y + parameter * firstDy };
   }
-  if (derived.kind === 'midpoint') {
-    const a = resolvePointCoordinates(spec, derived.refs[0], visiting);
-    const b = resolvePointCoordinates(spec, derived.refs[1], visiting);
+  if (definition.type === 'midpoint') {
+    const a = resolvePointCoordinates(spec, definition.points[0], new Set(visiting));
+    const b = resolvePointCoordinates(spec, definition.points[1], new Set(visiting));
     return a && b ? { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 } : undefined;
   }
-  if (derived.kind === 'perpendicularFoot') {
-    const a = resolvePointCoordinates(spec, derived.refs[0], visiting);
-    const b = resolvePointCoordinates(spec, derived.refs[1], visiting);
-    const source = resolvePointCoordinates(spec, derived.refs[2], visiting);
+  if (definition.type === 'projection') {
+    const [lineA, lineB] = projectionSupportPoints(definition, spec.objects);
+    // Cada referencia se resuelve con su propia copia del recorrido: dos hermanas
+    // pueden depender del mismo punto sin que eso sea un ciclo.
+    const a = resolvePointCoordinates(spec, lineA, new Set(visiting));
+    const b = resolvePointCoordinates(spec, lineB, new Set(visiting));
+    const source = resolvePointCoordinates(spec, definition.point, new Set(visiting));
     if (!a || !b || !source) return undefined;
     const dx = b.x - a.x;
     const dy = b.y - a.y;
@@ -65,22 +93,23 @@ function resolveConstructedPoint(spec: DiagramSceneBag, derived: DiagramElement,
   return undefined;
 }
 
+/**
+ * Refleja el origen de una relación `reflection` (`refs`: destino, centro o eje,
+ * origen opcional) respecto de un punto o de un soporte lineal.
+ */
 export function resolveReflectedPoint(
-  spec: DiagramSceneBag,
-  direct: DiagramPoint,
-  constraint: DiagramConstraint,
+  spec: DiagramScene,
+  direct: PositionedPoint,
+  relation: Extract<DiagramRelation, { type: 'reflection' }>,
   visiting: Set<string>,
 ): Coordinates | undefined {
-  const targetId = constraint.refs[0];
-  const centerOrAxisId = constraint.refs[1];
-  const sourceId = constraint.refs.length >= 3 ? constraint.refs[2] : targetId;
+  const targetId = relation.refs[0];
+  const centerOrAxisId = relation.refs[1];
+  const sourceId = relation.refs.length >= 3 ? relation.refs[2] : targetId;
 
-  let sourceCoords: Coordinates | undefined;
-  if (sourceId === direct.id) {
-    sourceCoords = { x: direct.x, y: direct.y };
-  } else {
-    sourceCoords = resolvePointCoordinates(spec, sourceId, visiting);
-  }
+  const sourceCoords = sourceId === direct.id
+    ? pointPosition(direct)
+    : resolvePointCoordinates(spec, sourceId, visiting);
   if (!sourceCoords) return undefined;
 
   const centerCoords = resolvePointCoordinates(spec, centerOrAxisId, visiting);
@@ -108,54 +137,59 @@ export function resolveReflectedPoint(
   return undefined;
 }
 
-export function resolvePointCoordinates(spec: DiagramSceneBag, id: string, visiting = new Set<string>()): Coordinates | undefined {
-  const direct = spec.points.find(point => point.id === id);
+export function resolvePointCoordinates(spec: DiagramScene, id: string, visiting = new Set<string>()): Coordinates | undefined {
   if (visiting.has(id)) return undefined;
   visiting.add(id);
+  const object = findObject(spec, id);
+  if (object?.objectType !== 'point') return undefined;
 
-  if (direct) {
-    if (direct.constraint === 'constrained' && direct.constraintIds?.length) {
-      const reflectionConstraint = spec.constraints?.find(c => (
-        c.enabled
-        && c.kind === 'reflection'
-        && direct.constraintIds?.includes(c.id)
+  if (isPositionedPoint(object)) {
+    if (object.mobility.type === 'constrained' && object.mobility.relationIds.length > 0) {
+      const relationIds = object.mobility.relationIds;
+      const reflection = sceneRelations(spec).find(relation => (
+        relation.enabled
+        && relation.type === 'reflection'
+        && relationIds.includes(relation.id)
       ));
-      if (reflectionConstraint) {
-        const reflected = resolveReflectedPoint(spec, direct, reflectionConstraint, visiting);
+      if (reflection?.type === 'reflection') {
+        const reflected = resolveReflectedPoint(spec, object, reflection, visiting);
         if (reflected) return reflected;
       }
     }
-    if (direct.constraint === 'derived' && direct.xExpression && direct.yExpression) {
-      return resolveExpressionPoint(spec, direct, visiting);
-    }
-    return { x: direct.x, y: direct.y };
+    if (object.definition.type === 'expression') return resolveExpressionPoint(spec, object, visiting);
+    return pointPosition(object);
   }
 
-  const derived = spec.elements.find(element => element.id === id);
-  return derived ? resolveConstructedPoint(spec, derived, visiting) : undefined;
+  return resolveConstructedPoint(spec, object, visiting);
 }
 
+/** Dos puntos de la recta que soporta un objeto lineal (segmento, recta, semirrecta o recta construida). */
 export function linearSupportCarrier(
-  spec: DiagramSceneBag,
+  spec: DiagramScene,
   id: string,
   visiting: Set<string>,
-): { a: { x: number; y: number }; b: { x: number; y: number } } | undefined {
-  const support = spec.elements.find(element => element.id === id);
-  if (!support) return undefined;
-  const first = resolvePointCoordinates(spec, support.refs[0], new Set(visiting));
-  const second = resolvePointCoordinates(spec, support.refs[1], new Set(visiting));
-  if (!first || !second) return undefined;
-  if (support.kind === 'segment' || support.kind === 'line' || support.kind === 'ray') return { a: first, b: second };
-  const through = resolvePointCoordinates(spec, support.refs[2], new Set(visiting));
-  if (!through) return undefined;
-  if (support.kind === 'parallel') {
-    return { a: through, b: { x: through.x + second.x - first.x, y: through.y + second.y - first.y } };
+): { a: Coordinates; b: Coordinates } | undefined {
+  const support = findObject(spec, id);
+  if (support?.objectType !== 'path') return undefined;
+  const geometry = support.geometry;
+  const resolve = (pointId: string) => resolvePointCoordinates(spec, pointId, new Set(visiting));
+  if ((geometry.type === 'segment' && !geometry.construction) || geometry.type === 'ray') {
+    const first = resolve(geometry.points[0]);
+    const second = resolve(geometry.points[1]);
+    return first && second ? { a: first, b: second } : undefined;
   }
-  if (support.kind === 'perpendicular') {
-    return { a: through, b: { x: through.x - (second.y - first.y), y: through.y + second.x - first.x } };
+  if (geometry.type !== 'line') return undefined;
+  const construction = geometry.construction;
+  if (construction.type === 'through-points') {
+    const first = resolve(construction.points[0]);
+    const second = resolve(construction.points[1]);
+    return first && second ? { a: first, b: second } : undefined;
   }
-  if (support.kind === 'angleBisector') {
-    const vertex = second;
+  if (construction.type === 'angle-bisector') {
+    const first = resolve(construction.points[0]);
+    const vertex = resolve(construction.points[1]);
+    const through = resolve(construction.points[2]);
+    if (!first || !vertex || !through) return undefined;
     const firstDx = first.x - vertex.x;
     const firstDy = first.y - vertex.y;
     const secondDx = through.x - vertex.x;
@@ -170,42 +204,69 @@ export function linearSupportCarrier(
     }
     return { a: vertex, b: { x: vertex.x + directionX, y: vertex.y + directionY } };
   }
-  return undefined;
+  const first = resolve(construction.linePoints[0]);
+  const second = resolve(construction.linePoints[1]);
+  const through = resolve(construction.through);
+  if (!first || !second || !through) return undefined;
+  if (construction.type === 'parallel') {
+    return { a: through, b: { x: through.x + second.x - first.x, y: through.y + second.y - first.y } };
+  }
+  return { a: through, b: { x: through.x - (second.y - first.y), y: through.y + second.x - first.x } };
 }
 
-export function expressionVariables(spec: DiagramSceneBag): Record<string, number> {
+/**
+ * Referencias de construcción en orden geométrico; el pie de una perpendicular
+ * se lee como `[base A, base B, punto proyectado]`. Lo usan las variables
+ * `.length` y los encuadres.
+ */
+export function sceneReferences(spec: { readonly objects: readonly DiagramObject[] }, object: DiagramObject): string[] {
+  if (object.objectType === 'point' && object.definition.type === 'projection') {
+    return [...projectionSupportPoints(object.definition, spec.objects), object.definition.point];
+  }
+  return objectConstructionReferences(object);
+}
+
+/**
+ * Variables reactivas de la escena: coordenadas de puntos (`P.x`, `P.y`),
+ * valores de controles, longitudes (`s.length`) y amplitudes de ángulos
+ * (`a.value`, `a.radians`, `a.degrees`).
+ */
+export function expressionVariables(spec: DiagramScene): Record<string, number> {
   const variables: Record<string, number> = {};
-  spec.points.forEach(point => {
-    const coordinates = resolvePointCoordinates(spec, point.id);
+  spec.objects.forEach(object => {
+    if (!isPositionedPoint(object)) return;
+    const coordinates = resolvePointCoordinates(spec, object.id);
     if (!coordinates) return;
-    variables[`${point.id}.x`] = coordinates.x;
-    variables[`${point.id}.y`] = coordinates.y;
+    variables[`${object.id}.x`] = coordinates.x;
+    variables[`${object.id}.y`] = coordinates.y;
   });
-  spec.sliders.forEach(slider => {
-    variables[slider.id] = slider.value;
+  spec.objects.forEach(object => {
+    if (isControlObject(object)) variables[object.id] = object.value;
   });
-  spec.elements.forEach(element => {
-    const coordinates = resolvePointCoordinates(spec, element.id);
+  spec.objects.forEach(object => {
+    if (isPositionedPoint(object) || isControlObject(object)) return;
+    const coordinates = resolvePointCoordinates(spec, object.id);
     if (coordinates) {
-      variables[`${element.id}.x`] = coordinates.x;
-      variables[`${element.id}.y`] = coordinates.y;
+      variables[`${object.id}.x`] = coordinates.x;
+      variables[`${object.id}.y`] = coordinates.y;
     }
-    if (element.refs.length >= 2) {
-      const a = resolvePointCoordinates(spec, element.refs[0]);
-      const b = resolvePointCoordinates(spec, element.refs[1]);
-      if (a && b) variables[`${element.id}.length`] = Math.hypot(b.x - a.x, b.y - a.y);
+    const refs = sceneReferences(spec, object);
+    if (refs.length >= 2) {
+      const a = resolvePointCoordinates(spec, refs[0]);
+      const b = resolvePointCoordinates(spec, refs[1]);
+      if (a && b) variables[`${object.id}.length`] = Math.hypot(b.x - a.x, b.y - a.y);
     }
-    if ((element.kind === 'angle' || element.kind === 'nonReflexAngle') && element.refs.length >= 3) {
-      const first = resolvePointCoordinates(spec, element.refs[0]);
-      const vertex = resolvePointCoordinates(spec, element.refs[1]);
-      const second = resolvePointCoordinates(spec, element.refs[2]);
+    if (isMeasurableAngle(object)) {
+      const first = resolvePointCoordinates(spec, object.points[0]);
+      const vertex = resolvePointCoordinates(spec, object.points[1]);
+      const second = resolvePointCoordinates(spec, object.points[2]);
       const radians = first && vertex && second
-        ? angleMeasureRadians(element.kind, first, vertex, second)
+        ? angleMeasureRadians(angleSweep(object), first, vertex, second)
         : undefined;
       if (radians !== undefined) {
-        variables[`${element.id}.value`] = radians;
-        variables[`${element.id}.radians`] = radians;
-        variables[`${element.id}.degrees`] = radians * 180 / Math.PI;
+        variables[`${object.id}.value`] = radians;
+        variables[`${object.id}.radians`] = radians;
+        variables[`${object.id}.degrees`] = radians * 180 / Math.PI;
       }
     }
   });
@@ -238,13 +299,14 @@ export function angleMeasureRadians(
   return oriented < 0 ? oriented + Math.PI * 2 : oriented;
 }
 
-export function supportElements(spec: DiagramSceneBag): DiagramElement[] {
-  return spec.elements.filter(item => legacyElementCapabilities(item.kind).has('support'));
+/** Objetos sobre los que puede deslizar un punto. */
+export function supportElements(spec: Pick<DiagramSpec, 'objects'>): DiagramObject[] {
+  return spec.objects.filter(item => sceneObjectHasCapability(item, 'support'));
 }
 
-function projectToCircle(spec: DiagramSceneBag, support: DiagramElement, coordinates: Coordinates): Coordinates {
-  const center = resolvePointCoordinates(spec, support.refs[0]);
-  const edge = resolvePointCoordinates(spec, support.refs[1]);
+function projectToCircle(spec: DiagramScene, refs: readonly string[], coordinates: Coordinates): Coordinates {
+  const center = resolvePointCoordinates(spec, refs[0]);
+  const edge = resolvePointCoordinates(spec, refs[1]);
   if (!center || !edge) return coordinates;
   const radius = Math.hypot(edge.x - center.x, edge.y - center.y) || 1;
   const dx = coordinates.x - center.x;
@@ -269,65 +331,66 @@ function angleBisectorDirection(a: Coordinates, vertex: Coordinates, other: Coor
     : { x: sumX / sumLength, y: sumY / sumLength };
 }
 
-export function linearProjectionDirection(support: DiagramElement, a: Coordinates, b: Coordinates, through: Coordinates | undefined): Coordinates {
+export function linearProjectionDirection(kind: DiagramObjectKind, a: Coordinates, b: Coordinates, through: Coordinates | undefined): Coordinates {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
-  if (support.kind === 'angleBisector') return angleBisectorDirection(a, b, through) ?? { x: dx, y: dy };
-  if (support.kind === 'perpendicular') return { x: -dy, y: dx };
+  if (kind === 'angleBisector') return angleBisectorDirection(a, b, through) ?? { x: dx, y: dy };
+  if (kind === 'perpendicular') return { x: -dy, y: dx };
   return { x: dx, y: dy };
 }
 
-export function activePointConstraints(spec: DiagramSceneBag, point: DiagramPoint): DiagramConstraint[] {
-  return (point.constraintIds ?? [])
-    .map(constraintId => (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled))
-    .filter((constraint): constraint is DiagramConstraint => Boolean(constraint));
+export function activePointConstraints(spec: DiagramScene, point: PointObject): DiagramRelation[] {
+  return pointActiveRelations(spec, point);
 }
 
-/** Soporte de deslizamiento: `glider` directo o relación `on` en relaciones combinadas. */
-export function onSupportTargetId(spec: DiagramSceneBag, point: DiagramPoint): string | undefined {
-  if (point.constraint === 'glider' && point.gliderTarget) return point.gliderTarget;
-  if (point.constraint === 'constrained') {
-    const on = activePointConstraints(spec, point).find(constraint => (
-      constraint.kind === 'on' && constraint.refs[0] === point.id
+/** Soporte de deslizamiento: movilidad `on-support` directa o relación `on-support` en relaciones combinadas. */
+export function onSupportTargetId(spec: DiagramScene, point: PointObject): string | undefined {
+  const glider = pointGliderSupportId(point);
+  if (glider) return glider;
+  if (point.mobility.type === 'constrained') {
+    const on = activePointConstraints(spec, point).find(relation => (
+      relation.type === 'on-support' && relation.point === point.id
     ));
-    if (on) return on.refs[1];
+    if (on?.type === 'on-support') return on.support;
   }
   return undefined;
 }
 
 /** Punto cuya posición en el soporte mantiene JSXGraph sin re-resolución pasiva. */
-export function isJsxgraphOnSupportPoint(spec: DiagramSceneBag, point: DiagramPoint): boolean {
+export function isJsxgraphOnSupportPoint(spec: DiagramScene, point: PointObject): boolean {
   if (!onSupportTargetId(spec, point)) return false;
-  if (point.constraint === 'glider') return true;
-  return point.constraint === 'constrained' && activePointConstraints(spec, point).length === 1;
+  if (point.mobility.type === 'on-support') return true;
+  return point.mobility.type === 'constrained' && activePointConstraints(spec, point).length === 1;
 }
 
-export function asGliderPoint(point: DiagramPoint, supportId: string): DiagramPoint {
-  return { ...point, constraint: 'glider', gliderTarget: supportId };
+export function asGliderPoint<T extends PointObject>(point: T, supportId: string): T {
+  return { ...point, mobility: { type: 'on-support', support: supportId } };
 }
 
 export function projectPointToSupport(
-  spec: DiagramSceneBag,
-  point: DiagramPoint,
+  spec: DiagramScene,
+  point: PointObject,
   coordinates: { x: number; y: number },
 ): { x: number; y: number } {
-  if (!point.gliderTarget) return coordinates;
-  const support = spec.elements.find(item => item.id === point.gliderTarget);
+  const supportId = pointGliderSupportId(point);
+  if (!supportId) return coordinates;
+  const support = findObject(spec, supportId);
   if (!support) return coordinates;
+  const refs = objectConstructionReferences(support);
+  if (support.objectType === 'path' && support.geometry.type === 'circle') return projectToCircle(spec, refs, coordinates);
 
-  if (support.kind === 'circle') return projectToCircle(spec, support, coordinates);
-
-  const a = resolvePointCoordinates(spec, support.refs[0]);
-  const b = resolvePointCoordinates(spec, support.refs[1]);
-  const through = resolvePointCoordinates(spec, support.refs[2]);
-  const lineA = support.kind === 'perpendicular' || support.kind === 'parallel' ? through : a;
+  const kind = objectKind(support);
+  const a = refs[0] ? resolvePointCoordinates(spec, refs[0]) : undefined;
+  const b = refs[1] ? resolvePointCoordinates(spec, refs[1]) : undefined;
+  const through = refs[2] ? resolvePointCoordinates(spec, refs[2]) : undefined;
+  const lineA = kind === 'perpendicular' || kind === 'parallel' ? through : a;
   if (!lineA || !a || !b) return coordinates;
 
-  const angleVertex = support.kind === 'angleBisector' ? b : undefined;
-  const direction = linearProjectionDirection(support, a, b, through);
-  const origin = support.kind === 'angleBisector' && angleVertex ? angleVertex : lineA;
+  const angleVertex = kind === 'angleBisector' ? b : undefined;
+  const direction = linearProjectionDirection(kind, a, b, through);
+  const origin = kind === 'angleBisector' && angleVertex ? angleVertex : lineA;
   const lengthSquared = direction.x * direction.x + direction.y * direction.y || 1;
   const t = ((coordinates.x - origin.x) * direction.x + (coordinates.y - origin.y) * direction.y) / lengthSquared;
-  const projectedT = support.kind === 'ray' || support.kind === 'angleBisector' ? Math.max(0, t) : t;
+  const projectedT = kind === 'ray' || kind === 'angleBisector' ? Math.max(0, t) : t;
   return { x: origin.x + direction.x * projectedT, y: origin.y + direction.y * projectedT };
 }

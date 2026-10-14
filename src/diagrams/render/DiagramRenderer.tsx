@@ -5,8 +5,8 @@ import { StepNavigator } from '@/components/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/lib/page-context/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
 import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
-import {DIAGRAM_RENDERER_ID, type DiagramBounds, type DiagramElement, type DiagramSpecV3, type DiagramSpecV2, localizeDiagramSpec} from '@/diagrams/model'
-import {createScenePlan, prepareSceneSpec, sceneGeometryRevision, sceneStackRevision, zoomViewport} from '@/diagrams/geometry';
+import {DIAGRAM_RENDERER_ID, annotationViewportPosition, isControlObject, isPositionedPoint, localizeDiagramSpec, withPointPosition, type DiagramBounds, type DiagramObject, type DiagramSpec} from '@/diagrams/model'
+import {createScenePlan, resolveDiagramScene, sceneGeometryRevision, sceneStackRevision, zoomViewport} from '@/diagrams/geometry';
 import { useI18n } from '@/i18n';
 
 import { useDiagramSelection } from '@/diagrams/render/interaction/useDiagramSelection';
@@ -26,7 +26,7 @@ import { useCanvasControl } from './CanvasControlContext';
 import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
 
 export interface DiagramRendererProps {
-  spec: DiagramSpecV2 | DiagramSpecV3;
+  spec: DiagramSpec;
   lang?: string;
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
@@ -90,7 +90,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 
   const effectiveInputSpec = (canvasControl?.isCompleted && canvasControl?.activeSpec) || inputSpec;
   const localizedInputSpec = useMemo(() => localizeDiagramSpec(effectiveInputSpec, effectiveLang), [effectiveInputSpec, effectiveLang]);
-  const spec = useMemo(() => prepareSceneSpec(localizedInputSpec), [localizedInputSpec]);
+  const spec = useMemo(() => resolveDiagramScene(localizedInputSpec), [localizedInputSpec]);
 
   const isInteractionLocked = Boolean(readOnly || disabled || isCompleted || canvasControl?.isCompleted || interactive === false);
 
@@ -146,28 +146,32 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   });
   const liveVariablesSignatureRef = useRef('');
 
-  const liveViewportSpec: DiagramSpecV2 = useMemo(() => ({
+  const liveViewportSpec: DiagramSpec = useMemo(() => ({
     ...spec,
-    points: spec.points.map(point => {
-      const x = liveSceneVariables[`${point.id}.x`];
-      const y = liveSceneVariables[`${point.id}.y`];
-      return Number.isFinite(x) && Number.isFinite(y) ? { ...point, x, y } : point;
-    }),
-    sliders: spec.sliders.map(slider => {
-      const value = liveSceneVariables[slider.id];
-      return Number.isFinite(value) ? { ...slider, value } : slider;
+    objects: spec.objects.map(object => {
+      if (isPositionedPoint(object)) {
+        const x = liveSceneVariables[`${object.id}.x`];
+        const y = liveSceneVariables[`${object.id}.y`];
+        return Number.isFinite(x) && Number.isFinite(y) ? withPointPosition(object, { x, y }) : object;
+      }
+      if (isControlObject(object)) {
+        const value = liveSceneVariables[object.id];
+        return Number.isFinite(value) ? { ...object, value } : object;
+      }
+      return object;
     }),
   }), [liveSceneVariables, spec]);
 
   const allHeaderItems = useMemo(() => headerReadingItems(spec), [spec]);
   const allHeaderItemIds = useMemo(() => new Set(allHeaderItems.map(item => item.id)), [allHeaderItems]);
 
-  const hasTopViewportPanel = useMemo(() => spec.elements.some(item => (
-    item.kind === 'infoPanel'
-    && item.properties?.anchorMode === 'viewport'
-    && (item.properties.viewportPosition?.[1] ?? 0) <= 0.34
+  const hasTopViewportPanel = useMemo(() => spec.objects.some(item => (
+    item.objectType === 'annotation'
+    && item.variant === 'panel'
+    && annotationViewportPosition(item) !== undefined
+    && (annotationViewportPosition(item)?.[1] ?? 0) <= 0.34
     && !allHeaderItemIds.has(item.id)
-  )), [allHeaderItemIds, spec.elements]);
+  )), [allHeaderItemIds, spec.objects]);
 
   const headerItems = useMemo(() => {
     const visibleIds = new Set(createScenePlan(spec, { activeStepId: effectiveStepId })
@@ -177,8 +181,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   }, [allHeaderItems, effectiveStepId, spec]);
 
   const allHeaderReadings = allHeaderItems
-    .map(item => ({ item, text: headerReadingText(item, liveSceneVariables) }))
-    .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry.text));
+    .map(item => ({ item, text: headerReadingText(item, liveSceneVariables, spec) }))
+    .filter((entry): entry is { item: DiagramObject; text: string } => Boolean(entry.text));
   const compactReadings = compactHeaderReadings(allHeaderReadings, spec);
   const visibleHeaderItemIds = new Set(headerItems.map(item => item.id));
 

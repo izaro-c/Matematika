@@ -1,3 +1,5 @@
+import { isPositionedPoint, pointIsImmovable } from '@/diagrams';
+import { withPointMode } from '../../model/elements/pointModes';
 import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import { setVisibilityInAllSteps } from '../stepMatrixUtils';
@@ -35,10 +37,11 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
 
   const handleToggleLock = () => {
     const pointsToToggle = new Set(selectedIds);
-    const nextPoints = model.points.map(p =>
-      pointsToToggle.has(p.id) ? { ...p, fixed: !p.fixed } : p
-    );
-    onModelEdit({ ...model, points: nextPoints });
+    const nextObjects = model.objects.map(object => {
+      if (!pointsToToggle.has(object.id) || !isPositionedPoint(object)) return object;
+      return withPointMode(object, pointIsImmovable(object) ? 'free' : 'fixed');
+    });
+    onModelEdit({ ...model, objects: nextObjects });
   };
 
   return (

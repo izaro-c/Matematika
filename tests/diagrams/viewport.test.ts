@@ -1,38 +1,36 @@
 import { describe, expect, it } from 'vitest';
-import v2Fixture from '../fixtures/diagrams/diagram-spec-v2.json';
+import fixture from '../fixtures/diagrams/diagram-spec.json';
 import {computeAutoFitBounds,
   fitVisibleItemsAtStep,
-  migrateDiagramSpec,
   normalizeViewportBounds,
-  prepareSceneSpec,
   offscreenVisibleItemIds,
   resolveHomeViewport,
   resolveInitialCamera,
   unionBounds,
-  type DiagramSpecV2} from '@/diagrams/public';
+  type DiagramSpec,
+  type PointObject} from '@/diagrams/public';
 
-const baseSpec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);
+const baseSpec = fixture as DiagramSpec;
 
-function makeSpec(overrides: Partial<DiagramSpecV2> = {}): DiagramSpecV2 {
+function makeSpec(overrides: Partial<DiagramSpec> = {}): DiagramSpec {
   return { ...baseSpec, ...overrides };
 }
 
-function pointSpec(id: string, x: number, y: number, visible = true) {
+function pointSpec(id: string, x: number, y: number, visible = true): PointObject {
   return {
     id,
     label: id,
-    x,
-    y,
-    fixed: false,
-    constraint: 'free' as const,
-    color: 'terracota' as const,
+    objectType: 'point',
+    definition: { type: 'coordinates', x, y },
+    mobility: { type: 'free' },
+    color: 'terracota',
     layerId: 'geometry',
     order: 10,
     visible,
     locked: false,
     groupIds: [],
     target: false,
-    selection: { selectable: true, ariaLabel: id, role: 'primary' as const },
+    selection: { selectable: true, ariaLabel: id, role: 'primary' },
   };
 }
 
@@ -59,7 +57,7 @@ describe('diagram viewport semantics', () => {
   it('does not include offscreen items that are never visible in any step', () => {
     const spec = makeSpec({
       viewport: { ...baseSpec.viewport, bounds: [-2, 2, 2, -2], padding: 0.1 },
-      points: [
+      objects: [
         pointSpec('pNear', 0, 0, true),
         pointSpec('pFarHidden', 50, 50, true),
         pointSpec('pLater', 4, 4, false),
@@ -79,7 +77,7 @@ describe('diagram viewport semantics', () => {
 
   it('includes elements visible only in an intermediate step', () => {
     const spec = makeSpec({
-      points: [pointSpec('pA', 0, 0), pointSpec('pMid', 6, 0, false)],
+      objects: [pointSpec('pA', 0, 0), pointSpec('pMid', 6, 0, false)],
       steps: [
         { id: 's1', label: '1', description: 'A', visibleTargets: ['pA'] },
         { id: 's2', label: '2', description: 'Mid', visibleTargets: ['pA', 'pMid'], objectStates: { pMid: { visible: true } } },
@@ -96,7 +94,7 @@ describe('diagram viewport semantics', () => {
         { id: 'hidden', label: 'Oculta', order: 0, visible: false, locked: false },
         { id: 'geometry', label: 'Geometría', order: 1, visible: true, locked: false },
       ],
-      points: [
+      objects: [
         { ...pointSpec('pHiddenLayer', 20, 20), layerId: 'hidden' },
         pointSpec('pVisible', 0, 0),
       ],
@@ -114,7 +112,7 @@ describe('diagram viewport semantics', () => {
         locked: false,
         selection: { selectable: true, ariaLabel: 'g', role: 'primary' },
       }],
-      points: [
+      objects: [
         { ...pointSpec('pGrouped', 30, 30), groupIds: ['hidden-group'] },
         pointSpec('pVisible', 0, 0),
       ],
@@ -125,7 +123,7 @@ describe('diagram viewport semantics', () => {
 
   it('respects explicit step visibility overrides over base visibility', () => {
     const spec = makeSpec({
-      points: [pointSpec('pBaseHidden', 3, 3, false)],
+      objects: [pointSpec('pBaseHidden', 3, 3, false)],
       steps: [{
         id: 's1',
         label: '1',
@@ -141,7 +139,7 @@ describe('diagram viewport semantics', () => {
 
   it('returns null auto-fit when no element is visible', () => {
     const spec = makeSpec({
-      points: [pointSpec('pHidden', 0, 0, false)],
+      objects: [pointSpec('pHidden', 0, 0, false)],
       steps: [{ id: 's1', label: '1', description: 'x', visibleTargets: [] }],
     });
     expect(computeAutoFitBounds(spec)).toBeNull();
@@ -151,7 +149,7 @@ describe('diagram viewport semantics', () => {
     const bounds = unionBounds([[-1, 1, 1, -1], [2, 4, 4, 2]]);
     expect(bounds).toEqual([-1, 4, 4, -1]);
     const spec = makeSpec({
-      points: [pointSpec('pA', -1, 0), pointSpec('pB', 3, 3)],
+      objects: [pointSpec('pA', -1, 0), pointSpec('pB', 3, 3)],
       steps: [
         { id: 's1', label: '1', description: 'A', visibleTargets: ['pA'] },
         { id: 's2', label: '2', description: 'B', visibleTargets: ['pB'] },
@@ -166,7 +164,7 @@ describe('diagram viewport semantics', () => {
   it('detects only currently visible offscreen items for recovery', () => {
     const spec = makeSpec({
       viewport: { ...baseSpec.viewport, bounds: [-2, 2, 2, -2] },
-      points: [pointSpec('pNear', 0, 0), pointSpec('pFar', 20, 20)],
+      objects: [pointSpec('pNear', 0, 0), pointSpec('pFar', 20, 20)],
       steps: [
         { id: 's1', label: '1', description: 'near', visibleTargets: ['pNear'] },
         { id: 's2', label: '2', description: 'far', visibleTargets: ['pFar'] },
@@ -181,7 +179,7 @@ describe('diagram viewport semantics', () => {
   it('regression: far hidden auxiliary is ignored while later visible element is included', () => {
     const spec = makeSpec({
       viewport: { bounds: [-2, 2, 2, -2], home: [-2, 2, 2, -2], minZoom: 0.2, maxZoom: 12, padding: 0.1 },
-      points: [
+      objects: [
         pointSpec('pMain', 0, 0, true),
         pointSpec('pAuxFar', 50, 50, true),
         pointSpec('pLater', 3, 3, false),

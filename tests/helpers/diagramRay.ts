@@ -1,5 +1,6 @@
 import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
-import { projectPointToSupport, withMovedPoint } from '@/diagrams/geometry/layout/scene';
+import { asGliderPoint, projectPointToSupport, withMovedPoint } from '@/diagrams/geometry';
+import { movedTo, pointById, positionOf } from './diagramSpec';
 
 export function distanceToSupport(
   spec: VisualDiagramModel,
@@ -7,12 +8,7 @@ export function distanceToSupport(
   supportId: string,
   result: { x: number; y: number },
 ): number {
-  const p = spec.points.find(item => item.id === pointId)!;
-  const onSupport = projectPointToSupport(
-    spec,
-    { ...p, constraint: 'glider', gliderTarget: supportId },
-    result,
-  );
+  const onSupport = projectPointToSupport(spec, asGliderPoint(pointById(spec, pointId), supportId), result);
   return Math.hypot(result.x - onSupport.x, result.y - onSupport.y);
 }
 
@@ -22,9 +18,9 @@ export function rayParameter(
   originId: string,
   directionId: string,
 ): number {
-  const p = spec.points.find(item => item.id === pointId)!;
-  const origin = spec.points.find(item => item.id === originId)!;
-  const direction = spec.points.find(item => item.id === directionId)!;
+  const p = positionOf(spec, pointId);
+  const origin = positionOf(spec, originId);
+  const direction = positionOf(spec, directionId);
   const dx = direction.x - origin.x;
   const dy = direction.y - origin.y;
   const len = dx * dx + dy * dy || 1;
@@ -39,22 +35,18 @@ export function placeGliderOnSupport(
   originId: string,
   directionId: string,
 ): VisualDiagramModel {
-  const pPrev = previous.points.find(item => item.id === pointId)!;
-  const origin0 = previous.points.find(item => item.id === originId)!;
-  const direction0 = previous.points.find(item => item.id === directionId)!;
-  const origin1 = next.points.find(item => item.id === originId)!;
-  const direction1 = next.points.find(item => item.id === directionId)!;
+  const pPrev = positionOf(previous, pointId);
+  const origin0 = positionOf(previous, originId);
+  const direction0 = positionOf(previous, directionId);
+  const origin1 = positionOf(next, originId);
+  const direction1 = positionOf(next, directionId);
   const dx0 = direction0.x - origin0.x;
   const dy0 = direction0.y - origin0.y;
   const len0 = dx0 * dx0 + dy0 * dy0 || 1;
   const t = Math.max(0, ((pPrev.x - origin0.x) * dx0 + (pPrev.y - origin0.y) * dy0) / len0);
   const dx1 = direction1.x - origin1.x;
   const dy1 = direction1.y - origin1.y;
-  const glider = { x: origin1.x + t * dx1, y: origin1.y + t * dy1 };
-  return {
-    ...next,
-    points: next.points.map(item => item.id === pointId ? { ...item, ...glider } : item),
-  };
+  return movedTo(next, pointId, origin1.x + t * dx1, origin1.y + t * dy1);
 }
 
 /**
@@ -70,10 +62,7 @@ export function moveSupportPoint(
   originId: string,
   directionId: string,
 ): VisualDiagramModel {
-  const drafted = {
-    ...spec,
-    points: spec.points.map(item => item.id === draggedId ? { ...item, x, y } : item),
-  };
+  const drafted = movedTo(spec, draggedId, x, y);
   const withGlider = placeGliderOnSupport(spec, drafted, gliderId, originId, directionId);
   return withMovedPoint(withGlider, draggedId, x, y);
 }

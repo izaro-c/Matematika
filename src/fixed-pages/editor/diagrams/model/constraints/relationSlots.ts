@@ -1,4 +1,4 @@
-import type { DiagramSceneItem } from '@/diagrams';
+import { isMeasurableAngle, type AngleObject, type DiagramObject } from '@/diagrams';
 import {
   angleCandidates,
   areaCandidates,
@@ -7,12 +7,14 @@ import {
   pointLikeCandidates,
   reflectionAxisCandidates,
   supportCandidates,
-} from '../scene/v3Projection';
+} from '../scene/sceneCandidates';
 import {
   combinedConstraintBlockReason,
   constraintPresentation,
 } from '../constraints/constraintOptions';
-import type { VisualConstraint, VisualDiagramModel } from '../types';
+import type { VisualDiagramModel } from '../types';
+import type { RelationIntent } from './relationIntents';
+import { modelPoints } from '../scene/objectLists';
 
 export type RelationSlotKindFilter =
   | 'point'
@@ -41,7 +43,7 @@ export interface RelationAvailability {
   reason?: string;
 }
 
-const POINT_POINT_KINDS = new Set<VisualConstraint['kind']>([
+const POINT_POINT_KINDS = new Set<RelationIntent>([
   'horizontal',
   'vertical',
   'coincident',
@@ -52,7 +54,7 @@ function subjectSlot(label = 'Punto restringido'): RelationSlot {
   return { index: 0, label, filter: 'point', subject: true };
 }
 
-export function slotsFor(kind: VisualConstraint['kind']): RelationSlot[] {
+export function slotsFor(kind: RelationIntent): RelationSlot[] {
   switch (kind) {
     case 'fixed':
     case 'expression':
@@ -133,25 +135,31 @@ export function slotsFor(kind: VisualConstraint['kind']): RelationSlot[] {
   }
 }
 
-function excludeIds(items: DiagramSceneItem[], refs: readonly string[], upToIndex: number): DiagramSceneItem[] {
+function anglesWithSideEndpoint(model: VisualDiagramModel, pointId: string): AngleObject[] {
+  return model.objects.filter((object): object is AngleObject => (
+    isMeasurableAngle(object) && (object.points[0] === pointId || object.points[2] === pointId)
+  ));
+}
+
+function excludeIds(items: DiagramObject[], refs: readonly string[], upToIndex: number): DiagramObject[] {
   const blocked = new Set(refs.slice(0, upToIndex));
   return items.filter(item => !blocked.has(item.id));
 }
 
 export function candidatesForSlot(
   model: VisualDiagramModel,
-  kind: VisualConstraint['kind'],
+  kind: RelationIntent,
   index: number,
   refs: readonly string[],
-): DiagramSceneItem[] {
+): DiagramObject[] {
   const slot = slotsFor(kind).find(item => item.index === index);
   if (!slot) return [];
 
   switch (slot.filter) {
     case 'point':
-      return model.points.filter(candidate => candidate.id === refs[0] || index === 0);
+      return modelPoints(model).filter(candidate => candidate.id === refs[0] || index === 0);
     case 'other-points':
-      return excludeIds(model.points, refs, index);
+      return excludeIds(modelPoints(model), refs, index);
     case 'support':
       return supportCandidates(model);
     case 'area':
@@ -167,59 +175,43 @@ export function candidatesForSlot(
     case 'equal-length-segment':
       return otherSegmentCandidatesForEqualLength(model, refs[1], refs[0]);
     case 'equal-angle-vertex': {
-      const targetAngles = model.elements.filter(element => (
-        (element.kind === 'angle' || element.kind === 'nonReflexAngle')
-        && (element.refs[0] === refs[0] || element.refs[2] === refs[0])
-      ));
-      return model.points.filter(candidate => targetAngles.some(angle => angle.refs[1] === candidate.id));
+      const targetAngles = anglesWithSideEndpoint(model, refs[0]);
+      return modelPoints(model).filter(candidate => targetAngles.some(angle => angle.points[1] === candidate.id));
     }
     case 'equal-angle-fixed': {
-      const targetAngles = model.elements.filter(element => (
-        (element.kind === 'angle' || element.kind === 'nonReflexAngle')
-        && (element.refs[0] === refs[0] || element.refs[2] === refs[0])
-      ));
-      return model.points.filter(candidate => targetAngles.some(angle => (
-        angle.refs[1] === refs[1]
+      const targetAngles = anglesWithSideEndpoint(model, refs[0]);
+      return modelPoints(model).filter(candidate => targetAngles.some(angle => (
+        angle.points[1] === refs[1]
         && candidate.id !== refs[0]
-        && (angle.refs[0] === candidate.id || angle.refs[2] === candidate.id)
+        && (angle.points[0] === candidate.id || angle.points[2] === candidate.id)
       )));
     }
     case 'equal-angle-source': {
-      const targetAngles = model.elements.filter(element => (
-        (element.kind === 'angle' || element.kind === 'nonReflexAngle')
-        && (element.refs[0] === refs[0] || element.refs[2] === refs[0])
-      ));
-      const targetAngle = targetAngles.find(angle => angle.refs[1] === refs[1] && angle.refs.includes(refs[2]));
-      const kinds = targetAngle?.kind === 'angle' || targetAngle?.kind === 'nonReflexAngle'
-        ? [targetAngle.kind]
-        : undefined;
+      const targetAngle = anglesWithSideEndpoint(model, refs[0])
+        .find(angle => angle.points[1] === refs[1] && angle.points.includes(refs[2]));
+      const kinds = targetAngle ? [targetAngle.sweep === 'directed' ? 'angle' as const : 'nonReflexAngle' as const] : undefined;
       return angleCandidates(model, kinds).filter(element => (
-        element.id !== targetAngle?.id && !element.refs.includes(refs[0])
+        element.id !== targetAngle?.id && !(element.objectType === 'angle' && element.points.includes(refs[0]))
       ));
     }
-    case 'equal-angle-target': {
-      const targetAngles = model.elements.filter(element => (
-        (element.kind === 'angle' || element.kind === 'nonReflexAngle')
-        && (element.refs[0] === refs[0] || element.refs[2] === refs[0])
-      ));
-      return targetAngles;
-    }
+    case 'equal-angle-target':
+      return anglesWithSideEndpoint(model, refs[0]);
     default:
       return [];
   }
 }
 
 /** Editable slots only (excludes subject index 0). */
-export function editableSlotsFor(kind: VisualConstraint['kind']): RelationSlot[] {
+export function editableSlotsFor(kind: RelationIntent): RelationSlot[] {
   return slotsFor(kind).filter(slot => !slot.subject);
 }
 
 export function relationAvailability(
   model: VisualDiagramModel,
-  kind: VisualConstraint['kind'],
+  kind: RelationIntent,
   targetId: string,
-  activeKinds: readonly VisualConstraint['kind'][],
-  options?: { ignoreKind?: VisualConstraint['kind'] },
+  activeKinds: readonly RelationIntent[],
+  options?: { ignoreKind?: RelationIntent },
 ): RelationAvailability {
   const reason = combinedConstraintBlockReason(model, kind, targetId, activeKinds, options);
   if (reason) return { status: 'disabled', reason };

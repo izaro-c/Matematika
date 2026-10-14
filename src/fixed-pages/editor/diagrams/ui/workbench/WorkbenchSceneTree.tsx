@@ -1,6 +1,10 @@
+import type { ElementUpdate, PointUpdate, SliderUpdate } from '../inspector/types';
+import { objectKind, pointIsImmovable } from '@/diagrams';
+import { withPointMode } from '../../model/elements/pointModes';
+import { modelElements, modelPoints, modelSliders } from '../../model/scene/objectLists';
 import React, { useState } from 'react';
 import katex from 'katex';
-import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider } from '../../model/types';
+import type { VisualDiagramModel } from '../../model/types';
 import { PALETTE_TOKENS } from '../inspector/paletteTokens';
 import { IconEye, IconEyeOff, IconLock, IconUnlock, IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
 import { ObjectListBatchToolbar } from '../scene/ObjectListBatchToolbar';
@@ -66,9 +70,9 @@ interface WorkbenchSceneTreeProps {
   model: VisualDiagramModel | null;
   selectedIds: readonly string[];
   onSelectObjects: (ids: string[], additive?: boolean) => void;
-  onUpdatePoint: (id: string, updates: Partial<VisualPoint>) => void;
-  onUpdateElement?: (id: string, updates: Partial<VisualElement>) => void;
-  onUpdateSlider?: (id: string, updates: Partial<VisualSlider>) => void;
+  onUpdatePoint: (id: string, updates: PointUpdate) => void;
+  onUpdateElement?: (id: string, updates: ElementUpdate) => void;
+  onUpdateSlider?: (id: string, updates: SliderUpdate) => void;
   onUpdateModel?: (nextModel: VisualDiagramModel, label: string) => void;
   onCopySelection?: () => void;
   onDeleteSelection?: () => void;
@@ -103,15 +107,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
     setOpenCategory(prev => ({ ...prev, [cat]: !prev[cat] }));
   };
 
-  const points = model.points || [];
-  const lines = (model.elements || []).filter(e =>
-    ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'segmentExtension', 'angleBisector'].includes(e.kind)
+  const points = modelPoints(model) || [];
+  const lines = (modelElements(model) || []).filter(e =>
+    ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'segmentExtension', 'angleBisector'].includes(objectKind(e))
   );
-  const circles = (model.elements || []).filter(e => ['circle', 'arc'].includes(e.kind));
-  const anglesAndMarks = (model.elements || []).filter(e =>
-    ['angle', 'nonReflexAngle', 'rightAngle', 'congruenceMark', 'parallelMark', 'perpendicularMark', 'measureTicks'].includes(e.kind)
+  const circles = (modelElements(model) || []).filter(e => ['circle', 'arc'].includes(objectKind(e)));
+  const anglesAndMarks = (modelElements(model) || []).filter(e =>
+    ['angle', 'nonReflexAngle', 'rightAngle', 'congruenceMark', 'parallelMark', 'perpendicularMark', 'measureTicks'].includes(objectKind(e))
   );
-  const curvesAndAreas = (model.elements || []).filter(e =>
+  const curvesAndAreas = (modelElements(model) || []).filter(e =>
     [
       'functionCurve',
       'parametricCurve',
@@ -122,15 +126,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
       'areaIntersection',
       'polygon',
       'grid',
-    ].includes(e.kind)
+    ].includes(objectKind(e))
   );
-  const derivedPoints = (model.elements || []).filter(e =>
-    ['intersection', 'midpoint', 'perpendicularFoot'].includes(e.kind)
+  const derivedPoints = (modelElements(model) || []).filter(e =>
+    ['intersection', 'midpoint', 'perpendicularFoot'].includes(objectKind(e))
   );
-  const annotations = (model.elements || []).filter(e =>
-    ['text', 'label', 'formula', 'measurement', 'dimensionLine', 'infoPanel'].includes(e.kind)
+  const annotations = (modelElements(model) || []).filter(e =>
+    ['text', 'label', 'formula', 'measurement', 'dimensionLine', 'infoPanel'].includes(objectKind(e))
   );
-  const uncategorized = (model.elements || []).filter(e =>
+  const uncategorized = (modelElements(model) || []).filter(e =>
     ![
       ...lines,
       ...circles,
@@ -140,8 +144,8 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
       ...annotations,
     ].some(listed => listed.id === e.id)
   );
-  const sliders = model.sliders || [];
-  const totalObjects = points.length + (model.elements || []).length + sliders.length;
+  const sliders = modelSliders(model) || [];
+  const totalObjects = points.length + (modelElements(model) || []).length + sliders.length;
 
   const renderSectionHeader = (key: string, title: string, count: number) => (
     <button
@@ -273,11 +277,11 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               p.id,
               p.label,
               p.color,
-              p.fixed ? 'Fijo' : 'Libre',
+              pointIsImmovable(p) ? 'Fijo' : 'Libre',
               p.visible !== false,
-              p.fixed || false,
+              pointIsImmovable(p),
               () => onUpdatePoint(p.id, { visible: p.visible === false }),
-              () => onUpdatePoint(p.id, { fixed: !p.fixed, constraint: p.fixed ? 'free' : 'fixed' })
+              () => onUpdatePoint(p.id, current => withPointMode(current, pointIsImmovable(current) ? 'free' : 'fixed'))
             )
           )
         )}
@@ -291,7 +295,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -308,7 +312,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -325,7 +329,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -342,7 +346,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -359,7 +363,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -376,7 +380,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
@@ -412,7 +416,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.id,
               e.label,
               e.color,
-              e.kind,
+              objectKind(e),
               e.visible !== false,
               false,
               onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined

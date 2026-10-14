@@ -1,20 +1,303 @@
 {
-  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Ángulos y marcas", "componentId": "marks-angles", "category": "Demos", "mode": "diagram", "axis": false, "grid": false,
-  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
-  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
-  "points": [
-    { "id": "pA", "label": "A", "x": -2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 0, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "pV", "label": "V", "x": 0, "y": 0, "fixed": true, "constraint": "fixed", "color": "terracota", "layerId": "geometry", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "pB", "label": "B", "x": 0, "y": 2, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Ángulos y marcas",
+  "componentId": "marks-angles",
+  "category": "Demos",
+  "mode": "diagram",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -4,
+      4,
+      4,
+      -4
+    ],
+    "home": [
+      -4,
+      4,
+      4,
+      -4
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    }
   ],
-  "elements": [
-    { "id": "segAV", "label": "Segmento AV", "kind": "segment", "refs": ["pA", "pV"], "color": "carbon", "layerId": "geometry", "order": 9, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "angleAVB", "label": "Ángulo AVB", "kind": "angle", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "nonReflexAngleAVB", "label": "Ángulo no reflejo AVB", "kind": "nonReflexAngle", "refs": ["pA", "pV", "pB"], "color": "pavo", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "perpAVB", "label": "Perpendicularidad", "kind": "perpendicularMark", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "congAV", "label": "Congruencia AV", "kind": "congruenceMark", "refs": ["pA", "pV"], "color": "terracota", "layerId": "geometry", "order": 13, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "markCount": 2 }, "style": { "markHeight": 0.4 } },
-    { "id": "parallelAV", "label": "Paralelismo AV", "kind": "parallelMark", "refs": ["pA", "pV"], "color": "pavo", "layerId": "geometry", "order": 14, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "markCount": 2 }, "style": { "markHeight": 0.42 } },
-    { "id": "ticksAV", "label": "Marcas de medida AV", "kind": "measureTicks", "refs": ["segAV"], "color": "carbon", "layerId": "geometry", "order": 15, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "tickDistance": 2 }, "style": { "markHeight": 12 } }
+  "groups": [],
+  "objects": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "pV",
+      "label": "V",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "segAV",
+      "label": "Segmento AV",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 9,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pV"
+        ]
+      },
+      "appearance": {}
+    },
+    {
+      "id": "angleAVB",
+      "label": "Ángulo AVB",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "pV",
+        "pB"
+      ],
+      "sweep": "directed",
+      "marker": "arc",
+      "appearance": {}
+    },
+    {
+      "id": "nonReflexAngleAVB",
+      "label": "Ángulo no reflejo AVB",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "pV",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {}
+    },
+    {
+      "id": "perpAVB",
+      "label": "Perpendicularidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "pV",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpAVB-perpendicular",
+      "appearance": {}
+    },
+    {
+      "id": "congAV",
+      "label": "Congruencia AV",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pV"
+        ]
+      },
+      "count": 2,
+      "height": 0.4,
+      "appearance": {}
+    },
+    {
+      "id": "parallelAV",
+      "label": "Paralelismo AV",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pV"
+        ]
+      },
+      "count": 2,
+      "height": 0.42,
+      "appearance": {}
+    },
+    {
+      "id": "ticksAV",
+      "label": "Marcas de medida AV",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 15,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true
+      },
+      "target": true,
+      "objectType": "mark",
+      "variant": "graduation",
+      "anchor": {
+        "type": "path",
+        "path": "segAV"
+      },
+      "count": 1,
+      "height": 12,
+      "spacing": 2,
+      "appearance": {}
+    }
   ],
-  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Ángulo, congruencia y perpendicularidad.", "extensions": { "acceptanceFamily": "marks-angles" }
+  "relations": [
+    {
+      "id": "perpAVB-perpendicular",
+      "label": "Perpendicularidad de Perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pV",
+          "pA"
+        ],
+        [
+          "pV",
+          "pB"
+        ]
+      ]
+    }
+  ],
+  "steps": [],
+  "note": "Ángulo, congruencia y perpendicularidad."
 }

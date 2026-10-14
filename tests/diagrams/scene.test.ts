@@ -1,20 +1,29 @@
 import { describe, expect, it } from 'vitest';
-import v2Fixture from '../fixtures/diagrams/diagram-spec-v2.json';
-import { prepareSceneSpec,
+import fixture from '../fixtures/diagrams/diagram-spec.json';
+import {
   createScenePlan,
   createSceneConstructionPlan,
   fitViewport,
-  migrateDiagramSpec,
   offscreenItemIds,
   recoverViewport,
+  resolveDiagramScene,
   resolvePointCoordinates,
-  zoomViewport} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+  zoomViewport,
+  type DiagramObject,
+  type DiagramSpec,
+  type PointObject,
+} from '@/diagrams/public';
+import { element, point, withPointMode } from '@/fixed-pages/editor/diagrams/model';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
 import { CuadrilateroSpec } from '../../content/diagrams/Definiciones/Cuadrilatero';
+import { findById } from '../helpers/diagramSpec';
 
-const spec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);
-const triangulo = toWorkingSceneV2(TrianguloSpec);
+const spec = resolveDiagramScene(fixture as unknown as DiagramSpec);
+const triangulo = TrianguloSpec;
+
+function withObjects(objects: DiagramObject[]): DiagramSpec {
+  return { ...spec, objects: [...spec.objects, ...objects] };
+}
 
 describe('shared diagram scene semantics', () => {
   it('combines layer order, steps, visibility, lock and selection deterministically', () => {
@@ -26,12 +35,12 @@ describe('shared diagram scene semantics', () => {
   });
 
   it('lets explicit references and selection override the local hover opt-out', () => {
-    const target = spec.points.find(point => point.groupIds.includes('triangle-group'))!;
+    const target = spec.objects.find(object => object.objectType === 'point' && object.groupIds.includes('triangle-group'))!;
     const quietSpec = {
       ...spec,
-      points: spec.points.map(point => point.id === target.id
-        ? { ...point, selection: { ...point.selection, highlightable: false } }
-        : point),
+      objects: spec.objects.map(object => object.id === target.id
+        ? { ...object, selection: { ...object.selection, highlightable: false } }
+        : object),
     };
     const plan = createScenePlan(quietSpec, {
       selectedIds: [target.id],
@@ -50,30 +59,10 @@ describe('shared diagram scene semantics', () => {
   });
 
   it('separates topological construction order from visual layer order', () => {
-    const derivedSpec = {
-      ...spec,
-      elements: [
-        ...spec.elements,
-        {
-          ...spec.elements[0],
-          id: 'lineAfterMidpoint',
-          label: 'Perpendicular por el punto medio',
-          kind: 'perpendicular' as const,
-          refs: ['pA', 'pB', 'midAB'],
-          order: -10,
-          groupIds: [],
-        },
-        {
-          ...spec.elements[0],
-          id: 'midAB',
-          label: 'Punto medio AB',
-          kind: 'midpoint' as const,
-          refs: ['pA', 'pB'],
-          order: 100,
-          groupIds: [],
-        },
-      ],
-    };
+    const derivedSpec = withObjects([
+      { ...element('lineAfterMidpoint', 'Perpendicular por el punto medio', 'perpendicular', ['pA', 'pB', 'midAB'], 'pavo'), order: -10 },
+      { ...element('midAB', 'Punto medio AB', 'midpoint', ['pA', 'pB'], 'terracota'), order: 100 },
+    ]);
     const visualIds = createScenePlan(derivedSpec).map(entry => entry.item.id);
     const constructionIds = createSceneConstructionPlan(derivedSpec).map(entry => entry.item.id);
     expect(visualIds.indexOf('lineAfterMidpoint')).toBeLessThan(visualIds.indexOf('midAB'));
@@ -81,23 +70,17 @@ describe('shared diagram scene semantics', () => {
   });
 
   it('keeps reciprocal drag attractors out of the construction order', () => {
-    const segment = spec.elements.find(item => item.id === 'segAB')!;
-    const reciprocalSpec = {
+    const reciprocalSpec: DiagramSpec = {
       ...spec,
-      points: spec.points.map(point => {
-        if (point.id === 'pA') return { ...point, attractorIds: ['lineAfterMidpoint'] };
-        if (point.id === 'pB') return { ...point, attractorIds: ['segCA'] };
-        return point;
-      }),
-      elements: [
-        ...spec.elements,
-        { ...segment, id: 'midAB', label: 'Punto medio AB', kind: 'midpoint' as const, refs: ['pA', 'pB'], order: 100 },
-        { ...segment, id: 'lineAfterMidpoint', label: 'Mediatriz AB', kind: 'perpendicular' as const, refs: ['pA', 'pB', 'midAB'], order: -10 },
-        { ...segment, id: 'segCA', label: 'Segmento CA', refs: ['pC', 'pA'], order: 90 },
-      ],
-      dependencies: [
-        { sourceId: 'lineAfterMidpoint', targetId: 'pA', relation: 'constraint' as const },
-        { sourceId: 'segCA', targetId: 'pB', relation: 'constraint' as const },
+      objects: [
+        ...spec.objects.map(object => {
+          if (object.id === 'pA' && object.objectType === 'point') return { ...object, interaction: { attractorIds: ['lineAfterMidpoint'] } };
+          if (object.id === 'pB' && object.objectType === 'point') return { ...object, interaction: { attractorIds: ['segCA'] } };
+          return object;
+        }),
+        { ...element('midAB', 'Punto medio AB', 'midpoint', ['pA', 'pB'], 'terracota'), order: 100 },
+        { ...element('lineAfterMidpoint', 'Mediatriz AB', 'perpendicular', ['pA', 'pB', 'midAB'], 'pavo'), order: -10 },
+        { ...element('segCA', 'Segmento CA', 'segment', ['pC', 'pA'], 'carbon'), order: 90 },
       ],
     };
 
@@ -105,7 +88,7 @@ describe('shared diagram scene semantics', () => {
 
     expect(constructionIds.indexOf('midAB')).toBeLessThan(constructionIds.indexOf('lineAfterMidpoint'));
     expect(new Set(constructionIds).size).toBe(constructionIds.length);
-    expect(constructionIds).toHaveLength(reciprocalSpec.points.length + reciprocalSpec.elements.length + reciprocalSpec.sliders.length);
+    expect(constructionIds).toHaveLength(reciprocalSpec.objects.length);
   });
 
   it('computes exact equilateral magnetic targets for every triangle vertex', () => {
@@ -115,8 +98,8 @@ describe('shared diagram scene semantics', () => {
       C: ['A', 'B'],
     };
     for (const pointId of ['A', 'B', 'C']) {
-      const point = triangulo.points.find(item => item.id === pointId)!;
-      const equilateralTarget = resolvePointCoordinates(triangulo, point.attractorIds![0])!;
+      const vertex = findById<PointObject>(triangulo, pointId);
+      const equilateralTarget = resolvePointCoordinates(triangulo, vertex.interaction!.attractorIds![0])!;
       const [firstId, secondId] = oppositeVertices[pointId];
       const first = resolvePointCoordinates(triangulo, firstId)!;
       const second = resolvePointCoordinates(triangulo, secondId)!;
@@ -131,17 +114,16 @@ describe('shared diagram scene semantics', () => {
   it('treats a point with the fixed constraint as immovable scene state', () => {
     const fixedSpec = {
       ...spec,
-      points: spec.points.map((point, index) => index === 0 ? { ...point, fixed: false, constraint: 'fixed' as const } : point),
+      objects: spec.objects.map(object => object.id === 'pA' && object.objectType === 'point' ? withPointMode(object as never, 'fixed') : object),
     };
-    const fixedPoint = createScenePlan(fixedSpec).find(entry => entry.item.id === fixedSpec.points[0].id);
+    const fixedPoint = createScenePlan(fixedSpec).find(entry => entry.item.id === 'pA');
     expect(fixedPoint?.locked).toBe(true);
   });
 
   it('orders items by within-layer rank instead of raw order magnitudes', () => {
     const layeredSpec = {
       ...spec,
-      points: spec.points.map((point, index) => ({ ...point, order: (index + 1) * 100_000 })),
-      elements: spec.elements.map((element, index) => ({ ...element, order: (index + 1) * 100_000 })),
+      objects: spec.objects.map((object, index) => ({ ...object, order: (index + 1) * 100_000 })),
     };
     const plan = createScenePlan(layeredSpec);
     const geometryLayerOrder = layeredSpec.layers.find(layer => layer.id === 'geometry')?.order ?? 0;
@@ -151,17 +133,15 @@ describe('shared diagram scene semantics', () => {
   });
 
   it('excludes invisible reference points from bounds calculations', () => {
-    const specWithInvisibleAux = {
+    const specWithInvisibleAux: DiagramSpec = {
       ...spec,
-      points: [
-        { id: 'pA', x: 0, y: 0, visible: true, layerId: 'geometry', order: 0, groupIds: [] },
-        { id: 'pAux', x: 50, y: 100, visible: false, layerId: 'background', order: 1, groupIds: [] },
-      ],
-      elements: [
-        { id: 'rayA', kind: 'ray', refs: ['pA', 'pAux'], visible: true, layerId: 'geometry', order: 0, groupIds: [] },
+      objects: [
+        point('pA', 'A', 0, 0),
+        { ...point('pAux', 'Aux', 50, 100), visible: false },
+        element('rayA', 'Rayo', 'ray', ['pA', 'pAux'], 'carbon'),
       ],
     };
-    const bounds = fitViewport(specWithInvisibleAux as any);
+    const bounds = fitViewport(specWithInvisibleAux);
     expect(bounds[1]).toBeLessThan(50);
     expect(bounds[2]).toBeLessThan(50);
   });

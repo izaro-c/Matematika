@@ -10,14 +10,14 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 /** Alias targets that must keep resolving for app + editor boot. */
 const CRITICAL_ALIAS_MODULES = [
   '@/diagrams',
-  '@/diagrams/model/schema/v3Compatibility',
+  '@/diagrams/model/schema/schemaV3',
   '@/diagrams/constants',
   '@/data/content/schemas',
 ] as const;
 
 const CRITICAL_FILES = [
   'src/diagrams/model/index.ts',
-  'src/diagrams/model/schema/v3Compatibility.ts',
+  'src/diagrams/model/schema/schemaV3.ts',
   'src/diagrams/constants.ts',
   'src/data/content/schemas.ts',
   'src/app/main.tsx',

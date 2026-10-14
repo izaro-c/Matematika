@@ -7,43 +7,43 @@ import {
   createScenePlan,
   evaluateMathExpression,
   expressionVariables,
-  type DiagramElementKind,
-  type DiagramSpecV2,
+  objectKind,
+  objectStyle,
+  type AnnotationObject,
+  type DiagramConstructionKind,
+  type DiagramSpec,
+  type PointObject,
 } from '../../../../src/diagrams/public';
+import { findById, movedTo } from '../../../helpers/diagramSpec';
 
 const sourcePath = 'content/diagrams/Definiciones/Cuadrilatero.tsx';
 const pagePath = 'content/mdx/es/definitions/cuadrilatero.mdx';
 
-function readModel(): DiagramSpecV2 {
+function readModel(): DiagramSpec {
   const parsed = parseDiagramSourceAST(fs.readFileSync(sourcePath, 'utf8'));
   expect(parsed.status).toBe('visual-exact');
   if (parsed.status !== 'visual-exact') throw new Error('Cuadrilatero debe ser editable visualmente sin pérdida.');
   return parsed.model;
 }
 
-function withCoordinates(model: DiagramSpecV2, coordinates: Record<string, [number, number]>): DiagramSpecV2 {
-  return {
-    ...model,
-    points: model.points.map(point => {
-      const next = coordinates[point.id];
-      return next ? { ...point, x: next[0], y: next[1] } : point;
-    }),
-  };
+function withCoordinates(model: DiagramSpec, coordinates: Record<string, [number, number]>): DiagramSpec {
+  return Object.entries(coordinates).reduce((current, [id, [x, y]]) => movedTo(current, id, x, y), model);
 }
 
-function classification(model: DiagramSpecV2): string {
-  const panel = model.elements.find(element => element.id === 'clasificacion');
+function classification(model: DiagramSpec): string {
+  const panel = findById<AnnotationObject>(model, 'clasificacion');
   const variables = expressionVariables(model);
-  return panel?.properties?.textRules?.find(rule => evaluateMathExpression(rule.when, variables) !== 0)?.text ?? '';
+  const rules = panel.content.blocks?.[0]?.rules ?? panel.content.rules;
+  return rules?.find(rule => evaluateMathExpression(rule.when, variables) !== 0)?.text ?? '';
 }
 
-function visibleMarks(model: DiagramSpecV2, kind: DiagramElementKind): number {
+function visibleMarks(model: DiagramSpec, kind: DiagramConstructionKind): number {
   const scene = new Map(createScenePlan(model, {}).map(entry => [entry.item.id, entry.visible]));
   const variables = expressionVariables(model);
-  return model.elements.filter(element => (
-    element.kind === kind
-    && scene.get(element.id)
-    && (!element.properties?.visibleWhen || evaluateMathExpression(element.properties.visibleWhen, variables) !== 0)
+  return model.objects.filter(object => (
+    objectKind(object) === kind
+    && scene.get(object.id)
+    && (!object.visibleWhen || evaluateMathExpression(object.visibleWhen, variables) !== 0)
   )).length;
 }
 
@@ -112,14 +112,14 @@ describe('Cuadrilatero visual classifier', () => {
 
   it('keeps angles and diagonals hidden until their textual targets request them', () => {
     const model = readModel();
-    const details = model.elements.filter(element => ['anguloA', 'anguloB', 'anguloC', 'anguloD', 'AC', 'BD'].includes(element.id));
+    const details = model.objects.filter(element => ['anguloA', 'anguloB', 'anguloC', 'anguloD', 'AC', 'BD'].includes(element.id));
     expect(details).toHaveLength(6);
     details.forEach(element => {
       expect(element.visible, element.id).toBe(false);
-      expect(element.style?.highlightVisible, element.id).toBe(true);
+      expect(objectStyle(element)?.highlightVisible, element.id).toBe(true);
     });
-    expect(model.points.find(point => point.id === 'C')?.attractorIds).toEqual(['guiaRectoB', 'guiaIgualBC']);
-    expect(model.points.find(point => point.id === 'D')?.attractorIds).toEqual([
+    expect(findById<PointObject>(model, 'C').interaction?.attractorIds).toEqual(['guiaRectoB', 'guiaIgualBC']);
+    expect(findById<PointObject>(model, 'D').interaction?.attractorIds).toEqual([
       'guiaParalelaCD',
       'guiaParalelaDA',
       'guiaRectoA',
