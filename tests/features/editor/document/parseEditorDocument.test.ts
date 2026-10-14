@@ -33,4 +33,13 @@ describe('Production Lossless MDX Parser', () => {
     expect(doc.diagnostics).toContainEqual(expect.objectContaining({ code: 'METADATA_EXPORT_MISSING' }));
     expect(doc.sourceFingerprint).toBeDefined();
   });
+
+  it('handles documents with only ESM declarations and no body nodes', () => {
+    const source = 'export const metadata = { id: "test", type: "definicion" };';
+    const doc = parseEditorDocument(source);
+
+    expect(doc.bodyBlocks).toHaveLength(0);
+    expect(doc.bodyRange.start).toBe(source.length);
+    expect(doc.bodyRange.end).toBe(source.length);
+  });
 });
