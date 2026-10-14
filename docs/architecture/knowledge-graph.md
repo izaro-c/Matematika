@@ -1,12 +1,19 @@
 # El Grafo de Conocimiento y las relaciones lógicas
 
+> **TL;DR**:
+> - **Resumen**: Red semántica y lógica (DAG) que modela las dependencias deductivas entre axiomas, definiciones, teoremas y modelos.
+> - **Alcance**: Validación topológica anti-ciclos, grupos alternativos de axiomas, generación de `graph_structure.json` y visor interactivo 2D.
+> - **Archivos clave**: [`scripts/core/validate-logical-graph.ts`](../../scripts/core/validate-logical-graph.ts), [`src/fixed-pages/graph/GraphPage.tsx`](../../src/fixed-pages/graph/GraphPage.tsx), [`src/data/graph/graph_structure.json`](../../src/data/graph/graph_structure.json).
+
+---
+
 El Grafo de Conocimiento organiza todo el contenido de Matematika como una red semántica. En lugar de ser un listado estático de páginas, almacena las relaciones de dependencia entre axiomas, definiciones, teoremas, lemas, corolarios y modelos.
 
 ---
 
 ## Ordenación topológica y prevención de ciclos
 
-Para evitar inconsistencias (como que un teorema dependa de sí mismo o que una demostración use un corolario posterior), el script [scripts/core/validate-logical-graph.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/core/validate-logical-graph.ts) clasifica el contenido en una jerarquía por niveles:
+Para evitar inconsistencias (como que un teorema dependa de sí mismo o que una demostración use un corolario posterior), el script [`scripts/core/validate-logical-graph.ts`](../../scripts/core/validate-logical-graph.ts) clasifica el contenido en una jerarquía por niveles:
 
 | Tipo | Nivel | Regla |
 |---|---|---|
@@ -33,9 +40,9 @@ Para evitar mezclar axiomas incompatibles dentro del mismo sistema:
 
 ---
 
-## Lienzo interactivas 2D (`react-force-graph-2d`)
+## Lienzo interactivo 2D (`react-force-graph-2d`)
 
-La vista interactiva del grafo ([src/fixed-pages/graph/GraphPage.tsx](file:///home/izaro/Proiektuak/Matematika_Drafts/src/fixed-pages/graph/GraphPage.tsx)) utiliza la librería `react-force-graph-2d`:
+La vista interactiva del grafo ([`src/fixed-pages/graph/GraphPage.tsx`](../../src/fixed-pages/graph/GraphPage.tsx)) utiliza la librería `react-force-graph-2d`:
 
 - **Cálculos en Web Worker**: La resolución de nodos activos y propagación de verdad ante cambios de axiomas se procesa en un subproceso (`graphWorkerClient.ts`) para mantener la interfaz a 60 FPS sin bloqueos.
 - **Resaltado de conexiones**: Al pasar el cursor por encima de un concepto, se destacan sus dependencias (de qué depende) y sus aplicaciones (quién lo utiliza).

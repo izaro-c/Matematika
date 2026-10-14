@@ -23,7 +23,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`concepto-primitivo`](../content/mdx/es/definitions/concepto-primitivo.mdx) | Concepto primitivo | Oinarrizko kontzeptua | Primitive concept | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`incidencia`](../content/mdx/es/definitions/incidencia.mdx) | Incidencia | Intzidentzia | Incidence | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`dimension`](../content/mdx/es/definitions/dimension.mdx) | Dimensión | Dimentsioa | Dimension | Definición (`nominal`) | ✅ 2026-08-29 |
-| [`estructura-geometrica`](../content/mdx/es/estructura-geometrica.mdx) | Estructura geométrica | Egitura geometrikoa | Geometric structure | Definición (`nominal`) | ✅ 2026-08-29 |
+| [`estructura-geometrica`](../content/mdx/es/definitions/estructura-geometrica.mdx) | Estructura geométrica | Egitura geometrikoa | Geometric structure | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`signatura`](../content/mdx/es/definitions/signatura.mdx) | Signatura | Sinadura | Signature | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`semiplano`](../content/mdx/es/definitions/semiplano.mdx) | Semiplano | Planoerdia | Half-plane | Definición (`derivado`) | ✅ 2026-08-29 |
 | [`dominio`](../content/mdx/es/definitions/dominio.mdx) | Dominio | Domeinua | Domain | Definición (`nominal`) | ✅ 2026-08-29 |

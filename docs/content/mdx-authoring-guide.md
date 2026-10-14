@@ -1,13 +1,22 @@
 # Guía para redactar contenido en MDX
 
-Todo el contenido matemático de la enciclopedia se escribe en archivos **MDX** dentro de la carpeta [content/mdx/](file:///home/izaro/Proiektuak/Matematika_Drafts/content/README.md).
+> **TL;DR**:
+> - **Resumen**: Guía práctica de autoría para redactar nodos matemáticos en MDX con metadatos Zod, enlaces semánticos y fórmulas KaTeX.
+> - **Alcance**: Estructura de carpetas en `content/mdx/{es,eu,en}/`, frontmatter obligatorio, componente `<ConceptLink>` y comandos de validación.
+> - **Archivos clave**: [`content/mdx/`](../../content/mdx/), [`src/data/content/schemas.ts`](../../src/data/content/schemas.ts), [`scripts/core/validate-cross-references.ts`](../../scripts/core/validate-cross-references.ts).
+
+---
+
+Todo el contenido matemático de la enciclopedia se escribe en archivos **MDX** dentro de la carpeta [`content/mdx/`](../../content/mdx/).
 
 ---
 
 ## Dónde va cada tipo de contenido
 
+El contenido se divide por idioma (`es/`, `eu/`, `en/`) y dentro de cada idioma por tipo conceptual:
+
 ```
-content/mdx/
+content/mdx/{es,eu,en}/
 ├── theorems/             # Teoremas, lemas y corolarios
 ├── definitions/          # Definiciones y conceptos base
 ├── axioms/               # Axiomas
@@ -20,16 +29,16 @@ content/mdx/
 ├── usecases/             # Aplicaciones prácticas
 ├── mathematicians/       # Biografías
 ├── lessons/              # Lecciones didácticas
-└── study-plans/          # Guías de estudio estructuradas
+└── plans/                # Guías de estudio estructuradas
 ```
 
 ---
 
 ## Cabecera de metadatos (Frontmatter)
 
-Cada archivo `.mdx` debe exportar un objeto `metadata` que cumpla con el esquema Zod correspondiente (`src/data/schemas/`).
+Cada archivo `.mdx` debe exportar un objeto `metadata` que cumpla con el esquema Zod correspondiente ([`src/data/content/schemas.ts`](../../src/data/content/schemas.ts)).
 
-### Ejemplo: `content/mdx/theorems/teorema-pitagoras.mdx`
+### Ejemplo: `content/mdx/es/theorems/teorema-pitagoras.mdx`
 
 ```mdx
 export const metadata = {

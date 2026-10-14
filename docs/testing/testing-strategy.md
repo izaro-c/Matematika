@@ -1,5 +1,12 @@
 # Estrategia de Pruebas y Cobertura de Código
 
+> **TL;DR**:
+> - **Resumen**: Estrategia de pruebas multinivel (unitarias, integración, E2E y roundtrip del corpus) para asegurar estabilidad visual y preservación MDX sin pérdidas.
+> - **Alcance**: Pruebas con Vitest en `tests/features/`, pruebas E2E con Puppeteer, pruebas visuales de diagramas y umbrales mínimos de cobertura.
+> - **Archivos clave**: [`tests/features/editor/`](../../tests/features/editor/), [`tests/e2e/editor/editor-safe-ux.e2e.ts`](../../tests/e2e/editor/editor-safe-ux.e2e.ts), [`scripts/editor/check-editor-coverage.ts`](../../scripts/editor/check-editor-coverage.ts).
+
+---
+
 El proyecto combina varias capas de pruebas (unitarias, integración, E2E con navegador real y auditorías de preservación de archivos) para asegurar que tanto la enciclopedia como el editor funcionen de forma estable.
 
 ---
@@ -17,7 +24,7 @@ graph BT
 
 ## 1. Pruebas unitarias e integración (`Vitest`)
 
-Están ubicadas principalmente en `tests/features/editor/` y `tests/components/`.
+Están ubicadas principalmente en [`tests/features/editor/`](../../tests/features/editor/) y [`tests/components/`](../../tests/components/).
 
 - **Qué prueban**:
   - Clasificación de bloques AST y parsing de MDX (`parseEditorDocument.test.ts`).
@@ -40,7 +47,7 @@ Están ubicadas principalmente en `tests/features/editor/` y `tests/components/`
 
 ## 2. Pruebas End-to-End (E2E) con Puppeteer
 
-Ubicadas en `tests/e2e/editor/editor-safe-ux.e2e.ts`.
+Ubicadas en [`tests/e2e/editor/editor-safe-ux.e2e.ts`](../../tests/e2e/editor/editor-safe-ux.e2e.ts).
 
 - **Cómo funcionan**: Arrancan un servidor local de Vite en el puerto `5177` y lanzan una instancia sin cabeza de Chrome con Puppeteer para probar flujos de usuario reales.
 - **Flujos probados (18 casos)**:
@@ -58,7 +65,7 @@ Ubicadas en `tests/e2e/editor/editor-safe-ux.e2e.ts`.
 
 ## 3. Pruebas visuales y de diagramas
 
-Ubicadas en `tests/e2e/editor/real-diagrams.e2e.ts`.
+Ubicadas en [`tests/e2e/editor/real-diagrams.e2e.ts`](../../tests/e2e/editor/real-diagrams.e2e.ts).
 
 - **Qué comprueban**:
   - Que los elementos geométricos del lienzo JSXGraph se carguen según la especificación JSON.
@@ -73,7 +80,7 @@ Ubicadas en `tests/e2e/editor/real-diagrams.e2e.ts`.
 
 ## 4. Auditorías de preservación del corpus (Roundtrip MDX)
 
-Script: `scripts/editor/audit-mdx-roundtrip.ts`.
+Script: [`scripts/editor/audit-mdx-roundtrip.ts`](../../scripts/editor/audit-mdx-roundtrip.ts).
 
 - **Qué hace**: Abre cada archivo `.mdx` de `content/mdx/`, simula tres ciclos seguidos de edición en memoria y guardado, y compara el hash SHA-256 del resultado con el archivo original.
 - **Objetivo**: Garantizar que el motor del editor no altere el formato, comentarios o sangrías de los artículos que no hayan sido modificados visualmente.
@@ -86,7 +93,7 @@ Script: `scripts/editor/audit-mdx-roundtrip.ts`.
 
 ## Umbrales de cobertura obligatorios (`check-editor-coverage.ts`)
 
-El script de cobertura exige los siguientes mínimos por módulo crítico:
+El script de cobertura ([`scripts/editor/check-editor-coverage.ts`](../../scripts/editor/check-editor-coverage.ts)) exige los siguientes mínimos por módulo crítico:
 
 | Módulo / Archivo | Cobertura Mínima Exigida |
 |---|---|

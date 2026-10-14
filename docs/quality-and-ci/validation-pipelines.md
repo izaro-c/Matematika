@@ -1,5 +1,12 @@
 # Scripts de validación y automatismos de CI
 
+> **TL;DR**:
+> - **Resumen**: Catálogo de scripts de verificación de contenido y del editor para CI/prebuild y release gates.
+> - **Alcance**: Comprobaciones en `scripts/core/` (grafo, referencias, cobertura, SEO) y `scripts/editor/` (roundtrip, seguridad, cobertura y artefactos).
+> - **Archivos clave**: [`scripts/core/validate-logical-graph.ts`](../../scripts/core/validate-logical-graph.ts), [`scripts/core/validate-cross-references.ts`](../../scripts/core/validate-cross-references.ts), [`scripts/editor/audit-mdx-roundtrip.ts`](../../scripts/editor/audit-mdx-roundtrip.ts).
+
+---
+
 Para evitar roturas en la arquitectura, enlaces caídos o alteraciones accidentales en el formato del contenido, el proyecto cuenta con una serie de scripts de verificación en `scripts/`.
 
 ---
@@ -8,10 +15,10 @@ Para evitar roturas en la arquitectura, enlaces caídos o alteraciones accidenta
 
 | Script | Archivo | Qué hace | Qué comprueba |
 |---|---|---|---|
-| **Indexador de contenido** | [generate-content-index.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/core/generate-content-index.ts) | Lee los metadatos de los archivos MDX en `content/mdx/`. | Valida la sintaxis con Zod y genera `contentIndex.json`. |
-| **Validador de grafo** | [validate-logical-graph.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/core/validate-logical-graph.ts) | Construye la red de dependencias y calcula la ordenación topológica. | Falla si encuentra **dependencias circulares** o axiomas incompatibles (`alternativeGroup`). |
-| **Validador de referencias** | [validate-cross-references.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/core/validate-cross-references.ts) | Revisa los enlaces salientes `<ConceptLink>`. | Falla si los autores o métodos de demostración no existen en la base de datos. |
-| **Cobertura de contenido** | [generate-content-coverage.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/core/generate-content-coverage.ts) | Comprueba la presencia de diagramas y fuentes en cada artículo. | Genera `contentCoverage.json` para auditar la completitud del corpus. |
+| **Indexador de contenido** | [`generate-content-index.ts`](../../scripts/core/generate-content-index.ts) | Lee los metadatos de los archivos MDX en `content/mdx/`. | Valida la sintaxis con Zod y genera `contentIndex.json`. |
+| **Validador de grafo** | [`validate-logical-graph.ts`](../../scripts/core/validate-logical-graph.ts) | Construye la red de dependencias y calcula la ordenación topológica. | Falla si encuentra **dependencias circulares** o axiomas incompatibles (`alternativeGroup`). |
+| **Validador de referencias** | [`validate-cross-references.ts`](../../scripts/core/validate-cross-references.ts) | Revisa los enlaces salientes `<ConceptLink>`. | Falla si los autores o métodos de demostración no existen en la base de datos. |
+| **Cobertura de contenido** | [`generate-content-coverage.ts`](../../scripts/core/generate-content-coverage.ts) | Comprueba la presencia de diagramas y fuentes en cada artículo. | Genera `contentCoverage.json` para auditar la completitud del corpus. |
 
 ---
 
@@ -19,10 +26,10 @@ Para evitar roturas en la arquitectura, enlaces caídos o alteraciones accidenta
 
 | Script | Archivo | Qué hace | Qué comprueba |
 |---|---|---|---|
-| **Auditoría roundtrip MDX** | [audit-mdx-roundtrip.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/editor/audit-mdx-roundtrip.ts) | Simula ciclos de carga y guardado en todo el corpus MDX. | Falla si cualquier archivo sufre cambios no autorizados fuera de los rangos editados. |
-| **Seguridad de código** | [check-editor-safety.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/editor/check-editor-safety.ts) | Escanea el código del editor en busca de patrones prohibidos. | Falla si encuentra `fetch` en componentes UI, `eval`, `alert` o `@ts-ignore`. |
-| **Sincronización de JSONs** | [check-generated-artifacts.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/editor/check-generated-artifacts.ts) | Compara los JSONs generados contra `git diff`. | Falla si los índices guardados en el repo están desactualizados respecto al código fuente. |
-| **Cobertura por riesgo** | [check-editor-coverage.ts](file:///home/izaro/Proiektuak/Matematika_Drafts/scripts/editor/check-editor-coverage.ts) | Analiza los reportes de Vitest en módulos críticos. | Falla si la cobertura en parsers o persistencia cae por debajo del umbral exigido. |
+| **Auditoría roundtrip MDX** | [`audit-mdx-roundtrip.ts`](../../scripts/editor/audit-mdx-roundtrip.ts) | Simula ciclos de carga y guardado en todo el corpus MDX. | Falla si cualquier archivo sufre cambios no autorizados fuera de los rangos editados. |
+| **Seguridad de código** | [`check-editor-safety.ts`](../../scripts/editor/check-editor-safety.ts) | Escanea el código del editor en busca de patrones prohibidos. | Falla si encuentra `fetch` en componentes UI, `eval`, `alert` o `@ts-ignore`. |
+| **Sincronización de JSONs** | [`check-generated-artifacts.ts`](../../scripts/editor/check-generated-artifacts.ts) | Compara los JSONs generados contra `git diff`. | Falla si los índices guardados en el repo están desactualizados respecto al código fuente. |
+| **Cobertura por riesgo** | [`check-editor-coverage.ts`](../../scripts/editor/check-editor-coverage.ts) | Analiza los reportes de Vitest en módulos críticos. | Falla si la cobertura en parsers o persistencia cae por debajo del umbral exigido. |
 
 ---
 

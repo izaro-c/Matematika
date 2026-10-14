@@ -1,73 +1,92 @@
-# Arquitectura del código en `src/` (Feature-Sliced Design)
+# Arquitectura del código en `src/` (Estructura Modular por Capas)
 
-El código fuente de la aplicación dentro de `src/` está estructurado siguiendo **Feature-Sliced Design (FSD)**. El objetivo es mantener las responsabilidades separadas y evitar acoplamientos raros entre pantallas, componentes de UI y lógica de datos.
+> **TL;DR**:
+> - **Resumen**: Organización del código en `src/` mediante capas modulares estrictas, aislamiento entre pantallas fijas y de contenido, y desacoplamiento de estado.
+> - **Alcance**: Las 9 capas reales del frontend (`app/`, `design/`, `components/`, `lib/`, `data/`, `diagrams/`, `fixed-pages/`, `content-pages/`, `i18n/`), enrutamiento Wouter y Zustand stores.
+> - **Archivos clave**: [`src/app/App.tsx`](../../src/app/App.tsx), [`src/app/routes/AppRouter.tsx`](../../src/app/routes/AppRouter.tsx), [`docs/architecture/map.md`](map.md).
 
 ---
 
 ## Organización por capas
 
-Las carpetas principales dentro de `src/` ordenadas de mayor nivel a menor nivel:
+El código fuente dentro de `src/` organiza sus responsabilidades en 9 capas bien definidas, estructuradas de mayor a menor nivel de abstracción:
 
 ```mermaid
 graph TD
-    App[app - Punto de entrada, rutas y estilos globales] --> Pages[pages - Pantallas de la app]
-    Pages --> Widgets[widgets - Componentes compuestos complejos]
-    Widgets --> Features[features - Lógica de negocio y stores]
-    Features --> Entities[entities - Datos, esquemas y modelos]
-    Entities --> Shared[shared - Componentes base, hooks y utilidades]
+    App[app - Entrada, router wouter, providers y estilos] --> FixedPages[fixed-pages - Pantallas fijas: home, graph, editor...]
+    App --> ContentPages[content-pages - Pantallas de contenido MDX]
+    FixedPages --> Components[components - UI reutilizable]
+    ContentPages --> Components
+    FixedPages --> Diagrams[diagrams - Motor de diagramas reactivos]
+    ContentPages --> Diagrams
+    Components --> Design[design - Tokens visuales y tipografía]
+    FixedPages --> Lib[lib - Hooks, helpers y Zustand stores]
+    ContentPages --> Lib
+    FixedPages --> Data[data - ContentStore y esquemas Zod]
+    ContentPages --> Data
+    App --> I18n[i18n - Traducciones y rutas localizadas]
 ```
 
 ### 1. `app/` (Inicialización y configuración global)
-Aquí arranca la aplicación y se configuran las dependencias globales.
-- `main.tsx`: Punto de entrada de React 18 en el DOM.
+Punto de arranque de la aplicación y configuración de dependencias globales:
+- `main.tsx`: Punto de entrada de React 19 en el DOM.
 - `App.tsx`: Layout principal y contenedores de contextos/proveedores.
-- `routes/AppRouter.tsx`: Configuración de rutas con `wouter`.
+- `routes/AppRouter.tsx`: Configuración de rutas declarativas con `wouter`.
 - `styles/`: Estilos globales CSS (`index.css`, `theme.css`).
 
-### 2. `pages/` (Pantallas)
-Se dividen en dos bloques según su naturaleza:
-- **`fixed-pages/`**: Páginas fijas de la aplicación (la portada `home`, el visor del grafo `graph`, el diccionario `glossary`, la línea temporal de matemáticos `mathematicians` y el editor `editor`).
-- **`content-pages/`**: Plantillas que renderizan artículos MDX (`screens/` para teoremas, definiciones, ejemplos, ejercicios, planes de estudio, etc.).
+### 2. `design/` (Sistema de diseño)
+Constantes visuales del tema ("Arts and Crafts"), tipografía, tokens y macros/estilos de KaTeX.
 
-> **Nota arquitectónica**: `fixed-pages` y `content-pages` no se importan entre sí.
+### 3. `components/` (Componentes UI reutilizables)
+Componentes visuales puros y bloques reutilizables de UI (botones, modales, diálogo de confirmación, badges) que no constituyen pantallas completas.
 
-### 3. `widgets/` (Bloques de interfaz independientes)
-Componentes visuales complejos que combinan UI y estado:
-- `SearchOmnibar`: El modal de búsqueda global (`Cmd+K`).
-- `MarginaliaPanel`: El panel desplegable/modal lateral para leer referencias sin salir del texto.
-- `PageDependencyGraph`: El minigrafo incrustado en la cabecera de cada artículo.
+### 4. `lib/` (Lógica transversal, utilidades y stores)
+Hooks reutilizables, utilidades auxiliares y stores genéricos de Zustand (`MathStore`, `GlossaryStore`, `NavigationStore`, `UserProgressStore`).
 
-### 4. `features/` (Funcionalidades de dominio)
-Lógica de negocio y manejo de estado:
-- **Marginalia**: Apertura y resolución de términos (`GlossaryStore.ts`).
-- **Búsqueda**: Motor client-side con Fuse.js (`searchApi.ts`).
-- **Simulaciones**: Sincronización entre controles MDX y JSXGraph (`MathStore.ts`).
-- **Progreso del usuario**: Registro local de lectura y ejercicios resueltos (`UserProgressStore.ts`).
-- **Cálculos pesados del grafo**: Recálculos delegados a un Web Worker (`graphWorkerClient.ts`).
+### 5. `data/` (Modelos y fuentes de datos)
+- `ContentStore`: Acceso y consulta al corpus indexado de contenido ([`src/data/content/ContentStore.ts`](../../src/data/content/ContentStore.ts)).
+- `schemas.ts`: Validación y esquemas de metadatos con Zod ([`src/data/content/schemas.ts`](../../src/data/content/schemas.ts)).
+- `graph/`: Estructura del grafo calculada (`graph_structure.json`).
 
-### 5. `entities/` (Modelos y fuente de datos)
-- `ContentStore`: Acceso a la base de datos de contenido (`src/data/content/ContentStore.ts`).
-- `schemas/`: Validación de metadatos con Zod (`src/data/schemas/`).
-- `diagrams/model/`: Especificación JSON de primitivas de diagramas.
+### 6. `diagrams/` (Motor de diagramas interactivos)
+Motor de especificación, cálculo geométrico y renderizado de diagramas (JSXGraph y KaTeX).
+- Submódulos: `model/`, `geometry/`, `jsxgraph/`, `render/`.
+- Entrada pública: `@/diagrams/public` ([`src/diagrams/public.ts`](../../src/diagrams/public.ts)).
 
-### 6. `shared/` (Código base reutilizable)
-Componentes sin lógica de negocio propia:
-- Botones, insignias (`ContentTypeBadge.tsx`), pantallas de carga.
-- Motor e integración de JSXGraph (`MathBoard.tsx`, `MathFactory.ts`, `DiagramKatexOverlay.tsx`).
-- Helpers genéricos en `src/lib/`.
+### 7. `fixed-pages/` (Pantallas fijas de producto)
+Pantallas de la aplicación con estructura fija e interactividad propia:
+- `home/`: Portada y navegación principal.
+- `graph/`: Visor interactivo del grafo lógico ([`GraphPage.tsx`](../../src/fixed-pages/graph/GraphPage.tsx)).
+- `glossary/`: Diccionario de conceptos y glosario.
+- `mathematicians/`: Línea temporal de matemáticos y biografías.
+- `editor/`: Editor híbrido (Monaco + WYSIWYG) con sesión, guardado y banco de pruebas de diagramas.
+
+### 8. `content-pages/` (Pantallas para tipos de contenido MDX)
+Plantillas que renderizan los distintos tipos de artículos matemáticos definidos en MDX (`screens/` para teoremas, definiciones, axiomas, ejemplos, ejercicios, demostraciones, planes de estudio).
+
+### 9. `i18n/` (Internacionalización)
+Diccionarios de traducción (castellano `es`, euskera `eu`), utilidades de localización y enrutamiento traducido.
+
+---
+
+## Reglas de aislamiento e inviolabilidad
+
+1. **Aislamiento entre pantallas**: `fixed-pages/` y `content-pages/` **no** se importan entre sí.
+2. **Motor frente a contenido**: `src/diagrams/` contiene estrictamente el **motor**. Los diagramas publicados y módulos interactivos creados por autores residen en `content/diagrams/`.
+3. **Encapsulación de JSXGraph**: La librería `jsxgraph` solo se importa directamente dentro de `src/diagrams/jsxgraph/`. Ningún otro módulo de la aplicación debe importarla directamente.
 
 ---
 
 ## Enrutamiento con `wouter`
 
-El enrutador [src/app/routes/AppRouter.tsx](file:///home/izaro/Proiektuak/Matematika_Drafts/src/app/routes/AppRouter.tsx) gestiona las URLs mediante tres despachadores:
+El enrutador [`src/app/routes/AppRouter.tsx`](../../src/app/routes/AppRouter.tsx) gestiona las URLs mediante tres despachadores:
 
 1. **Rutas de 3 segmentos (`/:lang/:segment/:id`)**:
-   Mapea URLs traducidas (como `/es/teorema/pitagoras` o `/eu/teorema/pitagoras`) usando `SEGMENT_TO_CANONICAL_TYPE` para cargar la pantalla correspondiente.
+   Mapea URLs traducidas (como `/es/teorema/pitagoras` o `/eu/teorema/pitagoras`) usando `SEGMENT_TO_CANONICAL_TYPE` para cargar la pantalla correspondiente de `content-pages`.
 2. **Rutas de 2 segmentos (`/:first/:second`)**:
    Maneja vistas fijas traducidas (como `/:lang/diccionario` o `/:lang/grafo`).
 3. **Rutas de 1 segmento (`/:segment`)**:
-   Resuelve `/es` o `/eu` hacia la portada local.
+   Resuelve `/es` o `/eu` hacia la portada local (`fixed-pages/home`).
 
 ---
 
@@ -75,12 +94,12 @@ El enrutador [src/app/routes/AppRouter.tsx](file:///home/izaro/Proiektuak/Matema
 
 | Store | Archivo | Para qué sirve |
 |---|---|---|
-| `useMetadataStore` | `src/data/metadata/MetadataStore.ts` | Guarda los metadatos de la página activa (título, autor, TOC, dependencias). |
-| `useGraphStore` | `src/fixed-pages/graph/GraphStore.ts` | Estado del lienzo del grafo, axiomas activos y modelo seleccionado. |
-| `useMathStore` | `src/lib/page-context/MathStore.ts` | Store aislado por página con variables numéricas reactivas para los diagramas. |
-| `useGlossaryStore` | `src/lib/stores/GlossaryStore.ts` | Términos abiertos en el panel Marginalia y modo de presentación. |
-| `useNavigationStore` | `src/lib/stores/NavigationStore.ts` | Estado de apertura del buscador omnibar. |
-| `useProgressStore` | `src/lib/stores/UserProgressStore.ts` | Artículos leídos y ejercicios completados (guardados en `localStorage`). |
+| `useMetadataStore` | [`src/data/metadata/MetadataStore.ts`](../../src/data/metadata/MetadataStore.ts) | Guarda los metadatos de la página activa (título, autor, TOC, dependencias). |
+| `useGraphStore` | [`src/fixed-pages/graph/GraphStore.ts`](../../src/fixed-pages/graph/GraphStore.ts) | Estado del lienzo del grafo, axiomas activos y modelo seleccionado. |
+| `useMathStore` | [`src/lib/page-context/MathStore.ts`](../../src/lib/page-context/MathStore.ts) | Store reactivo por página para sincronizar variables numéricas con diagramas. |
+| `useGlossaryStore` | [`src/lib/stores/GlossaryStore.ts`](../../src/lib/stores/GlossaryStore.ts) | Términos abiertos en el panel Marginalia y modo de presentación. |
+| `useNavigationStore` | [`src/lib/stores/NavigationStore.ts`](../../src/lib/stores/NavigationStore.ts) | Estado de apertura del buscador omnibar (`Cmd+K`). |
+| `useProgressStore` | [`src/lib/stores/UserProgressStore.ts`](../../src/lib/stores/UserProgressStore.ts) | Artículos leídos y ejercicios completados (almacenamiento en `localStorage`). |
 
 ---
 

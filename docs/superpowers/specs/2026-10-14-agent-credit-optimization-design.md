@@ -10,7 +10,7 @@
 
 ### 1.1 Problemas detectados en la estructura actual
 1. **Ausencia de directivas raíz (`AGENTS.md` / `CLAUDE.md`)**: Los agentes inician cada sesión sin orientación de bajo nivel, recurriendo a escaneos exploratorios masivos de archivos y carpetas (`find`, `grep` recursivos, lecturas completas de directorios) que devoran tokens.
-2. **Documentación técnica desactualizada con enlaces rotos**: Varios documentos en `docs/` (`fsd-design.md`, `diagram-engine.md`, `validation-pipelines.md`, etc.) contienen enlaces absolutos a un entorno antiguo (`file:///home/izaro/Proiektuak/Matematika_Drafts/...`) y describen capas que ya no existen en la raíz de `src/` (como `widgets/`, `features/`, `entities/`). Esto desorienta a los agentes, provocando alucinaciones y reintentos fallidos.
+2. **Documentación técnica desactualizada con enlaces rotos**: Varios documentos en `docs/` (`fsd-design.md`, `diagram-engine.md`, `validation-pipelines.md`, etc.) contenían enlaces absolutos a un entorno antiguo (rutas absolutas obsoletas de borradores previos) y describían capas que ya no existen en la raíz de `src/` (como `widgets/`, `features/`, `entities/`). Esto desorienta a los agentes, provocando alucinaciones y reintentos fallidos.
 3. **Falta de aprovechamiento del grafo de código MCP**: Aunque `codebase-memory-mcp` está disponible e indexado, los agentes desconocen su existencia o el identificador del proyecto (`home-izaro-Proiektuak-Matematika`), recurriendo a `grep` y lecturas de archivos TypeScript para consultas que el grafo resuelve en una única llamada compacta.
 4. **Ejecución indiscriminada de comandos de verificación pesados**: Invocación de `npm run test` (que incluye pruebas E2E/pesadas) en lugar de variantes rápidas (`npm run test:fast`, `npm run typecheck` o vitest focalizado).
 
@@ -127,7 +127,7 @@ Documento ultra-compacto (< 80 líneas, ~350 tokens) que describe:
 - Cheat-sheet de verificación rápida por contexto.
 
 #### 2. Saneamiento de documentos existentes en `docs/`
-- Eliminar todas las URLs absolutas `file:///home/izaro/Proiektuak/Matematika_Drafts/...` y sustituirlas por rutas relativas limpias.
+- Eliminar todas las URLs absolutas obsoletas y sustituirlas por rutas relativas limpias.
 - Actualizar `docs/architecture/fsd-design.md`: reflejar la estructura real de carpetas en `src/`.
 - Actualizar `docs/architecture/diagram-engine.md`: reflejar la arquitectura v3 modularizada y el punto de exportación `@/diagrams/public`.
 - Añadir en la cabecera de cada documento de `docs/` un bloque **TL;DR (3 líneas)** con el resumen y los archivos clave para evaluación ultrarrápida.
@@ -138,7 +138,7 @@ Documento ultra-compacto (< 80 líneas, ~350 tokens) que describe:
 ## 4. Plan de Verificación
 
 1. **Verificación de archivos y enlaces**:
-   - `grep -rn "Matematika_Drafts" docs/ .agents/ .claude/` debe devolver 0 resultados.
+   - Comprobación de que no queden rutas absolutas obsoletas en `docs/`, `.agents/`, `.claude/` (0 resultados).
    - Comprobar que no existen enlaces rotos entre `AGENTS.md`, `CLAUDE.md`, `.claude/rules/` y `docs/`.
 2. **Validación de tipos y linting**:
    - `npm run typecheck`

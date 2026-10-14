@@ -1,6 +1,13 @@
 # Cómo funciona el Editor MDX por dentro
 
-El editor de Matematika vive en [src/fixed-pages/editor/](file:///home/izaro/Proiektuak/Matematika_Drafts/src/fixed-pages/editor/). Permite editar artículos MDX de dos formas: editando el código fuente directamente en **Monaco** o modificando bloques visualmente en un panel **WYSIWYG**.
+> **TL;DR**:
+> - **Resumen**: Motor del editor híbrido MDX que combina Monaco con edición visual WYSIWYG mediante parches por offsets sin pérdida de formato.
+> - **Alcance**: Arquitectura interna en `src/fixed-pages/editor/` (`session`, `document`, `ui`, `save`, `diagrams`), AST Remark, mutaciones seguras y reglas de seguridad.
+> - **Archivos clave**: [`src/fixed-pages/editor/session/useEditorCore.ts`](../../src/fixed-pages/editor/session/useEditorCore.ts), [`src/fixed-pages/editor/document/applySourceEdits.ts`](../../src/fixed-pages/editor/document/applySourceEdits.ts), [`src/fixed-pages/editor/ui/panels/CodeEditorPanel.tsx`](../../src/fixed-pages/editor/ui/panels/CodeEditorPanel.tsx).
+
+---
+
+El editor de Matematika vive en [`src/fixed-pages/editor/`](../../src/fixed-pages/editor/). Permite editar artículos MDX de dos formas: editando el código fuente directamente en **Monaco** o modificando bloques visualmente en un panel **WYSIWYG**.
 
 El reto principal que resuelve este motor es **no romper el código original**: si editas un título o un texto en el panel visual, el editor modifica únicamente los bytes de ese bloque sin tocar el resto del archivo, manteniendo comentarios, espacios y sintaxis personalizada.
 
@@ -69,7 +76,7 @@ sequenceDiagram
 
 ## Integración con Monaco Editor
 
-El panel de código ([CodeEditorPanel.tsx](file:///home/izaro/Proiektuak/Matematika_Drafts/src/fixed-pages/editor/ui/panels/CodeEditorPanel.tsx)) usa `@monaco-editor/react`:
+El panel de código ([`CodeEditorPanel.tsx`](../../src/fixed-pages/editor/ui/panels/CodeEditorPanel.tsx)) usa `@monaco-editor/react`:
 
 - **Navegación sincronizada**: Al hacer clic en un bloque del panel visual, el editor convierte los offsets en bytes del nodo AST a número de línea y columna en Monaco (`model.getPositionAt(offset)`) y desplaza el cursor automáticamente a esa línea (`revealRange`).
 - **Diagnósticos al vuelo**: Las comprobaciones de sintaxis y Zod se reflejan como subrayados de error directamente en el código de Monaco.
