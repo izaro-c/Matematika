@@ -13,7 +13,7 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
 
 | Principio | Regla Innegociable |
 |---|---|
-| **1. Compatibilidad Visual Exacta (`visual-exact`)** | Los diagramas deben ser compatibles con el Editor Visual de Matematika. Deben usar la especificación **`v3`** envuelta entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` con `createDiagramSpec(JSON_VALIDO)` y exportar `<DiagramRenderer spec={...Spec} />`. |
+| **1. Compatibilidad Visual Exacta (`visual-exact`)** | Los diagramas deben ser compatibles con el Editor Visual de Matematika. Importación canónica obligatoria desde **`@/diagrams/public`** (`import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';`). Deben usar la especificación **`v3`** envuelta entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` con `createDiagramSpec(JSON_VALIDO)` y exportar `<DiagramRenderer spec={...Spec} />`. |
 | **2. Interactividad Pedagógica** | Salvo necesidad puramente estática, los diagramas deben permitir la exploración activa del alumno: puntos móviles arrastrables con restricciones geométricas coherentes (`free`, `on-support`, `intersection`, `midpoint`, `projection`). |
 | **3. Persistencia de la Figura Base** | En demostraciones y teoremas divididos por pasos (`steps`): **NUNCA ocultar la figura base**. La figura completa debe mantenerse visible (`visibleTargets`) y el foco cognitivo debe dirigirse mediante resaltes de énfasis (`objectStates: { id: { emphasis: 'primary' } }`). |
 | **4. Sincronización Estricta con MDX** | Todos los elementos resaltables en el texto mediante `<VisualBind element="ID" color="COLOR">` deben corresponderse exactamente 1:1 con un `id` o `targetId` definido en el diagrama (con `target: true`). Mismos identificadores y colores en **Castellano**, **Euskara** e **Inglés**. |
@@ -130,10 +130,15 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
 
 3. **Validación:**
    Desde la raíz del repositorio:
-   ```bash
-   npx tsx scripts/editor/check-diagrams-support.ts
-   npm run typecheck
-   ```
+   - Verificación rápida y focalizada de un diagrama individual:
+     ```bash
+     npx tsx .agents/skills/matematika-diagram-generator/scripts/verify-diagram.ts <ruta-al-diagrama.tsx>
+     ```
+   - Verificación global de la suite de diagramas y tipado:
+     ```bash
+     npx tsx scripts/editor/check-diagrams-support.ts
+     npm run typecheck
+     ```
    Asegurar que el recurso esté en **Edición visual exacta (`visual-exact`)** y que no haya recursos inválidos.
 
 ---

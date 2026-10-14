@@ -44,7 +44,7 @@ Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad tr
 
 **4. Validación** (tras cada lote de 3 nodos / 9 archivos MDX), desde la raíz del repo:
 ```bash
-node .claude/skills/matematika-content-generator/scripts/check-parity.mjs <id> [<id>...]
+node .agents/skills/matematika-content-generator/scripts/check-parity.mjs <id> [<id>...]
 npm run validate-references && npm run validate-graph && npm run typecheck
 ```
 `check-parity.mjs` compara los tres idiomas: metadatos no traducibles (`id`, `lang`, `type`, `branch`, `demos`, `parentTheorem`), conjunto de `targetId`, `isDependency`, `PropiedadItem`, secuencia de componentes y número de fórmulas. Diferencias en metadatos, enlaces o dependencias son errores a corregir; una diferencia de ±1 fórmula inline puede ser legítima (una traducción que fusiona dos símbolos), revísala y decide.
@@ -59,12 +59,12 @@ Cuando el usuario pida rellenar huecos, reducir páginas «En construcción» o 
 
 1. **Ranking.** Desde la raíz del repo:
    ```bash
-   node .claude/skills/matematika-content-generator/scripts/rank-missing-ids.mjs --top 20
+   node .agents/skills/matematika-content-generator/scripts/rank-missing-ids.mjs --top 20
    ```
    Ordena los `targetId` sin nodo por `score = 2·(nodos que lo enlazan) + (enlaces con isDependency)`. Pesa más lo que otros nodos necesitan como antecedente, porque un hueco ahí rompe la cadena deductiva, no solo la navegación. Muestra la tabla al usuario y propón los 3 primeros como lote; si el usuario ya nombró IDs, úsalos.
 2. **Inferir el significado desde los enlaces.** El ID lo inventó quien escribió el enlace, así que el nodo debe servir a esos usos:
    ```bash
-   node .claude/skills/matematika-content-generator/scripts/rank-missing-ids.mjs --contexts <id>
+   node .agents/skills/matematika-content-generator/scripts/rank-missing-ids.mjs --contexts <id>
    ```
    Si los contextos muestran que un mismo ID se usa para conceptos distintos (p. ej. `lado` de triángulo y de ángulo), no lo resuelvas en silencio: elige el sentido común a la mayoría, escribe el nodo para ese sentido y lista al usuario los enlaces que habría que redirigir.
 3. **Elegir tipo y ubicación.** Carpeta según tipo (`definitions/`, `axioms/`, `theorems/`, `demonstrations/`, `mathematicians/`…), el nombre de archivo es exactamente el `id`. Conceptos meta (`teorema`, `axioma`, `conjunto`) son `definicion` con `subtype: "nominal"`; obras como `elementos-euclides` no tienen tipo de nodo propio, consúltalo antes de inventar uno.

@@ -21,28 +21,36 @@ Grafo estructural del repositorio TypeScript. **Cargar esta skill antes de explo
 
 ## Cuándo NO usar el grafo
 
-- Archivos **MDX** de contenido (`src/database/content/`) y assets estáticos: usar `Grep`/`Read`.
-- Texto literal, comentarios o cadenas: `Grep`.
-- Validación de producto: `npm run full-check` (independiente del grafo MCP).
+- Archivos **MDX** de contenido (`content/mdx/`) y assets estáticos: usar `Grep`/`Read`.
+- Texto literal, comentarios o cadenas no indexadas: `Grep`.
+- Validación de producto: suites de tests o verificación de tipos (independiente del grafo MCP).
+
+> [!IMPORTANT]
+> **Prohibición estricta de `Grep` para símbolos TypeScript**: Está terminantemente prohibido utilizar `Grep`, `ripgrep` o escaneo exploratorio recursivo en `src/` para buscar definiciones de tipos, interfaces, clases o funciones. Para cualquier símbolo TypeScript debe usarse el MCP `codebase-memory` con `project: "home-izaro-Proiektuak-Matematika"`.
 
 ## Flujo recomendado al cargar la skill
 
 1. Usar herramientas MCP (`search_graph`, `trace_path`, `get_architecture`, `get_code_snippet`).
 2. Si el grafo requiere reindexar o tras cambios estructurales grandes → llamar MCP `index_repository`:
-   - `repo_path`: raíz del workspace
+   - `repo_path`: raíz del workspace (`/home/izaro/Proiektuak/Matematika`)
    - `mode`: `full` (refactors grandes o primera sesión); `moderate` (cambios acotados); `fast` (solo verificación rápida)
 3. Usar el grafo para la tarea; no repetir `Grep`/`Glob` para lo que el grafo ya resuelve.
 
-## Prioridad de herramientas
+## Prioridad de herramientas (Ahorro de Tokens)
 
-1. `search_graph` → localizar símbolo
-2. `trace_path` / `get_architecture` → relaciones y contexto
-3. `get_code_snippet` → leer código
-4. `Grep` / `Read` → solo lo no indexado o búsqueda literal
+Para minimizar el consumo de tokens y evitar lecturas masivas de contexto en el agente:
+1. `search_graph` → localiza la definición y firma del símbolo TS devolviendo su `qualified_name` (sin volcar archivos).
+2. `trace_path` / `get_architecture` → traza relaciones, callers, callees y contexto arquitectónico sin inspección manual.
+3. `get_code_snippet` → lectura quirúrgica de la implementación del símbolo especificado por `qualified_name`.
+4. `view_file` con rangos de líneas acotados (`StartLine`/`EndLine`) → solo si se requiere contexto periférico no resuelto por snippet.
+5. `Grep` → **prohibido para símbolos TS**; exclusivo para cadenas literales, comentarios o archivos de contenido MDX.
 
 ## Proyecto MCP
 
-El nombre del proyecto lo devuelve `index_repository` (derivado de la ruta del repo). Guardarlo en el sello; no hardcodear rutas absolutas de máquina en documentación.
+- **Identificador canónico del proyecto**: `project: "home-izaro-Proiektuak-Matematika"`
+- Almacenado en `.codebase-memory/stamp.json`.
+- Todas las herramientas del MCP `codebase-memory` que requieran o acepten el parámetro `project` deben usar `"home-izaro-Proiektuak-Matematika"`.
+- Guardarlo en el sello (`stamp.json`); no hardcodear rutas absolutas de máquina en documentación.
 
 ## Límites conocidos
 
