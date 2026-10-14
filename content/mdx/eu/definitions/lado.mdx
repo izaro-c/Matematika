@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "lado",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Aldea",
+  description: "Irudi geometriko baten elementu lineal eratzailea: erpin jarraituen arteko zuzenkia poligono batean edo angelu baten zuzenerdia.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "poligonos", "triangulos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definiciones 8 y 19",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Lado } from '@content/diagrams/Definiciones/Lado';
+export const Simulation = Lado;
+
+<Capitular letra="A" />**ldea** terminoak irudi geometriko bat mugatzen edo osatzen duen elementu lineala adierazten du, zorroztasun formalez bi testuingurutan bereizten dena: <ConceptLink targetId="poligono">poligono</ConceptLink> baten ondoz ondoko bi <ConceptLink targetId="vertice" isDependency={true}>erpin</ConceptLink> lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink>, edo <ConceptLink targetId="angulo">angelu</ConceptLink> bat osatzen duten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdietako</ConceptLink> bakoitza.
+
+Bi erabilerak <ConceptLink targetId="recta">zuzen euskarri</ConceptLink> batekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <ConceptLink targetId="punto">puntuen</ConceptLink> azpimultzo konexoei dagozkie. Hala ere, beren estatus epistemologikoa argiro bereizita dago: poligono baten aldea irudi mugatua da, bere <ConceptLink targetId="longitud">luzerak</ConceptLink> <ConceptLink targetId="perimetro">perimetroan</ConceptLink> parte hartzen du eta irudi itxien arteko kongruentziak formulatzea ahalbidetzen du; angelu baten aldea, aldiz, irudi mugagabea da, eta haren funtzio formala irekidura angeluarra zehaztea da, distantziaren edozein kontzeptu metrikotatik at.
+
+<Definicion title="Aldearen definizio formala poligonoetan eta angeluetan">
+1. **Aldea irudi poligonal batean:** Planoan ziklikoki ordenatutako $(A_1, A_2, \dots, A_n)$ $n$ erpin emanda, poligonoaren **alde** bakoitza ondoz ondoko bi erpinek mugatutako zuzenki itxia da:
+
+$$
+\overline{A_i A_{i+1}} = \operatorname{seg}(A_i, A_{i+1}) \cup \{A_i, A_{i+1}\} \subset \mathcal{P}
+$$
+
+<VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> erpinak dituen triangelu batean, hiru aldeak <VisualBind element="ladoAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="ladoBC" color="pavo">$\overline{BC}$</VisualBind> eta <VisualBind element="ladoCA" color="ocre">$\overline{CA}$</VisualBind> zuzenki itxiak dira.
+
+2. **Aldea angelu batean:** $O$ jatorri-puntu bera partekatzen duten aurkakoak ez diren zuzenerdien bikote ez-ordenatu gisa definitutako $\angle(h, k)$ angelu bat emanda, $h = \overrightarrow{OA}$ eta $k = \overrightarrow{OB}$ zuzenerdietako bakoitzari angeluaren **alde** deritzo formalki:
+
+$$
+\overrightarrow{OA} = \{ A \} \cup \{ P \in \mathcal{P} \mid O * P * A \lor O * A * P \}
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Aldeen egitura-propietateak">
+    <PropiedadItem 
+      id="interseccion-lados-consecutivos" 
+      title="Ondoz ondoko aldeen ebakidura"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      Edozein poligono sinpletan, ondoz ondoko bi aldek elkarrekin partekatzen duten <ConceptLink targetId="vertice">erpinean</ConceptLink> bakarrik ebakitzen dute elkar, irudiaren mugan gainezarpenik ez dagoela bermatuz.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="particion-frontera-poligonal" 
+      title="Muga poligonalaren osaketa"
+      formula="\operatorname{tr}(\partial\mathcal{F}) = \bigcup_{i=1}^n \overline{A_i A_{i+1}}"
+    >
+      Irudi poligonal itxi baten ingerada osoa bere aldeen kateatze ziklikoaren bidez mugatzen da erabat, <ConceptLink targetId="plano">planoko</ConceptLink> eskualdeak bereizten dituen muga jarraitua zehaztuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

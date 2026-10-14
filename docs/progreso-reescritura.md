@@ -7,9 +7,9 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 **Resumen de Estado:**
 - **Aprobados con Visto Bueno:** 50 documentos
-- **Reescritos en Espera de Revisión:** 64 documentos
+- **Reescritos en Espera de Revisión:** 70 documentos
 - **Pendientes de Reescritura:** 0 documentos
-- **Total de Nodos en el Grafo:** 114 documentos
+- **Total de Nodos en el Grafo:** 120 documentos
 
 ---
 
@@ -70,7 +70,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 ---
 
-## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 64)
+## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 70)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Reescritura |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -138,14 +138,20 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`wallman`](../content/mdx/es/mathematicians/wallman.mdx) | Henry Wallman | Henry Wallman | Henry Wallman | `matematico` | ⏳ 2026-10-11 |
 | [`grupo`](../content/mdx/es/definitions/grupo.mdx) | Grupo | Taldea | Group | `definicion` | ⏳ 2026-10-11 |
 | [`derivada`](../content/mdx/es/definitions/derivada.mdx) | Derivada | Deribatua | Derivative | `definicion` | ⏳ 2026-10-11 |
+| [`colinealidad`](../content/mdx/es/definitions/colinealidad.mdx) | Colinealidad | Kolinealtasuna | Collinearity | `definicion` | ⏳ 2026-10-14 |
+| [`lado`](../content/mdx/es/definitions/lado.mdx) | Lado | Aldea | Side | `definicion` | ⏳ 2026-10-14 |
+| [`vertice`](../content/mdx/es/definitions/vertice.mdx) | Vértice | Erpina | Vertex | `definicion` | ⏳ 2026-10-14 |
+| [`angulo-recto`](../content/mdx/es/definitions/angulo-recto.mdx) | Ángulo recto | Angelu zuzena | Right Angle | `definicion` | ⏳ 2026-10-14 |
+| [`longitud`](../content/mdx/es/definitions/longitud.mdx) | Longitud | Luzera | Length | `definicion` | ⏳ 2026-10-14 |
+| [`cateto`](../content/mdx/es/definitions/cateto.mdx) | Cateto | Katetoa | Leg | `definicion` | ⏳ 2026-10-14 |
 
 ---
 
 ## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (0 pendientes restantes — Reescritura Completa)
 
-Todos los nodos del grafo de conocimiento (114 documentos en total en sus tres lenguas: Castellano, Euskara Batua e Inglés) han sido reescritos y auditados rigurosamente bajo la skill actualizada `matematika-content-generator` y las convenciones del proyecto:
+Todos los nodos del grafo de conocimiento (120 documentos en total en sus tres lenguas: Castellano, Euskara Batua e Inglés) han sido reescritos y auditados rigurosamente bajo la skill actualizada `matematika-content-generator` y las convenciones del proyecto:
 - **50 documentos** cuentan con el visto bueno oficial (Sección 1).
-- **64 documentos** han sido completados y están a la espera de revisión y visto bueno oficial (Sección 2).
+- **70 documentos** han sido completados y están a la espera de revisión y visto bueno oficial (Sección 2).
 - **0 documentos** pendientes de reescritura.
 
-Todas las fases (Fase 1 a Fase 11) han culminado con paridad trilingual 1:1 verificada (`check-parity.mjs` 114/114), resolución completa de referencias (`validate-references`) e integridad total del grafo deductivo libre de ciclos (`validate-graph`).
+Todas las fases (Fase 1 a Fase 11) han culminado con paridad trilingual 1:1 verificada (`check-parity.mjs` 120/120), resolución completa de referencias (`validate-references`) e integridad total del grafo deductivo libre de ciclos (`validate-graph`).

@@ -1,0 +1,95 @@
+export const metadata = {
+  id: "longitud",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Longitud",
+  description: "Función de medida métrica unidimensional que asigna a cada segmento un número real positivo, invariante por congruencia y aditiva por intermediación.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-metrica", "segmento", "medida", "congruencia", "continuidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5; Capítulo V, §29",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="L" />a **longitud** es una función de medida métrica unidimensional que asigna a cada <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> un número real positivo, de forma invariante bajo la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> y aditiva respecto a la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink>.
+
+A diferencia de las comparaciones cualitativas directas basadas en la relación de congruencia $\overline{AB} \cong \overline{CD}$, la asignación de una magnitud escalar numérica $|\cdot|: \mathcal{S} \to \mathbb{R}^+$ exige fijar un segmento unidad de referencia y sustentarse en los axiomas de continuidad de Hilbert: el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Axioma V.1 (Arquímedes)</ConceptLink> para asegurar que ninguna magnitud geométrica no nula sea infinitesimal frente a otra, y el <ConceptLink targetId="axioma-completitud" isDependency={true}>Axioma V.2 (Completitud lineal)</ConceptLink> para garantizar el isomorfismo con el cuerpo continuo de los números reales $\mathbb{R}$. Esta noción fundamenta la <ConceptLink targetId="distancia">distancia</ConceptLink> euclídea y enlaza la estructura sintética de la <ConceptLink targetId="recta">recta</ConceptLink> con el análisis real.
+
+<Definicion title="Definición formal de la función longitud">
+Sea $\mathcal{S} = \{ \overline{AB} \subset \mathcal{P} : A, B \in \mathcal{P}, A \neq B \}$ el conjunto de todos los <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> no degenerados del espacio geométrico determinados por pares de <ConceptLink targetId="punto">puntos</ConceptLink>. Fijado un segmento de referencia $u_0 \in \mathcal{S}$ denominado **unidad de longitud**, la **función longitud** es la única aplicación
+
+$$
+|\cdot|: \mathcal{S} \to \mathbb{R}^+
+$$
+
+que verifica los siguientes postulados constitutivos:
+
+1. **Normalización unitaria:** El segmento unidad posee longitud uno:
+$$
+|u_0| = 1
+$$
+
+2. **Invariancia por congruencia:** Dos segmentos tienen la misma longitud si y solo si son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
+$$
+|AB| = |CD| \iff \overline{AB} \cong \overline{CD}
+$$
+
+3. **Aditividad por intermediación:** Si tres puntos $A, B, C \in \mathcal{P}$ verifican la relación $A * B * C$ (el punto $B$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $C$), la longitud del segmento unión es la suma de las longitudes de sus partes componentes:
+$$
+A * B * C \implies |AC| = |AB| + |BC|
+$$
+
+La existencia y unicidad de dicha función de medida real se apoya deductivamente en el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Axioma V.1</ConceptLink> y en el <ConceptLink targetId="axioma-completitud" isDependency={true}>Axioma V.2</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades métricas de la función longitud">
+    <PropiedadItem 
+      id="positividad-estricta" 
+      title="Positividad estricta"
+      formula="\forall \overline{AB} \in \mathcal{S}, \quad |AB| > 0"
+    >
+      Todo segmento no degenerado posee una longitud estrictamente positiva. La función no anula ningún segmento de extremos disjuntos en el espacio métrico.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="desigualdad-triangular-longitud" 
+      title="Desigualdad triangular métrica"
+      formula="|AC| \le |AB| + |BC|"
+    >
+      Para cualesquiera tres puntos $A, B, C \in \mathcal{P}$, la longitud directa entre dos puntos no supera la suma de las longitudes intermedias, dándose la igualdad si y solo si $B$ está entre $A$ y $C$ ($A * B * C$) o si coinciden extremos.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Fundamentación deductiva y continuidad">
+    <PropiedadItem 
+      id="isomorfismo-aditivo-real" 
+      title="Isomorfismo con el semigrupo aditivo real"
+      formula="(\mathcal{S}/{\cong}, +) \cong (\mathbb{R}^+, +)"
+    >
+      El conjunto cociente de las clases de congruencia de segmentos, dotado de la suma inducida por la yuxtaposición lineal sobre la recta, constituye una estructura algebraica continua e isomorfa al semigrupo aditivo de los números reales positivos $(\mathbb{R}^+, +)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la geometría sintética pura de Hilbert, la relación de congruencia de segmentos y el orden lineal son primitivos y no requieren la construcción del cuerpo de los números reales. La función longitud constituye la aritmetización métrica que surge al añadir los axiomas de continuidad.
+</Nota>

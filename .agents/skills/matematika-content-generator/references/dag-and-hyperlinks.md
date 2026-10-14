@@ -4,9 +4,10 @@ El conocimiento en Matematika se estructura como un **Grafo Acíclico Dirigido (
 
 ---
 
-## 1. Principio de Grafo Abierto y Enlaces a Páginas Futuras
+## 1. Principio de Grafo Abierto y Enlaces/Dependencias a Páginas Futuras
 
 - **Es totalmente obligatorio y prioritario enlazar a todo concepto, axioma, teorema o método matemático con `<ConceptLink targetId="...">`, exista o no el archivo en el repositorio.**
+- **Dependencias formales a páginas futuras:** Si un concepto o axioma es un antecedente constitutivo formal, **debe llevar obligatoriamente `isDependency={true}` incluso si el archivo de destino todavía no existe en el repositorio**. Nunca se debe degradar una dependencia causal a un enlace contextual simple por el mero hecho de que la página esté pendiente de redacción.
 - En la interfaz web, los enlaces hacia páginas pendientes se renderizan como enlaces activos hacia una vista pedagógica provisional (*"En construcción"*), permitiendo al lector visualizar la red conceptual global.
 - En la suite de validación estática (`npm run validate-references`), los enlaces a IDs aún no creados generan avisos informativos (`[WARN]`), **sin bloquear la compilación**.
 

@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "angulo-recto",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Ángulo recto",
+  description: "Ángulo que es congruente con su adyacente suplementario según la formulación sintética de Hilbert.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "angulo", "congruencia", "perpendicularidad", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 10",
+      role: "secondary"
+    }
+  ]
+};
+
+import { AnguloRecto } from '@content/diagrams/Definiciones/AnguloRecto';
+export const Simulation = AnguloRecto;
+
+<Capitular letra="U" />n **ángulo recto** es un <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> que es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con su <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adyacente suplementario</ConceptLink>.
+
+La noción se formula sin recurrir a ninguna <ConceptLink targetId="medida-angular">medida angular</ConceptLink> cuantitativa ni a la asignación numérica de $90^\circ$: pertenece por entero a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> y descansa sobre la partición de la <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> opuestas a partir de la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink>, combinada con los axiomas de congruencia lineal y angular.
+
+<Definicion title="Definición formal de ángulo recto">
+Sea <VisualBind element="recta-l" color="carbon">$\ell \in \mathcal{L}$</VisualBind> una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, con $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$, y sea <VisualBind element="pO" color="carbon">$O \in \operatorname{tr}(\ell)$</VisualBind> un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink>. Sean <VisualBind element="pA" color="canela">$A$</VisualBind>, <VisualBind element="pB" color="pavo">$B$</VisualBind> $\in \operatorname{tr}(\ell) \setminus \{O\}$ dos puntos tales que $O$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $B$ ($A * O * B$), de modo que <VisualBind element="semirrecta-h" color="canela">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="semirrecta-hp" color="pavo">$h' = \overrightarrow{OB}$</VisualBind> son semirrectas opuestas sobre $\ell$. Sea <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, que determina la semirrecta <VisualBind element="semirrecta-k" color="terracota">$k = \overrightarrow{OC}$</VisualBind> no contenida en $\ell$.
+
+Las semirrectas $h$ y $k$, y $h'$ y $k$, determinan en el <ConceptLink targetId="vertice">vértice</ConceptLink> $O$ los <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos adyacentes suplementarios</ConceptLink> <VisualBind element="angAOC" color="ocre">$\angle(h, k)$</VisualBind> y <VisualBind element="angBOC" color="musgo">$\angle(h', k)$</VisualBind>. Se dice que el ángulo $\angle(h, k)$ es un **ángulo recto** si y solo si es congruente con su adyacente suplementario $\angle(h', k)$:
+
+$$
+\angle(h, k) \text{ es recto} \iff \angle(h, k) \cong \angle(h', k)
+$$
+
+Si $\angle(h, k)$ es un ángulo recto, su adyacente suplementario $\angle(h', k)$ también es recto, y las <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> $\overleftrightarrow{h} = \ell$ y $\overleftrightarrow{k} = \overleftrightarrow{OC}$ son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades sintéticas en geometría absoluta">
+    <PropiedadItem 
+      id="congruencia-angulos-rectos" 
+      title="Congruencia universal de los ángulos rectos"
+      formula="\angle \alpha \text{ recto} \land \angle \beta \text{ recto} \implies \angle \alpha \cong \angle \beta"
+    >
+      Todos los ángulos rectos son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí. Esta propiedad, que Euclides formuló como el cuarto postulado de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, es demostrable como teorema en la fundamentación sintética de Hilbert a partir de los axiomas de congruencia de segmentos y ángulos, sin requerir el axioma de las paralelas.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplementario-angulo-recto" 
+      title="Suplementario de un ángulo recto"
+      formula="\angle(h, k) \cong \angle(h', k) \implies \angle(h', k) \text{ es recto}"
+    >
+      Todo ángulo suplementario de un ángulo recto es también un ángulo recto. Se deduce inmediatamente de la simetría de la relación de congruencia angular garantizada por el <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Correspondencia métrica euclidiana">
+    <PropiedadItem 
+      id="medida-angular-recta" 
+      title="Medida métrica del ángulo recto"
+      formula="|\angle(h, k)| = 90^\circ = \frac{\pi}{2} \text{ rad}"
+    >
+      En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, al introducir una <ConceptLink targetId="medida-angular">medida angular</ConceptLink> arquimediana continua, la amplitud de un ángulo recto corresponde exactamente a $90^\circ$ sexagesimales o $\frac{\pi}{2}$ radianes, la mitad de un ángulo llano.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la axiomática de Hilbert (§6), la definición de ángulo recto precede a la de rectas perpendiculares: dos rectas secantes se declaran perpendiculares porque determinan ángulos rectos en su punto de intersección, invirtiendo la dependencia circular habitual de la geometría elemental.
+</Nota>

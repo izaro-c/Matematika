@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "angulo-recto",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Right Angle",
+  description: "An angle congruent to its adjacent supplementary angle according to Hilbert's synthetic formulation.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "angulo", "congruencia", "perpendicularidad", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 10",
+      role: "secondary"
+    }
+  ]
+};
+
+import { AnguloRecto } from '@content/diagrams/Definiciones/AnguloRecto';
+export const Simulation = AnguloRecto;
+
+<Capitular letra="A" /> **right angle** is an <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> that is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to its <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adjacent supplementary</ConceptLink> angle.
+
+The notion is formulated without invoking any quantitative <ConceptLink targetId="medida-angular">angular measure</ConceptLink> or numerical assignment of $90^\circ$: it belongs entirely to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> and rests on the partition of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> into two opposite <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> via the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation, combined with the axioms of linear and angular congruence.
+
+<Definicion title="Formal definition of a right angle">
+Let <VisualBind element="recta-l" color="carbon">$\ell \in \mathcal{L}$</VisualBind> be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, with $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$, and let <VisualBind element="pO" color="carbon">$O \in \operatorname{tr}(\ell)$</VisualBind> be a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>. Let <VisualBind element="pA" color="canela">$A$</VisualBind>, <VisualBind element="pB" color="pavo">$B$</VisualBind> $\in \operatorname{tr}(\ell) \setminus \{O\}$ be two points such that $O$ <ConceptLink targetId="estar-entre" isDependency={true}>is between</ConceptLink> $A$ and $B$ ($A * O * B$), so that <VisualBind element="semirrecta-h" color="canela">$h = \overrightarrow{OA}$</VisualBind> and <VisualBind element="semirrecta-hp" color="pavo">$h' = \overrightarrow{OB}$</VisualBind> are opposite rays on $\ell$. Let <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, defining the ray <VisualBind element="semirrecta-k" color="terracota">$k = \overrightarrow{OC}$</VisualBind> not contained in $\ell$.
+
+The rays $h$ and $k$, and $h'$ and $k$, determine at the <ConceptLink targetId="vertice">vertex</ConceptLink> $O$ the <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adjacent supplementary angles</ConceptLink> <VisualBind element="angAOC" color="ocre">$\angle(h, k)$</VisualBind> and <VisualBind element="angBOC" color="musgo">$\angle(h', k)$</VisualBind>. The angle $\angle(h, k)$ is said to be a **right angle** if and only if it is congruent to its adjacent supplementary angle $\angle(h', k)$:
+
+$$
+\angle(h, k) \text{ is right} \iff \angle(h, k) \cong \angle(h', k)
+$$
+
+If $\angle(h, k)$ is a right angle, its adjacent supplementary angle $\angle(h', k)$ is also a right angle, and the <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> $\overleftrightarrow{h} = \ell$ and $\overleftrightarrow{k} = \overleftrightarrow{OC}$ are <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Synthetic properties in absolute geometry">
+    <PropiedadItem 
+      id="congruencia-angulos-rectos" 
+      title="Universal congruence of right angles"
+      formula="\angle \alpha \text{ right} \land \angle \beta \text{ right} \implies \angle \alpha \cong \angle \beta"
+    >
+      All right angles are <ConceptLink targetId="congruencia">congruent</ConceptLink> to one another. This property, which Euclid stated as the fourth postulate of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, is provable as a theorem in Hilbert's synthetic foundation from the congruence axioms of segments and angles, without requiring the parallel axiom.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplementario-angulo-recto" 
+      title="Supplement of a right angle"
+      formula="\angle(h, k) \cong \angle(h', k) \implies \angle(h', k) \text{ is right}"
+    >
+      Every angle supplementary to a right angle is likewise a right angle. This follows directly from the symmetry of the angle congruence relation guaranteed by <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Euclidean metric correspondence">
+    <PropiedadItem 
+      id="medida-angular-recta" 
+      title="Metric measure of a right angle"
+      formula="|\angle(h, k)| = 90^\circ = \frac{\pi}{2} \text{ rad}"
+    >
+      In <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, upon introducing a continuous Archimedean <ConceptLink targetId="medida-angular">angular measure</ConceptLink>, the amplitude of a right angle corresponds exactly to $90^\circ$ sexagesimal or $\frac{\pi}{2}$ radians, half of a straight angle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+In Hilbert's axiomatization (§6), the definition of a right angle precedes that of perpendicular lines: two intersecting lines are declared perpendicular because they form right angles at their point of intersection, reversing the circular dependency commonly found in elementary geometry.
+</Nota>

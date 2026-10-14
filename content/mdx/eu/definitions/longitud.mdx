@@ -1,0 +1,95 @@
+export const metadata = {
+  id: "longitud",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Luzera",
+  description: "Segmento bakoitzari zenbaki erreal positibo bat esleitzen dion dimentsio bakarreko neurri-funtzio metrikoa, kongruentziarekiko aldaezina eta bitartekotasunarekiko aditiboa.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-metrica", "segmento", "medida", "congruencia", "continuidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5; Capítulo V, §29",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="L" />**uzera** dimentsio bakarreko neurri-funtzio metrikoa da, <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> bakoitzari zenbaki erreal positibo bat esleitzen diona, <ConceptLink targetId="congruencia" isDependency={true}>kongruentziarekiko</ConceptLink> aldaezina eta <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunarekiko</ConceptLink> aditiboa dena.
+
+$\overline{AB} \cong \overline{CD}$ kongruentzia-erlazioan oinarritutako konparazio kualitatibo hutsetatik bereiziz, $|\cdot|: \mathcal{S} \to \mathbb{R}^+$ zenbakizko magnitude eskalar bat esleitzeak unitate-zuzenki bat finkatzea eta Hilberten jarraitutasun-axiometan oinarritzea eskatzen du: <ConceptLink targetId="axioma-arquimedes" isDependency={true}>V.1 axioman (Arkimedes)</ConceptLink>, zero ez den magnitude geometriko bat bera ere beste baten aurrean infinitesimala ez dela bermatzeko, eta <ConceptLink targetId="axioma-completitud" isDependency={true}>V.2 axioman (Zuzen-osotasuna)</ConceptLink>, $\mathbb{R}$ zenbaki errealen gorputz jarraituarekiko isomorfismoa ziurtatzeko. Kontzeptu honek distantzia euklidearraren oinarria ezartzen du, <ConceptLink targetId="distancia">distantzia</ConceptLink> kontzeptua formalizatuz eta <ConceptLink targetId="recta">zuzenaren</ConceptLink> egitura sintetikoa analisi errealarekin lotuz.
+
+<Definicion title="Luzera-funtzioaren definizio formala">
+Izan bedi $\mathcal{S} = \{ \overline{AB} \subset \mathcal{P} : A, B \in \mathcal{P}, A \neq B \}$ espazio geometrioko endekatu gabeko <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> multzoa, <ConceptLink targetId="punto">puntu-pareek</ConceptLink> zehaztua. Erreferentziako $u_0 \in \mathcal{S}$ zuzenki bat **luzera-unitate** gisa finkaturik, **luzera-funtzioa** honako aplikazio bakarra da:
+
+$$
+|\cdot|: \mathcal{S} \to \mathbb{R}^+
+$$
+
+zeinak ondorengo postulatu eratzaileak betetzen dituen:
+
+1. **Normalizazio unitarioa:** Unitate-zuzenkiak bat balio duen luzera du:
+$$
+|u_0| = 1
+$$
+
+2. **Aldaezintasuna kongruentziarekiko:** Bi zuzenkik luzera bera dute baldin eta soilik baldin <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira:
+$$
+|AB| = |CD| \iff \overline{AB} \cong \overline{CD}
+$$
+
+3. **Aditibitatea bitartekotasunarekiko:** Baldin eta $A, B, C \in \mathcal{P}$ hiru puntuk $A * B * C$ erlazioa betetzen badute ($B$ puntua $A$ eta $C$-ren <ConceptLink targetId="estar-entre" isDependency={true}>artean badago</ConceptLink>), zuzenki elkartuaren luzera haren zati osagaien luzeren batura da:
+$$
+A * B * C \implies |AC| = |AB| + |BC|
+$$
+
+Neurri-funtzio erreal horren existentzia eta bakartasuna deduktiboki <ConceptLink targetId="axioma-arquimedes" isDependency={true}>V.1 axioman</ConceptLink> eta <ConceptLink targetId="axioma-completitud" isDependency={true}>V.2 axioman</ConceptLink> bermatzen dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Luzera-funtzioaren propietate metrikoak">
+    <PropiedadItem 
+      id="positividad-estricta" 
+      title="Positibotasun zorrotza"
+      formula="\forall \overline{AB} \in \mathcal{S}, \quad |AB| > 0"
+    >
+      Endekatu gabeko edozein zuzenkik luzera hertsiki positiboa du. Funtzioak ez du mutur desberdineko zuzenkirik deuseztatzen espazio metrikoan.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="desigualdad-triangular-longitud" 
+      title="Desberdintza triangeluar metrikoa"
+      formula="|AC| \le |AB| + |BC|"
+    >
+      Edozein $A, B, C \in \mathcal{P}$ hiru punturentzat, bi punturen arteko luzera zuzena ez da tarteko luzeren batura baino handiagoa, berdintza soilik $B$ puntua $A$ eta $C$-ren artean dagoenean ($A * B * C$) edo muturrak bat datozenean gertatuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Oinarri deduktiboa eta jarraitutasuna">
+    <PropiedadItem 
+      id="isomorfismo-aditivo-real" 
+      title="Isomorfismoa zenbaki errealen batuketa-erditaldearekin"
+      formula="(\mathcal{S}/{\cong}, +) \cong (\mathbb{R}^+, +)"
+    >
+      Zuzenkien kongruentzia-klaseen multzo zatidura, zuzenaren gaineko juntadura linealari dagokion baturaz hornitua, egitura aljebraiko jarraitu bat da, zenbaki erreal positiboen $(\mathbb{R}^+, +)$ batuketa-erditaldearekiko isomorfoa.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Hilberten geometria sintetiko hutsean, zuzenkien kongruentzia-erlazioa eta ordena lineala oinarrizkoak dira eta ez dute zenbaki errealen eraikuntzarik eskatzen. Luzera-funtzioa jarraitutasun-axiomak gehitzean sortzen den aritmetizazio metrikoa da.
+</Nota>

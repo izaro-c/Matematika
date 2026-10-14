@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "vertice",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Vértice",
+  description: "Punto singular donde concurren dos lados consecutivos de una figura poligonal o el origen común de las dos semirrectas de un ángulo.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "puntos", "poligonos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 8",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Vertice } from '@content/diagrams/Definiciones/Vertice';
+export const Simulation = Vertice;
+
+<Capitular letra="E" />l **vértice** es cada uno de los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> que integran la configuración generadora de una figura <ConceptLink targetId="poligono">poligonal</ConceptLink>, o que constituye el <ConceptLink targetId="punto">origen</ConceptLink> común de las dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> que componen un <ConceptLink targetId="angulo">ángulo</ConceptLink>.
+
+A diferencia de los puntos situados en el interior de los segmentos de una figura, el vértice es un elemento estructural discreto del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que ancla la configuración geométrica. En los <ConceptLink targetId="triangulo">triángulos</ConceptLink>, tres vértices no <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> determinan tanto las rectas soporte (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>) como el <ConceptLink targetId="plano">plano</ConceptLink> de la figura (<ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>), sirviendo de referencia fundamental para el ordenamiento cíclico y los criterios de <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+
+<Definicion title="Definición formal de vértice en figuras poligonales y ángulos">
+1. **Vértice en una figura poligonal:** Dada una sucesión de $n$ puntos ordenados cíclicamente $(A_1, A_2, \dots, A_n) \in \mathcal{P}^n$, con $n \ge 3$, en la que ningún trío de puntos consecutivos es colineal, cada uno de los puntos $A_i \in \mathcal{P}$ se denomina **vértice** de la figura:
+
+$$
+\operatorname{V\acute{e}rtices}(\mathcal{F}) = \{ A_1, A_2, \dots, A_n \} \subset \mathcal{P}
+$$
+
+En particular, para un triángulo generado por la terna de puntos no colineales <VisualBind element="verticeA" color="terracota">$A$</VisualBind>, <VisualBind element="verticeB" color="pavo">$B$</VisualBind> y <VisualBind element="verticeC" color="granada">$C$</VisualBind>, el conjunto de sus vértices es $\{A, B, C\}$, conectándose consecutivamente mediante los segmentos <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> y <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind>.
+
+2. **Vértice en un ángulo:** Dado un ángulo constituido por el par no ordenado de semirrectas $\angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OB} \}$, el punto $O \in \mathcal{P}$ recibe formalmente el nombre de **vértice** del ángulo, definido como el origen común de ambas semirrectas:
+
+$$
+O = \operatorname{origen}(h) = \operatorname{origen}(k)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades estructurales de los vértices">
+    <PropiedadItem 
+      id="unicidad-interseccion-lados" 
+      title="Concurrencia de lados consecutivos en el vértice"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      Al construir los <ConceptLink targetId="lado">lados</ConceptLink> de un polígono a partir de sus vértices, la intersección de dos lados consecutivos coincide exactamente con el vértice común que comparten, impidiendo la degeneración de la figura.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="determinacion-angulo-en-vertice" 
+      title="Determinación del ángulo interior en cada vértice"
+      formula="\angle A_1 A_2 A_3 = \{ \overrightarrow{A_2 A_1}, \overrightarrow{A_2 A_3} \}"
+    >
+      Cada vértice $A_2$ de una figura poligonal, en combinación con sus vértices adyacentes $A_1$ y $A_3$, determina de manera única un <ConceptLink targetId="angulo">ángulo</ConceptLink> interior de la figura.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

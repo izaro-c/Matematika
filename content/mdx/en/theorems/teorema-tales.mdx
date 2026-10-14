@@ -25,8 +25,10 @@ export const Simulation = Tales;
 
 The theorem turns <ConceptLink targetId="paralelas">parallelism</ConceptLink> into a relation between <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> and is the basis of the theory of <ConceptLink targetId="semejanza">similarity</ConceptLink>. It is a result of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>: it depends on the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink> and, in the classical proof, on the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>.
 
+<StepSection step="step-general">
+
 <Definicion title="Statement of Thales's theorem">
-Let $\ell_1, \ell_2, \ell_3$ be three distinct <ConceptLink targetId="paralelas">parallel</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$, and let $t, t'$ be two lines of $\sigma$ <ConceptLink targetId="secante">secant</ConceptLink> to them. Let $A, B, C$ be the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> where $t$ meets $\ell_1, \ell_2, \ell_3$, and $A', B', C'$ the points where $t'$ meets them, with $B$ <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $C$:
+Let <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="ocre">$\ell_2$</VisualBind>, <VisualBind element="lineL3" color="ocre">$\ell_3$</VisualBind> be three distinct <ConceptLink targetId="paralelas">parallel</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$, and let <VisualBind element="lineT" color="carbon">$t$</VisualBind>, <VisualBind element="lineTPrime" color="carbon">$t'$</VisualBind> be two lines of $\sigma$ <ConceptLink targetId="secante">secant</ConceptLink> to them. Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB1" color="terracota">$B$</VisualBind>, <VisualBind element="pC1" color="terracota">$C$</VisualBind> be the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> where $t$ meets $\ell_1, \ell_2, \ell_3$, and <VisualBind element="pA1p" color="terracota">$A'$</VisualBind>, <VisualBind element="pB1p" color="terracota">$B'$</VisualBind>, <VisualBind element="pC1p" color="terracota">$C'$</VisualBind> the points where $t'$ meets them, with $B$ <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $C$:
 
 $$
 A * B * C, \quad \{A\} = \operatorname{tr}(t) \cap \operatorname{tr}(\ell_1), \ \dots, \ \{C'\} = \operatorname{tr}(t') \cap \operatorname{tr}(\ell_3).
@@ -41,15 +43,21 @@ $$
 The transversals $t$ and $t'$ may be parallel or may meet, even at a point of one of the lines $\ell_i$.
 </Definicion>
 
+</StepSection>
+
+<StepSection step="step-triangulo">
+
 ### Triangle corollary
 
-When the transversals meet at a point of $\ell_1$, the theorem concerns a <ConceptLink targetId="triangulo">triangle</ConceptLink>. Let $\triangle ABC$ have vertices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> and <VisualBind element="pC" color="terracota">$C$</VisualBind>, and let $\ell$ be the <VisualBind element="parCBD" color="ocre">line parallel</VisualBind> to the line <VisualBind element="lineBC" color="carbon">$\overleftrightarrow{BC}$</VisualBind>, distinct from it, that meets the side $\overline{AB}$ at a point <VisualBind element="pD" color="terracota">$D$</VisualBind> and the side $\overline{AC}$ at a point <VisualBind element="intE" color="terracota">$E$</VisualBind>, both distinct from the vertices. Then
+When the transversals meet at a point of <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind>, the theorem concerns a <ConceptLink targetId="triangulo">triangle</ConceptLink>. Let $\triangle ABC$ have vertices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> and <VisualBind element="pC" color="terracota">$C$</VisualBind>, and let $\ell$ be the <VisualBind element="parCBD" color="ocre">line parallel</VisualBind> to the line <VisualBind element="lineL3" color="ocre">$\overleftrightarrow{BC}$</VisualBind>, distinct from it, that meets the side $\overline{AB}$ at a point <VisualBind element="pD" color="terracota">$D$</VisualBind> and the side $\overline{AC}$ at a point <VisualBind element="intE" color="terracota">$E$</VisualBind>, both distinct from the vertices. Then
 
 $$
 \frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}, \qquad \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|}.
 $$
 
 The segments <VisualBind element="segAD" color="carbon">$\overline{AD}$</VisualBind> and <VisualBind element="segDB" color="carbon">$\overline{DB}$</VisualBind> are in the same ratio as <VisualBind element="segAE" color="carbon">$\overline{AE}$</VisualBind> and <VisualBind element="segEC" color="carbon">$\overline{EC}$</VisualBind>. This case is Proposition VI.2 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, which also states the <ConceptLink targetId="teorema-reciproco-tales">converse</ConceptLink>: if $D \in \operatorname{seg}(AB)$, $E \in \operatorname{seg}(AC)$ and $|AD|/|DB| = |AE|/|EC|$, then $\overleftrightarrow{DE} \parallel \overleftrightarrow{BC}$.
+
+</StepSection>
 
 <Nota>
 The classical proof, by areas, uses the area function and real lengths, and hence the <ConceptLink targetId="continuidad">continuity axioms</ConceptLink> involved in the <ConceptLink targetId="teorema-area-rectangulo">rectangle area theorem</ConceptLink>. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> showed in Chapter III of the *Grundlagen der Geometrie* that the theory of proportion and this theorem can be founded without continuity, by means of a <ConceptLink targetId="calculo-segmentos">calculus of segments</ConceptLink> based on <ConceptLink targetId="teorema-pascal">Pascal's theorem</ConceptLink>. In <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink> the theorem does not hold in general.

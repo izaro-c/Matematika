@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "lado",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Lado",
+  description: "Elemento lineal constitutivo de una figura geométrica: segmento delimitado por dos vértices consecutivos en un polígono o semirrecta en un ángulo.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "poligonos", "triangulos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definiciones 8 y 19",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Lado } from '@content/diagrams/Definiciones/Lado';
+export const Simulation = Lado;
+
+<Capitular letra="E" />l término **lado** designa el elemento lineal que delimita o conforma una figura geométrica, distinguiéndose con precisión formal en dos contextos: como el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> delimitado por dos <ConceptLink targetId="vertice" isDependency={true}>vértices</ConceptLink> consecutivos de un <ConceptLink targetId="poligono">polígono</ConceptLink>, o como cada una de las dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> que componen un <ConceptLink targetId="angulo">ángulo</ConceptLink>.
+
+Ambos usos refieren a subconjuntos conexos de <ConceptLink targetId="punto">puntos</ConceptLink> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una <ConceptLink targetId="recta">recta soporte</ConceptLink>. Sin embargo, su estatus epistemológico es nítidamente diferenciado: el lado de un polígono es una figura acotada cuya <ConceptLink targetId="longitud">longitud</ConceptLink> contribuye al <ConceptLink targetId="perimetro">perímetro</ConceptLink> y permite formular las congruencias entre figuras cerradas, mientras que el lado de un ángulo es una figura ilimitada cuya función formal es determinar la apertura angular con independencia de cualquier noción métrica de distancia.
+
+<Definicion title="Definición formal de lado en polígonos y ángulos">
+1. **Lado en una figura poligonal:** Dados $n$ vértices ordenados cíclicamente $(A_1, A_2, \dots, A_n)$ en el plano, cada **lado** del polígono es el segmento cerrado delimitado por dos vértices consecutivos:
+
+$$
+\overline{A_i A_{i+1}} = \operatorname{seg}(A_i, A_{i+1}) \cup \{A_i, A_{i+1}\} \subset \mathcal{P}
+$$
+
+En un triángulo de vértices <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind>, los tres lados son los segmentos cerrados <VisualBind element="ladoAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="ladoBC" color="pavo">$\overline{BC}$</VisualBind> y <VisualBind element="ladoCA" color="ocre">$\overline{CA}$</VisualBind>.
+
+2. **Lado en un ángulo:** Dado un ángulo $\angle(h, k)$ definido como un par no ordenado de semirrectas no opuestas que comparten un punto origen $O$, cada una de dichas semirrectas $h = \overrightarrow{OA}$ y $k = \overrightarrow{OB}$ recibe formalmente el nombre de **lado** del ángulo:
+
+$$
+\overrightarrow{OA} = \{ A \} \cup \{ P \in \mathcal{P} \mid O * P * A \lor O * A * P \}
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades estructurales de los lados">
+    <PropiedadItem 
+      id="interseccion-lados-consecutivos" 
+      title="Intersección de lados consecutivos"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      En todo polígono simple, dos lados contiguos se intersecan exclusivamente en el <ConceptLink targetId="vertice">vértice</ConceptLink> que comparten, garantizando la ausencia de solapamiento en la frontera de la figura.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="particion-frontera-poligonal" 
+      title="Constitución de la frontera poligonal"
+      formula="\operatorname{tr}(\partial\mathcal{F}) = \bigcup_{i=1}^n \overline{A_i A_{i+1}}"
+    >
+      El contorno de una figura poligonal cerrada queda exhaustivamente delimitado por la concatenación cíclica de sus lados, definiendo la frontera continua que separa las regiones del <ConceptLink targetId="plano">plano</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

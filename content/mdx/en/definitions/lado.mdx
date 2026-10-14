@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "lado",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Side",
+  description: "Constitutive linear element of a geometric figure: a segment bounded by two consecutive vertices in a polygon or a ray in an angle.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "poligonos", "triangulos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definiciones 8 y 19",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Lado } from '@content/diagrams/Definiciones/Lado';
+export const Simulation = Lado;
+
+<Capitular letra="T" />he term **side** designates the linear element that bounds or constitutes a geometric figure, distinguished with formal precision in two contexts: as the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> bounded by two consecutive <ConceptLink targetId="vertice" isDependency={true}>vertices</ConceptLink> of a <ConceptLink targetId="poligono">polygon</ConceptLink>, or as each of the two <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> that compose an <ConceptLink targetId="angulo">angle</ConceptLink>.
+
+Both usages refer to connected subsets of <ConceptLink targetId="punto">points</ConceptLink> of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ that are <ConceptLink targetId="incidencia">incident</ConceptLink> with a supporting <ConceptLink targetId="recta">line</ConceptLink>. However, their epistemological status is clearly differentiated: the side of a polygon is a bounded figure whose <ConceptLink targetId="longitud">length</ConceptLink> contributes to the <ConceptLink targetId="perimetro">perimeter</ConceptLink> and enables formulating congruences between closed figures, whereas the side of an angle is an unbounded figure whose formal role is to determine angular aperture independently of any metric notion of distance.
+
+<Definicion title="Formal definition of side in polygons and angles">
+1. **Side in a polygonal figure:** Given $n$ cyclically ordered vertices $(A_1, A_2, \dots, A_n)$ in the plane, each **side** of the polygon is the closed segment bounded by two consecutive vertices:
+
+$$
+\overline{A_i A_{i+1}} = \operatorname{seg}(A_i, A_{i+1}) \cup \{A_i, A_{i+1}\} \subset \mathcal{P}
+$$
+
+In a triangle with vertices <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind>, the three sides are the closed segments <VisualBind element="ladoAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="ladoBC" color="pavo">$\overline{BC}$</VisualBind>, and <VisualBind element="ladoCA" color="ocre">$\overline{CA}$</VisualBind>.
+
+2. **Side in an angle:** Given an angle $\angle(h, k)$ defined as an unordered pair of non-opposite rays sharing a common origin point $O$, each of these rays $h = \overrightarrow{OA}$ and $k = \overrightarrow{OB}$ formally receives the name of **side** of the angle:
+
+$$
+\overrightarrow{OA} = \{ A \} \cup \{ P \in \mathcal{P} \mid O * P * A \lor O * A * P \}
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Structural properties of sides">
+    <PropiedadItem 
+      id="interseccion-lados-consecutivos" 
+      title="Intersection of consecutive sides"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      In every simple polygon, two consecutive sides intersect exclusively at the common <ConceptLink targetId="vertice">vertex</ConceptLink> they share, ensuring the absence of self-overlap along the boundary of the figure.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="particion-frontera-poligonal" 
+      title="Constitution of the polygonal boundary"
+      formula="\operatorname{tr}(\partial\mathcal{F}) = \bigcup_{i=1}^n \overline{A_i A_{i+1}}"
+    >
+      The complete boundary of a closed polygonal figure is exhaustively delimited by the cyclic concatenation of its sides, defining the continuous boundary that separates regions in the <ConceptLink targetId="plano">plane</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

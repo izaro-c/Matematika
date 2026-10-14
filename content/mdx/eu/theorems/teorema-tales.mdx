@@ -25,8 +25,10 @@ export const Simulation = Tales;
 
 Teoremak <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzeren</ConceptLink> arteko erlazio bihurtzen du, eta <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink> teoriaren oinarria da. <ConceptLink targetId="sistema-euclidiano">Sistema euklidearreko</ConceptLink> emaitza da: <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axiomaren</ConceptLink> mende dago, eta, frogapen klasikoan, <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremaren</ConceptLink> mende.
 
+<StepSection step="step-general">
+
 <Definicion title="Talesen teoremaren enuntziatua">
-Izan bitez $\ell_1, \ell_2, \ell_3$ $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko hiru <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdin, eta izan bitez $t, t'$ $\sigma$ planoko bi zuzen, haiekiko <ConceptLink targetId="secante">ebakitzaileak</ConceptLink>. Izan bitez $A, B, C$ $t$ zuzenak $\ell_1, \ell_2, \ell_3$ ebakitzen dituen <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink>, eta $A', B', C'$ $t'$ zuzenak ebakitzen dituen puntuak, $B$ puntua $A$ eta $C$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dagoela:
+Izan bitez <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="ocre">$\ell_2$</VisualBind>, <VisualBind element="lineL3" color="ocre">$\ell_3$</VisualBind> $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko hiru <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdin, eta izan bitez <VisualBind element="lineT" color="carbon">$t$</VisualBind>, <VisualBind element="lineTPrime" color="carbon">$t'$</VisualBind> $\sigma$ planoko bi zuzen, haiekiko <ConceptLink targetId="secante">ebakitzaileak</ConceptLink>. Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB1" color="terracota">$B$</VisualBind>, <VisualBind element="pC1" color="terracota">$C$</VisualBind> $t$ zuzenak $\ell_1, \ell_2, \ell_3$ ebakitzen dituen <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink>, eta <VisualBind element="pA1p" color="terracota">$A'$</VisualBind>, <VisualBind element="pB1p" color="terracota">$B'$</VisualBind>, <VisualBind element="pC1p" color="terracota">$C'$</VisualBind> $t'$ zuzenak ebakitzen dituen puntuak, $B$ puntua $A$ eta $C$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dagoela:
 
 $$
 A * B * C, \quad \{A\} = \operatorname{tr}(t) \cap \operatorname{tr}(\ell_1), \ \dots, \ \{C'\} = \operatorname{tr}(t') \cap \operatorname{tr}(\ell_3).
@@ -41,15 +43,21 @@ $$
 $t$ eta $t'$ zuzenak paraleloak izan daitezke edo ebaki egin daitezke, baita $\ell_i$ zuzenetako baten puntu batean ere.
 </Definicion>
 
+</StepSection>
+
+<StepSection step="step-triangulo">
+
 ### Triangeluaren korolarioa
 
-Zuzen ebakitzaileak $\ell_1$ zuzeneko puntu batean ebakitzen direnean, teorema <ConceptLink targetId="triangulo">triangelu</ConceptLink> bati buruzkoa da. Izan bedi $\triangle ABC$, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> erpinekin, eta izan bedi $\ell$ <VisualBind element="lineBC" color="carbon">$\overleftrightarrow{BC}$</VisualBind> zuzenaren <VisualBind element="parCBD" color="ocre">zuzen paraleloa</VisualBind>, hura ez dena, $\overline{AB}$ aldea <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuan eta $\overline{AC}$ aldea <VisualBind element="intE" color="terracota">$E$</VisualBind> puntuan ebakitzen dituena, biak erpinetatik desberdinak. Orduan
+Zuzen ebakitzaileak <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind> zuzeneko puntu batean ebakitzen direnean, teorema <ConceptLink targetId="triangulo">triangelu</ConceptLink> bati buruzkoa da. Izan bedi $\triangle ABC$, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> erpinekin, eta izan bedi $\ell$ <VisualBind element="lineL3" color="ocre">$\overleftrightarrow{BC}$</VisualBind> zuzenaren <VisualBind element="parCBD" color="ocre">zuzen paraleloa</VisualBind>, hura ez dena, $\overline{AB}$ aldea <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuan eta $\overline{AC}$ aldea <VisualBind element="intE" color="terracota">$E$</VisualBind> puntuan ebakitzen dituena, biak erpinetatik desberdinak. Orduan
 
 $$
 \frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}, \qquad \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|}.
 $$
 
 <VisualBind element="segAD" color="carbon">$\overline{AD}$</VisualBind> eta <VisualBind element="segDB" color="carbon">$\overline{DB}$</VisualBind> zuzenkien arrazoia <VisualBind element="segAE" color="carbon">$\overline{AE}$</VisualBind> eta <VisualBind element="segEC" color="carbon">$\overline{EC}$</VisualBind> zuzenkiena bera da. Kasu hau <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 proposizioa da, eta han <ConceptLink targetId="teorema-reciproco-tales">alderantzizkoa</ConceptLink> ere enuntziatzen da: $D \in \operatorname{seg}(AB)$, $E \in \operatorname{seg}(AC)$ eta $|AD|/|DB| = |AE|/|EC|$ badira, orduan $\overleftrightarrow{DE} \parallel \overleftrightarrow{BC}$.
+
+</StepSection>
 
 <Nota>
 Azaleren bidezko frogapen klasikoak azalera-funtzioa eta luzera erreala erabiltzen ditu, eta, beraz, <ConceptLink targetId="teorema-area-rectangulo">laukizuzenaren azaleraren teoreman</ConceptLink> parte hartzen duten <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink>. <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko III. kapituluan erakutsi zuen proportzioen teoria eta teorema hau jarraitutasunik gabe oinarri daitezkeela, <ConceptLink targetId="teorema-pascal">Pascalen teoreman</ConceptLink> oinarritutako <ConceptLink targetId="calculo-segmentos">zuzenki-kalkulu</ConceptLink> baten bidez. <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink> teorema ez da orokorrean betetzen.

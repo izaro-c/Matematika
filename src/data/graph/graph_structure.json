@@ -32,9 +32,17 @@
     "sistema-hiperbolico",
     "sistema-incidencia",
     "semirrecta",
+    "colinealidad",
     "angulo",
     "angulos-suplementarios",
+    "angulo-recto",
     "segmento",
+    "triangulo",
+    "perpendicular",
+    "triangulo-rectangulo",
+    "vertice",
+    "lado",
+    "cateto",
     "circunferencia",
     "concepto-primitivo",
     "conjunto-disjunto",
@@ -48,11 +56,10 @@
     "geometria-hilbertiana",
     "geometria-sintetica",
     "grupo",
+    "longitud",
     "traza",
     "paralelas",
     "paralelogramo",
-    "perpendicular",
-    "triangulo",
     "semiplano",
     "demo-angulos-alternos-internos",
     "teorema-angulos-alternos-internos",
@@ -61,7 +68,6 @@
     "teoria-medida-area",
     "demo-area-aditividad",
     "teorema-area-aditividad",
-    "triangulo-rectangulo",
     "demo-area-rectangulo",
     "teorema-area-rectangulo",
     "demo-area-triangulo",
@@ -476,6 +482,24 @@
         "plano"
       ]
     },
+    "angulo-recto": {
+      "id": "angulo-recto",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Angelu zuzena",
+      "description": "Bere angelu betegarri auzokidearekin kongruentea den angelua, Hilberten formulazio sintetikoaren arabera.",
+      "proofs": [],
+      "directDependencies": [
+        "angulos-suplementarios",
+        "congruencia",
+        "angulo",
+        "recta",
+        "semirrecta",
+        "estar-entre",
+        "plano",
+        "punto"
+      ]
+    },
     "angulo": {
       "id": "angulo",
       "type": "definicion",
@@ -484,7 +508,8 @@
       "description": "Erpin izeneko jatorri-puntu bera partekatzen duten eta zuzen berekoak ez diren bi zuzenerdiren bikote ez-ordenatuz osatutako figura geometrikoa.",
       "proofs": [],
       "directDependencies": [
-        "semirrecta"
+        "semirrecta",
+        "colinealidad"
       ]
     },
     "angulos-suplementarios": {
@@ -504,6 +529,23 @@
         "congruencia"
       ]
     },
+    "cateto": {
+      "id": "cateto",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Katetoa",
+      "description": "Triangelu angeluzuzen bateko angelu zuzenaren erpinean elkartzen diren bi aldeetako bakoitza.",
+      "proofs": [],
+      "directDependencies": [
+        "triangulo-rectangulo",
+        "angulo-recto",
+        "vertice",
+        "lado",
+        "segmento",
+        "plano",
+        "punto"
+      ]
+    },
     "circunferencia": {
       "id": "circunferencia",
       "type": "definicion",
@@ -516,6 +558,20 @@
         "punto",
         "segmento",
         "congruencia"
+      ]
+    },
+    "colinealidad": {
+      "id": "colinealidad",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Kolinealtasuna",
+      "description": "Zuzen berarekin intziditzen duten puntuek betetzen duten intzidentzia-erlazio geometrikoa.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "incidencia",
+        "recta",
+        "axioma-incidencia-1"
       ]
     },
     "concepto-primitivo": {
@@ -553,7 +609,9 @@
       "description": "Lau aldeak kongruenteak eta lau angeluak zuzenak dituen laukia.",
       "proofs": [],
       "directDependencies": [
+        "lado",
         "congruencia",
+        "angulo-recto",
         "cuadrilatero"
       ]
     },
@@ -567,7 +625,8 @@
       "directDependencies": [
         "plano",
         "punto",
-        "segmento"
+        "segmento",
+        "colinealidad"
       ]
     },
     "derivada": {
@@ -666,6 +725,34 @@
       "proofs": [],
       "directDependencies": []
     },
+    "lado": {
+      "id": "lado",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Aldea",
+      "description": "Irudi geometriko baten elementu lineal eratzailea: erpin jarraituen arteko zuzenkia poligono batean edo angelu baten zuzenerdia.",
+      "proofs": [],
+      "directDependencies": [
+        "vertice",
+        "segmento",
+        "semirrecta"
+      ]
+    },
+    "longitud": {
+      "id": "longitud",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Luzera",
+      "description": "Segmento bakoitzari zenbaki erreal positibo bat esleitzen dion dimentsio bakarreko neurri-funtzio metrikoa, kongruentziarekiko aldaezina eta bitartekotasunarekiko aditiboa.",
+      "proofs": [],
+      "directDependencies": [
+        "segmento",
+        "congruencia",
+        "estar-entre",
+        "axioma-arquimedes",
+        "axioma-completitud"
+      ]
+    },
     "paralelas": {
       "id": "paralelas",
       "type": "definicion",
@@ -702,6 +789,7 @@
       "proofs": [],
       "directDependencies": [
         "recta",
+        "angulo-recto",
         "plano",
         "punto",
         "estar-entre",
@@ -760,6 +848,7 @@
         "triangulo",
         "angulo",
         "congruencia",
+        "longitud",
         "teorema-suma-angulos-triangulo",
         "teorema-tales"
       ]
@@ -841,6 +930,7 @@
       "proofs": [],
       "directDependencies": [
         "angulo",
+        "angulo-recto",
         "triangulo",
         "plano",
         "punto",
@@ -855,7 +945,21 @@
       "description": "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako irudi laua.",
       "proofs": [],
       "directDependencies": [
+        "colinealidad",
         "segmento"
+      ]
+    },
+    "vertice": {
+      "id": "vertice",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Erpina",
+      "description": "Irudi poligonal baten ondoz ondoko bi aldek bat egiten duten puntu berezia edo angelu baten bi zuzenerdien jatorri komuna.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "semirrecta",
+        "colinealidad"
       ]
     },
     "demo-angulos-alternos-internos": {
@@ -1358,8 +1462,10 @@
         {
           "id": "demo-area-rectangulo",
           "dependencies": [
+            "longitud",
             "axioma-arquimedes",
             "triangulo-rectangulo",
+            "angulo-recto",
             "teoria-medida-area",
             "axioma-congruencia-1",
             "paralelas",
@@ -1373,8 +1479,10 @@
       ],
       "directDependencies": [
         "teoria-medida-area",
+        "longitud",
         "teorema-area-aditividad",
         "plano",
+        "angulo-recto",
         "cuadrilatero"
       ]
     },
@@ -1392,19 +1500,22 @@
             "perpendicular",
             "axioma-orden-3",
             "estar-entre",
+            "angulo-recto",
             "paralelas",
             "axioma-paralelas-euclides",
             "semiplano",
             "teoria-medida-area",
             "teorema-area-aditividad",
             "teorema-area-rectangulo",
-            "segmento"
+            "segmento",
+            "longitud"
           ]
         }
       ],
       "directDependencies": [
         "triangulo",
         "teoria-medida-area",
+        "longitud",
         "perpendicular",
         "teorema-area-rectangulo",
         "teorema-area-aditividad",
@@ -1426,6 +1537,7 @@
             "axioma-congruencia-1",
             "axioma-congruencia-4",
             "triangulo",
+            "lado",
             "angulo",
             "segmento",
             "congruencia",
@@ -1439,6 +1551,7 @@
       ],
       "directDependencies": [
         "triangulo",
+        "lado",
         "angulo",
         "congruencia",
         "segmento",
@@ -1466,6 +1579,7 @@
             "congruencia",
             "semiplano",
             "triangulo",
+            "lado",
             "axioma-congruencia-4"
           ]
         }
@@ -1473,6 +1587,7 @@
       "directDependencies": [
         "plano",
         "angulo",
+        "vertice",
         "semirrecta",
         "congruencia",
         "axioma-congruencia-1",
@@ -1491,6 +1606,8 @@
           "id": "demo-pitagoras-areas",
           "dependencies": [
             "triangulo-rectangulo",
+            "longitud",
+            "cateto",
             "teoria-medida-area",
             "teorema-area-rectangulo",
             "teorema-area-triangulo",
@@ -1503,7 +1620,11 @@
           "id": "demo-pitagoras-euclides",
           "dependencies": [
             "triangulo-rectangulo",
+            "vertice",
+            "angulo-recto",
             "teoria-medida-area",
+            "cateto",
+            "longitud",
             "perpendicular",
             "axioma-congruencia-5",
             "congruencia",
@@ -1515,12 +1636,15 @@
       ],
       "directDependencies": [
         "triangulo-rectangulo",
+        "longitud",
+        "cateto",
         "teoria-medida-area",
         "teorema-area-triangulo",
         "teorema-area-rectangulo",
         "teorema-area-aditividad",
         "plano",
-        "triangulo"
+        "triangulo",
+        "angulo-recto"
       ]
     },
     "teorema-suma-angulos-triangulo": {
@@ -1565,6 +1689,7 @@
             "teorema-angulos-alternos-internos",
             "paralelogramo",
             "axioma-paralelas-euclides",
+            "longitud",
             "semiplano"
           ]
         }
@@ -1573,6 +1698,7 @@
         "paralelas",
         "plano",
         "segmento",
+        "longitud",
         "axioma-paralelas-euclides",
         "teorema-area-triangulo",
         "recta",
@@ -1591,6 +1717,7 @@
           "dependencies": [
             "triangulo",
             "axioma-congruencia-5",
+            "lado",
             "congruencia",
             "segmento",
             "angulo",
@@ -1603,6 +1730,7 @@
       ],
       "directDependencies": [
         "triangulo",
+        "lado",
         "congruencia",
         "angulo",
         "axioma-congruencia-5",

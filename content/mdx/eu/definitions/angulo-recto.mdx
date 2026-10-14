@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "angulo-recto",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Angelu zuzena",
+  description: "Bere angelu betegarri auzokidearekin kongruentea den angelua, Hilberten formulazio sintetikoaren arabera.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "angulo", "congruencia", "perpendicularidad", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 10",
+      role: "secondary"
+    }
+  ]
+};
+
+import { AnguloRecto } from '@content/diagrams/Definiciones/AnguloRecto';
+export const Simulation = AnguloRecto;
+
+<Capitular letra="A" />**ngelu zuzena** bere <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarri auzokidearekin</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den <ConceptLink targetId="angulo" isDependency={true}>angelua</ConceptLink> da.
+
+Kontzeptu hau inolako <ConceptLink targetId="medida-angular">angelu-neurri</ConceptLink> kuantitatibotara edo $90^\circ$-ko zenbakizko baliora jo gabe formulatzen da: osoki <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> eremuan kokatzen da, eta <ConceptLink targetId="recta" isDependency={true}>zuzena</ConceptLink> bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> aurkakotan zatitzean oinarritzen da <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasun-erlazioaren</ConceptLink> bidez, lerro- zein angelu-kongruentziaren axiomekin batera.
+
+<Definicion title="Angelu zuzenaren definizio formala">
+Izan bitez $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <VisualBind element="recta-l" color="carbon">$\ell \in \mathcal{L}$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzena</ConceptLink>, non $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ den, eta <VisualBind element="pO" color="carbon">$O \in \operatorname{tr}(\ell)$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat. Izan bitez <VisualBind element="pA" color="canela">$A$</VisualBind>, <VisualBind element="pB" color="pavo">$B$</VisualBind> $\in \operatorname{tr}(\ell) \setminus \{O\}$ bi puntu non $O$ puntua $A$ eta $B$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean dagoen</ConceptLink> ($A * O * B$), halatan non <VisualBind element="semirrecta-h" color="canela">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="semirrecta-hp" color="pavo">$h' = \overrightarrow{OB}$</VisualBind> $\ell$ zuzenaren gaineko aurkako zuzenerdiak diren. Izan bedi <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, zeinak $\ell$ zuzenean ez dagoen <VisualBind element="semirrecta-k" color="terracota">$k = \overrightarrow{OC}$</VisualBind> zuzenerdia zehazten duen.
+
+$h$ eta $k$, zein $h'$ eta $k$ zuzenerdiek $O$ <ConceptLink targetId="vertice">erpinean</ConceptLink> <VisualBind element="angAOC" color="ocre">$\angle(h, k)$</VisualBind> eta <VisualBind element="angBOC" color="musgo">$\angle(h', k)$</VisualBind> <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarri auzokideak</ConceptLink> eratzen dituzte. $\angle(h, k)$ angelua **angelu zuzena** dela esaten da baldin eta soilik baldin bere $\angle(h', k)$ betegarri auzokidearekin kongruentea bada:
+
+$$
+\angle(h, k) \text{ zuzena da} \iff \angle(h, k) \cong \angle(h', k)
+$$
+
+$\angle(h, k)$ angelu zuzena bada, bere $\angle(h', k)$ betegarri auzokidea ere zuzena da, eta $\overleftrightarrow{h} = \ell$ zein $\overleftrightarrow{k} = \overleftrightarrow{OC}$ <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate sintetikoak geometria absolutuan">
+    <PropiedadItem 
+      id="congruencia-angulos-rectos" 
+      title="Angelu zuzenen kongruentzia unibertsala"
+      formula="\angle \alpha \text{ zuzena} \land \angle \beta \text{ zuzena} \implies \angle \alpha \cong \angle \beta"
+    >
+      Angelu zuzen guztiak elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira. Euklidesek bere <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko laugarren postulatu gisa ezarri zuen propietate hau, baina Hilberten oinarri sintetikoan teorema gisa froga daiteke segmentuen eta angeluen kongruentzia-axiometatik abiatuta, paraleloen axioma erabili gabe.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplementario-angulo-recto" 
+      title="Angelu zuzen baten betegarria"
+      formula="\angle(h, k) \cong \angle(h', k) \implies \angle(h', k) \text{ zuzena da}"
+    >
+      Angelu zuzen baten edozein angelu betegarri angelu zuzena da era berean. Angelu-kongruentziaren simetriatik eratortzen da zuzenean, <ConceptLink targetId="axioma-congruencia-4">III.4 axioman</ConceptLink> bermatzen den moduan.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Euklidear korrespondentzia metrikoa">
+    <PropiedadItem 
+      id="medida-angular-recta" 
+      title="Angelu zuzenaren neurri metrikoa"
+      formula="|\angle(h, k)| = 90^\circ = \frac{\pi}{2} \text{ rad}"
+    >
+      <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, <ConceptLink targetId="medida-angular">angelu-neurri</ConceptLink> arkimediar jarraitua sartzean, angelu zuzen baten zabalera zehazki $90^\circ$ sexagesimali edo $\frac{\pi}{2}$ radiani dagokio, hots, angelu lau baten erdiari.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Hilberten axiomatikan (§6), angelu zuzenaren definizioa zuzen perpendikularrenaren aurretik dator: bi zuzen ebakitzaile perpendikularrak dira beren ebaki-puntuan angelu zuzenak eratzen dituztelako, oinarrizko geometriako ohiko mendekotasun zirkularra alderantzikatuz.
+</Nota>

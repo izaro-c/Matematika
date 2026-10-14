@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "cateto",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Katetoa",
+  description: "Triangelu angeluzuzen bateko angelu zuzenaren erpinean elkartzen diren bi aldeetako bakoitza.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "perpendicularidad"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzenean</ConceptLink>, **katetoa** <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenaren</ConceptLink> <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> bat egiten duten bi <ConceptLink targetId="lado" isDependency={true}>aldeetako</ConceptLink> edozein da.
+
+Bi katetoak elkarrekiko ortogonalak diren <ConceptLink targetId="segmento" isDependency={true}>zuzenkiak</ConceptLink> dira, zeinen <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> baitira. <ConceptLink targetId="hipotenusa">Hipotenusarekin</ConceptLink> batera, triangeluaren irudi osoa zehazten dute <ConceptLink targetId="plano" isDependency={true}>planoan</ConceptLink>; kalkulu metrikoan txandaka oinarri zein altuera gisa balio dute eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> erlazio koadratikoa betetzen dute.
+
+<Definicion title="Katetoaren definizio formala">
+Izan bedi <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzena</ConceptLink>, zeinaren erpinak <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-kolinealak diren, angelu zuzena <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> izanik; hots, $\overleftrightarrow{CA}$ eta $\overleftrightarrow{CB}$ zuzen euskarriek $\overleftrightarrow{CA} \perp \overleftrightarrow{CB}$ betetzen dute eta <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind> <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> eratzen dute.
+
+$C$ erpinean elkartzen diren bi <ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink>, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> eta <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, $\triangle ABC$ triangeluaren **katetoak** deitzen dira:
+
+$$
+\text{Katetoak}(\triangle ABC) = \{ \overline{CA}, \overline{CB} \}
+$$
+
+Hirugarren aldeak, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind>, angelu zuzenaren erpinaren aurkakoak, <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> izena hartzen du.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Erlazio metriko euklidearrak">
+    <PropiedadItem 
+      id="relacion-pitagorica-catetos" 
+      title="Katetoen eta hipotenusaren arteko erlazio pitagorikoa"
+      formula="|CA|^2 + |CB|^2 = |AB|^2"
+    >
+      Plano euklidearrean, bi katetoen <ConceptLink targetId="longitud">luzeren</ConceptLink> karratuen batura hipotenusaren luzeraren karratuaren berdina da (<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="acotacion-longitud-cateto" 
+      title="Kateto bakoitza hipotenusa baino txikiagoa da"
+      formula="|CA| < |AB| \land |CB| < |AB|"
+    >
+      Triangelu angeluzuzen orotan, kateto bakoitzaren luzera hipotenusarena baino hertsiki txikiagoa da, <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> eta angelu-ordenaren erlazioen zuzeneko ondorio gisa.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Kongruentzia-irizpide sintetikoak">
+    <PropiedadItem 
+      id="criterio-cateto-cateto" 
+      title="Kateto-kateto (KK) kongruentzia-irizpidea"
+      formula="\overline{CA} \cong \overline{C'A'} \land \overline{CB} \cong \overline{C'B'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      $C$ eta $C'$ erpinetan angelu zuzenak dituzten bi triangelu angeluzuzen <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira baldin eta soilik baldin dagozkien kateto-pareak kongruenteak badira. Irizpide hau Alde-Angelu-Alde (<ConceptLink targetId="axioma-congruencia-5">III.5 axioma</ConceptLink>) irizpide orokorraren ondorio zuzena da, haien arteko angelu zuzenak kongruenteak baitira.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Etimologikoki, «kateto» antzinako grezierako *káthetos* ($\kappa\acute{\alpha}\theta\epsilon\tau\text{o}\varsigma$) hitzetik dator, perpendikularki erortzen den berun-hariari erreferentzia eginez. Geometria euklidearreko azaleren kalkuluan, bi katetoetako edozein har daiteke triangelu angeluzuzenaren oinarritzat, beste katetoak zuzenean haren garaiera erlatibo gisa jokatzen duelarik.
+</Nota>

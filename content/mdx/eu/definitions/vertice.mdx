@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "vertice",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Erpina",
+  description: "Irudi poligonal baten ondoz ondoko bi aldek bat egiten duten puntu berezia edo angelu baten bi zuzenerdien jatorri komuna.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "puntos", "poligonos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 8",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Vertice } from '@content/diagrams/Definiciones/Vertice';
+export const Simulation = Vertice;
+
+<Capitular letra="E" />**rpina** irudi <ConceptLink targetId="poligono">poligonal</ConceptLink> baten konfigurazio sortzailea eratzen duten <ConceptLink targetId="punto" isDependency={true}>puntuetako</ConceptLink> bakoitza da, edo <ConceptLink targetId="angulo">angelu</ConceptLink> bat osatzen duten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdien</ConceptLink> <ConceptLink targetId="punto">jatorri</ConceptLink> komuna dena.
+
+Irudi baten zuzenkien barnean dauden puntuekin alderatuta, erpina konfigurazio geometrikoa ainguratzen duen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> egitura-elementu diskretu bat da. <ConceptLink targetId="triangulo">Triangeluetan</ConceptLink>, hiru erpin ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealek</ConceptLink> zuzen euskarriak (<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>) zein irudiaren <ConceptLink targetId="plano">planoa</ConceptLink> (<ConceptLink targetId="axioma-incidencia-4">I.4 axioma</ConceptLink>) zehazten dituzte, antolamendu ziklikorako eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-irizpideetarako funtsezko erreferentzia izanik.
+
+<Definicion title="Erpinaren definizio formala irudi poligonaletan eta angeluetan">
+1. **Erpina irudi poligonal batean:** Planoan ziklikoki ordenatutako $(A_1, A_2, \dots, A_n) \in \mathcal{P}^n$ $n$ punturen segida bat emanik ($n \ge 3$), non ondoz ondoko hiru puntu kolinealak ez diren, $A_i \in \mathcal{P}$ puntu bakoitzari irudiaren **erpin** deritzo:
+
+$$
+\operatorname{Erpinak}(\mathcal{F}) = \{ A_1, A_2, \dots, A_n \} \subset \mathcal{P}
+$$
+
+Bereziki, <VisualBind element="verticeA" color="terracota">$A$</VisualBind>, <VisualBind element="verticeB" color="pavo">$B$</VisualBind> eta <VisualBind element="verticeC" color="granada">$C$</VisualBind> puntu ez-kolinealen hirukoteak zehaztutako triangelu batean, bere erpinen multzoa $\{A, B, C\}$ da, ondoz ondo <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> eta <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind> zuzenkien bidez lotzen direlarik.
+
+2. **Erpina angelu batean:** Zuzenerdien bikote ez-ordenatuak eratutako $\angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OB} \}$ angelu bat emanda, $O \in \mathcal{P}$ puntuak angeluaren **erpin** izena jasotzen du formalki, bi zuzenerdien jatorri komun gisa definitua:
+
+$$
+O = \operatorname{origen}(h) = \operatorname{origen}(k)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Erpinen egitura-propietateak">
+    <PropiedadItem 
+      id="unicidad-interseccion-lados" 
+      title="Ondoz ondoko aldeen bat egitea erpinean"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      Poligono baten <ConceptLink targetId="lado">aldeak</ConceptLink> beren erpinetatik abiatuta eraikitzean, ondoz ondoko bi alderen ebakidura partekatzen duten erpin komunarekin bat dator zehazki, irudia endekatzea eragotziz.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="determinacion-angulo-en-vertice" 
+      title="Erpin bakoitzeko barne-angeluaren determinazioa"
+      formula="\angle A_1 A_2 A_3 = \{ \overrightarrow{A_2 A_1}, \overrightarrow{A_2 A_3} \}"
+    >
+      Irudi poligonal baten $A_2$ erpin bakoitzak, $A_1$ eta $A_3$ erpin auzokideekin batera, irudiaren barne-<ConceptLink targetId="angulo">angelu</ConceptLink> bat zehazten du modu bakarrean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

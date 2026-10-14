@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useExercise } from '@/lib/page-context/ExerciseContext';
 import { EXERCISE_SHAKE_MS } from '../constants';
 import type { QuestionType, ExerciseCardTab } from '../types';
@@ -49,10 +49,19 @@ export function useExerciseQuestion({ id, type }: UseExerciseQuestionOptions): U
 
   const [activeTab, setActiveTab] = useState<ExerciseCardTab>('pregunta');
   const [isShaking, setIsShaking] = useState(false);
+  const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     register(id, type);
   }, [id, type, register]);
+
+  useEffect(() => {
+    return () => {
+      if (shakeTimerRef.current) {
+        clearTimeout(shakeTimerRef.current);
+      }
+    };
+  }, []);
 
   const isCompleted = qState?.isCorrect === true || qState?.revealed === true;
   const isCorrect = qState?.isCorrect ?? null;
@@ -63,8 +72,12 @@ export function useExerciseQuestion({ id, type }: UseExerciseQuestionOptions): U
 
   const triggerShake = useCallback(() => {
     setIsShaking(true);
-    const timer = setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
-    return () => clearTimeout(timer);
+    if (shakeTimerRef.current) {
+      clearTimeout(shakeTimerRef.current);
+    }
+    shakeTimerRef.current = setTimeout(() => {
+      setIsShaking(false);
+    }, EXERCISE_SHAKE_MS);
   }, []);
 
   const submitAnswer = useCallback(

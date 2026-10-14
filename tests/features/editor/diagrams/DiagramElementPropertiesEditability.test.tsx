@@ -18,8 +18,13 @@ function setupInspector(
   const onDeleteSelected = vi.fn();
 
   const base = createTemplateModel('modelo-estatico', 'Escena', 'diagram');
+  const points = modelPoints(base);
   const segment = modelElements(base).find(item => elementKind(item) === 'segment')!;
-  const refs = kind === 'label' ? [segment.id] : [modelPoints(base)[0].id];
+  const refs = kind === 'label'
+    ? [segment.id]
+    : kind === 'parallel' || kind === 'perpendicular' || kind === 'angleBisector'
+      ? [points[0].id, points[1].id, points[2]?.id ?? points[0].id]
+      : [points[0].id];
   const targetElement = configure(element(`el-${kind}`, `Elemento ${kind}`, kind, refs, 'mora', true, { text: 'Texto base' }));
 
   const model: VisualDiagramModel = insertObjects(base, [targetElement]);
@@ -52,6 +57,17 @@ describe('DiagramElementPropertiesEditability', () => {
       const input = screen.getByLabelText(/Etiqueta Visual/i);
       fireEvent.change(input, { target: { value: '$s_1$' } });
       expect(applied()).toMatchObject({ label: '$s_1$' });
+    });
+
+    it('shows slider for parallel line label position along path', () => {
+      const { applied } = setupInspector('parallel', el => ({
+        ...el,
+        appearance: { ...el.appearance, labelVisible: true },
+      }));
+      const rangeInput = screen.getByLabelText(/Posición de etiqueta/i);
+      expect((rangeInput as HTMLInputElement).type).toBe('range');
+      fireEvent.change(rangeInput, { target: { value: '0.35' } });
+      expect(objectStyle(applied())).toMatchObject({ labelPosition: 0.35 });
     });
   });
 

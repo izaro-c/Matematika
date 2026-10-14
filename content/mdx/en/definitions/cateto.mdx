@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "cateto",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Leg",
+  description: "Either of the two sides that meet at the right-angled vertex in a right triangle.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "perpendicularidad"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="I" />n any <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink>, a **leg** is either of the two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> that meet at the <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> of the <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>.
+
+The two legs are mutually orthogonal <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> whose <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> are <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>. Together with the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink>, they determine the full triangle figure in the <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, serving interchangeably as base and height in metric calculations and satisfying the quadratic relation of the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+
+<Definicion title="Formal definition of a leg">
+Let <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, whose vertices are the non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$, with a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> at the <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>, that is, such that the supporting lines $\overleftrightarrow{CA}$ and $\overleftrightarrow{CB}$ satisfy $\overleftrightarrow{CA} \perp \overleftrightarrow{CB}$ and determine the right angle <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind>.
+
+The two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> incident with vertex $C$, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> and <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, are called the **legs** of triangle $\triangle ABC$:
+
+$$
+\text{Legs}(\triangle ABC) = \{ \overline{CA}, \overline{CB} \}
+$$
+
+The third side, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind>, opposite to the right-angled vertex, is called the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Euclidean metric relations">
+    <PropiedadItem 
+      id="relacion-pitagorica-catetos" 
+      title="Pythagorean relation between legs and hypotenuse"
+      formula="|CA|^2 + |CB|^2 = |AB|^2"
+    >
+      In the Euclidean plane, the sum of the squares of the <ConceptLink targetId="longitud">lengths</ConceptLink> of the two legs equals the square of the length of the hypotenuse (<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="acotacion-longitud-cateto" 
+      title="Each leg is strictly shorter than the hypotenuse"
+      formula="|CA| < |AB| \land |CB| < |AB|"
+    >
+      In any right triangle, the length of each leg is strictly less than the length of the hypotenuse, as a direct consequence of the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink> and the relations of angular order.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Synthetic congruence criteria">
+    <PropiedadItem 
+      id="criterio-cateto-cateto" 
+      title="Leg-Leg (LL) congruence criterion"
+      formula="\overline{CA} \cong \overline{C'A'} \land \overline{CB} \cong \overline{C'B'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      Two right triangles with right angles at $C$ and $C'$ are <ConceptLink targetId="congruencia">congruent</ConceptLink> if and only if their respective pairs of legs are congruent. This criterion is a direct consequence of the general Side-Angle-Side (<ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>) criterion, as the included right angles are congruent.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Etymologically, "cathetus" (or leg) originates from the Ancient Greek *káthetos* ($\kappa\acute{\alpha}\theta\epsilon\tau\text{o}\varsigma$), referring to a plumb line falling perpendicularly. In Euclidean area calculation, either leg may serve as the base of the right triangle, with the remaining leg functioning directly as the corresponding altitude.
+</Nota>

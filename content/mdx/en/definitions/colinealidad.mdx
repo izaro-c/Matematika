@@ -1,0 +1,75 @@
+export const metadata = {
+  id: "colinealidad",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Collinearity",
+  description: "Geometric incidence relation satisfied by a set of points when there exists a line with which all of them are incident.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "incidencia", "hilbert", "fundamentos"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1 y §3",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 4",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Colinealidad } from '@content/diagrams/Definiciones/Colinealidad';
+export const Simulation = Colinealidad;
+
+<Capitular letra="C" />**ollinearity** is the relation of <ConceptLink targetId="incidencia" isDependency={true}>incidence</ConceptLink> satisfied by a set of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> when there exists at least one <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> with which all of them are incident.
+
+By <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axiom I.1</ConceptLink>, any two distinct points determine a unique line and are therefore always collinear with each other. The notion acquires deductive relevance when considering three or more points: the existence of non-collinear triples postulates that the <ConceptLink targetId="plano">plane</ConceptLink> does not degenerate into a single line (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>), enables the determination of planes in <ConceptLink targetId="espacio">space</ConceptLink> (<ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>), and constitutes the indispensable condition for defining the <ConceptLink targetId="triangulo">triangle</ConceptLink> and the <ConceptLink targetId="angulo">angle</ConceptLink>.
+
+<Definicion title="Formal definition of collinearity and non-collinearity">
+Let $(\mathcal{P}, \mathcal{L}, \mathbf{I})$ be an <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> where $\mathcal{P} \cap \mathcal{L} = \emptyset$. A non-empty set of points $\{P_1, P_2, \dots, P_n\} \subset \mathcal{P}$ is **collinear** if there exists a line $\ell \in \mathcal{L}$ such that each point is incident with it:
+
+$$
+\operatorname{col}(P_1, P_2, \dots, P_n) \iff \exists \ell \in \mathcal{L} \; \forall i \in \{1, \dots, n\} \, (P_i \,\mathbf{I}\, \ell)
+$$
+
+In particular, three points <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind> are collinear with respect to the line <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> if and only if all three are incident with it:
+
+$$
+\operatorname{col}(A, B, C) \iff \exists \ell \in \mathcal{L} \, (A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land C \,\mathbf{I}\, \ell)
+$$
+
+Conversely, the points $A$, $B$, and <VisualBind element="pD" color="terracota">$D$</VisualBind> are **non-collinear** if there exists no line in $\mathcal{L}$ that is simultaneously incident with all three:
+
+$$
+\neg\operatorname{col}(A, B, D) \iff \forall \ell \in \mathcal{L} \, \neg(A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land D \,\mathbf{I}\, \ell)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Incidence and order properties">
+    <PropiedadItem 
+      id="determinacion-plano-no-colinealidad" 
+      title="Planar determination by non-collinearity"
+      formula="\neg\operatorname{col}(A, B, C) \implies \exists! \pi \in \Pi \, (A\,\mathbf{I}\,\pi \land B\,\mathbf{I}\,\pi \land C\,\mathbf{I}\,\pi)"
+    >
+      Three non-collinear points uniquely determine a <ConceptLink targetId="plano">plane</ConceptLink> in space by Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, preventing the geometric structure from collapsing into a single dimension.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="colinealidad-orden-lineal" 
+      title="Collinearity induced by betweenness"
+      formula="A * B * C \implies \operatorname{col}(A, B, C)"
+    >
+      The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation requires that the points belong to the same straight line according to <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>; if a point lies between two others, the three are necessarily collinear.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -3495,6 +3495,152 @@
       "eu"
     ]
   },
+  "en:angulo-recto": {
+    "id": "angulo-recto",
+    "slug": "angulo-recto",
+    "lang": "en",
+    "filePath": "en/definitions/angulo-recto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "angulo-recto",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Right Angle",
+      "description": "An angle congruent to its adjacent supplementary angle according to Hilbert's synthetic formulation.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "angulo",
+        "congruencia",
+        "perpendicularidad",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 10",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "angulo",
+        "congruencia",
+        "angulos-suplementarios",
+        "medida-angular",
+        "sistema-absoluto",
+        "recta",
+        "semirrecta",
+        "estar-entre",
+        "plano",
+        "punto",
+        "vertice",
+        "recta-soporte",
+        "perpendicular",
+        "elementos-euclides",
+        "axioma-congruencia-4",
+        "sistema-euclidiano",
+        "congruencia-angulos-rectos",
+        "suplementario-angulo-recto",
+        "medida-angular-recta"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "angulo-recto": {
+    "id": "angulo-recto",
+    "slug": "angulo-recto",
+    "lang": "es",
+    "filePath": "es/definitions/angulo-recto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "angulo-recto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Ángulo recto",
+      "description": "Ángulo que es congruente con su adyacente suplementario según la formulación sintética de Hilbert.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "angulo",
+        "congruencia",
+        "perpendicularidad",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 10",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "angulo",
+        "congruencia",
+        "angulos-suplementarios",
+        "medida-angular",
+        "sistema-absoluto",
+        "recta",
+        "semirrecta",
+        "estar-entre",
+        "plano",
+        "punto",
+        "vertice",
+        "recta-soporte",
+        "perpendicular",
+        "elementos-euclides",
+        "axioma-congruencia-4",
+        "sistema-euclidiano",
+        "congruencia-angulos-rectos",
+        "suplementario-angulo-recto",
+        "medida-angular-recta"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:angulo": {
     "id": "angulo",
     "slug": "angulo",
@@ -3805,6 +3951,148 @@
       "eu"
     ]
   },
+  "en:cateto": {
+    "id": "cateto",
+    "slug": "cateto",
+    "lang": "en",
+    "filePath": "en/definitions/cateto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cateto",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Leg",
+      "description": "Either of the two sides that meet at the right-angled vertex in a right triangle.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "triangulo-rectangulo",
+        "perpendicularidad"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 21",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "triangulo-rectangulo",
+        "lado",
+        "vertice",
+        "angulo-recto",
+        "segmento",
+        "recta-soporte",
+        "perpendicular",
+        "hipotenusa",
+        "plano",
+        "teorema-pitagoras",
+        "punto",
+        "longitud",
+        "teorema-angulo-exterior",
+        "congruencia",
+        "axioma-congruencia-5",
+        "relacion-pitagorica-catetos",
+        "acotacion-longitud-cateto",
+        "criterio-cateto-cateto"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "cateto": {
+    "id": "cateto",
+    "slug": "cateto",
+    "lang": "es",
+    "filePath": "es/definitions/cateto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cateto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Cateto",
+      "description": "Cada uno de los dos lados que concurren en el vértice del ángulo recto en un triángulo rectángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "triangulo-rectangulo",
+        "perpendicularidad"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 21",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "triangulo-rectangulo",
+        "lado",
+        "vertice",
+        "angulo-recto",
+        "segmento",
+        "recta-soporte",
+        "perpendicular",
+        "hipotenusa",
+        "plano",
+        "teorema-pitagoras",
+        "punto",
+        "longitud",
+        "teorema-angulo-exterior",
+        "congruencia",
+        "axioma-congruencia-5",
+        "relacion-pitagorica-catetos",
+        "acotacion-longitud-cateto",
+        "criterio-cateto-cateto"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:circunferencia": {
     "id": "circunferencia",
     "slug": "circunferencia",
@@ -3954,6 +4242,142 @@
         "tangente-perpendicular-radio",
         "longitud-circunferencia",
         "area-circulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:colinealidad": {
+    "id": "colinealidad",
+    "slug": "colinealidad",
+    "lang": "en",
+    "filePath": "en/definitions/colinealidad.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "colinealidad",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Collinearity",
+      "description": "Geometric incidence relation satisfied by a set of points when there exists a line with which all of them are incident.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1 y §3",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 4",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "incidencia",
+        "punto",
+        "recta",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-3",
+        "espacio",
+        "axioma-incidencia-4",
+        "triangulo",
+        "angulo",
+        "sistema-incidencia",
+        "axioma-incidencia-5",
+        "estar-entre",
+        "axioma-orden-1",
+        "determinacion-plano-no-colinealidad",
+        "colinealidad-orden-lineal"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "colinealidad": {
+    "id": "colinealidad",
+    "slug": "colinealidad",
+    "lang": "es",
+    "filePath": "es/definitions/colinealidad.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "colinealidad",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Colinealidad",
+      "description": "Relación de incidencia geométrica que satisface un conjunto de puntos cuando existe una recta en la que todos ellos inciden.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1 y §3",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 4",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "incidencia",
+        "punto",
+        "recta",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-3",
+        "espacio",
+        "axioma-incidencia-4",
+        "triangulo",
+        "angulo",
+        "sistema-incidencia",
+        "axioma-incidencia-5",
+        "estar-entre",
+        "axioma-orden-1",
+        "determinacion-plano-no-colinealidad",
+        "colinealidad-orden-lineal"
       ],
       "availableLangs": [
         "en",
@@ -6056,6 +6480,272 @@
         "continuidad",
         "geometria-finita",
         "modelo-fano"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:lado": {
+    "id": "lado",
+    "slug": "lado",
+    "lang": "en",
+    "filePath": "en/definitions/lado.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "lado",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Side",
+      "description": "Constitutive linear element of a geometric figure: a segment bounded by two consecutive vertices in a polygon or a ray in an angle.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "poligonos",
+        "triangulos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definiciones 8 y 19",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "vertice",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "punto",
+        "dominio",
+        "incidencia",
+        "recta",
+        "longitud",
+        "perimetro",
+        "plano",
+        "interseccion-lados-consecutivos",
+        "particion-frontera-poligonal"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "lado": {
+    "id": "lado",
+    "slug": "lado",
+    "lang": "es",
+    "filePath": "es/definitions/lado.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "lado",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Lado",
+      "description": "Elemento lineal constitutivo de una figura geométrica: segmento delimitado por dos vértices consecutivos en un polígono o semirrecta en un ángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "poligonos",
+        "triangulos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definiciones 8 y 19",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "vertice",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "punto",
+        "dominio",
+        "incidencia",
+        "recta",
+        "longitud",
+        "perimetro",
+        "plano",
+        "interseccion-lados-consecutivos",
+        "particion-frontera-poligonal"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:longitud": {
+    "id": "longitud",
+    "slug": "longitud",
+    "lang": "en",
+    "filePath": "en/definitions/longitud.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "longitud",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Length",
+      "description": "One-dimensional metric measure function assigning a positive real number to each segment, invariant under congruence and additive under betweenness.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-metrica",
+        "segmento",
+        "medida",
+        "congruencia",
+        "continuidad",
+        "hilbert"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5; Capítulo V, §29",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "congruencia",
+        "estar-entre",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "distancia",
+        "recta",
+        "punto",
+        "positividad-estricta",
+        "desigualdad-triangular-longitud",
+        "isomorfismo-aditivo-real"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "longitud": {
+    "id": "longitud",
+    "slug": "longitud",
+    "lang": "es",
+    "filePath": "es/definitions/longitud.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "longitud",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Longitud",
+      "description": "Función de medida métrica unidimensional que asigna a cada segmento un número real positivo, invariante por congruencia y aditiva por intermediación.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-metrica",
+        "segmento",
+        "medida",
+        "congruencia",
+        "continuidad",
+        "hilbert"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5; Capítulo V, §29",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "congruencia",
+        "estar-entre",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "distancia",
+        "recta",
+        "punto",
+        "positividad-estricta",
+        "desigualdad-triangular-longitud",
+        "isomorfismo-aditivo-real"
       ],
       "availableLangs": [
         "en",
@@ -8394,6 +9084,140 @@
         "coplanaridad-soporte",
         "interior-triangular",
         "interseccion-recta-triangulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:vertice": {
+    "id": "vertice",
+    "slug": "vertice",
+    "lang": "en",
+    "filePath": "en/definitions/vertice.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "vertice",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Vertex",
+      "description": "Distinguished point where two consecutive sides of a polygonal figure meet or the common origin of the two rays of an angle.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "puntos",
+        "poligonos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 8",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "punto",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "dominio",
+        "triangulo",
+        "colinealidad",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-4",
+        "congruencia",
+        "lado",
+        "unicidad-interseccion-lados",
+        "determinacion-angulo-en-vertice"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "vertice": {
+    "id": "vertice",
+    "slug": "vertice",
+    "lang": "es",
+    "filePath": "es/definitions/vertice.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "vertice",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Vértice",
+      "description": "Punto singular donde concurren dos lados consecutivos de una figura poligonal o el origen común de las dos semirrectas de un ángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "puntos",
+        "poligonos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 8",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "punto",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "dominio",
+        "triangulo",
+        "colinealidad",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-4",
+        "congruencia",
+        "lado",
+        "unicidad-interseccion-lados",
+        "determinacion-angulo-en-vertice"
       ],
       "availableLangs": [
         "en",
@@ -17185,6 +18009,79 @@
       "eu"
     ]
   },
+  "es:angulo-recto": {
+    "id": "angulo-recto",
+    "slug": "angulo-recto",
+    "lang": "es",
+    "filePath": "es/definitions/angulo-recto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "angulo-recto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Ángulo recto",
+      "description": "Ángulo que es congruente con su adyacente suplementario según la formulación sintética de Hilbert.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "angulo",
+        "congruencia",
+        "perpendicularidad",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 10",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "angulo",
+        "congruencia",
+        "angulos-suplementarios",
+        "medida-angular",
+        "sistema-absoluto",
+        "recta",
+        "semirrecta",
+        "estar-entre",
+        "plano",
+        "punto",
+        "vertice",
+        "recta-soporte",
+        "perpendicular",
+        "elementos-euclides",
+        "axioma-congruencia-4",
+        "sistema-euclidiano",
+        "congruencia-angulos-rectos",
+        "suplementario-angulo-recto",
+        "medida-angular-recta"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:angulo": {
     "id": "angulo",
     "slug": "angulo",
@@ -17340,6 +18237,77 @@
       "eu"
     ]
   },
+  "es:cateto": {
+    "id": "cateto",
+    "slug": "cateto",
+    "lang": "es",
+    "filePath": "es/definitions/cateto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cateto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Cateto",
+      "description": "Cada uno de los dos lados que concurren en el vértice del ángulo recto en un triángulo rectángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "triangulo-rectangulo",
+        "perpendicularidad"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 21",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "triangulo-rectangulo",
+        "lado",
+        "vertice",
+        "angulo-recto",
+        "segmento",
+        "recta-soporte",
+        "perpendicular",
+        "hipotenusa",
+        "plano",
+        "teorema-pitagoras",
+        "punto",
+        "longitud",
+        "teorema-angulo-exterior",
+        "congruencia",
+        "axioma-congruencia-5",
+        "relacion-pitagorica-catetos",
+        "acotacion-longitud-cateto",
+        "criterio-cateto-cateto"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:circunferencia": {
     "id": "circunferencia",
     "slug": "circunferencia",
@@ -17408,6 +18376,74 @@
         "tangente-perpendicular-radio",
         "longitud-circunferencia",
         "area-circulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:colinealidad": {
+    "id": "colinealidad",
+    "slug": "colinealidad",
+    "lang": "es",
+    "filePath": "es/definitions/colinealidad.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "colinealidad",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Colinealidad",
+      "description": "Relación de incidencia geométrica que satisface un conjunto de puntos cuando existe una recta en la que todos ellos inciden.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1 y §3",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 4",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "incidencia",
+        "punto",
+        "recta",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-3",
+        "espacio",
+        "axioma-incidencia-4",
+        "triangulo",
+        "angulo",
+        "sistema-incidencia",
+        "axioma-incidencia-5",
+        "estar-entre",
+        "axioma-orden-1",
+        "determinacion-plano-no-colinealidad",
+        "colinealidad-orden-lineal"
       ],
       "availableLangs": [
         "en",
@@ -18459,6 +19495,139 @@
         "continuidad",
         "geometria-finita",
         "modelo-fano"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:lado": {
+    "id": "lado",
+    "slug": "lado",
+    "lang": "es",
+    "filePath": "es/definitions/lado.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "lado",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Lado",
+      "description": "Elemento lineal constitutivo de una figura geométrica: segmento delimitado por dos vértices consecutivos en un polígono o semirrecta en un ángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "poligonos",
+        "triangulos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definiciones 8 y 19",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "vertice",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "punto",
+        "dominio",
+        "incidencia",
+        "recta",
+        "longitud",
+        "perimetro",
+        "plano",
+        "interseccion-lados-consecutivos",
+        "particion-frontera-poligonal"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:longitud": {
+    "id": "longitud",
+    "slug": "longitud",
+    "lang": "es",
+    "filePath": "es/definitions/longitud.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "longitud",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Longitud",
+      "description": "Función de medida métrica unidimensional que asigna a cada segmento un número real positivo, invariante por congruencia y aditiva por intermediación.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-metrica",
+        "segmento",
+        "medida",
+        "congruencia",
+        "continuidad",
+        "hilbert"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5; Capítulo V, §29",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "congruencia",
+        "estar-entre",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "distancia",
+        "recta",
+        "punto",
+        "positividad-estricta",
+        "desigualdad-triangular-longitud",
+        "isomorfismo-aditivo-real"
       ],
       "availableLangs": [
         "en",
@@ -19628,6 +20797,73 @@
         "coplanaridad-soporte",
         "interior-triangular",
         "interseccion-recta-triangulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:vertice": {
+    "id": "vertice",
+    "slug": "vertice",
+    "lang": "es",
+    "filePath": "es/definitions/vertice.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "vertice",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Vértice",
+      "description": "Punto singular donde concurren dos lados consecutivos de una figura poligonal o el origen común de las dos semirrectas de un ángulo.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "puntos",
+        "poligonos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 8",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "punto",
+        "poligono",
+        "semirrecta",
+        "angulo",
+        "dominio",
+        "triangulo",
+        "colinealidad",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-4",
+        "congruencia",
+        "lado",
+        "unicidad-interseccion-lados",
+        "determinacion-angulo-en-vertice"
       ],
       "availableLangs": [
         "en",
@@ -24904,6 +26140,79 @@
       "eu"
     ]
   },
+  "eu:angulo-recto": {
+    "id": "angulo-recto",
+    "slug": "angulo-recto",
+    "lang": "eu",
+    "filePath": "eu/definitions/angulo-recto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "angulo-recto",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Angelu zuzena",
+      "description": "Bere angelu betegarri auzokidearekin kongruentea den angelua, Hilberten formulazio sintetikoaren arabera.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "angulo",
+        "congruencia",
+        "perpendicularidad",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 10",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "angulos-suplementarios",
+        "congruencia",
+        "angulo",
+        "medida-angular",
+        "sistema-absoluto",
+        "recta",
+        "semirrecta",
+        "estar-entre",
+        "plano",
+        "punto",
+        "vertice",
+        "recta-soporte",
+        "perpendicular",
+        "elementos-euclides",
+        "axioma-congruencia-4",
+        "sistema-euclidiano",
+        "congruencia-angulos-rectos",
+        "suplementario-angulo-recto",
+        "medida-angular-recta"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:angulo": {
     "id": "angulo",
     "slug": "angulo",
@@ -25059,6 +26368,77 @@
       "eu"
     ]
   },
+  "eu:cateto": {
+    "id": "cateto",
+    "slug": "cateto",
+    "lang": "eu",
+    "filePath": "eu/definitions/cateto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cateto",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Katetoa",
+      "description": "Triangelu angeluzuzen bateko angelu zuzenaren erpinean elkartzen diren bi aldeetako bakoitza.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "triangulo-rectangulo",
+        "perpendicularidad"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 21",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §6",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "triangulo-rectangulo",
+        "angulo-recto",
+        "vertice",
+        "lado",
+        "segmento",
+        "recta-soporte",
+        "perpendicular",
+        "hipotenusa",
+        "plano",
+        "teorema-pitagoras",
+        "punto",
+        "longitud",
+        "teorema-angulo-exterior",
+        "congruencia",
+        "axioma-congruencia-5",
+        "relacion-pitagorica-catetos",
+        "acotacion-longitud-cateto",
+        "criterio-cateto-cateto"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:circunferencia": {
     "id": "circunferencia",
     "slug": "circunferencia",
@@ -25127,6 +26507,74 @@
         "tangente-perpendicular-radio",
         "longitud-circunferencia",
         "area-circulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:colinealidad": {
+    "id": "colinealidad",
+    "slug": "colinealidad",
+    "lang": "eu",
+    "filePath": "eu/definitions/colinealidad.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "colinealidad",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Kolinealtasuna",
+      "description": "Zuzen berarekin intziditzen duten puntuek betetzen duten intzidentzia-erlazio geometrikoa.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1 y §3",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 4",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "punto",
+        "incidencia",
+        "recta",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-3",
+        "espacio",
+        "axioma-incidencia-4",
+        "triangulo",
+        "angulo",
+        "sistema-incidencia",
+        "axioma-incidencia-5",
+        "estar-entre",
+        "axioma-orden-1",
+        "determinacion-plano-no-colinealidad",
+        "colinealidad-orden-lineal"
       ],
       "availableLangs": [
         "en",
@@ -26178,6 +27626,139 @@
         "continuidad",
         "geometria-finita",
         "modelo-fano"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:lado": {
+    "id": "lado",
+    "slug": "lado",
+    "lang": "eu",
+    "filePath": "eu/definitions/lado.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "lado",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Aldea",
+      "description": "Irudi geometriko baten elementu lineal eratzailea: erpin jarraituen arteko zuzenkia poligono batean edo angelu baten zuzenerdia.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "poligonos",
+        "triangulos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definiciones 8 y 19",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "poligono",
+        "vertice",
+        "segmento",
+        "angulo",
+        "semirrecta",
+        "recta",
+        "incidencia",
+        "dominio",
+        "punto",
+        "longitud",
+        "perimetro",
+        "plano",
+        "interseccion-lados-consecutivos",
+        "particion-frontera-poligonal"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:longitud": {
+    "id": "longitud",
+    "slug": "longitud",
+    "lang": "eu",
+    "filePath": "eu/definitions/longitud.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "longitud",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Luzera",
+      "description": "Segmento bakoitzari zenbaki erreal positibo bat esleitzen dion dimentsio bakarreko neurri-funtzio metrikoa, kongruentziarekiko aldaezina eta bitartekotasunarekiko aditiboa.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-metrica",
+        "segmento",
+        "medida",
+        "congruencia",
+        "continuidad",
+        "hilbert"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5; Capítulo V, §29",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "segmento",
+        "congruencia",
+        "estar-entre",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "distancia",
+        "recta",
+        "punto",
+        "positividad-estricta",
+        "desigualdad-triangular-longitud",
+        "isomorfismo-aditivo-real"
       ],
       "availableLangs": [
         "en",
@@ -27347,6 +28928,73 @@
         "coplanaridad-soporte",
         "interior-triangular",
         "interseccion-recta-triangulo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:vertice": {
+    "id": "vertice",
+    "slug": "vertice",
+    "lang": "eu",
+    "filePath": "eu/definitions/vertice.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "vertice",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Erpina",
+      "description": "Irudi poligonal baten ondoz ondoko bi aldek bat egiten duten puntu berezia edo angelu baten bi zuzenerdien jatorri komuna.",
+      "branch": "51A",
+      "branches": [
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "puntos",
+        "poligonos",
+        "angulos",
+        "hilbert"
+      ],
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §3 y §5",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 8",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "poligono",
+        "punto",
+        "angulo",
+        "semirrecta",
+        "dominio",
+        "triangulo",
+        "colinealidad",
+        "axioma-incidencia-1",
+        "plano",
+        "axioma-incidencia-4",
+        "congruencia",
+        "lado",
+        "unicidad-interseccion-lados",
+        "determinacion-angulo-en-vertice"
       ],
       "availableLangs": [
         "en",

@@ -172,59 +172,44 @@ function applyRenderedStackLayer(element: any, layer: number) {
 }
 
 export function calculateLineLabelAnchor(element: any, t: number): any {
-  if (!element.point1 || !element.point2) {
+  if (!element.point1 || !element.point2 || !element.board) {
     return new JXG.Coords(JXG.COORDS_BY_USER, [0, 0], element.board);
   }
 
-  const x1 = element.point1.X();
-  const y1 = element.point1.Y();
-  const x2 = element.point2.X();
-  const y2 = element.point2.Y();
+  const p1Usr = element.point1.coords?.usrCoords ?? [1, element.point1.X(), element.point1.Y()];
+  const p2Usr = element.point2.coords?.usrCoords ?? [1, element.point2.X(), element.point2.Y()];
 
-  let tEffective = t;
+  const isP2Ideal = Math.abs(p2Usr[0]) < 1e-9;
+  const p2Normalized = isP2Ideal
+    ? [1, p1Usr[1] + p2Usr[1], p1Usr[2] + p2Usr[2]]
+    : p2Usr;
 
-  if (element.elType === 'line' && element.board) {
-    const margin = 20;
-    const board = element.board;
-    const cTL = new JXG.Coords(JXG.COORDS_BY_SCREEN, [margin, margin], board);
-    const cBR = new JXG.Coords(
-      JXG.COORDS_BY_SCREEN,
-      [Math.max(margin, board.canvasWidth - margin), Math.max(margin, board.canvasHeight - margin)],
-      board,
-    );
+  const c1 = new JXG.Coords(JXG.COORDS_BY_USER, [p1Usr[1], p1Usr[2]], element.board);
+  const c2 = new JXG.Coords(JXG.COORDS_BY_USER, [p2Normalized[1], p2Normalized[2]], element.board);
 
-    const minX = Math.min(cTL.usrCoords[1], cBR.usrCoords[1]);
-    const maxX = Math.max(cTL.usrCoords[1], cBR.usrCoords[1]);
-    const minY = Math.min(cTL.usrCoords[2], cBR.usrCoords[2]);
-    const maxY = Math.max(cTL.usrCoords[2], cBR.usrCoords[2]);
+  const isInfiniteLine = (
+    element.elType === 'line'
+    || element.elType === 'parallel'
+    || element.elType === 'perpendicular'
+    || (typeof element.evalVisProp === 'function' && (Boolean(element.evalVisProp('straightfirst')) || Boolean(element.evalVisProp('straightlast'))))
+  );
 
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-
-    let tMin = -Infinity;
-    let tMax = Infinity;
-
-    if (Math.abs(dx) > 1e-9) {
-      const t1 = (minX - x1) / dx;
-      const t2 = (maxX - x1) / dx;
-      tMin = Math.max(tMin, Math.min(t1, t2));
-      tMax = Math.min(tMax, Math.max(t1, t2));
-    }
-
-    if (Math.abs(dy) > 1e-9) {
-      const t1 = (minY - y1) / dy;
-      const t2 = (maxY - y1) / dy;
-      tMin = Math.max(tMin, Math.min(t1, t2));
-      tMax = Math.min(tMax, Math.max(t1, t2));
-    }
-
-    if (isFinite(tMin) && isFinite(tMax)) {
-      tEffective = tMin + t * (tMax - tMin);
-    }
+  const jxgGeometry = JXG?.Math?.Geometry as any;
+  if (
+    isInfiniteLine
+    && typeof element.evalVisProp === 'function'
+    && typeof jxgGeometry?.calcStraight === 'function'
+  ) {
+    jxgGeometry.calcStraight(element, c1, c2, 20);
   }
 
-  const x = x1 + tEffective * (x2 - x1);
-  const y = y1 + tEffective * (y2 - y1);
+  const x1 = c1.usrCoords[1];
+  const y1 = c1.usrCoords[2];
+  const x2 = c2.usrCoords[1];
+  const y2 = c2.usrCoords[2];
+
+  const x = x1 + t * (x2 - x1);
+  const y = y1 + t * (y2 - y1);
   return new JXG.Coords(JXG.COORDS_BY_USER, [x, y], element.board);
 }
 
@@ -242,7 +227,14 @@ export function syncNativeElementLabel(
 
   const visible = state.visible && state.text.trim().length > 0;
   const isLineParametric = typeof state.labelPosition === 'number'
-    && (element.elType === 'line' || element.elType === 'segment' || element.elType === 'arrow');
+    && (
+      element.elType === 'line'
+      || element.elType === 'parallel'
+      || element.elType === 'perpendicular'
+      || element.elType === 'segment'
+      || element.elType === 'arrow'
+      || (typeof element.evalVisProp === 'function' && (Boolean(element.evalVisProp('straightfirst')) || Boolean(element.evalVisProp('straightlast'))))
+    );
 
   const visualSignature = JSON.stringify({
     visible,

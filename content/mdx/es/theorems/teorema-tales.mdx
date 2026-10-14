@@ -25,8 +25,10 @@ export const Simulation = Tales;
 
 El teorema convierte el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> en una relación entre <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> y es la base de la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink>. Es un resultado del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>: depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink> y, en la demostración clásica, del <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>.
 
+<StepSection step="step-general">
+
 <Definicion title="Enunciado del teorema de Tales">
-Sean $\ell_1, \ell_2, \ell_3$ tres <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> distintas de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$, y sean $t, t'$ dos rectas de $\sigma$ <ConceptLink targetId="secante">secantes</ConceptLink> a ellas. Sean $A, B, C$ los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> en que $t$ corta a $\ell_1, \ell_2, \ell_3$, y $A', B', C'$ los puntos en que las corta $t'$, con $B$ <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $C$:
+Sean <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="ocre">$\ell_2$</VisualBind>, <VisualBind element="lineL3" color="ocre">$\ell_3$</VisualBind> tres <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> distintas de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$, y sean <VisualBind element="lineT" color="carbon">$t$</VisualBind>, <VisualBind element="lineTPrime" color="carbon">$t'$</VisualBind> dos rectas de $\sigma$ <ConceptLink targetId="secante">secantes</ConceptLink> a ellas. Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB1" color="terracota">$B$</VisualBind>, <VisualBind element="pC1" color="terracota">$C$</VisualBind> los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> en que $t$ corta a $\ell_1, \ell_2, \ell_3$, y <VisualBind element="pA1p" color="terracota">$A'$</VisualBind>, <VisualBind element="pB1p" color="terracota">$B'$</VisualBind>, <VisualBind element="pC1p" color="terracota">$C'$</VisualBind> los puntos en que las corta $t'$, con $B$ <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $C$:
 
 $$
 A * B * C, \quad \{A\} = \operatorname{tr}(t) \cap \operatorname{tr}(\ell_1), \ \dots, \ \{C'\} = \operatorname{tr}(t') \cap \operatorname{tr}(\ell_3).
@@ -41,15 +43,21 @@ $$
 Las transversales $t$ y $t'$ pueden ser paralelas o cortarse, incluso en un punto de alguna de las rectas $\ell_i$.
 </Definicion>
 
+</StepSection>
+
+<StepSection step="step-triangulo">
+
 ### Corolario del triángulo
 
-Cuando las transversales se cortan en un punto de $\ell_1$, el teorema se refiere a un <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Sea $\triangle ABC$ con vértices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>, y sea $\ell$ la <VisualBind element="parCBD" color="ocre">recta paralela</VisualBind> a la recta <VisualBind element="lineBC" color="carbon">$\overleftrightarrow{BC}$</VisualBind>, distinta de ella, que corta al lado $\overline{AB}$ en un punto <VisualBind element="pD" color="terracota">$D$</VisualBind> y al lado $\overline{AC}$ en un punto <VisualBind element="intE" color="terracota">$E$</VisualBind>, ambos distintos de los vértices. Entonces
+Cuando las transversales se cortan en un punto de <VisualBind element="lineL1" color="ocre">$\ell_1$</VisualBind>, el teorema se refiere a un <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Sea $\triangle ABC$ con vértices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>, y sea $\ell$ la <VisualBind element="parCBD" color="ocre">recta paralela</VisualBind> a la recta <VisualBind element="lineL3" color="ocre">$\overleftrightarrow{BC}$</VisualBind>, distinta de ella, que corta al lado $\overline{AB}$ en un punto <VisualBind element="pD" color="terracota">$D$</VisualBind> y al lado $\overline{AC}$ en un punto <VisualBind element="intE" color="terracota">$E$</VisualBind>, ambos distintos de los vértices. Entonces
 
 $$
 \frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}, \qquad \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|}.
 $$
 
 Los segmentos <VisualBind element="segAD" color="carbon">$\overline{AD}$</VisualBind> y <VisualBind element="segDB" color="carbon">$\overline{DB}$</VisualBind> guardan la misma razón que <VisualBind element="segAE" color="carbon">$\overline{AE}$</VisualBind> y <VisualBind element="segEC" color="carbon">$\overline{EC}$</VisualBind>. Este caso es la Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, que también enuncia el <ConceptLink targetId="teorema-reciproco-tales">recíproco</ConceptLink>: si $D \in \operatorname{seg}(AB)$, $E \in \operatorname{seg}(AC)$ y $|AD|/|DB| = |AE|/|EC|$, entonces $\overleftrightarrow{DE} \parallel \overleftrightarrow{BC}$.
+
+</StepSection>
 
 <Nota>
 La demostración clásica, por áreas, utiliza la función área y la longitud real, y por tanto los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> que intervienen en el <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> mostró en el capítulo III de los *Grundlagen der Geometrie* que la teoría de la proporción y este teorema pueden fundarse sin continuidad, mediante un <ConceptLink targetId="calculo-segmentos">cálculo de segmentos</ConceptLink> basado en el <ConceptLink targetId="teorema-pascal">teorema de Pascal</ConceptLink>. En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> el teorema no es válido en general.

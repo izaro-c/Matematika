@@ -63,6 +63,23 @@ export const TrianguloRectanguloSpec = createDiagramSpec(
       "target": true,
       "targetId": "catetos",
       "color": "terracota"
+    },
+    {
+      "id": "gRightAngle",
+      "label": "Ángulo recto",
+      "memberIds": [
+        "angC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo recto en C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "rightAngle",
+      "color": "ocre"
     }
   ],
   "objects": [
@@ -394,7 +411,9 @@ export const TrianguloRectanguloSpec = createDiagramSpec(
       "order": 60,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "gRightAngle"
+      ],
       "selection": {
         "selectable": true,
         "ariaLabel": "Ángulo recto en C",
@@ -452,7 +471,9 @@ export const TrianguloRectanguloSpec = createDiagramSpec(
         "segCA": "CA katetoa",
         "segCB": "CB katetoa",
         "segAB": "AB hipotenusa",
-        "angC": "Angelu zuzena C-n"
+        "angC": "Angelu zuzena C-n",
+        "gCatetos": "CA eta CB katetoak",
+        "gRightAngle": "Angelu zuzena C-n"
       }
     },
     "en": {
@@ -468,7 +489,9 @@ export const TrianguloRectanguloSpec = createDiagramSpec(
         "segCA": "Leg CA",
         "segCB": "Leg CB",
         "segAB": "Hypotenuse AB",
-        "angC": "Right angle at C"
+        "angC": "Right angle at C",
+        "gCatetos": "Legs CA and CB",
+        "gRightAngle": "Right angle at C"
       }
     }
   }

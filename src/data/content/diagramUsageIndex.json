@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "df6d22ad31a7cf90e2b3a55c07c4d0f399276d997a4b55b36444bf0b5380f6d6",
+  "corpusHash": "7610a10f86ea9f34d467c13d6159a08ca5ac7df11e96d3a7a02be74c8a7a570d",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -26,12 +26,15 @@
     "SAS": "content/diagrams/Axiomas/SAS.tsx",
     "GpsTrilateracion": "content/diagrams/CasosUso/GpsTrilateracion.tsx",
     "Angulo": "content/diagrams/Definiciones/Angulo.tsx",
+    "AnguloRecto": "content/diagrams/Definiciones/AnguloRecto.tsx",
     "AngulosSuplementarios": "content/diagrams/Definiciones/AngulosSuplementarios.tsx",
     "Bisectriz": "content/diagrams/Definiciones/Bisectriz.tsx",
     "Circunferencia": "content/diagrams/Definiciones/Circunferencia.tsx",
+    "Colinealidad": "content/diagrams/Definiciones/Colinealidad.tsx",
     "Cuadrado": "content/diagrams/Definiciones/Cuadrado.tsx",
     "Cuadrilatero": "content/diagrams/Definiciones/Cuadrilatero.tsx",
     "EstarEntre": "content/diagrams/Definiciones/EstarEntre.tsx",
+    "Lado": "content/diagrams/Definiciones/Lado.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
     "Perpendicular": "content/diagrams/Definiciones/Perpendicular.tsx",
@@ -43,6 +46,7 @@
     "Semirrecta": "content/diagrams/Definiciones/Semirrecta.tsx",
     "Triangulo": "content/diagrams/Definiciones/Triangulo.tsx",
     "TrianguloRectangulo": "content/diagrams/Definiciones/TrianguloRectangulo.tsx",
+    "Vertice": "content/diagrams/Definiciones/Vertice.tsx",
     "DemoAngulosAlternosInternos": "content/diagrams/Demos/DemoAngulosAlternosInternos.tsx",
     "DemoAngulosOpuestos": "content/diagrams/Demos/DemoAngulosOpuestos.tsx",
     "DemoCongruenciaALA": "content/diagrams/Demos/DemoCongruenciaALA.tsx",
@@ -806,6 +810,38 @@
         "blockId": "angulo:diagram:Angulo"
       }
     ],
+    "AnguloRecto": [
+      {
+        "contentId": "angulo-recto",
+        "contentPath": "content/mdx/en/definitions/angulo-recto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 772,
+          "end": 809
+        },
+        "blockId": "angulo-recto:diagram:AnguloRecto"
+      },
+      {
+        "contentId": "angulo-recto",
+        "contentPath": "content/mdx/es/definitions/angulo-recto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 771,
+          "end": 808
+        },
+        "blockId": "angulo-recto:diagram:AnguloRecto"
+      },
+      {
+        "contentId": "angulo-recto",
+        "contentPath": "content/mdx/eu/definitions/angulo-recto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 779,
+          "end": 816
+        },
+        "blockId": "angulo-recto:diagram:AnguloRecto"
+      }
+    ],
     "AngulosSuplementarios": [
       {
         "contentId": "angulos-suplementarios",
@@ -902,6 +938,38 @@
         "blockId": "circunferencia:diagram:Circunferencia"
       }
     ],
+    "Colinealidad": [
+      {
+        "contentId": "colinealidad",
+        "contentPath": "content/mdx/en/definitions/colinealidad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 774,
+          "end": 812
+        },
+        "blockId": "colinealidad:diagram:Colinealidad"
+      },
+      {
+        "contentId": "colinealidad",
+        "contentPath": "content/mdx/es/definitions/colinealidad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 779,
+          "end": 817
+        },
+        "blockId": "colinealidad:diagram:Colinealidad"
+      },
+      {
+        "contentId": "colinealidad",
+        "contentPath": "content/mdx/eu/definitions/colinealidad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 747,
+          "end": 785
+        },
+        "blockId": "colinealidad:diagram:Colinealidad"
+      }
+    ],
     "Cuadrado": [
       {
         "contentId": "cuadrado",
@@ -996,6 +1064,38 @@
           "end": 653
         },
         "blockId": "estar-entre:diagram:EstarEntre"
+      }
+    ],
+    "Lado": [
+      {
+        "contentId": "lado",
+        "contentPath": "content/mdx/en/definitions/lado.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 770,
+          "end": 800
+        },
+        "blockId": "lado:diagram:Lado"
+      },
+      {
+        "contentId": "lado",
+        "contentPath": "content/mdx/es/definitions/lado.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 785,
+          "end": 815
+        },
+        "blockId": "lado:diagram:Lado"
+      },
+      {
+        "contentId": "lado",
+        "contentPath": "content/mdx/eu/definitions/lado.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 768,
+          "end": 798
+        },
+        "blockId": "lado:diagram:Lado"
       }
     ],
     "Paralelas": [
@@ -1320,6 +1420,16 @@
     ],
     "TrianguloRectangulo": [
       {
+        "contentId": "cateto",
+        "contentPath": "content/mdx/en/definitions/cateto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 754,
+          "end": 799
+        },
+        "blockId": "cateto:diagram:TrianguloRectangulo"
+      },
+      {
         "contentId": "triangulo-rectangulo",
         "contentPath": "content/mdx/en/definitions/triangulo-rectangulo.mdx",
         "referenceKind": "Simulation",
@@ -1328,6 +1438,16 @@
           "end": 827
         },
         "blockId": "triangulo-rectangulo:diagram:TrianguloRectangulo"
+      },
+      {
+        "contentId": "cateto",
+        "contentPath": "content/mdx/es/definitions/cateto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 774,
+          "end": 819
+        },
+        "blockId": "cateto:diagram:TrianguloRectangulo"
       },
       {
         "contentId": "triangulo-rectangulo",
@@ -1340,6 +1460,16 @@
         "blockId": "triangulo-rectangulo:diagram:TrianguloRectangulo"
       },
       {
+        "contentId": "cateto",
+        "contentPath": "content/mdx/eu/definitions/cateto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 770,
+          "end": 815
+        },
+        "blockId": "cateto:diagram:TrianguloRectangulo"
+      },
+      {
         "contentId": "triangulo-rectangulo",
         "contentPath": "content/mdx/eu/definitions/triangulo-rectangulo.mdx",
         "referenceKind": "Simulation",
@@ -1348,6 +1478,38 @@
           "end": 849
         },
         "blockId": "triangulo-rectangulo:diagram:TrianguloRectangulo"
+      }
+    ],
+    "Vertice": [
+      {
+        "contentId": "vertice",
+        "contentPath": "content/mdx/en/definitions/vertice.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 763,
+          "end": 796
+        },
+        "blockId": "vertice:diagram:Vertice"
+      },
+      {
+        "contentId": "vertice",
+        "contentPath": "content/mdx/es/definitions/vertice.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 772,
+          "end": 805
+        },
+        "blockId": "vertice:diagram:Vertice"
+      },
+      {
+        "contentId": "vertice",
+        "contentPath": "content/mdx/eu/definitions/vertice.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 761,
+          "end": 794
+        },
+        "blockId": "vertice:diagram:Vertice"
       }
     ],
     "DemoAngulosAlternosInternos": [

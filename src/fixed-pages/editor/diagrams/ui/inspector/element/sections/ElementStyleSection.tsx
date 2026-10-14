@@ -174,7 +174,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           size={style?.labelSize ?? 16}
           offset={style?.labelOffset}
           position={style?.labelPosition}
-          alongPath={['segment', 'line', 'ray', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'].includes(kind)}
+          alongPath={['segment', 'line', 'ray', 'parallel', 'perpendicular', 'angleBisector', 'segmentExtension', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'].includes(kind)}
           onVisibleChange={showLabel => onUpdateElement(element.id, current => withObjectLabelVisible(current, showLabel))}
           onStyleChange={update => onUpdateElement(element.id, current => withObjectStylePatch(current, update))}
         />

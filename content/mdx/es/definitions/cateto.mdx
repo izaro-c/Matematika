@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "cateto",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Cateto",
+  description: "Cada uno de los dos lados que concurren en el vértice del ángulo recto en un triángulo rectángulo.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "perpendicularidad"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink>, un **cateto** es cualquiera de los dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> que concurren en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> del <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>.
+
+Los dos catetos son <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> mutuamente ortogonales cuyas <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink>. Junto con la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>, determinan la figura completa del triángulo en el <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, sirviendo alternativamente como base y altura en el cálculo métrico y satisfaciendo la relación cuadrática del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+
+<Definicion title="Definición formal de cateto">
+Sea <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, cuyos vértices son los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$, con <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>, es decir, tal que las rectas soporte $\overleftrightarrow{CA}$ y $\overleftrightarrow{CB}$ verifican $\overleftrightarrow{CA} \perp \overleftrightarrow{CB}$ y determinan el ángulo recto <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind>.
+
+Los dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> incidentes en el vértice $C$, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> y <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, se denominan **catetos** del triángulo $\triangle ABC$:
+
+$$
+\text{Catetos}(\triangle ABC) = \{ \overline{CA}, \overline{CB} \}
+$$
+
+El tercer lado, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind>, opuesto al vértice del ángulo recto, recibe el nombre de <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Relaciones métricas euclidianas">
+    <PropiedadItem 
+      id="relacion-pitagorica-catetos" 
+      title="Relación pitagórica entre catetos e hipotenusa"
+      formula="|CA|^2 + |CB|^2 = |AB|^2"
+    >
+      En el plano euclidiano, la suma de los cuadrados de las <ConceptLink targetId="longitud">longitudes</ConceptLink> de los dos catetos es igual al cuadrado de la longitud de la hipotenusa (<ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="acotacion-longitud-cateto" 
+      title="Cada cateto es menor que la hipotenusa"
+      formula="|CA| < |AB| \land |CB| < |AB|"
+    >
+      En todo triángulo rectángulo, la longitud de cada cateto es estrictamente menor que la longitud de la hipotenusa, como consecuencia directa del <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink> y de las relaciones de orden angular.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Criterios sintéticos de congruencia">
+    <PropiedadItem 
+      id="criterio-cateto-cateto" 
+      title="Criterio de congruencia cateto-cateto (CC)"
+      formula="\overline{CA} \cong \overline{C'A'} \land \overline{CB} \cong \overline{C'B'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      Dos triángulos rectángulos con ángulos rectos en $C$ y $C'$ son <ConceptLink targetId="congruencia">congruentes</ConceptLink> si y solo si sus respectivos pares de catetos son congruentes. Este criterio es una consecuencia directa del criterio general Lado-Ángulo-Lado (<ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>), al ser congruentes los ángulos rectos comprendidos entre ellos.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Etimológicamente, «cateto» proviene del griego antiguo *káthetos* ($\kappa\acute{\alpha}\theta\epsilon\tau\text{o}\varsigma$), derivado de la línea de la plomada que cae perpendicularmente. En el cálculo de áreas en geometría euclidiana, cualquiera de los dos catetos puede elegirse como base del triángulo rectángulo, actuando el otro cateto inmediatamente como su altura relativa.
+</Nota>

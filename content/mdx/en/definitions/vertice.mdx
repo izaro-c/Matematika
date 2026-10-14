@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "vertice",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Vertex",
+  description: "Distinguished point where two consecutive sides of a polygonal figure meet or the common origin of the two rays of an angle.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "puntos", "poligonos", "angulos", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3 y §5",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 8",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Vertice } from '@content/diagrams/Definiciones/Vertice';
+export const Simulation = Vertice;
+
+<Capitular letra="A" /> **vertex** is each of the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> composing the generating configuration of a <ConceptLink targetId="poligono">polygonal</ConceptLink> figure, or that constitutes the common <ConceptLink targetId="punto">origin</ConceptLink> of the two <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> forming an <ConceptLink targetId="angulo">angle</ConceptLink>.
+
+Unlike points situated in the interior of the segments of a figure, the vertex is a discrete structural element of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ that anchors the geometric configuration. In <ConceptLink targetId="triangulo">triangles</ConceptLink>, three non-<ConceptLink targetId="colinealidad" isDependency={true}>collinear</ConceptLink> vertices determine both the supporting lines (<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>) and the <ConceptLink targetId="plano">plane</ConceptLink> of the figure (<ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>), serving as the fundamental reference for cyclic ordering and <ConceptLink targetId="congruencia">congruence</ConceptLink> criteria.
+
+<Definicion title="Formal definition of vertex in polygonal figures and angles">
+1. **Vertex in a polygonal figure:** Given a cyclically ordered sequence of $n$ points $(A_1, A_2, \dots, A_n) \in \mathcal{P}^n$, with $n \ge 3$, such that no three consecutive points are collinear, each point $A_i \in \mathcal{P}$ is called a **vertex** of the figure:
+
+$$
+\operatorname{Vertices}(\mathcal{F}) = \{ A_1, A_2, \dots, A_n \} \subset \mathcal{P}
+$$
+
+In particular, for a triangle determined by the triple of non-collinear points <VisualBind element="verticeA" color="terracota">$A$</VisualBind>, <VisualBind element="verticeB" color="pavo">$B$</VisualBind>, and <VisualBind element="verticeC" color="granada">$C$</VisualBind>, the set of its vertices is $\{A, B, C\}$, connected consecutively by segments <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind>, and <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind>.
+
+2. **Vertex in an angle:** Given an angle formed by the unordered pair of rays $\angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OB} \}$, the point $O \in \mathcal{P}$ formally receives the name of **vertex** of the angle, defined as the common origin of both rays:
+
+$$
+O = \operatorname{origen}(h) = \operatorname{origen}(k)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Structural properties of vertices">
+    <PropiedadItem 
+      id="unicidad-interseccion-lados" 
+      title="Concurrence of consecutive sides at the vertex"
+      formula="\overline{A_1 A_2} \cap \overline{A_2 A_3} = \{A_2\}"
+    >
+      Upon constructing the <ConceptLink targetId="lado">sides</ConceptLink> of a polygon from its vertices, the intersection of two consecutive sides coincides strictly with their common vertex, preventing the figure from degenerating.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="determinacion-angulo-en-vertice" 
+      title="Determination of the interior angle at each vertex"
+      formula="\angle A_1 A_2 A_3 = \{ \overrightarrow{A_2 A_1}, \overrightarrow{A_2 A_3} \}"
+    >
+      Each vertex $A_2$ of a polygonal figure, in combination with its adjacent vertices $A_1$ and $A_3$, uniquely determines an interior <ConceptLink targetId="angulo">angle</ConceptLink> of the figure.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
