@@ -508,6 +508,7 @@
       "description": "Erpin izeneko jatorri-puntu bera partekatzen duten eta zuzen berekoak ez diren bi zuzenerdiren bikote ez-ordenatuz osatutako figura geometrikoa.",
       "proofs": [],
       "directDependencies": [
+        "punto",
         "semirrecta",
         "colinealidad"
       ]
@@ -946,6 +947,7 @@
       "proofs": [],
       "directDependencies": [
         "colinealidad",
+        "punto",
         "segmento"
       ]
     },
@@ -1665,6 +1667,8 @@
       ],
       "directDependencies": [
         "triangulo",
+        "angulo",
+        "angulo-recto",
         "angulos-suplementarios",
         "axioma-paralelas-euclides",
         "teorema-angulos-alternos-internos",
