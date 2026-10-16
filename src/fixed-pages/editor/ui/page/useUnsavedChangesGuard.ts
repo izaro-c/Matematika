@@ -4,20 +4,28 @@ import { editorDocumentKey } from '@/fixed-pages/editor/session/editorNavigation
 
 export interface UseUnsavedChangesGuardOptions {
   hasLocalChanges: boolean;
-  openFile: (path: string, options?: { discardLocalChanges?: boolean }) => void;
   setLocation: (url: string) => void;
   /** Limpia superficie diagrama / targeting antes de descartar y navegar. */
   onBeforeDiscardNavigate?: () => void;
-  /** Tras openFile por path de corpus (no URL de app). */
-  onAfterDiscardFileNavigate?: (path: string) => void;
+}
+
+/** Clave en `history.state` con la posición de cada entrada, para deshacer atrás/adelante. */
+const HISTORY_INDEX_KEY = 'matematikaEditorIndex';
+
+function historyIndexOf(state: unknown): number | null {
+  const value = state && typeof state === 'object' ? (state as Record<string, unknown>)[HISTORY_INDEX_KEY] : undefined;
+  return typeof value === 'number' ? value : null;
+}
+
+function stampHistoryIndex(index: number) {
+  const state = window.history.state && typeof window.history.state === 'object' ? window.history.state : {};
+  window.history.replaceState({ ...state, [HISTORY_INDEX_KEY]: index }, '');
 }
 
 export function useUnsavedChangesGuard({
   hasLocalChanges,
-  openFile,
   setLocation,
   onBeforeDiscardNavigate,
-  onAfterDiscardFileNavigate,
 }: UseUnsavedChangesGuardOptions) {
   const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
 
@@ -31,27 +39,71 @@ export function useUnsavedChangesGuard({
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [hasLocalChanges]);
 
+  // Cada entrada del historial lleva su posición. wouter emite `pushState`/`replaceState`
+  // tras cambiar el historial: una entrada nueva recibe la siguiente posición y una
+  // reemplazada conserva la suya. Así se puede volver con `history.go` sin crear entradas.
+  const historyIndexRef = useRef(0);
+  useEffect(() => {
+    const existing = historyIndexOf(window.history.state);
+    if (existing === null) stampHistoryIndex(historyIndexRef.current);
+    else historyIndexRef.current = existing;
+
+    const onPush = () => {
+      historyIndexRef.current += 1;
+      stampHistoryIndex(historyIndexRef.current);
+    };
+    const onReplace = () => {
+      if (historyIndexOf(window.history.state) === null) stampHistoryIndex(historyIndexRef.current);
+    };
+    window.addEventListener('pushState', onPush);
+    window.addEventListener('replaceState', onReplace);
+    return () => {
+      window.removeEventListener('pushState', onPush);
+      window.removeEventListener('replaceState', onReplace);
+    };
+  }, []);
+
   // Atrás/adelante: el navegador ya cambió la URL cuando llega `popstate`. Si eso nos
   // saca del documento (o de la superficie de diagrama) con cambios sin guardar, se
-  // restaura la URL anterior antes de que wouter la vea y se pide confirmación.
+  // vuelve a la entrada anterior antes de que wouter la vea y se pide confirmación.
   const [location] = useLocation();
   const search = useSearch();
   const { base } = useRouter();
   const committedUrlRef = useRef({ pathname: '', search: '' });
+  /** Salto de historial que repite el atrás/adelante bloqueado si se confirma. */
+  const blockedTraversalRef = useRef<{ url: string; delta: number } | null>(null);
+  const allowNextTraversalRef = useRef(false);
   useEffect(() => {
     committedUrlRef.current = { pathname: window.location.pathname, search: window.location.search };
   }, [location, search]);
 
   useEffect(() => {
     const onPopState = (event: PopStateEvent) => {
-      if (!hasLocalChanges) return;
+      const committedIndex = historyIndexRef.current;
+      const targetIndex = historyIndexOf(event.state);
+      const allowed = allowNextTraversalRef.current;
+      allowNextTraversalRef.current = false;
       const committed = committedUrlRef.current;
       const target = { pathname: window.location.pathname, search: window.location.search };
-      if (!committed.pathname || editorDocumentKey(target) === editorDocumentKey(committed)) return;
+      const blocks = hasLocalChanges && !allowed && Boolean(committed.pathname)
+        && editorDocumentKey(target) !== editorDocumentKey(committed);
+      if (!blocks) {
+        if (targetIndex !== null) historyIndexRef.current = targetIndex;
+        return;
+      }
       event.stopImmediatePropagation();
-      window.history.pushState(window.history.state, '', `${committed.pathname}${committed.search}`);
       const appPath = base && target.pathname.startsWith(base) ? target.pathname.slice(base.length) || '/' : target.pathname;
-      setPendingFileNavigation(`${appPath}${target.search}`);
+      const url = `${appPath}${target.search}`;
+      if (targetIndex !== null) {
+        // Deshacer el salto: el `popstate` de vuelta coincide con la URL acordada y no bloquea.
+        blockedTraversalRef.current = { url, delta: targetIndex - committedIndex };
+        window.history.go(committedIndex - targetIndex);
+      } else {
+        // Entrada anterior al editor, sin posición conocida: se restaura empujando la URL.
+        blockedTraversalRef.current = null;
+        window.history.pushState(window.history.state, '', `${committed.pathname}${committed.search}`);
+      }
+      setPendingFileNavigation(url);
     };
     window.addEventListener('popstate', onPopState, true);
     return () => window.removeEventListener('popstate', onPopState, true);
@@ -80,18 +132,21 @@ export function useUnsavedChangesGuard({
 
   const continuePendingNavigation = () => {
     const target = pendingFileNavigation;
+    const traversal = blockedTraversalRef.current;
+    blockedTraversalRef.current = null;
     setPendingFileNavigation(null);
     if (!target) return;
     onBeforeDiscardNavigate?.();
-    if (target.startsWith('/') && !target.includes('database/content/')) {
-      setLocation(target);
+    if (traversal && traversal.url === target) {
+      allowNextTraversalRef.current = true;
+      window.history.go(traversal.delta);
       return;
     }
-    openFile(target, { discardLocalChanges: true });
-    onAfterDiscardFileNavigate?.(target);
+    setLocation(target);
   };
 
   const cancelPendingNavigation = () => {
+    blockedTraversalRef.current = null;
     setPendingFileNavigation(null);
   };
 

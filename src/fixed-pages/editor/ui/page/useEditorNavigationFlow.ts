@@ -25,6 +25,8 @@ export interface DiagramReturnContext {
 export interface UseEditorNavigationFlowOptions {
   files: FileNode[];
   filesLoading: boolean;
+  /** Error al cargar el catálogo: sin él no se puede resolver la ruta. */
+  filesError?: string | null;
   currentFile: string | null;
   openFile: (path: string, options?: { discardLocalChanges?: boolean }) => void;
   closeFile: () => void;
@@ -51,6 +53,7 @@ type EditorUrlPatch = {
 export function useEditorNavigationFlow({
   files,
   filesLoading,
+  filesError = null,
   currentFile,
   openFile,
   closeFile,
@@ -79,9 +82,11 @@ export function useEditorNavigationFlow({
     [files, location, search],
   );
   // Mientras llega el catálogo no se puede resolver la ruta: no es un «no encontrado».
-  const route: EditorRoute | { status: 'pending' } =
-    parsedRoute.status === 'not-found' && (filesLoading || files.length === 0)
-      ? { status: 'pending' }
+  // Si el catálogo falló, tampoco: se informa del error en lugar de esperar para siempre.
+  const route: EditorRoute | { status: 'pending' } | { status: 'catalog-error'; requested: string } =
+    parsedRoute.status !== 'not-found' ? parsedRoute
+      : filesError ? { status: 'catalog-error', requested: parsedRoute.requested }
+      : filesLoading || files.length === 0 ? { status: 'pending' }
       : parsedRoute;
   const routeFile = route.status === 'file' ? route : null;
   const currentUrl = search ? `${location}?${search}` : location;
@@ -118,7 +123,7 @@ export function useEditorNavigationFlow({
   const routePath = routeFile?.path ?? null;
   const routeStatus = route.status;
   useEffect(() => {
-    if (routeStatus === 'pending') return;
+    if (routeStatus === 'pending' || routeStatus === 'catalog-error') return;
     if (routePath === syncedPathRef.current) return;
     syncedPathRef.current = routePath;
     if (routePath) {
@@ -190,10 +195,13 @@ export function useEditorNavigationFlow({
   const openFileSafely = useCallback((path: string) => {
     // Un diagrama abierto desde una página recuerda cómo volver a ella.
     const returnTo = path.endsWith('.tsx') && routeFile && !isDiagramRoute ? currentUrl : null;
-    const url = urlForPath(path, { returnTo });
+    // Reabrir la página actual conserva vista, bloque y paso; solo cierra la superficie.
+    const url = routeFile?.path === path
+      ? urlForPath(path, { viewMode: routeFile.viewMode, blockId: routeFile.blockId, step: routeFile.step, returnTo: routeFile.returnTo })
+      : urlForPath(path, { returnTo });
     const leavingCurrent = Boolean(currentFile && currentFile !== path);
-    const diagramBlocksNav = diagramSurfaceOpen && diagramDirty;
-    if (leavingCurrent && (hasLocalChanges || diagramBlocksNav)) {
+    const leavingDirtySurface = diagramSurfaceOpen && diagramDirty && url !== currentUrl;
+    if ((leavingCurrent && hasLocalChanges) || leavingDirtySurface) {
       setPendingFileNavigation(url);
       return;
     }

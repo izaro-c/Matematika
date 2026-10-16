@@ -245,7 +245,8 @@ export const EDITOR_PANEL_LIMITS = {
 //
 //   /:lang/editor                                   portada (?seccion=diagramas)
 //   /:lang/editor/:docLang/:carpeta/:slug           documento de content/mdx
-//   /:lang/editor/diagrama/:nombre                  diagrama de content/diagrams
+//   /:lang/editor/diagrama/:carpeta/:nombre         diagrama de content/diagrams
+//                                                   (también /diagrama/:nombre si el nombre es único)
 //   /:lang/editor/archivo/<ruta>                    cualquier otro recurso del catálogo
 //
 // Parámetros: vista=visual|codigo|previa, bloque=<id>, editar=diagrama (superficie
@@ -298,7 +299,8 @@ export function editorRouteSegmentsForPath(path: string): string[] {
     return [parts[2], parts[3], name.replace(/\.mdx$/, '')];
   }
   if (parts[0] === 'content' && parts[1] === 'diagrams' && name.endsWith('.tsx')) {
-    return [EDITOR_DIAGRAM_SEGMENT, name.replace(/\.tsx$/, '')];
+    // La carpeta forma parte de la identidad: dos categorías pueden repetir nombre.
+    return [EDITOR_DIAGRAM_SEGMENT, ...parts.slice(2, -1), name.replace(/\.tsx$/, '')];
   }
   return [EDITOR_GENERIC_SEGMENT, ...parts];
 }
@@ -307,9 +309,21 @@ function isDiagramPath(path: string): boolean {
   return path.endsWith('.tsx');
 }
 
-/** Solo rutas internas absolutas (evita redirecciones abiertas con `//host` o `https:`). */
+/**
+ * Solo rutas internas absolutas (evita redirecciones abiertas con `//host` o `https:`).
+ * Se rechazan también los caracteres de control: el analizador de URL del navegador
+ * elimina tabuladores y saltos de línea, y `/\t//host` acabaría siendo `//host`.
+ */
 export function sanitizeReturnPath(value: string | null | undefined): string | null {
   if (!value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\')) return null;
+  // eslint-disable-next-line no-control-regex
+  if (/[\u0000-\u001f\u007f]/.test(value)) return null;
+  try {
+    const origin = 'https://editor.invalid';
+    if (new URL(value, origin).origin !== origin) return null;
+  } catch {
+    return null;
+  }
   return value;
 }
 
@@ -365,6 +379,12 @@ export function editorStateFromUrl(
   if (!match && segments[0] === EDITOR_DIAGRAM_SEGMENT) {
     const lower = requested.toLowerCase();
     match = files.find(file => isDiagramPath(file.path) && key(file).toLowerCase() === lower);
+    // Forma corta `/diagrama/:nombre`: solo si el nombre no se repite en otra carpeta.
+    if (!match && segments.length === 2) {
+      const name = segments[1].toLowerCase();
+      const candidates = files.filter(file => isDiagramPath(file.path) && key(file).split('/').pop()?.toLowerCase() === name);
+      if (candidates.length === 1) match = candidates[0];
+    }
   }
   if (!match) return { status: 'not-found', requested };
 

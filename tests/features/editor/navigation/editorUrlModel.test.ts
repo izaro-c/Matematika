@@ -14,7 +14,9 @@ const anguloEu: FileNode = { ...base, path: 'content/mdx/eu/definitions/angulo.m
 const congruence1: FileNode = { ...base, path: 'content/diagrams/Axiomas/Congruence1.tsx', name: 'Congruence1.tsx', type: 'diagram-axiomas', kind: 'diagram', id: 'geometry' };
 const tales: FileNode = { ...base, path: 'content/diagrams/Teoremas/Tales.tsx', name: 'Tales.tsx', type: 'diagram-teoremas', kind: 'diagram', id: 'geometry' };
 const readme: FileNode = { ...base, path: 'content/diagrams/README.md', name: 'README.md', type: 'content', kind: 'mdx-document', id: 'README' };
-const files = [anguloEs, anguloEu, congruence1, tales, readme];
+const pitagorasA: FileNode = { ...base, path: 'content/diagrams/Axiomas/Pitagoras.tsx', name: 'Pitagoras.tsx', type: 'diagram-axiomas', kind: 'diagram', id: 'geometry' };
+const pitagorasT: FileNode = { ...base, path: 'content/diagrams/Teoremas/Pitagoras.tsx', name: 'Pitagoras.tsx', type: 'diagram-teoremas', kind: 'diagram', id: 'geometry' };
+const files = [anguloEs, anguloEu, congruence1, tales, pitagorasA, pitagorasT, readme];
 
 const parse = (url: string) => {
   const [pathname, search = ''] = url.split('?');
@@ -49,13 +51,21 @@ describe('URL del editor', () => {
 
   it('cada diagrama se identifica por su archivo aunque el catálogo repita `id`', () => {
     const url = editorUrlFromState({ uiLang: 'es', path: tales.path, step: '3', returnTo: '/es/editor/es/definitions/angulo?vista=codigo' });
-    expect(url).toBe('/es/editor/diagrama/Tales?paso=3&volver=%2Fes%2Feditor%2Fes%2Fdefinitions%2Fangulo%3Fvista%3Dcodigo');
+    expect(url).toBe('/es/editor/diagrama/Teoremas/Tales?paso=3&volver=%2Fes%2Feditor%2Fes%2Fdefinitions%2Fangulo%3Fvista%3Dcodigo');
     expect(parse(url)).toMatchObject({
       status: 'file', path: tales.path, step: '3', diagramSurface: false,
       returnTo: '/es/editor/es/definitions/angulo?vista=codigo',
     });
-    expect(parse('/es/editor/diagrama/tales')).toMatchObject({ path: tales.path });
-    expect(parse('/es/editor/diagrama/Congruence1')).toMatchObject({ path: congruence1.path });
+    expect(parse('/es/editor/diagrama/teoremas/tales')).toMatchObject({ path: tales.path });
+    expect(parse('/es/editor/diagrama/Axiomas/Congruence1')).toMatchObject({ path: congruence1.path });
+  });
+
+  it('diagramas con el mismo nombre en carpetas distintas tienen URLs distintas', () => {
+    expect(parse(editorUrlFromState({ uiLang: 'es', path: pitagorasA.path }))).toMatchObject({ path: pitagorasA.path });
+    expect(parse(editorUrlFromState({ uiLang: 'es', path: pitagorasT.path }))).toMatchObject({ path: pitagorasT.path });
+    // La forma corta solo resuelve nombres únicos.
+    expect(parse('/es/editor/diagrama/Tales')).toMatchObject({ path: tales.path });
+    expect(parse('/es/editor/diagrama/Pitagoras')).toMatchObject({ status: 'not-found' });
   });
 
   it('otros recursos del catálogo usan su ruta completa', () => {
@@ -66,7 +76,7 @@ describe('URL del editor', () => {
 
   it('archivos aún fuera del catálogo (recién creados) tienen URL', () => {
     expect(editorUrlFromState({ uiLang: 'es', path: 'content/mdx/eu/theorems/berria.mdx' })).toBe('/es/editor/eu/theorems/berria');
-    expect(editorUrlFromState({ uiLang: 'es', path: 'content/diagrams/Teoremas/Nuevo.tsx' })).toBe('/es/editor/diagrama/Nuevo');
+    expect(editorUrlFromState({ uiLang: 'es', path: 'content/diagrams/Teoremas/Nuevo.tsx' })).toBe('/es/editor/diagrama/Teoremas/Nuevo');
   });
 
   it('rutas inexistentes o mal formadas → no encontrado', () => {
@@ -80,6 +90,9 @@ describe('URL del editor', () => {
     expect(sanitizeReturnPath('/es/editor')).toBe('/es/editor');
     expect(sanitizeReturnPath('//evil.example')).toBeNull();
     expect(sanitizeReturnPath('https://evil.example')).toBeNull();
+    expect(sanitizeReturnPath('/\t//evil.example')).toBeNull();
+    expect(sanitizeReturnPath('/\n/evil.example')).toBeNull();
+    expect(sanitizeReturnPath('/es/editor?vista=codigo')).toBe('/es/editor?vista=codigo');
     expect(parse('/es/editor/diagrama/Tales?volver=//evil.example')).toMatchObject({ returnTo: null });
   });
 

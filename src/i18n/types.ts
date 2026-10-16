@@ -571,6 +571,9 @@ export interface TranslationDictionary {
     checkingCatalog: string;
     catalogLoadError: string;
     retry: string;
+    routeNotFoundTitle: string;
+    routeNotFoundBody: string;
+    backToCatalog: string;
     noEditableResources: string;
     memoryEditing: string;
     editToken: string;

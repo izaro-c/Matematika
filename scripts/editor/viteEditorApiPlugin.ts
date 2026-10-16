@@ -2,47 +2,11 @@ import type { Plugin } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-
-interface FileNode {
-  path: string;
-  name: string;
-  title?: string;
-  type: string;
-  kind: 'mdx-document' | 'diagram';
-  capability: 'visual-exact' | 'code-preview' | 'invalid';
-  capabilityLabel: string;
-  reason: string;
-  lang?: string;
-  id?: string;
-}
-
-const CONTENT_TYPE_MAP: Record<string, string> = {
-  definitions: 'definicion',
-  theorems: 'teorema',
-  methods: 'metodo',
-  demonstrations: 'demostracion',
-  mathematicians: 'matematico',
-  examples: 'ejemplo',
-  exercises: 'ejercicio',
-  usecases: 'caso-de-uso',
-  plans: 'plan-de-estudio',
-  axioms: 'axioma',
-  models: 'modelo',
-  'axiomatic-systems': 'sistema-axiomatico',
-};
+import type { FileNode } from '../../src/fixed-pages/editor/types/editorContracts';
+import { buildCatalogNode } from '../../src/fixed-pages/editor/save/catalogNode';
 
 function getRootDir(): string {
   return process.env.MATEMATIKA_EDITOR_SRC_ROOT || process.cwd();
-}
-
-function extractTitle(source: string, defaultTitle: string): string {
-  const match = source.match(/["']title["']\s*:\s*["']([^"']+)["']/);
-  if (match?.[1]) return match[1];
-  const h1 = source.match(/^#\s+(.+)$/m);
-  if (h1?.[1]) return h1[1].trim();
-  const h2 = source.match(/^##\s+(.+)$/m);
-  if (h2?.[1]) return h2[1].trim();
-  return defaultTitle;
 }
 
 function extractMetadata(source: string): { title?: string; type?: string; lang?: string; id?: string } {
@@ -97,64 +61,15 @@ async function buildCatalog(rootDir: string): Promise<FileNode[]> {
   relativePaths.push(...scannedMdx, ...scannedDiagrams, ...scannedDocs);
 
   for (const relPath of relativePaths) {
-    const isMdx = relPath.endsWith('.mdx') || relPath.endsWith('.md');
-    const isDiagram = relPath.endsWith('.tsx');
-    if (!isMdx && !isDiagram) continue;
-
-    const absPath = path.join(rootDir, relPath);
+    if (!/\.(mdx|md|tsx)$/.test(relPath)) continue;
     let source: string;
     try {
-      source = await fs.promises.readFile(absPath, 'utf8');
+      source = await fs.promises.readFile(path.join(rootDir, relPath), 'utf8');
     } catch {
       continue;
     }
-
-    const fileName = path.basename(relPath);
-    const idFromPath = fileName.replace(/\.(mdx|md|tsx)$/i, '');
-    const meta = extractMetadata(source);
-
-    if (isMdx) {
-      const relParts = relPath.replace(/^(content\/mdx|docs\/content)\//, '').split('/');
-      let lang = meta.lang || 'es';
-      let typeDir = relParts[0];
-      if (relParts.length > 1 && /^[a-z]{2}(-[A-Z]{2})?$/.test(relParts[0])) {
-        lang = relParts[0];
-        typeDir = relParts[1];
-      }
-      const type = meta.type || CONTENT_TYPE_MAP[typeDir] || typeDir || 'content';
-      const id = meta.id || idFromPath;
-      const title = extractTitle(source, meta.title || id);
-
-      fileNodes.push({
-        path: relPath,
-        name: fileName,
-        title,
-        type,
-        kind: 'mdx-document',
-        capability: 'visual-exact',
-        capabilityLabel: 'Visual exacto',
-        reason: 'Edición local en disco.',
-        lang,
-        id,
-      });
-    } else {
-      const category = relPath.replace(/^content\/diagrams\//, '').split('/')[0] || 'general';
-      // El nombre del archivo es la identidad del diagrama; un `"id"` del TSX es de algún objeto de la especificación.
-      const id = idFromPath;
-      const title = extractTitle(source, id);
-
-      fileNodes.push({
-        path: relPath,
-        name: fileName,
-        title,
-        type: `diagram-${category.toLowerCase()}`,
-        kind: 'diagram',
-        capability: 'visual-exact',
-        capabilityLabel: 'Visual exacto',
-        reason: 'Edición local en disco.',
-        id,
-      });
-    }
+    const node = buildCatalogNode({ path: relPath, source, meta: extractMetadata(source), reason: 'Edición local en disco.' });
+    if (node) fileNodes.push(node);
   }
 
   return fileNodes.sort((a, b) => a.path.localeCompare(b.path));

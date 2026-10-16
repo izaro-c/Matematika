@@ -5,26 +5,12 @@ import type {
   SaveDraftRequest,
 } from './persistenceContracts';
 import { hashSource } from './revision';
+import { buildCatalogNode } from './catalogNode';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import contentIndexRaw from '@/data/content/contentIndex.json';
 
 const STORAGE_PREFIX = 'matematika-local-file:';
 const DRAFT_PREFIX = 'matematika-local-draft:';
-
-const CONTENT_TYPE_MAP: Record<string, string> = {
-  definitions: 'definicion',
-  theorems: 'teorema',
-  methods: 'metodo',
-  demonstrations: 'demostracion',
-  mathematicians: 'matematico',
-  examples: 'ejemplo',
-  exercises: 'ejercicio',
-  usecases: 'caso-de-uso',
-  plans: 'plan-de-estudio',
-  axioms: 'axioma',
-  models: 'modelo',
-  'axiomatic-systems': 'sistema-axiomatico',
-};
 
 function getRawText(val: unknown): string {
   if (typeof val === 'string') return val;
@@ -150,72 +136,13 @@ if (typeof localStorage !== 'undefined') {
   }
 }
 
-function extractTitle(source: string, defaultTitle: string): string {
-  const match = source.match(/["']title["']\s*:\s*["']([^"']+)["']/);
-  if (match?.[1]) return match[1];
-  const h1 = source.match(/^#\s+(.+)$/m);
-  if (h1?.[1]) return h1[1].trim();
-  const h2 = source.match(/^##\s+(.+)$/m);
-  if (h2?.[1]) return h2[1].trim();
-  return defaultTitle;
-}
-
 export async function getLocalCatalog(): Promise<FileNode[]> {
-  const catalogMap = new Map<string, FileNode>();
-
+  const catalog: FileNode[] = [];
   for (const [filePath, source] of localFiles.entries()) {
-    const isMdx = filePath.endsWith('.mdx');
-    const isDiagram = filePath.endsWith('.tsx');
-    if (!isMdx && !isDiagram) continue;
-
-    const fileName = filePath.split('/').pop() || '';
-    const idFromPath = fileName.replace(/\.(mdx|tsx)$/i, '');
-    const meta = fileMetaMap.get(filePath);
-
-    if (isMdx) {
-      const relParts = filePath.replace(/^content\/mdx\//, '').split('/');
-      let lang = meta?.lang || 'es';
-      let typeDir = relParts[0];
-      if (relParts.length > 1 && /^[a-z]{2}(-[A-Z]{2})?$/.test(relParts[0])) {
-        lang = relParts[0];
-        typeDir = relParts[1];
-      }
-      const type = meta?.type || CONTENT_TYPE_MAP[typeDir] || typeDir || 'content';
-      const id = meta?.id || idFromPath;
-      const title = extractTitle(source, meta?.title || id);
-
-      catalogMap.set(filePath, {
-        path: filePath,
-        name: fileName,
-        title,
-        type,
-        kind: 'mdx-document',
-        capability: 'visual-exact',
-        capabilityLabel: 'Visual exacto',
-        reason: 'Edición local habilitada.',
-        lang,
-        id,
-      });
-    } else {
-      const category = filePath.replace(/^content\/diagrams\//, '').split('/')[0] || 'general';
-      const id = idFromPath;
-      const title = extractTitle(source, id);
-
-      catalogMap.set(filePath, {
-        path: filePath,
-        name: fileName,
-        title,
-        type: `diagram-${category.toLowerCase()}`,
-        kind: 'diagram',
-        capability: 'visual-exact',
-        capabilityLabel: 'Visual exacto',
-        reason: 'Edición local habilitada.',
-        id,
-      });
-    }
+    const node = buildCatalogNode({ path: filePath, source, meta: fileMetaMap.get(filePath), reason: 'Edición local habilitada.' });
+    if (node) catalog.push(node);
   }
-
-  return Array.from(catalogMap.values()).sort((a, b) => a.path.localeCompare(b.path));
+  return catalog.sort((a, b) => a.path.localeCompare(b.path));
 }
 
 export async function readLocalContent(path: string): Promise<ReadContentResponse> {

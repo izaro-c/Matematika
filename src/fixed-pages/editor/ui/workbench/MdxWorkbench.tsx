@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
+import { useI18n } from '@/i18n';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
 import { DiagramWorkbenchHost } from '../../diagrams/ui/workbench/DiagramWorkbenchHost';
@@ -107,6 +108,7 @@ export const MdxWorkbench: React.FC = () => {
   const currentResource = files.find(file => file.path === currentFile);
 
   const [, setLocation] = useLocation();
+  const { t } = useI18n();
   const [diagramDirty, setDiagramDirty] = useState(false);
   const cleanupDiagramSessionRef = useRef<() => void>(() => {});
 
@@ -118,7 +120,6 @@ export const MdxWorkbench: React.FC = () => {
     cancelPendingNavigation,
   } = useUnsavedChangesGuard({
     hasLocalChanges: hasLocalChanges || diagramDirty,
-    openFile,
     setLocation,
     onBeforeDiscardNavigate: () => cleanupDiagramSessionRef.current(),
   });
@@ -148,6 +149,7 @@ export const MdxWorkbench: React.FC = () => {
   } = useEditorNavigationFlow({
     files,
     filesLoading,
+    filesError,
     currentFile,
     openFile,
     closeFile,
@@ -216,14 +218,31 @@ export const MdxWorkbench: React.FC = () => {
     }
   }, [currentConceptVariants, openFileSafely]);
 
+  // Abrir otro archivo solo navega: la traducción espera a que el núcleo lo haya cargado.
+  const [pendingTranslation, setPendingTranslation] = useState<{ path: string; lang: string } | null>(null);
   const handleCreateTranslation = useCallback(async (fileOrLang: FileNode | string, maybeLang?: string) => {
     const targetLang = typeof fileOrLang === 'string' ? fileOrLang : maybeLang;
     if (!targetLang) return;
     if (typeof fileOrLang !== 'string' && fileOrLang.path !== currentFile) {
+      setPendingTranslation({ path: fileOrLang.path, lang: targetLang });
       openFileSafely(fileOrLang.path);
+      return;
     }
     await createTranslation(targetLang);
   }, [createTranslation, currentFile, openFileSafely]);
+
+  const routePath = route.status === 'file' ? route.path : null;
+  useEffect(() => {
+    if (!pendingTranslation) return;
+    if (routePath !== pendingTranslation.path) {
+      // Navegación cancelada en el aviso de cambios sin guardar o sustituida por otra.
+      if (!pendingFileNavigation) setPendingTranslation(null);
+      return;
+    }
+    if (currentFile !== pendingTranslation.path || loading) return;
+    setPendingTranslation(null);
+    void createTranslation(pendingTranslation.lang);
+  }, [createTranslation, currentFile, loading, pendingFileNavigation, pendingTranslation, routePath]);
 
   const writeAvailable = !editorApiUnavailableInProduction() && editorWriteAccessGranted();
   const saveCapability = useMemo(
@@ -363,12 +382,14 @@ export const MdxWorkbench: React.FC = () => {
     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [blocks, loading]);
 
-  // Superficie de diagrama recargada desde la URL: recuperar el bloque activo.
+  // Superficie de diagrama recargada desde la URL: recuperar el bloque activo. `bloque=`
+  // también es la selección de edición, así que solo cuenta si es un bloque de diagrama.
   useEffect(() => {
-    if (route.status === 'file' && route.diagramSurface && urlBlockId && activeDiagramBlockId === null) {
+    if (route.status !== 'file' || !route.diagramSurface || !urlBlockId || activeDiagramBlockId !== null) return;
+    if (blocks.some(block => block.id === urlBlockId && block.type === 'diagram')) {
       setActiveDiagramBlockId(urlBlockId);
     }
-  }, [activeDiagramBlockId, route, urlBlockId]);
+  }, [activeDiagramBlockId, blocks, route, urlBlockId]);
 
   const encodedDiagramStep = editorDiagramStepIndex !== null
     ? String(editorDiagramStepIndex)
@@ -703,6 +724,13 @@ export const MdxWorkbench: React.FC = () => {
         </div>
       ) : route.status === 'not-found' ? (
         <EditorRouteNotFound requested={route.requested} onBack={() => goToLanding()} />
+      ) : route.status === 'catalog-error' ? (
+        <EditorRouteNotFound requested={route.requested} onBack={() => goToLanding()} onRetry={loadFileList} />
+      ) : !currentFile && route.status !== 'landing' ? (
+        // La URL apunta a un archivo que aún no se ha abierto: no mostrar la portada entretanto.
+        <main aria-busy="true" className="flex flex-1 items-center justify-center bg-lienzo font-serif text-sm text-carbon/60">
+          {t('editor', 'loadingContent')}
+        </main>
       ) : !currentFile ? (
         <EditorLandingView
           files={files}
