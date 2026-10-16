@@ -92,9 +92,9 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   avisos,
   save,
   onCloseEditor,
-  closeTitle = 'Cerrar documento',
+  closeTitle,
   confirmCloseWhenDirty = false,
-  closeConfirmMessage = 'Hay cambios sin guardar. ¿Deseas cerrar de todos modos?',
+  closeConfirmMessage,
 }) => {
   const { t } = useI18n();
   const [isDark, setIsDark] = useState(isDarkMode);
@@ -209,7 +209,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         <HeaderIconButton onClick={toggleTheme} title={isDark ? t('editor.nav.lightMode') : t('editor.nav.darkMode')}>
           {isDark ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
         </HeaderIconButton>
-        <HeaderIconButton onClick={handleClose} variant="danger" title={closeTitle} aria-label={closeTitle}>
+        <HeaderIconButton onClick={handleClose} variant="danger" title={closeTitle ?? t('editor.nav.closeDocument')} aria-label={closeTitle ?? t('editor.nav.closeDocument')}>
           <IconClose className="h-4 w-4" />
         </HeaderIconButton>
       </div>
@@ -219,7 +219,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 p-4" role="dialog" aria-modal="true" aria-labelledby="editor-header-close-title">
           <div className="w-full max-w-sm rounded-xl border border-carbon/15 bg-lienzo p-4 shadow-xl">
             <h2 id="editor-header-close-title" className="font-serif text-sm font-bold text-carbon">{t('editor.save.unsavedChanges')}</h2>
-            <p className="mt-2 text-xs text-carbon/70">{closeConfirmMessage}</p>
+            <p className="mt-2 text-xs text-carbon/70">{closeConfirmMessage ?? t('editor.save.unsavedCloseConfirm')}</p>
             <div className="mt-4 flex justify-end gap-2">
               <HeaderActionButton onClick={() => setPendingAction(null)} variant="secondary">
                 {t('editor.save.stay')}

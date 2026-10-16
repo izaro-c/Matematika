@@ -584,7 +584,7 @@ export const euLanguage: LanguageConfig = {
         addToFavorites: 'Gehitu gogokoetara',
         removeFromFavorites: 'Kendu gogokoetatik',
         editable: 'Editagarria',
-        sourceOnly: 'Iturburua',
+        sourceOnly: 'Iturburua soilik',
         attentionNeeded: 'Arreta',
         needsFixing: 'Zuzenketa behar du',
         tsxDiagram: 'TSX Diagrama',

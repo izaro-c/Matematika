@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/i18n';
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { ProofStepNumberBadge } from '@/components/content/ProofStepNumberBadge';
@@ -54,6 +55,7 @@ export function ProofStepWysiwyg({
   onFocusSurface,
   onEditChip,
 }: ProofStepWysiwygProps) {
+  const { t } = useI18n();
   const targets = selectedTargets(step);
   const cited = extractJustificationIdsFromBody(step.body || '');
   const missingJustification = !bodyHasLogicalJustification(step.body || '');
@@ -111,7 +113,7 @@ export function ProofStepWysiwyg({
             disabled={index === 0}
             onClick={(e) => { e.stopPropagation(); onMoveStep?.(-1); }}
             className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30"
-            title="Subir Paso"
+            title={t('editor.blocks.stepUp')}
           >
             ↑
           </button>
@@ -120,7 +122,7 @@ export function ProofStepWysiwyg({
             disabled={index === totalSteps - 1}
             onClick={(e) => { e.stopPropagation(); onMoveStep?.(1); }}
             className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30"
-            title="Bajar Paso"
+            title={t('editor.blocks.stepDown')}
           >
             ↓
           </button>
@@ -128,7 +130,7 @@ export function ProofStepWysiwyg({
             type="button"
             onClick={(e) => { e.stopPropagation(); onDuplicateStep?.(); }}
             className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-pavo/30 bg-lienzo text-[10px] text-pavo hover:bg-pavo/10"
-            title="Duplicar Paso"
+            title={t('editor.blocks.stepDuplicate')}
           >
             ⧉
           </button>
@@ -136,7 +138,7 @@ export function ProofStepWysiwyg({
             type="button"
             onClick={(e) => { e.stopPropagation(); onDeleteStep?.(); }}
             className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-terracota text-[10px] text-lienzo hover:bg-terracota/80"
-            title="Eliminar Paso"
+            title={t('editor.blocks.stepDelete')}
           >
             ✕
           </button>
@@ -145,7 +147,7 @@ export function ProofStepWysiwyg({
 
       {active && (
         <div className="mb-2 font-sans text-[10px] font-bold uppercase tracking-wider text-canela">
-          Paso seleccionado
+          {t('editor.blocks.stepSelected')}
         </div>
       )}
       <div className="mb-4 flex items-center gap-3 lg:gap-4">
@@ -155,7 +157,7 @@ export function ProofStepWysiwyg({
           value={step.title}
           singleLine
           disabled={isReadOnly}
-          placeholder="Afirmación del paso"
+          placeholder={t('editor.blocks.stepClaim')}
           onFocusSurface={onFocusSurface}
           onChange={title => onChangeStep({ ...step, number: displayNumber, title })}
           className="flex-1 border-b border-carbon/20 pb-1 text-xl italic lg:text-2xl [&:empty]:before:italic"
@@ -167,7 +169,7 @@ export function ProofStepWysiwyg({
           surfaceId={`${blockId}-body`}
           value={step.body || ''}
           disabled={isReadOnly}
-          placeholder="Escribe el paso. Selecciona texto → Enlazar. Usa Fórmula en la barra para insertar matemáticas."
+          placeholder={t('editor.blocks.stepBodyPlaceholder')}
           onFocusSurface={onFocusSurface}
           onEditChip={onEditChip}
           onChange={body => onChangeStep({ ...step, number: displayNumber, body })}
@@ -176,21 +178,21 @@ export function ProofStepWysiwyg({
 
         {!isReadOnly && active && (
           <div className="mt-2 flex flex-wrap items-center gap-1.5 font-sans border-t border-carbon/10 pt-2 text-[10px]">
-            <span className="font-bold uppercase tracking-wider text-carbon/40 mr-1">Insertar en paso:</span>
-            <button type="button" onClick={() => handleAppendBlockToStep('formula')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-mono font-bold text-ocre hover:bg-ocre/15 cursor-pointer">+ Fórmula</button>
-            <button type="button" onClick={() => setStepModalOpen(true)} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">+ Ref Paso</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('justification')} className="rounded border border-mora/30 bg-mora/5 px-2 py-0.5 font-bold text-mora hover:bg-mora/15 cursor-pointer">+ Justificación</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('list')} className="rounded border border-pavo/30 bg-pavo/5 px-2 py-0.5 font-bold text-pavo hover:bg-pavo/15 cursor-pointer">+ Lista</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('table')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-bold text-ocre hover:bg-ocre/15 cursor-pointer">+ Tabla</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('note')} className="rounded border border-carbon/20 bg-carbon/5 px-2 py-0.5 font-bold text-carbon/70 hover:bg-carbon/10 cursor-pointer">+ Nota</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('citation')} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">+ Cita</button>
+            <span className="font-bold uppercase tracking-wider text-carbon/40 mr-1">{t('editor.blocks.insertInStep')}</span>
+            <button type="button" onClick={() => handleAppendBlockToStep('formula')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-mono font-bold text-ocre hover:bg-ocre/15 cursor-pointer">{t('editor.blocks.addFormula')}</button>
+            <button type="button" onClick={() => setStepModalOpen(true)} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">{t('editor.blocks.addStepRef')}</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('justification')} className="rounded border border-mora/30 bg-mora/5 px-2 py-0.5 font-bold text-mora hover:bg-mora/15 cursor-pointer">{t('editor.blocks.addJustification')}</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('list')} className="rounded border border-pavo/30 bg-pavo/5 px-2 py-0.5 font-bold text-pavo hover:bg-pavo/15 cursor-pointer">{t('editor.blocks.addList')}</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('table')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-bold text-ocre hover:bg-ocre/15 cursor-pointer">{t('editor.blocks.addTable')}</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('note')} className="rounded border border-carbon/20 bg-carbon/5 px-2 py-0.5 font-bold text-carbon/70 hover:bg-carbon/10 cursor-pointer">{t('editor.blocks.addNote')}</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('citation')} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">{t('editor.blocks.addCitation')}</button>
           </div>
         )}
 
         {active && (
           <div className="mt-3 space-y-2 border-t border-carbon/10 pt-3 font-sans">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Momento</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">{t('editor.blocks.moment')}</span>
               {(['initial', 'auto', 'manual'] as const).map(mode => (
                 <button
                   key={mode}
@@ -208,7 +210,7 @@ export function ProofStepWysiwyg({
                     moment === mode ? 'border-canela bg-canela/10 text-carbon' : 'border-carbon/15 text-carbon/60'
                   }`}
                 >
-                  {mode === 'initial' ? 'Figura inicial' : mode === 'auto' ? 'Automático' : 'Manual'}
+                  {mode === 'initial' ? t('editor.blocks.momentInitial') : mode === 'auto' ? t('editor.blocks.momentAuto') : t('editor.blocks.momentManual')}
                 </button>
               ))}
               {moment === 'manual' && (
@@ -224,14 +226,14 @@ export function ProofStepWysiwyg({
                       diagramStep: v === '' ? undefined : (/^\d+$/.test(v) ? Number(v) : v),
                     });
                   }}
-                  placeholder="id o número"
+                  placeholder={t('editor.blocks.momentPlaceholder')}
                 />
               )}
             </div>
 
             <div>
               <div className="mb-1 flex flex-col gap-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Justificaciones del Paso</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">{t('editor.blocks.justifications')}</span>
                 {cited.length > 0 ? (
                   <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                     {cited.map(id => {
@@ -253,32 +255,32 @@ export function ProofStepWysiwyg({
                     })}
                   </div>
                 ) : (
-                  <p className="text-[10px] italic text-carbon/50 font-serif">Por hipótesis o inferencia lógica elemental.</p>
+                  <p className="text-[10px] italic text-carbon/50 font-serif">{t('editor.blocks.justificationDefault')}</p>
                 )}
                 {missingJustification && (
-                  <span className="text-[10px] text-granada">Falta justificación en el texto (axioma, teorema, definición, paso previo o regla).</span>
+                  <span className="text-[10px] text-granada">{t('editor.blocks.justificationMissing')}</span>
                 )}
               </div>
 
               <div className="mt-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50 block mb-1">Resaltes de Diagrama</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50 block mb-1">{t('editor.blocks.diagramHighlights')}</span>
                 {diagramTargets.length === 0 ? (
-                  <p className="text-[11px] italic text-carbon/45">Sin elementos de diagrama registrados.</p>
+                  <p className="text-[11px] italic text-carbon/45">{t('editor.blocks.noDiagramElements')}</p>
                 ) : (
                   <div className="flex max-h-24 flex-wrap gap-1.5 overflow-y-auto">
-                    {diagramTargets.map(t => {
-                      const selected = targets.includes(t.id);
+                    {diagramTargets.map(target => {
+                      const selected = targets.includes(target.id);
                       return (
                         <button
-                          key={t.qualifiedId ?? t.id}
+                          key={target.qualifiedId ?? target.id}
                           type="button"
                           disabled={isReadOnly}
-                          onClick={() => toggleTarget(t.id)}
+                          onClick={() => toggleTarget(target.id)}
                           className={`rounded-lg border px-2 py-0.5 font-mono text-[10px] cursor-pointer ${
                             selected ? 'border-canela bg-canela text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
                           }`}
                         >
-                          {t.id}{t.label ? ` (${t.label})` : ''}
+                          {target.id}{target.label ? ` (${target.label})` : ''}
                         </button>
                       );
                     })}

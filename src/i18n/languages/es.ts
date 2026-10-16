@@ -584,7 +584,7 @@ export const esLanguage: LanguageConfig = {
         addToFavorites: 'Añadir a favoritos',
         removeFromFavorites: 'Quitar de favoritos',
         editable: 'Editable',
-        sourceOnly: 'Fuente',
+        sourceOnly: 'Solo fuente',
         attentionNeeded: 'Atención',
         needsFixing: 'Requiere corrección',
         tsxDiagram: 'Diagrama TSX',

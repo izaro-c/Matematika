@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/i18n';
 import type { Block } from '@/fixed-pages/editor/session/parser';
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
@@ -41,16 +42,17 @@ export function DemonstrationCanvas({
   onFocusSurface,
   onEditChip,
 }: DemonstrationCanvasProps) {
+  const { t } = useI18n();
   if (blocks.length === 0) {
     return (
       <div className="rounded-sm border border-dashed border-terracota/30 bg-terracota/5 px-6 py-10 text-center">
-        <p className="font-serif text-sm italic text-terracota/80">Esta demostración aún no tiene pasos.</p>
+        <p className="font-serif text-sm italic text-terracota/80">{t('editor.blocks.demoEmpty')}</p>
       </div>
     );
   }
 
   return (
-    <section className="demonstration-canvas space-y-0" aria-label="Demostración">
+    <section className="demonstration-canvas space-y-0" aria-label={t('editor.blocks.demoLabel')}>
       {blocks.map((block, index) => {
         const step = stepFromDemoBlock(block);
         const displayNumber = index + 1;
@@ -82,7 +84,7 @@ export function DemonstrationCanvas({
                   onClick={() => onInsertAfter(block.id)}
                   className="relative z-[1] rounded-full border border-carbon/15 bg-lienzo px-3 py-0.5 text-[10px] font-bold text-carbon/50 opacity-0 transition-opacity hover:border-terracota/40 hover:text-terracota group-hover/gap:opacity-100 cursor-pointer"
                 >
-                  Añadir paso
+                  {t('editor.blocks.addStep')}
                 </button>
               </div>
             )}
