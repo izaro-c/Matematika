@@ -708,6 +708,7 @@ export const MdxWorkbench: React.FC = () => {
           files={files}
           isLoading={filesLoading}
           initialSection={landingSection}
+          onSectionChange={section => goToLanding(section, { replace: true })}
           favoritePaths={workspace.favoritePaths}
           recentPaths={workspace.recentPaths}
           onOpenFile={openFileSafely}

@@ -19,6 +19,8 @@ interface EditorLandingViewProps {
   files: FileNode[];
   isLoading?: boolean;
   initialSection?: LandingSection;
+  /** La pestaña activa se refleja en la URL para recordarla al volver. */
+  onSectionChange?: (section: LandingSection) => void;
   favoritePaths?: string[];
   recentPaths?: string[];
   onOpenFile: (path: string) => void;
@@ -31,6 +33,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
   files,
   isLoading = false,
   initialSection = 'documents',
+  onSectionChange,
   favoritePaths = [],
   recentPaths = [],
   onOpenFile,
@@ -94,6 +97,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             onClick={() => {
               setActiveSection('documents');
               setSelectedType('all');
+              onSectionChange?.('documents');
             }}
           >
             {t('editor', 'documents')}
@@ -103,6 +107,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             onClick={() => {
               setActiveSection('diagrams');
               setSelectedType('all');
+              onSectionChange?.('diagrams');
             }}
           >
             {t('editor', 'diagrams')}

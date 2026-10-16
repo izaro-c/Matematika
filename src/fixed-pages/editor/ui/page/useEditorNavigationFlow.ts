@@ -6,7 +6,6 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import {
   editorStateFromUrl,
   editorUrlFromState,
-  fileNodeFromPath,
   readEditorWorkspacePreferences,
   recordRecentPath,
   toggleFavoritePath,
@@ -87,16 +86,10 @@ export function useEditorNavigationFlow({
   const routeFile = route.status === 'file' ? route : null;
   const currentUrl = search ? `${location}?${search}` : location;
 
-  const fileByPath = useCallback(
-    (path: string) => files.find(file => file.path === path) ?? fileNodeFromPath(path),
-    [files],
+  const urlForPath = useCallback(
+    (path: string, patch: EditorUrlPatch = {}) => editorUrlFromState({ uiLang, path, ...patch }),
+    [uiLang],
   );
-
-  const urlForPath = useCallback((path: string, patch: EditorUrlPatch = {}) => {
-    const file = fileByPath(path);
-    if (!file) return null;
-    return editorUrlFromState({ uiLang, file, ...patch });
-  }, [fileByPath, uiLang]);
 
   const updateCurrentUrl = useCallback((patch: EditorUrlPatch, options: { replace?: boolean } = {}) => {
     if (!routeFile) return;
@@ -108,11 +101,11 @@ export function useEditorNavigationFlow({
       returnTo: routeFile.returnTo,
       ...patch,
     });
-    if (url && url !== currentUrl) navigate(url, { replace: options.replace });
+    if (url !== currentUrl) navigate(url, { replace: options.replace });
   }, [currentUrl, navigate, routeFile, urlForPath]);
 
-  const goToLanding = useCallback((section: EditorResourceSection = 'documents') => {
-    navigate(editorUrlFromState({ uiLang, file: null, section }));
+  const goToLanding = useCallback((section: EditorResourceSection = 'documents', options: { replace?: boolean } = {}) => {
+    navigate(editorUrlFromState({ uiLang, path: null, section }), { replace: options.replace });
   }, [navigate, uiLang]);
 
   // --- Sincronización URL ⇄ núcleo -----------------------------------------
@@ -143,10 +136,8 @@ export function useEditorNavigationFlow({
     previousCoreFileRef.current = currentFile;
     if (currentFile === previous || currentFile === syncedPathRef.current) return;
     if (!currentFile) return;
-    const url = urlForPath(currentFile);
-    if (!url) return;
     syncedPathRef.current = currentFile;
-    navigate(url);
+    navigate(urlForPath(currentFile));
   }, [currentFile, navigate, urlForPath]);
 
   // --- Superficie de diagrama -------------------------------------------------
@@ -200,7 +191,6 @@ export function useEditorNavigationFlow({
     // Un diagrama abierto desde una página recuerda cómo volver a ella.
     const returnTo = path.endsWith('.tsx') && routeFile && !isDiagramRoute ? currentUrl : null;
     const url = urlForPath(path, { returnTo });
-    if (!url) return;
     const leavingCurrent = Boolean(currentFile && currentFile !== path);
     const diagramBlocksNav = diagramSurfaceOpen && diagramDirty;
     if (leavingCurrent && (hasLocalChanges || diagramBlocksNav)) {

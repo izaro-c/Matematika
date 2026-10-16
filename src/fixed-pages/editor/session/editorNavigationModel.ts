@@ -244,28 +244,30 @@ export const EDITOR_PANEL_LIMITS = {
 // URL del editor como fuente de verdad
 //
 //   /:lang/editor                                   portada (?seccion=diagramas)
-//   /:lang/editor/:docLang/:tipo/:slug              documento MDX
-//   /:lang/editor/diagrama/:id                      archivo de diagrama
+//   /:lang/editor/:docLang/:carpeta/:slug           documento de content/mdx
+//   /:lang/editor/diagrama/:nombre                  diagrama de content/diagrams
+//   /:lang/editor/archivo/<ruta>                    cualquier otro recurso del catálogo
 //
 // Parámetros: vista=visual|codigo|previa, bloque=<id>, editar=diagrama (superficie
 // de diagrama sobre la página), paso=<n|id>, volver=<ruta interna>.
 // `:lang` es el idioma de la interfaz; `:docLang` el del documento (siempre explícito,
 // para que cambiar el idioma de la interfaz nunca cambie el archivo abierto).
+// La URL se deriva SOLO de la ruta del archivo: `id`, `type` y `lang` del catálogo
+// salen de heurísticas sobre el código fuente y pueden repetirse.
 // ---------------------------------------------------------------------------
 
 export type EditorUrlViewMode = 'visual' | 'code' | 'preview';
 
-type EditorUrlFile = Pick<FileNode, 'path' | 'name' | 'type' | 'kind' | 'lang' | 'id'>;
-
 export const EDITOR_DIAGRAM_SEGMENT = 'diagrama';
+export const EDITOR_GENERIC_SEGMENT = 'archivo';
 
 const VIEW_MODE_TO_URL: Record<EditorUrlViewMode, string> = { visual: 'visual', code: 'codigo', preview: 'previa' };
 const URL_TO_VIEW_MODE: Record<string, EditorUrlViewMode> = { visual: 'visual', codigo: 'code', previa: 'preview' };
 
 export interface EditorUrlState {
   uiLang: string;
-  /** Archivo abierto (ruta del corpus). `null` → portada. */
-  file?: EditorUrlFile | null;
+  /** Ruta del corpus del archivo abierto. `null` → portada. */
+  path?: string | null;
   viewMode?: EditorUrlViewMode;
   blockId?: string | null;
   /** Superficie de diagrama abierta sobre la página MDX (diagrama en línea o nuevo). */
@@ -288,10 +290,21 @@ export type EditorRoute =
       returnTo: string | null;
     };
 
-function fileSlug(file: Pick<FileNode, 'path' | 'name' | 'id'>): string {
-  if (file.id) return file.id;
-  const base = file.path.split('/').pop() || file.name;
-  return base.replace(/\.(mdx|tsx)$/i, '');
+/** Segmentos de URL (tras `/editor/`) que identifican un archivo del corpus. */
+export function editorRouteSegmentsForPath(path: string): string[] {
+  const parts = path.split('/').filter(Boolean);
+  const name = parts[parts.length - 1] ?? '';
+  if (parts[0] === 'content' && parts[1] === 'mdx' && parts.length === 5 && name.endsWith('.mdx')) {
+    return [parts[2], parts[3], name.replace(/\.mdx$/, '')];
+  }
+  if (parts[0] === 'content' && parts[1] === 'diagrams' && name.endsWith('.tsx')) {
+    return [EDITOR_DIAGRAM_SEGMENT, name.replace(/\.tsx$/, '')];
+  }
+  return [EDITOR_GENERIC_SEGMENT, ...parts];
+}
+
+function isDiagramPath(path: string): boolean {
+  return path.endsWith('.tsx');
 }
 
 /** Solo rutas internas absolutas (evita redirecciones abiertas con `//host` o `https:`). */
@@ -315,25 +328,17 @@ function editorSegments(pathname: string): string[] | null {
 export function editorUrlFromState(state: EditorUrlState): string {
   const base = `/${state.uiLang}/editor`;
   const params = new URLSearchParams();
-  const file = state.file ?? null;
 
-  if (!file) {
+  if (!state.path) {
     if (state.section === 'diagrams') params.set('seccion', 'diagramas');
     const query = params.toString();
     return query ? `${base}?${query}` : base;
   }
 
-  let path: string;
-  if (file.kind === 'diagram') {
-    path = `${base}/${EDITOR_DIAGRAM_SEGMENT}/${encodeURIComponent(fileSlug(file))}`;
-  } else {
-    const docLang = file.lang || extractResourceIdentity(file as FileNode).lang || state.uiLang;
-    path = `${base}/${encodeURIComponent(docLang)}/${encodeURIComponent(file.type)}/${encodeURIComponent(fileSlug(file))}`;
-  }
-
+  const path = `${base}/${editorRouteSegmentsForPath(state.path).map(encodeURIComponent).join('/')}`;
   if (state.viewMode && state.viewMode !== 'visual') params.set('vista', VIEW_MODE_TO_URL[state.viewMode]);
   if (state.blockId) params.set('bloque', state.blockId);
-  if (state.diagramSurface && file.kind !== 'diagram') params.set('editar', 'diagrama');
+  if (state.diagramSurface && !isDiagramPath(state.path)) params.set('editar', 'diagrama');
   if (state.step) params.set('paso', state.step);
   const returnTo = sanitizeReturnPath(state.returnTo);
   if (returnTo) params.set('volver', returnTo);
@@ -344,7 +349,7 @@ export function editorUrlFromState(state: EditorUrlState): string {
 
 export function editorStateFromUrl(
   location: { pathname: string; search?: string },
-  files: ReadonlyArray<EditorUrlFile>,
+  files: ReadonlyArray<Pick<FileNode, 'path'>>,
 ): EditorRoute {
   const segments = editorSegments(location.pathname) ?? [];
   const params = new URLSearchParams(location.search ?? '');
@@ -355,23 +360,12 @@ export function editorStateFromUrl(
   }
 
   const requested = segments.join('/');
-  let match: (typeof files)[number] | undefined;
-
-  if (segments.length === 2 && segments[0] === EDITOR_DIAGRAM_SEGMENT) {
-    const id = segments[1];
-    const diagrams = files.filter(file => file.kind === 'diagram');
-    match = diagrams.find(file => fileSlug(file) === id)
-      ?? diagrams.find(file => fileSlug(file).toLowerCase() === id.toLowerCase());
-  } else if (segments.length === 3) {
-    const [docLang, type, slug] = segments;
-    match = files.find(file =>
-      file.kind === 'mdx-document'
-      && file.type === type
-      && fileSlug(file) === slug
-      && (extractResourceIdentity(file as FileNode).lang ?? docLang) === docLang,
-    );
+  const key = (file: Pick<FileNode, 'path'>) => editorRouteSegmentsForPath(file.path).join('/');
+  let match = files.find(file => key(file) === requested);
+  if (!match && segments[0] === EDITOR_DIAGRAM_SEGMENT) {
+    const lower = requested.toLowerCase();
+    match = files.find(file => isDiagramPath(file.path) && key(file).toLowerCase() === lower);
   }
-
   if (!match) return { status: 'not-found', requested };
 
   const view = URL_TO_VIEW_MODE[params.get('vista') ?? ''] ?? 'visual';
@@ -380,7 +374,7 @@ export function editorStateFromUrl(
     path: match.path,
     viewMode: view,
     blockId: params.get('bloque') || null,
-    diagramSurface: match.kind === 'mdx-document' && params.get('editar') === 'diagrama',
+    diagramSurface: !isDiagramPath(match.path) && params.get('editar') === 'diagrama',
     step: params.get('paso') || null,
     returnTo: sanitizeReturnPath(params.get('volver')),
   };
@@ -396,23 +390,4 @@ export function editorDocumentKey(location: { pathname: string; search?: string 
   if (!segments) return `outside:${location.pathname}`;
   const params = new URLSearchParams(location.search ?? '');
   return `${segments.join('/')}${params.get('editar') === 'diagrama' ? '#diagrama' : ''}`;
-}
-
-/**
- * Identidad mínima de un recurso a partir de su ruta del corpus, para construir su URL
- * cuando aún no figura en el catálogo (p. ej. justo después de crearlo).
- */
-export function fileNodeFromPath(path: string): EditorUrlFile | null {
-  const parts = path.split('/').filter(Boolean);
-  const name = parts[parts.length - 1] ?? '';
-  const mdxIndex = parts.indexOf('mdx');
-  if (name.endsWith('.mdx') && mdxIndex !== -1 && parts.length - mdxIndex === 4) {
-    const [lang, type] = parts.slice(mdxIndex + 1, mdxIndex + 3);
-    return { path, name, type, kind: 'mdx-document', lang, id: name.replace(/\.mdx$/, '') };
-  }
-  if (name.endsWith('.tsx') && parts.includes('diagrams')) {
-    const category = parts[parts.length - 2] ?? 'general';
-    return { path, name, type: `diagram-${category.toLowerCase()}`, kind: 'diagram', id: name.replace(/\.tsx$/, '') };
-  }
-  return null;
 }

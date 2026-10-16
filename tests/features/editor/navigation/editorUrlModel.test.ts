@@ -4,15 +4,17 @@ import {
   editorDocumentKey,
   editorStateFromUrl,
   editorUrlFromState,
-  fileNodeFromPath,
   sanitizeReturnPath,
 } from '../../../../src/fixed-pages/editor/session/editorNavigationModel';
 
 const base = { capability: 'visual-exact', capabilityLabel: 'Editable', reason: '' } as const;
-const anguloEs: FileNode = { ...base, path: 'content/mdx/es/definitions/angulo.mdx', name: 'angulo.mdx', type: 'definitions', kind: 'mdx-document', lang: 'es', id: 'angulo' };
-const anguloEu: FileNode = { ...base, path: 'content/mdx/eu/definitions/angulo.mdx', name: 'angulo.mdx', type: 'definitions', kind: 'mdx-document', lang: 'eu', id: 'angulo' };
-const tales: FileNode = { ...base, path: 'content/diagrams/Teoremas/Tales.tsx', name: 'Tales.tsx', type: 'diagram-teoremas', kind: 'diagram', id: 'Tales' };
-const files = [anguloEs, anguloEu, tales];
+// `id` y `type` imitan lo que devuelve la API de desarrollo: heurísticas poco fiables.
+const anguloEs: FileNode = { ...base, path: 'content/mdx/es/definitions/angulo.mdx', name: 'angulo.mdx', type: 'definicion', kind: 'mdx-document', lang: 'es', id: 'angulo' };
+const anguloEu: FileNode = { ...base, path: 'content/mdx/eu/definitions/angulo.mdx', name: 'angulo.mdx', type: 'definicion', kind: 'mdx-document', lang: 'eu', id: 'angulo' };
+const congruence1: FileNode = { ...base, path: 'content/diagrams/Axiomas/Congruence1.tsx', name: 'Congruence1.tsx', type: 'diagram-axiomas', kind: 'diagram', id: 'geometry' };
+const tales: FileNode = { ...base, path: 'content/diagrams/Teoremas/Tales.tsx', name: 'Tales.tsx', type: 'diagram-teoremas', kind: 'diagram', id: 'geometry' };
+const readme: FileNode = { ...base, path: 'content/diagrams/README.md', name: 'README.md', type: 'content', kind: 'mdx-document', id: 'README' };
+const files = [anguloEs, anguloEu, congruence1, tales, readme];
 
 const parse = (url: string) => {
   const [pathname, search = ''] = url.split('?');
@@ -29,7 +31,7 @@ describe('URL del editor', () => {
   });
 
   it('documento MDX: idioma de interfaz y de documento son independientes', () => {
-    const url = editorUrlFromState({ uiLang: 'es', file: anguloEu, viewMode: 'code', blockId: 'block-3' });
+    const url = editorUrlFromState({ uiLang: 'es', path: anguloEu.path, viewMode: 'code', blockId: 'block-3' });
     expect(url).toBe('/es/editor/eu/definitions/angulo?vista=codigo&bloque=block-3');
     expect(parse(url)).toEqual({
       status: 'file', path: anguloEu.path, viewMode: 'code', blockId: 'block-3',
@@ -40,19 +42,31 @@ describe('URL del editor', () => {
   });
 
   it('ida y vuelta conserva vista, bloque, superficie de diagrama y paso', () => {
-    const url = editorUrlFromState({ uiLang: 'es', file: anguloEs, viewMode: 'preview', blockId: 'block-1', diagramSurface: true, step: '2' });
+    const url = editorUrlFromState({ uiLang: 'es', path: anguloEs.path, viewMode: 'preview', blockId: 'block-1', diagramSurface: true, step: '2' });
     expect(url).toBe('/es/editor/es/definitions/angulo?vista=previa&bloque=block-1&editar=diagrama&paso=2');
     expect(parse(url)).toMatchObject({ viewMode: 'preview', blockId: 'block-1', diagramSurface: true, step: '2' });
   });
 
-  it('diagrama por id con ruta de vuelta', () => {
-    const url = editorUrlFromState({ uiLang: 'es', file: tales, step: '3', returnTo: '/es/editor/es/definitions/angulo?vista=codigo' });
+  it('cada diagrama se identifica por su archivo aunque el catálogo repita `id`', () => {
+    const url = editorUrlFromState({ uiLang: 'es', path: tales.path, step: '3', returnTo: '/es/editor/es/definitions/angulo?vista=codigo' });
     expect(url).toBe('/es/editor/diagrama/Tales?paso=3&volver=%2Fes%2Feditor%2Fes%2Fdefinitions%2Fangulo%3Fvista%3Dcodigo');
     expect(parse(url)).toMatchObject({
       status: 'file', path: tales.path, step: '3', diagramSurface: false,
       returnTo: '/es/editor/es/definitions/angulo?vista=codigo',
     });
     expect(parse('/es/editor/diagrama/tales')).toMatchObject({ path: tales.path });
+    expect(parse('/es/editor/diagrama/Congruence1')).toMatchObject({ path: congruence1.path });
+  });
+
+  it('otros recursos del catálogo usan su ruta completa', () => {
+    const url = editorUrlFromState({ uiLang: 'es', path: readme.path });
+    expect(url).toBe('/es/editor/archivo/content/diagrams/README.md');
+    expect(parse(url)).toMatchObject({ path: readme.path });
+  });
+
+  it('archivos aún fuera del catálogo (recién creados) tienen URL', () => {
+    expect(editorUrlFromState({ uiLang: 'es', path: 'content/mdx/eu/theorems/berria.mdx' })).toBe('/es/editor/eu/theorems/berria');
+    expect(editorUrlFromState({ uiLang: 'es', path: 'content/diagrams/Teoremas/Nuevo.tsx' })).toBe('/es/editor/diagrama/Nuevo');
   });
 
   it('rutas inexistentes o mal formadas → no encontrado', () => {
@@ -79,13 +93,5 @@ describe('URL del editor', () => {
     expect(key('/es/editor/es/definitions/angulo')).not.toBe(key('/es/editor/eu/definitions/angulo'));
     expect(key('/base/es/editor/x/y/z')).toBe(key('/es/editor/x/y/z'));
     expect(key('/es/teorema/tales')).toBe('outside:/es/teorema/tales');
-  });
-
-  it('deduce la identidad de un recurso recién creado a partir de su ruta', () => {
-    expect(editorUrlFromState({ uiLang: 'es', file: fileNodeFromPath('content/mdx/eu/theorems/berria.mdx') }))
-      .toBe('/es/editor/eu/theorems/berria');
-    expect(editorUrlFromState({ uiLang: 'es', file: fileNodeFromPath('content/diagrams/Teoremas/Nuevo.tsx') }))
-      .toBe('/es/editor/diagrama/Nuevo');
-    expect(fileNodeFromPath('src/otro.ts')).toBeNull();
   });
 });

@@ -139,7 +139,8 @@ async function buildCatalog(rootDir: string): Promise<FileNode[]> {
       });
     } else {
       const category = relPath.replace(/^content\/diagrams\//, '').split('/')[0] || 'general';
-      const id = meta.id || idFromPath;
+      // El nombre del archivo es la identidad del diagrama; un `"id"` del TSX es de algún objeto de la especificación.
+      const id = idFromPath;
       const title = extractTitle(source, id);
 
       fileNodes.push({
