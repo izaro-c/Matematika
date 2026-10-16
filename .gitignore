@@ -44,3 +44,6 @@ docs/dependency_graph.svg
 # Codebase-memory artifacts (stamp.json se versiona)
 .codebase-memory/graph.db.zst
 
+
+# CodeAtlas local index (large, regenerable)
+.codeatlas/
