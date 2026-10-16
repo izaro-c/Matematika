@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useRouter, useSearch } from 'wouter';
+import { editorDocumentKey } from '@/fixed-pages/editor/session/editorNavigationModel';
 
 export interface UseUnsavedChangesGuardOptions {
   hasLocalChanges: boolean;
@@ -28,6 +30,32 @@ export function useUnsavedChangesGuard({
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [hasLocalChanges]);
+
+  // Atrás/adelante: el navegador ya cambió la URL cuando llega `popstate`. Si eso nos
+  // saca del documento (o de la superficie de diagrama) con cambios sin guardar, se
+  // restaura la URL anterior antes de que wouter la vea y se pide confirmación.
+  const [location] = useLocation();
+  const search = useSearch();
+  const { base } = useRouter();
+  const committedUrlRef = useRef({ pathname: '', search: '' });
+  useEffect(() => {
+    committedUrlRef.current = { pathname: window.location.pathname, search: window.location.search };
+  }, [location, search]);
+
+  useEffect(() => {
+    const onPopState = (event: PopStateEvent) => {
+      if (!hasLocalChanges) return;
+      const committed = committedUrlRef.current;
+      const target = { pathname: window.location.pathname, search: window.location.search };
+      if (!committed.pathname || editorDocumentKey(target) === editorDocumentKey(committed)) return;
+      event.stopImmediatePropagation();
+      window.history.pushState(window.history.state, '', `${committed.pathname}${committed.search}`);
+      const appPath = base && target.pathname.startsWith(base) ? target.pathname.slice(base.length) || '/' : target.pathname;
+      setPendingFileNavigation(`${appPath}${target.search}`);
+    };
+    window.addEventListener('popstate', onPopState, true);
+    return () => window.removeEventListener('popstate', onPopState, true);
+  }, [base, hasLocalChanges]);
 
   // Interceptar clicks globales para proteger la navegación interna (wouter)
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch, useParams } from "wouter";
+import { Redirect, Route, Switch, useParams, useSearch } from "wouter";
 import { MathProvider } from "@/lib/page-context/MathStoreContext";
 import { Suspense, lazy } from 'react';
 import { BiographyLayout } from "@/components/layouts/BiographyLayout";
@@ -330,6 +330,13 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
   );
 };
 
+const EditorLanguageRedirect: React.FC<{ lang: string; rest?: string }> = ({ lang, rest }) => {
+  const search = useSearch();
+  const suffix = rest ? `/${rest}` : '';
+  const query = search ? `?${search}` : '';
+  return <Redirect to={`/${lang}/editor${suffix}${query}`} replace />;
+};
+
 export const AppRouter = () => {
   const { lang, t } = useI18n();
 
@@ -337,13 +344,11 @@ export const AppRouter = () => {
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
         {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas - NUNCA INDEXAR) */}
-        <Route path="/:lang/editor">
-          <SeoHead title={t('editor', 'docHeroTitle')} noindex={true} />
-          <MathProvider>
-            <EditorPage />
-          </MathProvider>
+        {/* /editor/... sin idioma → /:lang/editor/... (conserva subruta y parámetros) */}
+        <Route path="/editor/*?">
+          {(params) => <EditorLanguageRedirect lang={lang} rest={params['*']} />}
         </Route>
-        <Route path="/editor">
+        <Route path="/:lang/editor/*?">
           <SeoHead title={t('editor', 'docHeroTitle')} noindex={true} />
           <MathProvider>
             <EditorPage />

@@ -20,7 +20,7 @@ import { EditorLandingView } from '../landing/EditorLandingView';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
-import { useI18n, isSupportedLanguage } from '@/i18n';
+import { EditorRouteNotFound } from '@/fixed-pages/editor/ui/page/EditorRouteNotFound';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext, type DiagramStepSyncContextValue } from '@/lib/page-context/DiagramStepSyncContext';
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
@@ -44,7 +44,7 @@ import {
 } from '@/fixed-pages/editor/save/editorApiBase';
 import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 
-import { MdxWorkbenchHeader, type MdxViewMode } from './MdxWorkbenchHeader';
+import { MdxWorkbenchHeader } from './MdxWorkbenchHeader';
 import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
 
 import {
@@ -58,7 +58,6 @@ import {
 } from '../page/editorPageModel';
 
 export const MdxWorkbench: React.FC = () => {
-  const { lang: appLang, setLang: setAppLang } = useI18n();
   const {
     files,
     filesLoading,
@@ -110,7 +109,6 @@ export const MdxWorkbench: React.FC = () => {
   const [, setLocation] = useLocation();
   const [diagramDirty, setDiagramDirty] = useState(false);
   const cleanupDiagramSessionRef = useRef<() => void>(() => {});
-  const afterDiscardFileRef = useRef<(path: string) => void>(() => {});
 
   // 1. Unsaved changes guard & navigation flow
   const {
@@ -123,7 +121,6 @@ export const MdxWorkbench: React.FC = () => {
     openFile,
     setLocation,
     onBeforeDiscardNavigate: () => cleanupDiagramSessionRef.current(),
-    onAfterDiscardFileNavigate: path => afterDiscardFileRef.current(path),
   });
 
   const {
@@ -136,30 +133,31 @@ export const MdxWorkbench: React.FC = () => {
     isDiagnosticsOpen,
     openFileSafely,
     toggleFavorite,
+    route,
+    viewMode,
+    setViewMode,
+    urlBlockId,
+    setUrlBlockId,
+    urlStep,
+    setUrlStep,
+    landingSection: routeLandingSection,
+    goToLanding,
     diagramSurfaceOpen,
-    diagramReturnContext,
     openDiagramSurface,
     closeDiagramSurface,
   } = useEditorNavigationFlow({
     files,
+    filesLoading,
     currentFile,
     openFile,
+    closeFile,
     loadFileList,
     hasLocalChanges,
     diagramDirty,
     setPendingFileNavigation,
   });
 
-  // State for landing section ('documents' | 'diagrams') and view mode ('visual' | 'code' | 'preview')
-  const [landingSection, setLandingSection] = useState<'documents' | 'diagrams'>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const tab = params.get('tab') || params.get('section');
-      if (tab === 'diagrams' || tab === 'diagram') return 'diagrams';
-    }
-    return 'documents';
-  });
-  const [viewMode, setViewMode] = useState<MdxViewMode>('visual');
+  const landingSection = routeLandingSection ?? 'documents';
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>('page');
   const [formatBarNode, setFormatBarNode] = useState<React.ReactNode>(null);
 
@@ -213,12 +211,10 @@ export const MdxWorkbench: React.FC = () => {
   const handleSwitchLanguage = useCallback((targetLang: string) => {
     const targetFile = currentConceptVariants[targetLang];
     if (targetFile) {
+      // Cambia la versión del documento; el idioma de la interfaz (`:lang`) se mantiene.
       openFileSafely(targetFile.path);
-      if (isSupportedLanguage(targetLang) && targetLang !== appLang) {
-        setAppLang(targetLang);
-      }
     }
-  }, [currentConceptVariants, openFileSafely, appLang, setAppLang]);
+  }, [currentConceptVariants, openFileSafely]);
 
   const handleCreateTranslation = useCallback(async (fileOrLang: FileNode | string, maybeLang?: string) => {
     const targetLang = typeof fileOrLang === 'string' ? fileOrLang : maybeLang;
@@ -227,10 +223,7 @@ export const MdxWorkbench: React.FC = () => {
       openFileSafely(fileOrLang.path);
     }
     await createTranslation(targetLang);
-    if (isSupportedLanguage(targetLang) && targetLang !== appLang) {
-      setAppLang(targetLang);
-    }
-  }, [createTranslation, currentFile, openFileSafely, appLang, setAppLang]);
+  }, [createTranslation, currentFile, openFileSafely]);
 
   const writeAvailable = !editorApiUnavailableInProduction() && editorWriteAccessGranted();
   const saveCapability = useMemo(
@@ -336,15 +329,81 @@ export const MdxWorkbench: React.FC = () => {
     setActiveDiagramBlockId(null);
     setActiveDiagramIndex(null);
     setDiagramDirty(false);
-    closeDiagramSurface();
   };
 
   useEffect(() => {
     cleanupDiagramSessionRef.current = clearDiagramSession;
-    afterDiscardFileRef.current = (path: string) => {
-      if (path.endsWith('.tsx')) openDiagramSurface(null);
-    };
   });
+
+  // --- URL ⇄ estado local (bloque, paso, modo del motor) ----------------------
+  // Cada par usa una referencia con el último valor acordado para no rebotar.
+  const lastUrlBlockRef = useRef<string | null>(null);
+  const pendingBlockScrollRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (urlBlockId === lastUrlBlockRef.current) return;
+    lastUrlBlockRef.current = urlBlockId;
+    if (urlBlockId === editingBlockId) return;
+    setEditingBlockId(urlBlockId);
+    pendingBlockScrollRef.current = urlBlockId;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlBlockId]);
+  useEffect(() => {
+    if (editingBlockId === lastUrlBlockRef.current) return;
+    lastUrlBlockRef.current = editingBlockId;
+    setUrlBlockId(editingBlockId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editingBlockId]);
+  // Al recargar con `bloque=` el documento llega después: desplazarse cuando exista.
+  useEffect(() => {
+    const target = pendingBlockScrollRef.current;
+    if (!target || loading) return;
+    const element = document.getElementById(`block-${target}`) || document.querySelector(`[data-block-id="${target}"]`);
+    if (!element) return;
+    pendingBlockScrollRef.current = null;
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [blocks, loading]);
+
+  // Superficie de diagrama recargada desde la URL: recuperar el bloque activo.
+  useEffect(() => {
+    if (route.status === 'file' && route.diagramSurface && urlBlockId && activeDiagramBlockId === null) {
+      setActiveDiagramBlockId(urlBlockId);
+    }
+  }, [activeDiagramBlockId, route, urlBlockId]);
+
+  const encodedDiagramStep = editorDiagramStepIndex !== null
+    ? String(editorDiagramStepIndex)
+    : editorDiagramStepId && editorDiagramStepId !== 'initial' ? editorDiagramStepId : null;
+  const lastUrlStepRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (urlStep === lastUrlStepRef.current) return;
+    lastUrlStepRef.current = urlStep;
+    if (urlStep === encodedDiagramStep) return;
+    if (urlStep === null) {
+      setEditorDiagramStepId('initial');
+      setEditorDiagramStepIndex(null);
+    } else if (/^\d+$/.test(urlStep)) {
+      setEditorDiagramStepIndex(Number(urlStep));
+      setEditorDiagramStepId(null);
+    } else {
+      setEditorDiagramStepId(urlStep);
+      setEditorDiagramStepIndex(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlStep]);
+  useEffect(() => {
+    if (encodedDiagramStep === lastUrlStepRef.current) return;
+    lastUrlStepRef.current = encodedDiagramStep;
+    setUrlStep(encodedDiagramStep);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [encodedDiagramStep]);
+
+  // `vista=` decide el modo del motor (código o visual) una vez cargado el documento.
+  useEffect(() => {
+    if (loading || !currentFile?.endsWith('.mdx')) return;
+    if (viewMode === 'code' && editorMode !== 'code') setEditorMode('code');
+    if (viewMode === 'visual' && editorMode === 'code' && compatibility !== 'unsupported') setEditorMode('visual');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentFile, loading, viewMode]);
 
   // Semantic Linker state
   const linkerRangeRef = useRef<Range | null>(null);
@@ -370,13 +429,6 @@ export const MdxWorkbench: React.FC = () => {
     error: diagramUsageError,
   } = useDiagramUsages(isDiagramFile ? currentFile : null, files);
 
-  // Archivo .tsx → superficie diagrama (p. ej. tras descartar cambios y navegar)
-  useEffect(() => {
-    if (isDiagramFile && currentFile) {
-      openDiagramSurface(null);
-    }
-  }, [currentFile, isDiagramFile, openDiagramSurface]);
-
   const openDiagramEditor = (options?: {
     blockId?: string | null;
     blockIndex?: number | null;
@@ -397,24 +449,9 @@ export const MdxWorkbench: React.FC = () => {
   };
 
   const handleCloseDiagramSurface = () => {
-    const restoreView = diagramReturnContext?.viewMode;
-    const wasDiagramFile = isDiagramFile || (currentFile?.endsWith('.tsx') ?? false);
-    setDiagramWorkbenchOverride(null);
-    setRewriteDiagramPath(null);
-    setActiveDiagramBlockId(null);
-    setActiveDiagramIndex(null);
-    setDiagramDirty(false);
+    // La URL decide adónde se vuelve: a la página (con su vista), a `volver` o a la portada.
+    clearDiagramSession();
     closeDiagramSurface();
-    if (restoreView) {
-      setViewMode(restoreView);
-    } else {
-      if (wasDiagramFile) {
-        setLandingSection('diagrams');
-      } else {
-        setLandingSection('documents');
-      }
-      closeFile();
-    }
   };
 
   const setDiagramBuilderOpen = (open: boolean) => {
@@ -613,11 +650,7 @@ export const MdxWorkbench: React.FC = () => {
         onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
         saving={saving}
         viewMode={viewMode}
-        onSetViewMode={(mode) => {
-          setViewMode(mode);
-          if (mode === 'code') setEditorMode('code');
-          if (mode === 'visual') setEditorMode('visual');
-        }}
+        onSetViewMode={setViewMode}
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isInspectorOpen={isInspectorOpen}
@@ -631,13 +664,8 @@ export const MdxWorkbench: React.FC = () => {
         onSaveDraft={() => void saveDraftCurrentFile()}
         onCreatePage={() => setCreatePageOpen(true)}
         onCloseEditor={() => {
-          if (isDiagramFile) {
-            setLandingSection('diagrams');
-          } else {
-            setLandingSection('documents');
-          }
-          closeFile();
           clearDiagramSession();
+          goToLanding(isDiagramFile ? 'diagrams' : 'documents');
         }}
         canSaveDraft={canSaveDraft}
         isReadOnly={isReadOnly}
@@ -673,6 +701,8 @@ export const MdxWorkbench: React.FC = () => {
             }}
           />
         </div>
+      ) : route.status === 'not-found' ? (
+        <EditorRouteNotFound requested={route.requested} onBack={() => goToLanding()} />
       ) : !currentFile ? (
         <EditorLandingView
           files={files}
@@ -680,14 +710,7 @@ export const MdxWorkbench: React.FC = () => {
           initialSection={landingSection}
           favoritePaths={workspace.favoritePaths}
           recentPaths={workspace.recentPaths}
-          onOpenFile={(path) => {
-            if (path.endsWith('.tsx')) {
-              setLandingSection('diagrams');
-            } else {
-              setLandingSection('documents');
-            }
-            openFileSafely(path);
-          }}
+          onOpenFile={openFileSafely}
           onToggleFavorite={toggleFavorite}
           onCreateDocument={() => setCreatePageOpen(true)}
           onCreateDiagram={() => setCreateDiagramOpen(true)}
