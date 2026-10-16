@@ -1,10 +1,13 @@
 import React from 'react';
+import type { useI18n } from '@/i18n';
 import { KatexText } from '@/components/ui/KatexText';
 import { parseInlineNodes } from '@/fixed-pages/editor/session/parser';
 import { InteractivePreviewToken } from './InteractivePreviewToken';
 
 import type { EditLinkHandler } from './previewTypes';
 export type { EditLinkHandler };
+
+type Translate = ReturnType<typeof useI18n>['t'];
 
 export function insertSymbol(textareaId: string, symbol: string) {
   const textarea = document.getElementById(textareaId) as HTMLTextAreaElement | null;
@@ -23,32 +26,32 @@ export function parseMarkdownTable(content: string): string[][] {
     .map(line => line.replace(/^\|/, '').replace(/\|$/, '').split('|').map(cell => cell.trim()));
 }
 
-export function renderFormattedText(text: string, blockId: string, onEditLink?: EditLinkHandler): React.ReactNode[] | string {
+export function renderFormattedText(text: string, blockId: string, onEditLink: EditLinkHandler | undefined, t: Translate): React.ReactNode[] | string {
   const parts = parseInlineNodes(text).map((node, index) => {
     const key = `${blockId}-${index}`;
     if (node.type === 'text') return node.value;
     if (node.type === 'bold') return <strong key={key} className="font-bold text-carbon">{node.value}</strong>;
     if (node.type === 'italic') return <em key={key} className="italic text-carbon/85">{node.value}</em>;
     if (node.type === 'inlineLatex') return <KatexText key={key} text={`$${node.value}$`} className="rounded bg-ocre/5 px-1 py-0.5 text-carbon" />;
-    if (node.type === 'proofStepLink') return <span key={key} className="inline-flex items-center gap-1 rounded bg-pavo/15 px-1.5 py-0.5 font-mono text-xs font-bold text-pavo border border-pavo/30">Paso {node.step}</span>;
+    if (node.type === 'proofStepLink') return <span key={key} className="inline-flex items-center gap-1 rounded bg-pavo/15 px-1.5 py-0.5 font-mono text-xs font-bold text-pavo border border-pavo/30">{t('editor.stepLink.stepN', { num: node.step })}</span>;
 
     if (node.type === 'conceptLink' || node.type === 'refLink') {
       const tag = node.type === 'conceptLink' ? 'ConceptLink' : 'RefLink';
       const colorClass = node.type === 'conceptLink' ? 'text-canela border-b border-dashed border-canela/30' : 'text-pavo border-b border-dashed border-pavo/30';
       const targetLabel = Array.isArray(node.attrs.targetId) ? node.attrs.targetId.join(', ') : node.attrs.targetId || '';
       return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag={tag}
-        target={String(node.attrs.highlightTarget || '')} colorClass={colorClass} title={`Vínculo a: ${targetLabel} (Click para editar)`}
-        onEditLink={onEditLink} tooltip={`Concepto: ${targetLabel || 'sin destino'}`}>
-        {renderFormattedText(node.value, blockId, onEditLink)}
+        target={String(node.attrs.highlightTarget || '')} colorClass={colorClass} title={t('editor.preview.linkTitle', { target: String(targetLabel) })}
+        onEditLink={onEditLink} tooltip={t('editor.preview.conceptTooltip', { target: String(targetLabel || t('editor.preview.noTarget')) })}>
+        {renderFormattedText(node.value, blockId, onEditLink, t)}
       </InteractivePreviewToken>;
     }
 
     const color = node.attrs.color || 'canela';
     return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag="InteractiveElement"
       target={String(node.attrs.target || '')} colorClass={`text-${color} border-b border-dashed border-${color}/30`}
-      title={`Resalta en gráfico: ${node.attrs.target || ''} (Click para editar)`} onEditLink={onEditLink}
-      tooltip={`Resalta: ${node.attrs.target || ''} (${color})`}>
-      {renderFormattedText(node.value, blockId, onEditLink)}
+      title={t('editor.preview.highlightTitle', { target: String(node.attrs.target || '') })} onEditLink={onEditLink}
+      tooltip={t('editor.preview.highlightTooltip', { target: String(node.attrs.target || ''), color: String(color) })}>
+      {renderFormattedText(node.value, blockId, onEditLink, t)}
     </InteractivePreviewToken>;
   });
   return parts.length > 0 ? parts : text;

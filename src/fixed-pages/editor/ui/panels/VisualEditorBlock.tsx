@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/i18n';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
@@ -42,6 +43,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   handleTextareaSelect, handleEditLink, renderInlineToolbar, setActiveDiagramIndex,
   setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets: _diagramTargets,
 }) => {
+  const { t } = useI18n();
   const precedingCapitular = blocks[index - 1]?.metadata?.component === 'Capitular' ? blocks[index - 1] : null;
   const dropCapLetter = block.metadata?.capitular
     ? String(block.metadata.capitular).slice(0, 1)
@@ -69,7 +71,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               id={`block-${block.id}`}
               data-block-id={block.id}
               tabIndex={0}
-              aria-label={`Bloque ${index + 1}: ${block.type}. Alt y flechas para reordenar.`}
+              aria-label={t('editor.visual.blockAria', { n: index + 1, type: block.type })}
               onKeyDown={(event) => {
                 if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === 'F2') && !isReadOnly && !isSourceOnly && INLINE_EDITABLE_BLOCKS.has(block.type)) {
                   event.preventDefault();
@@ -94,7 +96,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       }`}
                     >
                       <span className="font-bold uppercase text-[9px] tracking-wider">
-                        {issue.severity === 'error' ? 'Error' : 'Aviso'}:
+                        {issue.severity === 'error' ? t('editor.visual.severityError') : t('editor.visual.severityWarning')}:
                       </span>
                       <span>{issue.message}</span>
                     </div>
@@ -106,7 +108,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {Boolean(block.metadata?.diagramStep) && (
                 <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px]">
                   <span className="inline-flex items-center gap-1 rounded border border-terracota/30 bg-terracota/10 px-2 py-0.5 font-bold text-terracota">
-                    ✦ Paso de diagrama: {String(block.metadata?.diagramStep)}
+                    {t('editor.visual.diagramStep', { step: String(block.metadata?.diagramStep) })}
                   </span>
                 </div>
               )}
@@ -123,7 +125,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       surfaceId={`prose-${block.id}`}
                       value={block.content}
                       disabled={isReadOnly}
-                      placeholder="Escriba prosa explicativa…"
+                      placeholder={t('editor.visual.proseEmpty')}
                       onFocusSurface={() => setEditingBlockId(block.id)}
                       onEditChip={(raw, text, attrs, tag, event) => handleEditLink(block.id, raw, text, attrs, tag, event)}
                       onChange={(content) => {
@@ -143,8 +145,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'heading' && (
                 <div className="space-y-1 py-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Título</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockHeading')}</label>
+                    <span className="text-[8px] text-carbon/30 italic font-sans">{t('editor.visual.clickToEdit')}</span>
                   </div>
                   {editingBlockId === block.id ? (
                     <input
@@ -152,7 +154,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       value={block.content}
                       onChange={(e) => updateBlock(block.id, e.target.value)}
                       onBlur={() => setEditingBlockId(null)}
-                      placeholder="Escriba el título de sección..."
+                      placeholder={t('editor.visual.headingPlaceholder')}
                       className="w-full bg-transparent border-none outline-none font-serif font-bold text-xl text-carbon p-0 focus:ring-0"
                     />
                   ) : (
@@ -162,7 +164,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         block.metadata?.level === 2 ? 'text-2xl border-b border-carbon/15 pb-2' : 'text-xl'
                       }`}
                     >
-                      {block.content || <span className="text-carbon/25 italic">Título de sección...</span>}
+                      {block.content || <span className="text-carbon/25 italic">{t('editor.visual.headingEmpty')}</span>}
                     </h3>
                   )}
                 </div>
@@ -171,9 +173,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'list' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Lista</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockList')}</label>
                     <label className="flex items-center gap-1 ac-label ac-label--2xs ac-label--muted cursor-pointer">
-                      Numerada
+                      {t('editor.visual.numbered')}
                       <input
                         type="checkbox"
                         checked={block.metadata?.ordered === true}
@@ -191,7 +193,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
                         className="min-h-24 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 text-sm leading-relaxed text-carbon outline-none focus:border-canela"
-                        placeholder="Un elemento por línea..."
+                        placeholder={t('editor.visual.listPlaceholder')}
                       />
                     </div>
                   ) : (
@@ -199,13 +201,13 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       {block.metadata?.ordered === true ? (
                         <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-carbon">
                           {block.content.split('\n').filter(Boolean).map((item, itemIndex) => (
-                            <li key={`${block.id}-${itemIndex}`}>{renderFormattedText(item, block.id, handleEditLink)}</li>
+                            <li key={`${block.id}-${itemIndex}`}>{renderFormattedText(item, block.id, handleEditLink, t)}</li>
                           ))}
                         </ol>
                       ) : (
                         <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-carbon">
                           {block.content.split('\n').filter(Boolean).map((item, itemIndex) => (
-                            <li key={`${block.id}-${itemIndex}`}>{renderFormattedText(item, block.id, handleEditLink)}</li>
+                            <li key={`${block.id}-${itemIndex}`}>{renderFormattedText(item, block.id, handleEditLink, t)}</li>
                           ))}
                         </ul>
                       )}
@@ -217,8 +219,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'table' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Tabla</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar Markdown de tabla</span>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockTable')}</label>
+                    <span className="text-[8px] text-carbon/30 italic font-sans">{t('editor.visual.tableClickToEdit')}</span>
                   </div>
                   {editingBlockId === block.id ? (
                     <div className="space-y-2">
@@ -230,7 +232,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
                         className="min-h-32 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-canela"
-                        placeholder="| Columna | Valor |\n|---|---|\n| a | $1$ |"
+                        placeholder={t('editor.visual.tablePlaceholder')}
                       />
                     </div>
                   ) : (
@@ -243,7 +245,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                                 const Cell = rowIndex === 0 ? 'th' : 'td';
                                 return (
                                   <Cell key={`${block.id}-${rowIndex}-${cellIndex}`} className="px-3 py-2 text-left align-top">
-                                    {renderFormattedText(cell, block.id, handleEditLink)}
+                                    {renderFormattedText(cell, block.id, handleEditLink, t)}
                                   </Cell>
                                 );
                               })}
@@ -259,7 +261,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'separator' && (
                 <div className="py-2 select-none">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Separador</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockSeparator')}</label>
                   </div>
                   <div className="h-px bg-gradient-to-r from-transparent via-carbon/15 to-transparent my-4" />
                 </div>
@@ -268,8 +270,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'note' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans font-serif">Nota</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans font-serif">{t('editor.visual.blockNote')}</label>
+                    <span className="text-[8px] text-carbon/30 italic font-sans">{t('editor.visual.clickToEdit')}</span>
                   </div>
                   {editingBlockId === block.id ? (
                     <div className="space-y-2">
@@ -282,7 +284,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           onSelect={(e) => handleTextareaSelect(e, block.id)}
                           onBlur={() => setEditingBlockId(null)}
                           className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon leading-relaxed p-0 resize-none focus:ring-0 min-h-[40px]"
-                          placeholder="Escriba la nota aclaratoria..."
+                          placeholder={t('editor.visual.notePlaceholder')}
                         />
                       </div>
                     </div>
@@ -291,7 +293,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className="p-4 bg-carbon/5 border-l-4 border-carbon/40 rounded-r font-serif text-sm text-carbon leading-relaxed cursor-text italic"
                     >
-                      {renderFormattedText(block.content, block.id, handleEditLink) || <span className="text-carbon/25 italic">Escriba una nota aclaratoria aquí...</span>}
+                      {renderFormattedText(block.content, block.id, handleEditLink, t) || <span className="text-carbon/25 italic">{t('editor.visual.noteEmpty')}</span>}
                     </div>
                   )}
                 </div>
@@ -300,8 +302,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'citation' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Cita</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockCitation')}</label>
+                    <span className="text-[8px] text-carbon/30 italic font-sans">{t('editor.visual.clickToEdit')}</span>
                   </div>
                   {editingBlockId === block.id ? (
                     <div className="py-3 px-5 border-l-2 border-canela/30 bg-canela/5 rounded-r space-y-2">
@@ -312,14 +314,14 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         className="w-full bg-transparent border-none outline-none font-serif italic text-sm text-carbon p-0 resize-none focus:ring-0"
-                        placeholder="Texto de la cita..."
+                        placeholder={t('editor.visual.quotePlaceholder')}
                       />
                       <input
                         value={block.metadata?.author || ''}
                         onChange={(e) => updateBlock(block.id, block.content, { author: e.target.value })}
                         onBlur={() => setEditingBlockId(null)}
                         className="w-full bg-transparent border-none outline-none text-[10px] font-sans text-carbon/60 p-0 focus:ring-0 text-right"
-                        placeholder="Autor de la cita..."
+                        placeholder={t('editor.visual.quoteAuthor')}
                       />
                     </div>
                   ) : (
@@ -327,7 +329,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className="py-4 px-6 border-l-2 border-canela/30 italic text-carbon/85 font-serif text-sm leading-relaxed cursor-text relative"
                     >
-                      <p>"{renderFormattedText(block.content, block.id, handleEditLink) || 'Escriba la cita aquí...'}"</p>
+                      <p>"{renderFormattedText(block.content, block.id, handleEditLink, t) || t('editor.visual.quoteEmpty')}"</p>
                       {block.metadata?.author && (
                         <p className="text-right text-[10px] text-carbon/50 not-italic mt-1">— {block.metadata.author}</p>
                       )}
@@ -339,8 +341,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'definition_box' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Definición Inline</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.blockDefinitionBox')}</label>
+                    <span className="text-[8px] text-carbon/30 italic font-sans">{t('editor.visual.clickToEdit')}</span>
                   </div>
                   {editingBlockId === block.id ? (
                     <div className="p-4 border border-canela/20 bg-canela/5 rounded-sm space-y-2">
@@ -348,7 +350,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         value={block.metadata?.title || ''}
                         onChange={(e) => updateBlock(block.id, block.content, { title: e.target.value })}
                         className="w-full bg-transparent border-none outline-none text-xs font-serif font-bold text-canela p-0 focus:ring-0"
-                        placeholder="Título de la definición..."
+                        placeholder={t('editor.visual.definitionTitlePlaceholder')}
                       />
                       {renderInlineToolbar(block)}
                       <textarea
@@ -358,7 +360,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
                         className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon p-0 resize-none focus:ring-0"
-                        placeholder="Escriba la definición formal..."
+                        placeholder={t('editor.visual.definitionPlaceholder')}
                       />
                     </div>
                   ) : (
@@ -367,9 +369,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       className="p-4 border border-canela/20 bg-canela/5 rounded-sm font-serif text-sm text-carbon cursor-text"
                     >
                       <div className="ac-label ac-label--sm ac-label--canela mb-1 select-none">
-                        Definición: {block.metadata?.title || 'Sin Título'}
+                        {t('editor.visual.definitionHeading', { title: String(block.metadata?.title || t('editor.visual.untitled')) })}
                       </div>
-                      <div>{renderFormattedText(block.content, block.id, handleEditLink) || <span className="text-carbon/25 italic">Cuerpo de la definición...</span>}</div>
+                      <div>{renderFormattedText(block.content, block.id, handleEditLink, t) || <span className="text-carbon/25 italic">{t('editor.visual.definitionEmpty')}</span>}</div>
                     </div>
                   )}
                 </div>
@@ -378,9 +380,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'formula' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Fórmula Destacada</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">{t('editor.visual.featuredFormula')}</label>
                     <div className="flex gap-1 items-center">
-                      <span className="ac-label ac-label--2xs ac-label--faint mr-1">Insertar:</span>
+                      <span className="ac-label ac-label--2xs ac-label--faint mr-1">{t('editor.visual.insert')}</span>
                       {LATEX_SYMBOLS.map(sym => (
                         <button
                           key={sym.label}
@@ -409,8 +411,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 block.metadata?.editable ? <RegisteredMdxBlockEditor block={block} isReadOnly={isReadOnly} updateBlock={updateBlock} handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink} renderInlineToolbar={renderInlineToolbar} /> :
                 <div className="space-y-2"><div className="rounded border border-pavo/20 bg-pavo/5 p-4"><>
                       <p className="mb-3 text-xs italic text-carbon/55 select-none">
-                        Este fragmento se conserva tal cual (listas, tablas o código especial).
-                        Para editarlo, cambia a la vista <strong>Fuente</strong>.
+                        {t('editor.visual.preservedNote')}
                       </p>
                       <pre className="max-h-48 overflow-auto whitespace-pre-wrap rounded border border-carbon/10 bg-lienzo p-3 font-mono text-[10px] leading-relaxed text-carbon/65">{block.content}</pre>
                     </></div></div>
@@ -420,7 +421,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 <div className="space-y-2">
                   <div className="flex justify-between items-center border-b border-carbon/10 pb-1 opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
                     <label className="block ac-label ac-label--2xs ac-label--faint font-sans">
-                      Diagrama canónico ({block.content})
+                      {t('editor.visual.canonicalDiagram', { name: block.content })}
                     </label>
                     {canMutateVisualStructure && (
                       <button
@@ -432,7 +433,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         }}
                         className="text-[9px] bg-canela/10 text-canela hover:bg-canela/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
                       >
-                        Reemplazar
+                        {t('editor.visual.replace')}
                       </button>
                     )}
                   </div>
@@ -440,10 +441,10 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-serif text-sm font-bold text-carbon">{block.content}</p>
-                        <p className="mt-0.5 font-mono text-[10px] text-carbon/50">{block.metadata?.path || 'Diagrama heredado sin archivo asociado'}</p>
+                        <p className="mt-0.5 font-mono text-[10px] text-carbon/50">{block.metadata?.path || t('editor.visual.legacyDiagram')}</p>
                       </div>
                       <span className="rounded bg-canela/10 px-2.5 py-1 text-[10px] font-bold text-canela select-none shrink-0">
-                        Catálogo de diagramas finales
+                        {t('editor.visual.finalCatalog')}
                       </span>
                     </div>
                     {Array.isArray(block.metadata?.targets) && block.metadata.targets.length > 0 && (

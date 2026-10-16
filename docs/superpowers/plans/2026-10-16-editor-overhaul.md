@@ -48,7 +48,7 @@ Archivos: `src/app/routes/AppRouter.tsx`, `ui/page/useEditorNavigationFlow.ts`, 
 
 - [x] 2.1 🧠 Convención: espacio de nombres `editor.*` en `src/i18n/types.ts`, dividido por áreas (`editor.nav`, `editor.mdx`, `editor.diagram`, `editor.save`, `editor.errors`). El motor (`session/`, `save/`, `document/`) devuelve **códigos** (`{ code: 'save.noChanges', params }`) en lugar de frases, y la interfaz los traduce.
 - [x] 2.2 🔧 Script de protección `scripts/editor/check-hardcoded-strings.ts` (o una regla de `editor:safety:check`) que falle con literales visibles en JSX bajo `src/fixed-pages/editor/ui/**`. Al principio admite una lista de excepciones y la lista va encogiendo.
-- [ ] 2.3 🔧 Migración por lotes, una carpeta por sesión: (a ✅) `ui/page`, `ui/landing` y `ui/workbench`; (b) `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components`; (c) `diagrams/ui/**`; (d) los mensajes de `useEditorCore.ts`.
+- [ ] 2.3 🔧 Migración por lotes, una carpeta por sesión: (a ✅) `ui/page`, `ui/landing` y `ui/workbench`; (b ✅) `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components`; (c) `diagrams/ui/**`; (d) los mensajes de `useEditorCore.ts`.
 - [ ] 2.4 🔧 Revisión del euskera de las claves nuevas (memoria *basque-i18n-care*: `-ko` delante del sustantivo y sin sufijos pegados a numerales en las plantillas).
 
 Decisiones tomadas en 2.1:
@@ -118,3 +118,4 @@ Distinguir siempre el **idioma de la interfaz** (`:lang` de la URL) del **idioma
 | 2026-10-16 | 2.1 | (este commit) | Claves `editor.*` agrupadas por áreas; `EditorMessage` y `translateEditorText`; `saveCapability` migrado. Pruebas en `tests/features/editor/i18n/`. |
 | 2026-10-16 | 2.2 | (este commit) | `scripts/editor/check-hardcoded-strings.ts` + baseline; integrado en `editor:safety:check`. Pruebas en `tests/features/editor/i18n/`. |
 | 2026-10-16 | 2.3(a) | (este commit) | `ui/page` y `ui/workbench` migrados; área `editor.language`. |
+| 2026-10-16 | 2.3(b) | (este commit) | `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components` migrados; áreas `blocks`, `stepLink`, `linker`, `metadata`, `source`, `diagnostics`, `preview`, `exercise`, `registered`, `visual`, `format`, `diagramPanel`. Baseline 1289 → 1027. Pendiente: `visualEditorPresets.ts` y etiquetas de `metadataFields`. |

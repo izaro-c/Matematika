@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/i18n';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 
 interface DiagramSourcePanelProps {
@@ -13,14 +14,14 @@ interface DiagramSourcePanelProps {
   capability?: FileNode['capability'];
 }
 
-function capabilityDescription(capability: FileNode['capability'] | undefined): string {
+function capabilityDescription(capability: FileNode['capability'] | undefined, t: ReturnType<typeof useI18n>['t']): string {
   if (capability === 'visual-exact') {
-    return 'El modelo visual representa el archivo completo y puede regenerarlo sin pérdida.';
+    return t('editor.source.capVisual');
   }
   if (capability === 'invalid') {
-    return 'El recurso es inválido. Solo se ofrece el código para corregirlo; el guardado permanece bloqueado mientras no sea válido.';
+    return t('editor.source.capInvalid');
   }
-  return 'La fuente completa es autoritativa. Se ofrece una vista previa real, sin regeneración desde un modelo parcial.';
+  return t('editor.source.capCode');
 }
 
 export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
@@ -34,6 +35,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   onRewriteVisually,
   capability,
 }) => {
+  const { t } = useI18n();
   const formatFileName = (name: string) => {
     let clean = name.replace(/\.(mdx|tsx)$/, '');
     clean = clean.replace(/^(teorema|lema|corolario|definicion|axioma|ejercicio|ejemplo|modelo)-/, '');
@@ -52,7 +54,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
     if (diagramLinkedPages.length === 0) {
       return (
         <p className="mt-3 rounded border border-dashed border-carbon/20 bg-carbon/5 p-3 text-xs italic text-carbon/55 select-none">
-          No se ha encontrado ninguna página que importe este diagrama.
+          {t('editor.source.noImporters')}
         </p>
       );
     }
@@ -76,12 +78,12 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   return (
     <div className="h-full w-full overflow-hidden bg-lienzo flex flex-col">
       <div className="border-b border-carbon/15 bg-carbon/5 p-4 select-none">
-        <h3 className="ac-label ac-label--md ac-label--emphasis">Diagrama</h3>
+        <h3 className="ac-label ac-label--md ac-label--emphasis">{t('editor.source.diagram')}</h3>
         <p className="mt-1 font-mono text-[10px] text-carbon/45 truncate">{currentFile}</p>
       </div>
       <div className="flex-1 overflow-y-auto">
         <section className="p-4">
-          <h4 className="ac-label ac-label--sm ac-label--strong select-none">Páginas conectadas</h4>
+          <h4 className="ac-label ac-label--sm ac-label--strong select-none">{t('editor.source.linkedPages')}</h4>
           {renderLinkedPages()}
         </section>
         <section className="border-t border-carbon/15 p-4">
@@ -94,7 +96,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
             }}
             className="mb-3 w-full rounded bg-canela/10 px-3 py-2 text-xs font-bold text-canela hover:bg-canela/20 cursor-pointer"
           >
-            {capability === 'visual-exact' ? 'Abrir edición visual exacta' : 'Abrir código y vista previa'}
+            {capability === 'visual-exact' ? t('editor.source.openVisual') : t('editor.source.openCode')}
           </button>
           {capability === 'code-preview' && (
             <button
@@ -102,15 +104,15 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
               onClick={onRewriteVisually}
               className="mb-3 w-full rounded border border-ocre/30 bg-ocre/10 px-3 py-2 text-xs font-bold text-ocre hover:bg-ocre/20"
             >
-              Reescribir visualmente desde cero
+              {t('editor.source.rewriteVisually')}
             </button>
           )}
           <p className="text-xs italic text-carbon/55 select-none">
-            {capabilityDescription(capability)}
+            {capabilityDescription(capability, t)}
           </p>
           {capability === 'code-preview' && (
             <p className="mt-2 text-[10px] leading-relaxed text-carbon/50">
-              Esta opción crea un modelo visual nuevo y solo sustituye la fuente heredada después de una confirmación y un guardado explícitos.
+              {t('editor.source.rewriteNote')}
             </p>
           )}
         </section>

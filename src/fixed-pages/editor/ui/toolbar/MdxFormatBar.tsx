@@ -145,14 +145,14 @@ export function MdxFormatBar({
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Fórmula destacada (bloque)"
+          title={t('editor.format.blockFormulaTitle')}
           onMouseDown={keep(() => {
             if (insertHtmlAtSelection(formulaBlockHtml('$$ x = y $$'))) after();
-            else onNotify?.('Haz clic dentro del paso o párrafo donde quieras la fórmula.');
+            else onNotify?.(t('editor.format.blockFormulaNotify'));
           })}
         >
           <span className="font-mono text-xs">$$</span>
-          <span className="hidden sm:inline font-medium">Fórmula Bloque</span>
+          <span className="hidden sm:inline font-medium">{t('editor.format.blockFormula')}</span>
         </button>
 
         <div className="mx-1 h-5 w-px bg-carbon/15" />
@@ -162,16 +162,16 @@ export function MdxFormatBar({
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Enlazar la selección a un concepto"
+          title={t('editor.format.linkTitle')}
           onMouseDown={keep(() => {
             if (!getSelectedPlainText().trim()) {
-              onNotify?.('Selecciona el texto que quieres enlazar.');
+              onNotify?.(t('editor.format.linkNotify'));
               return;
             }
             onOpenLinker();
           })}
         >
-          <span>Enlazar</span>
+          <span>{t('editor.format.link')}</span>
         </button>
 
         {/* Insertar Enlace a Paso (ProofStepLink) con Modal */}
@@ -180,25 +180,25 @@ export function MdxFormatBar({
           disabled={proseOff}
           className={btnClass()}
           onClick={() => setStepModalOpen(true)}
-          title="Insertar referencia a un paso de demostración"
+          title={t('editor.format.stepRefTitle')}
         >
           <span className="font-mono text-xs font-bold text-pavo">#</span>
-          <span>Paso ref.</span>
+          <span>{t('editor.format.stepRef')}</span>
         </button>
 
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Resaltar elemento del diagrama"
+          title={t('editor.format.highlightTitle')}
           onMouseDown={keep(() => {
             const selected = getSelectedPlainText().trim() || 'elemento';
             if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'canela', selected)))) after();
-            else onNotify?.('Haz clic en el texto del paso y selecciona o escribe el rótulo.');
+            else onNotify?.(t('editor.format.highlightNotify'));
           })}
         >
           <IconSparkles className="w-3.5 h-3.5 text-canela" />
-          <span>Diagrama</span>
+          <span>{t('editor.format.diagram')}</span>
         </button>
 
         <div className="mx-1 h-5 w-px bg-carbon/15" />
@@ -213,7 +213,7 @@ export function MdxFormatBar({
             onClick={() => setOpen(open === 'insert' ? null : 'insert')}
           >
             <IconPlus className="w-3.5 h-3.5" />
-            <span>Insertar Bloque</span>
+            <span>{t('editor.format.insertBlock')}</span>
             <IconChevronDown className="w-3 h-3 opacity-70" />
           </button>
           {open === 'insert' && (
@@ -223,7 +223,7 @@ export function MdxFormatBar({
                   autoFocus
                   value={query}
                   onChange={e => setQuery(e.target.value)}
-                  placeholder="Buscar bloque…"
+                  placeholder={t('editor.format.searchBlock')}
                   className="h-8 w-full rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs outline-none focus:border-canela font-sans"
                 />
               </div>
@@ -245,7 +245,7 @@ export function MdxFormatBar({
                   </button>
                 ))}
                 {filteredPresets.length === 0 && (
-                  <p className="px-3 py-4 text-[11px] italic text-carbon/50">Ningún bloque coincide.</p>
+                  <p className="px-3 py-4 text-[11px] italic text-carbon/50">{t('editor.format.noBlockMatches')}</p>
                 )}
               </div>
             </div>
@@ -261,7 +261,7 @@ export function MdxFormatBar({
             className={btnClass(open === 'paso' || hasActiveDemoStep)}
             onClick={() => setOpen(open === 'paso' ? null : 'paso')}
           >
-            <span className="font-bold">Paso</span>
+            <span className="font-bold">{t('editor.format.step')}</span>
             <IconChevronDown className="w-3 h-3 opacity-70" />
           </button>
           {open === 'paso' && (
@@ -276,7 +276,7 @@ export function MdxFormatBar({
                 }}
               >
                 <IconPlus className="w-3.5 h-3.5" />
-                <span>Añadir paso</span>
+                <span>{t('editor.format.addStep')}</span>
               </button>
               <button
                 type="button"
@@ -288,7 +288,7 @@ export function MdxFormatBar({
                   setOpen(null);
                 }}
               >
-                <span>Subir paso seleccionado</span>
+                <span>{t('editor.format.moveStepUp')}</span>
               </button>
               <button
                 type="button"
@@ -300,7 +300,7 @@ export function MdxFormatBar({
                   setOpen(null);
                 }}
               >
-                <span>Bajar paso seleccionado</span>
+                <span>{t('editor.format.moveStepDown')}</span>
               </button>
               <button
                 type="button"
@@ -313,7 +313,7 @@ export function MdxFormatBar({
                 }}
               >
                 <IconCopy className="w-3.5 h-3.5" />
-                <span>Duplicar paso</span>
+                <span>{t('editor.format.duplicateStep')}</span>
               </button>
               <button
                 type="button"
@@ -326,15 +326,15 @@ export function MdxFormatBar({
                 }}
               >
                 <IconTrash className="w-3.5 h-3.5" />
-                <span>Eliminar paso</span>
+                <span>{t('editor.format.deleteStep')}</span>
               </button>
             </div>
           )}
         </div>
 
         <div className="ml-auto hidden md:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
-          <span className="text-[11px] text-carbon/50">Modo:</span>
-          <span className="font-bold text-canela">Formato MDX</span>
+          <span className="text-[11px] text-carbon/50">{t('editor.format.mode')}</span>
+          <span className="font-bold text-canela">{t('editor.format.mdxFormat')}</span>
         </div>
       </div>
 
@@ -346,7 +346,7 @@ export function MdxFormatBar({
           if (insertHtmlAtSelection(proofStepLinkHtml(step))) {
             after();
           } else {
-            onNotify?.('Haz clic dentro del paso o párrafo donde quieras insertar la referencia.');
+            onNotify?.(t('editor.format.stepRefNotify'));
           }
         }}
       />

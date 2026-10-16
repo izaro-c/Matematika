@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useI18n } from '@/i18n';
 import { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
@@ -87,9 +88,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   onSyncDiagramStep,
   onFormatBarChange,
 }) => {
+  const { t } = useI18n();
   const [selectedBlockIds, setSelectedBlockIds] = useState<string[]>([]);
   const [assignStepOpen, setAssignStepOpen] = useState(false);
-  const stepTargets = useMemo(() => diagramTargets.filter(t => t.kind === 'step'), [diagramTargets]);
+  const stepTargets = useMemo(() => diagramTargets.filter(target => target.kind === 'step'), [diagramTargets]);
 
   const setVariable = useMathStore(state => state.setVariable);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -393,14 +395,14 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       <div className="mb-8 pb-6 border-b border-carbon/15 space-y-4">
         <div>
           <span className="ac-label ac-label--sm ac-label--canela select-none">
-            {String(metadata.type || 'Concepto')}
+            {String(metadata.type || t('editor.metadata.defaultType'))}
           </span>
           <textarea
             value={String(metadata.title || '')}
             disabled={isReadOnly || !canEditVisualMetadata}
             onChange={(e) => handleMetadataChange('title', e.target.value)}
             className="w-full bg-transparent border-none outline-none font-serif font-bold text-3xl text-carbon p-0 mt-1 resize-none focus:ring-0 placeholder-carbon/20"
-            placeholder="Título del Concepto"
+            placeholder={t('editor.visual.conceptTitlePlaceholder')}
             rows={1}
             style={{ height: 'auto' }}
             onInput={(e) => {
@@ -414,7 +416,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
             disabled={isReadOnly || !canEditVisualMetadata}
             onChange={(e) => handleMetadataChange('description', e.target.value)}
             className="w-full bg-transparent border-none outline-none font-serif italic text-base text-carbon/70 p-0 mt-2 resize-none focus:ring-0 placeholder-carbon/30"
-            placeholder="Añada una breve descripción motivacional..."
+            placeholder={t('editor.visual.conceptDescriptionPlaceholder')}
             rows={2}
             style={{ height: 'auto' }}
             onInput={(e) => {
@@ -425,25 +427,25 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           />
         </div>
 
-        {isMathematician && <section className="grid gap-4 rounded border border-canela/20 bg-canela/5 p-4 sm:grid-cols-[7rem_1fr]" aria-label="Ficha del matemático">
+        {isMathematician && <section className="grid gap-4 rounded border border-canela/20 bg-canela/5 p-4 sm:grid-cols-[7rem_1fr]" aria-label={t('editor.visual.mathematicianCard')}>
           <div className="overflow-hidden rounded border border-carbon/10 bg-lienzo">
             {metadata.image ? <img src={resolvePublicOrExternalAsset(String(metadata.image))} alt="" className="aspect-[4/5] h-full w-full object-cover" /> : <div className="flex aspect-[4/5] items-center justify-center font-serif text-3xl text-carbon/25">∑</div>}
           </div>
           <div className="grid content-start gap-3 sm:grid-cols-2">
-            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Nombre completo<input value={String(metadata.name || metadata.title || '')} onChange={event => handleMetadataChange('name', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-3 py-2 font-serif text-base font-bold text-carbon" /></label>
-            <label className="text-[10px] font-bold text-carbon/55">Nacimiento<input type="number" value={Number(metadata.birthYear || 0)} onChange={event => handleMetadataChange('birthYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-            <label className="text-[10px] font-bold text-carbon/55">Fallecimiento<input type="number" value={Number(metadata.deathYear || 0)} onChange={event => handleMetadataChange('deathYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Lugar o tradición<input value={String(metadata.country || '')} onChange={event => handleMetadataChange('country', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Ruta de la imagen<input value={String(metadata.image || '')} onChange={event => handleMetadataChange('image', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 font-mono text-[10px] text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.fullName')}<input value={String(metadata.name || metadata.title || '')} onChange={event => handleMetadataChange('name', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-3 py-2 font-serif text-base font-bold text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.birth')}<input type="number" value={Number(metadata.birthYear || 0)} onChange={event => handleMetadataChange('birthYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.death')}<input type="number" value={Number(metadata.deathYear || 0)} onChange={event => handleMetadataChange('deathYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.placeOrTradition')}<input value={String(metadata.country || '')} onChange={event => handleMetadataChange('country', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.imagePath')}<input value={String(metadata.image || '')} onChange={event => handleMetadataChange('image', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 font-mono text-[10px] text-carbon" /></label>
           </div>
         </section>}
 
         {showStatement && (
           <div className="p-4 border-l-4 border-ocre/50 bg-ocre/5 rounded-r space-y-2">
             <div className="flex justify-between items-center select-none">
-              <div className="ac-label ac-label--xs ac-label--ocre-soft">Enunciado Formal</div>
+              <div className="ac-label ac-label--xs ac-label--ocre-soft">{t('editor.visual.formalStatement')}</div>
               <div className="flex gap-1 items-center">
-                <span className="ac-label ac-label--2xs ac-label--faint mr-1">Insertar:</span>
+                <span className="ac-label ac-label--2xs ac-label--faint mr-1">{t('editor.visual.insert')}</span>
                 {LATEX_SYMBOLS.map(sym => (
                   <button
                     key={sym.label}
@@ -462,7 +464,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               value={String(metadata.statement || '')}
               onChange={(e) => handleMetadataChange('statement', e.target.value)}
               className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon leading-relaxed p-0 resize-none focus:ring-0 placeholder-carbon/30"
-              placeholder="Escriba el enunciado formal o definición exacta..."
+              placeholder={t('editor.visual.statementPlaceholder')}
               rows={2}
               style={{ height: 'auto' }}
               onInput={(e) => {
@@ -484,9 +486,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           className="max-w-2xl mx-auto py-8 space-y-6 font-serif animate-pulse"
           role="status"
           aria-busy="true"
-          aria-label="Cargando documento"
+          aria-label={t('editor.visual.loadingDocument')}
         >
-          <span className="sr-only">Cargando contenido…</span>
+          <span className="sr-only">{t('editor.visual.loadingContent')}</span>
           {/* Header Skeleton */}
           <div className="pb-6 border-b border-carbon/15 space-y-3">
             <div className="h-5 w-20 rounded-full bg-canela/20" />
@@ -533,9 +535,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
             <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
-            <p className="mt-3 text-sm font-serif font-bold text-carbon">Esta página no tiene contenido todavía</p>
+            <p className="mt-3 text-sm font-serif font-bold text-carbon">{t('editor.visual.emptyPageTitle')}</p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              Puedes empezar escribiendo un primer párrafo o añadiendo elementos desde la barra superior.
+              {t('editor.visual.emptyPageBody')}
             </p>
             <button
               type="button"
@@ -543,7 +545,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               onClick={() => addBlock(0, 'paragraph')}
               className="mt-4 px-4 py-2 bg-canela text-lienzo rounded-xl text-xs font-serif font-bold hover:bg-canela/90 transition-all shadow-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Añadir Párrafo
+              {t('editor.visual.addParagraph')}
             </button>
           </div>
         </div>
@@ -558,7 +560,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
         {stepTargets.length > 0 && !isReadOnly && (
           <div className="flex items-center justify-between rounded border border-terracota/25 bg-terracota/5 p-2.5 font-sans text-xs text-carbon">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-terracota">✦ Pasos de diagrama</span>
+              <span className="font-bold text-terracota">{t('editor.visual.diagramSteps')}</span>
               <button
                 type="button"
                 onClick={() => {
@@ -569,13 +571,13 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                   assignStepOpen ? 'border-terracota bg-terracota text-lienzo' : 'border-carbon/20 bg-lienzo text-carbon/70 hover:border-terracota/40'
                 }`}
               >
-                {assignStepOpen ? 'Cancelar selección' : 'Asignar paso a varios bloques'}
+                {assignStepOpen ? t('editor.visual.cancelSelection') : t('editor.visual.assignStepToBlocks')}
               </button>
             </div>
 
             {assignStepOpen && selectedBlockIds.length > 0 && (
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] text-carbon/60">{selectedBlockIds.length} seleccionado(s)</span>
+                <span className="font-mono text-[11px] text-carbon/60">{t(selectedBlockIds.length === 1 ? 'editor.visual.selectedOne' : 'editor.visual.selectedOther', { count: selectedBlockIds.length })}</span>
                 <select
                   defaultValue=""
                   onChange={(e) => {
@@ -586,11 +588,11 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                   }}
                   className="rounded border border-terracota/30 bg-lienzo px-2 py-1 font-mono text-[11px] text-carbon outline-none"
                 >
-                  <option value="">Seleccionar paso…</option>
-                  {stepTargets.map(t => (
-                    <option key={t.id} value={t.id}>✦ {t.label || t.id}</option>
+                  <option value="">{t('editor.visual.selectStep')}</option>
+                  {stepTargets.map(target => (
+                    <option key={target.id} value={target.id}>✦ {target.label || target.id}</option>
                   ))}
-                  <option value="">(Quitar asignación)</option>
+                  <option value="">{t('editor.visual.removeAssignment')}</option>
                 </select>
               </div>
             )}
@@ -687,7 +689,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       <div className="mx-auto mb-4 max-w-3xl space-y-2 pt-2">
         {isReadOnly && (
           <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
-            <span className="font-bold text-pavo">Edición de código con vista previa:</span> El cuerpo no contiene ningún bloque visual que pueda editarse mediante un parche localizado exacto.
+            <span className="font-bold text-pavo">{t('editor.visual.codeEditing')}</span> <span>{t('editor.visual.noVisualBlocks')}</span>
           </div>
         )}
       </div>
@@ -696,10 +698,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       </div>
 
       {commandOpen && <div className="absolute inset-0 z-40 flex items-start justify-center bg-carbon/20 p-4 pt-[10vh]" role="presentation">
-        <div ref={commandDialogRef} className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl" role="dialog" aria-modal="true" aria-label="Insertar bloque">
+        <div ref={commandDialogRef} className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl" role="dialog" aria-modal="true" aria-label={t('editor.visual.insertBlock')}>
           <div className="flex items-center gap-2">
-            <input ref={commandSearchRef} value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" aria-label="Buscar tipo de bloque" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-canela" />
-            <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">Esc</button>
+            <input ref={commandSearchRef} value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder={t('editor.visual.searchBlock')} aria-label={t('editor.visual.searchBlockType')} className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-canela" />
+            <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">{t('editor.visual.escape')}</button>
           </div>
           <div className="mt-3 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">
             {[...allPresets]

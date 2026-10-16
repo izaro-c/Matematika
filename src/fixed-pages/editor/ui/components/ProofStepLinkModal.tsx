@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/i18n';
 import { IconClose, IconPlus } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
 
 interface ProofStepLinkModalProps {
@@ -18,6 +19,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
   onConfirm,
   onRemove,
 }) => {
+  const { t } = useI18n();
   const [stepValue, setStepValue] = useState<string>(String(initialStep));
 
   if (!isOpen) return null;
@@ -48,7 +50,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
             <span className="flex h-6 w-6 items-center justify-center rounded-md bg-pavo/15 font-mono text-xs font-bold text-pavo">
               #
             </span>
-            <h3 className="font-serif text-lg font-bold text-carbon">Referencia a Paso</h3>
+            <h3 className="font-serif text-lg font-bold text-carbon">{t('editor.stepLink.title')}</h3>
           </div>
           <button
             type="button"
@@ -62,7 +64,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-carbon/60 mb-1.5">
-              Número del paso referenciado
+              {t('editor.stepLink.numberLabel')}
             </label>
             <div className="flex gap-2">
               <input
@@ -79,7 +81,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
                 className="flex items-center gap-1.5 rounded-xl bg-pavo px-4 py-2 text-xs font-bold text-lienzo shadow-xs hover:bg-pavo/90 transition-all cursor-pointer"
               >
                 <IconPlus className="w-4 h-4" />
-                <span>Aplicar</span>
+                <span>{t('editor.stepLink.apply')}</span>
               </button>
             </div>
           </div>
@@ -87,7 +89,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
           {stepOptions.length > 0 && (
             <div>
               <span className="block text-[11px] font-bold text-carbon/50 mb-2">
-                Pasos disponibles en el documento:
+                {t('editor.stepLink.available')}
               </span>
               <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-1">
                 {stepOptions.map(num => (
@@ -101,7 +103,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
                         : 'border-carbon/15 bg-lienzo text-carbon/70 hover:border-pavo/40 hover:text-pavo'
                     }`}
                   >
-                    <span>Paso {num}</span>
+                    <span>{t('editor.stepLink.stepN', { num })}</span>
                   </button>
                 ))}
               </div>
@@ -118,7 +120,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
                 }}
                 className="rounded-lg px-3 py-1.5 text-xs font-bold text-granada hover:bg-granada/10 transition-colors cursor-pointer"
               >
-                Eliminar Enlace
+                {t('editor.stepLink.removeLink')}
               </button>
             ) : <span />}
             <button
@@ -126,7 +128,7 @@ export const ProofStepLinkModal: React.FC<ProofStepLinkModalProps> = ({
               onClick={onClose}
               className="rounded-lg border border-carbon/20 px-3 py-1.5 text-xs font-bold text-carbon/70 hover:bg-carbon/5 transition-colors cursor-pointer"
             >
-              Cancelar
+              {t('editor.common.cancel')}
             </button>
           </div>
         </form>

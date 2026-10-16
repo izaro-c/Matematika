@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/i18n';
 import { getMetadataFields, type MetadataFieldConfig } from '@/fixed-pages/editor/metadata/metadataFields';
 import { IconChevronDown, IconChevronRight } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
 
@@ -27,6 +28,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
   onAddCustom,
   disabled = false,
 }) => {
+  const { t } = useI18n();
   const [customFieldKey, setCustomFieldKey] = useState('');
   const [newArrayItem, setNewArrayItem] = useState<Record<string, string>>({});
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -82,7 +84,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           disabled={field.readonly || disabled}
           onChange={(e) => onChange(field.key, e.target.value)}
         >
-          <option value="">- Seleccionar -</option>
+          <option value="">{t('editor.metadata.select')}</option>
           {field.options?.map(option => (
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
@@ -96,7 +98,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           className="min-h-[72px] w-full resize-y rounded-lg border border-carbon/15 bg-lienzo p-2.5 text-xs font-serif text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 disabled:bg-carbon/5 placeholder-carbon/25"
           value={String(value)}
           disabled={field.readonly || disabled}
-          placeholder={field.placeholder || 'Detalles del campo...'}
+          placeholder={field.placeholder || t('editor.metadata.fieldDetails')}
           onChange={(e) => onChange(field.key, e.target.value)}
         />
       );
@@ -108,7 +110,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
         <div className="space-y-2">
           <div className="flex flex-wrap gap-1.5 min-h-[32px] p-2 rounded-lg border border-carbon/10 bg-lienzo/60 shadow-2xs">
             {items.length === 0 ? (
-              <span className="text-[11px] italic text-carbon/35">Sin elementos</span>
+              <span className="text-[11px] italic text-carbon/35">{t('editor.metadata.noItems')}</span>
             ) : (
               items.map((item, idx) => (
                 <span
@@ -121,7 +123,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
                       type="button"
                       onClick={() => handleArrayRemove(field.key, idx)}
                       className="text-canela/70 hover:text-canela font-bold ml-0.5 cursor-pointer"
-                      title="Eliminar"
+                      title={t('editor.metadata.remove')}
                     >
                       ×
                     </button>
@@ -135,7 +137,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
               <input
                 type="text"
                 className="flex-1 rounded-md border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon placeholder-carbon/30 focus:border-canela focus:outline-none focus:ring-1 focus:ring-canela/30"
-                placeholder={field.placeholder || 'Agregar ID o valor...'}
+                placeholder={field.placeholder || t('editor.metadata.addValuePlaceholder')}
                 value={newArrayItem[field.key] || ''}
                 onChange={(e) => setNewArrayItem(prev => ({ ...prev, [field.key]: e.target.value }))}
                 onKeyDown={(e) => {
@@ -150,7 +152,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
                 onClick={() => handleArrayAdd(field.key)}
                 className="rounded-md border border-canela/30 bg-canela/10 px-2.5 py-1 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
               >
-                + Añadir
+                {t('editor.metadata.add')}
               </button>
             </div>
           )}
@@ -171,7 +173,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
               : 'border-carbon/15 bg-lienzo text-carbon/60 hover:bg-carbon/5'
           }`}
         >
-          <span className="text-xs">{boolVal ? 'Activado' : 'Desactivado'}</span>
+          <span className="text-xs">{boolVal ? t('editor.metadata.on') : t('editor.metadata.off')}</span>
           <span className={`h-3.5 w-3.5 rounded-full border ${boolVal ? 'bg-canela border-canela' : 'bg-transparent border-carbon/30'}`} />
         </button>
       );
@@ -217,7 +219,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
                     {field.required && <span className="text-terracota font-bold">*</span>}
                   </label>
                   {field.readonly && (
-                    <span className="ac-label ac-label--2xs ac-label--faint">Solo lectura</span>
+                    <span className="ac-label ac-label--2xs ac-label--faint">{t('editor.metadata.readOnly')}</span>
                   )}
                 </div>
                 {renderFieldInput(field)}
@@ -235,17 +237,17 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
     <fieldset disabled={disabled} className="flex-1 space-y-3 overflow-y-auto bg-lienzo p-4 disabled:opacity-60">
       <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
         <div>
-          <h3 className="font-serif text-base font-bold text-carbon">Metadatos del Documento</h3>
-          <p className="text-xs italic text-carbon/50">Esquema oficial para <span className="font-bold text-canela">{type || 'concepto'}</span></p>
+          <h3 className="font-serif text-base font-bold text-carbon">{t('editor.metadata.documentMetadata')}</h3>
+          <p className="text-xs italic text-carbon/50"><span className="font-bold text-canela">{t('editor.metadata.officialSchemaFor', { type: type || t('editor.metadata.defaultType') })}</span></p>
         </div>
         <span className="ac-label ac-label--sm ac-label--canela select-none uppercase tracking-wider">
-          {type || 'General'}
+          {type || t('editor.metadata.general')}
         </span>
       </div>
 
-      {renderFieldGroup('identity', 'Identificación Principal', identityFields)}
-      {renderFieldGroup('relations', 'Estructura y Relaciones', relationFields)}
-      {renderFieldGroup('config', 'Configuración y Estilo', configFields)}
+      {renderFieldGroup('identity', t('editor.metadata.identity'), identityFields)}
+      {renderFieldGroup('relations', t('editor.metadata.relations'), relationFields)}
+      {renderFieldGroup('config', t('editor.metadata.config'), configFields)}
 
       {/* Sección de Campos Personalizados Colapsable */}
       <div className="rounded-2xl border border-carbon/15 bg-lienzo p-4 shadow-2xs transition-all hover:border-carbon/25">
@@ -255,7 +257,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           onClick={() => toggleSection('custom')}
           className="flex w-full items-center justify-between font-serif text-xs font-bold uppercase tracking-wider text-carbon/80 py-0.5 cursor-pointer select-none"
         >
-          <span>Campos Personalizados</span>
+          <span>{t('editor.metadata.customFields')}</span>
           <span className="text-carbon/40 hover:text-carbon transition-colors p-0.5 rounded-lg hover:bg-carbon/5">
             {customIsOpen ? <IconChevronDown className="w-4 h-4" /> : <IconChevronRight className="w-4 h-4" />}
           </span>
@@ -280,7 +282,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
                       type="button"
                       onClick={() => onRemove(key)}
                       className="text-xs font-bold text-terracota hover:text-terracota/80 px-1 cursor-pointer"
-                      title="Eliminar campo"
+                      title={t('editor.metadata.removeField')}
                     >
                       ×
                     </button>
@@ -293,7 +295,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
               <input
                 className="flex-1 rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon placeholder-carbon/30 focus:border-canela focus:outline-none focus:ring-1 focus:ring-canela/30"
                 value={customFieldKey}
-                placeholder="Nombre del nuevo campo..."
+                placeholder={t('editor.metadata.newFieldName')}
                 onChange={(e) => setCustomFieldKey(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
@@ -307,7 +309,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
                 onClick={addCustomField}
                 className="rounded-lg border border-carbon/15 bg-carbon/5 px-3 py-1.5 text-xs font-bold text-carbon hover:bg-carbon/10 transition-colors cursor-pointer"
               >
-                + Añadir
+                {t('editor.metadata.add')}
               </button>
             </div>
           </div>

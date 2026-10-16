@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/i18n';
 import type { EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
@@ -18,29 +19,29 @@ interface EditorDiagnosticsPanelProps {
   embedded?: boolean;
 }
 
-function statusDescription(status: EditorPersistenceStatus): string {
+function statusDescription(status: EditorPersistenceStatus, t: ReturnType<typeof useI18n>['t']): string {
   switch (status.kind) {
-    case 'idle': return 'Abra un recurso para iniciar una sesión de edición.';
-    case 'loading': return 'Se está leyendo la última versión disponible.';
-    case 'ready-clean': return 'El contenido local coincide con la versión abierta.';
-    case 'ready-dirty': return 'Hay cambios locales que todavía no se han aplicado.';
-    case 'validating': return 'Se comprueba la integridad antes de guardar.';
+    case 'idle': return t('editor.diagnostics.idle');
+    case 'loading': return t('editor.diagnostics.loading');
+    case 'ready-clean': return t('editor.diagnostics.readyClean');
+    case 'ready-dirty': return t('editor.diagnostics.readyDirty');
+    case 'validating': return t('editor.diagnostics.validating');
     case 'blocked': return status.reason;
-    case 'saving-draft': return 'Se conserva una copia sin modificar el archivo real.';
-    case 'draft-saved': return 'El borrador local quedó guardado.';
-    case 'saving-file': return 'Se aplica el contenido revisado al archivo real.';
-    case 'saved': return 'El archivo real quedó actualizado y dispone de copia de seguridad.';
-    case 'save-error': return 'El contenido local se conserva; la escritura no fue confirmada.';
-    case 'conflict': return 'La versión externa cambió después de abrir el recurso.';
-    case 'cancelled': return 'La operación se canceló sin descartar cambios locales.';
+    case 'saving-draft': return t('editor.diagnostics.savingDraft');
+    case 'draft-saved': return t('editor.diagnostics.draftSaved');
+    case 'saving-file': return t('editor.diagnostics.savingFile');
+    case 'saved': return t('editor.diagnostics.saved');
+    case 'save-error': return t('editor.diagnostics.saveError');
+    case 'conflict': return t('editor.diagnostics.conflict');
+    case 'cancelled': return t('editor.diagnostics.cancelled');
     case 'unsupported': return status.reason;
   }
 }
 
-function validationPresentation(validation: EditorValidationResult): { className: string; label: string } {
-  if (validation.errorCount > 0) return { className: 'bg-granada/10 text-granada', label: `${validation.errorCount} errores` };
-  if (validation.warningCount > 0) return { className: 'bg-ocre/10 text-ocre', label: `${validation.warningCount} avisos` };
-  return { className: 'bg-canela/10 text-canela', label: 'Sin errores' };
+function validationPresentation(validation: EditorValidationResult, t: ReturnType<typeof useI18n>['t']): { className: string; label: string } {
+  if (validation.errorCount > 0) return { className: 'bg-granada/10 text-granada', label: t('editor.diagnostics.errorsCount', { count: validation.errorCount }) };
+  if (validation.warningCount > 0) return { className: 'bg-ocre/10 text-ocre', label: t('editor.diagnostics.warningsCount', { count: validation.warningCount }) };
+  return { className: 'bg-canela/10 text-canela', label: t('editor.diagnostics.noErrors') };
 }
 
 function persistenceIndicator(status: EditorPersistenceStatus): string {
@@ -60,15 +61,16 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
   close,
   embedded = false,
 }) => {
-  const validationStatus = validationPresentation(validation);
+  const { t } = useI18n();
+  const validationStatus = validationPresentation(validation, t);
   const persistenceClass = persistenceIndicator(persistenceStatus);
 
   return (
-    <section className="flex h-full flex-col bg-lienzo" aria-label="Avisos y actividad">
+    <section className="flex h-full flex-col bg-lienzo" aria-label={t('editor.diagnostics.sectionLabel')}>
       {!embedded && (
         <header className="flex items-center justify-between border-b border-carbon/15 bg-lienzo px-4 py-3 shadow-2xs">
           <div className="flex items-center gap-3">
-            <h2 className="font-serif text-sm font-bold text-carbon">Avisos y Actividad</h2>
+            <h2 className="font-serif text-sm font-bold text-carbon">{t('editor.diagnostics.title')}</h2>
             <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-semibold tracking-wide ${validationStatus.className}`}>
               {validationStatus.label}
             </span>
@@ -78,7 +80,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
             onClick={close}
             className="rounded-xl border border-carbon/15 bg-carbon/5 px-3 py-1 text-xs font-medium text-carbon hover:bg-carbon/10 hover:border-carbon/30 transition-all cursor-pointer"
           >
-            Cerrar
+            {t('editor.common.close')}
           </button>
         </header>
       )}
@@ -86,11 +88,11 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
       {embedded && (
         <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
           <div>
-            <h3 className="font-serif text-base font-bold text-carbon">Avisos y Validación</h3>
+            <h3 className="font-serif text-base font-bold text-carbon">{t('editor.diagnostics.embeddedTitle')}</h3>
             <p className="text-xs italic text-carbon/50">
               {validation.issues.length === 0
-                ? 'Sin problemas detectados'
-                : `${validation.issues.length} ${validation.issues.length === 1 ? 'problema detectado' : 'problemas detectados'}`}
+                ? t('editor.diagnostics.noProblems')
+                : t(validation.issues.length === 1 ? 'editor.diagnostics.problemsOne' : 'editor.diagnostics.problemsOther', { count: validation.issues.length })}
             </p>
           </div>
           <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${validationStatus.className}`}>
@@ -100,10 +102,10 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
       )}
 
       <div className={`flex-1 space-y-4 ${embedded ? 'pt-3' : 'p-4'} overflow-y-auto`}>
-        <InspectorExpandableBlock title="Avisos del Documento" defaultOpen={true}>
+        <InspectorExpandableBlock title={t('editor.diagnostics.documentWarnings')} defaultOpen={true}>
           {!currentFile && (
             <div className="rounded-xl border border-carbon/10 bg-lienzo/50 p-4 text-center text-xs italic text-carbon/50">
-              No hay un recurso abierto en esta sesión.
+              {t('editor.diagnostics.noResource')}
             </div>
           )}
 
@@ -112,8 +114,8 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
               <svg className="w-6 h-6 mx-auto mb-1.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              <p className="font-serif text-xs font-bold">Todo en orden</p>
-              <p className="text-[11px] text-carbon/65 mt-0.5">El documento cumple los requisitos de integridad.</p>
+              <p className="font-serif text-xs font-bold">{t('editor.diagnostics.allGood')}</p>
+              <p className="text-[11px] text-carbon/65 mt-0.5">{t('editor.diagnostics.allGoodBody')}</p>
             </div>
           )}
 
@@ -147,15 +149,15 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                         />
                         <span className="font-bold text-[11px] uppercase tracking-wider text-carbon">
                           {({
-                            metadata: 'Metadatos',
-                            body: 'Contenido',
-                            block: 'Bloque',
-                            diagram: 'Diagrama',
-                            proof: 'Demostración',
-                            source: 'Fuente',
+                            metadata: t('editor.diagnostics.areaMetadata'),
+                            body: t('editor.diagnostics.areaBody'),
+                            block: t('editor.diagnostics.areaBlock'),
+                            diagram: t('editor.diagnostics.areaDiagram'),
+                            proof: t('editor.diagnostics.areaProof'),
+                            source: t('editor.diagnostics.areaSource'),
                           } as Record<string, string>)[issue.area] ?? issue.area}
                           {' • '}
-                          {isError ? 'Error' : isWarning ? 'Aviso' : 'Info'}
+                          {isError ? t('editor.diagnostics.severityError') : isWarning ? t('editor.diagnostics.severityWarning') : t('editor.diagnostics.severityInfo')}
                         </span>
                       </div>
                       <button
@@ -167,7 +169,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                         aria-label={issue.message}
                         className="rounded-lg border border-carbon/15 bg-lienzo px-2 py-0.5 text-[10px] font-semibold text-carbon hover:bg-carbon/5 transition-all cursor-pointer flex items-center space-x-1 shadow-2xs"
                       >
-                        <span>Ir al elemento</span>
+                        <span>{t('editor.diagnostics.goToElement')}</span>
                         <svg className="w-3 h-3 text-carbon/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
@@ -176,7 +178,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                     <p className="mt-2 font-sans text-xs text-carbon/90 leading-relaxed">{issue.message}</p>
                     {(issue.blockId || issue.sourceRange) && (
                       <span className="inline-block mt-2 font-mono text-[9px] text-carbon/70 bg-carbon/5 px-2 py-0.5 rounded-md border border-carbon/10">
-                        {issue.blockId ? `Bloque: ${issue.blockId}` : `Línea: ${issue.sourceRange?.start ?? 'origen'}`}
+                        {issue.blockId ? t('editor.diagnostics.blockRef', { id: issue.blockId }) : t('editor.diagnostics.lineRef', { value: issue.sourceRange?.start ?? t('editor.diagnostics.sourceStart') })}
                       </span>
                     )}
                   </div>
@@ -185,15 +187,15 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
           </div>
         </InspectorExpandableBlock>
 
-        <InspectorExpandableBlock title="Estado de la Sesión" defaultOpen={true}>
+        <InspectorExpandableBlock title={t('editor.diagnostics.sessionState')} defaultOpen={true}>
           <div className="flex items-start gap-3 p-1">
             <span className={`mt-1 h-3 w-3 shrink-0 rounded-full border border-white shadow-2xs ${persistenceClass}`} />
             <div className="min-w-0 space-y-1">
               <p className="font-serif text-xs font-bold text-carbon">{persistenceLabel}</p>
-              <p className="text-xs text-carbon/70 leading-snug">{statusDescription(persistenceStatus)}</p>
+              <p className="text-xs text-carbon/70 leading-snug">{statusDescription(persistenceStatus, t)}</p>
               {resource && (
                 <p className="text-[11px] text-carbon/60 pt-1 border-t border-carbon/10 mt-2">
-                  <span className="font-bold text-carbon/80">Capacidad:</span> {resource.capabilityLabel}. {resource.reason}
+                  {t('editor.diagnostics.capabilityLine', { label: resource.capabilityLabel, reason: resource.reason })}
                 </p>
               )}
               {level === 'advanced' && currentFile && (
