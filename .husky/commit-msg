@@ -1,0 +1,2 @@
+# Strip AI tool co-author trailers (Claude, Cursor)
+sed -i -E '/^[Cc]o-[Aa]uthored-[Bb]y:.*(claude|anthropic|cursor)/d' "$1"

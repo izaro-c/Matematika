@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
 import { useI18n } from '@/i18n';
 
@@ -11,6 +10,9 @@ interface AxiomaticDisplayOptionsProps {
   typeColors: Record<string, string>;
 }
 
+const HINT_CLASS = 'mt-1 font-serif text-[13px] italic leading-snug text-ink-muted';
+const LEGEND_TEXT_CLASS = 'font-serif text-[13px] leading-snug text-ink-muted';
+
 export function AxiomaticDisplayOptions({
   visibleTypes,
   onToggleType,
@@ -22,25 +24,16 @@ export function AxiomaticDisplayOptions({
   return (
     <div>
       <section aria-labelledby="visible-layers-title">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h2 id="visible-layers-title" className="font-serif text-base font-semibold text-carbon">
-              {t('graph', 'visibleLayers')}
-            </h2>
-            <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-              {t('graph', 'layersViewHint')}
-            </p>
-          </div>
-          <span className="shrink-0 font-sans text-[9px] tabular-nums text-carbon/50">
-            {visibleTypes.size}/{NODE_TYPES.length}
-          </span>
-        </div>
+        <h2 id="visible-layers-title" className="text-lg leading-tight text-ink">
+          {t('graph', 'visibleLayers')}
+        </h2>
+        <p className={HINT_CLASS}>{t('graph', 'layersViewHint')}</p>
 
-        <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1">
+        {/* Leyenda de atlas pulsable: muestra llena = capa visible; solo contorno = oculta. */}
+        <div className="mt-3 grid grid-cols-2 gap-x-4">
           {NODE_TYPES.map(type => {
             const isVisible = visibleTypes.has(type);
             const color = typeColors[type] ?? CONTENT_TYPE_COLORS.matematico.cssVar;
-            const style = { '--node-filter-color': color } as CSSProperties;
 
             return (
               <button
@@ -48,20 +41,15 @@ export function AxiomaticDisplayOptions({
                 type="button"
                 aria-pressed={isVisible}
                 onClick={() => onToggleType(type)}
-                style={style}
-                className={`flex min-h-10 items-center gap-2 border-b px-0.5 text-left font-sans text-[10px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota ${
-                  isVisible
-                    ? 'border-carbon/15 text-carbon'
-                    : 'border-carbon/10 text-carbon/40 hover:text-carbon/65'
+                className={`flex min-h-9 items-center gap-2.5 py-1 text-left font-serif text-[14px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota ${
+                  isVisible ? 'text-ink' : 'italic text-ink-subtle hover:text-ink-muted'
                 }`}
               >
                 <span
                   aria-hidden="true"
-                  className={`flex size-3.5 shrink-0 items-center justify-center rounded-sm border ${isVisible ? 'bg-[var(--node-filter-color)]' : 'bg-transparent'}`}
-                  style={{ borderColor: color }}
-                >
-                  {isVisible && <span className="text-[8px] leading-none text-lienzo">✓</span>}
-                </span>
+                  className="size-3 shrink-0 border"
+                  style={{ borderColor: color, backgroundColor: isVisible ? color : 'transparent' }}
+                />
                 <span className="truncate">{typeLabel[type] || type}</span>
               </button>
             );
@@ -69,56 +57,51 @@ export function AxiomaticDisplayOptions({
         </div>
       </section>
 
-      <div className="my-6 border-t border-carbon/10" />
+      <hr className="my-6 border-carbon/15" />
 
       <section aria-labelledby="graph-reading-title">
-        <h2 id="graph-reading-title" className="font-serif text-base font-semibold text-carbon">
+        <h2 id="graph-reading-title" className="text-lg leading-tight text-ink">
           {t('graph', 'howToRead')}
         </h2>
-        <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-          {t('graph', 'arrowDirectionMeaning')}
-        </p>
 
         <div className="my-4 flex items-center gap-3" aria-label={t('graph', 'aNecessaryForBAria')}>
-          <span className="flex size-7 items-center justify-center rounded-full border border-pavo bg-pavo/10 font-serif text-[10px] text-carbon">A</span>
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-pavo bg-pavo/10 font-serif text-xs text-ink">A</span>
           <svg aria-hidden="true" viewBox="0 0 88 16" className="h-4 min-w-0 flex-1 text-carbon/55">
             <path d="M1 8H82" fill="none" stroke="currentColor" strokeWidth="1.5" />
             <path d="M76 3L83 8L76 13" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span className="flex size-7 items-center justify-center rounded-full border border-terracota bg-terracota/10 font-serif text-[10px] text-carbon">B</span>
-          <span className="font-serif text-[10px] leading-tight text-carbon/65" dangerouslySetInnerHTML={{ __html: t('graph', 'aNecessaryForBText') }} />
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-terracota bg-terracota/10 font-serif text-xs text-ink">B</span>
+          <span className="font-serif text-[13px] italic leading-tight text-ink-muted" dangerouslySetInnerHTML={{ __html: t('graph', 'aNecessaryForBText') }} />
         </div>
 
-        <div className="space-y-3 border-y border-carbon/10 py-3">
-          <div className="grid grid-cols-[2.25rem_1fr] items-center gap-2.5 font-sans text-[10px] leading-snug text-carbon/65">
-            <span aria-hidden="true" className="block h-[2px] w-8 bg-carbon/55" />
-            <span>{t('graph', 'originAxiom')}</span>
-            <span aria-hidden="true" className="block h-[2px] w-8 bg-[repeating-linear-gradient(90deg,var(--theme-carbon)_0,var(--theme-carbon)_4px,transparent_4px,transparent_8px)] opacity-55" />
-            <span>{t('graph', 'originLemma')}</span>
-            <span aria-hidden="true" className="block h-[2px] w-8 bg-[repeating-linear-gradient(90deg,var(--theme-carbon)_0,var(--theme-carbon)_2px,transparent_2px,transparent_5px)] opacity-55" />
-            <span>{t('graph', 'originDefinition')}</span>
-            <span aria-hidden="true" className="block h-[2.5px] w-8 bg-pavo" />
-            <span>{t('graph', 'originPrimitive')}</span>
-          </div>
+        <div className={`grid grid-cols-[2.25rem_1fr] items-center gap-x-2.5 gap-y-2 ${LEGEND_TEXT_CLASS}`}>
+          <span aria-hidden="true" className="block h-[2px] w-8 bg-carbon/55" />
+          <span>{t('graph', 'originAxiom')}</span>
+          <span aria-hidden="true" className="block h-[2px] w-8 bg-[repeating-linear-gradient(90deg,var(--theme-carbon)_0,var(--theme-carbon)_4px,transparent_4px,transparent_8px)] opacity-55" />
+          <span>{t('graph', 'originLemma')}</span>
+          <span aria-hidden="true" className="block h-[2px] w-8 bg-[repeating-linear-gradient(90deg,var(--theme-carbon)_0,var(--theme-carbon)_2px,transparent_2px,transparent_5px)] opacity-55" />
+          <span>{t('graph', 'originDefinition')}</span>
+          <span aria-hidden="true" className="block h-[2.5px] w-8 bg-pavo" />
+          <span>{t('graph', 'originPrimitive')}</span>
         </div>
       </section>
 
-      <section aria-labelledby="graph-states-title" className="mt-5">
-        <h2 id="graph-states-title" className="font-serif text-sm font-semibold text-carbon">
+      <section aria-labelledby="graph-states-title" className="mt-6">
+        <h3 id="graph-states-title" className="ac-rubric text-[15px]">
           {t('graph', 'graphStates')}
-        </h2>
-        <div className="mt-3 space-y-3 font-sans text-[10px] leading-relaxed text-carbon/65">
+        </h3>
+        <div className={`mt-2 space-y-2.5 ${LEGEND_TEXT_CLASS}`}>
           <div className="flex items-start gap-3">
-            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-canela shadow-sm" />
-            <p><strong className="font-semibold text-carbon">{t('graph', 'fullColorState')}</strong> {t('graph', 'fullColorDesc')}</p>
+            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-canela" />
+            <p><strong className="font-semibold text-ink">{t('graph', 'fullColorState')}</strong> {t('graph', 'fullColorDesc')}</p>
           </div>
           <div className="flex items-start gap-3">
             <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-canela opacity-25" />
-            <p><strong className="font-semibold text-carbon">{t('graph', 'fadedState')}</strong> {t('graph', 'fadedDesc')}</p>
+            <p><strong className="font-semibold text-ink">{t('graph', 'fadedState')}</strong> {t('graph', 'fadedDesc')}</p>
           </div>
           <div className="flex items-start gap-3">
             <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full border-[3px] border-carbon bg-lienzo" />
-            <p><strong className="font-semibold text-carbon">{t('graph', 'markedBorderState')}</strong> {t('graph', 'markedBorderDesc')}</p>
+            <p><strong className="font-semibold text-ink">{t('graph', 'markedBorderState')}</strong> {t('graph', 'markedBorderDesc')}</p>
           </div>
         </div>
       </section>

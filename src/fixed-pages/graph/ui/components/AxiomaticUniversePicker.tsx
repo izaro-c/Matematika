@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import type { CSSProperties } from 'react';
 import type { ModelInfo, SystemInfo } from '@/data/graph/graphTypes';
 import { useI18n } from '@/i18n';
 
@@ -11,147 +11,64 @@ interface AxiomaticUniversePickerProps {
   onToggleModel: (id: string) => void;
 }
 
-interface FrameworkMenuProps<T extends ModelInfo | SystemInfo> {
+interface FrameworkIndexProps<T extends ModelInfo | SystemInfo> {
   label: string;
-  placeholder: string;
   options: T[];
   activeId?: string;
   color: string;
   onSelect: (id: string) => void;
 }
 
-function FrameworkMenu<T extends ModelInfo | SystemInfo>({
+/** Sistemas y modelos comparten `name`: elegir uno descarta el resto, como en un índice. */
+const FRAMEWORK_RADIO_NAME = 'axiomatic-framework';
+
+function FrameworkIndex<T extends ModelInfo | SystemInfo>({
   label,
-  placeholder,
   options,
   activeId,
   color,
   onSelect,
-}: FrameworkMenuProps<T>) {
-  const [isOpen, setIsOpen] = useState(false);
+}: FrameworkIndexProps<T>) {
   const { t } = useI18n();
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const menuId = useId();
-  const activeOption = options.find(option => option.id === activeId);
-  const menuStyle = { '--framework-color': color } as CSSProperties;
-
-  const focusOption = (index: number) => {
-    const optionButtons = menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="option"]');
-    if (!optionButtons || optionButtons.length === 0) return;
-    const wrappedIndex = (index + optionButtons.length) % optionButtons.length;
-    optionButtons[wrappedIndex].focus();
-  };
-
-  const openAndFocus = () => {
-    setIsOpen(true);
-    requestAnimationFrame(() => {
-      const selectedIndex = Math.max(0, options.findIndex(option => option.id === activeId));
-      focusOption(selectedIndex);
-    });
-  };
-
-  const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault();
-      openAndFocus();
-    }
-  };
-
-  const handleOptionKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      focusOption(index + 1);
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      focusOption(index - 1);
-    } else if (event.key === 'Escape') {
-      event.preventDefault();
-      setIsOpen(false);
-      triggerRef.current?.focus();
-    }
-  };
+  const style = { '--framework-color': color } as CSSProperties;
 
   return (
-    <div
-      className="relative"
-      style={menuStyle}
-      onBlur={event => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsOpen(false);
-      }}
-    >
-      <span className="ac-label ac-label--xs ac-label--strong mb-1.5 block">
-        {label}
-      </span>
-      <button
-        ref={triggerRef}
-        type="button"
-        aria-haspopup="listbox"
-        aria-controls={menuId}
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen(open => !open)}
-        onKeyDown={handleTriggerKeyDown}
-        className={`flex min-h-12 w-full items-center gap-3 border border-carbon/15 border-l-2 border-l-[var(--framework-color)] bg-lienzo px-3 text-left transition-colors hover:border-carbon/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota ${
-          isOpen ? 'border-carbon/30 bg-carbon/[0.025]' : ''
-        }`}
-      >
-        <span
-          aria-hidden="true"
-          className={`flex size-4 shrink-0 items-center justify-center rounded-full border border-[var(--framework-color)] ${activeOption ? 'bg-[var(--framework-color)]' : ''}`}
-        >
-          {activeOption && <span className="size-1.5 rounded-full bg-lienzo" />}
-        </span>
-        <span className={`min-w-0 flex-1 truncate font-serif text-xs ${activeOption ? 'font-semibold text-carbon' : 'italic text-carbon/55'}`}>
-          {activeOption?.title ?? placeholder}
-        </span>
-        {activeOption && (
-          <span className="shrink-0 font-sans text-[8px] tabular-nums text-carbon/40">
-            {activeOption.axioms.length} {t('graph', 'axAbbr')}
-          </span>
-        )}
-        <span aria-hidden="true" className={`shrink-0 text-xs text-carbon/45 transition-transform ${isOpen ? 'rotate-180' : ''}`}>⌄</span>
-      </button>
-
-      {isOpen && (
-        <div
-          ref={menuRef}
-          id={menuId}
-          role="listbox"
-          aria-label={label}
-          className="absolute inset-x-0 top-[calc(100%+0.25rem)] z-30 max-h-64 overflow-y-auto border border-carbon/20 bg-lienzo p-1 shadow-[var(--theme-shadow-classic)]"
-        >
-          {options.map((option, index) => {
-            const isSelected = option.id === activeId;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                role="option"
-                aria-selected={isSelected}
-                onClick={() => {
-                  onSelect(option.id);
-                  setIsOpen(false);
-                  triggerRef.current?.focus();
-                }}
-                onKeyDown={event => handleOptionKeyDown(event, index)}
-                className={`flex min-h-10 w-full items-center gap-2.5 border-l-2 px-2.5 py-2 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota ${
-                  isSelected
-                    ? 'border-l-[var(--framework-color)] bg-[color-mix(in_srgb,var(--framework-color)_8%,transparent)] text-carbon'
-                    : 'border-l-transparent text-carbon/65 hover:bg-carbon/[0.035] hover:text-carbon'
+    <fieldset style={style}>
+      <legend className="ac-rubric mb-1 text-[13px]">{label}</legend>
+      <ul>
+        {options.map(option => {
+          const isSelected = option.id === activeId;
+          return (
+            <li key={option.id}>
+              <label
+                className={`group/option flex min-h-8 cursor-pointer items-baseline gap-1.5 py-0.5 font-serif text-[15px] leading-snug transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-terracota ${
+                  isSelected ? 'font-semibold text-ink' : 'text-ink-muted hover:text-ink'
                 }`}
               >
-                <span
-                  aria-hidden="true"
-                  className={`size-2.5 shrink-0 rounded-full border border-[var(--framework-color)] ${isSelected ? 'bg-[var(--framework-color)]' : ''}`}
+                {/* onClick (no onChange): volver a pulsar el marco activo lo reaplica tras ajustes manuales. */}
+                <input
+                  type="radio"
+                  name={FRAMEWORK_RADIO_NAME}
+                  checked={isSelected}
+                  readOnly
+                  onClick={() => onSelect(option.id)}
+                  className="sr-only"
                 />
-                <span className="min-w-0 flex-1 font-serif text-[11px] leading-tight">{option.title}</span>
-                <span className="shrink-0 font-sans text-[8px] tabular-nums text-carbon/40">{option.axioms.length}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
+                <span aria-hidden="true" className="w-4 shrink-0 font-normal text-[var(--framework-color)]">
+                  {isSelected ? '☞' : ''}
+                </span>
+                <span className="min-w-0">{option.title}</span>
+                <span aria-hidden="true" className="mx-1 min-w-4 flex-1 self-end border-b border-dotted border-carbon/30 mb-[0.4em]" />
+                <span className="shrink-0 font-normal text-[13px] text-ink-subtle [font-variant-numeric:oldstyle-nums]">
+                  {option.axioms.length}
+                  <span className="sr-only"> {t('graph', 'axAbbr')}</span>
+                </span>
+              </label>
+            </li>
+          );
+        })}
+      </ul>
+    </fieldset>
   );
 }
 
@@ -169,27 +86,23 @@ export function AxiomaticUniversePicker({
 
   return (
     <section aria-labelledby="framework-picker-title">
-      <div className="mb-3">
-        <h2 id="framework-picker-title" className="font-serif text-base font-semibold text-carbon">
-          {t('graph', 'startFromFramework')}
-        </h2>
-        <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-          {t('graph', 'frameworkChoiceHint')}
-        </p>
-      </div>
+      <h2 id="framework-picker-title" className="text-lg leading-tight text-ink">
+        {t('graph', 'startFromFramework')}
+      </h2>
+      <p className="mt-1 font-serif text-[13px] italic leading-snug text-ink-muted">
+        {t('graph', 'frameworkChoiceHint')}
+      </p>
 
-      <div className="space-y-3">
-        <FrameworkMenu
+      <div className="mt-4 space-y-4">
+        <FrameworkIndex
           label={t('graph', 'axiomaticSystem')}
-          placeholder={t('graph', 'chooseSystem')}
           options={systems}
           activeId={activeSystem?.id}
           color="var(--theme-terracota)"
           onSelect={onToggleSystem}
         />
-        <FrameworkMenu
+        <FrameworkIndex
           label={t('graph', 'concreteModel')}
-          placeholder={t('graph', 'chooseModel')}
           options={models}
           activeId={activeModel?.id}
           color="var(--theme-pavo)"

@@ -59,6 +59,16 @@
 .ac-label--ocre-soft { --ac-label-color: color-mix(in srgb, var(--theme-ocre) 70%, var(--theme-carbon)); }
 .ac-label--terracota-soft { --ac-label-color: color-mix(in srgb, var(--theme-terracota) 72%, var(--theme-carbon)); }
 
+/* Rúbrica de libro: versalitas en la letra de cuerpo (índices, familias, pestañas) */
+.ac-rubric {
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+  color: var(--ac-rubric-color, var(--ink-text-muted));
+}
+
 .ac-fieldset-legend {
   padding-inline: 0.25rem;
   font-family: var(--font-sans-family);

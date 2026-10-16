@@ -1,4 +1,4 @@
-import { useState, useMemo, type KeyboardEvent } from 'react';
+import { useState, useMemo, type CSSProperties, type KeyboardEvent } from 'react';
 import { db } from '@/data/content';
 import { useGraphStore } from '@/fixed-pages/graph/GraphStore';
 import { GraphExplorerLink } from './GraphExplorerLink';
@@ -18,6 +18,18 @@ interface AxiomaticSidebarProps {
 }
 
 type SidebarView = 'logic' | 'display';
+
+/** Mismo lienzo que el grafo, el buscador y los botones; las casillas y la pestaña fija lo reutilizan. */
+const PANEL_STYLE = {
+  '--axiomatic-panel-bg': 'var(--theme-lienzo)',
+} as CSSProperties;
+
+const tabClass = (isActive: boolean) =>
+  `ac-rubric -mb-px min-h-11 border-b-[1.5px] text-[15px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota ${
+    isActive
+      ? 'border-terracota [--ac-rubric-color:var(--ink-text)]'
+      : 'border-transparent [--ac-rubric-color:var(--ink-text-subtle)] hover:[--ac-rubric-color:var(--ink-text)]'
+  }`;
 
 export function AxiomaticSidebar({
   isMobile,
@@ -78,8 +90,9 @@ export function AxiomaticSidebar({
     ?? activeModel?.title
     ?? (isNeutralBase ? t('graph', 'neutralBase') : t('graph', 'manualSelection'));
 
-  let statusLabel = t('graph', 'updated');
-  let statusColor = 'text-musgo';
+  // En reposo no se rotula nada: el estado solo aparece cuando reclama atención.
+  let statusLabel: string | null = null;
+  let statusColor = '';
   if (isLoading) {
     statusLabel = t('graph', 'recalculating');
     statusColor = 'text-ocre';
@@ -102,154 +115,140 @@ export function AxiomaticSidebar({
   return (
     <aside
       aria-label={t('graph', 'dependencyControlsAria')}
+      style={PANEL_STYLE}
       className={isMobile
-        ? 'fixed inset-x-0 bottom-0 top-24 z-50 w-full overflow-y-auto overscroll-contain border-t border-carbon/15 bg-lienzo shadow-2xl'
-        : 'h-full w-[320px] shrink-0 overflow-y-auto overscroll-contain border-r border-carbon/15 bg-lienzo/95'}
+        ? 'fixed inset-x-0 bottom-0 top-24 z-50 flex w-full flex-col border-t border-carbon/15 bg-[var(--axiomatic-panel-bg)] shadow-2xl'
+        : 'flex h-full w-[320px] shrink-0 flex-col border-r border-carbon/15 bg-[var(--axiomatic-panel-bg)]'}
     >
-      <header className={isMobile ? 'px-5 pb-4 pt-5' : 'px-5 pb-4 pt-24'}>
-        <div className="flex items-start gap-3">
-          <div className="min-w-0 flex-1">
-            <p className="ac-label ac-label--xs ac-label--terracota">
-              {t('graph', 'logicExplorer')}
-            </p>
-            <h1 className="mt-1 font-serif text-xl leading-tight tracking-tight text-carbon">
-              {t('graph', 'axiomaticDependencies')}
-            </h1>
+      {/* Franja fija bajo el logo flotante: así las pestañas fijas nunca quedan tapadas por él. */}
+      {!isMobile && <div aria-hidden="true" className="h-20 shrink-0" />}
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <header className={isMobile ? 'px-5 pb-5 pt-5' : 'px-5 pb-5 pt-4'}>
+          <div className="flex items-start gap-3">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-2xl leading-tight text-ink">
+                {t('graph', 'axiomaticDependencies')}
+              </h1>
+            </div>
+            {isMobile && (
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                aria-label={t('graph', 'closeControlsAria')}
+                className="flex size-11 shrink-0 items-center justify-center border border-carbon/15 text-lg text-carbon/55 transition-colors hover:border-carbon/30 hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            )}
           </div>
-          {isMobile && (
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(false)}
-              aria-label={t('graph', 'closeControlsAria')}
-              className="flex size-11 shrink-0 items-center justify-center border border-carbon/15 text-lg text-carbon/55 transition-colors hover:border-carbon/30 hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          )}
-        </div>
-        <p className="mt-2 max-w-[32ch] font-sans text-[11px] leading-relaxed text-carbon/60">
-          {t('graph', 'logicModificationDescription')}
-        </p>
-        <div className="mt-3 border-t border-carbon/10 pt-1">
-          <GraphExplorerLink href="/grafo" direction="back">
-            {t('graph', 'generalConnectionMap')}
-          </GraphExplorerLink>
-        </div>
-      </header>
-
-      <section
-        aria-live="polite"
-        aria-label={t('graph', 'currentLogicStateAria')}
-        className="border-y border-carbon/15 bg-carbon/[0.025] px-5 py-3.5"
-      >
-        <div className="flex items-baseline justify-between gap-3">
-          <div className="min-w-0">
-            <p className="ac-label ac-label--2xs">
-              {t('graph', 'currentBase')}
-            </p>
-            <p className="mt-0.5 truncate font-serif text-sm font-semibold text-carbon">
+          <p className="mt-1.5 font-serif text-sm italic leading-snug text-ink-muted">
+            {t('graph', 'logicModificationDescription')}
+          </p>
+          <div className="mt-2 flex">
+            <GraphExplorerLink href="/grafo" direction="back">
+              {t('graph', 'generalConnectionMap')}
+            </GraphExplorerLink>
+          </div>
+        </header>
+  
+        <section
+          aria-live="polite"
+          aria-label={t('graph', 'currentLogicStateAria')}
+          className="border-t border-carbon/15 px-5 py-4"
+        >
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="min-w-0 truncate font-serif text-base font-semibold text-ink">
+              <span className="sr-only">{t('graph', 'currentBase')}: </span>
               {activeContext}
             </p>
+            {statusLabel && (
+              <span className={`shrink-0 font-serif text-[13px] italic ${statusColor}`}>{statusLabel}</span>
+            )}
           </div>
-          <span className={`shrink-0 font-sans text-[9px] ${statusColor}`}>{statusLabel}</span>
+          {status === 'error' ? (
+            <p role="alert" className="mt-1 font-serif text-[13px] italic leading-snug text-granada">
+              {t('graph', 'recalculateError')}{error?.message ? `: ${error.message}` : '.'}
+            </p>
+          ) : (
+            <p className="mt-0.5 font-serif text-[13px] italic text-ink-muted [font-variant-numeric:oldstyle-nums]">
+              {t('graph', 'axiomsTally', { active: activeAxiomCount, total: axioms.length })}
+              <span aria-hidden="true"> · </span>
+              {t('graph', 'validNodesTally', { valid: validNodeCount, total: evaluatedNodeCount || '—' })}
+            </p>
+          )}
+        </section>
+  
+        <div className="sticky top-0 z-10 flex gap-6 border-y border-carbon/15 bg-[var(--axiomatic-panel-bg)] px-5" role="tablist" aria-label={t('graph', 'controlsOrganizationAria')}>
+          <button
+            type="button"
+            role="tab"
+            id="axiomatic-logic-tab"
+            aria-controls="axiomatic-logic-panel"
+            aria-selected={activeView === 'logic'}
+            tabIndex={activeView === 'logic' ? 0 : -1}
+            onClick={() => setActiveView('logic')}
+            onKeyDown={handleTabKeyDown}
+            className={tabClass(activeView === 'logic')}
+          >
+            {t('graph', 'logicBase')}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="axiomatic-display-tab"
+            aria-controls="axiomatic-display-panel"
+            aria-selected={activeView === 'display'}
+            tabIndex={activeView === 'display' ? 0 : -1}
+            onClick={() => setActiveView('display')}
+            onKeyDown={handleTabKeyDown}
+            className={tabClass(activeView === 'display')}
+          >
+            {t('graph', 'viewAndReading')}
+          </button>
         </div>
-
-        {status === 'error' ? (
-          <p role="alert" className="mt-2 font-sans text-[10px] leading-relaxed text-granada">
-            {t('graph', 'recalculateError')}{error?.message ? `: ${error.message}` : '.'}
-          </p>
-        ) : (
-          <div className="mt-3 grid grid-cols-2 divide-x divide-carbon/10">
-            <div className="pr-3">
-              <span className="block font-serif text-lg leading-none text-carbon tabular-nums">{activeAxiomCount}</span>
-              <span className="mt-1 block font-sans text-[9px] text-carbon/55">{t('graph', 'ofAxioms', { total: axioms.length })}</span>
-            </div>
-            <div className="pl-3">
-              <span className="block font-serif text-lg leading-none text-carbon tabular-nums">{validNodeCount}</span>
-              <span className="mt-1 block font-sans text-[9px] text-carbon/55">{t('graph', 'ofValidNodes', { total: evaluatedNodeCount || '—' })}</span>
-            </div>
-          </div>
-        )}
-      </section>
-
-      <div className="sticky top-0 z-10 grid grid-cols-2 border-b border-carbon/15 bg-lienzo/95 px-5 pt-2 backdrop-blur-sm" role="tablist" aria-label={t('graph', 'controlsOrganizationAria')}>
-        <button
-          type="button"
-          role="tab"
-          id="axiomatic-logic-tab"
-          aria-controls="axiomatic-logic-panel"
-          aria-selected={activeView === 'logic'}
-          tabIndex={activeView === 'logic' ? 0 : -1}
-          onClick={() => setActiveView('logic')}
-          onKeyDown={handleTabKeyDown}
-          className={`min-h-11 border-b-2 px-2 font-serif text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota ${
-            activeView === 'logic'
-              ? 'border-terracota text-carbon'
-              : 'border-transparent text-carbon/50 hover:text-carbon'
-          }`}
+  
+        <div
+          id="axiomatic-logic-panel"
+          role="tabpanel"
+          aria-labelledby="axiomatic-logic-tab"
+          hidden={activeView !== 'logic'}
+          className="px-5 py-5"
         >
-          {t('graph', 'logicBase')}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          id="axiomatic-display-tab"
-          aria-controls="axiomatic-display-panel"
-          aria-selected={activeView === 'display'}
-          tabIndex={activeView === 'display' ? 0 : -1}
-          onClick={() => setActiveView('display')}
-          onKeyDown={handleTabKeyDown}
-          className={`min-h-11 border-b-2 px-2 font-serif text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota ${
-            activeView === 'display'
-              ? 'border-terracota text-carbon'
-              : 'border-transparent text-carbon/50 hover:text-carbon'
-          }`}
+          <AxiomaticUniversePicker
+            systems={localizedSystems}
+            inactiveSystems={inactiveSystems}
+            onToggleSystem={toggleSystem}
+            models={localizedModels}
+            inactiveModels={inactiveModels}
+            onToggleModel={toggleModel}
+          />
+  
+          <hr className="my-6 border-carbon/15" />
+  
+          <AxiomaticAxiomPicker
+            axioms={axiomPages}
+            disabledAxioms={disabledAxiomIds}
+            baselineAxiomIds={neutralAxiomIds}
+            onToggle={toggleAxiom}
+            onRestoreBaseline={() => setActiveAxioms(neutralAxiomIds)}
+            onDeactivateAll={() => setActiveAxioms([])}
+          />
+        </div>
+  
+        <div
+          id="axiomatic-display-panel"
+          role="tabpanel"
+          aria-labelledby="axiomatic-display-tab"
+          hidden={activeView !== 'display'}
+          className="px-5 py-5"
         >
-          {t('graph', 'viewAndReading')}
-        </button>
-      </div>
-
-      <div
-        id="axiomatic-logic-panel"
-        role="tabpanel"
-        aria-labelledby="axiomatic-logic-tab"
-        hidden={activeView !== 'logic'}
-        className="px-5 py-5"
-      >
-        <AxiomaticUniversePicker
-          systems={localizedSystems}
-          inactiveSystems={inactiveSystems}
-          onToggleSystem={toggleSystem}
-          models={localizedModels}
-          inactiveModels={inactiveModels}
-          onToggleModel={toggleModel}
-        />
-
-        <div className="my-5 border-t border-carbon/10" />
-
-        <AxiomaticAxiomPicker
-          axioms={axiomPages}
-          disabledAxioms={disabledAxiomIds}
-          baselineAxiomIds={neutralAxiomIds}
-          onToggle={toggleAxiom}
-          onRestoreBaseline={() => setActiveAxioms(neutralAxiomIds)}
-          onDeactivateAll={() => setActiveAxioms([])}
-        />
-      </div>
-
-      <div
-        id="axiomatic-display-panel"
-        role="tabpanel"
-        aria-labelledby="axiomatic-display-tab"
-        hidden={activeView !== 'display'}
-        className="px-5 py-5"
-      >
-        <AxiomaticDisplayOptions
-          visibleTypes={visibleTypes}
-          onToggleType={toggleType}
-          typeLabel={typeLabel}
-          typeColors={typeColors}
-        />
+          <AxiomaticDisplayOptions
+            visibleTypes={visibleTypes}
+            onToggleType={toggleType}
+            typeLabel={typeLabel}
+            typeColors={typeColors}
+          />
+        </div>
       </div>
     </aside>
   );

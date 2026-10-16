@@ -185,9 +185,9 @@ export interface TranslationDictionary {
     recalculateError: string;
     error: string;
     axiomsCount: string;
-    ofAxioms: string;
+    axiomsTally: string;
     validNodesCount: string;
-    ofValidNodes: string;
+    validNodesTally: string;
     logicTab: string;
     logicBase: string;
     displayTab: string;
@@ -208,7 +208,6 @@ export interface TranslationDictionary {
     axAbbr: string;
     axiomaticAdjustment: string;
     incompatibleAlternativesDesc: string;
-    incompatibleAlternativesHint: string;
     restoreNeutral: string;
     restoreNeutralBase: string;
     emptyBase: string;
@@ -220,7 +219,6 @@ export interface TranslationDictionary {
     layersViewHint: string;
     howToRead: string;
     arrowMeaning: string;
-    arrowDirectionMeaning: string;
     aNeededForB: string;
     aNecessaryForBAria: string;
     aNecessaryForBText: string;

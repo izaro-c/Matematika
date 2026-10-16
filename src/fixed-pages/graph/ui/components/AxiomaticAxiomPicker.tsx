@@ -62,6 +62,38 @@ function formatAlternativeGroup(groupId: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
+/** Casilla dibujada a tinta: filete del color de la familia; marcada, se rellena dejando un margen de papel. */
+const INK_INPUT_CLASS = 'mt-[0.2em] size-3.5 shrink-0 cursor-pointer appearance-none border border-[color-mix(in_srgb,var(--axiom-group-color)_70%,var(--theme-carbon))] bg-transparent checked:bg-[var(--axiom-group-color)] checked:shadow-[inset_0_0_0_2px_var(--axiomatic-panel-bg,var(--theme-lienzo))] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota';
+
+interface AxiomChoiceProps {
+  type: 'checkbox' | 'radio';
+  name?: string;
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}
+
+function AxiomChoice({ type, name, label, checked, onChange }: AxiomChoiceProps) {
+  return (
+    <label
+      className={`flex min-h-9 cursor-pointer items-start gap-2.5 py-1 font-serif text-[14px] leading-snug transition-colors ${
+        checked ? 'text-ink' : 'italic text-ink-subtle hover:text-ink-muted'
+      }`}
+    >
+      <input
+        type={type}
+        name={name}
+        checked={checked}
+        onChange={onChange}
+        className={`${INK_INPUT_CLASS} ${type === 'radio' ? 'rounded-full' : ''}`}
+      />
+      <span>{label}</span>
+    </label>
+  );
+}
+
+const TEXT_ACTION_CLASS = 'ac-rubric whitespace-nowrap text-left text-[13px] text-terracota transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-ink-subtle disabled:opacity-60';
+
 export function AxiomaticAxiomPicker({
   axioms,
   disabledAxioms,
@@ -80,40 +112,20 @@ export function AxiomaticAxiomPicker({
 
   return (
     <section aria-labelledby="axiom-picker-title">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h2 id="axiom-picker-title" className="font-serif text-base font-semibold text-carbon">
-            {t('graph', 'axiomaticAdjustment')}
-          </h2>
-          <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-            {t('graph', 'incompatibleAlternativesHint')}
-          </p>
-        </div>
-        <span className="shrink-0 font-sans text-[9px] tabular-nums text-carbon/50">
-          {activeCount}/{axioms.length}
-        </span>
-      </div>
+      <h2 id="axiom-picker-title" className="text-lg leading-tight text-ink">
+        {t('graph', 'axiomaticAdjustment')}
+      </h2>
 
-      <div className="mt-3 flex gap-4 border-y border-carbon/10 py-2">
-        <button
-          type="button"
-          onClick={onRestoreBaseline}
-          disabled={isBaselineActive}
-          className="font-sans text-[10px] font-semibold text-terracota transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
-        >
+      <div className="mt-1.5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <button type="button" onClick={onRestoreBaseline} disabled={isBaselineActive} className={TEXT_ACTION_CLASS}>
           {t('graph', 'restoreNeutralBase')}
         </button>
-        <button
-          type="button"
-          onClick={onDeactivateAll}
-          disabled={activeCount === 0}
-          className="font-sans text-[10px] font-semibold text-carbon/55 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
-        >
+        <button type="button" onClick={onDeactivateAll} disabled={activeCount === 0} className={TEXT_ACTION_CLASS}>
           {t('graph', 'clearBase')}
         </button>
       </div>
 
-      <div className="mt-2">
+      <div className="mt-4 space-y-3">
         {groups.map(group => {
           const groupActiveCount = group.axioms.filter(axiom => !disabledAxioms.has(axiom.id)).length;
           const groupStyle = { '--axiom-group-color': group.color } as CSSProperties;
@@ -127,91 +139,57 @@ export function AxiomaticAxiomPicker({
           }
           const showAlternativeLabels = independentAxioms.length > 0 || alternatives.size > 1;
           return (
-            <details key={group.label} className="group border-b border-carbon/10" style={groupStyle}>
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2.5 py-2 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota [&::-webkit-details-marker]:hidden">
-                <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[var(--axiom-group-color)]" />
-                <span className="min-w-0 flex-1 font-serif text-xs font-semibold text-carbon">{group.label}</span>
-                <span className="font-sans text-[9px] tabular-nums text-carbon/45">
+            <details key={group.label} open className="group" style={groupStyle}>
+              <summary className="flex min-h-9 cursor-pointer list-none items-baseline gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota [&::-webkit-details-marker]:hidden">
+                <span aria-hidden="true" className="w-3 shrink-0 text-[10px] text-ink-subtle transition-transform group-open:rotate-90">▸</span>
+                <span className="ac-rubric min-w-0 flex-1 text-[15px] [--ac-rubric-color:color-mix(in_srgb,var(--axiom-group-color)_72%,var(--theme-carbon))]">
+                  {group.label}
+                </span>
+                <span className="font-serif text-[13px] text-ink-subtle [font-variant-numeric:oldstyle-nums]">
                   {groupActiveCount}/{group.axioms.length}
                 </span>
-                <span aria-hidden="true" className="text-xs text-carbon/40 transition-transform group-open:rotate-180">⌄</span>
               </summary>
 
-              <fieldset className="pb-2 pl-4">
+              <fieldset className="pb-1 pl-5">
                 <legend className="sr-only">{t('graph', 'axiomsOf', { group: group.label })}</legend>
-                {independentAxioms.map(axiom => {
-                  const isActive = !disabledAxioms.has(axiom.id);
-                  return (
-                    <label
-                      key={axiom.id}
-                      className={`flex min-h-10 cursor-pointer items-start gap-2.5 border-l-2 px-2 py-2 transition-colors ${
-                        isActive
-                          ? 'border-[var(--axiom-group-color)] bg-[color-mix(in_srgb,var(--axiom-group-color)_7%,transparent)] text-carbon'
-                          : 'border-transparent text-carbon/55 hover:bg-carbon/[0.025] hover:text-carbon'
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={isActive}
-                        onChange={() => onToggle(axiom.id)}
-                        className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
-                        style={{ accentColor: group.color }}
-                      />
-                      <span className="font-serif text-[11px] leading-tight">{axiom.title}</span>
-                    </label>
-                  );
-                })}
+                {independentAxioms.map(axiom => (
+                  <AxiomChoice
+                    key={axiom.id}
+                    type="checkbox"
+                    label={axiom.title}
+                    checked={!disabledAxioms.has(axiom.id)}
+                    onChange={() => onToggle(axiom.id)}
+                  />
+                ))}
                 {[...alternatives.entries()].map(([alternativeGroup, options]) => {
                   const activeOptions = options.filter((axiom) => !disabledAxioms.has(axiom.id));
+                  const radioName = `axiom-alternative-${alternativeGroup}`;
                   return (
                     <div key={alternativeGroup} role="group" aria-label={formatAlternativeGroup(alternativeGroup)}>
                       {showAlternativeLabels && (
-                        <p className="ac-label ac-label--2xs ac-label--soft px-2 pb-1 pt-2 block">
+                        <p className="pb-0.5 pt-2 font-serif text-[13px] italic text-ink-muted">
                           {formatAlternativeGroup(alternativeGroup)}
                         </p>
                       )}
-                      <label
-                        className={`flex min-h-10 cursor-pointer items-start gap-2.5 border-l-2 px-2 py-2 transition-colors ${
-                          activeOptions.length === 0
-                            ? 'border-[var(--axiom-group-color)] bg-[color-mix(in_srgb,var(--axiom-group-color)_7%,transparent)] text-carbon'
-                            : 'border-transparent text-carbon/55 hover:bg-carbon/[0.025] hover:text-carbon'
-                        }`}
-                      >
-                        <input
+                      <AxiomChoice
+                        type="radio"
+                        name={radioName}
+                        label={t('graph', 'noneUndecided')}
+                        checked={activeOptions.length === 0}
+                        onChange={() => {
+                          for (const axiom of activeOptions) onToggle(axiom.id);
+                        }}
+                      />
+                      {options.map((axiom) => (
+                        <AxiomChoice
+                          key={axiom.id}
                           type="radio"
-                          name={`axiom-alternative-${alternativeGroup}`}
-                          checked={activeOptions.length === 0}
-                          onChange={() => {
-                            for (const axiom of activeOptions) onToggle(axiom.id);
-                          }}
-                          className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
-                          style={{ accentColor: group.color }}
+                          name={radioName}
+                          label={axiom.title}
+                          checked={!disabledAxioms.has(axiom.id)}
+                          onChange={() => onToggle(axiom.id)}
                         />
-                        <span className="font-serif text-[11px] leading-tight">{t('graph', 'noneUndecided')}</span>
-                      </label>
-                      {options.map((axiom) => {
-                        const isActive = !disabledAxioms.has(axiom.id);
-                        return (
-                          <label
-                            key={axiom.id}
-                            className={`flex min-h-10 cursor-pointer items-start gap-2.5 border-l-2 px-2 py-2 transition-colors ${
-                              isActive
-                                ? 'border-[var(--axiom-group-color)] bg-[color-mix(in_srgb,var(--axiom-group-color)_7%,transparent)] text-carbon'
-                                : 'border-transparent text-carbon/55 hover:bg-carbon/[0.025] hover:text-carbon'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name={`axiom-alternative-${alternativeGroup}`}
-                              checked={isActive}
-                              onChange={() => onToggle(axiom.id)}
-                              className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
-                              style={{ accentColor: group.color }}
-                            />
-                            <span className="font-serif text-[11px] leading-tight">{axiom.title}</span>
-                          </label>
-                        );
-                      })}
+                      ))}
                     </div>
                   );
                 })}

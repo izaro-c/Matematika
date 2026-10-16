@@ -10,7 +10,7 @@ import { getAxiomGroup } from '@/fixed-pages/graph/lib/graphUtils';
 afterEach(cleanup);
 
 describe('axiomatic sidebar controls', () => {
-  it('presents systems and models in project-styled selection menus', () => {
+  it('presents systems and models as one exclusive printed index', () => {
     const onToggleSystem = vi.fn();
     const onToggleModel = vi.fn();
 
@@ -25,16 +25,18 @@ describe('axiomatic sidebar controls', () => {
       />,
     );
 
-    const activeSystem = screen.getByRole('button', { name: /Sistema A/ });
-    const modelMenu = screen.getByRole('button', { name: /Elegir un modelo/ });
-    expect(activeSystem.getAttribute('aria-haspopup')).toBe('listbox');
-    expect(activeSystem.getAttribute('aria-expanded')).toBe('false');
-    expect(modelMenu.getAttribute('aria-expanded')).toBe('false');
+    const activeSystem = screen.getByRole('radio', { name: /Sistema A/ }) as HTMLInputElement;
+    const model = screen.getByRole('radio', { name: /Modelo A/ }) as HTMLInputElement;
+    expect(activeSystem.checked).toBe(true);
+    expect(model.checked).toBe(false);
+    expect(activeSystem.name).toBe(model.name);
 
-    fireEvent.click(modelMenu);
-    expect(modelMenu.getAttribute('aria-expanded')).toBe('true');
-    fireEvent.click(screen.getByRole('option', { name: /Modelo A/ }));
+    fireEvent.click(model);
     expect(onToggleModel).toHaveBeenCalledWith('modelo-a');
+
+    // Volver a pulsar el marco activo lo reaplica (p. ej. tras ajustes manuales).
+    fireEvent.click(activeSystem);
+    expect(onToggleSystem).toHaveBeenCalledWith('sistema-a');
   });
 
   it('groups axioms by family and exposes bulk and individual actions', () => {
@@ -84,7 +86,7 @@ describe('axiomatic sidebar controls', () => {
     expect(congruenceGroup).toBeDefined();
     const checkbox = within(congruenceGroup!).getByRole('checkbox', { name: 'Congruencia I', hidden: true });
     expect((checkbox as HTMLInputElement).checked).toBe(false);
-    expect((checkbox as HTMLInputElement).style.accentColor).toBe(
+    expect(congruenceGroup!.closest('details')!.style.getPropertyValue('--axiom-group-color')).toBe(
       getAxiomGroup('axioma-congruencia-1')?.color,
     );
     fireEvent.click(checkbox);
@@ -163,7 +165,7 @@ describe('axiomatic sidebar controls', () => {
     );
 
     const logicTab = screen.getByRole('tab', { name: 'Base lógica' });
-    const displayTab = screen.getByRole('tab', { name: 'Vista y lectura' });
+    const displayTab = screen.getByRole('tab', { name: 'Vista' });
     expect(logicTab.getAttribute('aria-selected')).toBe('true');
 
     logicTab.focus();
