@@ -21,6 +21,7 @@ import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '@/fixed-pages/editor/save';
 import { validateEditorDocument } from './validation';
+import { saveBlockedByValidation } from './validationMessages';
 import {
   buildAuthoringIntegrityReport, cloneMdxForTranslation, createPagePath, createPageSource, type CreatePageInput,
   type CreateDiagramInput, idToComponentName, createDiagramPath,
@@ -28,13 +29,14 @@ import {
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 import type { DiagramTargetRegistry, EditorDiagramReference } from './editorTypes';
+import { editorMessage, EditorMessageError, type EditorMessage } from '@/fixed-pages/editor/types/editorMessage';
 
 export type VisualSavePolicy = 'disabled' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
 
 export type SaveAttemptResult =
   | { ok: true }
-  | { ok: false; reason: string };
+  | { ok: false; reason: EditorMessage };
 
 interface OpenFileOptions {
   discardLocalChanges?: boolean;
@@ -87,16 +89,32 @@ function sliceRanges(source: string, ranges: Array<{ start: number; end: number 
   return ranges.map(range => source.slice(range.start, range.end)).join('\n');
 }
 
-function persistenceMessage(error: PersistenceError): string {
-  if (error.kind === 'content-conflict') return 'Conflicto: el archivo cambió externamente. Recárguelo antes de aplicar.';
-  if (error.kind === 'draft-conflict') return 'Conflicto: ya existe un borrador más reciente de otra sesión.';
-  if (error.kind === 'invalid-response' || error.kind === 'protocol-error') return 'El servidor devolvió una respuesta inválida; no se confirmó el guardado.';
-  if (error.kind === 'aborted') return 'Operación cancelada.';
-  if (error.kind === 'network-error') return 'Error de red; los cambios locales se conservan.';
-  return 'Error de persistencia; los cambios locales se conservan.';
+export function persistenceMessage(error: PersistenceError): EditorMessage {
+  if (error.kind === 'content-conflict') return editorMessage('errors.contentConflict');
+  if (error.kind === 'draft-conflict') return editorMessage('errors.draftConflict');
+  if (error.kind === 'invalid-response' || error.kind === 'protocol-error') return editorMessage('errors.invalidServerResponse');
+  if (error.kind === 'aborted') return editorMessage('errors.operationCancelled');
+  if (error.kind === 'network-error') return editorMessage('errors.networkError');
+  return editorMessage('errors.persistenceError');
 }
 
-const blockedMessage = 'Acción bloqueada: no hay documento abierto.';
+const blockedMessage = editorMessage('errors.noDocumentOpen');
+
+type FailureCode = 'errors.changeRejected' | 'errors.bindingRejected' | 'errors.assignmentRejected'
+  | 'errors.pageCreateFailed' | 'errors.diagramCreateFailed' | 'errors.translationCreateFailed';
+
+/**
+ * Mensaje de un fallo capturado: el propio del error si lo trae (`EditorMessageError`),
+ * el de persistencia si es un fallo de guardado, o el genérico con el detalle del error.
+ */
+export function failureMessage(error: unknown, generic: FailureCode): EditorMessage {
+  if (error instanceof EditorMessageError) return error.editorMessage;
+  const detail = error && typeof error === 'object' && 'detail' in error
+    ? (error as { detail: PersistenceError }).detail
+    : null;
+  if (detail) return persistenceMessage(detail);
+  return editorMessage(generic, { detail: error instanceof Error ? error.message : String(error) });
+}
 
 class LiveSaveIdentity {
   private path: string | null = null;
@@ -120,7 +138,7 @@ class LiveSaveIdentity {
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
   const [filesLoading, setFilesLoading] = useState(true);
-  const [filesError, setFilesError] = useState<string | null>(null);
+  const [filesError, setFilesError] = useState<EditorMessage | null>(null);
   const [editorMode, setEditorMode] = useState<EditorMode>('visual');
   const [metadata, setMetadataView] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
@@ -128,7 +146,7 @@ export const useEditorCore = () => {
   const [blocks, setBlocksView] = useState<Block[]>([]);
   const [doc, setDoc] = useState<EditorDocument | null>(null);
   const docRef = useRef<EditorDocument | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<EditorMessage | null>(null);
   const [baseSource, setBaseSource] = useState('');
   const [persistence, dispatch] = useReducer(editorPersistenceReducer, initialEditorPersistenceState);
   const persistenceRef = useRef(persistence);
@@ -234,7 +252,7 @@ export const useEditorCore = () => {
     try { setFiles(await editorApiClient.listContent() as FileNode[]); }
     catch (error) {
       console.error('Error cargando lista de archivos:', error);
-      setFilesError('El servidor del editor no devolvió el catálogo seguro.');
+      setFilesError(editorMessage('errors.catalogUnavailable'));
     }
     finally { setFilesLoading(false); }
   }, []);
@@ -251,7 +269,7 @@ export const useEditorCore = () => {
     const file = { path: filePath };
     const active = persistenceRef.current;
     if (!options.discardLocalChanges && active.file && active.file.path !== filePath && (active.localRevision > active.confirmedRevision || revisionRef.current > active.confirmedRevision)) {
-      setMessage('Cambio de archivo bloqueado: existen cambios locales sin aplicar.');
+      setMessage(editorMessage('errors.fileSwitchBlocked'));
       return;
     }
     loadControllerRef.current?.abort();
@@ -260,7 +278,7 @@ export const useEditorCore = () => {
     const controller = new AbortController();
     loadControllerRef.current = controller;
     dispatch({ type: 'FILE_LOAD_STARTED', file });
-    setMessage('');
+    setMessage(null);
     try {
       const response = await contentRepository.read(file, controller.signal);
       if (controller.signal.aborted) return;
@@ -301,7 +319,7 @@ export const useEditorCore = () => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
-    setMessage('');
+    setMessage(null);
     revisionRef.current += 1;
     const revision = revisionRef.current;
     saveIdentity.set(file.path, source, revision);
@@ -325,7 +343,7 @@ export const useEditorCore = () => {
     if (editorMode === 'visual') { setEditorMode('code'); return; }
     if (!currentFile?.endsWith('.mdx')) return;
     const nextDoc = enterVisualMode(openEditorDocument(sourceRef.current)).document;
-    if (nextDoc.compatibility === 'unsupported') { setMessage(`Modo visual bloqueado: ${nextDoc.compatibilityReasons.join(' ')}`); return; }
+    if (nextDoc.compatibility === 'unsupported') { setMessage(editorMessage('errors.visualModeBlocked', { reasons: nextDoc.compatibilityReasons.join(' ') })); return; }
     syncProjection(nextDoc);
     setEditorMode('visual');
   }, [currentFile, editorMode, syncProjection]);
@@ -335,7 +353,7 @@ export const useEditorCore = () => {
     commitSourceChange(source, nextDoc);
   }, [commitSourceChange, currentFile]);
 
-  const commitMutation = useCallback((mutation: DocumentMutationPlan, successMessage: string) => {
+  const commitMutation = useCallback((mutation: DocumentMutationPlan, successMessage: EditorMessage) => {
     const current = docRef.current;
     if (!current) { setMessage(blockedMessage); return; }
     try {
@@ -346,7 +364,7 @@ export const useEditorCore = () => {
       commitSourceChange(nextDoc.source, nextDoc);
       setMessage(successMessage);
     } catch (error) {
-      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.changeRejected'));
     }
   }, [commitSourceChange]);
 
@@ -354,21 +372,21 @@ export const useEditorCore = () => {
     const current = docRef.current;
     if (!current || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
     try {
-      commitMutation(planBlockUpdate(current, id, { content, metadata: blockMetadata }), 'Cambio localizado aplicado.');
+      commitMutation(planBlockUpdate(current, id, { content, metadata: blockMetadata }), editorMessage('notices.localChangeApplied'));
     } catch (error) {
-      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.changeRejected'));
     }
   }, [capabilities.canEditSafeBlocks, commitMutation]);
 
   const blockUnsafeAction = useCallback((_id?: string) => setMessage(blockedMessage), []);
   const setMetadata = useCallback((nextAction: SetStateAction<Record<string, unknown>>) => {
     const current = docRef.current;
-    if (!current || current.metadata.status !== 'readable') { setMessage('Los metadatos no son legibles de forma estática. Edítelos en código.'); return; }
+    if (!current || current.metadata.status !== 'readable') { setMessage(editorMessage('errors.metadataNotReadable')); return; }
     const next = typeof nextAction === 'function' ? nextAction(metadata) : nextAction;
     try {
-      commitMutation(planMetadataUpdate(current, next), 'Metadatos actualizados mediante parches de propiedades.');
+      commitMutation(planMetadataUpdate(current, next), editorMessage('notices.metadataUpdated'));
     } catch (error) {
-      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.changeRejected'));
     }
   }, [commitMutation, metadata]);
   const setImports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
@@ -378,43 +396,43 @@ export const useEditorCore = () => {
   const removeBlock = useCallback((id: string) => {
     const current = docRef.current;
     if (!current) { blockUnsafeAction(id); return; }
-    try { commitMutation(planBlockDeletion(current, id), 'Bloque eliminado localmente.'); }
-    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+    try { commitMutation(planBlockDeletion(current, id), editorMessage('notices.blockDeleted')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
   }, [blockUnsafeAction, commitMutation]);
 
   const addBlock = useCallback((index: number, type: BlockType, content?: string, blockMetadata?: Record<string, unknown>) => {
     const current = docRef.current;
     if (!current) { blockUnsafeAction(); return; }
-    try { commitMutation(planBlockInsertion(current, { index, blockType: type, content, metadata: blockMetadata }), 'Bloque insertado localmente.'); }
-    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+    try { commitMutation(planBlockInsertion(current, { index, blockType: type, content, metadata: blockMetadata }), editorMessage('notices.blockInserted')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
   }, [blockUnsafeAction, commitMutation]);
 
   const moveBlock = useCallback((from: number, to: number) => {
     const current = docRef.current;
     if (!current) { blockUnsafeAction(); return; }
     const moving = current.bodyBlocks[from];
-    if (!moving) { setMessage('No existe el bloque que se intenta mover.'); return; }
+    if (!moving) { setMessage(editorMessage('errors.blockNotFound')); return; }
     const sameParent = current.bodyBlocks.filter(block => block.parentId === moving.parentId);
     const target = current.bodyBlocks[to];
     const localTarget = target?.parentId === moving.parentId
       ? sameParent.findIndex(block => block.id === target.id)
       : Math.max(0, sameParent.length - 1);
-    try { commitMutation(planBlockMove(current, moving.id, localTarget), 'Bloque reordenado localmente.'); }
-    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+    try { commitMutation(planBlockMove(current, moving.id, localTarget), editorMessage('notices.blockMoved')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
   }, [blockUnsafeAction, commitMutation]);
 
   const duplicateBlock = useCallback((id: string) => {
     const current = docRef.current;
     if (!current) { blockUnsafeAction(id); return; }
-    try { commitMutation(planBlockDuplication(current, id), 'Bloque duplicado localmente.'); }
-    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+    try { commitMutation(planBlockDuplication(current, id), editorMessage('notices.blockDuplicated')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
   }, [blockUnsafeAction, commitMutation]);
 
   const bindDiagram = useCallback((spec: EditorDiagramReference) => {
     const current = docRef.current;
     if (!current || spec.mode === 'inline') {
       setMessage(spec.mode === 'inline'
-        ? 'Los diagramas inline requieren edición explícita del contenedor en modo código.'
+        ? editorMessage('errors.inlineDiagramNeedsCode')
         : blockedMessage);
       return;
     }
@@ -423,9 +441,9 @@ export const useEditorCore = () => {
         componentName: spec.componentName,
         importPath: spec.importPath,
         mode: spec.mode,
-      }), 'Diagrama vinculado mediante un plan estructural único.');
+      }), editorMessage('notices.diagramLinked'));
     } catch (error) {
-      setMessage(`Vinculación rechazada: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.bindingRejected'));
     }
   }, [commitMutation]);
 
@@ -433,16 +451,18 @@ export const useEditorCore = () => {
     const current = docRef.current;
     if (!current) { setMessage(blockedMessage); return; }
     try {
-      commitMutation(planAssignDiagramStep(current, blockIds, stepId), stepId ? `Paso ${stepId} asignado a bloque(s).` : 'Paso desasignado.');
+      commitMutation(planAssignDiagramStep(current, blockIds, stepId), stepId
+        ? (blockIds.length === 1 ? editorMessage('notices.stepAssignedOne', { step: stepId }) : editorMessage('notices.stepAssignedOther', { step: stepId, count: blockIds.length }))
+        : editorMessage('notices.stepUnassigned'));
     } catch (error) {
-      setMessage(`Asignación rechazada: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.assignmentRejected'));
     }
   }, [commitMutation]);
 
 
   const createPage = useCallback(async (input: CreatePageInput): Promise<boolean> => {
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
-      setMessage('No se puede crear la página: se requiere API configurada y token de edición.');
+      setMessage(editorMessage('errors.createPageNeedsApi'));
       return false;
     }
     try {
@@ -450,27 +470,24 @@ export const useEditorCore = () => {
       const path = createPagePath(input);
       const candidate = parseEditorDocument(source);
       if (candidate.metadata.status !== 'readable' || !candidate.metadata.schemaValid || candidate.compatibility === 'unsupported') {
-        throw new Error('La plantilla inicial no cumple el schema autoritativo o no es MDX estructurable.');
+        throw new EditorMessageError(editorMessage('errors.pageTemplateInvalid'));
       }
       const sourceHash = await hashSource(source);
       await editorApiClient.createContent({ path, source, sourceHash, localRevision: 0, create: true });
       await loadFileList();
       await openFile(path, { discardLocalChanges: true });
       setEditorMode('visual');
-      setMessage('Página creada con estructura y metadatos validados.');
+      setMessage(editorMessage('notices.pageCreated'));
       return true;
     } catch (error) {
-      const detail = error && typeof error === 'object' && 'detail' in error
-        ? (error as { detail: PersistenceError }).detail
-        : null;
-      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear la página: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.pageCreateFailed'));
       return false;
     }
   }, [loadFileList, openFile]);
 
   const createDiagram = useCallback(async (input: CreateDiagramInput): Promise<{ path: string; componentName: string } | null> => {
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
-      setMessage('No se puede crear el diagrama: se requiere API configurada y token de edición.');
+      setMessage(editorMessage('errors.createDiagramNeedsApi'));
       return null;
     }
     try {
@@ -480,25 +497,22 @@ export const useEditorCore = () => {
       const templateModel = createTemplateModel(input.templateType, input.title, category);
       const generated = generateDiagramSource(templateModel, componentName);
       if (!generated.ok) {
-        throw new Error('No se pudo generar la plantilla inicial del diagrama.');
+        throw new EditorMessageError(editorMessage('errors.diagramTemplateFailed'));
       }
       const source = generated.source;
       const sourceHash = await hashSource(source);
       await editorApiClient.createContent({ path, source, sourceHash, localRevision: 0, create: true });
       await loadFileList();
-      setMessage('Diagrama creado en el catálogo autoritativo.');
+      setMessage(editorMessage('notices.diagramCreated'));
       return { path, componentName };
     } catch (error) {
-      const detail = error && typeof error === 'object' && 'detail' in error
-        ? (error as { detail: PersistenceError }).detail
-        : null;
-      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear el diagrama: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.diagramCreateFailed'));
       return null;
     }
   }, [loadFileList]);
 
   const saveCurrentFile = useCallback(async (): Promise<SaveAttemptResult> => {
-    const fail = (reason: string): SaveAttemptResult => {
+    const fail = (reason: EditorMessage): SaveAttemptResult => {
       setMessage(reason);
       return { ok: false, reason };
     };
@@ -506,32 +520,30 @@ export const useEditorCore = () => {
     flushPendingProse();
 
     const state = persistenceRef.current;
-    if (!state.file || !state.version) return fail('No hay un archivo abierto con versión confirmada.');
+    if (!state.file || !state.version) return fail(editorMessage('errors.noConfirmedVersion'));
     if (editorApiUnavailableInProduction()) {
-      return fail('No se puede guardar: la API del editor no está configurada en este despliegue.');
+      return fail(editorMessage('errors.saveNeedsApi'));
     }
     if (!editorWriteAccessGranted()) {
-      return fail('No se puede guardar: introduce el token de edición para persistir cambios.');
+      return fail(editorMessage('errors.saveNeedsToken'));
     }
     if (revisionRef.current <= state.confirmedRevision && state.localRevision <= state.confirmedRevision) {
-      return fail('No hay cambios locales que guardar.');
+      return fail(editorMessage('errors.noLocalChanges'));
     }
     if (!validationRef.current.canSave) {
       return fail(
-        validationRef.current.errorCount === 1
-          ? 'No se puede guardar: hay 1 error de validación.'
-          : `No se puede guardar: hay ${validationRef.current.errorCount} errores de validación.`,
+        saveBlockedByValidation(validationRef.current.errorCount),
       );
     }
     if (editorMode === 'visual' && !isDiagramSource) {
       if ((VISUAL_SAVE_POLICY as VisualSavePolicy) === 'disabled') {
-        return fail('El guardado visual está desactivado por contención de seguridad.');
+        return fail(editorMessage('errors.visualSaveDisabled'));
       }
       if (compatibility === 'read-only') {
-        return fail('El guardado visual está desactivado para documentos de solo lectura.');
+        return fail(editorMessage('errors.visualSaveReadOnly'));
       }
       if (compatibility === 'unsupported') {
-        return fail('El guardado visual está desactivado para documentos no soportados.');
+        return fail(editorMessage('errors.visualSaveUnsupported'));
       }
     }
     const captured = {
@@ -541,34 +553,34 @@ export const useEditorCore = () => {
       baseVersion: state.version
     };
     if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
-      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
-      return fail('No se puede aplicar: el source MDX actual no se puede analizar.');
+      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: editorMessage('errors.invalidSourceReason') });
+      return fail(editorMessage('errors.sourceUnparseable'));
     }
     if (captured.file.path.endsWith('.mdx')) {
       const candidateDoc = parseEditorDocument(captured.source);
       if (candidateDoc.metadata.status !== 'readable' || !candidateDoc.metadata.schemaValid) {
-        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX metadata' });
-        return fail('No se puede aplicar: los metadatos no cumplen el schema de contenido autoritativo.');
+        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: editorMessage('errors.invalidMetadataReason') });
+        return fail(editorMessage('errors.metadataSchemaInvalid'));
       }
     }
     const sourceHash = await hashSource(captured.source);
     if (persistenceRef.current.file?.path !== captured.file.path
       || revisionRef.current !== captured.localRevision
       || sourceRef.current !== captured.source) {
-      return fail('El documento cambió mientras se preparaba el guardado. Reintenta.');
+      return fail(editorMessage('errors.documentChangedWhileSaving'));
     }
     const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
     const applied = await coordinator.applyNow(snapshot);
     if (applied.ok) return { ok: true };
     if (applied.error) return fail(persistenceMessage(applied.error));
-    return fail('El guardado se canceló o quedó obsoleto. Reintenta.');
+    return fail(editorMessage('errors.saveCancelledOrStale'));
   }, [coordinator, editorMode, isDiagramSource, compatibility]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!coordinator || !state.file || !state.version || state.localRevision <= state.confirmedRevision) return false;
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
-      setMessage('No se puede guardar borrador: se requiere API configurada y token de edición.');
+      setMessage(editorMessage('errors.draftNeedsApi'));
       return false;
     }
     const source = sourceRef.current;
@@ -590,11 +602,11 @@ export const useEditorCore = () => {
 
   const createTranslation = useCallback(async (targetLang: string, targetTitle?: string): Promise<boolean> => {
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
-      setMessage('No se puede crear la traducción: se requiere API configurada y token de edición.');
+      setMessage(editorMessage('errors.translationNeedsApi'));
       return false;
     }
     if (!currentFile || !currentFile.endsWith('.mdx')) {
-      setMessage('Solo se pueden crear traducciones de documentos MDX.');
+      setMessage(editorMessage('errors.translationOnlyMdx'));
       return false;
     }
     try {
@@ -612,20 +624,17 @@ export const useEditorCore = () => {
       });
       const candidate = parseEditorDocument(targetSource);
       if (candidate.metadata.status !== 'readable' || !candidate.metadata.schemaValid || candidate.compatibility === 'unsupported') {
-        throw new Error('El documento clonado para traducción no cumple el schema autoritativo.');
+        throw new EditorMessageError(editorMessage('errors.translationTemplateInvalid'));
       }
       const sourceHash = await hashSource(targetSource);
       await editorApiClient.createContent({ path, source: targetSource, sourceHash, localRevision: 0, create: true });
       await loadFileList();
       await openFile(path, { discardLocalChanges: true });
       setEditorMode('visual');
-      setMessage(`Traducción (${targetLang.toUpperCase()}) creada y abierta.`);
+      setMessage(editorMessage('notices.translationCreated', { lang: targetLang.toUpperCase() }));
       return true;
     } catch (error) {
-      const detail = error && typeof error === 'object' && 'detail' in error
-        ? (error as { detail: PersistenceError }).detail
-        : null;
-      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear la traducción: ${error instanceof Error ? error.message : String(error)}`);
+      setMessage(failureMessage(error, 'errors.translationCreateFailed'));
       return false;
     }
   }, [currentFile, doc, loadFileList, openFile]);

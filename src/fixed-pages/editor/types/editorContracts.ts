@@ -1,3 +1,4 @@
+import type { EditorText } from './editorMessage';
 import { THEME_COLOR_VARS, type ThemeColorName } from '@/design';
 
 /** Lista derivada de THEME_COLOR_VARS en primitives.ts. */
@@ -20,8 +21,9 @@ export interface FileNode {
   type: string;
   kind: 'mdx-document' | 'diagram';
   capability: 'visual-exact' | 'code-preview' | 'invalid';
-  capabilityLabel: string;
-  reason: string;
+  /** Texto del catálogo (cadena del servidor) o, si lo genera el cliente, un código traducible. */
+  capabilityLabel: EditorText;
+  reason: EditorText;
   lang?: string;
   id?: string;
 }

@@ -44,3 +44,18 @@ export function translateEditorText(t: EditorTranslate, text: EditorText | undef
   if (text === undefined || typeof text === 'string') return text;
   return t(`editor.${text.code}`, text.params ?? {});
 }
+
+/**
+ * Error del motor que lleva un mensaje traducible en lugar de una frase.
+ * Su `message` es el código en bruto y no es presentable: quien lo capture debe
+ * usar `editorMessage` (véase `failureMessage` en `useEditorCore`).
+ */
+export class EditorMessageError extends Error {
+  readonly editorMessage: EditorMessage;
+
+  constructor(editorMessage: EditorMessage) {
+    super(editorMessage.code);
+    this.name = 'EditorMessageError';
+    this.editorMessage = editorMessage;
+  }
+}

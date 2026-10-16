@@ -3,6 +3,7 @@ import { useLocation, useSearch } from 'wouter';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
 import { useI18n } from '@/i18n';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import type { EditorText } from '@/fixed-pages/editor/types/editorMessage';
 import {
   editorStateFromUrl,
   editorUrlFromState,
@@ -26,7 +27,7 @@ export interface UseEditorNavigationFlowOptions {
   files: FileNode[];
   filesLoading: boolean;
   /** Error al cargar el catálogo: sin él no se puede resolver la ruta. */
-  filesError?: string | null;
+  filesError?: EditorText | null;
   currentFile: string | null;
   openFile: (path: string, options?: { discardLocalChanges?: boolean }) => void;
   closeFile: () => void;

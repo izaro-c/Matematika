@@ -93,7 +93,7 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.toggleEditorMode());
     expect(result.current.editorMode).toBe('code');
     expect(result.current.rawBody).toBe(unsupported);
-    expect(result.current.message).toContain('bloqueado');
+    expect(result.current.message).toEqual({ code: 'errors.visualModeBlocked', params: expect.any(Object) });
   });
 
   it('applies a localized heading edit and preserves its depth and envelope', async () => {
@@ -186,8 +186,8 @@ describe('useEditorCore lossless integration', () => {
     await waitFor(() => expect(result.current.rawBody).toBe(`${changed}\n`));
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved.ok).toBe(false);
-    if (!saved.ok) expect(saved.reason.length).toBeGreaterThan(0);
-    expect(result.current.message).not.toContain('Cambio localizado aplicado');
+    if (!saved.ok) expect(saved.reason).toEqual({ code: 'errors.persistenceError' });
+    expect(result.current.message).not.toEqual({ code: 'notices.localChangeApplied' });
     expect(result.current.dirtyState).toBe('dirty');
   });
 
@@ -203,8 +203,9 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved.ok).toBe(false);
-    if (!saved.ok) expect(saved.reason).toMatch(/no se puede (analizar|guardar)|no soportados|errores? de validación/i);
-    expect(result.current.message).toMatch(/no se puede (analizar|guardar)|no soportados|errores? de validación/i);
+    const blockedCodes = /^errors\.(sourceUnparseable|saveBlockedByValidation(One|Other)|visualSaveUnsupported)$/;
+    if (!saved.ok) expect(saved.reason.code).toMatch(blockedCodes);
+    expect(result.current.message?.code).toMatch(blockedCodes);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -262,7 +263,7 @@ describe('useEditorCore lossless integration', () => {
     expect(heading).toBeDefined();
     act(() => result.current.updateBlock(heading!.id, 'Título actualizado'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Título actualizado'));
-    expect(result.current.message).toContain('Cambio localizado aplicado');
+    expect(result.current.message).toEqual({ code: 'notices.localChangeApplied' });
 
     let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
@@ -278,17 +279,17 @@ describe('useEditorCore lossless integration', () => {
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.updateBlock(result.current.blocks[0].id, 'Nuevo título'));
-    await waitFor(() => expect(result.current.message).toContain('Cambio localizado aplicado'));
+    await waitFor(() => expect(result.current.message).toEqual({ code: 'notices.localChangeApplied' }));
 
     let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved.ok).toBe(false);
     if (!saved.ok) {
-      expect(saved.reason).not.toContain('Cambio localizado aplicado');
-      expect(saved.reason.length).toBeGreaterThan(0);
+      expect(saved.reason.code).not.toBe('notices.localChangeApplied');
+      expect(saved.reason).toEqual({ code: 'errors.persistenceError' });
     }
-    expect(result.current.message).not.toContain('Cambio localizado aplicado');
+    expect(result.current.message).not.toEqual({ code: 'notices.localChangeApplied' });
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
@@ -372,7 +373,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await saving; });
 
     expect(saved.ok).toBe(false);
-    if (!saved.ok) expect(saved.reason).toMatch(/cambió|reintent/i);
+    if (!saved.ok) expect(saved.reason.code).toBe('errors.documentChangedWhileSaving');
     if (sentRequest) expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
     expect(result.current.dirtyState).toBe('dirty');
     expect(result.current.persistenceStatus.kind).not.toBe('saved');
@@ -414,9 +415,9 @@ describe('useEditorCore lossless integration', () => {
     let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved.ok).toBe(false);
-    if (!saved.ok) expect(saved.reason).toMatch(/conflicto/i);
+    if (!saved.ok) expect(saved.reason.code).toBe('errors.contentConflict');
     expect(result.current.persistenceStatus.kind).toBe('conflict');
-    expect(result.current.persistenceLabel).toBe('Conflicto');
+    expect(result.current.persistenceLabel).toEqual({ code: 'status.conflict' });
   });
 
   it('blocks file switching while local changes remain unconfirmed', async () => {
@@ -427,7 +428,7 @@ describe('useEditorCore lossless integration', () => {
     await waitFor(() => expect(result.current.dirtyState).toBe('dirty'));
     await act(() => result.current.openFile('content/b.mdx'));
     expect(result.current.currentFile).toBe('content/a.mdx');
-    expect(result.current.message).toContain('bloqueado');
+    expect(result.current.message).toEqual({ code: 'errors.fileSwitchBlocked' });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -448,7 +449,7 @@ describe('useEditorCore lossless integration', () => {
     await act(() => result.current.openFile('content/b.mdx'));
 
     expect(result.current.currentFile).toBe('content/a.mdx');
-    expect(result.current.message).toContain('bloqueado');
+    expect(result.current.message).toEqual({ code: 'errors.fileSwitchBlocked' });
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     await act(async () => { pendingHash.resolve(digest(4)); });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import type { EditorText } from '@/fixed-pages/editor/types/editorMessage';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
 import type { Block } from '@/fixed-pages/editor/session/parser';
 import { MetadataPanel } from '../panels/MetadataPanel';
@@ -25,7 +26,7 @@ interface MdxWorkbenchInspectorProps {
   removeBlock?: (id: string) => void;
   validation: EditorValidationResult;
   persistenceStatus: EditorPersistenceStatus;
-  persistenceLabel: string;
+  persistenceLabel: EditorText;
   blocks: Block[];
   openFile: (path: string) => void;
   pageDiagramLinks: PageDiagramLink[];

@@ -2,8 +2,11 @@ import { describe, expect, it } from 'vitest';
 import {
   buildEditorSafetyPresentation,
 } from '../../../../src/fixed-pages/editor/review/safetyPresentation';
+import type { EditorText } from '../../../../src/fixed-pages/editor/types/editorMessage';
 import type { EditorValidationResult } from '../../../../src/fixed-pages/editor/session/editorTypes';
 import type { EditorPersistenceStatus } from '../../../../src/fixed-pages/editor/save/editorPersistenceState';
+
+const translateText = (text: EditorText) => (typeof text === 'string' ? text : `t:${text.code}`);
 
 const valid: EditorValidationResult = {
   issues: [],
@@ -21,6 +24,7 @@ function presentation(status: EditorPersistenceStatus, validation = valid) {
     validation,
     editorMode: 'code',
     isDiagramFile: false,
+    translateText,
   });
 }
 
@@ -70,10 +74,20 @@ describe('safe editor presentation', () => {
       validation: valid,
       editorMode: 'code',
       isDiagramFile: false,
+      translateText,
     });
 
     expect(unsafe.level).toBe('error');
     expect(unsafe.blockedActions.map(action => action.id)).toContain('edit-visual');
     expect(unsafe.reasons[0]?.description).toContain('línea 4');
+  });
+
+  it('translates engine messages used as blocked and unsupported reasons', () => {
+    const file = { path: 'content/mdx/definitions/test.mdx' };
+    const blocked = presentation({ kind: 'blocked', file, localRevision: 1, reason: { code: 'errors.invalidSourceReason' } });
+    expect(blocked.reasons.find(reason => reason.id === 'blocked-save')?.description).toBe('t:errors.invalidSourceReason');
+    expect(blocked.description).toContain('t:errors.invalidSourceReason');
+    const unsupported = presentation({ kind: 'unsupported', file, reason: { code: 'errors.invalidMetadataReason' } });
+    expect(unsupported.reasons.find(reason => reason.id === 'unsupported-file')?.description).toBe('t:errors.invalidMetadataReason');
   });
 });

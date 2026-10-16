@@ -1,5 +1,6 @@
 import type { ContentVersion, EditorFileIdentity, LocalRevision } from '@/fixed-pages/editor/save/persistenceContracts';
 import type { PersistenceError } from '@/fixed-pages/editor/save/persistenceErrors';
+import { editorMessage, type EditorMessage, type EditorMessageCode, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
 
 export type EditorPersistenceStatus =
   | { kind: 'idle' }
@@ -7,7 +8,7 @@ export type EditorPersistenceStatus =
   | { kind: 'ready-clean'; file: EditorFileIdentity; version: ContentVersion; confirmedRevision: LocalRevision }
   | { kind: 'ready-dirty'; file: EditorFileIdentity; version: ContentVersion; localRevision: LocalRevision }
   | { kind: 'validating'; file: EditorFileIdentity; localRevision: LocalRevision }
-  | { kind: 'blocked'; file: EditorFileIdentity; localRevision: LocalRevision; reason: string }
+  | { kind: 'blocked'; file: EditorFileIdentity; localRevision: LocalRevision; reason: EditorText }
   | { kind: 'saving-draft'; file: EditorFileIdentity; localRevision: LocalRevision }
   | { kind: 'draft-saved'; file: EditorFileIdentity; localRevision: LocalRevision; draftId: string }
   | { kind: 'saving-file'; file: EditorFileIdentity; localRevision: LocalRevision }
@@ -15,7 +16,7 @@ export type EditorPersistenceStatus =
   | { kind: 'save-error'; file: EditorFileIdentity; localRevision: LocalRevision; error: PersistenceError }
   | { kind: 'conflict'; file: EditorFileIdentity; localRevision: LocalRevision; expectedVersion: ContentVersion; actualVersion: ContentVersion }
   | { kind: 'cancelled'; file: EditorFileIdentity; localRevision: LocalRevision }
-  | { kind: 'unsupported'; file: EditorFileIdentity; reason: string };
+  | { kind: 'unsupported'; file: EditorFileIdentity; reason: EditorText };
 
 export interface EditorPersistenceState {
   status: EditorPersistenceStatus;
@@ -39,7 +40,7 @@ export type PersistenceAction =
   | { type: 'SOURCE_CHANGED'; file: EditorFileIdentity; source: string; sourceHash?: string; localRevision: LocalRevision }
   | { type: 'SOURCE_HASH_RESOLVED'; file: EditorFileIdentity; source: string; sourceHash: string; localRevision: LocalRevision }
   | { type: 'VALIDATION_STARTED'; file: EditorFileIdentity; localRevision: LocalRevision }
-  | { type: 'VALIDATION_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; reason: string }
+  | { type: 'VALIDATION_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; reason: EditorText }
   | { type: 'DRAFT_SAVE_STARTED'; file: EditorFileIdentity; localRevision: LocalRevision }
   | { type: 'DRAFT_SAVE_SUCCEEDED'; file: EditorFileIdentity; localRevision: LocalRevision; draftId: string }
   | { type: 'DRAFT_SAVE_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; error: PersistenceError }
@@ -112,12 +113,13 @@ export function editorPersistenceReducer(state: EditorPersistenceState, action: 
   }
 }
 
-export function persistenceStatusLabel(status: EditorPersistenceStatus): string {
-  const labels: Record<EditorPersistenceStatus['kind'], string> = {
-    idle: 'Sin archivo', loading: 'Cargando', 'ready-clean': 'Sin cambios', 'ready-dirty': 'Cambios locales',
-    validating: 'Validando', blocked: 'Bloqueado', 'saving-draft': 'Guardando borrador', 'draft-saved': 'Borrador guardado',
-    'saving-file': 'Aplicando archivo', saved: 'Archivo guardado', 'save-error': 'Error de guardado', conflict: 'Conflicto',
-    cancelled: 'Operación cancelada', unsupported: 'Documento no compatible'
-  };
-  return labels[status.kind];
+const STATUS_LABEL_CODES: Record<EditorPersistenceStatus['kind'], EditorMessageCode> = {
+  idle: 'status.idle', loading: 'status.loading', 'ready-clean': 'status.readyClean', 'ready-dirty': 'status.readyDirty',
+  validating: 'status.validating', blocked: 'status.blocked', 'saving-draft': 'status.savingDraft', 'draft-saved': 'status.draftSaved',
+  'saving-file': 'status.savingFile', saved: 'status.saved', 'save-error': 'status.saveError', conflict: 'status.conflict',
+  cancelled: 'status.cancelled', unsupported: 'status.unsupported',
+};
+
+export function persistenceStatusLabel(status: EditorPersistenceStatus): EditorMessage {
+  return editorMessage(STATUS_LABEL_CODES[status.kind]);
 }

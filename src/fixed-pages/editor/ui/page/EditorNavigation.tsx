@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import { translateEditorText, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
   extractResourceIdentity,
@@ -17,7 +18,7 @@ import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHe
 interface EditorNavigationProps {
   files: FileNode[];
   isLoading: boolean;
-  error: string | null;
+  error: EditorText | null;
   currentFile: string | null;
   openFile: (path: string) => void;
   retry: () => void;
@@ -77,7 +78,7 @@ function ResourceButton({
           data-resource-path={file.path}
           onClick={() => openFile(file.path)}
           aria-current={current ? 'page' : undefined}
-          title={`${file.capabilityLabel}. ${file.reason}`}
+          title={`${translateEditorText(t, file.capabilityLabel)}. ${translateEditorText(t, file.reason)}`}
           className="min-w-0 flex-1 text-left"
         >
           <span className={`block truncate font-serif text-xs ${current ? 'font-bold text-carbon' : 'text-carbon/75'}`}>
@@ -341,7 +342,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         {!isLoading && error && (
           <div role="alert" className="rounded border border-granada/25 bg-granada/5 p-3 text-xs text-carbon/70">
             <p className="font-bold text-granada">{t('editor.nav.catalogLoadError')}</p>
-            <p className="mt-1">{error}</p>
+            <p className="mt-1">{translateEditorText(t, error)}</p>
             <button type="button" onClick={retry} className="mt-3 rounded bg-granada px-3 py-1 font-bold text-lienzo">{t('editor.common.retry')}</button>
           </div>
         )}

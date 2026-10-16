@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { editorMessage } from '@/fixed-pages/editor/types/editorMessage';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import {
   GeneratedDiagramUsageRepository,
@@ -40,8 +41,8 @@ export function useDiagramUsages(
         type: 'file' as const,
         kind: 'mdx-document' as const,
         capability: 'invalid' as const,
-        capabilityLabel: 'Recurso inválido',
-        reason: 'La referencia existe en el índice de usos, pero el documento no está disponible en el catálogo editable.',
+        capabilityLabel: editorMessage('usages.invalidResource'),
+        reason: editorMessage('usages.notInCatalog'),
       })
       .sort((a, b) => a.path.localeCompare(b.path));
   }, [files, state.usages]);

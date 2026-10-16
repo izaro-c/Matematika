@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'wouter';
 import { useI18n } from '@/i18n';
 import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
+import { saveBlockedByValidation } from '@/fixed-pages/editor/session/validationMessages';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
 import { DiagramWorkbenchHost } from '../../diagrams/ui/workbench/DiagramWorkbenchHost';
@@ -273,23 +274,18 @@ export const MdxWorkbench: React.FC = () => {
   const performSaveDocument = useCallback(async () => {
     if (!hasLocalChanges) return false;
     if (validation.errorCount > 0) {
-      setSaveErrorMessage(
-        `No se puede guardar: existen ${validation.errorCount} error(es) de validación que impiden la persistencia de cambios.`,
-      );
+      setSaveErrorMessage(translateEditorText(t, saveBlockedByValidation(validation.errorCount)));
       setSaveErrorModalOpen(true);
       return false;
     }
     const result = await saveCurrentFile();
     if (!result.ok) {
-      setSaveErrorMessage(
-        result.reason
-        || 'No se pudo guardar el archivo. Revisa los permisos, el token de edición o el panel de avisos.',
-      );
+      setSaveErrorMessage(translateEditorText(t, result.reason));
       setSaveErrorModalOpen(true);
       return false;
     }
     return true;
-  }, [hasLocalChanges, saveCurrentFile, validation.errorCount]);
+  }, [hasLocalChanges, saveCurrentFile, t, validation.errorCount]);
 
   const warningSaveCopy = warningSaveConfirmCopy(saveCapability.warningCount);
 
@@ -516,8 +512,9 @@ export const MdxWorkbench: React.FC = () => {
         validation,
         editorMode,
         isDiagramFile,
+        translateText: text => translateEditorText(t, text),
       }),
-    [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation],
+    [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, t, validation],
   );
 
   // Keyboard shortcuts

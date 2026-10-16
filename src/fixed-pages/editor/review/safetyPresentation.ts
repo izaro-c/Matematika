@@ -1,6 +1,7 @@
 import type { EditorMode, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { VisualCompatibility } from '../document/documentTypes';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
+import type { EditorText } from '@/fixed-pages/editor/types/editorMessage';
 
 export type SafetyLevel = 'safe' | 'attention' | 'blocked' | 'error';
 
@@ -35,6 +36,8 @@ export interface EditorSafetyInput {
   validation: EditorValidationResult;
   editorMode: EditorMode;
   isDiagramFile: boolean;
+  /** Traduce los mensajes del motor (`status.reason`). */
+  translateText: (text: EditorText) => string;
 }
 
 const ACTIONS = {
@@ -135,7 +138,11 @@ function compatibilityPresentation(
   }
 }
 
-function savePresentation(status: EditorPersistenceStatus, validation: EditorValidationResult): SafetyPresentation {
+function savePresentation(
+  status: EditorPersistenceStatus,
+  validation: EditorValidationResult,
+  translateText: (text: EditorText) => string,
+): SafetyPresentation {
   const validationBlocked = !validation.canSave;
   switch (status.kind) {
     case 'idle':
@@ -195,12 +202,12 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
       return {
         level: 'blocked',
         title: 'Guardado bloqueado',
-        description: status.reason,
+        description: translateText(status.reason),
         reasons: [{
           id: 'blocked-save',
           level: 'blocked',
           title: 'La operación no es segura',
-          description: status.reason,
+          description: translateText(status.reason),
         }],
         allowedActions: [ACTIONS.editCode],
         blockedActions: [ACTIONS.applyFile],
@@ -286,12 +293,12 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
       return {
         level: 'error',
         title: 'Recurso inválido',
-        description: status.reason,
+        description: translateText(status.reason),
         reasons: [{
           id: 'unsupported-file',
           level: 'error',
           title: 'Validación bloqueante',
-          description: status.reason,
+          description: translateText(status.reason),
         }],
         allowedActions: [ACTIONS.editCode],
         blockedActions: [ACTIONS.editVisual, ACTIONS.applyFile],
@@ -307,7 +314,7 @@ function strongestLevel(levels: SafetyLevel[]): SafetyLevel {
 }
 
 export function buildEditorSafetyPresentation(input: EditorSafetyInput): SafetyPresentation {
-  if (!input.currentFile) return savePresentation(input.persistenceStatus, input.validation);
+  if (!input.currentFile) return savePresentation(input.persistenceStatus, input.validation, input.translateText);
   if (input.isDiagramFile) {
     return {
       level: input.persistenceStatus.kind === 'save-error' || input.persistenceStatus.kind === 'conflict' ? 'error' : 'safe',
@@ -320,7 +327,7 @@ export function buildEditorSafetyPresentation(input: EditorSafetyInput): SafetyP
   }
 
   const compatibility = compatibilityPresentation(input.compatibility, input.compatibilityReasons);
-  const save = savePresentation(input.persistenceStatus, input.validation);
+  const save = savePresentation(input.persistenceStatus, input.validation, input.translateText);
   const level = strongestLevel([compatibility.level, save.level]);
 
   return {

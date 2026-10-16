@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
+import { translateEditorText, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
 import type { EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
@@ -11,7 +12,7 @@ interface EditorDiagnosticsPanelProps {
   resource?: FileNode;
   validation: EditorValidationResult;
   persistenceStatus: EditorPersistenceStatus;
-  persistenceLabel: string;
+  persistenceLabel: EditorText;
   level: EditorWorkspaceLevel;
   onSelectIssue: (issue: EditorValidationIssue) => void;
   close: () => void;
@@ -26,7 +27,7 @@ function statusDescription(status: EditorPersistenceStatus, t: ReturnType<typeof
     case 'ready-clean': return t('editor.diagnostics.readyClean');
     case 'ready-dirty': return t('editor.diagnostics.readyDirty');
     case 'validating': return t('editor.diagnostics.validating');
-    case 'blocked': return status.reason;
+    case 'blocked': return translateEditorText(t, status.reason);
     case 'saving-draft': return t('editor.diagnostics.savingDraft');
     case 'draft-saved': return t('editor.diagnostics.draftSaved');
     case 'saving-file': return t('editor.diagnostics.savingFile');
@@ -34,7 +35,7 @@ function statusDescription(status: EditorPersistenceStatus, t: ReturnType<typeof
     case 'save-error': return t('editor.diagnostics.saveError');
     case 'conflict': return t('editor.diagnostics.conflict');
     case 'cancelled': return t('editor.diagnostics.cancelled');
-    case 'unsupported': return status.reason;
+    case 'unsupported': return translateEditorText(t, status.reason);
   }
 }
 
@@ -191,11 +192,11 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
           <div className="flex items-start gap-3 p-1">
             <span className={`mt-1 h-3 w-3 shrink-0 rounded-full border border-white shadow-2xs ${persistenceClass}`} />
             <div className="min-w-0 space-y-1">
-              <p className="font-serif text-xs font-bold text-carbon">{persistenceLabel}</p>
+              <p className="font-serif text-xs font-bold text-carbon">{translateEditorText(t, persistenceLabel)}</p>
               <p className="text-xs text-carbon/70 leading-snug">{statusDescription(persistenceStatus, t)}</p>
               {resource && (
                 <p className="text-[11px] text-carbon/60 pt-1 border-t border-carbon/10 mt-2">
-                  {t('editor.diagnostics.capabilityLine', { label: resource.capabilityLabel, reason: resource.reason })}
+                  {t('editor.diagnostics.capabilityLine', { label: translateEditorText(t, resource.capabilityLabel), reason: translateEditorText(t, resource.reason) })}
                 </p>
               )}
               {level === 'advanced' && currentFile && (
