@@ -36,15 +36,11 @@ export function editorMessage(code: EditorMessageCode, params?: EditorMessagePar
   return params ? { code, params } : { code };
 }
 
-export function isEditorMessage(text: unknown): text is EditorMessage {
-  return typeof text === 'object' && text !== null && typeof (text as EditorMessage).code === 'string';
-}
+export type EditorTranslate = (key: string, params: EditorMessageParams) => string;
 
-type Translate = (key: string, params: EditorMessageParams) => string;
-
-export function translateEditorText(t: Translate, text: EditorText): string;
-export function translateEditorText(t: Translate, text: EditorText | undefined): string | undefined;
-export function translateEditorText(t: Translate, text: EditorText | undefined): string | undefined {
+export function translateEditorText(t: EditorTranslate, text: EditorText): string;
+export function translateEditorText(t: EditorTranslate, text: EditorText | undefined): string | undefined;
+export function translateEditorText(t: EditorTranslate, text: EditorText | undefined): string | undefined {
   if (text === undefined || typeof text === 'string') return text;
   return t(`editor.${text.code}`, text.params ?? {});
 }

@@ -31,7 +31,7 @@ export const EditorApiStatusBanner: React.FC = () => {
   return (
     <div
       role="region"
-      aria-label={t('editor.mdx.inspectorAriaLabel')}
+      aria-label={t('editor.save.memoryEditing')}
       className="border-b border-terracota/25 bg-terracota/10 px-4 py-3 text-xs text-carbon"
     >
       <p className="font-semibold">{t('editor.save.memoryEditing')}</p>

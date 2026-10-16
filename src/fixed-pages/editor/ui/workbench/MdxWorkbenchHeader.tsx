@@ -8,8 +8,7 @@ import {
 } from './EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
-import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
-import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
+import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
 import { useI18n } from '@/i18n';
 
 export type MdxViewMode = 'code' | 'visual' | 'preview';
@@ -22,7 +21,6 @@ interface MdxWorkbenchHeaderProps {
   availableLangs?: string[];
   onSwitchLanguage?: (lang: string) => void;
   onCreateTranslation?: (targetLang: string) => void;
-  saving: boolean;
   viewMode: MdxViewMode;
   onSetViewMode: (mode: MdxViewMode) => void;
   isSidebarOpen: boolean;
@@ -50,7 +48,6 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   availableLangs,
   onSwitchLanguage,
   onCreateTranslation,
-  saving,
   viewMode,
   onSetViewMode,
   isSidebarOpen,
@@ -72,8 +69,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   const { t } = useI18n();
   const untitledFallback = t('editor.mdx.untitledDocument');
   const displayTitle = fileTitle || currentFile?.split('/').pop()?.replace(/\.mdx$/, '') || untitledFallback;
-  const chrome = saveChromeFromCapability(saving ? { ...saveCapability, allowed: false, reason: 'saving' } : saveCapability);
-  const saveChrome = { ...chrome, label: translateEditorText(t, chrome.label), title: translateEditorText(t, chrome.title) };
+  const saveChrome = translateSaveChrome(t, saveChromeFromCapability(saveCapability));
 
   return (
     <EditorWorkbenchHeader

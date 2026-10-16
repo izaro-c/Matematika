@@ -748,6 +748,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     ? model.objects.length
     : 0;
 
+  const warningSaveCopy = warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagram');
+
   return (
     <div
       className="flex h-full w-full min-h-0 flex-col bg-lienzo text-carbon overflow-hidden select-none font-serif transition-colors"
@@ -778,7 +780,6 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         }}
         onTitleChange={handleTitleChange}
         sandboxMode={sandboxMode}
-        syncStatus={state.status}
         saveCapability={editorSaveCapability}
         onSave={handleSave}
         onCloseEditor={handleCloseEditor}
@@ -1049,8 +1050,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
       <DiagramConfirmDialog
         isOpen={warningSaveOpen}
-        title={translateEditorText(t, warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagram').title)}
-        message={translateEditorText(t, warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagram').message)}
+        title={translateEditorText(t, warningSaveCopy.title)}
+        message={translateEditorText(t, warningSaveCopy.message)}
         confirmLabel={t('editor.save.saveAnyway')}
         cancelLabel={t('editor.common.cancel')}
         variant="warning"

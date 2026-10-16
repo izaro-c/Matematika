@@ -291,6 +291,8 @@ export const MdxWorkbench: React.FC = () => {
     return true;
   }, [hasLocalChanges, saveCurrentFile, validation.errorCount]);
 
+  const warningSaveCopy = warningSaveConfirmCopy(saveCapability.warningCount);
+
   const handleSaveDocument = useCallback(() => {
     if (!saveCapability.allowed) return;
     if (saveCapability.warningCount > 0) {
@@ -670,7 +672,6 @@ export const MdxWorkbench: React.FC = () => {
         availableLangs={availableLangs}
         onSwitchLanguage={handleSwitchLanguage}
         onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
-        saving={saving}
         viewMode={viewMode}
         onSetViewMode={setViewMode}
         isSidebarOpen={isSidebarOpen}
@@ -1139,8 +1140,8 @@ export const MdxWorkbench: React.FC = () => {
       {/* Save Error & Validation Feedback Modal */}
       <DiagramConfirmDialog
         isOpen={warningSaveOpen}
-        title={translateEditorText(t, warningSaveConfirmCopy(saveCapability.warningCount).title)}
-        message={translateEditorText(t, warningSaveConfirmCopy(saveCapability.warningCount).message)}
+        title={translateEditorText(t, warningSaveCopy.title)}
+        message={translateEditorText(t, warningSaveCopy.message)}
         confirmLabel={t('editor.save.saveAnyway')}
         cancelLabel={t('editor.common.cancel')}
         variant="warning"

@@ -10,8 +10,7 @@ import {
 } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
-import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
-import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
+import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
 import { useI18n } from '@/i18n';
 
 interface WorkbenchHeaderProps {
@@ -36,7 +35,6 @@ interface WorkbenchHeaderProps {
   onTitleChange: (newTitle: string) => void;
   onCloseEditor?: () => void;
   sandboxMode?: boolean;
-  syncStatus?: string;
   saveCapability: EditorSaveCapability;
   onSave?: () => void;
   isSidebarOpen?: boolean;
@@ -65,7 +63,6 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   onTitleChange,
   onCloseEditor,
   sandboxMode = false,
-  syncStatus,
   saveCapability,
   onSave,
   isSidebarOpen,
@@ -78,12 +75,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
     ? (model?.translations?.[activeLang]?.title ?? '')
     : (model?.title ?? '');
   const title = localizedTitle || (activeLang && activeLang !== 'es' ? '' : (model?.title || 'Diagrama Sin Título'));
-  const saving = syncStatus === 'saving';
-  const chrome = saveChromeFromCapability(
-    saving ? { ...saveCapability, allowed: false, reason: 'saving' } : saveCapability,
-    { entity: 'diagram' },
-  );
-  const saveChrome = { ...chrome, label: translateEditorText(t, chrome.label), title: translateEditorText(t, chrome.title) };
+  const saveChrome = translateSaveChrome(t, saveChromeFromCapability(saveCapability, { entity: 'diagram' }));
 
   return (
     <EditorWorkbenchHeader

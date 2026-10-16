@@ -250,7 +250,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
       <div className="space-y-2 border-b border-carbon/15 p-3">
         <div className="flex items-center justify-between gap-2">
           <label className="block flex-1">
-            <span className="sr-only">{t('editor.landing.searchDocPlaceholder')}</span>
+            <span className="sr-only">{section === 'documents' ? t('editor.landing.searchDocPlaceholder') : t('editor.landing.searchDiagramPlaceholder')}</span>
             <input
               ref={searchRef}
               type="search"

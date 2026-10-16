@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react';
 import { SUPPORTED_LANGUAGES, useI18n } from '@/i18n';
 import {
   editorMessage,
-  isEditorMessage,
   translateEditorText,
 } from '@/fixed-pages/editor/types/editorMessage';
 
@@ -18,11 +17,6 @@ describe('editor messages', () => {
   it('passes legacy plain strings through untouched', () => {
     expect(translateEditorText(t, 'Modelo y código divergen')).toBe('Modelo y código divergen');
     expect(translateEditorText(t, undefined)).toBeUndefined();
-  });
-
-  it('recognises message objects', () => {
-    expect(isEditorMessage(editorMessage('common.save'))).toBe(true);
-    expect(isEditorMessage('Guardar')).toBe(false);
   });
 
   it('keeps every editor area as a non-empty group of strings in all languages', () => {

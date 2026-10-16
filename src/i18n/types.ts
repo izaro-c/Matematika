@@ -538,7 +538,9 @@ export interface TranslationDictionary {
       availableDocuments: string;
       availableDiagrams: string;
       itemCount: string;
-      noItemsYet: string;
+      itemCountFiltered: string;
+      noDocumentsYet: string;
+      noDiagramsYet: string;
       createFirstPrompt: string;
       noMatchingItems: string;
       clearFilters: string;

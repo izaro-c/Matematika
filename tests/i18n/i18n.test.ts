@@ -159,12 +159,12 @@ describe('i18n system', () => {
     const { result } = renderHook(() => useI18n());
     const t = result.current.t;
 
-    // Direct object with count
-    expect(t('editor.landing.itemCount', { count: 5 })).toBe('5 elementos');
+    // Namespace and keys as separate arguments
+    expect(t('editor', 'landing', 'itemCount', { count: 5 })).toBe('5 elementos');
     // Dot-separated key path
     expect(t('editor.landing.itemCount', { count: 5 })).toBe('5 elementos');
-    // Fallback when filtered/total are passed instead of count (e.g. EditorLandingView)
-    expect(t('editor.landing.itemCount', { filtered: 3, total: 10 })).toBe('10 elementos');
+    // Several placeholders (filtered count in EditorLandingView)
+    expect(t('editor.landing.itemCountFiltered', { filtered: 3, total: 10 })).toBe('3 de 10 elementos');
     // Primitive number passed directly as parameter
     expect(t('editor.landing.itemCount', 5)).toBe('5 elementos');
     // Multiple placeholders with fallback matching (e.g. ExercisePage)

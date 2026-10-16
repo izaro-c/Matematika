@@ -248,7 +248,9 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             </div>
           ) : (
             <span className="text-xs text-carbon/55 font-mono">
-              {t('editor.landing.itemCount', { filtered: filteredCount, total: totalCount })}
+              {filteredCount === totalCount
+                ? t('editor.landing.itemCount', { count: totalCount })
+                : t('editor.landing.itemCountFiltered', { filtered: filteredCount, total: totalCount })}
             </span>
           )}
         </div>
@@ -283,10 +285,10 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
             <p className="mt-3 font-serif text-base font-bold text-carbon">
-              {t('editor.landing.noItemsYet', { type: activeSection === 'documents' ? t('editor.nav.documents').toLowerCase() : t('editor.nav.diagrams').toLowerCase() })}
+              {activeSection === 'documents' ? t('editor.landing.noDocumentsYet') : t('editor.landing.noDiagramsYet')}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              {t('editor.landing.createFirstPrompt', { type: activeSection === 'documents' ? t('editor.landing.newDocument').toLowerCase() : t('editor.landing.newDiagram').toLowerCase() })}
+              {t('editor.landing.createFirstPrompt')}
             </p>
           </div>
         ) : (
@@ -298,7 +300,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               {t('search', 'noResults')}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              {t('editor.landing.noMatchingItems', { type: activeSection === 'documents' ? t('editor.nav.documents').toLowerCase() : t('editor.nav.diagrams').toLowerCase() })}
+              {t('editor.landing.noMatchingItems')}
             </p>
             <button
               type="button"

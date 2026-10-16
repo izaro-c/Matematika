@@ -1,4 +1,4 @@
-import { editorMessage, type EditorMessage, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
+import { editorMessage, translateEditorText, type EditorMessage, type EditorText, type EditorTranslate } from '@/fixed-pages/editor/types/editorMessage';
 
 export type EditorSaveBlockReason =
   | 'validation-error'
@@ -137,6 +137,11 @@ export function saveChromeFromCapability(
       : editorMessage('save.saveChanges'),
     disabled: false,
   };
+}
+
+/** Chrome listo para la cabecera: etiqueta y título traducidos. */
+export function translateSaveChrome(t: EditorTranslate, chrome: SaveButtonChrome) {
+  return { ...chrome, label: translateEditorText(t, chrome.label), title: translateEditorText(t, chrome.title) };
 }
 
 export function warningSaveConfirmCopy(
