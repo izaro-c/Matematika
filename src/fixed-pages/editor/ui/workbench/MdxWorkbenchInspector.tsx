@@ -55,13 +55,13 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
   return (
     <WorkbenchAsideTabs
       className="bg-lienzo select-none"
-      aria-label={t('editor', 'inspectorAriaLabel')}
+      aria-label={t('editor.mdx.inspectorAriaLabel')}
       tabs={[
-        { id: 'page', label: t('editor', 'pageTab') },
-        { id: 'diagrams', label: t('editor', 'diagramsTab') },
+        { id: 'page', label: t('editor.mdx.pageTab') },
+        { id: 'diagrams', label: t('editor.mdx.diagramsTab') },
         {
           id: 'avisos',
-          label: t('editor', 'warningsTab'),
+          label: t('editor.mdx.warningsTab'),
           endAdornment: errorCount > 0 ? (
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
           ) : props.validation.warningCount > 0 ? (
@@ -76,8 +76,8 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
           type="button"
           onClick={props.onClose}
           className="ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-carbon/60 hover:bg-carbon/10 hover:text-carbon transition-colors cursor-pointer"
-          title={t('editor', 'hideDetails')}
-          aria-label={t('editor', 'hideDetails')}
+          title={t('editor.mdx.hideDetails')}
+          aria-label={t('editor.mdx.hideDetails')}
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

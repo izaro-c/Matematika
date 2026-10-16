@@ -19,12 +19,12 @@ export const EditorRouteNotFound: React.FC<EditorRouteNotFoundProps> = ({ reques
     >
       <div className="max-w-md rounded-2xl border border-carbon/15 bg-lienzo/80 p-6 text-center shadow-sm">
         <h1 className="text-xl font-bold">
-          {onRetry ? t('editor', 'catalogLoadError') : t('editor', 'routeNotFoundTitle')}
+          {onRetry ? t('editor.nav.catalogLoadError') : t('editor.nav.routeNotFoundTitle')}
         </h1>
         <p className="mt-2 text-sm text-carbon/70">
           <code className="rounded bg-carbon/5 px-1 font-mono text-xs">{requested}</code>
         </p>
-        {!onRetry && <p className="mt-2 text-sm text-carbon/70">{t('editor', 'routeNotFoundBody')}</p>}
+        {!onRetry && <p className="mt-2 text-sm text-carbon/70">{t('editor.nav.routeNotFoundBody')}</p>}
         <div className="mt-5 flex justify-center gap-3">
           {onRetry && (
             <button
@@ -32,7 +32,7 @@ export const EditorRouteNotFound: React.FC<EditorRouteNotFoundProps> = ({ reques
               onClick={onRetry}
               className="rounded-xl bg-canela px-5 py-2.5 text-sm font-bold text-lienzo hover:bg-canela/90 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer"
             >
-              {t('editor', 'retry')}
+              {t('editor.common.retry')}
             </button>
           )}
           <button
@@ -42,7 +42,7 @@ export const EditorRouteNotFound: React.FC<EditorRouteNotFoundProps> = ({ reques
               ? 'rounded-xl border border-carbon/20 px-5 py-2.5 text-sm font-bold text-carbon hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer'
               : 'rounded-xl bg-canela px-5 py-2.5 text-sm font-bold text-lienzo hover:bg-canela/90 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer'}
           >
-            {t('editor', 'backToCatalog')}
+            {t('editor.nav.backToCatalog')}
           </button>
         </div>
       </div>

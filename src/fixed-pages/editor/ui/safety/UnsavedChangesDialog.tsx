@@ -44,7 +44,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
         className="w-full max-w-xl rounded-xl border border-carbon/20 bg-lienzo shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150"
       >
         <header className="border-b border-carbon/15 bg-ocre/10 p-4">
-          <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">{t('editor', 'unsavedChanges')}</h2>
+          <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">{t('editor.save.unsavedChanges')}</h2>
           <p id="unsaved-dialog-description" className="mt-1 text-sm leading-snug text-carbon/70">
             La acción hacia {targetLabel} descartaría cambios que todavía no están aplicados al archivo real.
           </p>
@@ -65,7 +65,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             onClick={onCancel}
             className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5"
           >
-            {t('editor', 'stay')}
+            {t('editor.save.stay')}
           </button>
           <button
             type="button"
@@ -73,7 +73,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             disabled={!canSaveDraft}
             className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            {t('editor', 'saveDraft')}
+            {t('editor.save.saveDraft')}
           </button>
           <button
             type="button"
@@ -81,14 +81,14 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             disabled={!canSave}
             className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            {t('editor', 'save')}
+            {t('editor.common.save')}
           </button>
           <button
             type="button"
             onClick={onDiscardAndContinue}
             className="rounded border border-granada/30 bg-granada/5 px-3 py-2 text-xs font-bold text-granada hover:bg-granada/10"
           >
-            {t('editor', 'discard')}
+            {t('editor.common.discard')}
           </button>
         </footer>
       </section>

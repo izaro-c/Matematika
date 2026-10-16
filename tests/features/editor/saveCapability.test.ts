@@ -26,7 +26,7 @@ describe('buildMdxSaveCapability', () => {
     expect(cap).toMatchObject({
       allowed: false,
       reason: 'validation-error',
-      summary: '2 errores',
+      summary: { code: 'save.errorCountOther', params: { count: 2 } },
       warningCount: 3,
     });
     expect(saveChromeFromCapability(cap).disabled).toBe(true);
@@ -35,19 +35,20 @@ describe('buildMdxSaveCapability', () => {
   it('blocks clean documents', () => {
     const cap = buildMdxSaveCapability({ ...ready, isDirty: false });
     expect(cap.reason).toBe('clean');
-    expect(saveChromeFromCapability(cap)).toMatchObject({ label: 'Guardado', disabled: true });
+    expect(saveChromeFromCapability(cap)).toMatchObject({ label: { code: 'save.saved' }, disabled: true });
   });
 
   it('keeps warnings allowed and chrome enabled', () => {
     const cap = buildMdxSaveCapability({ ...ready, warningCount: 2 });
     expect(cap.allowed).toBe(true);
     expect(saveChromeFromCapability(cap).disabled).toBe(false);
-    expect(warningSaveConfirmCopy(2).title).toContain('2 avisos');
+    expect(warningSaveConfirmCopy(2).title).toEqual({ code: 'save.pendingWarningsOther', params: { count: 2 } });
+    expect(warningSaveConfirmCopy(1, 'diagram').message.code).toBe('save.diagramWarningsConfirmOne');
   });
 });
 
 describe('buildEditorSaveCapabilityFromDiagram', () => {
-  it('maps clean dirty=false to Guardado', () => {
+  it('maps clean dirty=false to the saved chrome', () => {
     const cap = buildEditorSaveCapabilityFromDiagram({
       allowed: true,
       errorCount: 0,
@@ -56,7 +57,10 @@ describe('buildEditorSaveCapabilityFromDiagram', () => {
       saving: false,
     });
     expect(cap.reason).toBe('clean');
-    expect(saveChromeFromCapability(cap, { entityLabel: 'Diagrama' }).label).toBe('Guardado');
+    expect(saveChromeFromCapability(cap, { entity: 'diagram' })).toMatchObject({
+      label: { code: 'save.saved' },
+      title: { code: 'save.diagramUpToDate' },
+    });
   });
 
   it('preserves diagram block reason when not allowed', () => {

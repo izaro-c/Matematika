@@ -221,15 +221,15 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3">
         <div>
           <p className="ac-label ac-label--sm ac-label--canela">Editor</p>
-          <h2 className="font-serif text-base font-bold text-carbon">{t('editor', 'docHeroTitle')}</h2>
+          <h2 className="font-serif text-base font-bold text-carbon">{t('editor.landing.docHeroTitle')}</h2>
         </div>
-        <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label={t('editor', 'close')}>{t('editor', 'close')}</button>
+        <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label={t('editor.common.close')}>{t('editor.common.close')}</button>
       </header>
 
-      <div className="grid grid-cols-2 border-b border-carbon/15 p-2" role="tablist" aria-label={t('editor', 'typeLabel')}>
+      <div className="grid grid-cols-2 border-b border-carbon/15 p-2" role="tablist" aria-label={t('editor.create.typeLabel')}>
         {([
-          ['documents', t('editor', 'documents'), sectionCounts.documents],
-          ['diagrams', t('editor', 'diagrams'), sectionCounts.diagrams],
+          ['documents', t('editor.nav.documents'), sectionCounts.documents],
+          ['diagrams', t('editor.nav.diagrams'), sectionCounts.diagrams],
         ] as const).map(([id, label, count]) => (
           <button
             key={id}
@@ -250,13 +250,13 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
       <div className="space-y-2 border-b border-carbon/15 p-3">
         <div className="flex items-center justify-between gap-2">
           <label className="block flex-1">
-            <span className="sr-only">{t('editor', 'searchDocPlaceholder')}</span>
+            <span className="sr-only">{t('editor.landing.searchDocPlaceholder')}</span>
             <input
               ref={searchRef}
               type="search"
               value={filters.query}
               onChange={event => updateFilter('query', event.target.value)}
-              placeholder={section === 'documents' ? t('editor', 'searchDocPlaceholder') : t('editor', 'searchDiagramPlaceholder')}
+              placeholder={section === 'documents' ? t('editor.landing.searchDocPlaceholder') : t('editor.landing.searchDiagramPlaceholder')}
               className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-canela"
             />
           </label>
@@ -265,9 +265,9 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               type="button"
               onClick={onCreatePage}
               className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
-              title={t('editor', 'newStructuredPage')}
+              title={t('editor.create.newStructuredPage')}
             >
-              {t('editor', 'addPage')}
+              {t('editor.mdx.addPage')}
             </button>
           )}
           {section === 'diagrams' && onCreateDiagram && (
@@ -275,84 +275,84 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               type="button"
               onClick={onCreateDiagram}
               className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
-              title={t('editor', 'newDiagram')}
+              title={t('editor.landing.newDiagram')}
             >
-              {t('editor', 'addDiagram')}
+              {t('editor.mdx.addDiagram')}
             </button>
           )}
         </div>
         <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
           <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-canela [&::-webkit-details-marker]:hidden">
-            <span>{t('editor', 'filterResults')}</span>
+            <span>{t('editor.landing.filterResults')}</span>
             <span className="font-mono text-[9px] text-carbon/45">{advancedFilterCount > 0 ? `${advancedFilterCount} activos` : 'Tipo, estado, capacidad'} <span aria-hidden="true">▾</span></span>
           </summary>
           <div className="space-y-2 border-t border-carbon/10 p-2.5">
             <div className="grid grid-cols-2 gap-2">
               <label className="ac-label ac-label--xs">
-                {t('editor', 'typeLabel')}
+                {t('editor.create.typeLabel')}
                 <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-                  <option value="all">{t('editor', 'allTypes')}</option>
+                  <option value="all">{t('editor.landing.allTypes')}</option>
                   {types.map(type => <option key={type} value={type}>{categoryLabel(type)}</option>)}
                 </select>
               </label>
               <label className="ac-label ac-label--xs">
-                {t('editor', 'diagnostics')}
+                {t('editor.mdx.diagnostics')}
                 <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-                  <option value="all">{t('editor', 'all')}</option>
-                  <option value="available">{t('editor', 'editable')}</option>
-                  <option value="attention">{t('editor', 'attentionNeeded')}</option>
-                  <option value="invalid">{t('editor', 'diagnostics')}</option>
+                  <option value="all">{t('editor.common.all')}</option>
+                  <option value="available">{t('editor.landing.editable')}</option>
+                  <option value="attention">{t('editor.landing.attentionNeeded')}</option>
+                  <option value="invalid">{t('editor.mdx.diagnostics')}</option>
                 </select>
               </label>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <label className="block ac-label ac-label--xs">
-                {t('editor', 'howToEdit')}
+                {t('editor.nav.howToEdit')}
                 <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-                  <option value="all">{t('editor', 'all')}</option>
-                  <option value="visual-exact">{t('editor', 'editable')}</option>
-                  <option value="code-preview">{t('editor', 'sourceOnly')}</option>
-                  <option value="invalid">{t('editor', 'diagnostics')}</option>
+                  <option value="all">{t('editor.common.all')}</option>
+                  <option value="visual-exact">{t('editor.landing.editable')}</option>
+                  <option value="code-preview">{t('editor.landing.sourceOnly')}</option>
+                  <option value="invalid">{t('editor.mdx.diagnostics')}</option>
                 </select>
               </label>
               <label className="block ac-label ac-label--xs">
                 Idioma
                 <select value={filters.language || 'all'} onChange={event => updateFilter('language', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-                  <option value="all">{t('editor', 'all')}</option>
+                  <option value="all">{t('editor.common.all')}</option>
                   {SUPPORTED_LANGUAGES.map(lang => (
                     <option key={lang.code} value={lang.code}>{lang.name} ({lang.code})</option>
                   ))}
                 </select>
               </label>
             </div>
-            {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">{t('editor', 'clearFilters')}</button>}
+            {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">{t('editor.landing.clearFilters')}</button>}
           </div>
         </details>
       </div>
 
       <div className="flex-1 overflow-y-auto p-3" onKeyDown={handleResourceKeys}>
         {isLoading && (
-          <div role="status" className="space-y-2 p-2" aria-label={t('editor', 'loadingContent')}>
+          <div role="status" className="space-y-2 p-2" aria-label={t('editor.nav.loadingContent')}>
             {[0, 1, 2, 3].map(item => <div key={item} className="h-11 animate-pulse rounded bg-carbon/5" />)}
-            <p className="pt-2 text-xs italic text-carbon/50">{t('editor', 'checkingCatalog')}</p>
+            <p className="pt-2 text-xs italic text-carbon/50">{t('editor.nav.checkingCatalog')}</p>
           </div>
         )}
         {!isLoading && error && (
           <div role="alert" className="rounded border border-granada/25 bg-granada/5 p-3 text-xs text-carbon/70">
-            <p className="font-bold text-granada">{t('editor', 'catalogLoadError')}</p>
+            <p className="font-bold text-granada">{t('editor.nav.catalogLoadError')}</p>
             <p className="mt-1">{error}</p>
-            <button type="button" onClick={retry} className="mt-3 rounded bg-granada px-3 py-1 font-bold text-lienzo">{t('editor', 'retry')}</button>
+            <button type="button" onClick={retry} className="mt-3 rounded bg-granada px-3 py-1 font-bold text-lienzo">{t('editor.common.retry')}</button>
           </div>
         )}
         {!isLoading && !error && files.length === 0 && (
           <div className="rounded border border-dashed border-carbon/20 p-4 text-center text-xs text-carbon/55">
-            {t('editor', 'noEditableResources')}
+            {t('editor.nav.noEditableResources')}
           </div>
         )}
         {!isLoading && !error && files.length > 0 && filtered.length === 0 && (
           <div className="rounded border border-dashed border-carbon/20 p-4 text-center text-xs text-carbon/55">
-            <p>{t('editor', 'noMatchingItems')}</p>
-            {filtersActive && <button type="button" onClick={() => setFilters(DEFAULT_EDITOR_CATALOG_FILTERS)} className="mt-3 rounded border border-carbon/20 px-3 py-1 font-bold text-carbon">{t('editor', 'clearFilters')}</button>}
+            <p>{t('editor.landing.noMatchingItems')}</p>
+            {filtersActive && <button type="button" onClick={() => setFilters(DEFAULT_EDITOR_CATALOG_FILTERS)} className="mt-3 rounded border border-carbon/20 px-3 py-1 font-bold text-carbon">{t('editor.landing.clearFilters')}</button>}
           </div>
         )}
 

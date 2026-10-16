@@ -58,6 +58,8 @@ import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchA
 import { EDITOR_PANEL_LIMITS } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
 import { UI } from '@/design';
+import { useI18n } from '@/i18n';
+import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
 import { DiagramDataPanel } from './DiagramDataPanel';
 import { localizeDiagramSpec } from '@/diagrams/model/localizeDiagram';
 import { applyLocalizedModelEdit } from '../../model/scene/translationEdits';
@@ -127,6 +129,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   inspectorWidth: inspectorWidthProp,
   onInspectorWidthChange,
 }) => {
+  const { t } = useI18n();
   const {
     state,
     isDirty,
@@ -1046,10 +1049,10 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
       <DiagramConfirmDialog
         isOpen={warningSaveOpen}
-        title={warningSaveConfirmCopy(editorSaveCapability.warningCount).title}
-        message={warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagrama').message}
-        confirmLabel="Guardar de todos modos"
-        cancelLabel="Cancelar"
+        title={translateEditorText(t, warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagram').title)}
+        message={translateEditorText(t, warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagram').message)}
+        confirmLabel={t('editor.save.saveAnyway')}
+        cancelLabel={t('editor.common.cancel')}
         variant="warning"
         onConfirm={confirmWarningSave}
         onCancel={() => setWarningSaveOpen(false)}

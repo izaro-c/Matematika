@@ -11,6 +11,8 @@ import {
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
+import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
+import { useI18n } from '@/i18n';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
@@ -71,14 +73,17 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   isInspectorOpen,
   onToggleInspector,
 }) => {
+  const { t } = useI18n();
   const localizedTitle = activeLang && activeLang !== 'es'
     ? (model?.translations?.[activeLang]?.title ?? '')
     : (model?.title ?? '');
   const title = localizedTitle || (activeLang && activeLang !== 'es' ? '' : (model?.title || 'Diagrama Sin Título'));
   const saving = syncStatus === 'saving';
-  const saveChrome = saving
-    ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…', disabled: true }
-    : saveChromeFromCapability(saveCapability, { entityLabel: 'Diagrama' });
+  const chrome = saveChromeFromCapability(
+    saving ? { ...saveCapability, allowed: false, reason: 'saving' } : saveCapability,
+    { entity: 'diagram' },
+  );
+  const saveChrome = { ...chrome, label: translateEditorText(t, chrome.label), title: translateEditorText(t, chrome.title) };
 
   return (
     <EditorWorkbenchHeader

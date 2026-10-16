@@ -160,13 +160,13 @@ describe('i18n system', () => {
     const t = result.current.t;
 
     // Direct object with count
-    expect(t('editor', 'itemCount', { count: 5 })).toBe('5 elementos');
+    expect(t('editor.landing.itemCount', { count: 5 })).toBe('5 elementos');
     // Dot-separated key path
-    expect(t('editor.itemCount', { count: 5 })).toBe('5 elementos');
+    expect(t('editor.landing.itemCount', { count: 5 })).toBe('5 elementos');
     // Fallback when filtered/total are passed instead of count (e.g. EditorLandingView)
-    expect(t('editor', 'itemCount', { filtered: 3, total: 10 })).toBe('10 elementos');
+    expect(t('editor.landing.itemCount', { filtered: 3, total: 10 })).toBe('10 elementos');
     // Primitive number passed directly as parameter
-    expect(t('editor', 'itemCount', 5)).toBe('5 elementos');
+    expect(t('editor.landing.itemCount', 5)).toBe('5 elementos');
     // Multiple placeholders with fallback matching (e.g. ExercisePage)
     expect(t('exercise', 'correctCount', { count: 10 })).toBe('Correctas: 10 de 10');
   });

@@ -349,7 +349,7 @@ export const AppRouter = () => {
           {(params) => <EditorLanguageRedirect lang={lang} rest={params['*']} />}
         </Route>
         <Route path="/:lang/editor/*?">
-          <SeoHead title={t('editor', 'docHeroTitle')} noindex={true} />
+          <SeoHead title={t('editor.landing.docHeroTitle')} noindex={true} />
           <MathProvider>
             <EditorPage />
           </MathProvider>

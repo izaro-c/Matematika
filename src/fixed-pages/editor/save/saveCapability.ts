@@ -1,3 +1,5 @@
+import { editorMessage, type EditorMessage, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
+
 export type EditorSaveBlockReason =
   | 'validation-error'
   | 'clean'
@@ -13,7 +15,7 @@ export type EditorSaveBlockReason =
 export interface EditorSaveCapability {
   allowed: boolean;
   reason?: EditorSaveBlockReason;
-  summary?: string;
+  summary?: EditorText;
   errorCount: number;
   warningCount: number;
   isDirty: boolean;
@@ -34,27 +36,27 @@ export function buildMdxSaveCapability(input: MdxSaveCapabilityInput): EditorSav
   const { errorCount, warningCount, isDirty, saving } = input;
   const base = { errorCount, warningCount, isDirty };
   if (saving) {
-    return { ...base, allowed: false, reason: 'saving', summary: 'Guardando cambios…' };
+    return { ...base, allowed: false, reason: 'saving', summary: editorMessage('save.savingChanges') };
   }
   if (input.isReadOnly) {
-    return { ...base, allowed: false, reason: 'read-only', summary: 'Documento de solo lectura' };
+    return { ...base, allowed: false, reason: 'read-only', summary: editorMessage('save.readOnlyDocument') };
   }
   if (!input.hasFile || !input.hasVersion) {
-    return { ...base, allowed: false, reason: 'unavailable', summary: 'Guardado no disponible' };
+    return { ...base, allowed: false, reason: 'unavailable', summary: editorMessage('save.unavailable') };
   }
   if (!input.writeAvailable) {
-    return { ...base, allowed: false, reason: 'unavailable', summary: 'API o token de edición no disponibles' };
+    return { ...base, allowed: false, reason: 'unavailable', summary: editorMessage('save.writeUnavailable') };
   }
   if (errorCount > 0) {
     return {
       ...base,
       allowed: false,
       reason: 'validation-error',
-      summary: errorCount === 1 ? '1 error' : `${errorCount} errores`,
+      summary: editorMessage(errorCount === 1 ? 'save.errorCountOne' : 'save.errorCountOther', { count: errorCount }),
     };
   }
   if (!isDirty) {
-    return { ...base, allowed: false, reason: 'clean', summary: 'Documento al día' };
+    return { ...base, allowed: false, reason: 'clean', summary: editorMessage('save.documentUpToDate') };
   }
   return { ...base, allowed: true };
 }
@@ -63,7 +65,7 @@ export function buildMdxSaveCapability(input: MdxSaveCapabilityInput): EditorSav
 export function buildEditorSaveCapabilityFromDiagram(input: {
   allowed: boolean;
   reason?: EditorSaveBlockReason;
-  summary?: string;
+  summary?: EditorText;
   errorCount: number;
   warningCount: number;
   isDirty: boolean;
@@ -74,72 +76,80 @@ export function buildEditorSaveCapabilityFromDiagram(input: {
   const { errorCount, warningCount, isDirty, saving } = input;
   const base = { errorCount, warningCount, isDirty };
   if (saving) {
-    return { ...base, allowed: false, reason: 'saving', summary: 'Guardando cambios…' };
+    return { ...base, allowed: false, reason: 'saving', summary: editorMessage('save.savingChanges') };
   }
   if (input.sandboxMode) {
-    return { ...base, allowed: false, reason: 'unavailable', summary: 'Sandbox: no escribe al corpus' };
+    return { ...base, allowed: false, reason: 'unavailable', summary: editorMessage('save.sandboxNoWrite') };
   }
   if (!input.allowed) {
     return {
       ...base,
       allowed: false,
       reason: input.reason,
-      summary: input.summary ?? 'Guardado no disponible',
+      summary: input.summary ?? editorMessage('save.unavailable'),
     };
   }
   if (!isDirty && !input.allowCleanApply) {
-    return { ...base, allowed: false, reason: 'clean', summary: 'Diagrama al día' };
+    return { ...base, allowed: false, reason: 'clean', summary: editorMessage('save.diagramUpToDate') };
   }
   return { ...base, allowed: true, reason: input.reason, summary: input.summary };
 }
 
 export type SaveButtonChrome = {
-  label: string;
+  label: EditorMessage;
   variant: 'pavo' | 'secondary' | 'saving' | 'saved';
-  title: string;
+  title: EditorText;
   disabled: boolean;
 };
 
+export type SaveEntity = 'document' | 'diagram';
+
 export function saveChromeFromCapability(
   capability: EditorSaveCapability,
-  options?: { entityLabel?: 'Documento' | 'Diagrama' },
+  options?: { entity?: SaveEntity },
 ): SaveButtonChrome {
-  const entity = options?.entityLabel ?? 'Documento';
+  const entity = options?.entity ?? 'document';
   if (capability.reason === 'saving') {
-    return { label: 'Guardando…', variant: 'saving', title: 'Guardando cambios…', disabled: true };
+    return { label: editorMessage('save.saving'), variant: 'saving', title: editorMessage('save.savingChanges'), disabled: true };
   }
   if (!capability.allowed) {
     if (capability.reason === 'clean') {
-      return { label: 'Guardado', variant: 'saved', title: `${entity} al día`, disabled: true };
+      return {
+        label: editorMessage('save.saved'),
+        variant: 'saved',
+        title: editorMessage(entity === 'diagram' ? 'save.diagramUpToDate' : 'save.documentUpToDate'),
+        disabled: true,
+      };
     }
     return {
-      label: 'Guardar',
+      label: editorMessage('common.save'),
       variant: 'secondary',
-      title: capability.summary ?? 'Guardado no disponible',
+      title: capability.summary ?? editorMessage('save.unavailable'),
       disabled: true,
     };
   }
-  const warningHint = capability.warningCount > 0
-    ? ` (${capability.warningCount} aviso${capability.warningCount === 1 ? '' : 's'}; pedir confirmación)`
-    : '';
+  const { warningCount } = capability;
   return {
-    label: 'Guardar',
+    label: editorMessage('common.save'),
     variant: 'pavo',
-    title: `Guardar cambios${warningHint}`,
+    title: warningCount > 0
+      ? editorMessage(warningCount === 1 ? 'save.saveChangesWarningOne' : 'save.saveChangesWarningOther', { count: warningCount })
+      : editorMessage('save.saveChanges'),
     disabled: false,
   };
 }
 
 export function warningSaveConfirmCopy(
   warningCount: number,
-  entityLabel: 'documento' | 'diagrama' = 'documento',
-): { title: string; message: string } {
-  const n = warningCount;
+  entity: SaveEntity = 'document',
+): { title: EditorMessage; message: EditorMessage } {
+  const one = warningCount === 1;
+  const params = { count: warningCount };
+  const message = entity === 'diagram'
+    ? (one ? 'save.diagramWarningsConfirmOne' : 'save.diagramWarningsConfirmOther')
+    : (one ? 'save.documentWarningsConfirmOne' : 'save.documentWarningsConfirmOther');
   return {
-    title: n === 1 ? 'Hay 1 aviso pendiente' : `Hay ${n} avisos pendientes`,
-    message:
-      n === 1
-        ? `El ${entityLabel} tiene 1 aviso que no bloquea el guardado. ¿Quieres guardarlo de todos modos?`
-        : `El ${entityLabel} tiene ${n} avisos que no bloquean el guardado. ¿Quieres guardarlo de todos modos?`,
+    title: editorMessage(one ? 'save.pendingWarningsOne' : 'save.pendingWarningsOther', params),
+    message: editorMessage(message, params),
   };
 }

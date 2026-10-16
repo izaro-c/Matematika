@@ -48,7 +48,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
           </div>
           <div className="min-w-0 flex-1">
             <h2 id="save-error-title" className="font-serif text-lg font-bold text-granada">
-              {t('editor', 'cannotSaveTitle')}
+              {t('editor.save.cannotSaveTitle')}
             </h2>
             <p className="mt-0.5 text-xs text-carbon/70">
               {saveMessage
@@ -111,7 +111,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
               }}
               className="px-3 py-1.5 text-xs font-bold text-carbon/70 hover:bg-carbon/10 rounded-lg transition-colors cursor-pointer"
             >
-              {t('editor', 'viewWarnings')}
+              {t('editor.save.viewWarnings')}
             </button>
           )}
           {firstIssue && onJumpToIssue && (
@@ -123,7 +123,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
               }}
               className="px-3.5 py-1.5 text-xs font-bold bg-granada text-lienzo hover:bg-granada/85 rounded-lg shadow-xs transition-colors cursor-pointer"
             >
-              {t('editor', 'goToError')}
+              {t('editor.save.goToError')}
             </button>
           )}
           <button
@@ -131,7 +131,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
             onClick={onClose}
             className="px-3.5 py-1.5 text-xs font-bold bg-carbon/10 text-carbon hover:bg-carbon/20 rounded-lg transition-colors cursor-pointer"
           >
-            {t('editor', 'understood')}
+            {t('editor.common.understood')}
           </button>
         </div>
       </div>

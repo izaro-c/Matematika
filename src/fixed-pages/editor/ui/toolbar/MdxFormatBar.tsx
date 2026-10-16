@@ -95,42 +95,42 @@ export function MdxFormatBar({
       <div
         data-mdx-format-bar
         className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all"
-        aria-label={t('editor', 'toolbar')}
+        aria-label={t('editor.mdx.toolbar')}
       >
         {/* Formato de Texto */}
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title={t('editor', 'bold')}
+          title={t('editor.mdx.bold')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('strong')) after();
             else onNotify?.('Selecciona texto para poner o quitar negrita.');
           })}
         >
           <span className="font-bold">N</span>
-          <span className="hidden sm:inline font-medium">{t('editor', 'bold')}</span>
+          <span className="hidden sm:inline font-medium">{t('editor.mdx.bold')}</span>
         </button>
 
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title={t('editor', 'italic')}
+          title={t('editor.mdx.italic')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('em')) after();
             else onNotify?.('Selecciona texto para poner o quitar cursiva.');
           })}
         >
           <span className="italic font-serif">C</span>
-          <span className="hidden sm:inline font-medium">{t('editor', 'italic')}</span>
+          <span className="hidden sm:inline font-medium">{t('editor.mdx.italic')}</span>
         </button>
 
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title={t('editor', 'inlineFormula')}
+          title={t('editor.mdx.inlineFormula')}
           onMouseDown={keep(() => {
             const code = getSelectedPlainText().trim() || 'x';
             if (insertHtmlAtSelection(latexSpanHtml(code))) after();
@@ -138,7 +138,7 @@ export function MdxFormatBar({
           })}
         >
           <span className="font-mono text-xs">$x$</span>
-          <span className="hidden sm:inline font-medium">{t('editor', 'inlineFormula')}</span>
+          <span className="hidden sm:inline font-medium">{t('editor.mdx.inlineFormula')}</span>
         </button>
 
         <button

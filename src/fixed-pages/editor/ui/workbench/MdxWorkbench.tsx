@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useI18n } from '@/i18n';
+import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
 import { DiagramWorkbenchHost } from '../../diagrams/ui/workbench/DiagramWorkbenchHost';
@@ -729,7 +730,7 @@ export const MdxWorkbench: React.FC = () => {
       ) : !currentFile && route.status !== 'landing' ? (
         // La URL apunta a un archivo que aún no se ha abierto: no mostrar la portada entretanto.
         <main aria-busy="true" className="flex flex-1 items-center justify-center bg-lienzo font-serif text-sm text-carbon/60">
-          {t('editor', 'loadingContent')}
+          {t('editor.nav.loadingContent')}
         </main>
       ) : !currentFile ? (
         <EditorLandingView
@@ -1138,10 +1139,10 @@ export const MdxWorkbench: React.FC = () => {
       {/* Save Error & Validation Feedback Modal */}
       <DiagramConfirmDialog
         isOpen={warningSaveOpen}
-        title={warningSaveConfirmCopy(saveCapability.warningCount).title}
-        message={warningSaveConfirmCopy(saveCapability.warningCount).message}
-        confirmLabel="Guardar de todos modos"
-        cancelLabel="Cancelar"
+        title={translateEditorText(t, warningSaveConfirmCopy(saveCapability.warningCount).title)}
+        message={translateEditorText(t, warningSaveConfirmCopy(saveCapability.warningCount).message)}
+        confirmLabel={t('editor.save.saveAnyway')}
+        cancelLabel={t('editor.common.cancel')}
         variant="warning"
         onConfirm={confirmWarningSave}
         onCancel={() => setWarningSaveOpen(false)}

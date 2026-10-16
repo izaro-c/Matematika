@@ -84,7 +84,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           <Link
             href={getLocalizedPath('/')}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer"
-            title={t('editor', 'backToMain')}
+            title={t('editor.nav.backToMain')}
           >
             <Logo decorative className="h-8 w-8" />
           </Link>
@@ -100,7 +100,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               onSectionChange?.('documents');
             }}
           >
-            {t('editor', 'documents')}
+            {t('editor.nav.documents')}
           </HeaderPillButton>
           <HeaderPillButton
             active={activeSection === 'diagrams'}
@@ -110,7 +110,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               onSectionChange?.('diagrams');
             }}
           >
-            {t('editor', 'diagrams')}
+            {t('editor.nav.diagrams')}
           </HeaderPillButton>
         </HeaderPillContainer>
 
@@ -142,10 +142,10 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="max-w-2xl">
               <h1 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-carbon">
-                {activeSection === 'documents' ? t('editor', 'docHeroTitle') : t('editor', 'diagramHeroTitle')}
+                {activeSection === 'documents' ? t('editor.landing.docHeroTitle') : t('editor.landing.diagramHeroTitle')}
               </h1>
               <p className="mt-2 font-serif text-sm italic text-carbon/70 leading-relaxed">
-                {activeSection === 'documents' ? t('editor', 'docHeroDesc') : t('editor', 'diagramHeroDesc')}
+                {activeSection === 'documents' ? t('editor.landing.docHeroDesc') : t('editor.landing.diagramHeroDesc')}
               </p>
             </div>
             <button
@@ -156,7 +156,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              <span>{activeSection === 'documents' ? t('editor', 'newDocument') : t('editor', 'newDiagram')}</span>
+              <span>{activeSection === 'documents' ? t('editor.landing.newDocument') : t('editor.landing.newDiagram')}</span>
             </button>
           </div>
         </div>
@@ -173,7 +173,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 type="search"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder={activeSection === 'documents' ? t('editor', 'searchDocPlaceholder') : t('editor', 'searchDiagramPlaceholder')}
+                placeholder={activeSection === 'documents' ? t('editor.landing.searchDocPlaceholder') : t('editor.landing.searchDiagramPlaceholder')}
                 className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2 pl-9 pr-4 text-xs text-carbon placeholder:text-carbon/40 focus:border-canela focus:outline-none shadow-2xs font-serif"
               />
               {searchQuery && (
@@ -198,7 +198,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                     : 'border-carbon/15 bg-lienzo text-carbon/70 hover:border-carbon/30'
                 }`}
               >
-                ★ {t('editor', 'favoritesOnly')} ({favoritePaths.length})
+                ★ {t('editor.landing.favoritesOnly')} ({favoritePaths.length})
               </button>
 
               <select
@@ -206,9 +206,9 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 onChange={e => setSortBy(e.target.value as typeof sortBy)}
                 className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-semibold text-carbon/80 focus:border-canela focus:outline-none cursor-pointer"
               >
-                <option value="name">{t('editor', 'sortByName')}</option>
-                <option value="type">{t('editor', 'sortByType')}</option>
-                <option value="recent">{t('editor', 'sortByRecent')}</option>
+                <option value="name">{t('editor.landing.sortByName')}</option>
+                <option value="type">{t('editor.landing.sortByType')}</option>
+                <option value="recent">{t('editor.landing.sortByRecent')}</option>
               </select>
             </div>
           </div>
@@ -236,19 +236,19 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
         <div className="mt-6 flex items-center justify-between border-b border-carbon/10 pb-3">
           <h2 className="font-serif text-sm font-bold text-carbon">
             {activeSection === 'documents'
-              ? t('editor', 'availableDocuments')
-              : t('editor', 'availableDiagrams')}
+              ? t('editor.landing.availableDocuments')
+              : t('editor.landing.availableDiagrams')}
           </h2>
           {isLoading ? (
             <div className="flex items-center gap-2" role="status" aria-live="polite">
               <span className="h-2 w-2 rounded-full bg-canela animate-pulse" />
               <span className="font-serif text-xs italic text-carbon/60">
-                {t('editor', 'loadingContent')}
+                {t('editor.nav.loadingContent')}
               </span>
             </div>
           ) : (
             <span className="text-xs text-carbon/55 font-mono">
-              {t('editor', 'itemCount', { filtered: filteredCount, total: totalCount })}
+              {t('editor.landing.itemCount', { filtered: filteredCount, total: totalCount })}
             </span>
           )}
         </div>
@@ -259,7 +259,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             role="status"
             aria-busy="true"
-            aria-label={t('editor', 'loadingElements')}
+            aria-label={t('editor.diagram.loadingElements')}
           >
             {Array.from({ length: 8 }).map((_, idx) => (
               <EditorLandingCardSkeleton key={`skeleton-card-${idx}`} isDiagram={activeSection === 'diagrams'} />
@@ -283,10 +283,10 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
             <p className="mt-3 font-serif text-base font-bold text-carbon">
-              {t('editor', 'noItemsYet', { type: activeSection === 'documents' ? t('editor', 'documents').toLowerCase() : t('editor', 'diagrams').toLowerCase() })}
+              {t('editor.landing.noItemsYet', { type: activeSection === 'documents' ? t('editor.nav.documents').toLowerCase() : t('editor.nav.diagrams').toLowerCase() })}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              {t('editor', 'createFirstPrompt', { type: activeSection === 'documents' ? t('editor', 'newDocument').toLowerCase() : t('editor', 'newDiagram').toLowerCase() })}
+              {t('editor.landing.createFirstPrompt', { type: activeSection === 'documents' ? t('editor.landing.newDocument').toLowerCase() : t('editor.landing.newDiagram').toLowerCase() })}
             </p>
           </div>
         ) : (
@@ -298,7 +298,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               {t('search', 'noResults')}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              {t('editor', 'noMatchingItems', { type: activeSection === 'documents' ? t('editor', 'documents').toLowerCase() : t('editor', 'diagrams').toLowerCase() })}
+              {t('editor.landing.noMatchingItems', { type: activeSection === 'documents' ? t('editor.nav.documents').toLowerCase() : t('editor.nav.diagrams').toLowerCase() })}
             </p>
             <button
               type="button"
@@ -309,7 +309,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               }}
               className="mt-4 rounded-lg border border-carbon/20 bg-lienzo px-4 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 transition-all cursor-pointer"
             >
-              {t('editor', 'clearFilters')}
+              {t('editor.landing.clearFilters')}
             </button>
           </div>
         )}

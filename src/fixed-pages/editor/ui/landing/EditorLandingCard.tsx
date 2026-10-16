@@ -169,10 +169,10 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   }, [isVisible, file.kind, file.path]);
 
   const capabilityBadge = file.capability === 'visual-exact'
-    ? { label: t('editor', 'editable'), style: 'border-canela/30 bg-canela/10 text-canela' }
+    ? { label: t('editor.landing.editable'), style: 'border-canela/30 bg-canela/10 text-canela' }
     : file.capability === 'code-preview'
-      ? { label: t('editor', 'sourceOnly'), style: 'border-pavo/30 bg-pavo/10 text-pavo' }
-      : { label: t('editor', 'attentionNeeded'), style: 'border-granada/30 bg-granada/10 text-granada' };
+      ? { label: t('editor.landing.sourceOnly'), style: 'border-pavo/30 bg-pavo/10 text-pavo' }
+      : { label: t('editor.landing.attentionNeeded'), style: 'border-granada/30 bg-granada/10 text-granada' };
 
   return (
     <div
@@ -226,7 +226,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
                   e.stopPropagation();
                   onToggleFavorite(file.path);
                 }}
-                title={isFavorite ? t('editor', 'removeFromFavorites') : t('editor', 'addToFavorites')}
+                title={isFavorite ? t('editor.landing.removeFromFavorites') : t('editor.landing.addToFavorites')}
                 className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all cursor-pointer active:scale-90 ${
                   isFavorite
                     ? 'bg-ocre text-lienzo shadow-sm ring-2 ring-ocre/30 scale-105'
@@ -256,7 +256,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         {file.kind === 'diagram' && (
           <div className="mt-3 relative h-36 w-full overflow-hidden rounded-lg border border-carbon/10 bg-lienzo/60 pointer-events-none">
             {isLoadingContent && !diagramModel ? (
-              <DiagramSkeleton label={t('editor', 'loadingContent')} />
+              <DiagramSkeleton label={t('editor.nav.loadingContent')} />
             ) : diagramModel ? (
               <DiagramRenderer
                 spec={diagramModel}
@@ -268,7 +268,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-[10px] text-carbon/40 italic font-mono">
-                {isVisible ? t('editor', 'tsxDiagram') : t('editor', 'waitingForScroll')}
+                {isVisible ? t('editor.landing.tsxDiagram') : t('editor.diagram.waitingForScroll')}
               </div>
             )}
           </div>
@@ -278,13 +278,13 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
       {/* Footer / Action */}
       <div className="mt-4 flex items-center justify-between border-t border-carbon/10 pt-2.5 text-xs">
         <span className="text-[11px] font-medium text-carbon/60 group-hover:text-carbon transition-colors">
-          {file.kind === 'diagram' ? t('editor', 'interactiveDiagram') : t('editor', 'mdxDocument')}
+          {file.kind === 'diagram' ? t('editor.landing.interactiveDiagram') : t('editor.landing.mdxDocument')}
         </span>
         <span
           className="flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform text-xs"
           style={{ color: primaryColorVar }}
         >
-          {t('editor', 'open')}
+          {t('editor.common.open')}
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
