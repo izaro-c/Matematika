@@ -40,7 +40,7 @@ Prefer stable paths (`ui/page/EditorPage`, `session/…`, `diagrams/ui/workbench
 
 ## UI strings (i18n)
 
-- Every visible string lives in `editor.<area>.<key>` of `TranslationDictionary` (`src/i18n/types.ts`). Areas: `common`, `nav`, `landing`, `create`, `mdx`, `diagram`, `save` (add `errors` and others when their first key arrives). Call it as `t('editor.save.saving')`.
+- Every visible string lives in `editor.<area>.<key>` of `TranslationDictionary` (`src/i18n/types.ts`). Areas: `common`, `nav`, `language`, `landing`, `create`, `mdx`, `diagram`, `save` (add `errors` and others when their first key arrives). Call it as `t('editor.save.saving')`.
 - The engine (`session/`, `save/`, `document/`, `diagrams/model|save|checks`) never writes sentences: it returns an `EditorMessage` (`{ code: 'save.documentUpToDate', params? }`, code relative to `editor.`) from `types/editorMessage.ts`, and the UI renders it with `translateEditorText(t, text)`. `save/saveCapability.ts` is the reference implementation.
 - `EditorText = EditorMessage | string`: a plain string is the legacy, untranslated form and is removed batch by batch.
 - Plurals and document/diagram variants are chosen by code (`…One` / `…Other`, `document…` / `diagram…`), never by concatenating words: Basque inflects and reorders them.

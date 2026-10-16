@@ -36,10 +36,10 @@ function categoryLabel(type: string): string {
   return getCategoryDisplayName(type, 'plural');
 }
 
-function capabilityPresentation(file: FileNode): { label: string; className: string } {
-  if (file.capability === 'visual-exact') return { label: 'Editable', className: 'border-musgo/25 bg-musgo/10 text-musgo' };
-  if (file.capability === 'code-preview') return { label: 'Solo fuente', className: 'border-pavo/25 bg-pavo/10 text-pavo' };
-  return { label: 'Requiere corrección', className: 'border-granada/25 bg-granada/10 text-granada' };
+function capabilityPresentation(file: FileNode, t: ReturnType<typeof useI18n>['t']): { label: string; className: string } {
+  if (file.capability === 'visual-exact') return { label: t('editor.landing.editable'), className: 'border-musgo/25 bg-musgo/10 text-musgo' };
+  if (file.capability === 'code-preview') return { label: t('editor.landing.sourceOnly'), className: 'border-pavo/25 bg-pavo/10 text-pavo' };
+  return { label: t('editor.landing.needsFixing'), className: 'border-granada/25 bg-granada/10 text-granada' };
 }
 
 function ResourceButton({
@@ -61,7 +61,8 @@ function ResourceButton({
   variants?: Record<string, FileNode>;
   onCreateTranslation?: (file: FileNode, targetLang: string) => void;
 }) {
-  const capability = capabilityPresentation(file);
+  const { t } = useI18n();
+  const capability = capabilityPresentation(file, t);
   const isDocument = file.kind === 'mdx-document';
   const availableLangs = useMemo(() => Object.keys(variants ?? {}), [variants]);
   const activeLang = current
@@ -86,9 +87,9 @@ function ResourceButton({
         <button
           type="button"
           onClick={() => toggleFavorite(file.path)}
-          aria-label={favorite ? `Quitar ${resourceDisplayName(file)} de favoritos` : `Añadir ${resourceDisplayName(file)} a favoritos`}
+          aria-label={favorite ? t('editor.nav.removeNamedFromFavorites', { name: resourceDisplayName(file) }) : t('editor.nav.addNamedToFavorites', { name: resourceDisplayName(file) })}
           aria-pressed={favorite}
-          title={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+          title={favorite ? t('editor.landing.removeFromFavorites') : t('editor.landing.addToFavorites')}
           className={`rounded px-1 text-sm ${favorite ? 'text-ocre' : 'text-carbon/25 opacity-70 group-hover:opacity-100'}`}
         >
           {favorite ? '★' : '☆'}
@@ -109,7 +110,7 @@ function ResourceButton({
               if (target) openFile(target.path);
             }}
             onCreateTranslation={code => onCreateTranslation?.(file, code)}
-            aria-label="Versiones de idioma"
+            aria-label={t('editor.language.versions')}
           />
         )}
       </div>
@@ -214,13 +215,13 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
   return (
     <aside
       id="editor-navigation"
-      aria-label="Explorador de recursos"
+      aria-label={t('editor.nav.explorer')}
       className="fixed inset-y-0 left-0 z-40 flex max-w-[92vw] flex-col border-r border-carbon/15 bg-lienzo shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none"
       style={{ width }}
     >
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3">
         <div>
-          <p className="ac-label ac-label--sm ac-label--canela">Editor</p>
+          <p className="ac-label ac-label--sm ac-label--canela">{t('editor.nav.editorLabel')}</p>
           <h2 className="font-serif text-base font-bold text-carbon">{t('editor.landing.docHeroTitle')}</h2>
         </div>
         <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label={t('editor.common.close')}>{t('editor.common.close')}</button>
@@ -284,7 +285,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
           <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-canela [&::-webkit-details-marker]:hidden">
             <span>{t('editor.landing.filterResults')}</span>
-            <span className="font-mono text-[9px] text-carbon/45">{advancedFilterCount > 0 ? `${advancedFilterCount} activos` : 'Tipo, estado, capacidad'} <span aria-hidden="true">▾</span></span>
+            <span className="font-mono text-[9px] text-carbon/45">{advancedFilterCount > 0 ? t('editor.nav.activeFilters', { count: advancedFilterCount }) : t('editor.nav.filterHint')} <span aria-hidden="true">▾</span></span>
           </summary>
           <div className="space-y-2 border-t border-carbon/10 p-2.5">
             <div className="grid grid-cols-2 gap-2">
@@ -316,7 +317,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                 </select>
               </label>
               <label className="block ac-label ac-label--xs">
-                Idioma
+                {t('editor.nav.language')}
                 <select value={filters.language || 'all'} onChange={event => updateFilter('language', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
                   <option value="all">{t('editor.common.all')}</option>
                   {SUPPORTED_LANGUAGES.map(lang => (
@@ -358,7 +359,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
 
         {!filtersActive && favorites.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-favorites-heading">
-            <h3 id="editor-favorites-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--ocre">Favoritos</h3>
+            <h3 id="editor-favorites-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--ocre">{t('editor.nav.favorites')}</h3>
             <div className="space-y-1">
               {favorites.map(file => (
                 <ResourceButton
@@ -378,7 +379,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         )}
         {!filtersActive && recents.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-recents-heading">
-            <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--mora">Recientes</h3>
+            <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--mora">{t('editor.nav.recents')}</h3>
             <div className="space-y-1">
               {recents.slice(0, 4).map(file => (
                 <ResourceButton
@@ -432,7 +433,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         })}
       </div>
       <footer className="border-t border-carbon/15 px-3 py-2 text-[9px] text-carbon/45">
-        <span className="font-bold">Ctrl/⌘ P</span> busca · <span className="font-bold">↑ ↓</span> recorre recursos
+        <span className="font-bold">Ctrl/⌘ P</span> {t('editor.nav.shortcutSearch')} · <span className="font-bold">↑ ↓</span> {t('editor.nav.shortcutNavigate')}
       </footer>
     </aside>
   );

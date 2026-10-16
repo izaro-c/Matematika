@@ -1,5 +1,6 @@
 import React from 'react';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { useI18n } from '@/i18n';
 
 export type EditorLanguageBadgeMode = 'global' | 'document' | 'diagram';
 
@@ -35,8 +36,9 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
   onCreateTranslation,
   size = 'default',
   className = '',
-  'aria-label': ariaLabel = 'Idioma de edición',
+  'aria-label': ariaLabel,
 }) => {
+  const { t } = useI18n();
   const isCompact = size === 'compact';
 
   const containerBase = isCompact
@@ -58,7 +60,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
   return (
     <div
       role="group"
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? t('editor.language.editing')}
       className={`${containerBase} ${className}`}
     >
       {SUPPORTED_LANGUAGES.map(lang => {
@@ -70,7 +72,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
               <span
                 key={lang.code}
                 className={activeItemStyle}
-                title={`Idioma activo: ${lang.name}`}
+                title={t('editor.language.active', { name: lang.name })}
               >
                 {lang.code.toUpperCase()}
               </span>
@@ -82,7 +84,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
               type="button"
               onClick={() => onSelectLang?.(lang.code)}
               className={switchItemStyle}
-              title={`Cambiar idioma a ${lang.name}`}
+              title={t('editor.language.switchUi', { name: lang.name })}
             >
               {lang.code.toUpperCase()}
             </button>
@@ -97,7 +99,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
               <span
                 key={lang.code}
                 className={activeItemStyle}
-                title={`Idioma activo: ${lang.name}`}
+                title={t('editor.language.active', { name: lang.name })}
               >
                 {lang.code.toUpperCase()}
               </span>
@@ -111,7 +113,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
                 type="button"
                 onClick={() => onSelectLang?.(lang.code)}
                 className={switchItemStyle}
-                title={`Cambiar a ${lang.name}`}
+                title={t('editor.language.switchTo', { name: lang.name })}
               >
                 {lang.code.toUpperCase()}
               </button>
@@ -125,7 +127,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
                 type="button"
                 onClick={() => onCreateTranslation(lang.code)}
                 className={createItemStyle}
-                title={`Crear traducción en ${lang.name} (${lang.code.toUpperCase()})`}
+                title={t('editor.language.createTranslation', { name: lang.name, code: lang.code.toUpperCase() })}
               >
                 +{lang.code.toUpperCase()}
               </button>
@@ -141,7 +143,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
               <span
                 key={lang.code}
                 className={activeItemStyle}
-                title={`Visualizando en ${lang.name}`}
+                title={t('editor.language.viewingIn', { name: lang.name })}
               >
                 {lang.code.toUpperCase()}
               </span>
@@ -154,7 +156,7 @@ export const EditorLanguageBadges: React.FC<EditorLanguageBadgesProps> = ({
               type="button"
               onClick={() => onSelectLang?.(lang.code)}
               className={switchItemStyle}
-              title={`Editar/Visualizar en ${lang.name}`}
+              title={t('editor.language.editViewIn', { name: lang.name })}
             >
               {lang.code.toUpperCase()}
             </button>

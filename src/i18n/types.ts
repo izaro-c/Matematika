@@ -497,6 +497,9 @@ export interface TranslationDictionary {
       understood: string;
       advanced: string;
       basic: string;
+      errorsAndWarnings: string;
+      errorsShort: string;
+      warningsShort: string;
     };
     nav: {
       documents: string;
@@ -519,6 +522,40 @@ export interface TranslationDictionary {
       switchToBasic: string;
       switchToAdvanced: string;
       howToEdit: string;
+      explorer: string;
+      editorLabel: string;
+      filterHint: string;
+      language: string;
+      favorites: string;
+      recents: string;
+      activeFilters: string;
+      shortcutSearch: string;
+      shortcutNavigate: string;
+      resizeExplorer: string;
+      workspace: string;
+      resizeInspector: string;
+      detailsPanel: string;
+      resizeDiagnostics: string;
+      goHome: string;
+      hideExplorer: string;
+      showExplorer: string;
+      hideDetails: string;
+      showDetails: string;
+      lightMode: string;
+      darkMode: string;
+      addNamedToFavorites: string;
+      removeNamedFromFavorites: string;
+    };
+    language: {
+      versions: string;
+      editing: string;
+      documentEditing: string;
+      active: string;
+      switchUi: string;
+      switchTo: string;
+      createTranslation: string;
+      viewingIn: string;
+      editViewIn: string;
     };
     landing: {
       newDocument: string;
@@ -551,6 +588,7 @@ export interface TranslationDictionary {
       editable: string;
       sourceOnly: string;
       attentionNeeded: string;
+      needsFixing: string;
       tsxDiagram: string;
       filterResults: string;
     };

@@ -48,7 +48,7 @@ Archivos: `src/app/routes/AppRouter.tsx`, `ui/page/useEditorNavigationFlow.ts`, 
 
 - [x] 2.1 🧠 Convención: espacio de nombres `editor.*` en `src/i18n/types.ts`, dividido por áreas (`editor.nav`, `editor.mdx`, `editor.diagram`, `editor.save`, `editor.errors`). El motor (`session/`, `save/`, `document/`) devuelve **códigos** (`{ code: 'save.noChanges', params }`) en lugar de frases, y la interfaz los traduce.
 - [x] 2.2 🔧 Script de protección `scripts/editor/check-hardcoded-strings.ts` (o una regla de `editor:safety:check`) que falle con literales visibles en JSX bajo `src/fixed-pages/editor/ui/**`. Al principio admite una lista de excepciones y la lista va encogiendo.
-- [ ] 2.3 🔧 Migración por lotes, una carpeta por sesión: (a) `ui/page`, `ui/landing` y `ui/workbench`; (b) `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components`; (c) `diagrams/ui/**`; (d) los mensajes de `useEditorCore.ts`.
+- [ ] 2.3 🔧 Migración por lotes, una carpeta por sesión: (a ✅) `ui/page`, `ui/landing` y `ui/workbench`; (b) `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components`; (c) `diagrams/ui/**`; (d) los mensajes de `useEditorCore.ts`.
 - [ ] 2.4 🔧 Revisión del euskera de las claves nuevas (memoria *basque-i18n-care*: `-ko` delante del sustantivo y sin sufijos pegados a numerales en las plantillas).
 
 Decisiones tomadas en 2.1:
@@ -62,6 +62,12 @@ Decisiones tomadas en 2.2:
 - Análisis con el AST de TypeScript (no regex): texto JSX y atributos `title`, `placeholder`, `aria-label`, `alt`, `label`, `description`, `tooltip`, además de literales como hijos (`{cond ? 'a b' : 'c d'}`). Cubre `ui/**` y `diagrams/ui/**`.
 - Lista de excepciones = `scripts/editor/hardcoded-strings-baseline.json` (archivo → nº de literales; ahora 84 archivos y 1335 literales, más que el cálculo inicial porque cuenta también `diagrams/ui` y los atributos con condicionales o plantillas). Solo puede bajar (`--update` rechaza subirlo salvo `--allow-growth`); tras cada lote de 2.3 ejecutar `npm run editor:i18n:baseline`.
 - Integrado en `npm run editor:safety:check`.
+
+Decisiones tomadas en 2.3(a):
+- Quedaban 5 archivos con literales (`EditorNavigation`, `EditorShell`, `EditorLanguageBadges`, `EditorWorkbenchHeader`, `MdxWorkbenchHeader`); `ui/landing` ya estaba limpia. Baseline: 1289 literales en 80 archivos.
+- Área nueva `editor.language` (versiones, idioma activo, cambiar, crear traducción…), pensada para los componentes de la fase 3.2; claves nuevas en `nav` y `common` (errores/avisos con parámetros). `landing.needsFixing` conserva el texto «Requiere corrección».
+- Pendiente de 2.3(b)/(d): `title` de `ResourceButton` (`file.capabilityLabel` y `file.reason`, vienen del modelo) y los textos de `editorPageModel`/`useEditorNavigationFlow`, que no son JSX y el script no los ve.
+- Las claves en euskera están sin revisar: las revisa la 2.4.
 
 Archivos: `src/i18n/types.ts`, `src/i18n/languages/{es,eu,en}.ts` y la carpeta del lote. ⚠️ Esos archivos tienen ahora cambios sin confirmar (barra lateral axiomática): haz el commit antes de empezar.
 
@@ -111,3 +117,4 @@ Distinguir siempre el **idioma de la interfaz** (`:lang` de la URL) del **idioma
 | 2026-10-16 | 1 | (este commit) | URL como fuente de verdad; pruebas en `tests/features/editor/navigation/editorUrlModel.test.ts`. Falta probarla a mano en el navegador. |
 | 2026-10-16 | 2.1 | (este commit) | Claves `editor.*` agrupadas por áreas; `EditorMessage` y `translateEditorText`; `saveCapability` migrado. Pruebas en `tests/features/editor/i18n/`. |
 | 2026-10-16 | 2.2 | (este commit) | `scripts/editor/check-hardcoded-strings.ts` + baseline; integrado en `editor:safety:check`. Pruebas en `tests/features/editor/i18n/`. |
+| 2026-10-16 | 2.3(a) | (este commit) | `ui/page` y `ui/workbench` migrados; área `editor.language`. |

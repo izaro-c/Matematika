@@ -92,7 +92,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
             onSelectLang={onSwitchLanguage}
             onCreateTranslation={onCreateTranslation}
             className="hidden sm:inline-flex"
-            aria-label="Idioma de edición del documento"
+            aria-label={t('editor.language.documentEditing')}
           />
         </div>
       }

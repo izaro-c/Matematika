@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
+import { useI18n } from '@/i18n';
 import { isDarkMode, setTheme } from '@/lib/theme/theme';
 import { routePath } from '@/lib/routes';
 import { Logo } from '@/components/ui/Logo';
@@ -46,9 +47,12 @@ export interface EditorWorkbenchHeaderProps {
   closeConfirmMessage?: string;
 }
 
-function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos' }: EditorHeaderAvisosState) {
+function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel }: EditorHeaderAvisosState) {
+  const { t } = useI18n();
   const hasErrors = errorCount > 0;
   const hasWarnings = warningCount > 0;
+  const healthy = healthyLabel ?? t('editor.mdx.warningsTab');
+  const summary = hasErrors || hasWarnings ? t('editor.common.errorsAndWarnings', { errors: errorCount, warnings: warningCount }) : healthy;
   return (
     <button
       type="button"
@@ -60,12 +64,12 @@ function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos
             ? 'border-ocre/30 bg-ocre/10 text-ocre'
             : 'border-canela/30 bg-canela/10 text-canela'
       }`}
-      title={hasErrors || hasWarnings ? `${errorCount} errores, ${warningCount} avisos` : healthyLabel}
-      aria-label={hasErrors || hasWarnings ? `${errorCount} errores, ${warningCount} avisos` : healthyLabel}
+      title={summary}
+      aria-label={summary}
     >
       <span className={`h-2 w-2 rounded-full ${hasErrors ? 'bg-granada' : hasWarnings ? 'bg-ocre' : 'bg-canela'}`} />
       <span className="hidden sm:inline">
-        {hasErrors ? `${errorCount} Err` : hasWarnings ? `${warningCount} Av` : healthyLabel}
+        {hasErrors ? t('editor.common.errorsShort', { count: errorCount }) : hasWarnings ? t('editor.common.warningsShort', { count: warningCount }) : healthy}
       </span>
     </button>
   );
@@ -73,7 +77,7 @@ function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos
 
 export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   title,
-  titlePlaceholder = 'Sin título',
+  titlePlaceholder,
   onTitleChange,
   titleDisabled = false,
   fileBadge,
@@ -92,6 +96,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   confirmCloseWhenDirty = false,
   closeConfirmMessage = 'Hay cambios sin guardar. ¿Deseas cerrar de todos modos?',
 }) => {
+  const { t } = useI18n();
   const [isDark, setIsDark] = useState(isDarkMode);
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
@@ -136,8 +141,8 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
           href={routePath('/')}
           onClick={handleGoHome}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-canela cursor-pointer"
-          title="Ir al Inicio"
-          aria-label="Ir al Inicio"
+          title={t('editor.nav.goHome')}
+          aria-label={t('editor.nav.goHome')}
         >
           <Logo decorative className="h-8 w-8" />
         </Link>
@@ -146,8 +151,8 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
           <HeaderIconButton
             onClick={onToggleSidebar}
             active={isSidebarOpen}
-            title={isSidebarOpen ? 'Ocultar explorador' : 'Mostrar explorador'}
-            aria-label={isSidebarOpen ? 'Ocultar explorador' : 'Mostrar explorador'}
+            title={isSidebarOpen ? t('editor.nav.hideExplorer') : t('editor.nav.showExplorer')}
+            aria-label={isSidebarOpen ? t('editor.nav.hideExplorer') : t('editor.nav.showExplorer')}
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h8m-8 6h16" />
@@ -159,8 +164,8 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
           <HeaderIconButton
             onClick={onToggleInspector}
             active={isInspectorOpen}
-            title={isInspectorOpen ? 'Ocultar detalles' : 'Mostrar detalles'}
-            aria-label={isInspectorOpen ? 'Ocultar detalles' : 'Mostrar detalles'}
+            title={isInspectorOpen ? t('editor.nav.hideDetails') : t('editor.nav.showDetails')}
+            aria-label={isInspectorOpen ? t('editor.nav.hideDetails') : t('editor.nav.showDetails')}
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -173,13 +178,13 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
             value={title}
             onChange={e => onTitleChange(e.target.value)}
             disabled={titleDisabled}
-            placeholder={titlePlaceholder}
+            placeholder={titlePlaceholder ?? t('editor.mdx.untitledDocument')}
           />
           {fileBadge ? <HeaderBadge variant="subtle">{fileBadge}</HeaderBadge> : null}
           <div className="inline-flex min-w-0 shrink-0 items-center gap-1.5">{badges}</div>
           <span
             className={`h-2 w-2 shrink-0 rounded-full bg-ocre ${isDirty ? 'animate-pulse opacity-100' : 'opacity-0'}`}
-            title={isDirty ? 'Cambios no guardados' : undefined}
+            title={isDirty ? t('editor.save.unsavedChanges') : undefined}
             aria-hidden={!isDirty}
           />
         </div>
@@ -201,7 +206,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         >
           {save.label}
         </HeaderActionButton>
-        <HeaderIconButton onClick={toggleTheme} title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}>
+        <HeaderIconButton onClick={toggleTheme} title={isDark ? t('editor.nav.lightMode') : t('editor.nav.darkMode')}>
           {isDark ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
         </HeaderIconButton>
         <HeaderIconButton onClick={handleClose} variant="danger" title={closeTitle} aria-label={closeTitle}>
@@ -213,11 +218,11 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
       {pendingAction && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 p-4" role="dialog" aria-modal="true" aria-labelledby="editor-header-close-title">
           <div className="w-full max-w-sm rounded-xl border border-carbon/15 bg-lienzo p-4 shadow-xl">
-            <h2 id="editor-header-close-title" className="font-serif text-sm font-bold text-carbon">Cambios sin guardar</h2>
+            <h2 id="editor-header-close-title" className="font-serif text-sm font-bold text-carbon">{t('editor.save.unsavedChanges')}</h2>
             <p className="mt-2 text-xs text-carbon/70">{closeConfirmMessage}</p>
             <div className="mt-4 flex justify-end gap-2">
               <HeaderActionButton onClick={() => setPendingAction(null)} variant="secondary">
-                Permanecer
+                {t('editor.save.stay')}
               </HeaderActionButton>
               <HeaderActionButton
                 onClick={() => {
@@ -227,7 +232,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
                 }}
                 variant="pavo"
               >
-                Salir sin guardar
+                {t('editor.save.exitWithoutSaving')}
               </HeaderActionButton>
             </div>
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { EDITOR_PANEL_LIMITS } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
 import { UI } from '@/design';
+import { useI18n } from '@/i18n';
 
 interface EditorShellProps {
   toolbar: React.ReactNode;
@@ -45,6 +46,7 @@ export const EditorShell: React.FC<EditorShellProps> = ({
   persistPanelSizes,
   children,
 }) => {
+  const { t } = useI18n();
   const navigationResize = usePanelResize({ direction: 'horizontal', value: navigationWidth, ...EDITOR_PANEL_LIMITS.navigation, onChange: setNavigationWidth, onCommit: persistPanelSizes });
   const inspectorResize = usePanelResize({ direction: 'horizontal', value: inspectorWidth, inverted: true, ...EDITOR_PANEL_LIMITS.inspector, onChange: setInspectorWidth, onCommit: persistPanelSizes });
   const diagnosticsResize = usePanelResize({ direction: 'vertical', value: diagnosticsHeight, inverted: true, ...EDITOR_PANEL_LIMITS.diagnostics, onChange: setDiagnosticsHeight, onCommit: persistPanelSizes });
@@ -59,20 +61,20 @@ export const EditorShell: React.FC<EditorShellProps> = ({
         {navigationOpen && (
           <div
             {...navigationResize}
-            aria-label="Redimensionar explorador"
+            aria-label={t('editor.nav.resizeExplorer')}
             className={`${resizeHandle} w-1`}
           />
         )}
-        <main className="flex min-w-0 flex-1 overflow-hidden" aria-label="Área de trabajo">{children}</main>
+        <main className="flex min-w-0 flex-1 overflow-hidden" aria-label={t('editor.nav.workspace')}>{children}</main>
         {inspectorOpen && inspector && (
           <>
             <div
               {...inspectorResize}
-              aria-label="Redimensionar inspector"
+              aria-label={t('editor.nav.resizeInspector')}
               className={`${resizeHandle} w-1`}
             />
             <aside
-              aria-label="Panel de detalles"
+              aria-label={t('editor.nav.detailsPanel')}
               className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 max-w-[92vw] overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
               style={{ width: inspectorWidth }}
             >
@@ -85,7 +87,7 @@ export const EditorShell: React.FC<EditorShellProps> = ({
         <>
           <div
             {...diagnosticsResize}
-            aria-label="Redimensionar diagnósticos"
+            aria-label={t('editor.nav.resizeDiagnostics')}
             className={resizeHandleRow}
           />
           <div className={`${UI.editorPanel} max-h-[55dvh] shrink-0 overflow-hidden border-t`} style={{ height: diagnosticsHeight }}>

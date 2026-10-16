@@ -63,8 +63,7 @@
   "src/fixed-pages/editor/ui/create/AddDiagramDialog.tsx": 26,
   "src/fixed-pages/editor/ui/create/CreateDiagramDialog.tsx": 17,
   "src/fixed-pages/editor/ui/create/CreatePageDialog.tsx": 1,
-  "src/fixed-pages/editor/ui/page/EditorNavigation.tsx": 14,
-  "src/fixed-pages/editor/ui/page/EditorShell.tsx": 5,
+  "src/fixed-pages/editor/ui/page/EditorNavigation.tsx": 1,
   "src/fixed-pages/editor/ui/panels/DiagramSourcePanel.tsx": 7,
   "src/fixed-pages/editor/ui/panels/EditorDiagnosticsPanel.tsx": 17,
   "src/fixed-pages/editor/ui/panels/ExerciseBlockEditor.tsx": 9,
@@ -79,8 +78,5 @@
   "src/fixed-pages/editor/ui/safety/EditorApiStatusBanner.tsx": 6,
   "src/fixed-pages/editor/ui/safety/SaveErrorModal.tsx": 6,
   "src/fixed-pages/editor/ui/safety/UnsavedChangesDialog.tsx": 3,
-  "src/fixed-pages/editor/ui/toolbar/MdxFormatBar.tsx": 19,
-  "src/fixed-pages/editor/ui/workbench/EditorLanguageBadges.tsx": 7,
-  "src/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader.tsx": 20,
-  "src/fixed-pages/editor/ui/workbench/MdxWorkbenchHeader.tsx": 1
+  "src/fixed-pages/editor/ui/toolbar/MdxFormatBar.tsx": 19
 }
