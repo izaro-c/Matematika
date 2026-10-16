@@ -47,7 +47,7 @@ Archivos: `src/app/routes/AppRouter.tsx`, `ui/page/useEditorNavigationFlow.ts`, 
 ## Fase 2 — i18n de la interfaz del editor (3–4 sesiones cortas)
 
 - [x] 2.1 🧠 Convención: espacio de nombres `editor.*` en `src/i18n/types.ts`, dividido por áreas (`editor.nav`, `editor.mdx`, `editor.diagram`, `editor.save`, `editor.errors`). El motor (`session/`, `save/`, `document/`) devuelve **códigos** (`{ code: 'save.noChanges', params }`) en lugar de frases, y la interfaz los traduce.
-- [ ] 2.2 🔧 Script de protección `scripts/editor/check-hardcoded-strings.ts` (o una regla de `editor:safety:check`) que falle con literales visibles en JSX bajo `src/fixed-pages/editor/ui/**`. Al principio admite una lista de excepciones y la lista va encogiendo.
+- [x] 2.2 🔧 Script de protección `scripts/editor/check-hardcoded-strings.ts` (o una regla de `editor:safety:check`) que falle con literales visibles en JSX bajo `src/fixed-pages/editor/ui/**`. Al principio admite una lista de excepciones y la lista va encogiendo.
 - [ ] 2.3 🔧 Migración por lotes, una carpeta por sesión: (a) `ui/page`, `ui/landing` y `ui/workbench`; (b) `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components`; (c) `diagrams/ui/**`; (d) los mensajes de `useEditorCore.ts`.
 - [ ] 2.4 🔧 Revisión del euskera de las claves nuevas (memoria *basque-i18n-care*: `-ko` delante del sustantivo y sin sufijos pegados a numerales en las plantillas).
 
@@ -57,6 +57,11 @@ Decisiones tomadas en 2.1:
 - Plurales y variantes documento/diagrama: se elige el código (`…One`/`…Other`, `document…`/`diagram…`), nunca se concatenan palabras.
 - Implementación de referencia: `save/saveCapability.ts` (resumen, botón de guardar y confirmación de avisos), con sus consumidores (`MdxWorkbenchHeader`, `WorkbenchHeader`, `MdxWorkbench` y `DiagramWorkbench`). `useEditorCore` (`message` y `SaveAttemptResult.reason`) sigue con cadenas: lo migra la 2.3(d).
 - Se ha añadido la clave que faltaba, `editor.mdx.toolbar` (la usaba `MdxFormatBar`). La convención está resumida en `src/fixed-pages/editor/README.md`.
+
+Decisiones tomadas en 2.2:
+- Análisis con el AST de TypeScript (no regex): texto JSX y atributos `title`, `placeholder`, `aria-label`, `alt`, `label`, `description`, `tooltip`, además de literales como hijos (`{cond ? 'a b' : 'c d'}`). Cubre `ui/**` y `diagrams/ui/**`.
+- Lista de excepciones = `scripts/editor/hardcoded-strings-baseline.json` (archivo → nº de literales; ahora 84 archivos y 1335 literales, más que el cálculo inicial porque cuenta también `diagrams/ui` y los atributos con condicionales o plantillas). Solo puede bajar (`--update` rechaza subirlo salvo `--allow-growth`); tras cada lote de 2.3 ejecutar `npm run editor:i18n:baseline`.
+- Integrado en `npm run editor:safety:check`.
 
 Archivos: `src/i18n/types.ts`, `src/i18n/languages/{es,eu,en}.ts` y la carpeta del lote. ⚠️ Esos archivos tienen ahora cambios sin confirmar (barra lateral axiomática): haz el commit antes de empezar.
 
@@ -105,3 +110,4 @@ Distinguir siempre el **idioma de la interfaz** (`:lang` de la URL) del **idioma
 |---|---|---|---|
 | 2026-10-16 | 1 | (este commit) | URL como fuente de verdad; pruebas en `tests/features/editor/navigation/editorUrlModel.test.ts`. Falta probarla a mano en el navegador. |
 | 2026-10-16 | 2.1 | (este commit) | Claves `editor.*` agrupadas por áreas; `EditorMessage` y `translateEditorText`; `saveCapability` migrado. Pruebas en `tests/features/editor/i18n/`. |
+| 2026-10-16 | 2.2 | (este commit) | `scripts/editor/check-hardcoded-strings.ts` + baseline; integrado en `editor:safety:check`. Pruebas en `tests/features/editor/i18n/`. |
