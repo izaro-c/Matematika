@@ -7,6 +7,7 @@ import { DiagramRenderer } from '@/diagrams/public';
 import { toEditorModel } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
+import { useI18n } from '@/i18n';
 
 type DiagramModule = Record<string, unknown>;
 type DiagramComponent = React.ComponentType;
@@ -64,11 +65,16 @@ export interface DiagramRuntimePreviewProps {
   isolateMathStore?: boolean;
 }
 
+interface PreviewMessage {
+  key: string;
+  params?: Record<string, string | number>;
+}
+
 interface PreviewState {
   key: string;
   component: DiagramComponent | null;
   spec: VisualDiagramModel | null;
-  message: string;
+  message: PreviewMessage;
 }
 
 function findSpec(module: DiagramModule, componentName: string): VisualDiagramModel | null {
@@ -82,12 +88,12 @@ function findSpec(module: DiagramModule, componentName: string): VisualDiagramMo
   return null;
 }
 
-function pendingMessage(filePath: string | null, componentName: string, hasLoader: boolean): string {
-  if (hasLoader) return 'Cargando vista previa…';
+function pendingMessage(filePath: string | null, componentName: string, hasLoader: boolean): PreviewMessage {
+  if (hasLoader) return { key: 'editor.diagramEditors.previewLoading' };
   if (!filePath && !componentName) {
-    return 'La vista previa real está disponible para diagramas guardados del catálogo.';
+    return { key: 'editor.diagramEditors.previewOnlyCatalog' };
   }
-  return 'Este recurso no pertenece al catálogo de diagramas finales.';
+  return { key: 'editor.diagramEditors.previewNotInCatalog' };
 }
 
 export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
@@ -98,6 +104,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
   height = '280px',
   isolateMathStore = true,
 }) => {
+  const { t } = useI18n();
   const previewKey = `${filePath ?? ''}:${componentName}`;
   const loader = resolveDiagramLoader(diagramModules, filePath, componentName);
   const stepSync = useDiagramStepSync();
@@ -106,7 +113,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
     key: '',
     component: null,
     spec: null,
-    message: 'Cargando vista previa…',
+    message: { key: 'editor.diagramEditors.previewLoading' },
   });
 
   useEffect(() => {
@@ -122,11 +129,11 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
             key: previewKey,
             component: null,
             spec,
-            message: 'No se encontró el componente exportado para la vista previa.',
+            message: { key: 'editor.diagramEditors.previewComponentMissing' },
           });
           return;
         }
-        setLoadedPreview({ key: previewKey, component: next, spec, message: '' });
+        setLoadedPreview({ key: previewKey, component: next, spec, message: { key: '' } });
       })
       .catch(error => {
         if (active) {
@@ -134,7 +141,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
             key: previewKey,
             component: null,
             spec: null,
-            message: `No se pudo cargar la vista previa: ${error instanceof Error ? error.message : String(error)}`,
+            message: { key: 'editor.diagramEditors.previewLoadFailed', params: { error: error instanceof Error ? error.message : String(error) } },
           });
         }
       });
@@ -171,7 +178,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
   }, [spec, stepSync]);
 
   if (!currentPreview.component && !currentPreview.spec) {
-    return <p className="p-4 text-xs text-carbon/60" role="status">{currentPreview.message}</p>;
+    return <p className="p-4 text-xs text-carbon/60" role="status">{currentPreview.message.params ? t(currentPreview.message.key, currentPreview.message.params) : t(currentPreview.message.key)}</p>;
   }
 
   const Component = currentPreview.component;
@@ -210,7 +217,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
           />
         )}
         <p className="px-1 font-mono text-[9px] text-carbon/50 select-none">
-          {spec.objects.length} objetos · {spec.steps.length} pasos · {spec.objects.filter(item => item.target && item.objectType !== 'control').length + spec.groups.filter(item => item.target).length} vínculos MDX
+          {t('editor.diagramEditors.previewStats', { objects: spec.objects.length, steps: spec.steps.length, links: spec.objects.filter(item => item.target && item.objectType !== 'control').length + spec.groups.filter(item => item.target).length })}
         </p>
       </div>
     );
@@ -233,7 +240,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
     <div className="w-full" data-testid="diagram-runtime-preview">
       <ErrorBoundary
         key={`${filePath}:${componentName}`}
-        fallback={<p className="p-4 text-xs text-granada" role="alert">El diagrama guardado produjo un error al renderizarse.</p>}
+        fallback={<p className="p-4 text-xs text-granada" role="alert">{t('editor.diagramEditors.savedRenderError')}</p>}
       >
         {bounded}
       </ErrorBoundary>

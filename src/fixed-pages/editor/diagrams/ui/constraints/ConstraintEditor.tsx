@@ -28,6 +28,7 @@ import {
 import { withResolvedPointConstraints } from '@/diagrams/geometry/layout/scene';
 import { objectKind } from '@/diagrams';
 import { IconClose, IconPlus, IconTrash } from '../toolbar/WorkbenchIcons';
+import { useI18n } from '@/i18n';
 
 interface ConstraintEditorProps {
   model: VisualDiagramModel | null;
@@ -40,6 +41,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
   selectedId,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   const [showAddModal, setShowAddModal] = useState(false);
   const [newKind, setNewKind] = useState<RelationIntent>('fixed');
   const [newTargetId, setNewTargetId] = useState<string>('');
@@ -120,10 +122,10 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
       <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
         <div>
           <h3 className="font-bold text-[10px] uppercase tracking-wider text-canela">
-            Restricciones {selectedId ? `(${selectedId})` : `Totales (${constraints.length})`}
+            {selectedId ? t('editor.diagramConstraints.constraintsOf', { id: selectedId }) : t('editor.diagramConstraints.constraintsTotal', { count: constraints.length })}
           </h3>
           <p className="text-[10px] text-carbon/55">
-            Relaciones geométricas, posicionales y algebraicas.
+            {t('editor.diagramConstraints.constraintsSubtitle')}
           </p>
         </div>
         <button
@@ -135,15 +137,15 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
           className="flex items-center space-x-1 px-2.5 py-1 bg-canela text-lienzo rounded font-bold hover:bg-canela/90 transition-all cursor-pointer text-[11px] shadow-2xs"
         >
           <IconPlus className="w-3 h-3" />
-          <span>Restricción</span>
+          <span>{t('editor.diagramConstraints.constraint')}</span>
         </button>
       </div>
 
       {activeConstraints.length === 0 ? (
         <p className="text-center py-4 text-carbon/40 italic">
           {selectedId
-            ? `El objeto "${selectedId}" no tiene restricciones activas.`
-            : 'No hay ninguna restricción definida en este diagrama.'}
+            ? t('editor.diagramConstraints.noActiveConstraints', { id: selectedId })
+            : t('editor.diagramConstraints.noConstraints')}
         </p>
       ) : (
         <div className="space-y-2">
@@ -165,7 +167,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       checked={c.enabled !== false}
                       onChange={() => handleToggleConstraint(c.id)}
                       className="rounded text-canela border-carbon/20 focus:ring-canela cursor-pointer"
-                      title={c.enabled === false ? 'Activar restricción' : 'Desactivar restricción'}
+                      title={c.enabled === false ? t('editor.diagramConstraints.enableConstraint') : t('editor.diagramConstraints.disableConstraint')}
                     />
                     <span className="font-bold text-xs text-carbon">{c.label || presentation.label}</span>
                   </div>
@@ -173,7 +175,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                     type="button"
                     onClick={() => handleDeleteConstraint(c.id)}
                     className="text-granada hover:bg-granada/10 p-1 rounded text-[10px] cursor-pointer"
-                    title="Eliminar restricción"
+                    title={t('editor.diagramConstraints.deleteConstraint')}
                   >
                     <IconTrash className="w-3.5 h-3.5" />
                   </button>
@@ -183,7 +185,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
 
                 <div className="space-y-1.5 bg-carbon/5 p-2 rounded-lg border border-carbon/10">
                   <span className="text-[10px] font-bold text-carbon/70 block">
-                    Referencias ({c.refs.length} / {presentation.refs}):
+                    {t('editor.diagramConstraints.referencesCount', { current: c.refs.length, total: presentation.refs })}
                   </span>
                   <div className="space-y-1">
                     {(slots.length > 0 ? slots : c.refs.map((_, index) => ({ index, label: getConstraintSlotLabel(c.kind, index) }))).map(slot => {
@@ -196,7 +198,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       return (
                         <div key={slotIdx} className="flex flex-col space-y-0.5 text-[10px] bg-lienzo p-1.5 rounded border border-carbon/10">
                           <div className="flex items-center justify-between">
-                            <span className="font-mono text-canela font-bold">Slot {slotIdx + 1}:</span>
+                            <span className="font-mono text-canela font-bold">{t('editor.diagramConstraints.slotN', { n: slotIdx + 1 })}</span>
                             <span className="text-[10px] text-carbon/60 font-medium italic">
                               {slot.label || getConstraintSlotLabel(c.kind, slotIdx)}
                             </span>
@@ -206,7 +208,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                             onChange={e => handleUpdateSlotRef(c.id, slotIdx, e.target.value)}
                             className="w-full bg-carbon/5 border border-carbon/20 rounded px-1.5 py-1 text-xs text-carbon font-mono font-bold"
                           >
-                            {!refId && <option value="">-- Seleccionar --</option>}
+                            {!refId && <option value="">{t('editor.diagramConstraints.select')}</option>}
                             {options.map(cand => (
                               <option key={cand.id} value={cand.id}>
                                 {cand.label || cand.id} ({cand.id})
@@ -221,7 +223,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
 
                 {c.kind === 'distance' && (
                   <label className="mt-2 block text-[10px] font-bold text-carbon/70">
-                    Distancia
+                    {t('editor.diagramConstraints.distance')}
                     <input
                       type="number"
                       min={0}
@@ -238,7 +240,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
 
                 {c.kind === 'expression' && (
                   <label className="mt-2 block text-[10px] font-bold text-carbon/70">
-                    Expresión
+                    {t('editor.diagramConstraints.expression')}
                     <input
                       type="text"
                       value={c.expression ?? ''}
@@ -250,7 +252,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
 
                 {c.kind === 'insideArea' && (
                   <label className="mt-2 block text-[10px] font-bold text-carbon/70">
-                    Pertenencia al área
+                    {t('editor.diagramConstraints.areaMembership')}
                     <select
                       value={c.areaMembership ?? 'interior'}
                       onChange={e => handleUpdateConstraintField(c.id, {
@@ -258,15 +260,15 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       })}
                       className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs"
                     >
-                      <option value="interior">Interior</option>
-                      <option value="boundary">Perímetro o frontera</option>
+                      <option value="interior">{t('editor.diagramConstraints.interior')}</option>
+                      <option value="boundary">{t('editor.diagramConstraints.perimeterOrBoundary')}</option>
                     </select>
                   </label>
                 )}
 
                 {c.kind === 'sameSide' && (
                   <label className="mt-2 block text-[10px] font-bold text-carbon/70">
-                    Lado
+                    {t('editor.diagramConstraints.side')}
                     <select
                       value={c.side ?? 1}
                       onChange={e => handleUpdateConstraintField(c.id, {
@@ -274,8 +276,8 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       })}
                       className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs"
                     >
-                      <option value={1}>Positivo</option>
-                      <option value={-1}>Negativo</option>
+                      <option value={1}>{t('editor.diagramConstraints.positive')}</option>
+                      <option value={-1}>{t('editor.diagramConstraints.negative')}</option>
                     </select>
                   </label>
                 )}
@@ -295,7 +297,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-xs p-4">
           <div className="w-full max-w-md bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-4 space-y-3 font-serif">
             <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
-              <h3 className="font-bold text-sm text-carbon">Nueva Restricción</h3>
+              <h3 className="font-bold text-sm text-carbon">{t('editor.diagramConstraints.newConstraint')}</h3>
               <button
                 type="button"
                 onClick={() => setShowAddModal(false)}
@@ -306,20 +308,20 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-carbon/80 mb-1">Objeto Principal de la Restricción</label>
+              <label className="block text-xs font-bold text-carbon/80 mb-1">{t('editor.diagramConstraints.constraintMainObject')}</label>
               <select
                 value={newTargetId}
                 onChange={e => setNewTargetId(e.target.value)}
                 className="w-full bg-carbon/5 border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon"
               >
-                <optgroup label="Puntos">
+                <optgroup label={t('editor.diagramConstraints.points')}>
                   {points.map(p => (
                     <option key={p.id} value={p.id}>
                       {p.label || p.id} ({p.id})
                     </option>
                   ))}
                 </optgroup>
-                <optgroup label="Elementos / Segmentos">
+                <optgroup label={t('editor.diagramConstraints.elementsSegments')}>
                   {elements.map(e => (
                     <option key={e.id} value={e.id}>
                       {e.label || e.id} ({objectKind(e)})
@@ -330,7 +332,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-carbon/80 mb-1">Tipo de Restricción</label>
+              <label className="block text-xs font-bold text-carbon/80 mb-1">{t('editor.diagramConstraints.constraintType')}</label>
               <select
                 value={newKind}
                 onChange={e => setNewKind(e.target.value as RelationIntent)}
@@ -365,10 +367,10 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
             </div>
 
             <div className="bg-carbon/5 p-2 rounded-lg border border-carbon/10 text-[11px]">
-              <span className="font-bold block text-carbon">Información y compatibilidad:</span>
+              <span className="font-bold block text-carbon">{t('editor.diagramConstraints.informationAndCompatibility')}</span>
               <p className="text-carbon/70">{constraintPresentation(newKind).description}</p>
               <p className="text-carbon/50 mt-1">
-                Requiere {constraintPresentation(newKind).refs} referencia(s). Se auto-completarán únicamente con objetos compatibles existentes.
+                {t(constraintPresentation(newKind).refs === 1 ? 'editor.diagramConstraints.requiresRefsOne' : 'editor.diagramConstraints.requiresRefsOther', { count: constraintPresentation(newKind).refs })}
               </p>
             </div>
 
@@ -378,14 +380,14 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                 onClick={() => setShowAddModal(false)}
                 className="px-3 py-1.5 border border-carbon/20 rounded-lg text-xs font-bold text-carbon/70 hover:bg-carbon/5 cursor-pointer"
               >
-                Cancelar
+                {t('editor.diagramConstraints.cancel')}
               </button>
               <button
                 type="button"
                 onClick={handleAddConstraint}
                 className="px-4 py-1.5 bg-canela text-lienzo rounded-lg text-xs font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
               >
-                Crear Restricción
+                {t('editor.diagramConstraints.createConstraint')}
               </button>
             </div>
           </div>

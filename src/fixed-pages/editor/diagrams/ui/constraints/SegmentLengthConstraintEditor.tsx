@@ -12,6 +12,8 @@ import { findPositionedPoint } from '../../model/constraints/relationModel';
 import { modelElements } from '../../model/scene/objectLists';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 interface SegmentLengthConstraintEditorProps {
   model: VisualDiagramModel;
@@ -24,6 +26,7 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
   segment,
   onModelEdit,
 }) => {
+  const { t } = useI18n();
   const existing = equalLengthConstraintForSegment(model, segment.id);
   const endpoints = editableSegmentEndpoints(model, segment.id);
   const existingRoles = existing?.type === 'equal-length' ? equalLengthRoles(existing, model.objects) : undefined;
@@ -44,36 +47,36 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
 
   let disabledReason = '';
   if (endpoints.length === 0) {
-    disabledReason = 'Este segmento no tiene extremos móviles (sus puntos son fijos o derivados).';
+    disabledReason = t('editor.diagramConstraints.segmentNoMovableEndpoints');
   } else if (allReferenceSegments.length === 0) {
-    disabledReason = 'No hay otros segmentos en el diagrama para copiar su longitud.';
+    disabledReason = t('editor.diagramConstraints.noOtherSegments');
   } else if (referenceSegments.length === 0) {
-    disabledReason = 'El extremo seleccionado pertenece a todos los demás segmentos disponibles.';
+    disabledReason = t('editor.diagramConstraints.endpointInAllSegments');
   } else if (!ready) {
-    disabledReason = 'Seleccione un extremo móvil válido y un segmento de referencia.';
+    disabledReason = t('editor.diagramConstraints.selectEndpointAndSegment');
   }
 
   return (
     <DiagramPanel
-      title="Igualar longitudes"
+      title={t('editor.diagramConstraints.equalizeLengths')}
       badge={existing ? 'Configurada' : 'Opcional'}
       collapsible
       open={expanded}
       onOpenChange={setExpanded}
     >
         <p className="text-[10px] leading-relaxed text-carbon/60">
-          Este segmento conservará la longitud de otro. Un extremo queda como ancla y el otro se ajusta automáticamente.
+          {t('editor.diagramConstraints.lengthEqualityHint')}
         </p>
         <ol className="space-y-1 text-[10px] leading-relaxed text-carbon/55">
-          <li><strong>1.</strong> Elija el extremo que puede moverse.</li>
-          <li><strong>2.</strong> Elija el segmento cuya longitud se copiará.</li>
+          <li><strong>1.</strong> {t('editor.diagramConstraints.lengthEqualityStepEndpoint')}</li>
+          <li><strong>2.</strong> {t('editor.diagramConstraints.lengthEqualityStepSource')}</li>
         </ol>
 
         {endpoints.length > 0 && referenceSegments.length > 0 ? (
           <>
-            <DiagramFormField label="Extremo que se ajusta" className="p-0 border-0">
+            <DiagramFormField label={t('editor.diagramConstraints.endpointThatAdjusts')} className="p-0 border-0">
               <select
-                aria-label="Extremo que se ajusta para igualar longitudes"
+                aria-label={t('editor.diagramConstraints.lengthAdjustableEndpointAria')}
                 className={diagramInputClassName}
                 value={movingEndpointId}
                 onChange={event => setMovingEndpointId(event.target.value)}
@@ -81,9 +84,9 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
                 {endpoints.map(point => <option key={point.id} value={point.id}>{point.label} ({point.id})</option>)}
               </select>
             </DiagramFormField>
-            <DiagramFormField label="Segmento de referencia" className="p-0 border-0">
+            <DiagramFormField label={t('editor.diagramConstraints.referenceSegment')} className="p-0 border-0">
               <select
-                aria-label="Segmento de referencia para igualar longitudes"
+                aria-label={t('editor.diagramConstraints.lengthReferenceAria')}
                 className={diagramInputClassName}
                 value={effectiveSourceSegmentId}
                 onChange={event => setSourceSegmentId(event.target.value)}
@@ -93,7 +96,7 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
             </DiagramFormField>
             {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
-                Se ajustará <strong>{movingEndpoint?.label}</strong>; <strong>{anchor?.label}</strong> quedará como ancla. La longitud será la de <strong>{sourceSegment?.label}</strong>.
+                {renderRichText(t('editor.diagramConstraints.lengthEqualityPreview', { moving: movingEndpoint?.label ?? '', anchor: anchor?.label ?? '', source: sourceSegment?.label ?? '' }), { b: c => <strong>{c}</strong> })}
               </p>
             ) : disabledReason ? (
               <p className="rounded bg-ocre/10 px-2 py-1.5 text-[10px] leading-relaxed text-ocre font-medium" aria-live="polite">
@@ -106,7 +109,7 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
               disabled={!ready}
               onClick={() => onModelEdit(setEqualLengthConstraint(model, segment.id, movingEndpointId, effectiveSourceSegmentId))}
             >
-              {existing ? 'Actualizar igualdad de longitudes' : 'Mantener la misma longitud'}
+              {existing ? t('editor.diagramConstraints.updateLengthEquality') : t('editor.diagramConstraints.keepTheSameLength')}
             </DiagramButton>
             {existing && (
               <DiagramButton
@@ -114,13 +117,13 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
                 fullWidth
                 onClick={() => onModelEdit(removeConstraintFromModel(model, existing.id))}
               >
-                Quitar igualdad de longitudes
+                {t('editor.diagramConstraints.removeLengthEquality')}
               </DiagramButton>
             )}
           </>
         ) : (
           <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
-            {disabledReason || 'Se necesitan otro segmento y al menos un extremo móvil. Los puntos fijos o derivados no pueden ser el extremo ajustado.'}
+            {disabledReason || t('editor.diagramConstraints.lengthEqualityUnavailable')}
           </p>
         )}
     </DiagramPanel>

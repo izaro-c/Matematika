@@ -8,6 +8,7 @@ import { BoardHost } from './BoardHost';
 import { CanvasChrome } from './CanvasChrome';
 import { isPublicationMode, type CanvasFrameMode } from './canvasFrameMode';
 import { useFitScale } from './useFitScale';
+import { useI18n } from '@/i18n';
 
 export interface CanvasStageProps {
   model: VisualDiagramModel | null;
@@ -64,6 +65,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
   onToggleGrid,
   onToggleAxis,
 }) => {
+  const { t } = useI18n();
   const stageRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const publication = isPublicationMode(frameMode);
@@ -72,7 +74,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
   if (!model) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-lienzo text-mora/60 font-serif italic">
-        Cargando lienzo…
+        {t('editor.diagramCanvas.loadingCanvas')}
       </div>
     );
   }
@@ -87,7 +89,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       fallback={(
         <div className="flex h-full w-full items-center justify-center p-6 font-serif text-carbon">
           <p className="border-l-4 border-granada pl-4 text-carbon/70 italic" role="alert">
-            No se pudo renderizar el diagrama.
+            {t('editor.diagramCanvas.renderError')}
           </p>
         </div>
       )}

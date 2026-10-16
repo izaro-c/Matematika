@@ -1,5 +1,6 @@
 import React from 'react';
 import type { TemplateKind } from '../../model/types';
+import { useI18n } from '@/i18n';
 
 interface PresetsModalProps {
   isOpen: boolean;
@@ -7,11 +8,12 @@ interface PresetsModalProps {
   onSelectPreset: (kind: TemplateKind, title: string) => void;
 }
 
-const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.ReactNode }[] = [
+const PRESETS: { kind: TemplateKind; title: string; modelTitle: string; desc: string; icon: React.ReactNode }[] = [
   {
     kind: 'lienzo-inicial',
-    title: 'Lienzo Vacío',
-    desc: 'Un lienzo limpio con un punto inicial A(0,0) para comenzar desde cero.',
+    title: 'editor.diagramModals.presetBlankTitle',
+    modelTitle: 'Lienzo Vacío',
+    desc: 'editor.diagramModals.presetBlankDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
@@ -20,8 +22,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'triangulo-deformable',
-    title: 'Triángulo General',
-    desc: 'Triángulo ABC interactivo con tres vértices arrastrabiles y ángulo en C.',
+    title: 'editor.diagramModals.presetTriangleTitle',
+    modelTitle: 'Triángulo General',
+    desc: 'editor.diagramModals.presetTriangleDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 3l9 17H3L12 3z" />
@@ -30,8 +33,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'circunferencia',
-    title: 'Circunferencia & Radio',
-    desc: 'Centro O fijo, punto A periférico arrastrable y segmento de radio OA.',
+    title: 'editor.diagramModals.presetCircleTitle',
+    modelTitle: 'Circunferencia & Radio',
+    desc: 'editor.diagramModals.presetCircleDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="8" strokeWidth={1.8} />
@@ -41,8 +45,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'eje-cartesiano',
-    title: 'Eje Cartesiano con Deslizador',
-    desc: 'Plano cartesiano con rejilla, eje de coordenadas y parámetro slider t.',
+    title: 'editor.diagramModals.presetAxisTitle',
+    modelTitle: 'Eje Cartesiano con Deslizador',
+    desc: 'editor.diagramModals.presetAxisDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 12h18M12 3v18" />
@@ -52,8 +57,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'lugar-geometrico',
-    title: 'Lugar Geométrico (Mediatriz)',
-    desc: 'Punto P restringido a deslizarse sobre la mediatriz equidistante de A y B.',
+    title: 'editor.diagramModals.presetLocusTitle',
+    modelTitle: 'Lugar Geométrico (Mediatriz)',
+    desc: 'editor.diagramModals.presetLocusDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <line x1="4" y1="18" x2="20" y2="18" strokeWidth={1.8} />
@@ -64,8 +70,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'cuadrilatero-clasificable',
-    title: 'Cuadrilátero & Diagonal',
-    desc: 'Polígono de 4 lados con vértices libres y diagonal auxiliar discontinua.',
+    title: 'editor.diagramModals.presetQuadTitle',
+    modelTitle: 'Cuadrilátero & Diagonal',
+    desc: 'editor.diagramModals.presetQuadDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 6l14-2 3 14-15 3z" />
@@ -75,8 +82,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'demostracion-pasos',
-    title: 'Demostración por Pasos',
-    desc: 'Figura preparada con 3 pasos explicativos y resaltados progresivos.',
+    title: 'editor.diagramModals.presetStepsTitle',
+    modelTitle: 'Demostración por Pasos',
+    desc: 'editor.diagramModals.presetStepsDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 5l7 7-7 7" />
@@ -86,8 +94,9 @@ const PRESETS: { kind: TemplateKind; title: string; desc: string; icon: React.Re
   },
   {
     kind: 'modelo-estatico',
-    title: 'Modelo Fijo (No Interactivo)',
-    desc: 'Diagrama estático con puntos fijos sin interacción directa de arrastre.',
+    title: 'editor.diagramModals.presetFixedTitle',
+    modelTitle: 'Modelo Fijo (No Interactivo)',
+    desc: 'editor.diagramModals.presetFixedDesc',
     icon: (
       <svg className="w-6 h-6 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <rect x="5" y="11" width="14" height="10" rx="2" strokeWidth={1.8} />
@@ -102,6 +111,7 @@ export const PresetsModal: React.FC<PresetsModalProps> = ({
   onClose,
   onSelectPreset,
 }) => {
+  const { t } = useI18n();
   if (!isOpen) return null;
 
   return (
@@ -109,8 +119,8 @@ export const PresetsModal: React.FC<PresetsModalProps> = ({
       <div role="dialog" aria-modal="true" className="w-full max-w-2xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div>
-            <h2 className="font-serif font-bold text-base text-carbon">Galería de Plantillas Iniciales</h2>
-            <p className="text-xs text-mora/70 italic">Elige un esquema predefinido para acelerar la creación visual.</p>
+            <h2 className="font-serif font-bold text-base text-carbon">{t('editor.diagramModals.initialTemplatesGallery')}</h2>
+            <p className="text-xs text-mora/70 italic">{t('editor.diagramModals.presetsSubtitle')}</p>
           </div>
           <button
             type="button"
@@ -127,7 +137,7 @@ export const PresetsModal: React.FC<PresetsModalProps> = ({
               key={p.kind}
               type="button"
               onClick={() => {
-                onSelectPreset(p.kind, p.title);
+                onSelectPreset(p.kind, p.modelTitle);
                 onClose();
               }}
               className="flex items-start space-x-3 p-3 rounded-xl border border-carbon/15 bg-carbon/5 hover:border-canela hover:shadow-md transition-all text-left group cursor-pointer"
@@ -137,9 +147,9 @@ export const PresetsModal: React.FC<PresetsModalProps> = ({
               </div>
               <div>
                 <h4 className="font-serif font-bold text-sm text-carbon group-hover:text-canela transition-colors">
-                  {p.title}
+                  {t(p.title)}
                 </h4>
-                <p className="text-[11px] text-mora/80 leading-relaxed mt-0.5">{p.desc}</p>
+                <p className="text-[11px] text-mora/80 leading-relaxed mt-0.5">{t(p.desc)}</p>
               </div>
             </button>
           ))}

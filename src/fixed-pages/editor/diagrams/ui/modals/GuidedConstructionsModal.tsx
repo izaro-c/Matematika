@@ -4,6 +4,7 @@ import type { ConstructionKind, ConstructionRefKey, VisualDiagramModel } from '.
 import { CONSTRUCTION_OPTIONS } from '../../model';
 import { applyGuidedConstruction, validConstructionRefs } from '../../model/tools/guidedConstructions';
 import { IconClose, IconSparkles } from '../toolbar/WorkbenchIcons';
+import { useI18n } from '@/i18n';
 
 interface GuidedConstructionsModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
   onClose,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   const [kind, setKind] = useState<ConstructionKind>('mediatriz');
   const [refs, setRefs] = useState<Record<ConstructionRefKey, string>>({
     a: '',
@@ -40,7 +42,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
 
   const handleCreate = () => {
     if (!validConstructionRefs(kind, refs)) {
-      setError('Elige puntos distintos para cada ranura.');
+      setError(t('editor.diagramModals.distinctPointsError'));
       return;
     }
     const { model: nextModel } = applyGuidedConstruction(model, kind, refs);
@@ -54,7 +56,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
         <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
           <div className="flex items-center space-x-2 text-canela font-bold text-sm">
             <IconSparkles className="w-4 h-4" />
-            <h3>Construcciones Guiadas</h3>
+            <h3>{t('editor.diagramModals.guidedConstructions')}</h3>
           </div>
           <button
             type="button"
@@ -66,12 +68,12 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
         </div>
 
         <p className="text-xs text-carbon/70 leading-relaxed">
-          Genera automáticamente los puntos auxiliares, arcos, mediatrices o bisectrices necesarios conservándolos como objetos totalmente editables.
+          {t('editor.diagramModals.guidedIntro')}
         </p>
 
         <div>
           <label className="block text-xs font-bold text-carbon/80 mb-1">
-            Tipo de Construcción:
+            {t('editor.diagramModals.constructionType')}
           </label>
           <select
             value={kind}
@@ -101,7 +103,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
                 onChange={e => setRefs(prev => ({ ...prev, [slot.key]: e.target.value }))}
                 className="w-full bg-carbon/5 border border-carbon/20 rounded-lg p-2 text-xs text-carbon"
               >
-                <option value="">Seleccione un punto del diagrama...</option>
+                <option value="">{t('editor.diagramModals.selectPointPlaceholder')}</option>
                 {modelPoints(model).map(p => (
                   <option key={p.id} value={p.id}>
                     {p.label || p.id} ({p.id})
@@ -120,7 +122,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
             onClick={onClose}
             className="px-3 py-1.5 rounded-xl border border-carbon/20 text-xs font-bold text-carbon/70 hover:bg-carbon/5 cursor-pointer"
           >
-            Cancelar
+            {t('editor.diagramModals.cancel')}
           </button>
           <button
             type="button"
@@ -129,7 +131,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
             className="flex items-center space-x-1.5 px-4 py-1.5 rounded-xl bg-canela text-lienzo text-xs font-bold shadow-xs hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer"
           >
             <IconSparkles />
-            <span>Crear {selectedOption.label}</span>
+            <span>{t('editor.diagramModals.createItem', { label: selectedOption.label })}</span>
           </button>
           </div>
         </div>

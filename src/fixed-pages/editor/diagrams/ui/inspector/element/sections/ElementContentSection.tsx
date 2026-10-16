@@ -8,6 +8,8 @@ import { parseOptionalNumber } from '../../../workbenchSelection';
 import { objectLabelVisible, objectStyle, sceneReferences } from '@/diagrams';
 import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { elementExpression, elementText, labelVisiblePatch, setting, settingPatch, stylePatch, withElementText, withElementTextRules } from '../../elementSettings';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 /** Contenido: infoPanel usa el editor completo (bloques + variantes); resto texto/reglas, cotas, medidas, posición/offset y subtítulo. */
 export const ElementContentSection: React.FC<ElementPanelProps> = ({
@@ -16,6 +18,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   const kind = elementKind(element);
   const style = objectStyle(element);
   if (element.objectType === 'annotation' && element.variant === 'panel') {
@@ -88,11 +91,11 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Título / Contenido del texto */}
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-          {isCota ? 'Etiqueta / Plantilla de Cota' : isMedida ? 'Etiqueta / Plantilla de Medida' : 'Título / Texto'}
+          {isCota ? t('editor.diagramInspector.dimensionLabelTemplate') : isMedida ? t('editor.diagramInspector.measureLabelTemplate') : t('editor.diagramInspector.titleText')}
         </label>
         <input
           type="text"
-          aria-label="Título o texto"
+          aria-label={t('editor.diagramInspector.titleOrText')}
           value={elementText(element) || setting(element, 'title') || element.label || ''}
           onChange={e =>
             {
@@ -101,11 +104,11 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
             }
           }
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-bold text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
-          placeholder={isCota || isMedida ? '{value} o etiqueta personalizada...' : 'Título o texto...'}
+          placeholder={isCota || isMedida ? t('editor.diagramInspector.orCustomLabel', { value: '{value}' }) : t('editor.diagramInspector.titleOrTextPlaceholder')}
         />
         {(isCota || isMedida) && (
           <p className="mt-1 text-[9px] text-carbon/50">
-            Use <code className="rounded bg-carbon/5 px-1 py-0.5 font-mono text-[9px]">{'{value}'}</code> para insertar el valor numérico dinámico.
+            {renderRichText(t('editor.diagramInspector.useValuePlaceholder', { value: '{value}' }), { code: c => <code className="rounded bg-carbon/5 px-1 py-0.5 font-mono text-[9px]">{c}</code> })}
           </p>
         )}
       </div>
@@ -113,14 +116,14 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Visibilidad de la etiqueta en el lienzo */}
       <div className="flex items-center justify-between rounded-lg border border-carbon/10 bg-carbon/[0.02] p-2">
         <div>
-          <span className="block text-[11px] font-bold text-carbon">Mostrar etiqueta en el lienzo</span>
+          <span className="block text-[11px] font-bold text-carbon">{t('editor.diagramInspector.showLabelOnCanvas')}</span>
           <span className="block text-[9px] text-carbon/50">
-            {isLabelVisible ? 'Visible en el dibujo geométrico' : 'Oculta en el dibujo'}
+            {isLabelVisible ? t('editor.diagramInspector.visibleInDrawing') : t('editor.diagramInspector.hiddenInTheDrawing')}
           </span>
         </div>
         <input
           type="checkbox"
-          aria-label="Mostrar etiqueta en el lienzo"
+          aria-label={t('editor.diagramInspector.showLabelOnCanvas')}
           checked={isLabelVisible}
           onChange={e => onUpdateElement(element.id, labelVisiblePatch(e.target.checked))}
           className="h-4 w-4 rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
@@ -131,14 +134,14 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {isLabelVisible && (
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            {isCota ? 'Tamaño de la cota (px)' : isMedida ? 'Tamaño de la medida (px)' : 'Tamaño de la etiqueta (px)'}
+            {isCota ? t('editor.diagramInspector.dimensionSizePx') : isMedida ? t('editor.diagramInspector.measureSizePx') : t('editor.diagramInspector.labelSizePx')}
           </label>
           <input
             type="number"
             min="6"
             max="72"
             step="1"
-            aria-label={isCota ? 'Tamaño de cota' : isMedida ? 'Tamaño de medida' : 'Tamaño de etiqueta'}
+            aria-label={isCota ? t('editor.diagramInspector.dimensionSize') : isMedida ? t('editor.diagramInspector.measureSize') : t('editor.diagramInspector.labelSize')}
             value={style?.labelSize ?? (isCota ? 14 : 16)}
             onChange={e =>
               onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, isCota ? 14 : 16), }))
@@ -153,12 +156,12 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
         <div className="space-y-2 rounded-lg border border-canela/20 bg-canela/[0.03] p-2.5">
           <div className="flex items-center justify-between">
             <div>
-              <span className="block text-[11px] font-bold text-canela">Mostrar en subtítulo</span>
-              <span className="block text-[9px] text-carbon/50">Información bajo el título del diagrama</span>
+              <span className="block text-[11px] font-bold text-canela">{t('editor.diagramInspector.showInSubtitle')}</span>
+              <span className="block text-[9px] text-carbon/50">{t('editor.diagramInspector.headerInfoLabel')}</span>
             </div>
             <input
               type="checkbox"
-              aria-label="Mostrar como subtítulo en la cabecera"
+              aria-label={t('editor.diagramInspector.showAsSubtitle')}
               checked={isInHeaderReadings}
               onChange={e => toggleHeaderReading(e.target.checked)}
               className="h-4 w-4 rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
@@ -168,10 +171,10 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
           {isInHeaderReadings && currentReading && (
             <div className="pt-2 border-t border-canela/15 space-y-1.5">
               <label className="block text-[10px] font-bold text-carbon/70">
-                Formato en subtítulo
+                {t('editor.diagramInspector.subtitleFormat')}
               </label>
               <select
-                aria-label="Formato en subtítulo"
+                aria-label={t('editor.diagramInspector.subtitleFormat')}
                 value={currentReading.presentation}
                 onChange={e => {
                   if (!onUpdateModel) return;
@@ -192,13 +195,13 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 }}
                 className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
               >
-                <option value="label-value">Nombre y valor (ej. AB: 5 cm)</option>
-                <option value="value">Solo el valor (ej. 5 cm)</option>
-                <option value="equality">Igualdad condicional (ej. AB = BC = 5 cm)</option>
+                <option value="label-value">{t('editor.diagramInspector.formatNameAndValue')}</option>
+                <option value="value">{t('editor.diagramInspector.formatValueOnly')}</option>
+                <option value="equality">{t('editor.diagramInspector.formatConditionalEquality')}</option>
               </select>
               {currentReading.presentation === 'equality' && (
                 <p className="text-[9px] text-canela/90 leading-tight">
-                  La igualdad solo se mostrará combinada cuando los valores coincidan; si difieren, se mostrarán por separado.
+                  {t('editor.diagramInspector.equalityCombinedHint')}
                 </p>
               )}
             </div>
@@ -210,17 +213,17 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {isCota && (
         <div className="space-y-2.5 pt-2 border-t border-carbon/10">
           <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-            Ajustes de Cota
+            {t('editor.diagramInspector.dimensionSettings')}
           </span>
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Distancia de la referencia
+                {t('editor.diagramInspector.distanceFromTheReference')}
               </label>
               <input
                 type="number"
                 step="0.05"
-                aria-label="Distancia u offset de cota"
+                aria-label={t('editor.diagramInspector.dimensionDistanceOrOffset')}
                 value={setting(element, 'offset') ?? 0.35}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.35)))
@@ -230,13 +233,13 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Precisión (decimales)
+                {t('editor.diagramInspector.precisionDecimals')}
               </label>
               <input
                 type="number"
                 min="0"
                 max="12"
-                aria-label="Precisión decimal"
+                aria-label={t('editor.diagramInspector.decimalPrecision')}
                 value={setting(element, 'precision') ?? 2}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
@@ -248,29 +251,29 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Unidad
+                {t('editor.diagramInspector.unit')}
               </label>
               <input
                 type="text"
-                aria-label="Unidad de cota"
+                aria-label={t('editor.diagramInspector.dimensionUnit')}
                 value={setting(element, 'unit') ?? ''}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
-                placeholder="ej. cm, m, °"
+                placeholder={t('editor.diagramInspector.unitPlaceholder')}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño (px)
+                {t('editor.diagramInspector.sizePx')}
               </label>
               <input
                 type="number"
                 min="6"
                 max="72"
                 step="1"
-                aria-label="Tamaño de cota"
+                aria-label={t('editor.diagramInspector.dimensionSize')}
                 value={style?.labelSize ?? 14}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
@@ -286,16 +289,16 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {isMedida && (
         <div className="space-y-2.5 pt-2 border-t border-carbon/10">
           <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-            Ajustes de Medida
+            {t('editor.diagramInspector.measureSettings')}
           </span>
           <div className="grid grid-cols-3 gap-2">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Unidad
+                {t('editor.diagramInspector.unit')}
               </label>
               <input
                 type="text"
-                aria-label="Unidad de medida"
+                aria-label={t('editor.diagramInspector.measureUnit')}
                 value={setting(element, 'unit') ?? 'cm'}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
@@ -305,13 +308,13 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Precisión (decimales)
+                {t('editor.diagramInspector.precisionDecimals')}
               </label>
               <input
                 type="number"
                 min="0"
                 max="12"
-                aria-label="Precisión de medida"
+                aria-label={t('editor.diagramInspector.measurePrecision')}
                 value={setting(element, 'precision') ?? 2}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
@@ -321,14 +324,14 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño (px)
+                {t('editor.diagramInspector.sizePx')}
               </label>
               <input
                 type="number"
                 min="6"
                 max="72"
                 step="1"
-                aria-label="Tamaño de medida"
+                aria-label={t('editor.diagramInspector.measureSize')}
                 value={style?.labelSize ?? 16}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 16), }))
@@ -344,12 +347,12 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {hasParentRef && !isCota && (
         <div className="space-y-2 pt-2 border-t border-carbon/10">
           <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-            Posición respecto a la referencia ({refs.join(', ')})
+            {t('editor.diagramInspector.positionRelativeToRef', { refs: refs.join(', ') })}
           </span>
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="text-[11px] font-bold text-carbon/75">
-                Posición a lo largo del elemento ({Math.round((Number(setting(element, 'anchorParameter') ?? 0.5)) * 100)}%)
+                {t('editor.diagramInspector.positionAlongElement', { percent: Math.round((Number(setting(element, 'anchorParameter') ?? 0.5)) * 100) })}
               </label>
             </div>
             <input
@@ -357,7 +360,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               min="0"
               max="1"
               step="0.01"
-              aria-label="Posición a lo largo del elemento padre"
+              aria-label={t('editor.diagramInspector.positionAlongParentLabel')}
               value={setting(element, 'anchorParameter') ?? 0.5}
               onChange={e =>
                 onUpdateElement(element.id, settingPatch('anchorParameter', parseOptionalNumber(e.target.value, 0.5)))
@@ -371,17 +374,17 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Desplazamiento / Offsets finos de texto (X, Y) para TODOS los elementos de texto/cota/medida */}
       <div className="space-y-2 pt-2 border-t border-carbon/10">
         <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-          Desplazamiento fino del texto (Offset X, Y)
+          {t('editor.diagramInspector.fineTextOffset')}
         </span>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="block text-[10px] font-bold text-carbon/75 mb-1">
-              Offset X
+              {t('editor.diagramInspector.offsetX')}
             </label>
             <input
               type="number"
               step="0.05"
-              aria-label="Desplazamiento X respecto al padre"
+              aria-label={t('editor.diagramInspector.xOffsetFromParent')}
               value={style?.textOffset?.[0] ?? (kind === 'label' ? 0.04 : isCota ? 0 : 0.25)}
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ textOffset: [
@@ -394,12 +397,12 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
           </div>
           <div>
             <label className="block text-[10px] font-bold text-carbon/75 mb-1">
-              Offset Y
+              {t('editor.diagramInspector.offsetY')}
             </label>
             <input
               type="number"
               step="0.05"
-              aria-label="Desplazamiento Y respecto al padre"
+              aria-label={t('editor.diagramInspector.yOffsetFromParent')}
               value={style?.textOffset?.[1] ?? (kind === 'label' ? 0.04 : isCota ? 0 : 0.35)}
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ textOffset: [

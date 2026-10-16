@@ -8,6 +8,7 @@ import { syncStepObjectVisibility } from '../workbenchSelection';
 import { DiagramStepObjectAppearanceEditor } from '../DiagramStepObjectAppearanceEditor';
 import { IconPlus, IconTrash, IconCopy, IconChevronUp, IconChevronDown } from './WorkbenchIcons';
 import { InspectorExpandableBlock } from '../inspector/InspectorExpandableBlock';
+import { useI18n } from '@/i18n';
 
 interface WorkbenchStepsEditorProps {
   model: VisualDiagramModel | null;
@@ -25,9 +26,9 @@ interface WorkbenchStepsEditorProps {
 }
 
 const EMPHASIS_COLORS: Record<string, { label: string; bg: string; text: string }> = {
-  none: { label: 'Normal', bg: 'bg-carbon/10 text-carbon/70', text: 'text-carbon/60' },
-  primary: { label: 'Principal', bg: 'bg-canela text-lienzo', text: 'text-canela' },
-  secondary: { label: 'Secundario', bg: 'bg-terracota text-lienzo', text: 'text-terracota' },
+  none: { label: 'editor.diagramToolbar.emphasisNormal', bg: 'bg-carbon/10 text-carbon/70', text: 'text-carbon/60' },
+  primary: { label: 'editor.diagramToolbar.emphasisPrimary', bg: 'bg-canela text-lienzo', text: 'text-canela' },
+  secondary: { label: 'editor.diagramToolbar.emphasisSecondary', bg: 'bg-terracota text-lienzo', text: 'text-terracota' },
 };
 
 const EMPHASIS_SEQUENCE: DiagramStepEmphasis[] = ['none', 'primary', 'secondary'];
@@ -46,6 +47,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
   onSelectObjects,
   onTogglePickingStepIndex,
 }) => {
+  const { t } = useI18n();
   const [bulkObjectId, setBulkObjectId] = useState('');
 
   if (!model) return null;
@@ -113,8 +115,8 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
     <div className="p-3 space-y-3 text-xs font-serif text-carbon">
       <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
         <div>
-          <h3 className="font-bold text-sm text-carbon">Pasos de Demostración</h3>
-          <p className="text-[11px] text-carbon/50 italic">Explicación interactiva secuencia a secuencia.</p>
+          <h3 className="font-bold text-sm text-carbon">{t('editor.diagramToolbar.proofSteps')}</h3>
+          <p className="text-[11px] text-carbon/50 italic">{t('editor.diagramToolbar.interactiveStepByStep')}</p>
         </div>
         <button
           type="button"
@@ -122,15 +124,15 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
           className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-lg font-bold shadow-2xs hover:bg-canela/90 transition-all cursor-pointer"
         >
           <IconPlus className="w-3.5 h-3.5" />
-          <span>Añadir Paso</span>
+          <span>{t('editor.diagramToolbar.addStep')}</span>
         </button>
       </div>
 
       {/* Acción Masiva */}
-      <InspectorExpandableBlock title="Acción Masiva: Visibilidad" defaultOpen={false}>
+      <InspectorExpandableBlock title={t('editor.diagramToolbar.bulkActionVisibility')} defaultOpen={false}>
         <div className="space-y-2">
           <label className="block text-[10px] font-bold text-carbon/70 uppercase tracking-wider">
-            Objeto objetivo para visibilidad global
+            {t('editor.diagramToolbar.bulkTargetAria')}
           </label>
           <div className="flex items-center space-x-1.5">
             <select
@@ -150,9 +152,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 if (effectiveBulkId) onToggleObjectInAllSteps(effectiveBulkId, true);
               }}
               className="px-2.5 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-[10px] hover:bg-canela/90 transition-colors cursor-pointer"
-              title="Mostrar en todos los pasos"
+              title={t('editor.diagramToolbar.showInAllSteps')}
             >
-              Mostrar
+              {t('editor.diagramToolbar.show')}
             </button>
             <button
               type="button"
@@ -160,9 +162,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 if (effectiveBulkId) onToggleObjectInAllSteps(effectiveBulkId, false);
               }}
               className="px-2.5 py-1.5 bg-granada text-lienzo rounded-lg font-bold text-[10px] hover:bg-granada/90 transition-colors cursor-pointer"
-              title="Ocultar en todos los pasos"
+              title={t('editor.diagramToolbar.hideInAllSteps')}
             >
-              Ocultar
+              {t('editor.diagramToolbar.hide')}
             </button>
           </div>
         </div>
@@ -170,13 +172,13 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
 
       {steps.length === 0 ? (
         <div className="p-6 text-center text-carbon/50 border border-dashed border-carbon/20 rounded-xl bg-carbon/5">
-          <p className="italic">No hay pasos creados en este diagrama.</p>
+          <p className="italic">{t('editor.diagramToolbar.noSteps')}</p>
           <button
             type="button"
             onClick={onAddStep}
             className="mt-2 text-canela underline font-bold cursor-pointer"
           >
-            Crear el primer paso
+            {t('editor.diagramToolbar.createTheFirstStep')}
           </button>
         </div>
       ) : (
@@ -205,7 +207,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       value={st.label || ''}
                       onChange={(e) => onUpdateStep(idx, { label: e.target.value })}
                       className="font-bold text-xs bg-transparent border-b border-transparent hover:border-carbon/20 focus:border-canela focus:outline-none px-1 py-0.5 text-carbon truncate"
-                      placeholder={`Paso ${idx + 1}`}
+                      placeholder={t('editor.diagramToolbar.stepN', { n: idx + 1 })}
                     />
                   </div>
 
@@ -215,7 +217,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       onClick={() => handleMoveStep(st.id, -1)}
                       disabled={idx === 0}
                       className="p-1 text-carbon/60 hover:text-carbon disabled:opacity-20 cursor-pointer"
-                      title="Mover paso arriba"
+                      title={t('editor.diagramToolbar.moveStepUp')}
                     >
                       <IconChevronUp className="w-3.5 h-3.5" />
                     </button>
@@ -224,7 +226,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       onClick={() => handleMoveStep(st.id, 1)}
                       disabled={idx === steps.length - 1}
                       className="p-1 text-carbon/60 hover:text-carbon disabled:opacity-20 cursor-pointer"
-                      title="Mover paso abajo"
+                      title={t('editor.diagramToolbar.moveStepDown')}
                     >
                       <IconChevronDown className="w-3.5 h-3.5" />
                     </button>
@@ -232,7 +234,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       type="button"
                       onClick={() => handleDuplicateStep(st.id)}
                       className="p-1 text-canela hover:bg-canela/10 rounded cursor-pointer"
-                      title="Duplicar paso"
+                      title={t('editor.diagramToolbar.duplicateStep')}
                     >
                       <IconCopy className="w-3.5 h-3.5" />
                     </button>
@@ -243,9 +245,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
                         isInitial ? 'bg-ocre text-carbon' : 'bg-carbon/10 text-carbon/70 hover:bg-carbon/20'
                       }`}
-                      title="Garantizar que solo un paso es el estado inicial"
+                      title={t('editor.diagramToolbar.initialStepTitle')}
                     >
-                      {isInitial ? 'Inicial' : 'Hacer Inicial'}
+                      {isInitial ? t('editor.diagramToolbar.initial') : t('editor.diagramToolbar.makeInitial')}
                     </button>
 
                     <button
@@ -255,14 +257,14 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                         isActive ? 'bg-canela text-lienzo' : 'bg-carbon/10 text-carbon hover:bg-carbon/20'
                       }`}
                     >
-                      {isActive ? 'Viendo' : 'Ver'}
+                      {isActive ? t('editor.diagramToolbar.viewing') : t('editor.diagramToolbar.view')}
                     </button>
 
                     <button
                       type="button"
                       onClick={() => onDeleteStep(idx)}
                       className="text-granada hover:bg-granada/10 p-1 rounded-md text-[10px] font-bold cursor-pointer"
-                      title="Eliminar paso"
+                      title={t('editor.diagramToolbar.deleteStep')}
                     >
                       <IconTrash className="w-3.5 h-3.5" />
                     </button>
@@ -274,12 +276,12 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                   onChange={(e) => onUpdateStep(idx, { description: e.target.value })}
                   className="w-full bg-lienzo border border-carbon/15 rounded-lg p-2 text-xs text-carbon focus:ring-1 focus:ring-canela mb-2 placeholder-carbon/30"
                   rows={2}
-                  placeholder="Descripción explicativa del paso..."
+                  placeholder={t('editor.diagramToolbar.stepDescriptionPlaceholder')}
                 />
 
                 <div className="flex items-center justify-between gap-2 mb-2 bg-lienzo/50 px-2 py-1.5 rounded-lg border border-carbon/10">
                   <label className="text-[10px] font-bold text-carbon/70 uppercase tracking-wider">
-                    Transición (ms)
+                    {t('editor.diagramToolbar.transitionMs')}
                   </label>
                   <div className="flex items-center gap-1.5">
                     <input
@@ -294,14 +296,14 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       placeholder="1800"
                       className="w-20 bg-lienzo border border-carbon/20 rounded px-2 py-0.5 text-xs text-right text-carbon focus:border-canela focus:outline-none"
                     />
-                    <span className="text-[10px] text-carbon/40 font-mono">ms</span>
+                    <span className="text-[10px] text-carbon/40 font-mono">{'ms'}</span>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1">
                     <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
-                      Objetos visibles & Énfasis ({st.visibleTargets?.length || 0})
+                      {t('editor.diagramToolbar.visibleObjectsEmphasis', { count: st.visibleTargets?.length || 0 })}
                     </label>
                     <div className="flex flex-wrap items-center gap-1">
                       {onTogglePickingStepIndex && (
@@ -313,9 +315,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
                               : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
                           }`}
-                          title="Hacer clic en elementos del lienzo para alternar su visibilidad en este paso"
+                          title={t('editor.diagramToolbar.pickVisibilityHint')}
                         >
-                          {pickingStepIndex === idx ? 'Seleccionando en lienzo...' : 'Seleccionar en lienzo'}
+                          {pickingStepIndex === idx ? t('editor.diagramToolbar.selectingOnTheCanvas') : t('editor.diagramToolbar.selectOnTheCanvas')}
                         </button>
                       )}
                       {selectedIds.length > 0 && (
@@ -330,9 +332,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               onUpdateStep(idx, nextStep);
                             }}
                             className="px-1.5 py-0.5 bg-canela/10 text-canela hover:bg-canela/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-canela/30"
-                            title="Mostrar en este paso los elementos seleccionados en lienzo"
+                            title={t('editor.diagramToolbar.showSelectedInStepTitle')}
                           >
-                            + Mostrar sel. ({selectedIds.length})
+                            {t('editor.diagramToolbar.showSelected', { count: selectedIds.length })}
                           </button>
                           <button
                             type="button"
@@ -344,9 +346,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               onUpdateStep(idx, nextStep);
                             }}
                             className="px-1.5 py-0.5 bg-granada/10 text-granada hover:bg-granada/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-granada/30"
-                            title="Ocultar en este paso los elementos seleccionados en lienzo"
+                            title={t('editor.diagramToolbar.hideSelectedInStepTitle')}
                           >
-                            - Ocultar sel. ({selectedIds.length})
+                            {t('editor.diagramToolbar.hideSelected', { count: selectedIds.length })}
                           </button>
                         </>
                       )}
@@ -384,9 +386,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               type="button"
                               onClick={() => handleCycleEmphasis(idx, obj.id)}
                               className={`px-1.5 py-0.2 rounded text-[9px] font-bold cursor-pointer transition-all ${empInfo.bg}`}
-                              title={`Cambiar énfasis (Actual: ${empInfo.label})`}
+                              title={t('editor.diagramToolbar.changeEmphasis', { label: t(empInfo.label) })}
                             >
-                              {empInfo.label}
+                              {t(empInfo.label)}
                             </button>
                           )}
                         </div>
@@ -398,7 +400,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 {modelSliders(model).length > 0 && (
                   <div className="mt-2 p-2 bg-lienzo/50 rounded-lg border border-carbon/10 space-y-1.5">
                     <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
-                      Valores de deslizadores en este paso
+                      {t('editor.diagramToolbar.stepSliderValues')}
                     </label>
                     <div className="space-y-1.5">
                       {modelSliders(model).map(sl => {
@@ -449,7 +451,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                                     });
                                   }}
                                   className="text-carbon/40 hover:text-granada p-0.5 text-[10px] cursor-pointer"
-                                  title="Restablecer a valor base"
+                                  title={t('editor.diagramToolbar.resetToBaseValue')}
                                 >
                                   ×
                                 </button>
@@ -465,7 +467,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                   <div className="mt-2 rounded-xl border border-canela/25 bg-canela/5 p-2.5">
                     <div className="mb-2 flex items-center justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-canela">
-                        Apariencia de {selectedObject.label || selectedObject.id}
+                        {t('editor.diagramToolbar.appearanceOf', { name: selectedObject.label || selectedObject.id })}
                       </span>
                       <label className="flex items-center gap-1 text-[10px] font-bold text-carbon cursor-pointer">
                         <input
@@ -482,7 +484,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                           })}
                           className="rounded text-canela focus:ring-canela cursor-pointer"
                         />
-                        Interactivo
+                        {t('editor.diagramToolbar.interactive')}
                       </label>
                     </div>
                     <DiagramStepObjectAppearanceEditor

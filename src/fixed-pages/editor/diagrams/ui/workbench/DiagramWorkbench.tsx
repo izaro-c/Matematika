@@ -70,6 +70,7 @@ import { MdxLinkModal } from '../modals/MdxLinkModal';
 import { GuidedConstructionsModal } from '../modals/GuidedConstructionsModal';
 import { DiagramConfirmDialog } from '../DiagramConfirmDialog';
 import { DiagramDivergenceDialog } from '../DiagramDivergenceDialog';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 import {
   buildEditorSaveCapabilityFromDiagram,
   warningSaveConfirmCopy,
@@ -818,12 +819,12 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         {navigationOpen && (
           <div
             {...navigationResize}
-            aria-label="Redimensionar explorador"
+            aria-label={t('editor.diagramWorkbench.resizeExplorer')}
             className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
           />
         )}
 
-        <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label="Lienzo del diagrama">
+        <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label={t('editor.diagramWorkbench.diagramCanvas')}>
         <CanvasStage
           model={editingModel}
           lang={diagramLang}
@@ -872,24 +873,24 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
           <>
             <div
               {...inspectorResize}
-              aria-label="Redimensionar inspector"
+              aria-label={t('editor.diagramWorkbench.resizeInspector')}
               className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
             />
             <aside
-              aria-label="Panel de detalles"
+              aria-label={t('editor.diagramWorkbench.detailsPanel')}
               className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 flex max-w-[92vw] flex-col overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
               style={{ width: inspectorWidth }}
             >
           <WorkbenchAsideTabs
-            aria-label="Secciones del inspector de diagrama"
+            aria-label={t('editor.diagramWorkbench.diagramInspectorSections')}
             tabs={[
-              { id: 'scene', label: `Objetos (${objectCount})` },
-              { id: 'layers', label: 'Capas y Grupos' },
-              { id: 'properties', label: 'Propiedades' },
-              { id: 'steps', label: `Pasos (${(model?.steps || []).length})` },
+              { id: 'scene', label: t('editor.diagramWorkbench.tabObjects', { count: objectCount }) },
+              { id: 'layers', label: t('editor.diagramWorkbench.tabLayers') },
+              { id: 'properties', label: t('editor.diagramWorkbench.tabProperties') },
+              { id: 'steps', label: t('editor.diagramWorkbench.tabSteps', { count: (model?.steps || []).length }) },
               {
                 id: 'diagnostics',
-                label: 'Avisos',
+                label: t('editor.diagramWorkbench.tabWarnings'),
                 endAdornment: errorCount > 0 ? (
                   <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
                 ) : undefined,
@@ -928,7 +929,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
             {activeTab === 'properties' && isTranslating && (
               <p className="mx-4 mt-3 rounded-xl border border-canela/30 bg-canela/10 px-3 py-2 text-[11px] leading-snug text-carbon/75" role="status">
-                Editando textos en <strong>{diagramLang.toUpperCase()}</strong>: etiquetas, textos y variantes de paneles se guardan como traducción (vacío = texto en castellano). Los demás cambios afectan a todas las lenguas.
+                {renderRichText(t('editor.diagramWorkbench.editingTextsIn', { language: diagramLang.toUpperCase() }), { b: c => <strong>{c}</strong> })}
               </p>
             )}
             {activeTab === 'properties' && (
@@ -1061,14 +1062,14 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
       <DiagramConfirmDialog
         isOpen={Boolean(pendingDeleteIds?.length)}
-        title={pendingDeleteIds?.length === 1 ? 'Eliminar objeto' : 'Eliminar selección'}
+        title={pendingDeleteIds?.length === 1 ? t('editor.diagramWorkbench.deleteObject') : t('editor.diagramWorkbench.deleteSelection')}
         message={
           pendingDeleteIds?.length === 1
-            ? `Se eliminará «${pendingDeleteIds[0]}» y sus dependientes. Esta acción se puede deshacer.`
-            : `Se eliminarán ${pendingDeleteIds?.length ?? 0} objetos y sus dependientes. Esta acción se puede deshacer.`
+            ? t('editor.diagramWorkbench.deleteOneMessage', { id: pendingDeleteIds[0] })
+            : t('editor.diagramWorkbench.deleteManyMessage', { count: pendingDeleteIds?.length ?? 0 })
         }
-        confirmLabel="Eliminar"
-        cancelLabel="Cancelar"
+        confirmLabel={t('editor.diagramWorkbench.delete')}
+        cancelLabel={t('editor.diagramWorkbench.cancel')}
         onConfirm={confirmDeleteIds}
         onCancel={() => setPendingDeleteIds(null)}
       />

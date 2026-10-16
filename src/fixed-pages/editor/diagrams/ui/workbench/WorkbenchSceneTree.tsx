@@ -8,6 +8,7 @@ import type { VisualDiagramModel } from '../../model/types';
 import { PALETTE_TOKENS } from '../inspector/paletteTokens';
 import { IconEye, IconEyeOff, IconLock, IconUnlock, IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
 import { ObjectListBatchToolbar } from '../scene/ObjectListBatchToolbar';
+import { useI18n } from '@/i18n';
 
 export interface DiagramObjectLabelProps {
   label?: string;
@@ -89,6 +90,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
   onCopySelection: _onCopySelection,
   onDeleteSelection: _onDeleteSelection,
 }) => {
+  const { t } = useI18n();
   const [openCategory, setOpenCategory] = useState<Record<string, boolean>>({
     points: true,
     derived: true,
@@ -206,7 +208,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
                 !visible ? 'opacity-40' : ''
               }`}
-              title={visible ? 'Ocultar' : 'Mostrar'}
+              title={visible ? t('editor.diagramWorkbench.hide') : t('editor.diagramWorkbench.show')}
             >
               {visible ? <IconEye /> : <IconEyeOff />}
             </button>
@@ -221,7 +223,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
                 locked ? 'text-canela opacity-100 font-bold' : 'opacity-40'
               }`}
-              title={locked ? 'Desbloquear' : 'Bloquear (fijar)'}
+              title={locked ? t('editor.diagramWorkbench.unlock') : t('editor.diagramWorkbench.lockFix')}
             >
               {locked ? <IconLock /> : <IconUnlock />}
             </button>
@@ -250,11 +252,11 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
     <div className="p-4 space-y-3 text-xs font-serif text-carbon bg-lienzo h-full overflow-y-auto">
       <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
         <div>
-          <h3 className="font-serif text-base font-bold text-carbon">Objetos de la Escena</h3>
-          <p className="text-xs italic text-carbon/50">Elementos e iteraciones en el lienzo</p>
+          <h3 className="font-serif text-base font-bold text-carbon">{t('editor.diagramWorkbench.sceneObjects')}</h3>
+          <p className="text-xs italic text-carbon/50">{t('editor.diagramWorkbench.sceneSubtitle')}</p>
         </div>
         <span className="ac-label ac-label--sm ac-label--canela select-none uppercase tracking-wider">
-          {totalObjects} {totalObjects === 1 ? 'Objeto' : 'Objetos'}
+          {t(totalObjects === 1 ? 'editor.diagramWorkbench.objectCountOne' : 'editor.diagramWorkbench.objectCountOther', { count: totalObjects })}
         </span>
       </div>
 
@@ -270,7 +272,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'points',
-          'Puntos Libres & Fijos',
+          t('editor.diagramWorkbench.freeFixedPoints'),
           points.length,
           points.map(p =>
             renderElementRow(
@@ -288,7 +290,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'derived',
-          'Puntos Derivados',
+          t('editor.diagramWorkbench.derivedPoints'),
           derivedPoints.length,
           derivedPoints.map(e =>
             renderElementRow(
@@ -305,7 +307,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'lines',
-          'Segmentos & Rectas',
+          t('editor.diagramWorkbench.segmentsLines'),
           lines.length,
           lines.map(e =>
             renderElementRow(
@@ -322,7 +324,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'circles',
-          'Círculos & Arcos',
+          t('editor.diagramWorkbench.circlesArcs'),
           circles.length,
           circles.map(e =>
             renderElementRow(
@@ -339,7 +341,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'angles',
-          'Ángulos & Marcas',
+          t('editor.diagramWorkbench.anglesMarks'),
           anglesAndMarks.length,
           anglesAndMarks.map(e =>
             renderElementRow(
@@ -356,7 +358,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'curves',
-          'Curvas & Polígonos',
+          t('editor.diagramWorkbench.curvesPolygons'),
           curvesAndAreas.length,
           curvesAndAreas.map(e =>
             renderElementRow(
@@ -373,7 +375,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'annotations',
-          'Anotaciones & Fórmulas',
+          t('editor.diagramWorkbench.annotationsFormulas'),
           annotations.length,
           annotations.map(e =>
             renderElementRow(
@@ -409,7 +411,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
         {renderCategoryBlock(
           'other',
-          'Otros Elementos',
+          t('editor.diagramWorkbench.otherElements'),
           uncategorized.length,
           uncategorized.map(e =>
             renderElementRow(

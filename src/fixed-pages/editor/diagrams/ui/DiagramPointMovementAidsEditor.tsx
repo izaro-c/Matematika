@@ -3,6 +3,7 @@ import type { PointInteraction } from '@/diagrams';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/scene/pointMovement';
 import { InspectorExpandableBlock } from './inspector/InspectorExpandableBlock';
+import { useI18n } from '@/i18n';
 
 interface DiagramPointMovementAidsEditorProps {
   model: VisualDiagramModel;
@@ -23,6 +24,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
   onInteractionChange,
   onAttractorsChange,
 }) => {
+  const { t } = useI18n();
   const interaction = point.interaction ?? {};
   const supportsMovementAids = pointSupportsMovementAids(point);
   const attractors = movementAttractors(model).filter(attractor => attractor.id !== point.id);
@@ -40,32 +42,32 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
   if (!supportsMovementAids) return null;
 
   return (
-    <InspectorExpandableBlock title="Snap y magnetismo" defaultOpen={defaultOpen}>
+    <InspectorExpandableBlock title={t('editor.diagramEditors.snapAndMagnetism')} defaultOpen={defaultOpen}>
       <p className="text-[10px] leading-relaxed text-carbon/50">
-        Ayudas opcionales durante el arrastre. No sustituyen a las relaciones geométricas.
+        {t('editor.diagramEditors.snapHint')}
       </p>
 
       <div className="space-y-2">
-        <span className={sectionLabelClass}>Snap a cuadrícula</span>
+        <span className={sectionLabelClass}>{t('editor.diagramEditors.gridSnap')}</span>
         <label className="flex items-center gap-1.5 text-xs font-bold text-carbon/80 cursor-pointer">
           <input
             type="checkbox"
-            aria-label="Ajuste a cuadrícula"
+            aria-label={t('editor.diagramEditors.snapToGrid')}
             checked={interaction.snapToGrid ?? false}
             onChange={event => onInteractionChange({ snapToGrid: event.target.checked })}
             className={`h-3.5 w-3.5 ${inspectorCheckboxClass}`}
           />
-          Ajuste a cuadrícula
+          {t('editor.diagramEditors.snapToGrid')}
         </label>
         {interaction.snapToGrid && (
           <label className={sectionLabelClass}>
-            Tamaño de celda
+            {t('editor.diagramEditors.cellSize')}
             <input
               type="number"
               min="0.01"
               max="10"
               step="0.25"
-              aria-label="Tamaño de celda para ajustar a la cuadrícula"
+              aria-label={t('editor.diagramEditors.gridCellAria')}
               className={inspectorInputClass}
               value={interaction.snapSize ?? 0.5}
               onChange={event => onInteractionChange({ snapSize: Math.max(0.01, Number(event.target.value)) })}
@@ -75,9 +77,9 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
       </div>
 
       <div className="space-y-2 pt-1 border-t border-carbon/10">
-        <span className={sectionLabelClass}>Magnetismo hacia formas</span>
+        <span className={sectionLabelClass}>{t('editor.diagramEditors.magnetismTowardsShapes')}</span>
         {selectedAttractors.length > 0 && (
-          <ol className="space-y-1.5" aria-label={`Prioridad de atractores de ${point.label}`}>
+          <ol className="space-y-1.5" aria-label={t('editor.diagramEditors.attractorPriorityOf', { label: point.label })}>
             {selectedAttractors.map((attractorId, index) => {
               const attractor = attractors.find(item => item.id === attractorId);
               return (
@@ -91,7 +93,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   <span className="flex shrink-0 gap-1">
                     <button
                       type="button"
-                      aria-label={`Subir atractor ${attractor?.label ?? attractorId}`}
+                      aria-label={t('editor.diagramEditors.moveAttractorUp', { label: attractor?.label ?? attractorId })}
                       disabled={index === 0}
                       className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors"
                       onClick={() => moveAttractor(attractorId, -1)}
@@ -100,7 +102,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                     </button>
                     <button
                       type="button"
-                      aria-label={`Bajar atractor ${attractor?.label ?? attractorId}`}
+                      aria-label={t('editor.diagramEditors.moveAttractorDown', { label: attractor?.label ?? attractorId })}
                       disabled={index === selectedAttractors.length - 1}
                       className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors"
                       onClick={() => moveAttractor(attractorId, 1)}
@@ -129,7 +131,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
               >
                 <input
                   type="checkbox"
-                  aria-label={`Usar ${element.label} como atractor`}
+                  aria-label={t('editor.diagramEditors.useAsAttractor', { label: element.label })}
                   checked={checked}
                   disabled={createsCycle}
                   tabIndex={createsCycle ? -1 : undefined}
@@ -155,7 +157,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                     </span>
                   </span>
                   {createsCycle ? (
-                    <span className="text-carbon/25"> · no disponible (ciclo)</span>
+                    <span className="text-carbon/25"> {t('editor.diagramEditors.notAvailableCycle')}</span>
                   ) : null}
                 </span>
               </label>
@@ -165,13 +167,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
         {(interaction.attractorIds?.length ?? 0) > 0 && (
           <div className="grid grid-cols-2 gap-2">
             <label className={sectionLabelClass}>
-              Atracción
+              {t('editor.diagramEditors.attraction')}
               <input
                 type="number"
                 min="0.01"
                 max="20"
                 step="0.05"
-                aria-label="Distancia de atracción"
+                aria-label={t('editor.diagramEditors.attractionDistance')}
                 className={inspectorInputClass}
                 value={interaction.attractorDistance ?? 0.4}
                 onChange={event =>
@@ -180,13 +182,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
               />
             </label>
             <label className={sectionLabelClass}>
-              Liberación
+              {t('editor.diagramEditors.release')}
               <input
                 type="number"
                 min="0.01"
                 max="20"
                 step="0.05"
-                aria-label="Distancia de liberación"
+                aria-label={t('editor.diagramEditors.releaseDistance')}
                 className={inspectorInputClass}
                 value={interaction.snatchDistance ?? 0.6}
                 onChange={event =>

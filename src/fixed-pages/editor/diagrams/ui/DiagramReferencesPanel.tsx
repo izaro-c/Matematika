@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { getDiagramUsages } from '../references/usageIndex';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 interface DiagramReferencesPanelProps {
   filePath: string | null;
@@ -12,6 +14,7 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
   diagramMode = 'diagram',
   onLinkToMdxPage,
 }) => {
+  const { t } = useI18n();
   const [mdxPath, setMdxPath] = useState('');
   const usages = useMemo(() => {
     if (!filePath) return [];
@@ -21,7 +24,7 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
   return (
     <section className="rounded border border-carbon/10 bg-lienzo p-3 h-full overflow-y-auto">
       <h4 className="ac-label ac-label--sm ac-label--soft border-b border-carbon/10 pb-1 mb-3">
-        Referencias del Diagrama
+        {t('editor.diagramEditors.diagramReferences')}
       </h4>
 
       {filePath && onLinkToMdxPage && (
@@ -35,7 +38,7 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
           }}
         >
           <label className="block text-[10px] font-bold text-carbon/55">
-            Ruta de la página MDX
+            {t('editor.diagramEditors.mdxPagePath')}
             <input
               type="text"
               value={mdxPath}
@@ -48,19 +51,19 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
             type="submit"
             className="min-h-10 rounded border border-pavo/20 bg-pavo/10 px-3 text-[10px] font-bold text-pavo hover:bg-pavo/15"
           >
-            Vincular a página MDX
+            {t('editor.diagramEditors.linkToMdxPage')}
           </button>
         </form>
       )}
 
       {usages.length === 0 ? (
         <p className="text-xs italic text-carbon/55">
-          Este diagrama no está importado ni referenciado en ninguna página MDX todavía.
+          {t('editor.diagramEditors.noReferencesNotice')}
         </p>
       ) : (
         <div className="space-y-2">
           <p className="text-[11px] text-carbon/60 mb-2">
-            Referenciado en <span className="font-bold text-carbon">{usages.length}</span> página(s):
+            {renderRichText(t(usages.length === 1 ? 'editor.diagramEditors.referencedInPagesOne' : 'editor.diagramEditors.referencedInPagesOther', { count: usages.length }), { b: content => <span className="font-bold text-carbon">{content}</span> })}
           </p>
           <ul className="space-y-1.5">
             {usages.map((u, i) => (

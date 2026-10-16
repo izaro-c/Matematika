@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useI18n } from '@/i18n';
 import type { ReferencePickSession } from './referencePickTypes';
 import { ReferencePickContext } from './useReferencePick';
 
 export const ReferencePickProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { t } = useI18n();
   const [session, setSession] = useState<ReferencePickSession | null>(null);
   const [rejectMessage, setRejectMessage] = useState<string | null>(null);
 
@@ -25,9 +27,9 @@ export const ReferencePickProvider: React.FC<{ children: React.ReactNode }> = ({
       return true;
     }
     session.onReject?.(id);
-    setRejectMessage('Ese objeto no es válido para esta relación.');
+    setRejectMessage(t('editor.diagramConstraints.invalidReferenceObject'));
     return true;
-  }, [session]);
+  }, [session, t]);
 
   useEffect(() => {
     if (!session) return undefined;

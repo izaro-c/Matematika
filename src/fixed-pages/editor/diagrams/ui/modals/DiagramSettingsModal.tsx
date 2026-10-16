@@ -2,6 +2,7 @@ import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramMode } from '@/diagrams';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
+import { useI18n } from '@/i18n';
 
 interface DiagramSettingsModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
   onClose,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   if (!isOpen || !model) return null;
   const updateViewportValue = (
     key: 'bounds' | 'home',
@@ -34,8 +36,8 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
       <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 text-carbon">
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div>
-            <h2 className="font-serif font-bold text-base text-carbon">Configuración Global del Diagrama</h2>
-            <p className="text-xs text-mora/70 italic">Edita el título, modo, notas explicativas y lienzo.</p>
+            <h2 className="font-serif font-bold text-base text-carbon">{t('editor.diagramModals.globalDiagramSettings')}</h2>
+            <p className="text-xs text-mora/70 italic">{t('editor.diagramModals.settingsSubtitle')}</p>
           </div>
           <button
             type="button"
@@ -49,7 +51,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
         <div className="p-5 space-y-4 text-xs font-serif text-carbon max-h-[75vh] overflow-y-auto">
           {/* Título del Diagrama */}
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-1">Título Principal</label>
+            <label className="block text-[11px] font-bold text-carbon/70 mb-1">{t('editor.diagramModals.mainTitle')}</label>
             <input
               type="text"
               value={model.title || ''}
@@ -60,32 +62,32 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
 
           {/* Notas explicativas / Ayuda */}
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-1">Nota del Diagrama (Instrucciones para el estudiante)</label>
+            <label className="block text-[11px] font-bold text-carbon/70 mb-1">{t('editor.diagramModals.diagramNoteLabel')}</label>
             <textarea
               value={model.note || ''}
               onChange={(e) => onUpdateModel({ note: e.target.value }, 'Editar nota del diagrama')}
               className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
               rows={3}
-              placeholder="Ejemplo: Arrastre los vértices A y B para comprobar que el área permanece constante."
+              placeholder={t('editor.diagramModals.diagramNotePlaceholder')}
             />
           </div>
 
           {/* Categoría y Modo de Publicación */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-carbon/70 mb-1">Modo de Publicación</label>
+              <label className="block text-[11px] font-bold text-carbon/70 mb-1">{t('editor.diagramModals.publicationMode')}</label>
               <select
                 value={model.mode || 'simulation'}
                 onChange={(e) => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
                 className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
               >
-                <option value="simulation">Simulación (Arrastrable por el estudiante)</option>
-                <option value="diagram">Diagrama Fijo (Demostración estática)</option>
-                <option value="inline">Inline (Compacto para texto)</option>
+                <option value="simulation">{t('editor.diagramModals.modeSimulation')}</option>
+                <option value="diagram">{t('editor.diagramModals.fixedDiagramStaticDemonstration')}</option>
+                <option value="inline">{t('editor.diagramModals.inlineCompactForText')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-carbon/70 mb-1">Categoría del Contenido</label>
+              <label className="block text-[11px] font-bold text-carbon/70 mb-1">{t('editor.diagramModals.contentCategory')}</label>
               <input
                 type="text"
                 value={model.category || ''}
@@ -98,7 +100,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
 
           {/* Opciones del Lienzo */}
           <div className="border-t border-carbon/10 pt-3 space-y-2">
-            <h4 className="font-bold text-carbon/80 text-xs">Opciones de Fondo y Coordenadas</h4>
+            <h4 className="font-bold text-carbon/80 text-xs">{t('editor.diagramModals.backgroundAndCoordinateOptions')}</h4>
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -107,7 +109,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   onChange={(e) => onUpdateModel({ grid: e.target.checked }, 'Alternar rejilla')}
                   className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
-                <span>Mostrar Rejilla</span>
+                <span>{t('editor.diagramModals.showGrid')}</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -116,7 +118,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   onChange={(e) => onUpdateModel({ axis: e.target.checked }, 'Alternar ejes')}
                   className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
-                <span>Mostrar Ejes Cartesianos</span>
+                <span>{t('editor.diagramModals.showCartesianAxes')}</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -125,7 +127,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   onChange={(e) => onUpdateModel({ showLabels: e.target.checked }, 'Alternar etiquetas globales')}
                   className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
-                <span>Etiquetas Visibles</span>
+                <span>{t('editor.diagramModals.visibleLabels')}</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -134,20 +136,20 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   onChange={(e) => onUpdateModel({ showHeader: e.target.checked }, 'Alternar cabecera (Título y Subtítulo)')}
                   className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
-                <span>Mostrar Título y Subtítulo</span>
+                <span>{t('editor.diagramModals.showTitleAndSubtitle')}</span>
               </label>
             </div>
           </div>
 
           <div className="border-t border-carbon/10 pt-3 space-y-3">
-            <h4 className="font-bold text-carbon/80 text-xs">Vista y encuadre inicial</h4>
+            <h4 className="font-bold text-carbon/80 text-xs">{t('editor.diagramModals.initialViewAndFraming')}</h4>
             {(['bounds', 'home'] as const).map(key => (
               <fieldset key={key}>
                 <legend className="mb-1 text-[10px] font-bold text-carbon/55">
-                  {key === 'bounds' ? 'Límites actuales' : 'Vista inicial (Inicio)'}
+                  {key === 'bounds' ? t('editor.diagramModals.currentBounds') : t('editor.diagramModals.initialViewHome')}
                 </legend>
                 <div className="grid grid-cols-4 gap-2">
-                  {['x mín.', 'x máx.', 'y máx.', 'y mín.'].map((label, index) => (
+                  {[t('editor.diagramModals.xMin'), t('editor.diagramModals.xMax'), t('editor.diagramModals.yMax'), t('editor.diagramModals.yMin')].map((label, index) => (
                     <label key={label} className="text-[10px] text-carbon/55">
                       {label}
                       <input
@@ -177,7 +179,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
             onClick={onClose}
             className="px-4 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-xs hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
           >
-            Guardar en memoria y Cerrar
+            {t('editor.diagramModals.saveAndClose')}
           </button>
         </div>
       </div>

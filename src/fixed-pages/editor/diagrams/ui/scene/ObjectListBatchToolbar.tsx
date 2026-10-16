@@ -3,6 +3,7 @@ import { withPointMode } from '../../model/elements/pointModes';
 import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import { setVisibilityInAllSteps } from '../stepMatrixUtils';
+import { useI18n } from '@/i18n';
 
 interface ObjectListBatchToolbarProps {
   model: VisualDiagramModel;
@@ -17,6 +18,7 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
   onModelEdit,
   onClearSelection,
 }) => {
+  const { t } = useI18n();
   if (selectedIds.length <= 1) return null;
 
   const handleShowInAllSteps = () => {
@@ -47,13 +49,13 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
   return (
     <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-pavo/20 bg-pavo/5 p-2 text-xs">
       <div className="flex items-center gap-1">
-        <span className="font-bold text-pavo">{selectedIds.length} seleccionados</span>
+        <span className="font-bold text-pavo">{t(selectedIds.length === 1 ? 'editor.diagramScene.selectedCountOne' : 'editor.diagramScene.selectedCountOther', { count: selectedIds.length })}</span>
         <button
           type="button"
           onClick={onClearSelection}
           className="text-[10px] text-carbon/50 underline hover:text-carbon"
         >
-          Desmarcar
+          {t('editor.diagramScene.deselect')}
         </button>
       </div>
 
@@ -62,29 +64,29 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
           <>
             <button
               type="button"
-              title="Mostrar los objetos seleccionados en todos los pasos del diagrama"
+              title={t('editor.diagramScene.showInAllTitle')}
               onClick={handleShowInAllSteps}
               className="rounded border border-canela/30 bg-lienzo px-2 py-1 text-[10px] font-bold text-musgo hover:bg-canela/10"
             >
-              👁️ Mostrar en todos
+              {t('editor.diagramScene.showInAll')}
             </button>
             <button
               type="button"
-              title="Ocultar los objetos seleccionados en todos los pasos del diagrama"
+              title={t('editor.diagramScene.hideInAllTitle')}
               onClick={handleHideInAllSteps}
               className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5"
             >
-              🙈 Ocultar en todos
+              {t('editor.diagramScene.hideInAll')}
             </button>
           </>
         )}
         <button
           type="button"
-          title="Alternar bloqueo de arrastre para puntos seleccionados"
+          title={t('editor.diagramScene.toggleLockTitle')}
           onClick={handleToggleLock}
           className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/75 hover:bg-carbon/5"
         >
-          🔒 Alternar bloqueo
+          {t('editor.diagramScene.toggleLock')}
         </button>
       </div>
     </div>

@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import type { CanvasTool, ElementKind, VisualDiagramModel } from '../../model/types';
-import { KIND_LABELS } from '../../model/tools/diagramOptions';
+import type { CanvasTool, VisualDiagramModel } from '../../model/types';
 import { refsNeededForTool, toolReferenceCandidates } from '../../model';
 import { ToolDrawingIcon, IconChevronDown, IconClose, IconSparkles } from './WorkbenchIcons';
+import { useI18n } from '@/i18n';
+import { kindLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
 
 interface WorkbenchToolbarProps {
   model?: VisualDiagramModel | null;
@@ -37,6 +38,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
   onAddGliderPoint,
   gliderSupports = [],
 }) => {
+  const { t } = useI18n();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [toolQuery, setToolQuery] = useState('');
   const [gliderSupportId, setGliderSupportId] = useState('');
@@ -47,86 +49,86 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
   const toolCategories: (ToolCategory & { shortLabel?: string })[] = useMemo(() => [
     {
       id: 'points',
-      label: 'Puntos & Deslizadores',
-      shortLabel: 'Puntos',
+      label: t('editor.diagramToolbar.pointsSliders'),
+      shortLabel: t('editor.diagramToolbar.points'),
       tools: [
-        { id: 'point', toolId: 'point', name: 'Punto Libre', description: 'Haz clic en el lienzo para colocarlo' },
-        { id: 'midpoint', toolId: 'midpoint', name: 'Punto Medio', description: 'Selecciona 2 puntos' },
-        { id: 'intersection', toolId: 'intersection', name: 'Intersección', description: 'Selecciona 2 rectas, segmentos o círculos' },
-        { id: 'perpendicularFoot', toolId: 'perpendicularFoot', name: 'Pie Perpendicular', description: '2 puntos de la base + punto a proyectar' },
-        { id: 'add_glider', name: 'Punto sobre objeto', description: 'Punto que se desliza sobre una línea o curva', action: () => onAddGliderPoint?.(effectiveGliderSupportId) },
-        { id: 'add_slider', name: 'Deslizador', description: 'Variable numérica interactiva', action: onAddSliderClick },
+        { id: 'point', toolId: 'point', name: t('editor.diagramToolbar.freePointTool'), description: t('editor.diagramToolbar.placePointHint') },
+        { id: 'midpoint', toolId: 'midpoint', name: t('editor.diagramToolbar.midpoint'), description: t('editor.diagramToolbar.select2Points') },
+        { id: 'intersection', toolId: 'intersection', name: t('editor.diagramToolbar.intersection'), description: t('editor.diagramToolbar.intersectionHint') },
+        { id: 'perpendicularFoot', toolId: 'perpendicularFoot', name: t('editor.diagramToolbar.perpendicularFoot'), description: t('editor.diagramToolbar.perpendicularFootHint') },
+        { id: 'add_glider', name: t('editor.diagramToolbar.pointOnObject'), description: t('editor.diagramToolbar.gliderHint'), action: () => onAddGliderPoint?.(effectiveGliderSupportId) },
+        { id: 'add_slider', name: t('editor.diagramToolbar.slider'), description: t('editor.diagramToolbar.interactiveNumericVariable'), action: onAddSliderClick },
       ],
     },
     {
       id: 'lines',
-      label: 'Líneas & Geometría',
-      shortLabel: 'Líneas',
+      label: t('editor.diagramToolbar.linesGeometry'),
+      shortLabel: t('editor.diagramToolbar.lines'),
       tools: [
-        { id: 'guided', name: 'Construcción guiada', description: 'Mediatriz, bisectriz o circuncírculo paso a paso', action: onOpenGuidedClick },
-        { id: 'segment', toolId: 'segment', name: 'Segmento', description: 'Selecciona 2 puntos' },
-        { id: 'line', toolId: 'line', name: 'Recta', description: 'Selecciona 2 puntos' },
-        { id: 'ray', toolId: 'ray', name: 'Semirrecta', description: 'Origen y punto de paso' },
-        { id: 'circle', toolId: 'circle', name: 'Circunferencia', description: 'Centro y punto de borde' },
-        { id: 'arc', toolId: 'arc', name: 'Arco', description: 'Centro, inicio y fin' },
-        { id: 'polygon', toolId: 'polygon', name: 'Polígono', description: '≥3 vértices; finaliza con Crear polígono' },
-        { id: 'segmentExtension', toolId: 'segmentExtension', name: 'Extensión de segmento', description: '2 extremos del segmento + punto exterior' },
-        { id: 'perpendicular', toolId: 'perpendicular', name: 'Recta perpendicular', description: 'Punto y dirección' },
-        { id: 'parallel', toolId: 'parallel', name: 'Recta paralela', description: 'Punto y dirección' },
-        { id: 'angleBisector', toolId: 'angleBisector', name: 'Bisectriz', description: 'Tres puntos del ángulo' },
+        { id: 'guided', name: t('editor.diagramToolbar.guidedConstruction'), description: t('editor.diagramToolbar.guidedHint'), action: onOpenGuidedClick },
+        { id: 'segment', toolId: 'segment', name: t('editor.diagramToolbar.segment'), description: t('editor.diagramToolbar.select2Points') },
+        { id: 'line', toolId: 'line', name: t('editor.diagramToolbar.line'), description: t('editor.diagramToolbar.select2Points') },
+        { id: 'ray', toolId: 'ray', name: t('editor.diagramToolbar.ray'), description: t('editor.diagramToolbar.originAndThroughPoint') },
+        { id: 'circle', toolId: 'circle', name: t('editor.diagramToolbar.circle'), description: t('editor.diagramToolbar.centerAndEdgePoint') },
+        { id: 'arc', toolId: 'arc', name: t('editor.diagramToolbar.arc'), description: t('editor.diagramToolbar.centerStartAndEnd') },
+        { id: 'polygon', toolId: 'polygon', name: t('editor.diagramToolbar.polygon'), description: t('editor.diagramToolbar.polygonHint') },
+        { id: 'segmentExtension', toolId: 'segmentExtension', name: t('editor.diagramToolbar.segmentExtension'), description: t('editor.diagramToolbar.segmentExtensionHint') },
+        { id: 'perpendicular', toolId: 'perpendicular', name: t('editor.diagramToolbar.perpendicularLine'), description: t('editor.diagramToolbar.pointAndDirection') },
+        { id: 'parallel', toolId: 'parallel', name: t('editor.diagramToolbar.parallelLine'), description: t('editor.diagramToolbar.pointAndDirection') },
+        { id: 'angleBisector', toolId: 'angleBisector', name: t('editor.diagramToolbar.bisector'), description: t('editor.diagramToolbar.bisectorHint') },
       ],
     },
     {
       id: 'angles',
-      label: 'Ángulos & Marcas',
-      shortLabel: 'Ángulos',
+      label: t('editor.diagramToolbar.anglesMarks'),
+      shortLabel: t('editor.diagramToolbar.angles'),
       tools: [
-        { id: 'angle', toolId: 'angle', name: 'Ángulo Orientado', description: 'Tres puntos: lado 1, vértice, lado 2' },
-        { id: 'nonReflexAngle', toolId: 'nonReflexAngle', name: 'Ángulo No Cóncavo (≤180°)', description: 'Tres puntos' },
-        { id: 'rightAngle', toolId: 'rightAngle', name: 'Ángulo Recto', description: 'Tres puntos en ángulo de 90°' },
-        { id: 'congruenceMark', toolId: 'congruenceMark', name: 'Marca de Congruencia', description: 'Selecciona los extremos del segmento' },
-        { id: 'parallelMark', toolId: 'parallelMark', name: 'Marca de Paralelismo', description: 'Flecha en el segmento' },
-        { id: 'perpendicularMark', toolId: 'perpendicularMark', name: 'Marca Perpendicular', description: 'Caja de 90° en intersección' },
-        { id: 'measureTicks', toolId: 'measureTicks', name: 'Marcas de Medida (Ticks)', description: 'Marcas graduadas en el segmento' },
-        { id: 'dimensionLine', toolId: 'dimensionLine', name: 'Línea de Cota', description: 'Distancia entre 2 puntos' },
-        { id: 'measurement', toolId: 'measurement', name: 'Medición / Cota', description: 'Medición de longitud o área' },
+        { id: 'angle', toolId: 'angle', name: t('editor.diagramToolbar.orientedAngle'), description: t('editor.diagramToolbar.orientedAngleHint') },
+        { id: 'nonReflexAngle', toolId: 'nonReflexAngle', name: t('editor.diagramToolbar.nonReflexAngleName'), description: t('editor.diagramToolbar.threePoints') },
+        { id: 'rightAngle', toolId: 'rightAngle', name: t('editor.diagramToolbar.rightAngle'), description: t('editor.diagramToolbar.rightAngleHint') },
+        { id: 'congruenceMark', toolId: 'congruenceMark', name: t('editor.diagramToolbar.congruenceMark'), description: t('editor.diagramToolbar.selectTheSegmentEndpoints') },
+        { id: 'parallelMark', toolId: 'parallelMark', name: t('editor.diagramToolbar.parallelismMark'), description: t('editor.diagramToolbar.arrowOnTheSegment') },
+        { id: 'perpendicularMark', toolId: 'perpendicularMark', name: t('editor.diagramToolbar.perpendicularMark'), description: t('editor.diagramToolbar.perpendicularMarkHint') },
+        { id: 'measureTicks', toolId: 'measureTicks', name: t('editor.diagramToolbar.measureMarksTicks'), description: t('editor.diagramToolbar.ticksHint') },
+        { id: 'dimensionLine', toolId: 'dimensionLine', name: t('editor.diagramToolbar.dimensionLine'), description: t('editor.diagramToolbar.distanceBetween2Points') },
+        { id: 'measurement', toolId: 'measurement', name: t('editor.diagramToolbar.measurementDimension'), description: t('editor.diagramToolbar.lengthOrAreaMeasurement') },
       ],
     },
     {
       id: 'regions',
-      label: 'Áreas & Regiones',
-      shortLabel: 'Áreas',
+      label: t('editor.diagramToolbar.areasRegions'),
+      shortLabel: t('editor.diagramToolbar.areas'),
       tools: [
-        { id: 'halfPlane', toolId: 'halfPlane', name: 'Semiplano', description: 'Recta borde y punto del semiplano' },
-        { id: 'areaDecomposition', toolId: 'areaDecomposition', name: 'Descomposición de Área', description: 'Región sombreada por vértices' },
-        { id: 'areaIntersection', toolId: 'areaIntersection', name: 'Intersección de Áreas', description: 'Superposición de 2 regiones' },
-        { id: 'grid', toolId: 'grid', name: 'Cuadrícula Geométrica', description: 'Rejilla auxiliar' },
+        { id: 'halfPlane', toolId: 'halfPlane', name: t('editor.diagramToolbar.halfPlane'), description: t('editor.diagramToolbar.halfPlaneHint') },
+        { id: 'areaDecomposition', toolId: 'areaDecomposition', name: t('editor.diagramToolbar.areaDecomposition'), description: t('editor.diagramToolbar.regionShadedByVertices') },
+        { id: 'areaIntersection', toolId: 'areaIntersection', name: t('editor.diagramToolbar.areaIntersection'), description: t('editor.diagramToolbar.overlapOf2Regions') },
+        { id: 'grid', toolId: 'grid', name: t('editor.diagramToolbar.geometricGrid'), description: t('editor.diagramToolbar.auxiliaryGrid') },
       ],
     },
     {
       id: 'curves',
-      label: 'Curvas & Modelos',
-      shortLabel: 'Curvas',
+      label: t('editor.diagramToolbar.curvesModels'),
+      shortLabel: t('editor.diagramToolbar.curves'),
       tools: [
-        { id: 'functionCurve', toolId: 'functionCurve', name: 'Gráfica de Función f(x)', description: 'Función matemática continua' },
-        { id: 'parametricCurve', toolId: 'parametricCurve', name: 'Curva Paramétrica x(t), y(t)', description: 'Ecuaciones paramétricas' },
-        { id: 'poincareGeodesic', toolId: 'poincareGeodesic', name: 'Geodésica de Poincaré', description: 'Modelo hiperbólico del disco' },
-        { id: 'poincareArc', toolId: 'poincareArc', name: 'Arco de Poincaré', description: 'Arco hiperbólico' },
+        { id: 'functionCurve', toolId: 'functionCurve', name: t('editor.diagramToolbar.functionGraphName'), description: t('editor.diagramToolbar.continuousMathematicalFunction') },
+        { id: 'parametricCurve', toolId: 'parametricCurve', name: t('editor.diagramToolbar.parametricCurveXT'), description: t('editor.diagramToolbar.parametricEquations') },
+        { id: 'poincareGeodesic', toolId: 'poincareGeodesic', name: t('editor.diagramToolbar.poincareGeodesic'), description: t('editor.diagramToolbar.hyperbolicDiskModel') },
+        { id: 'poincareArc', toolId: 'poincareArc', name: t('editor.diagramToolbar.poincareArc'), description: t('editor.diagramToolbar.hyperbolicArc') },
       ],
     },
     {
       id: 'text',
-      label: 'Anotaciones & Explicación',
-      shortLabel: 'Anotaciones',
+      label: t('editor.diagramToolbar.annotationsExplanation'),
+      shortLabel: t('editor.diagramToolbar.annotations'),
       tools: [
-        { id: 'text', toolId: 'text', name: 'Etiqueta / Texto KaTeX', description: 'Punto ancla y contenido LaTeX' },
-        { id: 'label', toolId: 'label', name: 'Etiqueta Matemática', description: 'Símbolo matemático' },
-        { id: 'formula', toolId: 'formula', name: 'Fórmula Explicativa', description: 'Ecuaciones complejas en KaTeX' },
-        { id: 'infoPanel', toolId: 'infoPanel', name: 'Panel Informativo', description: 'Tarjeta explicativa flotante' },
-        { id: 'add_step', name: 'Nuevo Paso de Demostración', description: 'Crea un paso en la animación', action: onAddStepClick },
+        { id: 'text', toolId: 'text', name: t('editor.diagramToolbar.katexLabelText'), description: t('editor.diagramToolbar.textToolHint') },
+        { id: 'label', toolId: 'label', name: t('editor.diagramToolbar.mathLabel'), description: t('editor.diagramToolbar.mathematicalSymbol') },
+        { id: 'formula', toolId: 'formula', name: t('editor.diagramToolbar.explanatoryFormula'), description: t('editor.diagramToolbar.complexEquationsInKatex') },
+        { id: 'infoPanel', toolId: 'infoPanel', name: t('editor.diagramToolbar.infoPanel'), description: t('editor.diagramToolbar.floatingExplanatoryCard') },
+        { id: 'add_step', name: t('editor.diagramToolbar.newProofStep'), description: t('editor.diagramToolbar.addStepHint'), action: onAddStepClick },
       ],
     },
-  ], [effectiveGliderSupportId, onAddGliderPoint, onAddSliderClick, onAddStepClick, onOpenGuidedClick]);
+  ], [effectiveGliderSupportId, onAddGliderPoint, onAddSliderClick, onAddStepClick, onOpenGuidedClick, t]);
 
   const normalizedQuery = toolQuery.trim().toLocaleLowerCase('es');
   const isSearching = normalizedQuery.length > 0;
@@ -180,16 +182,16 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
   };
 
   const getToolDisplayName = (tool: CanvasTool) => {
-    if (tool === 'select') return 'Mover / Seleccionar';
-    if (tool === 'point') return 'Punto Libre';
-    return KIND_LABELS[tool as ElementKind] || tool;
+    if (tool === 'select') return t('editor.diagramToolbar.moveSelect');
+    if (tool === 'point') return t('editor.diagramToolbar.freePointTool');
+    return kindLabel(t, tool);
   };
 
   return (
     <nav data-workbench-toolbar className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all">
       <button
         type="button"
-        aria-label="Mover / Seleccionar"
+        aria-label={t('editor.diagramToolbar.moveSelect')}
         aria-pressed={activeTool === 'select'}
         onClick={() => onSelectTool('select')}
         className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
@@ -199,12 +201,12 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         }`}
       >
         <ToolDrawingIcon tool="select" className="w-3.5 h-3.5" />
-        <span>Mover</span>
+        <span>{t('editor.diagramToolbar.move')}</span>
       </button>
 
       <button
         type="button"
-        aria-label="Punto libre"
+        aria-label={t('editor.diagramToolbar.freePoint')}
         aria-pressed={activeTool === 'point'}
         onClick={() => onSelectTool('point')}
         className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
@@ -214,19 +216,19 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         }`}
       >
         <ToolDrawingIcon tool="point" className="w-3.5 h-3.5" />
-        <span>Punto Libre</span>
+        <span>{t('editor.diagramToolbar.freePointTool')}</span>
       </button>
 
       {onOpenGuidedClick && (
         <button
           type="button"
           onClick={onOpenGuidedClick}
-          aria-label="Construcciones guiadas"
+          aria-label={t('editor.diagramToolbar.guidedConstructions')}
           className="flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold text-canela bg-canela/10 hover:bg-canela/20 border border-canela/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela"
-          title="Abrir asistente de construcciones guiadas"
+          title={t('editor.diagramToolbar.openGuidedTitle')}
         >
           <IconSparkles className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Guiadas</span>
+          <span className="hidden sm:inline">{t('editor.diagramToolbar.guided')}</span>
         </button>
       )}
 
@@ -234,12 +236,12 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
 
       <div className="relative">
         <label className="flex h-8 items-center">
-          <span className="sr-only">Buscar herramienta</span>
+          <span className="sr-only">{t('editor.diagramToolbar.searchTool')}</span>
           <input
             type="search"
             value={toolQuery}
             onChange={e => setToolQuery(e.target.value)}
-            placeholder="Buscar…"
+            placeholder={t('editor.diagramToolbar.search')}
             className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs text-carbon placeholder-carbon/40 focus:bg-lienzo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela transition-colors font-sans"
           />
         </label>
@@ -247,38 +249,38 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         {isSearching && (
           <div
             role="listbox"
-            aria-label="Resultados de búsqueda"
+            aria-label={t('editor.diagramToolbar.searchResults')}
             className="absolute left-0 top-full mt-1.5 w-80 max-h-96 overflow-y-auto bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-2 z-[80] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 duration-200"
           >
             <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-carbon/10">
               <span className="text-[11px] font-bold text-carbon/70">
-                {searchHits.length} resultado{searchHits.length === 1 ? '' : 's'}
+                {t(searchHits.length === 1 ? 'editor.diagramToolbar.resultsCountOne' : 'editor.diagramToolbar.resultsCountOther', { count: searchHits.length })}
               </span>
               <button
                 type="button"
                 onClick={() => setToolQuery('')}
                 className="text-[10px] font-bold text-carbon/50 hover:text-carbon"
               >
-                Limpiar
+                {t('editor.diagramToolbar.clear')}
               </button>
             </div>
             {searchHits.length === 0 ? (
-              <p className="px-2 py-3 text-[11px] text-carbon/50 italic">Ninguna herramienta coincide.</p>
+              <p className="px-2 py-3 text-[11px] text-carbon/50 italic">{t('editor.diagramToolbar.noToolMatches')}</p>
             ) : (
               <div className="space-y-1">
-                {searchHits.map(t => {
-                  const isSelected = t.toolId ? activeTool === t.toolId : false;
-                  const drawingTool = t.id === 'add_glider' ? 'point' : t.id;
-                  const disabled = (t.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(t.toolId);
+                {searchHits.map(hit => {
+                  const isSelected = hit.toolId ? activeTool === hit.toolId : false;
+                  const drawingTool = hit.id === 'add_glider' ? 'point' : hit.id;
+                  const disabled = (hit.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(hit.toolId);
                   return (
                     <button
-                      key={`${t.categoryId}-${t.id}`}
+                      key={`${hit.categoryId}-${hit.id}`}
                       type="button"
                       role="option"
                       aria-selected={isSelected}
                       disabled={disabled}
                       onClick={() => {
-                        handleToolSelect(t.toolId, t.action);
+                        handleToolSelect(hit.toolId, hit.action);
                         setToolQuery('');
                       }}
                       className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 ${
@@ -293,13 +295,13 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-xs font-bold truncate">{t.name}</span>
+                            <span className="text-xs font-bold truncate">{hit.name}</span>
                             <span className={`text-[9px] shrink-0 ${isSelected ? 'text-lienzo/70' : 'text-carbon/45'}`}>
-                              {t.categoryLabel}
+                              {hit.categoryLabel}
                             </span>
                           </div>
                           <p className={`text-[10px] mt-0.5 truncate ${isSelected ? 'text-lienzo/80' : 'text-carbon/55'}`}>
-                            {disabled && t.toolId ? 'Faltan referencias compatibles' : t.description}
+                            {disabled && hit.toolId ? t('editor.diagramToolbar.compatibleReferencesAreMissing') : hit.description}
                           </p>
                         </div>
                       </div>
@@ -314,7 +316,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
 
       {toolCategories.map(category => {
         const isOpen = !isSearching && openMenu === category.id;
-        const hasActiveTool = category.tools.some(t => t.toolId === activeTool);
+        const hasActiveTool = category.tools.some(hit => hit.toolId === activeTool);
         const matchCount = filteredCategories.find(c => c.id === category.id)?.tools.length ?? 0;
 
         return (
@@ -356,7 +358,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                   </span>
                   <button
                     type="button"
-                    aria-label="Cerrar menú"
+                    aria-label={t('editor.diagramToolbar.closeMenu')}
                     onClick={() => setOpenMenu(null)}
                     className="text-carbon/40 hover:text-carbon text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-canela rounded"
                   >
@@ -368,14 +370,14 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                   {category.id === 'points' && onAddGliderPoint && (
                     <div className="p-2 mb-1 rounded-xl border border-carbon/10 bg-carbon/5 space-y-1.5">
                       <label className="block text-[10px] font-bold text-carbon/70 uppercase">
-                        Soporte del punto sobre objeto
+                        {t('editor.diagramToolbar.pointSupportOnObject')}
                         <select
                           value={effectiveGliderSupportId}
                           onChange={e => setGliderSupportId(e.target.value)}
                           disabled={gliderSupports.length === 0}
                           className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs disabled:opacity-40"
                         >
-                          {gliderSupports.length === 0 && <option value="">Añade antes una línea o curva</option>}
+                          {gliderSupports.length === 0 && <option value="">{t('editor.diagramToolbar.needsLineOrCurve')}</option>}
                           {gliderSupports.map(item => (
                             <option key={item.id} value={item.id}>{item.label || item.id}</option>
                           ))}
@@ -383,17 +385,17 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                       </label>
                     </div>
                   )}
-                  {category.tools.map(t => {
-                    const isSelected = t.toolId ? activeTool === t.toolId : false;
-                    const drawingTool = t.id === 'add_glider' ? 'point' : t.id;
-                    const disabled = (t.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(t.toolId);
+                  {category.tools.map(tool => {
+                    const isSelected = tool.toolId ? activeTool === tool.toolId : false;
+                    const drawingTool = tool.id === 'add_glider' ? 'point' : tool.id;
+                    const disabled = (tool.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(tool.toolId);
                     return (
                       <button
-                        key={t.id}
+                        key={tool.id}
                         type="button"
                         disabled={disabled}
                         aria-pressed={isSelected}
-                        onClick={() => handleToolSelect(t.toolId, t.action)}
+                        onClick={() => handleToolSelect(tool.toolId, tool.action)}
                         className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-canela ${
                           isSelected
                             ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
@@ -406,14 +408,14 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs font-bold truncate">{t.name}</span>
-                              {t.toolId && (
+                              <span className="text-xs font-bold truncate">{tool.name}</span>
+                              {tool.toolId && (
                                 <span
                                   className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${
                                     isSelected ? 'bg-lienzo/20 text-lienzo' : 'bg-carbon/10 text-carbon/60'
                                   }`}
                                 >
-                                  {t.toolId}
+                                  {tool.toolId}
                                 </span>
                               )}
                             </div>
@@ -422,7 +424,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                                 isSelected ? 'text-lienzo/80' : 'text-carbon/60'
                               }`}
                             >
-                              {disabled && t.toolId ? 'Faltan referencias compatibles' : t.description}
+                              {disabled && tool.toolId ? t('editor.diagramToolbar.compatibleReferencesAreMissing') : tool.description}
                             </p>
                           </div>
                         </div>
@@ -437,7 +439,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
       })}
 
       <div className="ml-auto hidden sm:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
-        <span className="text-[11px] text-carbon/50">Activa:</span>
+        <span className="text-[11px] text-carbon/50">{t('editor.diagramToolbar.active')}</span>
         <div className="flex items-center space-x-1">
           <ToolDrawingIcon tool={activeTool} className="w-3.5 h-3.5 text-canela" />
           <span className="font-bold text-canela">{getToolDisplayName(activeTool)}</span>

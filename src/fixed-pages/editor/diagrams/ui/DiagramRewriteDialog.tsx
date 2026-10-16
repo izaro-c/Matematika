@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { TEMPLATE_OPTIONS } from '../model';
 import type { TemplateKind } from '../model/types';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import { useI18n } from '@/i18n';
 
 interface DiagramRewriteDialogProps {
   path: string;
@@ -16,6 +17,7 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
   onClose,
   onStart,
 }) => {
+  const { t } = useI18n();
   const [title, setTitle] = useState(initialTitle);
   const [template, setTemplate] = useState<TemplateKind>('lienzo-inicial');
   const titleRef = useRef<HTMLInputElement>(null);
@@ -45,22 +47,22 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 id="rewrite-diagram-title" className="font-serif text-lg font-bold text-carbon">Reescribir como diagrama visual</h2>
+            <h2 id="rewrite-diagram-title" className="font-serif text-lg font-bold text-carbon">{t('editor.diagramEditors.rewriteTitle')}</h2>
             <p id="rewrite-diagram-description" className="mt-1 text-xs leading-relaxed text-carbon/55">
-              Se iniciará un modelo visual nuevo. El código existente no se interpreta ni se mezcla con la plantilla.
+              {t('editor.diagramEditors.rewriteDescription')}
             </p>
           </div>
-          <button type="button" onClick={onClose} className="rounded px-2 py-1 text-xs text-carbon/55">Cerrar</button>
+          <button type="button" onClick={onClose} className="rounded px-2 py-1 text-xs text-carbon/55">{t('editor.diagramEditors.close')}</button>
         </div>
 
         <div className="mt-4 rounded border border-ocre/25 bg-ocre/5 p-3 text-xs leading-relaxed text-carbon/65">
-          <strong className="text-ocre">La sustitución solo ocurre al guardar.</strong> En ese momento se comprobará que el archivo no ha cambiado y se creará un backup de la fuente actual.
+          <strong className="text-ocre">{t('editor.diagramEditors.rewriteOnSaveNote')}</strong> {t('editor.diagramEditors.rewriteBackupNote')}
           <span className="mt-1 block break-all font-mono text-[9px] text-carbon/45">{path}</span>
         </div>
 
         <div className="mt-4 space-y-4">
           <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-            Título del nuevo modelo
+            {t('editor.diagramEditors.newModelTitle')}
             <input
               ref={titleRef}
               value={title}
@@ -69,7 +71,7 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
             />
           </label>
           <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-            Punto de partida
+            {t('editor.diagramEditors.startingPoint')}
             <select
               value={template}
               onChange={event => setTemplate(event.target.value as TemplateKind)}
@@ -82,8 +84,8 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
         </div>
 
         <div className="mt-5 flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60">Cancelar</button>
-          <button type="submit" disabled={!valid} className="rounded bg-ocre px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40">Empezar desde cero</button>
+          <button type="button" onClick={onClose} className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60">{t('editor.diagramEditors.cancel')}</button>
+          <button type="submit" disabled={!valid} className="rounded bg-ocre px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40">{t('editor.diagramEditors.startFromScratch')}</button>
         </div>
       </form>
     </div>

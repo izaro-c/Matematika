@@ -18,11 +18,13 @@ import { ElementMarksSection } from './sections/ElementMarksSection';
 import { ElementStyleSection } from './sections/ElementStyleSection';
 import { ElementVisibilitySection } from './sections/ElementVisibilitySection';
 import { DiagramElementBehaviorEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramElementBehaviorEditor';
+import { useI18n } from '@/i18n';
 
 export const ElementInspectorPanel: React.FC<ElementPanelProps & {
   openAccordion: Record<string, boolean>;
   onToggleAccordion: (sec: string) => void;
 }> = (props) => {
+  const { t } = useI18n();
   const { model, element, onDeleteSelected, openAccordion, onToggleAccordion } = props;
   const colorToken = PALETTE_TOKENS.find(c => c.id === element.color) || PALETTE_TOKENS[4];
   const kind = elementKind(element);
@@ -35,33 +37,33 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
         onDelete={() => onDeleteSelected(element.id)}
       />
 
-      <AccordionSection sec="identity" title="Identidad & Referencias Editables" isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
+      <AccordionSection sec="identity" title={t('editor.diagramInspector.identityAndEditableReferences')} isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
         <ElementIdentitySection {...props} />
       </AccordionSection>
 
       {showsMarksSection(kind) && (
-        <AccordionSection sec="marks_congruence" title="Marcas & Anotaciones Visuales" isOpen={openAccordion.marks_congruence} onToggle={onToggleAccordion}>
+        <AccordionSection sec="marks_congruence" title={t('editor.diagramInspector.marksAndVisualAnnotations')} isOpen={openAccordion.marks_congruence} onToggle={onToggleAccordion}>
           <ElementMarksSection {...props} />
         </AccordionSection>
       )}
 
       {showsCurveSection(kind) && (
-        <AccordionSection sec="geometry" title="Fórmula de la Curva, Dominio & Relleno de Área" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
+        <AccordionSection sec="geometry" title={t('editor.diagramInspector.curveSection')} isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
           <ElementCurveSection {...props} />
         </AccordionSection>
       )}
 
       {showsContentSection(kind) && (
-        <AccordionSection sec="content" title="Contenido del Panel, Bloques & Posición" isOpen={openAccordion.content} onToggle={onToggleAccordion}>
+        <AccordionSection sec="content" title={t('editor.diagramInspector.contentSection')} isOpen={openAccordion.content} onToggle={onToggleAccordion}>
           <ElementContentSection {...props} />
         </AccordionSection>
       )}
 
-      <AccordionSection sec="style" title="Estilo, Grosor & Resaltado en Hover" isOpen={openAccordion.style} onToggle={onToggleAccordion}>
+      <AccordionSection sec="style" title={t('editor.diagramInspector.styleSection')} isOpen={openAccordion.style} onToggle={onToggleAccordion}>
         <ElementStyleSection {...props} />
       </AccordionSection>
 
-      <AccordionSection sec="visibility_selection" title="Visibilidad Condicionada & Selección" isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
+      <AccordionSection sec="visibility_selection" title={t('editor.diagramInspector.conditionalVisibilityAndSelection')} isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
         <ElementVisibilitySection object={element} onUpdate={update => props.onUpdateElement(element.id, update)} />
         <DiagramElementBehaviorEditor
           model={model}
@@ -71,7 +73,7 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
       </AccordionSection>
 
       {showsConstraintsSection(kind) && (
-        <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
+        <AccordionSection sec="constraints" title={t('editor.diagramInspector.geometricConstraints')} isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
           <ElementConstraintsSection {...props} />
         </AccordionSection>
       )}

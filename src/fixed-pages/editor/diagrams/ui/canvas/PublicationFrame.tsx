@@ -1,5 +1,6 @@
 import React from 'react';
 import { publicationContentSize } from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
+import { useI18n } from '@/i18n';
 
 export interface PublicationFrameProps {
   mode: 'desktop' | 'tablet' | 'mobile';
@@ -9,9 +10,9 @@ export interface PublicationFrameProps {
 }
 
 const MODE_LABELS: Record<PublicationFrameProps['mode'], string> = {
-  desktop: 'Escritorio',
-  tablet: 'Tableta',
-  mobile: 'Móvil',
+  desktop: 'editor.diagramCanvas.modeDesktop',
+  tablet: 'editor.diagramCanvas.modeTablet',
+  mobile: 'editor.diagramCanvas.modeMobile',
 };
 
 function bezelClassName(mode: PublicationFrameProps['mode']): string {
@@ -31,6 +32,7 @@ export const PublicationFrame: React.FC<PublicationFrameProps> = ({
   pageType,
   children,
 }) => {
+  const { t } = useI18n();
   const content = publicationContentSize(mode, pageType);
 
   return (
@@ -44,13 +46,13 @@ export const PublicationFrame: React.FC<PublicationFrameProps> = ({
           </div>
         )}
         <span className="ml-auto rounded border border-carbon/15 bg-lienzo px-2 py-0.5 text-[10px] font-mono uppercase tracking-wide text-carbon/60">
-          {MODE_LABELS[mode]}
+          {t(MODE_LABELS[mode])}
         </span>
       </div>
 
       <div className="flex flex-col bg-lienzo p-4">
         <header className="mb-4 space-y-2">
-          <h1 className="font-serif text-xl font-bold text-carbon">{title ?? 'Sin título'}</h1>
+          <h1 className="font-serif text-xl font-bold text-carbon">{title ?? t('editor.diagramCanvas.untitled')}</h1>
           <div className="space-y-1.5">
             <div className="h-2 w-full rounded bg-carbon/10" />
             <div className="h-2 w-11/12 rounded bg-carbon/8" />

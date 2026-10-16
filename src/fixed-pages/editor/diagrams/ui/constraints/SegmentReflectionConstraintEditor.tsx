@@ -10,6 +10,7 @@ import { objectKind } from '@/diagrams';
 import { modelElements } from '../../model/scene/objectLists';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
+import { useI18n } from '@/i18n';
 
 interface SegmentReflectionConstraintEditorProps {
   model: VisualDiagramModel;
@@ -22,6 +23,7 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
   segment,
   onModelEdit,
 }) => {
+  const { t } = useI18n();
   const existing = reflectionConstraintForSegment(model, segment.id);
   const candidates = editableReflectionCandidates(model, segment.id);
   const otherSegments = modelElements(model).filter(e => objectKind(e) === 'segment' && e.id !== segment.id);
@@ -48,25 +50,25 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
 
   return (
     <DiagramPanel
-      title="Reflejo simétrico de segmento"
+      title={t('editor.diagramConstraints.segmentReflectionTitle')}
       badge={existing ? 'Configurado' : 'Opcional'}
       collapsible
       open={expanded}
       onOpenChange={setExpanded}
     >
       <p className="text-[10px] leading-relaxed text-carbon/60">
-        Este segmento será el reflejo simétrico de sí mismo o de otro respecto a un centro o eje.
+        {t('editor.diagramConstraints.segmentReflectionHint')}
       </p>
 
       {candidates.length === 0 ? (
         <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
-          No hay centros (puntos) ni ejes (rectas/segmentos) en la escena para definir la simetría.
+          {t('editor.diagramConstraints.noSymmetryReferences')}
         </p>
       ) : (
         <div className="space-y-2 mt-2">
-          <DiagramFormField label="Centro o eje de simetría (respecto a qué)" className="p-0 border-0">
+          <DiagramFormField label={t('editor.diagramConstraints.symmetryCenterLabel')} className="p-0 border-0">
             <select
-              aria-label={`Centro o eje de simetría para ${segment.label}`}
+              aria-label={t('editor.diagramConstraints.symmetryCenterFor', { label: segment.label })}
               className={diagramInputClassName}
               value={selectedCenterOrAxis || candidates[0]?.id || ''}
               onChange={e => setSelectedCenterOrAxis(e.target.value)}
@@ -80,14 +82,14 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
           </DiagramFormField>
 
           {otherSegments.length > 0 && (
-            <DiagramFormField label="Segmento de origen (de qué segmento es reflejo)" className="p-0 border-0">
+            <DiagramFormField label={t('editor.diagramConstraints.reflectionSourceLabel')} className="p-0 border-0">
               <select
-                aria-label={`Segmento de origen para ${segment.label}`}
+                aria-label={t('editor.diagramConstraints.sourceSegmentFor', { label: segment.label })}
                 className={diagramInputClassName}
                 value={selectedSourceSegment}
                 onChange={e => setSelectedSourceSegment(e.target.value)}
               >
-                <option value="">Reflejar la posición actual del segmento</option>
+                <option value="">{t('editor.diagramConstraints.reflectCurrentPosition')}</option>
                 {otherSegments.map(other => (
                   <option key={other.id} value={other.id}>
                     {other.label} ({other.id})
@@ -98,7 +100,7 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
           )}
 
           <DiagramButton variant="primary" fullWidth onClick={handleAddSegmentReflection}>
-            {existing ? 'Actualizar reflejo simétrico' : 'Establecer reflejo simétrico'}
+            {existing ? t('editor.diagramConstraints.updateSymmetricReflection') : t('editor.diagramConstraints.setSymmetricReflection')}
           </DiagramButton>
 
           {existing && (
@@ -107,7 +109,7 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
               fullWidth
               onClick={() => onModelEdit(removeSegmentReflectionConstraint(model, segment.id))}
             >
-              Eliminar reflejo simétrico
+              {t('editor.diagramConstraints.removeSymmetricReflection')}
             </DiagramButton>
           )}
         </div>

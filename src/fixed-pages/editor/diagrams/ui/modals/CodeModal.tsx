@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import { generateDiagramSource } from '../../source/generator';
+import { useI18n } from '@/i18n';
 
 interface CodeModalProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
   onSourceChange,
   onClose,
 }) => {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'tsx' | 'json'>('tsx');
   const [sourceDraft, setSourceDraft] = useState(source);
@@ -91,7 +93,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
         {/* Cabecera del Modal */}
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div className="flex items-center space-x-3">
-            <h2 className="font-serif font-bold text-base text-carbon">Código Fuente & Especificación</h2>
+            <h2 className="font-serif font-bold text-base text-carbon">{t('editor.diagramModals.sourceCodeAndSpecification')}</h2>
             <div className="flex bg-carbon/10 p-0.5 rounded-lg">
               <button
                 type="button"
@@ -100,7 +102,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                   activeTab === 'tsx' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
                 }`}
               >
-                Fuente del diagrama
+                {t('editor.diagramModals.diagramSource')}
               </button>
               <button
                 type="button"
@@ -109,7 +111,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                   activeTab === 'json' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
                 }`}
               >
-                Especificación
+                {t('editor.diagramModals.specification')}
               </button>
             </div>
           </div>
@@ -124,7 +126,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
 
         <div className="flex-1 overflow-auto p-4 bg-carbon text-lienzo font-mono text-xs leading-relaxed select-text">
           <textarea
-            aria-label="Código fuente o especificación del diagrama"
+            aria-label={t('editor.diagramModals.sourceSpecAria')}
             value={sandboxMode ? contentToCopy : sourceDraft}
             readOnly={sandboxMode}
             onChange={event => {
@@ -141,9 +143,9 @@ export const CodeModal: React.FC<CodeModalProps> = ({
           <span className="text-xs text-mora/70 italic">
             {generated.ok
               ? sandboxMode
-                ? 'Exportación de lectura: el sandbox no guarda en el corpus.'
-                : 'Al aplicar, se analiza la fuente antes de permitir guardar.'
-              : 'La generación falló; revisa los avisos en el comentario de la fuente.'}
+                ? t('editor.diagramModals.sandboxReadOnlyNote')
+                : t('editor.diagramModals.applyAnalysisNote')
+              : t('editor.diagramModals.generationFailed')}
           </span>
           <div className="flex items-center space-x-2">
             <button
@@ -152,14 +154,14 @@ export const CodeModal: React.FC<CodeModalProps> = ({
               disabled={!generated.ok && activeTab === 'tsx'}
               className="px-3 py-1.5 text-xs font-bold text-carbon border border-carbon/20 hover:bg-carbon/5 rounded-lg transition-all cursor-pointer disabled:opacity-40"
             >
-              Descargar .{activeTab}
+              {t('editor.diagramModals.downloadAs', { ext: activeTab })}
             </button>
             <button
               type="button"
               onClick={handleCopy}
               className="px-4 py-1.5 text-xs font-bold text-lienzo bg-canela hover:bg-canela/90 rounded-lg shadow-sm transition-all cursor-pointer"
             >
-              {copied ? '¡Copiado!' : 'Copiar'}
+              {copied ? t('editor.diagramModals.copied') : t('editor.diagramModals.copy')}
             </button>
             {!sandboxMode && (
               <button
@@ -168,7 +170,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                 disabled={!canApplySource}
                 className="px-4 py-1.5 text-xs font-bold text-lienzo bg-pavo hover:bg-pavo/90 rounded-lg shadow-sm transition-all cursor-pointer disabled:opacity-40"
               >
-                Aplicar fuente
+                {t('editor.diagramModals.applySource')}
               </button>
             )}
           </div>

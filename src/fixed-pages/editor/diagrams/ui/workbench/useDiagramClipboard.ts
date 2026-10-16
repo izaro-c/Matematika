@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useI18n } from '@/i18n';
 import type React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import {
@@ -23,6 +24,7 @@ function browserClipboard(): Clipboard | undefined {
 }
 
 export function useDiagramClipboard({ model, selectedIds, onModelEdit, onSelectMany, onShowObjects }: UseDiagramClipboardOptions) {
+  const { t } = useI18n();
   const [payload, setPayload] = useState<DiagramClipboardPayload | null>(null);
   const [status, setStatus] = useState('');
 
@@ -36,7 +38,7 @@ export function useDiagramClipboard({ model, selectedIds, onModelEdit, onSelectM
     if (!model || selectedIds.length === 0) return;
     const nextPayload = createDiagramClipboard(model, selectedIds);
     if (!nextPayload) return;
-    store(nextPayload, selectedIds.length === 1 ? 'Objeto copiado.' : `${selectedIds.length} objetos copiados.`);
+    store(nextPayload, selectedIds.length === 1 ? t('editor.diagramWorkbench.clipboardCopiedOne') : t('editor.diagramWorkbench.clipboardCopiedOther', { count: selectedIds.length }));
   };
 
   const copyGroup = (groupId: string) => {
@@ -44,7 +46,7 @@ export function useDiagramClipboard({ model, selectedIds, onModelEdit, onSelectM
     const group = model.groups.find(item => item.id === groupId);
     const nextPayload = createDiagramClipboard(model, [], [groupId]);
     if (!group || !nextPayload) return;
-    store(nextPayload, `Grupo «${group.label}» copiado con ${group.memberIds.length} objeto(s).`);
+    store(nextPayload, t(group.memberIds.length === 1 ? 'editor.diagramWorkbench.groupCopiedOne' : 'editor.diagramWorkbench.groupCopiedOther', { label: group.label, count: group.memberIds.length }));
   };
 
   const apply = (nextPayload: DiagramClipboardPayload) => {
@@ -53,7 +55,7 @@ export function useDiagramClipboard({ model, selectedIds, onModelEdit, onSelectM
     onModelEdit(result.model, { label: `Pegar ${result.pastedIds.length} objeto(s)` });
     onSelectMany(result.pastedIds, result.selectedId);
     onShowObjects();
-    setStatus(`${result.pastedIds.length} objeto(s) pegado(s). Las referencias internas se han actualizado.`);
+    setStatus(t(result.pastedIds.length === 1 ? 'editor.diagramWorkbench.clipboardPastedOne' : 'editor.diagramWorkbench.clipboardPastedOther', { count: result.pastedIds.length }));
   };
 
   const paste = async () => {

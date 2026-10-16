@@ -14,6 +14,7 @@ import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/mode
 import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { dashedPatch, stylePatch } from '../../elementSettings';
 import { curveAreaFill, objectDashed, objectStyle, withObjectLabelVisible, withObjectStylePatch } from '@/diagrams';
+import { useI18n } from '@/i18n';
 
 /** Propiedades: color, strokeWidth, highlightStrokeWidth, fillOpacity, highlightFillOpacity, angleRadius, dashed, preserveColorOnHighlight, highlightable, layerId */
 export const ElementStyleSection: React.FC<ElementPanelProps> = ({
@@ -21,7 +22,8 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
   element,
   onUpdateElement,
 }) => {
-  const layers = availableLayers(model);
+  const { t } = useI18n();
+  const layers = availableLayers(model, t);
   const kind = elementKind(element);
   const style = objectStyle(element);
   const showStroke = showsStrokeControls(kind);
@@ -37,7 +39,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
   return (
     <div className="space-y-3">
       <div>
-        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">Color Principal</label>
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">{t('editor.diagramInspector.mainColor')}</label>
         <div className="flex flex-wrap gap-2">
           {PALETTE_TOKENS.map(c => (
             <button
@@ -57,14 +59,14 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         <div className="grid grid-cols-2 gap-2.5 pt-1">
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Grosor Trazo (px)
+              {t('editor.diagramInspector.strokeWidthPx')}
             </label>
             <input
               type="number"
               step="0.1"
               min="0"
               max="10"
-              aria-label="Grosor Trazo (px)"
+              aria-label={t('editor.diagramInspector.strokeWidthPx')}
               value={style?.strokeWidth ?? 2.4}
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ strokeWidth: parseOptionalNumber(e.target.value, 2.4) }))
@@ -74,14 +76,14 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           </div>
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Grosor Trazo Hover (px)
+              {t('editor.diagramInspector.hoverStrokeWidthPx')}
             </label>
             <input
               type="number"
               step="0.1"
               min="0"
               max="30"
-              aria-label="Grosor Trazo en Hover (px)"
+              aria-label={t('editor.diagramInspector.strokeWidthOnHover')}
               value={style?.highlightStrokeWidth ?? 3}
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) }))
@@ -96,14 +98,14 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-carbon/10">
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Opacidad Relleno
+              {t('editor.diagramInspector.fillOpacity')}
             </label>
             <input
               type="number"
               step="0.1"
               min="0"
               max="1"
-              aria-label="Opacidad Relleno"
+              aria-label={t('editor.diagramInspector.fillOpacity')}
               value={style?.fillOpacity ?? 0.2}
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ fillOpacity: parseOptionalNumber(e.target.value, 0) }))
@@ -113,7 +115,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           </div>
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Opacidad Relleno Hover
+              {t('editor.diagramInspector.hoverFillOpacity')}
             </label>
             <input
               type="number"
@@ -133,7 +135,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       {showAngleRadius && (
         <div className="pt-2 border-t border-carbon/10">
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Radio del Arco (px)
+            {t('editor.diagramInspector.arcRadiusPx')}
           </label>
           <input
             type="number"
@@ -152,14 +154,14 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       {['dimensionLine', 'measurement', 'label', 'text', 'formula'].includes(kind) ? (
         <div className="pt-2 border-t border-carbon/10">
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            {kind === 'dimensionLine' ? 'Tamaño de la Cota (px)' : 'Tamaño de la Etiqueta (px)'}
+            {kind === 'dimensionLine' ? t('editor.diagramInspector.dimensionSizePxTitled') : t('editor.diagramInspector.labelSizePxTitled')}
           </label>
           <input
             type="number"
             min="6"
             max="72"
             step="1"
-            aria-label={kind === 'dimensionLine' ? 'Tamaño de cota' : 'Tamaño de etiqueta'}
+            aria-label={kind === 'dimensionLine' ? t('editor.diagramInspector.dimensionSize') : t('editor.diagramInspector.labelSize')}
             value={style?.labelSize ?? (kind === 'dimensionLine' ? 14 : 16)}
             onChange={e =>
               onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, kind === 'dimensionLine' ? 14 : 16), }))
@@ -182,7 +184,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
 
       {capabilities.attachedLabel && (
         <div className="rounded-lg border border-canela/20 bg-canela/5 p-2.5 text-xs">
-          <p className="font-bold text-carbon">Etiqueta vinculada</p>
+          <p className="font-bold text-carbon">{t('editor.diagramInspector.linkedLabel')}</p>
           {attachedLabel ? (
             <div className="mt-1.5 space-y-2">
               <label className="flex items-center gap-2 text-carbon cursor-pointer select-none">
@@ -192,17 +194,17 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                   onChange={event => onUpdateElement(attachedLabel.id, { visible: event.target.checked })}
                   className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                 />
-                Mostrar junto al elemento
+                {t('editor.diagramInspector.showNextToElement')}
               </label>
               {attachedLabel.visible !== false && (
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Tamaño de la etiqueta (px)</label>
+                  <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.labelSizePx')}</label>
                   <input
                     type="number"
                     min="6"
                     max="72"
                     step="1"
-                    aria-label="Tamaño de etiqueta vinculada"
+                    aria-label={t('editor.diagramInspector.linkedLabelSize')}
                     value={attachedStyle?.labelSize ?? 14}
                     onChange={e =>
                       onUpdateElement(attachedLabel.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
@@ -213,7 +215,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               )}
             </div>
           ) : (
-            <p className="mt-1 text-[10px] text-carbon/55">Añade una etiqueta y ancla su referencia a este objeto para vincularla.</p>
+            <p className="mt-1 text-[10px] text-carbon/55">{t('editor.diagramInspector.linkedLabelHint')}</p>
           )}
         </div>
       )}
@@ -229,7 +231,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
             <label htmlFor={`dashed-${element.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
-              Línea Discontinua / Auxiliar
+              {t('editor.diagramInspector.dashedAuxiliaryLine')}
             </label>
           </div>
         )}
@@ -245,7 +247,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
           />
           <label htmlFor={`preserveColor-${element.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
-            Conservar color propio en hover (sin resaltar en amarillo)
+            {t('editor.diagramInspector.keepOwnColorNoYellow')}
           </label>
         </div>
 
@@ -262,13 +264,13 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
           />
           <label htmlFor={`highlightable-${element.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
-            Permitir resaltado visual con el puntero
+            {t('editor.diagramInspector.allowPointerHighlight')}
           </label>
         </div>
       </div>
 
       <div>
-        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Capa del Tablero</label>
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.boardLayer')}</label>
         <select
           value={element.layerId || 'geometry'}
           onChange={e => onUpdateElement(element.id, { layerId: e.target.value })}

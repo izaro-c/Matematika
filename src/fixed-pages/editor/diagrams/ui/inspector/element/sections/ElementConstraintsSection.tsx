@@ -20,6 +20,7 @@ import type { ElementPanelProps } from '../../types';
 import { constraintScopeForKind } from '../../elementSections';
 import { objectConstructionReferences, objectKind } from '@/diagrams';
 import { elementKind, modelElements, relationDraft } from '@/fixed-pages/editor/diagrams/model';
+import { useI18n } from '@/i18n';
 
 const fieldClass =
   'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none';
@@ -34,6 +35,7 @@ const SegmentReflectionCard: React.FC<{
   element: VisualElement;
   onUpdateModel: (next: VisualDiagramModel, label: string) => void;
 }> = ({ model, element, onUpdateModel }) => {
+  const { t } = useI18n();
   const reflection = reflectionConstraintForSegment(model, element.id);
   const reflectionRefs = reflection?.type === 'reflection' ? reflection.refs : [];
   const reflectionCandidates = editableReflectionCandidates(model, element.id);
@@ -45,16 +47,16 @@ const SegmentReflectionCard: React.FC<{
 
   return (
     <div className={cardClass}>
-      <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Reflejo Simétrico</span>
+      <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">{t('editor.diagramInspector.symmetricReflection')}</span>
       <p className="text-[11px] text-carbon/60 leading-relaxed">
-        El segmento queda como reflejo respecto a un centro o eje.
+        {t('editor.diagramInspector.reflectionHint')}
       </p>
       {reflectionCandidates.length === 0 ? (
-        <p className="text-[11px] text-ocre bg-ocre/10 rounded-lg p-2 border border-ocre/20">No hay centros ni ejes disponibles.</p>
+        <p className="text-[11px] text-ocre bg-ocre/10 rounded-lg p-2 border border-ocre/20">{t('editor.diagramInspector.noReflectionTargets')}</p>
       ) : (
         <>
           <div>
-            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Centro o eje</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.centerOrAxis')}</label>
             <select
               value={centerId || reflectionCandidates[0]?.id || ''}
               onChange={e => setCenterId(e.target.value)}
@@ -67,9 +69,9 @@ const SegmentReflectionCard: React.FC<{
           </div>
           {otherSegments.length > 0 && (
             <div>
-              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Segmento origen (opcional)</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.sourceSegmentOptional')}</label>
               <select value={sourceId} onChange={e => setSourceId(e.target.value)} className={fieldClass}>
-                <option value="">Posición actual</option>
+                <option value="">{t('editor.diagramInspector.currentPosition')}</option>
                 {otherSegments.map(s => (
                   <option key={s.id} value={s.id}>{s.label || s.id} ({s.id})</option>
                 ))}
@@ -89,7 +91,7 @@ const SegmentReflectionCard: React.FC<{
             }}
             className={applyBtn}
           >
-            {reflection ? 'Actualizar Reflejo' : 'Aplicar Reflejo Simétrico'}
+            {reflection ? t('editor.diagramInspector.updateReflection') : t('editor.diagramInspector.applySymmetricReflection')}
           </button>
           {reflection && (
             <button
@@ -97,7 +99,7 @@ const SegmentReflectionCard: React.FC<{
               onClick={() => onUpdateModel(removeSegmentReflectionConstraint(model, element.id), `Eliminar reflejo de ${element.id}`)}
               className={removeBtn}
             >
-              Quitar Reflejo Simétrico
+              {t('editor.diagramInspector.removeSymmetricReflection')}
             </button>
           )}
         </>
@@ -112,6 +114,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   element,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   const scope = constraintScopeForKind(elementKind(element));
   if (!scope || !onUpdateModel) return null;
 
@@ -125,13 +128,13 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
     return (
       <div className="space-y-3">
         <div className={cardClass}>
-          <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Igualar Longitud de Segmento</span>
+          <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">{t('editor.diagramInspector.equalizeSegmentLength')}</span>
           <p className="text-[11px] text-carbon/60 leading-relaxed">
-            Un extremo se ajusta para copiar la longitud de otro segmento.
+            {t('editor.diagramInspector.lengthEqualityHint')}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Extremo Móvil</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.movableEndpoint')}</label>
               <select
                 value={movingPtId}
                 onChange={e => {
@@ -145,12 +148,12 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                 className={fieldClass}
               >
                 {(editablePts.length ? editablePts.map(p => p.id) : objectConstructionReferences(element)).map(r => (
-                  <option key={r} value={r}>Punto {r}</option>
+                  <option key={r} value={r}>{t('editor.diagramInspector.pointRef', { id: r })}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Segmento a igualar</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.segmentToEqualize')}</label>
               <select
                 value={sourceSegId}
                 onChange={e => {
@@ -163,7 +166,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                 }}
                 className={fieldClass}
               >
-                <option value="">-- Ninguno --</option>
+                <option value="">{t('editor.diagramInspector.none')}</option>
                 {otherSegments.map(s => (
                   <option key={s.id} value={s.id}>{s.label || s.id} ({s.id})</option>
                 ))}
@@ -176,7 +179,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               onClick={() => onUpdateModel(removeConstraintFromModel(model, lengthConstraint.id), `Eliminar igualdad de longitud en ${element.id}`)}
               className={removeBtn}
             >
-              Quitar Igualdad de Longitud
+              {t('editor.diagramInspector.removeLengthEquality')}
             </button>
           ) : (
             <button
@@ -192,7 +195,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               }}
               className={applyBtn}
             >
-              Aplicar Igualdad de Longitud
+              {t('editor.diagramInspector.applyLengthEquality')}
             </button>
           )}
         </div>
@@ -212,13 +215,13 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   return (
     <div className="space-y-3">
       <div className={cardClass}>
-        <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Igualar Amplitud de Ángulo</span>
+        <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">{t('editor.diagramInspector.equalizeAngleAmplitude')}</span>
         <p className="text-[11px] text-carbon/60 leading-relaxed">
-          La amplitud de este ángulo se igualará a la del ángulo de referencia.
+          {t('editor.diagramInspector.angleEqualityHint')}
         </p>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Extremo / Vértice Móvil</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.movableEndpointVertex')}</label>
             <select
               value={movingPtId}
               onChange={e => {
@@ -232,12 +235,12 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               className={fieldClass}
             >
               {objectConstructionReferences(element).map(r => (
-                <option key={r} value={r}>Punto {r}</option>
+                <option key={r} value={r}>{t('editor.diagramInspector.pointRef', { id: r })}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Ángulo a igualar</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.angleToEqualize')}</label>
             <select
               value={sourceAngleId}
               onChange={e => {
@@ -250,7 +253,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               }}
               className={fieldClass}
             >
-              <option value="">-- Ninguno --</option>
+              <option value="">{t('editor.diagramInspector.none')}</option>
               {otherAngles.map(a => (
                 <option key={a.id} value={a.id}>{a.label || a.id} ({a.id})</option>
               ))}
@@ -263,7 +266,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
             onClick={() => onUpdateModel(removeConstraintFromModel(model, constraint.id), `Eliminar igualdad de amplitud en ${element.id}`)}
             className={removeBtn}
           >
-            Quitar Igualdad de Ángulo
+            {t('editor.diagramInspector.removeAngleEquality')}
           </button>
         ) : (
           <button
@@ -279,7 +282,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
             }}
             className={applyBtn}
           >
-            Aplicar Igualdad de Ángulo
+            {t('editor.diagramInspector.applyAngleEquality')}
           </button>
         )}
       </div>

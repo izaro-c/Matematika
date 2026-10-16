@@ -22,6 +22,7 @@ import { parseOptionalNumber } from '../../../workbenchSelection';
 import { objectStyle, withObjectStylePatch } from '@/diagrams';
 import { setting, settingPatch, stylePatch } from '../../elementSettings';
 import { elementKind } from '@/fixed-pages/editor/diagrams/model';
+import { useI18n } from '@/i18n';
 
 
 /** Propiedades: congruence/parallel marks, dimension line, measurement, markCount, markHeight, tickDistance, minorTickCount */
@@ -31,6 +32,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
   onUpdateModel,
 }) => {
+  const { t } = useI18n();
   const kind = elementKind(element);
   const cap = elementInspectorCapabilities(kind);
   const dimLine = kind === 'segment' ? dimensionLineForSegment(model, element.id) : undefined;
@@ -42,7 +44,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         <>
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
-              Marcas de Congruencia ({(setting(congruenceMarkForSegment(model, element.id), 'markCount') ?? 0)})
+              {t('editor.diagramInspector.congruenceMarks', { count: Number(setting(congruenceMarkForSegment(model, element.id), 'markCount') ?? 0) })}
             </label>
             <div className="grid grid-cols-5 gap-1.5">
               {[0, 1, 2, 3, 4].map(cnt => {
@@ -63,7 +65,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         : 'bg-lienzo text-carbon border-carbon/15 hover:bg-carbon/5'
                     }`}
                   >
-                    {cnt === 0 ? 'Ninguna' : `${cnt} ${cnt === 1 ? '|' : cnt === 2 ? '||' : cnt === 3 ? '|||' : '||||'}`}
+                    {cnt === 0 ? t('editor.diagramInspector.noneOption') : `${cnt} ${cnt === 1 ? '|' : cnt === 2 ? '||' : cnt === 3 ? '|||' : '||||'}`}
                   </button>
                 );
               })}
@@ -72,7 +74,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
 
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
-              Marcas de Paralelismo ({(setting(parallelMarkForSegment(model, element.id), 'markCount') ?? 0)})
+              {t('editor.diagramInspector.parallelismMarks', { count: Number(setting(parallelMarkForSegment(model, element.id), 'markCount') ?? 0) })}
             </label>
             <div className="grid grid-cols-4 gap-1.5">
               {[0, 1, 2, 3].map(cnt => {
@@ -93,7 +95,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         : 'bg-lienzo text-carbon border-carbon/15 hover:bg-carbon/5'
                     }`}
                   >
-                    {cnt === 0 ? 'Ninguna' : `${cnt} ${cnt === 1 ? '▶' : cnt === 2 ? '▶▶' : '▶▶▶'}`}
+                    {cnt === 0 ? t('editor.diagramInspector.noneOption') : `${cnt} ${cnt === 1 ? '▶' : cnt === 2 ? '▶▶' : '▶▶▶'}`}
                   </button>
                 );
               })}
@@ -114,17 +116,17 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                   }}
                   className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                 />
-                <span>Línea de Cota</span>
+                <span>{t('editor.diagramInspector.dimensionLine')}</span>
               </label>
               {dimLine && (
                 <div className="ml-5 space-y-2 p-2.5 rounded-lg bg-carbon/5 border border-carbon/10">
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Distancia / Offset</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.distanceOffset')}</label>
                       <input
                         type="number"
                         step="0.05"
-                        aria-label="Distancia de cota"
+                        aria-label={t('editor.diagramInspector.dimensionDistance')}
                         value={setting(dimLine, 'offset') ?? 0.4}
                         onChange={e =>
                           onUpdateElement(dimLine.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.4)))
@@ -133,12 +135,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Precisión</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.precision')}</label>
                       <input
                         type="number"
                         min="0"
                         max="12"
-                        aria-label="Precisión de cota"
+                        aria-label={t('editor.diagramInspector.dimensionPrecision')}
                         value={setting(dimLine, 'precision') ?? 2}
                         onChange={e =>
                           onUpdateElement(dimLine.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
@@ -149,11 +151,11 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Unidad</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.unit')}</label>
                       <input
                         type="text"
-                        placeholder="ej. cm"
-                        aria-label="Unidad de cota"
+                        placeholder={t('editor.diagramInspector.unitShortPlaceholder')}
+                        aria-label={t('editor.diagramInspector.dimensionUnit')}
                         value={setting(dimLine, 'unit') ?? ''}
                         onChange={e =>
                           onUpdateElement(dimLine.id, settingPatch('unit', e.target.value))
@@ -162,13 +164,13 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Tamaño (px)</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.sizePx')}</label>
                       <input
                         type="number"
                         min="6"
                         max="72"
                         step="1"
-                        aria-label="Tamaño de cota"
+                        aria-label={t('editor.diagramInspector.dimensionSize')}
                         value={objectStyle(dimLine)?.labelSize ?? 14}
                         onChange={e =>
                           onUpdateElement(dimLine.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
@@ -194,19 +196,19 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                   }}
                   className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                 />
-                <span>Etiqueta de Medida</span>
+                <span>{t('editor.diagramInspector.measureLabel')}</span>
               </label>
               {meas && (
                 <div className="ml-5 space-y-2 p-2.5 rounded-lg bg-carbon/5 border border-carbon/10">
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Posición (0 - 1)</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.positionUnit')}</label>
                       <input
                         type="number"
                         step="0.05"
                         min="0"
                         max="1"
-                        aria-label="Posición de medida"
+                        aria-label={t('editor.diagramInspector.measurePosition')}
                         value={setting(meas, 'anchorParameter') ?? 0.5}
                         onChange={e =>
                           onUpdateElement(meas.id, settingPatch('anchorParameter', parseOptionalNumber(e.target.value, 0.5)))
@@ -215,12 +217,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Precisión</label>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.precision')}</label>
                       <input
                         type="number"
                         min="0"
                         max="12"
-                        aria-label="Precisión de medida"
+                        aria-label={t('editor.diagramInspector.measurePrecision')}
                         value={setting(meas, 'precision') ?? 2}
                         onChange={e =>
                           onUpdateElement(meas.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
@@ -230,10 +232,10 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Unidad</label>
+                    <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">{t('editor.diagramInspector.unit')}</label>
                     <input
                       type="text"
-                      aria-label="Unidad de medida"
+                      aria-label={t('editor.diagramInspector.measureUnit')}
                       value={setting(meas, 'unit') ?? 'cm'}
                       onChange={e =>
                         onUpdateElement(meas.id, settingPatch('unit', e.target.value))
@@ -253,12 +255,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Distancia / Offset del Padre
+                {t('editor.diagramInspector.parentDistanceOffset')}
               </label>
               <input
                 type="number"
                 step="0.05"
-                aria-label="Distancia u offset de cota"
+                aria-label={t('editor.diagramInspector.dimensionDistanceOrOffset')}
                 value={setting(element, 'offset') ?? 0.35}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.35)))
@@ -268,13 +270,13 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Precisión (decimales)
+                {t('editor.diagramInspector.precisionDecimals')}
               </label>
               <input
                 type="number"
                 min="0"
                 max="12"
-                aria-label="Precisión decimal"
+                aria-label={t('editor.diagramInspector.decimalPrecision')}
                 value={setting(element, 'precision') ?? 2}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
@@ -286,29 +288,29 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Unidad
+                {t('editor.diagramInspector.unit')}
               </label>
               <input
                 type="text"
-                aria-label="Unidad de cota"
+                aria-label={t('editor.diagramInspector.dimensionUnit')}
                 value={setting(element, 'unit') ?? ''}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
-                placeholder="ej. cm, m, °"
+                placeholder={t('editor.diagramInspector.unitPlaceholder')}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño (px)
+                {t('editor.diagramInspector.sizePx')}
               </label>
               <input
                 type="number"
                 min="6"
                 max="72"
                 step="1"
-                aria-label="Tamaño de cota"
+                aria-label={t('editor.diagramInspector.dimensionSize')}
                 value={objectStyle(element)?.labelSize ?? 14}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
@@ -325,14 +327,14 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-3 gap-2">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Posición padre
+                {t('editor.diagramInspector.parentPosition')}
               </label>
               <input
                 type="number"
                 step="0.05"
                 min="0"
                 max="1"
-                aria-label="Posición a lo largo del objeto padre"
+                aria-label={t('editor.diagramInspector.positionAlongParentAria')}
                 value={setting(element, 'anchorParameter') ?? 0.5}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('anchorParameter', parseOptionalNumber(e.target.value, 0.5)))
@@ -342,11 +344,11 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Unidad
+                {t('editor.diagramInspector.unit')}
               </label>
               <input
                 type="text"
-                aria-label="Unidad de medida"
+                aria-label={t('editor.diagramInspector.measureUnit')}
                 value={setting(element, 'unit') ?? 'cm'}
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
@@ -356,14 +358,14 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño (px)
+                {t('editor.diagramInspector.sizePx')}
               </label>
               <input
                 type="number"
                 min="6"
                 max="72"
                 step="1"
-                aria-label="Tamaño de medida"
+                aria-label={t('editor.diagramInspector.measureSize')}
                 value={objectStyle(element)?.labelSize ?? 16}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 16), }))
@@ -375,12 +377,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Desplazamiento X (offset)
+                {t('editor.diagramInspector.xOffset')}
               </label>
               <input
                 type="number"
                 step="0.05"
-                aria-label="Desplazamiento horizontal"
+                aria-label={t('editor.diagramInspector.horizontalOffset')}
                 value={objectStyle(element)?.textOffset?.[0] ?? 0.25}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ textOffset: [
@@ -393,12 +395,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Desplazamiento Y (offset)
+                {t('editor.diagramInspector.yOffset')}
               </label>
               <input
                 type="number"
                 step="0.05"
-                aria-label="Desplazamiento vertical"
+                aria-label={t('editor.diagramInspector.verticalOffset')}
                 value={objectStyle(element)?.textOffset?.[1] ?? 0.35}
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ textOffset: [
@@ -416,13 +418,13 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
       {showsDirectMarkCount(kind) && (
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Número de Marcas
+            {t('editor.diagramInspector.numberOfMarks')}
           </label>
           <input
             type="number"
             min="1"
             max="12"
-            aria-label="Número de Marcas"
+            aria-label={t('editor.diagramInspector.numberOfMarks')}
             value={setting(element, 'markCount') ?? 1}
             onChange={e =>
               onUpdateElement(element.id, settingPatch('markCount', parseOptionalNumber(e.target.value, 1)))
@@ -435,14 +437,14 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
       {cap.markHeight && (
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Tamaño / Longitud Marca (px)
+            {t('editor.diagramInspector.markSizeLengthPx')}
           </label>
           <input
             type="number"
             step="0.05"
             min="0"
             max="100"
-            aria-label="Tamaño / Longitud Marca"
+            aria-label={t('editor.diagramInspector.markSizeLength')}
             value={objectStyle(element)?.markHeight ?? 0.32}
             onChange={e => {
               const val = parseOptionalNumber(e.target.value, 0.32);
@@ -458,7 +460,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Separación entre Marcas
+                {t('editor.diagramInspector.spacingBetweenMarks')}
               </label>
               <input
                 type="number"
@@ -474,7 +476,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Subdivisiones Menores
+                {t('editor.diagramInspector.minorSubdivisions')}
               </label>
               <input
                 type="number"

@@ -11,6 +11,7 @@ import {
 } from '../../../model/constraints/constraintOptions';
 import { relationAvailability } from '../../../model/constraints/relationSlots';
 import { diagramControlClassName } from '../../primitives';
+import { useI18n } from '@/i18n';
 
 interface RelationIntentPickerProps {
   model: VisualDiagramModel;
@@ -31,15 +32,16 @@ export const RelationIntentPicker: React.FC<RelationIntentPickerProps> = ({
   activeKinds = [],
   ignoreKind,
 }) => {
+  const { t } = useI18n();
   const entries = scope === 'point' ? relationsForPointPicker() : relationsForScope(scope);
   const selected = relationAvailability(model, value, targetId, activeKinds, { ignoreKind });
 
   return (
     <div className="space-y-1">
       <label className="block text-[10px] font-bold text-carbon/65">
-        Tipo de relación
+        {t('editor.diagramConstraints.relationType')}
         <select
-          aria-label="Nueva restricción"
+          aria-label={t('editor.diagramConstraints.newConstraintHeading')}
           className={diagramControlClassName}
           value={value}
           onChange={event => onChange(event.target.value as RelationIntent)}

@@ -3,6 +3,7 @@ import type { VisualDiagramModel } from '../model/types';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { DiagramButton } from './primitives';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
+import { useI18n } from '@/i18n';
 
 export interface DiagramDivergenceDialogProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ export const DiagramDivergenceDialog: React.FC<DiagramDivergenceDialogProps> = (
   onResolve,
   onClose,
 }) => {
+  const { t } = useI18n();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useModalFocus<HTMLElement>(isOpen, onClose, cancelRef);
 
@@ -37,21 +39,21 @@ export const DiagramDivergenceDialog: React.FC<DiagramDivergenceDialogProps> = (
         className="flex max-h-[min(900px,95vh)] w-full max-w-5xl flex-col overflow-hidden rounded border border-carbon/20 bg-lienzo shadow-xl"
       >
         <header className="border-b border-carbon/15 bg-granada/5 p-4">
-          <h2 id="diagram-divergence-title" className="font-serif text-lg font-bold text-carbon">Resolver divergencia</h2>
+          <h2 id="diagram-divergence-title" className="font-serif text-lg font-bold text-carbon">{t('editor.diagramEditors.resolveDivergence')}</h2>
           <p id="diagram-divergence-description" className="mt-1 text-sm leading-relaxed text-carbon/70">
-            El modelo visual y el código fuente ya no coinciden. Elija qué versión debe prevalecer antes de seguir editando o guardar.
+            {t('editor.diagramEditors.divergenceExplanation')}
           </p>
         </header>
 
         <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto p-4 md:grid-cols-2">
-          <section aria-label="Vista previa del modelo visual" className="min-h-0 space-y-2">
-            <h3 className="ac-label ac-label--sm">Modelo visual actual</h3>
+          <section aria-label={t('editor.diagramEditors.visualModelPreview')} className="min-h-0 space-y-2">
+            <h3 className="ac-label ac-label--sm">{t('editor.diagramEditors.currentVisualModel')}</h3>
             <div className="min-h-[220px] overflow-hidden rounded border border-carbon/15">
               <DiagramResponsivePreview model={model} pageType={pageType} />
             </div>
           </section>
           <section className="min-h-0 space-y-2">
-            <h3 id="diagram-divergence-source-title" className="ac-label ac-label--sm">Código fuente actual</h3>
+            <h3 id="diagram-divergence-source-title" className="ac-label ac-label--sm">{t('editor.diagramEditors.currentSourceCode')}</h3>
             <textarea
               aria-labelledby="diagram-divergence-source-title"
               readOnly
@@ -68,10 +70,10 @@ export const DiagramDivergenceDialog: React.FC<DiagramDivergenceDialogProps> = (
             onClick={onClose}
             className="min-h-11 rounded border border-carbon/20 px-3 text-xs font-bold text-carbon hover:bg-carbon/5"
           >
-            Cancelar
+            {t('editor.diagramEditors.cancel')}
           </button>
-          <DiagramButton type="button" variant="primary" onClick={() => onResolve('source')}>Usar código fuente</DiagramButton>
-          <DiagramButton type="button" variant="primary" onClick={() => onResolve('visual')}>Usar modelo visual</DiagramButton>
+          <DiagramButton type="button" variant="primary" onClick={() => onResolve('source')}>{t('editor.diagramEditors.useSourceCode')}</DiagramButton>
+          <DiagramButton type="button" variant="primary" onClick={() => onResolve('visual')}>{t('editor.diagramEditors.useVisualModel')}</DiagramButton>
         </footer>
       </section>
     </div>

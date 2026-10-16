@@ -4,6 +4,8 @@ import type { DiagramMode } from '@/diagrams';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
 import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 interface DiagramDataPanelProps {
   model: VisualDiagramModel | null;
@@ -22,15 +24,16 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
   width = 320,
   onClose,
 }) => {
+  const { t } = useI18n();
   if (!model) {
     return (
       <aside
         id="diagram-data-panel"
-        aria-label="Editor de datos del diagrama"
+        aria-label={t('editor.diagramWorkbench.diagramDataEditor')}
         className="fixed inset-y-0 left-0 z-40 flex max-w-[92vw] flex-col border-r border-carbon/15 bg-lienzo shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none font-serif text-carbon select-none"
         style={{ width }}
       >
-        <div className="p-4 text-xs text-carbon/50 italic">No hay un modelo de diagrama activo.</div>
+        <div className="p-4 text-xs text-carbon/50 italic">{t('editor.diagramWorkbench.noActiveModel')}</div>
       </aside>
     );
   }
@@ -91,24 +94,24 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
   return (
     <aside
       id="diagram-data-panel"
-      aria-label="Editor de datos del diagrama"
+      aria-label={t('editor.diagramWorkbench.diagramDataEditor')}
       className="fixed inset-y-0 left-0 z-40 flex max-w-[92vw] flex-col border-r border-carbon/15 bg-lienzo shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none font-serif text-carbon select-none"
       style={{ width }}
     >
       {/* Header */}
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/[0.02]">
         <div>
-          <p className="ac-label ac-label--sm ac-label--canela">Diagrama</p>
-          <h2 className="font-serif text-sm font-bold text-carbon">Datos del diagrama</h2>
+          <p className="ac-label ac-label--sm ac-label--canela">{t('editor.diagramWorkbench.diagram')}</p>
+          <h2 className="font-serif text-sm font-bold text-carbon">{t('editor.diagramWorkbench.diagramData')}</h2>
         </div>
         {onClose && (
           <button
             type="button"
             onClick={onClose}
-            aria-label="Ocultar panel de datos"
+            aria-label={t('editor.diagramWorkbench.hideDataPanel')}
             className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65 hover:bg-carbon/5 transition-colors cursor-pointer"
           >
-            Ocultar
+            {t('editor.diagramWorkbench.hide')}
           </button>
         )}
       </header>
@@ -118,7 +121,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
         {/* Idioma de edición y traducción */}
         <div className="rounded-lg border border-carbon/15 bg-carbon/[0.02] p-3 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="ac-label ac-label--xs">Idioma de trabajo</span>
+            <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.workingLanguage')}</span>
             <span className="text-[10px] font-bold text-canela">{activeLangConfig.name}</span>
           </div>
 
@@ -126,11 +129,11 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             mode="diagram"
             activeLang={activeLang}
             onSelectLang={onSelectActiveLang}
-            aria-label="Selector de idioma de edición del diagrama"
+            aria-label={t('editor.diagramWorkbench.diagramEditingLanguageSelector')}
           />
           {!isDefaultLang && (
             <p className="text-[10px] text-carbon/55 italic">
-              Editando variante en <strong>{activeLangConfig.name}</strong>. Si dejas un campo vacío se utilizará la versión base en español.
+              {renderRichText(t('editor.diagramWorkbench.editingVariantIn', { language: activeLangConfig.name }), { b: c => <strong>{c}</strong> })}
             </p>
           )}
         </div>
@@ -138,13 +141,13 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
         {/* Título */}
         <div>
           <label className="block ac-label ac-label--xs mb-1">
-            Título ({activeLang.toUpperCase()})
+            {t('editor.diagramWorkbench.titleWithLang', { lang: activeLang.toUpperCase() })}
           </label>
           <input
             type="text"
             value={currentTitle}
             onChange={e => handleTitleChange(e.target.value)}
-            placeholder={isDefaultLang ? 'Título del diagrama' : (model.title || 'Título en español')}
+            placeholder={isDefaultLang ? t('editor.diagramWorkbench.diagramTitle') : (model.title || t('editor.diagramWorkbench.titleInSpanish'))}
             className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs font-bold text-carbon focus:border-canela outline-none"
           />
         </div>
@@ -152,13 +155,13 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
         {/* Subtítulo / Nota explicativa */}
         <div>
           <label className="block ac-label ac-label--xs mb-1">
-            Subtítulo / Nota explicativa ({activeLang.toUpperCase()})
+            {t('editor.diagramWorkbench.subtitleWithLang', { lang: activeLang.toUpperCase() })}
           </label>
           <textarea
             value={currentNote}
             onChange={e => handleNoteChange(e.target.value)}
             rows={3}
-            placeholder={isDefaultLang ? 'Instrucciones pedagógicas o notas para el estudiante…' : (model.note || 'Instrucciones en español…')}
+            placeholder={isDefaultLang ? t('editor.diagramWorkbench.notePlaceholder') : (model.note || t('editor.diagramWorkbench.instructionsInSpanish'))}
             className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs text-carbon focus:border-canela outline-none"
           />
         </div>
@@ -166,24 +169,24 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
         {/* Modo de Publicación y Categoría */}
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block ac-label ac-label--xs mb-1">Modo</label>
+            <label className="block ac-label ac-label--xs mb-1">{t('editor.diagramWorkbench.mode')}</label>
             <select
               value={model.mode || 'simulation'}
               onChange={e => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
               className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
             >
-              <option value="simulation">Simulación</option>
-              <option value="diagram">Fijo</option>
-              <option value="inline">Inline</option>
+              <option value="simulation">{t('editor.diagramWorkbench.simulation')}</option>
+              <option value="diagram">{t('editor.diagramWorkbench.fixed')}</option>
+              <option value="inline">{t('editor.diagramWorkbench.inline')}</option>
             </select>
           </div>
           <div>
-            <label className="block ac-label ac-label--xs mb-1">Categoría</label>
+            <label className="block ac-label ac-label--xs mb-1">{t('editor.diagramWorkbench.category')}</label>
             <input
               type="text"
               value={model.category || ''}
               onChange={e => onUpdateModel({ category: e.target.value }, 'Editar categoría')}
-              placeholder="Teoremas"
+              placeholder={t('editor.diagramWorkbench.theorems')}
               className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
             />
           </div>
@@ -191,7 +194,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
 
         {/* Opciones del Lienzo */}
         <div className="rounded-lg border border-carbon/15 p-2.5 space-y-2">
-          <span className="ac-label ac-label--xs">Lienzo y coordenadas</span>
+          <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.canvasAndCoordinates')}</span>
           <div className="flex flex-wrap gap-3">
             <label className="flex items-center gap-1.5 text-xs cursor-pointer">
               <input
@@ -200,7 +203,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 onChange={e => onUpdateModel({ grid: e.target.checked }, 'Alternar rejilla')}
                 className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
-              <span>Rejilla</span>
+              <span>{t('editor.diagramWorkbench.grid')}</span>
             </label>
             <label className="flex items-center gap-1.5 text-xs cursor-pointer">
               <input
@@ -209,7 +212,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 onChange={e => onUpdateModel({ axis: e.target.checked }, 'Alternar ejes')}
                 className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
-              <span>Ejes</span>
+              <span>{t('editor.diagramWorkbench.axes')}</span>
             </label>
             <label className="flex items-center gap-1.5 text-xs cursor-pointer">
               <input
@@ -218,7 +221,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 onChange={e => onUpdateModel({ showLabels: e.target.checked }, 'Alternar etiquetas globales')}
                 className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
-              <span>Etiquetas</span>
+              <span>{t('editor.diagramWorkbench.labels')}</span>
             </label>
             <label className="flex items-center gap-1.5 text-xs cursor-pointer">
               <input
@@ -227,21 +230,21 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 onChange={e => onUpdateModel({ showHeader: e.target.checked }, 'Alternar cabecera (Título y Subtítulo)')}
                 className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
-              <span>Título y Subtítulo</span>
+              <span>{t('editor.diagramWorkbench.titleAndSubtitle')}</span>
             </label>
           </div>
         </div>
 
         {/* Encuadre / Viewport */}
         <div className="rounded-lg border border-carbon/15 p-2.5 space-y-2.5">
-          <span className="ac-label ac-label--xs">Encuadre y vista inicial</span>
+          <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.framingAndInitialView')}</span>
           {(['bounds', 'home'] as const).map(key => (
             <fieldset key={key} className="space-y-1">
               <legend className="text-[10px] font-bold text-carbon/60">
-                {key === 'bounds' ? 'Límites del lienzo (Bounds)' : 'Vista por defecto (Home)'}
+                {key === 'bounds' ? t('editor.diagramWorkbench.canvasBoundsBounds') : t('editor.diagramWorkbench.defaultViewHome')}
               </legend>
               <div className="grid grid-cols-4 gap-1.5">
-                {['x mín', 'x máx', 'y máx', 'y mín'].map((label, index) => (
+                {[t('editor.diagramModals.xMin'), t('editor.diagramModals.xMax'), t('editor.diagramModals.yMax'), t('editor.diagramModals.yMin')].map((label, index) => (
                   <label key={label} className="text-[9px] text-carbon/50">
                     {label}
                     <input

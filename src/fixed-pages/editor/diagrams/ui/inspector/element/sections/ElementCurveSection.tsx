@@ -3,6 +3,8 @@ import { isCurveObject, type CurvePath } from '@/diagrams';
 import type { ElementPanelProps } from '../../types';
 import { parseOptionalNumber } from '../../../workbenchSelection';
 import { modelPoints } from '@/fixed-pages/editor/diagrams/model';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 type CurveGeometryPatch = Partial<{
   expression: string;
@@ -36,6 +38,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
   element,
   onUpdateElement,
 }) => {
+  const { t } = useI18n();
   if (!isCurveObject(element)) return null;
   const geometry = element.geometry;
   const update = (patch: CurveGeometryPatch) => onUpdateElement(element.id, current => (
@@ -46,16 +49,16 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
     {geometry.type === 'function' && (
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-          Expresión <code className="font-mono text-[10px] text-canela">f(x)</code>
+          {renderRichText(t('editor.diagramInspector.expressionOf', { name: 'f(x)' }), { code: c => <code className="font-mono text-[10px] text-canela">{c}</code> })}
         </label>
         <input
           type="text"
-          aria-label="Expresión $f(x)$"
+          aria-label={t('editor.diagramInspector.expressionFX')}
           value={geometry.type === 'function' ? geometry.expression : ''}
           onChange={e =>
             update({ expression: e.target.value })
           }
-          placeholder="ej. sin(x) o x^2 - 2*x + 1"
+          placeholder={t('editor.diagramInspector.functionExample')}
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
         />
       </div>
@@ -65,31 +68,31 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       <div className="grid grid-cols-2 gap-2.5">
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Expresión <code className="font-mono text-[10px] text-canela">x(t)</code>
+            {renderRichText(t('editor.diagramInspector.expressionOf', { name: 'x(t)' }), { code: c => <code className="font-mono text-[10px] text-canela">{c}</code> })}
           </label>
           <input
             type="text"
-            aria-label="Expresión $x(t)$"
+            aria-label={t('editor.diagramInspector.expressionXT')}
             value={geometry.type === 'parametric' ? geometry.x : ''}
             onChange={e =>
               update({ x: e.target.value })
             }
-            placeholder="ej. cos(t)"
+            placeholder={t('editor.diagramInspector.xtExample')}
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
           />
         </div>
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Expresión <code className="font-mono text-[10px] text-canela">y(t)</code>
+            {renderRichText(t('editor.diagramInspector.expressionOf', { name: 'y(t)' }), { code: c => <code className="font-mono text-[10px] text-canela">{c}</code> })}
           </label>
           <input
             type="text"
-            aria-label="Expresión $y(t)$"
+            aria-label={t('editor.diagramInspector.expressionYT')}
             value={geometry.type === 'parametric' ? geometry.y : ''}
             onChange={e =>
               update({ y: e.target.value })
             }
-            placeholder="ej. sin(t)"
+            placeholder={t('editor.diagramInspector.ytExample')}
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
           />
         </div>
@@ -99,12 +102,12 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
     <div className="grid grid-cols-2 gap-2.5 pt-1">
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-          Mínimo Dominio
+          {t('editor.diagramInspector.domainMinimum')}
         </label>
         <input
           type="number"
           step="0.5"
-          aria-label="Mínimo Dominio"
+          aria-label={t('editor.diagramInspector.domainMinimum')}
           value={geometry.domain[0]}
           onChange={e => {
             const minVal = parseOptionalNumber(e.target.value, -5);
@@ -116,12 +119,12 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       </div>
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-          Máximo Dominio
+          {t('editor.diagramInspector.domainMaximum')}
         </label>
         <input
           type="number"
           step="0.5"
-          aria-label="Máximo Dominio"
+          aria-label={t('editor.diagramInspector.domainMaximum')}
           value={geometry.domain[1]}
           onChange={e => {
             const minVal = geometry.domain[0];
@@ -135,7 +138,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
 
     <div className="pt-2.5 border-t border-carbon/10 space-y-2.5">
       <div>
-        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Relleno de Área bajo la Curva</label>
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.areaFillTitle')}</label>
         <select
           value={geometry.areaFill || 'none'}
           onChange={e =>
@@ -143,24 +146,24 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           }
           className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
         >
-          <option value="none">Sin relleno de área</option>
-          <option value="interior">Relleno hasta el eje X (Interior)</option>
-          <option value="half-plane">Relleno de semiplano respecto a punto</option>
+          <option value="none">{t('editor.diagramInspector.noAreaFill')}</option>
+          <option value="interior">{t('editor.diagramInspector.fillToXAxis')}</option>
+          <option value="half-plane">{t('editor.diagramInspector.halfPlaneFill')}</option>
         </select>
       </div>
 
       {geometry.areaFill === 'half-plane' && (
         <div className="p-2.5 rounded-lg border border-canela/20 bg-canela/5 space-y-1">
-          <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">Punto de Referencia del Semiplano</label>
+          <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">{t('editor.diagramInspector.halfPlaneReferencePoint')}</label>
           <select
             value={geometry.areaSide || ''}
             onChange={e => update({ areaSide: e.target.value || undefined })}
             className="w-full rounded-md border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
           >
-            <option value="">-- Seleccionar punto --</option>
+            <option value="">{t('editor.diagramInspector.selectPoint')}</option>
             {modelPoints(model).map(p => (
               <option key={p.id} value={p.id}>
-                Punto {p.label || p.id} ({p.id})
+                {t('editor.diagramInspector.pointLabelId', { label: p.label || p.id, id: p.id })}
               </option>
             ))}
           </select>

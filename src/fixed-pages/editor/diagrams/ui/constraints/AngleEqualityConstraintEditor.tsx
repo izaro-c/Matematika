@@ -12,6 +12,8 @@ import { equalAngleRoles, objectConstructionReferences } from '@/diagrams';
 import { findPositionedPoint } from '../../model/constraints/relationModel';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 interface AngleEqualityConstraintEditorProps {
   model: VisualDiagramModel;
@@ -24,6 +26,7 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
   angle,
   onModelEdit,
 }) => {
+  const { t } = useI18n();
   const existing = equalAngleConstraintForAngle(model, angle.id);
   const existingRoles = existing?.type === 'equal-angle' ? equalAngleRoles(existing, model.objects) : undefined;
   const angleRefs = objectConstructionReferences(angle);
@@ -44,34 +47,34 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
 
   let disabledReason = '';
   if (endpoints.length === 0) {
-    disabledReason = 'Este ángulo no tiene extremos móviles (sus puntos del lado son fijos o derivados).';
+    disabledReason = t('editor.diagramConstraints.angleNoMovableEndpoints');
   } else if (candidates.length === 0) {
-    disabledReason = 'No hay otros ángulos del mismo tipo en el diagrama para copiar su amplitud.';
+    disabledReason = t('editor.diagramConstraints.noOtherAngles');
   } else if (!ready) {
-    disabledReason = 'Seleccione un extremo móvil del lado y un ángulo de referencia.';
+    disabledReason = t('editor.diagramConstraints.selectEndpointAndAngle');
   }
 
   return (
     <DiagramPanel
-      title="Igualar ángulos"
+      title={t('editor.diagramConstraints.equalizeAngles')}
       badge={existing ? 'Configurada' : 'Opcional'}
       collapsible
       open={expanded}
       onOpenChange={setExpanded}
     >
         <p className="text-[10px] leading-relaxed text-carbon/60">
-          Uno de los lados girará alrededor del vértice para conservar la misma amplitud que otro ángulo. Su distancia al vértice no cambia.
+          {t('editor.diagramConstraints.angleEqualityHint')}
         </p>
         <ol className="space-y-1 text-[10px] leading-relaxed text-carbon/55">
-          <li><strong>1.</strong> Elija el extremo del lado que puede ajustarse.</li>
-          <li><strong>2.</strong> Elija el ángulo cuya amplitud se copiará.</li>
+          <li><strong>1.</strong> {t('editor.diagramConstraints.angleEqualityStepEndpoint')}</li>
+          <li><strong>2.</strong> {t('editor.diagramConstraints.angleEqualityStepSource')}</li>
         </ol>
 
         {endpoints.length > 0 && candidates.length > 0 ? (
           <>
-            <DiagramFormField label="Extremo que se ajusta" className="p-0 border-0">
+            <DiagramFormField label={t('editor.diagramConstraints.endpointThatAdjusts')} className="p-0 border-0">
               <select
-                aria-label="Extremo que se ajusta para igualar ángulos"
+                aria-label={t('editor.diagramConstraints.angleAdjustableEndpointAria')}
                 className={diagramInputClassName}
                 value={movingEndpointId}
                 onChange={event => {
@@ -82,9 +85,9 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
                 {endpoints.map(point => <option key={point.id} value={point.id}>{point.label} ({point.id})</option>)}
               </select>
             </DiagramFormField>
-            <DiagramFormField label="Ángulo de referencia" className="p-0 border-0">
+            <DiagramFormField label={t('editor.diagramConstraints.referenceAngle')} className="p-0 border-0">
               <select
-                aria-label="Ángulo de referencia para igualar ángulos"
+                aria-label={t('editor.diagramConstraints.angleReferenceAria')}
                 className={diagramInputClassName}
                 value={effectiveSourceAngleId}
                 onChange={event => setSourceAngleId(event.target.value)}
@@ -94,7 +97,7 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
             </DiagramFormField>
             {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
-                Se ajustará <strong>{movingEndpoint?.label}</strong> alrededor de <strong>{vertex?.label}</strong>; el lado hacia <strong>{fixedEndpoint?.label}</strong> quedará como referencia. La amplitud será la de <strong>{sourceAngle?.label}</strong>.
+                {renderRichText(t('editor.diagramConstraints.angleEqualityPreview', { moving: movingEndpoint?.label ?? '', vertex: vertex?.label ?? '', fixed: fixedEndpoint?.label ?? '', source: sourceAngle?.label ?? '' }), { b: c => <strong>{c}</strong> })}
               </p>
             ) : disabledReason ? (
               <p className="rounded bg-ocre/10 px-2 py-1.5 text-[10px] leading-relaxed text-ocre font-medium" aria-live="polite">
@@ -107,7 +110,7 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
               disabled={!ready}
               onClick={() => onModelEdit(setEqualAngleConstraint(model, angle.id, movingEndpointId, effectiveSourceAngleId))}
             >
-              {existing ? 'Actualizar igualdad de ángulos' : 'Mantener el mismo ángulo'}
+              {existing ? t('editor.diagramConstraints.updateAngleEquality') : t('editor.diagramConstraints.keepTheSameAngle')}
             </DiagramButton>
             {existing && (
               <DiagramButton
@@ -115,13 +118,13 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
                 fullWidth
                 onClick={() => onModelEdit(removeConstraintFromModel(model, existing.id))}
               >
-                Quitar igualdad de ángulos
+                {t('editor.diagramConstraints.removeAngleEquality')}
               </DiagramButton>
             )}
           </>
         ) : (
           <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
-            {disabledReason || 'Se necesita otro ángulo del mismo tipo y al menos un extremo móvil. Los puntos fijos, derivados o ligados a otro objeto no pueden ser el lado ajustado.'}
+            {disabledReason || t('editor.diagramConstraints.angleEqualityUnavailable')}
           </p>
         )}
     </DiagramPanel>

@@ -3,6 +3,7 @@ import type { DiagramObject } from '@/diagrams';
 import { diagramControlClassName } from '../../primitives';
 import { DiagramFormField } from '../../primitives/DiagramFormField';
 import { useReferencePick } from './useReferencePick';
+import { useI18n } from '@/i18n';
 
 interface RelationSlotFieldProps {
   label: string;
@@ -25,6 +26,7 @@ export const RelationSlotField: React.FC<RelationSlotFieldProps> = ({
   onChange,
   optionalEmptyOption,
 }) => {
+  const { t } = useI18n();
   const { session, beginPick, clearPick } = useReferencePick();
   const allowedIds = candidates.map(item => item.id);
   const pickKey = `${ariaLabel}:${label}`;
@@ -73,14 +75,14 @@ export const RelationSlotField: React.FC<RelationSlotFieldProps> = ({
         <button
           type="button"
           aria-pressed={picking}
-          aria-label={picking ? 'Cancelar elección en el lienzo' : 'Elegir en el lienzo'}
+          aria-label={picking ? t('editor.diagramConstraints.cancelCanvasPick') : t('editor.diagramConstraints.chooseOnTheCanvas')}
           className={picking
             ? 'min-h-11 rounded bg-pavo px-2 text-xs font-bold text-lienzo'
             : 'min-h-11 rounded border border-pavo/25 bg-lienzo px-2 text-xs font-bold text-pavo disabled:cursor-not-allowed disabled:opacity-35'}
           onClick={togglePick}
           disabled={allowedIds.length === 0}
         >
-          {picking ? 'Cancelar elección' : 'Elegir en el lienzo'}
+          {picking ? t('editor.diagramConstraints.cancelChoice') : t('editor.diagramConstraints.chooseOnTheCanvas')}
         </button>
       )}
     </div>

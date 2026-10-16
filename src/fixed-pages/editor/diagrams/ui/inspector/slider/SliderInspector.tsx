@@ -7,6 +7,8 @@ import { omitKeys, type DiagramControlAction, type DiagramControlEasing, type Di
 import { handleRenameId } from '../utils';
 import { modelSliders } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 export const SliderInspector: React.FC<SliderPanelProps & {
   openAccordion: Record<string, boolean>;
@@ -21,6 +23,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
   openAccordion,
   onToggleAccordion,
 }) => {
+  const { t } = useI18n();
   const colorToken = PALETTE_TOKENS.find(c => c.id === slider.color) || PALETTE_TOKENS[5];
   const isButton = slider.variant === 'button';
   const action: DiagramControlAction = slider.action ?? defaultControlAction(slider);
@@ -44,16 +47,16 @@ export const SliderInspector: React.FC<SliderPanelProps & {
   return (
     <div className="p-3 space-y-3 text-xs font-serif text-carbon">
       <InspectorHeader
-        title={`${isButton ? 'Botón' : 'Deslizador'}: ${slider.id}`}
+        title={isButton ? t('editor.diagramInspector.buttonTitle', { id: slider.id }) : t('editor.diagramInspector.sliderTitle', { id: slider.id })}
         colorClass={colorToken.bgClass}
         onDelete={() => onDeleteSelected(slider.id)}
       />
 
-      <AccordionSection sec="identity" title="Identidad & Nombre" isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
+      <AccordionSection sec="identity" title={t('editor.diagramInspector.identityAndName')} isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Identificador (ID)
+              {t('editor.diagramInspector.identifierId')}
             </label>
             <input
               type="text"
@@ -69,20 +72,20 @@ export const SliderInspector: React.FC<SliderPanelProps & {
 
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Nombre del Parámetro
+              {t('editor.diagramInspector.parameterName')}
             </label>
             <input
               type="text"
               value={slider.label || ''}
               onChange={e => onUpdateSlider(slider.id, { label: e.target.value })}
-              placeholder="ej. Parámetro k"
+              placeholder={t('editor.diagramInspector.parameterNamePlaceholder')}
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
             />
           </div>
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="behavior" title="Tipo de control" isOpen={openAccordion.behavior} onToggle={onToggleAccordion}>
+      <AccordionSection sec="behavior" title={t('editor.diagramInspector.controlType')} isOpen={openAccordion.behavior} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-1 rounded-lg border border-carbon/15 bg-lienzo p-1">
             {(['slider', 'button'] as const).map(variant => (
@@ -93,18 +96,18 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                 onClick={() => setVariant(variant)}
                 className={`rounded-md px-2 py-1 text-xs font-bold transition-colors ${slider.variant === variant ? 'bg-canela/15 text-canela' : 'text-carbon/60 hover:text-carbon'}`}
               >
-                {variant === 'slider' ? 'Deslizador' : 'Botón animado'}
+                {variant === 'slider' ? t('editor.diagramInspector.slider') : t('editor.diagramInspector.animatedButton')}
               </button>
             ))}
           </div>
           {isButton ? (
             <div className="space-y-3">
               <p className="text-[11px] leading-snug text-carbon/60">
-                Al pulsarlo, el valor viaja de {slider.range.min} a «Destino» en el tiempo indicado. Las expresiones que usan <span className="font-mono">{slider.id}</span> se recalculan en cada fotograma.
+                {renderRichText(t('editor.diagramInspector.buttonSliderHelp', { min: slider.range.min, id: slider.id }), { code: c => <span className="font-mono">{c}</span> })}
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Destino</label>
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.target')}</label>
                   <input
                     type="number"
                     step={slider.range.step ?? 0.1}
@@ -114,7 +117,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Duración (ms)</label>
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.durationMs')}</label>
                   <input
                     type="number"
                     step="100"
@@ -126,7 +129,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Vuelta (ms)</label>
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.returnMs')}</label>
                   <input
                     type="number"
                     step="100"
@@ -148,66 +151,66 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Curva</label>
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.curve')}</label>
                   <select
                     value={action.easing}
                     onChange={e => updateAction({ easing: e.target.value as DiagramControlEasing })}
                     className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                   >
-                    <option value="linear">Lineal (tiempo)</option>
-                    <option value="ease-in">Acelerada</option>
-                    <option value="ease-out">Frenada</option>
-                    <option value="ease-in-out">Suave</option>
+                    <option value="linear">{t('editor.diagramInspector.linearTime')}</option>
+                    <option value="ease-in">{t('editor.diagramInspector.accelerated')}</option>
+                    <option value="ease-out">{t('editor.diagramInspector.decelerated')}</option>
+                    <option value="ease-in-out">{t('editor.diagramInspector.smooth')}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">Al pulsar de nuevo</label>
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.onPressingAgain')}</label>
                   <select
                     value={action.behavior}
                     onChange={e => updateAction({ behavior: e.target.value as DiagramControlAction['behavior'] })}
                     className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                   >
-                    <option value="toggle">Volver al mínimo</option>
-                    <option value="restart">Reiniciar y repetir</option>
+                    <option value="toggle">{t('editor.diagramInspector.returnToMinimum')}</option>
+                    <option value="restart">{t('editor.diagramInspector.restartAndRepeat')}</option>
                   </select>
                 </div>
               </div>
               {otherControls.length > 0 && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-bold text-carbon/75 tracking-tight">Efectos sobre otros controles</label>
+                    <label className="text-[10px] font-bold text-carbon/75 tracking-tight">{t('editor.diagramInspector.effectsOnOtherControls')}</label>
                     <button
                       type="button"
                       onClick={() => setEffects([...effects, { on: 'press', control: otherControls[0].id, do: 'reset' }])}
                       className="rounded-full border border-carbon/15 px-2 py-0.5 text-[10px] font-bold text-carbon/70 hover:border-canela hover:text-canela"
                     >
-                      + Efecto
+                      {t('editor.diagramInspector.effect')}
                     </button>
                   </div>
                   {effects.map((effect, index) => (
                     <div key={index} className="space-y-1.5 rounded-lg border border-carbon/10 bg-lienzo p-2">
                       <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-1">
                         <select
-                          aria-label="Momento"
+                          aria-label={t('editor.diagramInspector.moment')}
                           value={effect.on}
                           onChange={e => updateEffect(index, { on: e.target.value as DiagramControlEffect['on'] })}
                           className="rounded border border-carbon/15 bg-lienzo px-1 py-0.5 text-[11px]"
                         >
-                          <option value="press">Al pulsar</option>
-                          {action.behavior === 'toggle' && <option value="release">Al desactivar</option>}
-                          <option value="complete">Al terminar</option>
+                          <option value="press">{t('editor.diagramInspector.onPress')}</option>
+                          {action.behavior === 'toggle' && <option value="release">{t('editor.diagramInspector.onDeactivation')}</option>}
+                          <option value="complete">{t('editor.diagramInspector.onFinish')}</option>
                         </select>
                         <select
-                          aria-label="Acción"
+                          aria-label={t('editor.diagramInspector.action')}
                           value={effect.do}
                           onChange={e => updateEffect(index, { do: e.target.value as DiagramControlEffect['do'] })}
                           className="rounded border border-carbon/15 bg-lienzo px-1 py-0.5 text-[11px]"
                         >
-                          <option value="reset">reiniciar</option>
-                          <option value="play">animar</option>
+                          <option value="reset">{t('editor.diagramInspector.reset')}</option>
+                          <option value="play">{t('editor.diagramInspector.animate')}</option>
                         </select>
                         <select
-                          aria-label="Control"
+                          aria-label={t('editor.diagramInspector.control')}
                           value={effect.control}
                           onChange={e => updateEffect(index, { control: e.target.value })}
                           className="rounded border border-carbon/15 bg-lienzo px-1 py-0.5 font-mono text-[11px]"
@@ -216,7 +219,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                         </select>
                         <button
                           type="button"
-                          aria-label="Eliminar efecto"
+                          aria-label={t('editor.diagramInspector.deleteEffect')}
                           onClick={() => setEffects(effects.filter((_, effectIndex) => effectIndex !== index))}
                           className="px-1 text-carbon/50 hover:text-granada"
                         >
@@ -226,7 +229,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                       {effect.do === 'play' && (
                         <input
                           type="text"
-                          placeholder="Desde (expresión, por defecto el mínimo)"
+                          placeholder={t('editor.diagramInspector.effectFromExpression')}
                           defaultValue={effect.from ?? ''}
                           key={`from-${index}-${effect.from ?? ''}`}
                           onBlur={e => updateEffect(index, { from: e.target.value.trim() || undefined })}
@@ -235,7 +238,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                       )}
                       <input
                         type="text"
-                        placeholder="Solo si (expresión, opcional)"
+                        placeholder={t('editor.diagramInspector.onlyIfExpressionOptional')}
                         defaultValue={effect.when ?? ''}
                         key={`when-${index}-${effect.when ?? ''}`}
                         onBlur={e => updateEffect(index, { when: e.target.value.trim() || undefined })}
@@ -250,11 +253,11 @@ export const SliderInspector: React.FC<SliderPanelProps & {
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="geometry" title="Valor & Rango Numérico" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
+      <AccordionSection sec="geometry" title={t('editor.diagramInspector.valueAndNumericRange')} isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-[11px] font-bold text-carbon/75 tracking-tight">Valor Actual</label>
+              <label className="text-[11px] font-bold text-carbon/75 tracking-tight">{t('editor.diagramInspector.currentValue')}</label>
               <span className="font-mono text-xs font-bold text-canela bg-canela/10 px-2 py-0.5 rounded border border-canela/20">{slider.value}</span>
             </div>
             <input
@@ -271,7 +274,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
           <div className="grid grid-cols-4 gap-2 pt-1 border-t border-carbon/10">
             <div>
               <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">
-                Mínimo
+                {t('editor.diagramInspector.minimum')}
               </label>
               <input
                 type="number"
@@ -282,7 +285,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
             </div>
             <div>
               <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">
-                Máximo
+                {t('editor.diagramInspector.maximum')}
               </label>
               <input
                 type="number"
@@ -293,7 +296,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
             </div>
             <div>
               <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">
-                Paso
+                {t('editor.diagramInspector.step')}
               </label>
               <input
                 type="number"
@@ -305,7 +308,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
             </div>
             <div>
               <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">
-                Longitud
+                {t('editor.diagramInspector.length')}
               </label>
               <input
                 type="number"

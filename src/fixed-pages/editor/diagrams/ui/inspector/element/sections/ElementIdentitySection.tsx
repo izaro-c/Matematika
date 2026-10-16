@@ -3,6 +3,8 @@ import { TextContentHelp } from '../../help';
 import type { ElementPanelProps } from '../../types';
 import { objectKind } from '@/diagrams';
 import { elementReferenceCandidates, elementRefs, handleRenameId, updateElementRef } from '../../utils';
+import { useI18n } from '@/i18n';
+import { objectTypeLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
 
 /** Propiedades: id, label, refs */
 export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
@@ -12,13 +14,14 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
   onUpdateModel,
   onSelectId,
 }) => {
+  const { t } = useI18n();
   const refs = elementRefs(model, element);
   const kind = objectKind(element);
   return (
   <div className="space-y-3">
     <div>
       <label className="block text-[11px] font-bold text-carbon/75 tracking-tight">
-        Identificador (ID)
+        {t('editor.diagramInspector.identifierId')}
         <input
           type="text"
           defaultValue={element.id}
@@ -34,12 +37,12 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
 
     <div>
       <label className="block text-[11px] font-bold text-carbon/75 tracking-tight">
-        Etiqueta Visual (KaTeX)
+        {t('editor.diagramInspector.visualLabelKatex')}
         <input
           type="text"
           value={element.label || ''}
           onChange={e => onUpdateElement(element.id, { label: e.target.value })}
-          placeholder="ej. $a$ o Segmento AB"
+          placeholder={t('editor.diagramInspector.labelExample')}
           className="mt-1 w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
         />
       </label>
@@ -48,7 +51,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
     {refs.length > 0 && (
       <div className="space-y-2 pt-2 border-t border-carbon/10">
         <label className="block text-[10px] font-bold text-canela uppercase tracking-wider">
-          Referencias del Elemento ({refs.length}):
+          {t('editor.diagramInspector.elementReferencesCount', { count: refs.length })}
         </label>
         <div className="space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-2.5 shadow-2xs">
           {refs.map((rId, idx) => {
@@ -58,7 +61,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
               : [{ id: rId, label: rId, type: '?' }, ...candidates];
             return (
               <div key={idx} className="flex items-center justify-between gap-2 text-xs">
-                <span className="font-mono font-bold text-canela shrink-0 text-[11px]">Ref {idx + 1}:</span>
+                <span className="font-mono font-bold text-canela shrink-0 text-[11px]">{t('editor.diagramInspector.refN', { n: idx + 1 })}</span>
                 <select
                   value={rId}
                   onChange={e => {
@@ -69,7 +72,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
                 >
                   {options.map(cand => (
                     <option key={`${idx}-${cand.id}`} value={cand.id}>
-                      {cand.label} ({cand.id}) - {cand.type}
+                      {cand.label} ({cand.id}) - {objectTypeLabel(t, cand.type)}
                     </option>
                   ))}
                 </select>

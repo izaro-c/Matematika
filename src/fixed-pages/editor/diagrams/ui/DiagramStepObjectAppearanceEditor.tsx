@@ -6,6 +6,7 @@ import type { ElementKind, VisualElement, VisualPoint, VisualSlider } from '../m
 import { COLOR_OPTIONS } from '../model';
 import { elementInspectorCapabilities } from '../model/elements/elementInspectorCapabilities';
 import { DiagramField } from './primitives';
+import { useI18n } from '@/i18n';
 
 type StepSceneItem = VisualPoint | VisualElement | VisualSlider;
 
@@ -49,6 +50,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
   state,
   onStateChange,
 }) => {
+  const { t } = useI18n();
   const capabilities = isPoint(object)
     ? { stroke: false, fill: false, dashed: false, pointSize: true, angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true }
     : isSlider(object)
@@ -62,16 +64,16 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
   return (
     <div className="space-y-3">
       <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
-        <legend className="px-1 ac-label ac-label--sm ac-label--soft">Etiqueta en este paso</legend>
+        <legend className="px-1 ac-label ac-label--sm ac-label--soft">{t('editor.diagramEditors.labelInThisStep')}</legend>
         <label className="flex items-center gap-2 text-xs font-bold text-carbon">
           <input
             type="checkbox"
             checked={state.showLabel ?? ('showLabel' in object ? object.showLabel !== false : true)}
             onChange={event => onStateChange({ showLabel: event.target.checked }, 'Cambiar visibilidad de etiqueta del paso')}
           />
-          Mostrar etiqueta
+          {t('editor.diagramEditors.showLabel')}
         </label>
-        <DiagramField label="Texto temporal">
+        <DiagramField label={t('editor.diagramEditors.temporaryText')}>
           <input
             placeholder={object.label}
             value={state.label ?? ''}
@@ -81,13 +83,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
         {capabilities.fontSize && (
           <div className="grid gap-2 sm:grid-cols-2">
             <label className="text-xs font-bold text-carbon">
-              Tamaño
+              {t('editor.diagramEditors.size')}
               <input
                 type="number"
                 min="6"
                 max="72"
                 step="1"
-                aria-label="Tamaño temporal de la etiqueta"
+                aria-label={t('editor.diagramEditors.temporaryLabelSize')}
                 className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 placeholder={String(baseStyle.labelSize ?? (isPoint(object) ? 14 : 16))}
                 value={stepStyle.labelSize ?? ''}
@@ -100,11 +102,11 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
               />
             </label>
             <label className="text-xs font-bold text-carbon">
-              Desplazamiento X
+              {t('editor.diagramEditors.xOffset')}
               <input
                 type="number"
                 step="1"
-                aria-label="Desplazamiento horizontal temporal de la etiqueta"
+                aria-label={t('editor.diagramEditors.temporaryHorizontalLabelOffset')}
                 className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 placeholder={String(baseStyle.labelOffset?.[0] ?? 0)}
                 value={stepStyle.labelOffset?.[0] ?? ''}
@@ -122,11 +124,11 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
               />
             </label>
             <label className="text-xs font-bold text-carbon sm:col-span-2">
-              Desplazamiento Y
+              {t('editor.diagramEditors.yOffset')}
               <input
                 type="number"
                 step="1"
-                aria-label="Desplazamiento vertical temporal de la etiqueta"
+                aria-label={t('editor.diagramEditors.temporaryVerticalLabelOffset')}
                 className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 placeholder={String(baseStyle.labelOffset?.[1] ?? 0)}
                 value={stepStyle.labelOffset?.[1] ?? ''}
@@ -149,10 +151,10 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
       {isSlider(object) && (
         <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
-          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Valor del deslizador en este paso</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">{t('editor.diagramEditors.stepSliderValue')}</legend>
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-carbon">Valor temporal:</span>
+              <span className="font-bold text-carbon">{t('editor.diagramEditors.temporaryValue')}</span>
               <span className="font-mono font-bold text-canela">
                 {state.value !== undefined ? state.value : `${object.value} (base)`}
               </span>
@@ -190,7 +192,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                 onClick={() => onStateChange({ value: undefined }, 'Restablecer valor base del deslizador')}
                 className="text-[10px] text-carbon/60 hover:text-granada underline cursor-pointer"
               >
-                Restablecer valor base ({object.value})
+                {t('editor.diagramEditors.resetBaseValue', { value: object.value })}
               </button>
             )}
           </div>
@@ -199,17 +201,17 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
       {!isSlider(object) && (
         <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
-          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Apariencia temporal</legend>
-          <DiagramField label="Color del objeto">
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">{t('editor.diagramEditors.temporaryAppearance')}</legend>
+          <DiagramField label={t('editor.diagramEditors.objectColor')}>
             <select
-              aria-label="Color temporal del objeto"
+              aria-label={t('editor.diagramEditors.temporaryObjectColor')}
               value={state.color ?? ''}
               onChange={event => onStateChange(
                 { color: (event.target.value || undefined) as DiagramStepObjectState['color'] },
                 'Cambiar color temporal del objeto',
               )}
             >
-              <option value="">Conservar color original ({object.color})</option>
+              <option value="">{t('editor.diagramEditors.keepOriginalColor', { color: object.color })}</option>
               {COLOR_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
             </select>
           </DiagramField>
@@ -218,13 +220,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
             <div className="grid grid-cols-2 gap-2">
               {capabilities.pointSize && (
                 <label className="text-xs font-bold text-carbon">
-                  Tamaño del punto
+                  {t('editor.diagramEditors.pointSize')}
                   <input
                     type="number"
                     min="0"
                     max="30"
                     step="0.5"
-                    aria-label="Tamaño temporal del punto"
+                    aria-label={t('editor.diagramEditors.temporaryPointSize')}
                     className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                     placeholder={String(baseStyle.pointSize ?? 7)}
                     value={stepStyle.pointSize ?? ''}
@@ -240,13 +242,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
               {capabilities.angleRadius && !isPoint(object) && (
                 <label className="col-span-2 text-xs font-bold text-carbon">
-                  Radio angular
+                  {t('editor.diagramEditors.angularRadius')}
                   <input
                     type="number"
                     min="0.05"
                     max="10"
                     step="0.05"
-                    aria-label="Radio temporal de la marca angular"
+                    aria-label={t('editor.diagramEditors.stepAngleRadius')}
                     className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                     placeholder={String(baseStyle.angleRadius ?? angleRadiusFallback(object))}
                     value={stepStyle.angleRadius ?? ''}
@@ -262,13 +264,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
               {capabilities.markHeight && !isPoint(object) && (
                 <label className="col-span-2 text-xs font-bold text-carbon">
-                  Altura de marca
+                  {t('editor.diagramEditors.markHeight')}
                   <input
                     type="number"
                     min="0.05"
                     max="100"
                     step="0.05"
-                    aria-label="Altura temporal de la marca"
+                    aria-label={t('editor.diagramEditors.temporaryMarkHeight')}
                     className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                     placeholder={String(baseStyle.markHeight ?? markHeightFallback(object))}
                     value={stepStyle.markHeight ?? ''}
@@ -285,13 +287,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
               {capabilities.stroke && !isPoint(object) && (
                 <>
                   <label className="text-xs font-bold text-carbon">
-                    Grosor
+                    {t('editor.diagramEditors.thickness')}
                     <input
                       type="number"
                       min="0"
                       max="20"
                       step="0.1"
-                      aria-label="Grosor temporal del trazo"
+                      aria-label={t('editor.diagramEditors.temporaryStrokeWidth')}
                       className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                       placeholder={String(baseStyle.strokeWidth ?? 2.4)}
                       value={stepStyle.strokeWidth ?? ''}
@@ -304,13 +306,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                     />
                   </label>
                   <label className="text-xs font-bold text-carbon">
-                    Opacidad del trazo
+                    {t('editor.diagramEditors.strokeOpacity')}
                     <input
                       type="number"
                       min="0"
                       max="1"
                       step="0.01"
-                      aria-label="Opacidad temporal del trazo"
+                      aria-label={t('editor.diagramEditors.temporaryStrokeOpacity')}
                       className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                       placeholder={String(baseStyle.strokeOpacity ?? 1)}
                       value={stepStyle.strokeOpacity ?? ''}
@@ -327,13 +329,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
               {capabilities.fill && !isPoint(object) && (
                 <label className="col-span-2 text-xs font-bold text-carbon">
-                  Opacidad de relleno
+                  {t('editor.diagramEditors.fillOpacity')}
                   <input
                     type="number"
                     min="0"
                     max="1"
                     step="0.01"
-                    aria-label="Opacidad temporal de relleno"
+                    aria-label={t('editor.diagramEditors.temporaryFillOpacity')}
                     className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                     placeholder={String(baseStyle.fillOpacity ?? 0.16)}
                     value={stepStyle.fillOpacity ?? ''}
@@ -356,7 +358,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                 checked={state.dashed ?? objectDashed(object)}
                 onChange={event => onStateChange({ dashed: event.target.checked }, 'Cambiar trazo discontinuo temporal')}
               />
-              Línea discontinua en este paso
+              {t('editor.diagramEditors.stepDashedLine')}
             </label>
           )}
         </fieldset>

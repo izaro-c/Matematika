@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconTrash } from '../toolbar/WorkbenchIcons';
+import { useI18n } from '@/i18n';
 
 interface InspectorHeaderProps {
   title: string;
@@ -7,7 +8,9 @@ interface InspectorHeaderProps {
   onDelete: () => void;
 }
 
-export const InspectorHeader: React.FC<InspectorHeaderProps> = ({ title, colorClass, onDelete }) => (
+export const InspectorHeader: React.FC<InspectorHeaderProps> = ({ title, colorClass, onDelete }) => {
+  const { t } = useI18n();
+  return (
   <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
     <div className="flex items-center space-x-2">
       <span className={`h-3 w-3 rounded-full border border-carbon/20 shrink-0 ${colorClass}`} />
@@ -19,7 +22,8 @@ export const InspectorHeader: React.FC<InspectorHeaderProps> = ({ title, colorCl
       className="flex items-center space-x-1 px-2 py-1 text-granada hover:bg-granada/10 rounded transition-colors cursor-pointer text-[11px] font-bold"
     >
       <IconTrash className="w-3.5 h-3.5" />
-      <span>Eliminar</span>
+      <span>{t('editor.diagramInspector.delete')}</span>
     </button>
   </div>
 );
+};

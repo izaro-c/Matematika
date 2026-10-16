@@ -31,6 +31,7 @@ import {
   IconChevronRight,
 } from '../toolbar/WorkbenchIcons';
 import { DiagramObjectLabel } from '../workbench/WorkbenchSceneTree';
+import { useI18n } from '@/i18n';
 
 interface GroupsAndLayersManagerProps {
   model: VisualDiagramModel | null;
@@ -86,6 +87,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   onSelectObjects,
   onTogglePickingGroupId,
 }) => {
+  const { t } = useI18n();
   const [activeTab, setActiveTab] = useState<'layers' | 'groups'>('layers');
   const [newGroupLabel, setNewGroupLabel] = useState('');
   const [newLayerLabel, setNewLayerLabel] = useState('');
@@ -394,8 +396,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
       {/* Cabecera unificada con selector Capas / Grupos */}
       <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
         <div>
-          <h3 className="font-serif text-base font-bold text-carbon">Capas y Grupos</h3>
-          <p className="text-xs italic text-carbon/50">Organización visual y orden de renderizado</p>
+          <h3 className="font-serif text-base font-bold text-carbon">{t('editor.diagramScene.layersAndGroups')}</h3>
+          <p className="text-xs italic text-carbon/50">{t('editor.diagramScene.subtitle')}</p>
         </div>
         <div className="flex bg-carbon/10 p-0.5 rounded-lg text-[10px]">
           <button
@@ -405,7 +407,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               activeTab === 'layers' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
             }`}
           >
-            Capas ({layers.length})
+            {t('editor.diagramScene.layersCount', { count: layers.length })}
           </button>
           <button
             type="button"
@@ -414,7 +416,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               activeTab === 'groups' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
             }`}
           >
-            Grupos ({groups.length})
+            {t('editor.diagramScene.groupsCount', { count: groups.length })}
           </button>
         </div>
       </div>
@@ -430,7 +432,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               onKeyDown={e => {
                 if (e.key === 'Enter') handleAddLayer();
               }}
-              placeholder="Nueva capa..."
+              placeholder={t('editor.diagramScene.newLayer')}
               className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
             />
             <button
@@ -440,7 +442,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
             >
               <IconPlus className="w-3.5 h-3.5" />
-              <span>Capa</span>
+              <span>{t('editor.diagramScene.layer')}</span>
             </button>
           </div>
 
@@ -515,8 +517,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           }}
                           onDragEnd={clearDrag}
                           className="text-carbon/30 hover:text-carbon font-mono text-xs cursor-grab active:cursor-grabbing select-none px-1 py-0.5"
-                          title="Arrastrar para reordenar capa"
-                          aria-label={`Arrastrar capa ${layer.label}`}
+                          title={t('editor.diagramScene.dragToReorderLayer')}
+                          aria-label={t('editor.diagramScene.dragLayer', { label: layer.label })}
                         >
                           ⋮⋮
                         </span>
@@ -537,7 +539,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           </span>
                           {isDropTarget && draggingFromOtherLayer && (
                             <span className="text-[9px] font-bold text-canela bg-canela/15 px-1.5 py-0.5 rounded animate-pulse">
-                              Soltar aquí
+                              {t('editor.diagramScene.dropHere')}
                             </span>
                           )}
                         </button>
@@ -549,8 +551,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           onClick={() => handleMoveLayer(layer.id, -1)}
                           disabled={layerIndex <= 0}
                           className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                          title="Mover capa arriba"
-                          aria-label={`Mover capa arriba ${layer.label}`}
+                          title={t('editor.diagramScene.moveLayerUpTitle')}
+                          aria-label={t('editor.diagramScene.moveLayerUp', { label: layer.label })}
                         >
                           <IconChevronUp className="w-3.5 h-3.5" />
                         </button>
@@ -560,8 +562,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           onClick={() => handleMoveLayer(layer.id, 1)}
                           disabled={layerIndex >= layers.length - 1}
                           className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                          title="Mover capa abajo"
-                          aria-label={`Mover capa abajo ${layer.label}`}
+                          title={t('editor.diagramScene.moveLayerDownTitle')}
+                          aria-label={t('editor.diagramScene.moveLayerDown', { label: layer.label })}
                         >
                           <IconChevronDown className="w-3.5 h-3.5" />
                         </button>
@@ -572,8 +574,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
                             layer.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
-                          title={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
-                          aria-label={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
+                          title={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')}
+                          aria-label={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')}
                         >
                           {layer.visible !== false ? <IconEye /> : <IconEyeOff />}
                         </button>
@@ -584,8 +586,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
                             layer.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
-                          title={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
-                          aria-label={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
+                          title={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')}
+                          aria-label={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')}
                         >
                           {layer.locked ? <IconLock /> : <IconUnlock />}
                         </button>
@@ -595,8 +597,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             type="button"
                             onClick={() => handleDeleteLayer(layer.id)}
                             className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
-                            title="Eliminar capa vacía"
-                            aria-label="Eliminar capa vacía"
+                            title={t('editor.diagramScene.deleteEmptyLayer')}
+                            aria-label={t('editor.diagramScene.deleteEmptyLayer')}
                           >
                             <IconTrash className="w-3.5 h-3.5" />
                           </button>
@@ -610,7 +612,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                       {/* Edición rápida ID y Nombre */}
                       <div className="grid grid-cols-2 gap-2 bg-carbon/5 p-2.5 rounded-xl border border-carbon/10">
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">ID de Capa</label>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.layerId')}</label>
                           <input
                             type="text"
                             defaultValue={layer.id}
@@ -623,7 +625,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Nombre</label>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.name')}</label>
                           <input
                             type="text"
                             value={layer.label}
@@ -643,7 +645,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           }`}
                         >
                           <p className="text-xs italic font-sans">
-                            {isDropTarget ? 'Soltar elemento aquí para asignar a esta capa' : 'Esta capa está vacía. Arrastra objetos aquí.'}
+                            {isDropTarget ? t('editor.diagramScene.dropToAssignLayer') : t('editor.diagramScene.emptyLayer')}
                           </p>
                         </div>
                       ) : (
@@ -694,8 +696,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       }}
                                       onDragEnd={clearDrag}
                                       className="text-carbon/30 hover:text-carbon font-mono text-xs cursor-grab active:cursor-grabbing select-none px-0.5"
-                                      title="Arrastrar para reordenar o mover de capa"
-                                      aria-label={`Arrastrar ${item.id}`}
+                                      title={t('editor.diagramScene.dragItemTitle')}
+                                      aria-label={t('editor.diagramScene.dragItem', { id: item.id })}
                                     >
                                       ⋮⋮
                                     </span>
@@ -714,8 +716,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       }}
                                       disabled={frontIndex <= 0}
                                       className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                                      title="Traer adelante"
-                                      aria-label={`Traer adelante ${item.id}`}
+                                      title={t('editor.diagramScene.bringForward')}
+                                      aria-label={t('editor.diagramScene.bringForwardItem', { id: item.id })}
                                     >
                                       <IconChevronUp className="w-3 h-3" />
                                     </button>
@@ -728,8 +730,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       }}
                                       disabled={frontIndex < 0 || frontIndex >= frontIds.length - 1}
                                       className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                                      title="Enviar atrás"
-                                      aria-label={`Enviar atrás ${item.id}`}
+                                      title={t('editor.diagramScene.sendBackward')}
+                                      aria-label={t('editor.diagramScene.sendBackwardItem', { id: item.id })}
                                     >
                                       <IconChevronDown className="w-3 h-3" />
                                     </button>
@@ -743,7 +745,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       }}
                                       onClick={e => e.stopPropagation()}
                                       className="bg-carbon/5 border border-carbon/15 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-canela hover:border-canela/40 cursor-pointer focus:outline-none"
-                                      aria-label={`Cambiar capa de ${item.id}`}
+                                      aria-label={t('editor.diagramScene.changeLayerOf', { id: item.id })}
                                     >
                                       {layers.map(l => (
                                         <option key={l.id} value={l.id}>
@@ -778,7 +780,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               onKeyDown={e => {
                 if (e.key === 'Enter') handleAddGroup();
               }}
-              placeholder="Nuevo grupo..."
+              placeholder={t('editor.diagramScene.newGroup')}
               className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
             />
             <button
@@ -788,7 +790,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
             >
               <IconPlus className="w-3.5 h-3.5" />
-              <span>Grupo</span>
+              <span>{t('editor.diagramScene.group')}</span>
             </button>
           </div>
 
@@ -796,8 +798,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
           <div className="space-y-2">
             {groups.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-6 text-center text-carbon/60 space-y-1">
-                <p className="font-serif text-xs font-bold text-carbon">Sin grupos creados</p>
-                <p className="text-xs italic font-sans text-carbon/50">Crea un grupo para manipular varios objetos colectivamente.</p>
+                <p className="font-serif text-xs font-bold text-carbon">{t('editor.diagramScene.noGroupsCreated')}</p>
+                <p className="text-xs italic font-sans text-carbon/50">{t('editor.diagramScene.noGroupsHint')}</p>
               </div>
             ) : (
               groups.map(grp => {
@@ -824,12 +826,12 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                         </span>
                         <span className="font-serif font-bold text-xs truncate text-carbon">{grp.label}</span>
                         {grp.target !== false && (
-                          <span className="font-mono text-[9px] bg-canela/10 text-canela font-bold px-1.5 py-0.2 rounded border border-canela/20 shrink-0" title={`Target público: ${grp.targetId || grp.id}`}>
-                            target
+                          <span className="font-mono text-[9px] bg-canela/10 text-canela font-bold px-1.5 py-0.2 rounded border border-canela/20 shrink-0" title={t('editor.diagramScene.publicTarget', { id: grp.targetId || grp.id })}>
+                            {'target'}
                           </span>
                         )}
                         <span className="text-[10px] text-carbon/50 font-mono bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10 shrink-0">
-                          {memberCount} miembros
+                          {t(memberCount === 1 ? 'editor.diagramScene.membersCountOne' : 'editor.diagramScene.membersCountOther', { count: memberCount })}
                         </span>
                       </button>
 
@@ -840,8 +842,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
                             grp.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
-                          title={grp.visible !== false ? 'Ocultar grupo' : 'Mostrar grupo'}
-                          aria-label={grp.visible !== false ? `Ocultar grupo ${grp.label}` : `Mostrar grupo ${grp.label}`}
+                          title={grp.visible !== false ? t('editor.diagramScene.hideGroup') : t('editor.diagramScene.showGroup')}
+                          aria-label={grp.visible !== false ? t('editor.diagramScene.hideGroupNamed', { label: grp.label }) : t('editor.diagramScene.showGroupNamed', { label: grp.label })}
                         >
                           {grp.visible !== false ? <IconEye /> : <IconEyeOff />}
                         </button>
@@ -851,8 +853,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
                             grp.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
-                          title={grp.locked ? 'Desbloquear grupo' : 'Bloquear grupo'}
-                          aria-label={grp.locked ? `Desbloquear grupo ${grp.label}` : `Bloquear grupo ${grp.label}`}
+                          title={grp.locked ? t('editor.diagramScene.unlockGroup') : t('editor.diagramScene.lockGroup')}
+                          aria-label={grp.locked ? t('editor.diagramScene.unlockGroupNamed', { label: grp.label }) : t('editor.diagramScene.lockGroupNamed', { label: grp.label })}
                         >
                           {grp.locked ? <IconLock /> : <IconUnlock />}
                         </button>
@@ -860,8 +862,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           type="button"
                           onClick={() => handleDeleteGroup(grp.id)}
                           className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
-                          title="Eliminar grupo"
-                          aria-label={`Eliminar grupo ${grp.label}`}
+                          title={t('editor.diagramScene.deleteGroup')}
+                          aria-label={t('editor.diagramScene.deleteGroupNamed', { label: grp.label })}
                         >
                           <IconTrash className="w-3.5 h-3.5" />
                         </button>
@@ -873,7 +875,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                       <div className="p-3 border-t border-carbon/10 bg-lienzo space-y-3">
                         <div className="grid grid-cols-2 gap-2 bg-carbon/5 p-2.5 rounded-xl border border-carbon/10">
                           <div>
-                            <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">ID del Grupo</label>
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.groupId')}</label>
                             <input
                               type="text"
                               defaultValue={grp.id}
@@ -886,7 +888,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             />
                           </div>
                           <div>
-                            <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Nombre</label>
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.name')}</label>
                             <input
                               type="text"
                               value={grp.label}
@@ -899,7 +901,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                         {/* Enlazable desde MDX (Target) */}
                         <div className="bg-carbon/5 p-2.5 rounded-xl border border-carbon/10 space-y-2">
                           <label className="flex items-center justify-between text-xs font-bold text-carbon cursor-pointer select-none">
-                            <span>Enlazable desde MDX (Target público)</span>
+                            <span>{t('editor.diagramScene.mdxLinkable')}</span>
                             <input
                               type="checkbox"
                               checked={grp.target !== false}
@@ -910,7 +912,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           {grp.target !== false && (
                             <div className="grid grid-cols-2 gap-2 pt-1 border-t border-carbon/10">
                               <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Target ID</label>
+                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.targetId')}</label>
                                 <input
                                   type="text"
                                   value={grp.targetId ?? grp.id}
@@ -920,20 +922,20 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                 />
                               </div>
                               <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Color Resaltado</label>
+                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.highlightColor')}</label>
                                 <select
                                   value={grp.color || ''}
                                   onChange={e => handleUpdateGroupColor(grp.id, e.target.value || undefined)}
                                   className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none cursor-pointer"
                                 >
-                                  <option value="">(Auto por miembros)</option>
-                                  <option value="canela">canela</option>
-                                  <option value="terracota">terracota</option>
-                                  <option value="ocre">ocre</option>
-                                  <option value="pavo">pavo</option>
-                                  <option value="mora">mora</option>
-                                  <option value="granada">granada</option>
-                                  <option value="musgo">musgo</option>
+                                  <option value="">{t('editor.diagramScene.automaticByMembers')}</option>
+                                  <option value="canela">{'canela'}</option>
+                                  <option value="terracota">{'terracota'}</option>
+                                  <option value="ocre">{'ocre'}</option>
+                                  <option value="pavo">{'pavo'}</option>
+                                  <option value="mora">{'mora'}</option>
+                                  <option value="granada">{'granada'}</option>
+                                  <option value="musgo">{'musgo'}</option>
                                 </select>
                               </div>
                             </div>
@@ -943,7 +945,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                         <div className="space-y-2">
                           <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-carbon/10 pb-2">
                             <span className="text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
-                              Miembros del grupo ({memberCount})
+                              {t('editor.diagramScene.groupMembersCount', { count: memberCount })}
                             </span>
                             <div className="flex flex-wrap items-center gap-1">
                               {onTogglePickingGroupId && (
@@ -955,9 +957,9 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
                                       : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
                                   }`}
-                                  title="Hacer clic en elementos del lienzo para añadirlos o quitarlos de este grupo"
+                                  title={t('editor.diagramScene.pickMembersHint')}
                                 >
-                                  {pickingGroupId === grp.id ? 'Seleccionando en lienzo...' : 'Seleccionar en lienzo'}
+                                  {pickingGroupId === grp.id ? t('editor.diagramScene.selectingOnTheCanvas') : t('editor.diagramScene.selectOnTheCanvas')}
                                 </button>
                               )}
                               {selectedIds.length > 0 && (
@@ -966,17 +968,17 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                     type="button"
                                     onClick={() => handleAddSelectedToGroup(grp.id)}
                                     className="px-2 py-1 bg-canela/10 text-canela hover:bg-canela/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-canela/30"
-                                    title="Añadir los elementos seleccionados en el lienzo a este grupo"
+                                    title={t('editor.diagramScene.addSelectedTitle')}
                                   >
-                                    + Añadir sel. ({selectedIds.length})
+                                    {t('editor.diagramScene.addSelected', { count: selectedIds.length })}
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => handleRemoveSelectedFromGroup(grp.id)}
                                     className="px-2 py-1 bg-granada/10 text-granada hover:bg-granada/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-granada/30"
-                                    title="Quitar los elementos seleccionados en el lienzo de este grupo"
+                                    title={t('editor.diagramScene.removeSelectedTitle')}
                                   >
-                                    - Quitar sel. ({selectedIds.length})
+                                    {t('editor.diagramScene.removeSelected', { count: selectedIds.length })}
                                   </button>
                                 </>
                               )}
@@ -1000,7 +1002,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                       ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
                                       : 'bg-lienzo text-carbon/70 border-carbon/20 hover:border-canela/50 hover:text-carbon'
                                   } ${isCanvasSelected ? 'ring-2 ring-canela/60' : ''}`}
-                                  title={`${isMember ? 'Quitar del grupo' : 'Añadir al grupo'}: ${item.label} (${item.id})`}
+                                  title={isMember ? t('editor.diagramScene.removeFromGroup', { label: item.label, id: item.id }) : t('editor.diagramScene.addToGroup', { label: item.label, id: item.id })}
                                 >
                                   <span className={`w-1.5 h-1.5 rounded-full ${isMember ? 'bg-lienzo' : 'bg-carbon/30'}`} />
                                   <DiagramObjectLabel label={item.label} id={item.id} className="text-[10px]" />

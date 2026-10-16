@@ -3,6 +3,8 @@ import { modelElements, modelPoints, modelSliders } from '../../model/scene/obje
 import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider } from '../../model/types';
 import { DiagramReferencesPanel } from '../DiagramReferencesPanel';
+import { useI18n } from '@/i18n';
+import { objectTypeLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
 
 interface MdxLinkModalProps {
   isOpen: boolean;
@@ -31,6 +33,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
   diagramMode = 'diagram',
   onLinkToMdxPage,
 }) => {
+  const { t } = useI18n();
   const [copiedTargetId, setCopiedTargetId] = useState<string | null>(null);
 
   if (!isOpen || !model) return null;
@@ -39,7 +42,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
     ...modelPoints(model).map(p => ({
       id: p.id,
       label: p.label || p.id,
-      type: 'Punto',
+      type: 'point',
       color: p.color || 'canela',
       target: p.target !== false,
       groupIds: p.groupIds || [],
@@ -57,7 +60,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
     ...modelSliders(model).map(s => ({
       id: s.id,
       label: s.label || s.id,
-      type: 'Deslizador',
+      type: 'slider',
       color: s.color || 'pavo',
       target: s.target !== false,
       groupIds: s.groupIds || [],
@@ -103,11 +106,11 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
       <div role="dialog" aria-modal="true" className="w-full max-w-3xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in fade-in zoom-in duration-200 text-carbon">
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div>
-            <h2 className="font-bold text-base text-carbon">Gestor de Enlaces y Referencias MDX</h2>
+            <h2 className="font-bold text-base text-carbon">{t('editor.diagramModals.mdxLinksAndReferences')}</h2>
             <p className="text-xs text-mora/70 italic">
               {sandboxMode
-                ? 'Sandbox: solo copia snippets JSX al portapapeles; no vincula páginas MDX del corpus.'
-                : 'Configura qué elementos se pueden referenciar y edita sus IDs de grupos para intercalar en lecciones.'}
+                ? t('editor.diagramModals.sandboxSnippetsNote')
+                : t('editor.diagramModals.linksIntro')}
             </p>
           </div>
           <button
@@ -122,7 +125,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
         <div className="p-4 space-y-4 text-xs text-carbon overflow-y-auto flex-1">
           {/* Inserción de Componente Principal */}
           <div className="p-3 bg-carbon/5 border border-carbon/15 rounded-xl space-y-1.5 shadow-2xs">
-            <h4 className="font-bold text-sm text-carbon">Etiqueta del Componente en MDX</h4>
+            <h4 className="font-bold text-sm text-carbon">{t('editor.diagramModals.componentLabelInMdx')}</h4>
             <div className="flex items-center justify-between bg-carbon/10 p-2 rounded-lg border border-carbon/10 font-mono text-xs">
               <code>{componentSnippet}</code>
               <button
@@ -130,7 +133,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                 onClick={() => copyToClipboard(componentSnippet, 'comp')}
                 className="px-2.5 py-1 bg-canela text-lienzo rounded-lg text-[11px] font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
               >
-                {copiedTargetId === 'comp' ? '¡Copiado!' : 'Copiar JSX'}
+                {copiedTargetId === 'comp' ? t('editor.diagramModals.copied') : t('editor.diagramModals.copyJsx')}
               </button>
             </div>
           </div>
@@ -146,53 +149,53 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
           {/* Enlaces a Elementos Interactivos del Diagrama */}
           <div>
             <h4 className="font-bold text-sm text-carbon mb-1">
-              Elementos Destacables en Texto (`InteractiveElement`)
+              {t('editor.diagramModals.highlightableTitle')}
             </h4>
             <p className="text-[11px] text-mora/70 italic mb-2">
-              Edita la referenciabilidad (`target`) y los `groupIds` de cada objeto.
+              {t('editor.diagramModals.highlightableHint')}
             </p>
             <div className="space-y-2 max-h-80 overflow-y-auto p-2 bg-carbon/5 rounded-xl border border-carbon/10">
-              {targets.map(t => {
-                const snippet = `<InteractiveElement target="${t.id}" color="${t.color}">${t.label}</InteractiveElement>`;
+              {targets.map(tg => {
+                const snippet = `<InteractiveElement target="${tg.id}" color="${tg.color}">${tg.label}</InteractiveElement>`;
                 return (
                   <div
-                    key={t.id}
+                    key={tg.id}
                     className={`p-2.5 rounded-xl border transition-all bg-carbon/5 ${
-                      t.target ? 'border-canela/30 shadow-2xs' : 'border-carbon/10 opacity-70'
+                      tg.target ? 'border-canela/30 shadow-2xs' : 'border-carbon/10 opacity-70'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center space-x-2 min-w-0">
                         <input
                           type="checkbox"
-                          checked={t.target}
-                          onChange={() => handleToggleTarget(t.id, t.kind, t.target)}
+                          checked={tg.target}
+                          onChange={() => handleToggleTarget(tg.id, tg.kind, tg.target)}
                           className="rounded text-canela border-carbon/20 focus:ring-canela cursor-pointer"
-                          title="Permitir referencia interactiva"
+                          title={t('editor.diagramModals.allowInteractiveReference')}
                         />
-                        <span className="font-mono font-bold text-xs text-canela">{t.id}</span>
-                        <span className="text-carbon/80 truncate font-bold">({t.label})</span>
+                        <span className="font-mono font-bold text-xs text-canela">{tg.id}</span>
+                        <span className="text-carbon/80 truncate font-bold">({tg.label})</span>
                         <span className="text-[10px] font-mono text-carbon/40 bg-carbon/5 px-1.5 py-0.5 rounded">
-                          {t.type}
+                          {objectTypeLabel(t, tg.type)}
                         </span>
                       </div>
                       <button
                         type="button"
-                        onClick={() => copyToClipboard(snippet, t.id)}
+                        onClick={() => copyToClipboard(snippet, tg.id)}
                         className="px-2.5 py-1 bg-carbon/10 text-carbon hover:bg-canela hover:text-lienzo rounded-lg text-[10px] font-bold transition-all cursor-pointer"
                       >
-                        {copiedTargetId === t.id ? '¡Copiado!' : 'Copiar Elemento'}
+                        {copiedTargetId === tg.id ? t('editor.diagramModals.copied') : t('editor.diagramModals.copyElement')}
                       </button>
                     </div>
 
                     <div className="flex items-center space-x-2 mt-1 pt-1 border-t border-carbon/5">
-                      <span className="text-[10px] font-bold text-carbon/60 shrink-0">IDs de Grupos:</span>
+                      <span className="text-[10px] font-bold text-carbon/60 shrink-0">{t('editor.diagramModals.groupIds')}</span>
                       <input
                         type="text"
-                        key={`${t.id}-${t.groupIds.join(',')}`}
-                        value={t.groupIds.join(', ')}
-                        onChange={e => handleUpdateGroupIds(t.id, t.kind, e.target.value)}
-                        placeholder="Sin grupos (ej. grp1, grp2)"
+                        key={`${tg.id}-${tg.groupIds.join(',')}`}
+                        value={tg.groupIds.join(', ')}
+                        onChange={e => handleUpdateGroupIds(tg.id, tg.kind, e.target.value)}
+                        placeholder={t('editor.diagramModals.groupIdsPlaceholder')}
                         className="flex-1 bg-lienzo border border-carbon/20 rounded px-2 py-0.5 font-mono text-[10px] text-carbon"
                       />
                     </div>

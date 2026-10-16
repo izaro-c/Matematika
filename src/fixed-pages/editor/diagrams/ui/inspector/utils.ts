@@ -3,14 +3,14 @@ import type { VisualDiagramModel, VisualElement } from '@/fixed-pages/editor/dia
 import { renameDiagramId } from '@/fixed-pages/editor/diagrams/model/tools/graphCommands';
 import { modelElements, modelPoints, modelSliders, toolReferenceCandidatesForSlot, withSceneReferences } from '@/fixed-pages/editor/diagrams/model';
 
-export function availableLayers(model: VisualDiagramModel) {
+export function availableLayers(model: VisualDiagramModel, t: (key: string) => string) {
   return model.layers && model.layers.length > 0
     ? model.layers
     : [
-        { id: 'geometry', label: 'Geometría' },
-        { id: 'annotations', label: 'Anotaciones' },
-        { id: 'controls', label: 'Controles' },
-        { id: 'background', label: 'Fondo' },
+        { id: 'geometry', label: t('editor.diagramOptions.layerGeometry') },
+        { id: 'annotations', label: t('editor.diagramOptions.layerAnnotations') },
+        { id: 'controls', label: t('editor.diagramOptions.layerControls') },
+        { id: 'background', label: t('editor.diagramOptions.layerBackground') },
       ];
 }
 
@@ -33,7 +33,7 @@ export function elementReferenceCandidates(
         .map(item => ({
           id: item.id,
           label: item.label || item.id,
-          type: objectKind(item) === 'point' ? 'Punto' : objectKind(item),
+          type: String(objectKind(item)),
         }));
       if (slotted.length > 0) return slotted;
     } catch {
@@ -41,12 +41,12 @@ export function elementReferenceCandidates(
     }
   }
   if (kind && POINT_ONLY_KINDS.has(kind)) {
-    return modelPoints(model).map(p => ({ id: p.id, label: p.label || p.id, type: 'Punto' }));
+    return modelPoints(model).map(p => ({ id: p.id, label: p.label || p.id, type: 'point' }));
   }
   return [
-    ...modelPoints(model).map(p => ({ id: p.id, label: p.label || p.id, type: 'Punto' })),
+    ...modelPoints(model).map(p => ({ id: p.id, label: p.label || p.id, type: 'point' })),
     ...modelElements(model).filter(e => e.id !== excludeId).map(e => ({ id: e.id, label: e.label || e.id, type: String(objectKind(e)) })),
-    ...modelSliders(model).map(s => ({ id: s.id, label: s.label || s.id, type: 'Slider' })),
+    ...modelSliders(model).map(s => ({ id: s.id, label: s.label || s.id, type: 'slider' })),
   ];
 }
 

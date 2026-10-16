@@ -30,6 +30,7 @@ import { RelationIntentPicker } from '../constraints/relations/RelationIntentPic
 import { RelationSlotField } from '../constraints/relations/RelationSlotField';
 import { DiagramButton, DiagramPanel } from '../primitives';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
+import { useI18n } from '@/i18n';
 
 interface DiagramConstraintEditorProps {
   model: VisualDiagramModel;
@@ -50,24 +51,25 @@ function computeSameSide(model: VisualDiagramModel, refs: string[]): 1 | -1 | un
   return computeHalfPlaneSide(a, b, p);
 }
 
-function emptyHintForKind(kind: RelationIntent): string {
+function emptyHintForKind(t: (key: string) => string, kind: RelationIntent): string {
   switch (kind) {
     case 'distance':
     case 'coincident':
     case 'horizontal':
     case 'vertical':
     case 'midpoint':
-      return 'Añade otro punto primero';
+      return t('editor.diagramConstraints.addAnotherPointFirst');
     case 'on':
-      return 'Añade una recta, segmento o curva primero';
+      return t('editor.diagramConstraints.addLineFirst');
     case 'insideArea':
-      return 'Añade un área primero';
+      return t('editor.diagramConstraints.addAnAreaFirst');
     default:
-      return 'No hay objetos compatibles para esta referencia';
+      return t('editor.diagramConstraints.thereAreNoCompatible');
   }
 }
 
 export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = ({ model, point, onModelEdit }) => {
+  const { t } = useI18n();
   const [newKind, setNewKind] = useState<RelationIntent>('horizontal');
 
   const assignedConstraints = pointRelationDrafts(model, point.id);
@@ -187,9 +189,9 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
             ariaLabel={`${slot.label} de ${constraint.id}`}
             value={constraint.refs[2] || ''}
             candidates={candidates}
-            emptyHint={emptyHintForKind(constraint.kind)}
-            pickHint={`Elija en el lienzo: ${slot.label.toLowerCase()}`}
-            optionalEmptyOption={{ value: '', label: `Posición base de ${point.label} (${point.id})` }}
+            emptyHint={emptyHintForKind(t, constraint.kind)}
+            pickHint={t('editor.diagramConstraints.pickOnCanvas', { label: slot.label.toLowerCase() })}
+            optionalEmptyOption={{ value: '', label: t('editor.diagramConstraints.basePositionOf', { label: point.label, id: point.id }) }}
             onChange={val => {
               if (!val) changeRefs(constraint.id, [constraint.refs[0], constraint.refs[1]]);
               else changeRefs(constraint.id, [constraint.refs[0], constraint.refs[1], val]);
@@ -207,8 +209,8 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
           ariaLabel={`${slot.label} de ${constraint.id}`}
           value={hasCurrent ? current : ''}
           candidates={candidates}
-          emptyHint={emptyHintForKind(constraint.kind)}
-          pickHint={`Elija en el lienzo: ${slot.label.toLowerCase()}`}
+          emptyHint={emptyHintForKind(t, constraint.kind)}
+          pickHint={t('editor.diagramConstraints.pickOnCanvas', { label: slot.label.toLowerCase() })}
           onChange={val => changeReference(constraint, slot.index, val)}
         />
       );
@@ -216,22 +218,22 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
   };
 
   return (
-    <section aria-label="Relaciones geométricas del punto" className="space-y-3">
+    <section aria-label={t('editor.diagramConstraints.pointRelationsTitle')} className="space-y-3">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h5 className="text-xs font-bold text-carbon">Relaciones geométricas</h5>
+          <h5 className="text-xs font-bold text-carbon">{t('editor.diagramConstraints.geometricRelations')}</h5>
           <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">
-            Todas las relaciones activas se cumplen a la vez. Se pueden pausar sin perder su configuración.
+            {t('editor.diagramConstraints.pointRelationsHint')}
           </p>
         </div>
         <span className="shrink-0 rounded-full bg-pavo/10 px-2 py-1 text-[9px] font-bold text-pavo">
-          {assignedConstraints.length} activa{assignedConstraints.length === 1 ? '' : 's'}
+          {t(assignedConstraints.length === 1 ? 'editor.diagramConstraints.activeCountOne' : 'editor.diagramConstraints.activeCountOther', { count: assignedConstraints.length })}
         </span>
       </div>
 
       {assignedConstraints.length === 0 && (
         <p className="border-l-2 border-carbon/15 pl-3 text-[10px] leading-relaxed text-carbon/50">
-          Este punto todavía no depende de ninguna relación.
+          {t('editor.diagramConstraints.noPointRelations')}
         </p>
       )}
 
@@ -251,21 +253,21 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               <header className="flex items-start gap-2">
                 <label className="flex min-h-11 flex-1 items-center gap-2 text-xs font-bold text-carbon">
                   <input
-                    aria-label={`Relación activa de ${constraint.id}`}
+                    aria-label={t('editor.diagramConstraints.activeRelationOf', { id: constraint.id })}
                     type="checkbox"
                     checked={constraint.enabled}
                     onChange={event => onModelEdit(editDraft(constraint.id, item => ({ ...item, enabled: event.target.checked })))}
                   />
-                  <span>Activa</span>
+                  <span>{t('editor.diagramConstraints.active')}</span>
                 </label>
-                <DiagramButton type="button" variant="ghost" aria-label="Eliminar relación" onClick={() => deleteConstraint(constraint.id)}>
-                  Eliminar
+                <DiagramButton type="button" variant="ghost" aria-label={t('editor.diagramConstraints.deleteRelation')} onClick={() => deleteConstraint(constraint.id)}>
+                  {t('editor.diagramConstraints.delete')}
                 </DiagramButton>
               </header>
               <p className="text-[10px] leading-relaxed text-carbon/55">{presentation.description}</p>
-              <DiagramFormField label="Tipo de relación" className="p-0 border-0">
+              <DiagramFormField label={t('editor.diagramConstraints.relationType')} className="p-0 border-0">
                 <select
-                  aria-label={`Tipo de ${constraint.id}`}
+                  aria-label={t('editor.diagramConstraints.typeOf', { id: constraint.id })}
                   className={diagramInputClassName}
                   value={constraint.kind}
                   onChange={event => changeKind(constraint, event.target.value as RelationIntent)}
@@ -280,25 +282,25 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               )}
               {renderSlots(constraint)}
               {constraint.kind === 'insideArea' && (
-                <DiagramFormField label="Pertenencia al área" className="p-0 border-0">
+                <DiagramFormField label={t('editor.diagramConstraints.areaMembership')} className="p-0 border-0">
                   <select
-                    aria-label={`Pertenencia al área de ${constraint.id}`}
+                    aria-label={t('editor.diagramConstraints.areaMembershipOf', { id: constraint.id })}
                     className={diagramInputClassName}
                     value={constraint.areaMembership ?? 'interior'}
                     onChange={event => changeAreaMembership(constraint, event.target.value as AreaMembership)}
                   >
-                    <option value="interior">Interior</option>
-                    <option value="boundary">Perímetro o frontera</option>
+                    <option value="interior">{t('editor.diagramConstraints.interior')}</option>
+                    <option value="boundary">{t('editor.diagramConstraints.perimeterOrBoundary')}</option>
                   </select>
                 </DiagramFormField>
               )}
               {constraint.kind === 'distance' && (
-                <DiagramFormField label="Distancia" className="p-0 border-0">
+                <DiagramFormField label={t('editor.diagramConstraints.distance')} className="p-0 border-0">
                   <input
                     type="number"
                     min="0"
                     step="0.1"
-                    aria-label={`Distancia de ${constraint.id}`}
+                    aria-label={t('editor.diagramConstraints.distanceOf', { id: constraint.id })}
                     className={diagramInputClassName}
                     value={constraint.value ?? 1}
                     onChange={event => onModelEdit(editDraft(constraint.id, item => ({ ...item, value: Number(event.target.value), expression: undefined })))}
@@ -308,11 +310,11 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               {constraint.kind === 'expression' && (
                 <DiagramExpressionField
                   model={model}
-                  label="Expresión conservada"
-                  ariaLabel={`Expresión de ${constraint.id}`}
+                  label={t('editor.diagramConstraints.preservedExpression')}
+                  ariaLabel={t('editor.diagramConstraints.expressionOfId', { id: constraint.id })}
                   value={constraint.expression ?? ''}
                   onChange={value => onModelEdit(editDraft(constraint.id, item => ({ ...item, expression: value })))}
-                  help="La relación usa el mismo lenguaje matemático seguro que fórmulas, curvas y condiciones de visibilidad."
+                  help={t('editor.diagramConstraints.expressionLanguageHelp')}
                 />
               )}
             </DiagramPanel>
@@ -320,7 +322,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
         })}
       </div>
 
-      <DiagramPanel title="Nueva relación" className="mt-1">
+      <DiagramPanel title={t('editor.diagramConstraints.newRelation')} className="mt-1">
         <RelationIntentPicker
           model={model}
           scope="point"
@@ -336,7 +338,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
           disabled={addAvailability.status === 'disabled'}
           onClick={addConstraint}
         >
-          Añadir relación
+          {t('editor.diagramConstraints.addRelation')}
         </DiagramButton>
       </DiagramPanel>
     </section>

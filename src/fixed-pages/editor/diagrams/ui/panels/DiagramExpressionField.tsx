@@ -8,6 +8,8 @@ import {
 } from '@/diagrams/public';
 import type { VisualDiagramModel } from '../../model/types';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
+import { useI18n } from '@/i18n';
+import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
 interface DiagramExpressionFieldProps {
   model: VisualDiagramModel;
@@ -23,16 +25,31 @@ interface DiagramExpressionFieldProps {
   error?: string;
 }
 
-function variableLabel(variable: string, value?: number): string {
-  const currentValue = value === undefined ? '' : ` · ahora ${Number(value.toFixed(6))}`;
-  if (variable.endsWith('.x')) return `${variable} · coordenada horizontal${currentValue}`;
-  if (variable.endsWith('.y')) return `${variable} · coordenada vertical${currentValue}`;
-  if (variable.endsWith('.length')) return `${variable} · longitud${currentValue}`;
-  if (variable.endsWith('.radians')) return `${variable} · medida angular en radianes${currentValue}`;
-  if (variable.endsWith('.degrees')) return `${variable} · medida angular en grados${currentValue}`;
-  if (variable.endsWith('.value')) return `${variable} · medida angular en radianes (alias compatible)${currentValue}`;
-  return `${variable} · valor del control${currentValue}`;
+type TranslateWithParams = (...args: [string] | [string, Record<string, string | number>]) => string;
+
+function variableLabel(t: TranslateWithParams, variable: string, value?: number): string {
+  const kind = variable.endsWith('.x') ? 'Horizontal'
+    : variable.endsWith('.y') ? 'Vertical'
+    : variable.endsWith('.length') ? 'Length'
+    : variable.endsWith('.radians') ? 'Radians'
+    : variable.endsWith('.degrees') ? 'Degrees'
+    : variable.endsWith('.value') ? 'RadiansAlias'
+    : 'Control';
+  const keys = VARIABLE_LABEL_KEYS[kind];
+  return value === undefined
+    ? t(keys[0], { variable })
+    : t(keys[1], { variable, value: Number(value.toFixed(6)) });
 }
+
+const VARIABLE_LABEL_KEYS: Record<string, [string, string]> = {
+  Horizontal: ['editor.diagramPanels.variableHorizontal', 'editor.diagramPanels.variableHorizontalNow'],
+  Vertical: ['editor.diagramPanels.variableVertical', 'editor.diagramPanels.variableVerticalNow'],
+  Length: ['editor.diagramPanels.variableLength', 'editor.diagramPanels.variableLengthNow'],
+  Radians: ['editor.diagramPanels.variableRadians', 'editor.diagramPanels.variableRadiansNow'],
+  Degrees: ['editor.diagramPanels.variableDegrees', 'editor.diagramPanels.variableDegreesNow'],
+  RadiansAlias: ['editor.diagramPanels.variableRadiansAlias', 'editor.diagramPanels.variableRadiansAliasNow'],
+  Control: ['editor.diagramPanels.variableControl', 'editor.diagramPanels.variableControlNow'],
+};
 
 function normalizeSearch(value: string): string {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
@@ -84,6 +101,7 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
   compact = false,
   error,
 }) => {
+  const { t } = useI18n();
   const inputRef = useRef<HTMLInputElement>(null);
   const [chosenVariable, setChosenVariable] = useState('');
   const [variableSearch, setVariableSearch] = useState('');
@@ -104,22 +122,22 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
     candidates.forEach(variable => {
       const root = variable.split('.')[0];
       const item = model.objects.find(candidate => candidate.id === root);
-      let group = 'Otras variables';
-      if (variable === parameter) group = 'Variable de la curva';
+      let group = t('editor.diagramPanels.otherVariables');
+      if (variable === parameter) group = t('editor.diagramPanels.curveVariable');
       else if (item) group = `${item.label} — ${item.id}`;
-      const label = variableLabel(variable, variables[variable]);
+      const label = variableLabel(t, variable, variables[variable]);
       const searchable = normalizeSearch(`${group} ${label}`);
       if (searchTerms.some(term => !searchable.includes(term))) return;
       grouped.set(group, [...(grouped.get(group) ?? []), { variable, label }]);
     });
     return [...grouped.entries()].map(([group, options]) => ({ group, options }));
-  }, [model.objects, parameter, variableSearch, variables]);
+  }, [model.objects, parameter, t, variableSearch, variables]);
   const availableVariableCount = variableGroups.reduce((total, group) => total + group.options.length, 0);
 
   const validation = useMemo(() => {
     if (!value.trim()) return optional
-      ? { kind: 'empty' as const, message: 'Opcional: se usará el valor fijo o el comportamiento automático.' }
-      : { kind: 'error' as const, message: 'La expresión no puede estar vacía.' };
+      ? { kind: 'empty' as const, message: t('editor.diagramPanels.optionalExpression') }
+      : { kind: 'error' as const, message: t('editor.diagramPanels.emptyExpression') };
     try {
       parseMathExpression(value);
       const identifiers = extractMathExpressionIdentifiers(value);
@@ -127,21 +145,21 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
         const root = identifier.split('.')[0];
         return !(identifier in variables) && root !== parameter && root !== 'x' && root !== 't';
       });
-      if (unknown.length > 0) return { kind: 'warning' as const, message: `Falta una variable disponible: ${unknown.join(', ')}.` };
+      if (unknown.length > 0) return { kind: 'warning' as const, message: t('editor.diagramPanels.missingVariable', { variables: unknown.join(', ') }) };
       const result = evaluateMathExpression(value, {
         ...variables,
         ...(parameter ? { [parameter]: 0 } : {}),
         x: 0,
         t: 0,
       });
-      return { kind: 'valid' as const, message: `Expresión válida · valor de prueba ${Number(result.toFixed(6))}` };
+      return { kind: 'valid' as const, message: t('editor.diagramPanels.validExpression', { value: Number(result.toFixed(6)) }) };
     } catch (error) {
       return {
         kind: 'error' as const,
-        message: error instanceof DiagramExpressionError ? error.message : 'Expresión matemática no válida.',
+        message: error instanceof DiagramExpressionError ? error.message : t('editor.diagramPanels.invalidExpression'),
       };
     }
-  }, [optional, parameter, value, variables]);
+  }, [optional, parameter, t, value, variables]);
 
   const insert = (token: string, cursorBack = 0) => {
     const input = inputRef.current;
@@ -185,41 +203,41 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
         </p>
       {!compact && (
         <details className="border-t border-carbon/10 pt-1">
-          <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-pavo">Qué se puede escribir y cómo</summary>
+          <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-pavo">{t('editor.diagramPanels.expressionHelpTitle')}</summary>
           <div className="space-y-2 pb-1">
           {(variableGroups.length > 0 || variableSearch) && (
             <div className="space-y-1">
               <input
                 type="search"
-                aria-label={`Buscar variable para ${label}`}
+                aria-label={t('editor.diagramPanels.searchVariableFor', { label })}
                 className={diagramInputClassName}
                 value={variableSearch}
                 onChange={event => setVariableSearch(event.target.value)}
-                placeholder="Buscar por objeto, ID o magnitud…"
+                placeholder={t('editor.diagramPanels.variableSearchPlaceholder')}
               />
               <div className="flex gap-1">
-                <select aria-label={`Variable para ${label}`} className={`min-w-0 flex-1 ${diagramInputClassName}`} value={chosenVariable} onChange={event => setChosenVariable(event.target.value)}>
-                  <option value="">{availableVariableCount > 0 ? `Elegir entre ${availableVariableCount} variables…` : 'No hay coincidencias'}</option>
+                <select aria-label={t('editor.diagramPanels.variableFor', { label })} className={`min-w-0 flex-1 ${diagramInputClassName}`} value={chosenVariable} onChange={event => setChosenVariable(event.target.value)}>
+                  <option value="">{availableVariableCount > 0 ? t('editor.diagramPanels.chooseAmongVariables', { count: availableVariableCount }) : t('editor.diagramPanels.noMatches')}</option>
                   {variableGroups.map(group => (
                     <optgroup key={group.group} label={group.group}>
                       {group.options.map(option => <option key={option.variable} value={option.variable}>{option.label}</option>)}
                     </optgroup>
                   ))}
                 </select>
-                <button type="button" disabled={!chosenVariable} className="rounded border border-pavo/25 bg-lienzo px-2 text-[10px] font-bold text-pavo disabled:opacity-35" onClick={() => insert(chosenVariable)}>Insertar</button>
+                <button type="button" disabled={!chosenVariable} className="rounded border border-pavo/25 bg-lienzo px-2 text-[10px] font-bold text-pavo disabled:opacity-35" onClick={() => insert(chosenVariable)}>{t('editor.diagramPanels.insert')}</button>
               </div>
-              <p className="text-[9px] text-carbon/45">Las variables están agrupadas por objeto y muestran su valor actual.</p>
+              <p className="text-[9px] text-carbon/45">{t('editor.diagramPanels.variablesHint')}</p>
             </div>
           )}
-          <div className="flex flex-wrap gap-1" aria-label={`Atajos para ${label}`}>
+          <div className="flex flex-wrap gap-1" aria-label={t('editor.diagramPanels.shortcutsFor', { label })}>
             {EXPRESSION_SHORTCUTS.map(shortcut => <button key={shortcut.display} type="button" className="rounded-md border border-carbon/20 bg-lienzo shadow-sm px-2 py-1 font-mono text-[9px] text-carbon/70 hover:bg-carbon/5 hover:-translate-y-[0.5px] hover:shadow transition-all duration-200 active:translate-y-0 active:scale-95" onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</button>)}
           </div>
             <div className="space-y-1 border-t border-carbon/10 pt-2 text-[9px] leading-relaxed text-carbon/55 break-words">
-              <p>Se admiten números, paréntesis y los operadores <code>+ − * / ^</code>. Las constantes son <code>pi</code> y <code>e</code>.</p>
-              <p>Funciones: <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>sqrt</code>, <code>abs</code>, <code>min</code>, <code>max</code>, <code>round</code>, <code>hypot</code> y logaritmos <code>ln</code>/<code>log</code>.</p>
-              <p>Los ángulos ofrecen <code>id.radians</code> e <code>id.degrees</code>, tanto si son orientados como no reflejos.</p>
-              <p>Las condiciones usan <code>lt(a,b)</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>, <code>eq(a,b,…)</code>, <code>approx(a,b,tolerancia)</code>, <code>and</code>, <code>or</code> y <code>not</code>; producen 1 si se cumplen y 0 si no.</p>
-              <p>No se ejecuta JavaScript: no se admiten asignaciones, llamadas arbitrarias ni acceso fuera de las variables enumeradas.</p>
+              <p>{renderRichText(t('editor.diagramPanels.exprHelpOperators'), { code: c => <code>{c}</code> })}</p>
+              <p>{renderRichText(t('editor.diagramPanels.exprHelpFunctions'), { code: c => <code>{c}</code> })}</p>
+              <p>{renderRichText(t('editor.diagramPanels.exprHelpAngles'), { code: c => <code>{c}</code> })}</p>
+              <p>{renderRichText(t('editor.diagramPanels.exprHelpConditions'), { code: c => <code>{c}</code> })}</p>
+              <p>{t('editor.diagramPanels.expressionSafetyNote')}</p>
             </div>
           </div>
         </details>

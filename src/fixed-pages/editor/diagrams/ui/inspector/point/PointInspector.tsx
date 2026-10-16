@@ -15,6 +15,7 @@ import { pointMode, setPointMode, supportElements, withEditedPosition, withPoint
 import { parseOptionalNumber } from '../../workbenchSelection';
 import { ConstraintEditor } from '../../constraints/ConstraintEditor';
 import { ElementVisibilitySection } from '../element/sections/ElementVisibilitySection';
+import { useI18n } from '@/i18n';
 
 export const PointInspector: React.FC<PointPanelProps & {
   openAccordion: Record<string, boolean>;
@@ -29,13 +30,14 @@ export const PointInspector: React.FC<PointPanelProps & {
   openAccordion,
   onToggleAccordion,
 }) => {
+  const { t } = useI18n();
   const colorToken = PALETTE_TOKENS.find(c => c.id === point.color) || PALETTE_TOKENS[0];
   const mode = pointMode(point);
   const isFixed = mode === 'fixed';
   const position = pointPosition(point)!;
   const style = objectStyle(point);
   const gliderTarget = point.mobility.type === 'on-support' ? point.mobility.support : undefined;
-  const layers = availableLayers(model);
+  const layers = availableLayers(model, t);
   const gliderSupports = supportElements(model);
   const changeMode = (nextMode: PointConstraint, options: { gliderTarget?: string } = {}) => {
     if (onUpdateModel) onUpdateModel(setPointMode(model, point.id, nextMode, options), `Cambiar movilidad de ${point.id}`);
@@ -46,16 +48,16 @@ export const PointInspector: React.FC<PointPanelProps & {
   return (
     <div className="p-3 space-y-3 text-xs font-serif text-carbon">
       <InspectorHeader
-        title={`Punto: ${point.id}`}
+        title={t('editor.diagramInspector.pointTitle', { id: point.id })}
         colorClass={colorToken.bgClass}
         onDelete={() => onDeleteSelected(point.id)}
       />
 
-      <AccordionSection sec="identity" title="Identidad & Etiqueta KaTeX" isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
+      <AccordionSection sec="identity" title={t('editor.diagramInspector.identityAndKatexLabel')} isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Identificador Técnico (ID)
+              {t('editor.diagramInspector.technicalIdentifierId')}
             </label>
             <input
               type="text"
@@ -66,24 +68,24 @@ export const PointInspector: React.FC<PointPanelProps & {
                 if (e.key === 'Enter') handleRenameId(model, point.id, e.currentTarget.value, onUpdateModel, onSelectId);
               }}
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
-              title="Presiona Enter o cambia el foco para confirmar renombrado"
+              title={t('editor.diagramInspector.renameConfirmHint')}
             />
           </div>
 
           <div>
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Etiqueta Visual (KaTeX)
+              {t('editor.diagramInspector.visualLabelKatex')}
             </label>
             <input
               type="text"
               value={point.label || ''}
               onChange={e => onUpdatePoint(point.id, { label: e.target.value })}
-              placeholder="ej. $A$ o $P_1$"
+              placeholder={t('editor.diagramInspector.labelExampleKatex')}
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
             />
             {point.label && (
               <div className="mt-2 flex items-center space-x-2 rounded-lg border border-carbon/10 bg-lienzo/80 p-2 shadow-2xs">
-                <span className="text-[10px] uppercase font-bold text-carbon/50">Vista previa:</span>
+                <span className="text-[10px] uppercase font-bold text-carbon/50">{t('editor.diagramInspector.preview')}</span>
                 <KatexText text={point.label} className="text-xs font-bold text-canela" />
               </div>
             )}
@@ -103,12 +105,12 @@ export const PointInspector: React.FC<PointPanelProps & {
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="geometry" title="Geometría, Soporte & Coordenadas" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
+      <AccordionSection sec="geometry" title={t('editor.diagramInspector.geometrySupportAndCoordinates')} isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Coordenada X
+                {t('editor.diagramInspector.xCoordinate')}
               </label>
               <input
                 type="number"
@@ -123,7 +125,7 @@ export const PointInspector: React.FC<PointPanelProps & {
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Coordenada Y
+                {t('editor.diagramInspector.yCoordinate')}
               </label>
               <input
                 type="number"
@@ -141,7 +143,7 @@ export const PointInspector: React.FC<PointPanelProps & {
           <div className="pt-2.5 border-t border-carbon/10 space-y-2.5">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tipo de Punto & Soporte
+                {t('editor.diagramInspector.pointTypeAndSupport')}
               </label>
               <select
                 value={mode}
@@ -153,27 +155,27 @@ export const PointInspector: React.FC<PointPanelProps & {
                 }}
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
               >
-                <option value="free">Punto Libre (Arrastrable en el plano)</option>
-                <option value="fixed">Punto Fijo (Bloqueado)</option>
-                <option value="horizontal">Restringido horizontalmente</option>
-                <option value="vertical">Restringido verticalmente</option>
-                <option value="glider">Glider sobre objeto</option>
-                <option value="derived">Derivado (expresiones)</option>
-                <option value="constrained">Con restricciones geométricas</option>
+                <option value="free">{t('editor.diagramInspector.freePointOption')}</option>
+                <option value="fixed">{t('editor.diagramInspector.fixedPointLocked')}</option>
+                <option value="horizontal">{t('editor.diagramInspector.horizontallyConstrained')}</option>
+                <option value="vertical">{t('editor.diagramInspector.verticallyConstrained')}</option>
+                <option value="glider">{t('editor.diagramInspector.gliderOnObject')}</option>
+                <option value="derived">{t('editor.diagramInspector.derivedExpressions')}</option>
+                <option value="constrained">{t('editor.diagramInspector.withGeometricConstraints')}</option>
               </select>
             </div>
 
             {mode === 'glider' && (
               <div className="space-y-1.5 rounded-lg border border-canela/20 bg-canela/5 p-2.5">
                 <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">
-                  Objeto soporte (gliderTarget)
+                  {t('editor.diagramInspector.supportObjectGlidertarget')}
                 </label>
                 <select
                   value={gliderTarget || ''}
                   onChange={e => changeMode('glider', { gliderTarget: e.target.value || undefined })}
                   className="w-full rounded-lg border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
                 >
-                  <option value="">-- Seleccionar soporte --</option>
+                  <option value="">{t('editor.diagramInspector.selectSupport')}</option>
                   {gliderSupports.map(e => (
                     <option key={e.id} value={e.id}>
                       {e.label || e.id} ({e.id}) - {objectKind(e)}
@@ -193,7 +195,7 @@ export const PointInspector: React.FC<PointPanelProps & {
               className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
             <label htmlFor={`fixed-${point.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
-              Fijar posición (Bloquear arrastre)
+              {t('editor.diagramInspector.fixPositionLockDragging')}
             </label>
           </div>
 
@@ -221,10 +223,10 @@ export const PointInspector: React.FC<PointPanelProps & {
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="style" title="Estilo, Tamaño & Apariencia" isOpen={openAccordion.style} onToggle={onToggleAccordion}>
+      <AccordionSection sec="style" title={t('editor.diagramInspector.styleSizeAndAppearance')} isOpen={openAccordion.style} onToggle={onToggleAccordion}>
         <div className="space-y-3">
           <div>
-            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">Color del Punto</label>
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">{t('editor.diagramInspector.pointColor')}</label>
             <div className="flex flex-wrap gap-2">
               {PALETTE_TOKENS.map(c => (
                 <button
@@ -243,7 +245,7 @@ export const PointInspector: React.FC<PointPanelProps & {
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño Base (px)
+                {t('editor.diagramInspector.baseSizePx')}
               </label>
               <input
                 type="number"
@@ -256,7 +258,7 @@ export const PointInspector: React.FC<PointPanelProps & {
             </div>
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Tamaño Hover (px)
+                {t('editor.diagramInspector.hoverSizePx')}
               </label>
               <input
                 type="number"
@@ -279,7 +281,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                 className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
               />
               <label htmlFor={`preserveColor-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
-                Conservar color propio en hover
+                {t('editor.diagramInspector.keepOwnColorOnHover')}
               </label>
             </div>
 
@@ -296,13 +298,13 @@ export const PointInspector: React.FC<PointPanelProps & {
                 className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
               />
               <label htmlFor={`highlightable-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
-                Permitir resaltado visual con el puntero
+                {t('editor.diagramInspector.allowPointerHighlight')}
               </label>
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Capa del Tablero</label>
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.boardLayer')}</label>
             <select
               value={point.layerId || 'geometry'}
               onChange={e => onUpdatePoint(point.id, { layerId: e.target.value })}
@@ -318,14 +320,14 @@ export const PointInspector: React.FC<PointPanelProps & {
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="visibility_selection" title="Visibilidad Condicionada & Selección" isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
+      <AccordionSection sec="visibility_selection" title={t('editor.diagramInspector.conditionalVisibilityAndSelection')} isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
         <ElementVisibilitySection
           object={point}
           onUpdate={update => onUpdatePoint(point.id, update as Parameters<typeof onUpdatePoint>[1])}
         />
       </AccordionSection>
 
-      <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
+      <AccordionSection sec="constraints" title={t('editor.diagramInspector.geometricConstraints')} isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
         {onUpdateModel ? (
           <ConstraintEditor
             model={model}
