@@ -1,33 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useI18n } from '@/i18n';
 import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
-import { saveBlockedByValidation } from '@/fixed-pages/editor/session/validationMessages';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
 import { DiagramWorkbenchHost } from '../../diagrams/ui/workbench/DiagramWorkbenchHost';
-import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramWorkbenchLoader';
-import { DiagramRewriteDialog } from '../../diagrams/ui/DiagramRewriteDialog';
-import type { Block } from '@/fixed-pages/editor/session/parser';
 import type { EditorDiagramReference, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
-import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import { useDiagramUsages } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramUsages';
 import { usePageDiagramTargets } from '@/fixed-pages/editor/diagrams/ui/workbench/usePageDiagramTargets';
 import { PublishedRuntimePreview } from '../preview/PublishedRuntimePreview';
-import { CreatePageDialog } from '../create/CreatePageDialog';
-import { CreateDiagramDialog } from '../create/CreateDiagramDialog';
-import { AddDiagramDialog } from '../create/AddDiagramDialog';
 import { defaultMode } from '@/fixed-pages/editor/diagrams/model/tools/diagramOptions';
-import { toDiagramImportPath } from '@/fixed-pages/editor/review/authoringModel';
 import { EditorLandingView } from '../landing/EditorLandingView';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
 import { EditorRouteNotFound } from '@/fixed-pages/editor/ui/page/EditorRouteNotFound';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
-import { DiagramStepSyncContext, type DiagramStepSyncContextValue } from '@/lib/page-context/DiagramStepSyncContext';
-import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
-import { editableHtmlToMdx, insertHtmlAtSelection, mdxToEditableHtml } from '@/fixed-pages/editor/ui/prose/inlineProseOps';
+import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
 import { EditorShell } from '../page/EditorShell';
 import { DiagnosticsDock } from './DiagnosticsDock';
 import { EditorDiagnosticsPanel } from '../panels/EditorDiagnosticsPanel';
@@ -36,34 +25,23 @@ import { VisualEditorPanel } from '../panels/VisualEditorPanel';
 import { CodeEditorPanel } from '../panels/CodeEditorPanel';
 import { DiagramSourcePanel } from '../panels/DiagramSourcePanel';
 import { EditorApiStatusBanner } from '../safety/EditorApiStatusBanner';
-import { UnsavedChangesDialog } from '../safety/UnsavedChangesDialog';
-import { SaveErrorModal } from '../safety/SaveErrorModal';
 import { buildEditorSafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
-import {
-  buildMdxSaveCapability,
-  warningSaveConfirmCopy,
-} from '@/fixed-pages/editor/save/saveCapability';
-import {
-  editorApiUnavailableInProduction,
-  editorWriteAccessGranted,
-} from '@/fixed-pages/editor/save/editorApiBase';
-import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 
+import { MdxWorkbenchDialogs } from './mdx/MdxWorkbenchDialogs';
 import { MdxWorkbenchHeader } from './MdxWorkbenchHeader';
 import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
 import { TranslationWorkbench } from './TranslationWorkbench';
-import { SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
-import {
-  buildConceptIndex,
-  conceptKey,
-  documentVersionStatuses,
-  translationOriginLang,
-} from '@/fixed-pages/editor/session/conceptVersions';
+import { useDocumentVersionsFlow } from './mdx/useDocumentVersionsFlow';
+import { useDocumentSave } from './mdx/useDocumentSave';
+import { useDiagramStepState } from './mdx/useDiagramStepState';
+import { useBlockSelection } from './mdx/useBlockSelection';
+import { useDiagramEditorSession } from './mdx/useDiagramEditorSession';
+import { useSemanticLinker } from './mdx/useSemanticLinker';
+import { findBlockIdForIssue } from './mdx/issueBlockTarget';
 
 import {
   buildPageConnectionSummary,
   buildPageDiagramLinks,
-  getDiagramWorkbenchMode,
   getInlineDiagramTargets,
   getPreviewPath,
   mergeDiagramTargets,
@@ -178,252 +156,80 @@ export const MdxWorkbench: React.FC = () => {
   const [formatBarNode, setFormatBarNode] = useState<React.ReactNode>(null);
 
   // Modals state
-  const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [createPageOpen, setCreatePageOpen] = useState(false);
   const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
   const [addDiagramOpen, setAddDiagramOpen] = useState(false);
-  const [saveErrorModalOpen, setSaveErrorModalOpen] = useState(false);
-  const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
-  const [warningSaveOpen, setWarningSaveOpen] = useState(false);
-
-  const currentLang = useMemo(() => {
-    if (metadata && typeof metadata === 'object' && 'lang' in metadata && typeof (metadata as { lang?: unknown }).lang === 'string') {
-      return (metadata as { lang: string }).lang;
-    }
-    if (currentFile) {
-      const match = currentFile.split('/').find(p => /^[a-z]{2}(-[A-Z]{2})?$/.test(p));
-      if (match) return match;
-    }
-    return 'es';
-  }, [currentFile, metadata]);
-
-  const currentConceptVariants = useMemo<Record<string, FileNode>>(() => {
-    if (!currentResource || currentResource.kind !== 'mdx-document') return {};
-    return buildConceptIndex(files).get(conceptKey(currentResource)) ?? {};
-  }, [currentResource, files]);
-
-  const documentVersions = useMemo(
-    () => documentVersionStatuses(currentConceptVariants, SUPPORTED_LANGUAGE_CODES),
-    [currentConceptVariants],
-  );
-
-  // Vista de traducción: el original es el de `desde=` si existe; si no, el de referencia.
-  const translationOrigin = useMemo(() => {
-    const paths = Object.fromEntries(Object.entries(currentConceptVariants).map(([lang, file]) => [lang, file.path]));
-    const lang = urlOriginLang && urlOriginLang !== currentLang && paths[urlOriginLang]
-      ? urlOriginLang
-      : translationOriginLang(paths, currentLang);
-    return {
-      lang,
-      path: lang ? paths[lang] ?? null : null,
-      options: Object.keys(paths).filter(candidate => candidate !== currentLang),
-    };
-  }, [currentConceptVariants, currentLang, urlOriginLang]);
-
-  const handleSwitchLanguage = useCallback((targetLang: string) => {
-    const targetFile = currentConceptVariants[targetLang];
-    if (targetFile) {
-      // Cambia la versión del documento; el idioma de la interfaz (`:lang`) se mantiene.
-      openFileSafely(targetFile.path);
-    }
-  }, [currentConceptVariants, openFileSafely]);
-
-  // Abrir otro archivo solo navega: la traducción espera a que el núcleo lo haya cargado.
-  const [pendingTranslation, setPendingTranslation] = useState<{ path: string; lang: string } | null>(null);
-  const handleCreateTranslation = useCallback(async (fileOrLang: FileNode | string, maybeLang?: string) => {
-    const targetLang = typeof fileOrLang === 'string' ? fileOrLang : maybeLang;
-    if (!targetLang) return;
-    if (typeof fileOrLang !== 'string' && fileOrLang.path !== currentFile) {
-      setPendingTranslation({ path: fileOrLang.path, lang: targetLang });
-      openFileSafely(fileOrLang.path);
-      return;
-    }
-    await createTranslation(targetLang);
-  }, [createTranslation, currentFile, openFileSafely]);
 
   const routePath = route.status === 'file' ? route.path : null;
-  useEffect(() => {
-    if (!pendingTranslation) return;
-    if (routePath !== pendingTranslation.path) {
-      // Navegación cancelada en el aviso de cambios sin guardar o sustituida por otra.
-      if (!pendingFileNavigation) setPendingTranslation(null);
-      return;
-    }
-    if (currentFile !== pendingTranslation.path || loading) return;
-    setPendingTranslation(null);
-    void createTranslation(pendingTranslation.lang);
-  }, [createTranslation, currentFile, loading, pendingFileNavigation, pendingTranslation, routePath]);
-
-  const writeAvailable = !editorApiUnavailableInProduction() && editorWriteAccessGranted();
-  const saveCapability = useMemo(
-    () =>
-      buildMdxSaveCapability({
-        isDirty: hasLocalChanges,
-        saving,
-        errorCount: validation.errorCount,
-        warningCount: validation.warningCount,
-        hasFile: Boolean(currentFile),
-        hasVersion: Boolean(baseVersion),
-        writeAvailable,
-        isReadOnly,
-      }),
-    [
-      baseVersion,
-      currentFile,
-      hasLocalChanges,
-      isReadOnly,
-      saving,
-      validation.errorCount,
-      validation.warningCount,
-      writeAvailable,
-    ],
-  );
-
-  const performSaveDocument = useCallback(async () => {
-    if (!hasLocalChanges) return false;
-    if (validation.errorCount > 0) {
-      setSaveErrorMessage(translateEditorText(t, saveBlockedByValidation(validation.errorCount)));
-      setSaveErrorModalOpen(true);
-      return false;
-    }
-    const result = await saveCurrentFile();
-    if (!result.ok) {
-      setSaveErrorMessage(translateEditorText(t, result.reason));
-      setSaveErrorModalOpen(true);
-      return false;
-    }
-    return true;
-  }, [hasLocalChanges, saveCurrentFile, t, validation.errorCount]);
-
-  const warningSaveCopy = warningSaveConfirmCopy(saveCapability.warningCount);
-
-  const handleSaveDocument = useCallback(() => {
-    if (!saveCapability.allowed) return;
-    if (saveCapability.warningCount > 0) {
-      setWarningSaveOpen(true);
-      return;
-    }
-    void performSaveDocument();
-  }, [performSaveDocument, saveCapability.allowed, saveCapability.warningCount]);
-
-  const confirmWarningSave = useCallback(() => {
-    setWarningSaveOpen(false);
-    void performSaveDocument();
-  }, [performSaveDocument]);
-
-  const [diagramWorkbenchOverride, setDiagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
-  const [rewriteDiagramPath, setRewriteDiagramPath] = useState<string | null>(null);
-  const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
-  const [activeDiagramIndex, setActiveDiagramIndex] = useState<number | null>(null);
-  const [editorDiagramStepId, setEditorDiagramStepId] = useState<string | null>('initial');
-  const [editorDiagramStepIndex, setEditorDiagramStepIndex] = useState<number | null>(null);
-
-  const selectDiagramStep = React.useCallback((stepInput: number | string) => {
-    if (typeof stepInput === 'number') {
-      setEditorDiagramStepIndex(stepInput);
-      setEditorDiagramStepId(null);
-      return;
-    }
-    setEditorDiagramStepId(stepInput);
-    setEditorDiagramStepIndex(null);
-  }, []);
-
-  const diagramStepSyncValue = useMemo<DiagramStepSyncContextValue>(() => ({
-    activeStepIndex: editorDiagramStepIndex,
-    activeStepId: editorDiagramStepId,
-    selectDiagramStep,
-  }), [editorDiagramStepId, editorDiagramStepIndex, selectDiagramStep]);
-
-  const syncDemoStepToDiagram = React.useCallback((step: ProofStepData, index: number) => {
-    if (step.diagramStep === 'initial') {
-      setEditorDiagramStepId('initial');
-      setEditorDiagramStepIndex(null);
-      return;
-    }
-    if (step.diagramStep !== undefined && step.diagramStep !== '') {
-      setEditorDiagramStepId(String(step.diagramStep));
-      setEditorDiagramStepIndex(typeof step.diagramStep === 'number' ? step.diagramStep : null);
-      return;
-    }
-    setEditorDiagramStepId(null);
-    setEditorDiagramStepIndex(index);
-  }, []);
-
-  const clearDiagramSession = () => {
-    setDiagramWorkbenchOverride(null);
-    setRewriteDiagramPath(null);
-    setActiveDiagramBlockId(null);
-    setActiveDiagramIndex(null);
-    setDiagramDirty(false);
-  };
-
-  useEffect(() => {
-    cleanupDiagramSessionRef.current = clearDiagramSession;
+  const {
+    currentLang,
+    documentVersions,
+    translationOrigin,
+    handleSwitchLanguage,
+    handleCreateTranslation,
+  } = useDocumentVersionsFlow({
+    files,
+    currentFile,
+    currentResource,
+    metadata,
+    loading,
+    urlOriginLang,
+    routePath,
+    hasPendingNavigation: Boolean(pendingFileNavigation),
+    openFileSafely,
+    createTranslation,
   });
 
-  // --- URL ⇄ estado local (bloque, paso, modo del motor) ----------------------
-  // Cada par usa una referencia con el último valor acordado para no rebotar.
-  const lastUrlBlockRef = useRef<string | null>(null);
-  const pendingBlockScrollRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (urlBlockId === lastUrlBlockRef.current) return;
-    lastUrlBlockRef.current = urlBlockId;
-    if (urlBlockId === editingBlockId) return;
-    setEditingBlockId(urlBlockId);
-    pendingBlockScrollRef.current = urlBlockId;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlBlockId]);
-  useEffect(() => {
-    if (editingBlockId === lastUrlBlockRef.current) return;
-    lastUrlBlockRef.current = editingBlockId;
-    setUrlBlockId(editingBlockId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editingBlockId]);
-  // Al recargar con `bloque=` el documento llega después: desplazarse cuando exista.
-  useEffect(() => {
-    const target = pendingBlockScrollRef.current;
-    if (!target || loading) return;
-    const element = document.getElementById(`block-${target}`) || document.querySelector(`[data-block-id="${target}"]`);
-    if (!element) return;
-    pendingBlockScrollRef.current = null;
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, [blocks, loading]);
+  const {
+    saveCapability,
+    handleSaveDocument,
+    confirmWarningSave,
+    warningSaveCopy,
+    warningSaveOpen,
+    setWarningSaveOpen,
+    saveErrorModalOpen,
+    setSaveErrorModalOpen,
+    saveErrorMessage,
+  } = useDocumentSave({
+    currentFile,
+    hasLocalChanges,
+    saving,
+    baseVersion,
+    isReadOnly,
+    validation,
+    pendingFileNavigation,
+    cancelPendingNavigation,
+    saveCurrentFile,
+  });
 
-  // Superficie de diagrama recargada desde la URL: recuperar el bloque activo. `bloque=`
-  // también es la selección de edición, así que solo cuenta si es un bloque de diagrama.
-  useEffect(() => {
-    if (route.status !== 'file' || !route.diagramSurface || !urlBlockId || activeDiagramBlockId !== null) return;
-    if (blocks.some(block => block.id === urlBlockId && block.type === 'diagram')) {
-      setActiveDiagramBlockId(urlBlockId);
-    }
-  }, [activeDiagramBlockId, blocks, route, urlBlockId]);
+  const { editingBlockId, setEditingBlockId, highlightedBlockId, focusBlock } = useBlockSelection({
+    urlBlockId,
+    setUrlBlockId,
+    blocks,
+    loading,
+  });
+  const { diagramStepSyncValue, syncDemoStepToDiagram } = useDiagramStepState({ urlStep, setUrlStep });
 
-  const encodedDiagramStep = editorDiagramStepIndex !== null
-    ? String(editorDiagramStepIndex)
-    : editorDiagramStepId && editorDiagramStepId !== 'initial' ? editorDiagramStepId : null;
-  const lastUrlStepRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (urlStep === lastUrlStepRef.current) return;
-    lastUrlStepRef.current = urlStep;
-    if (urlStep === encodedDiagramStep) return;
-    if (urlStep === null) {
-      setEditorDiagramStepId('initial');
-      setEditorDiagramStepIndex(null);
-    } else if (/^\d+$/.test(urlStep)) {
-      setEditorDiagramStepIndex(Number(urlStep));
-      setEditorDiagramStepId(null);
-    } else {
-      setEditorDiagramStepId(urlStep);
-      setEditorDiagramStepIndex(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlStep]);
-  useEffect(() => {
-    if (encodedDiagramStep === lastUrlStepRef.current) return;
-    lastUrlStepRef.current = encodedDiagramStep;
-    setUrlStep(encodedDiagramStep);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [encodedDiagramStep]);
+  const {
+    rewriteDiagramPath,
+    setRewriteDiagramPath,
+    setActiveDiagramBlockId,
+    setActiveDiagramIndex,
+    clearDiagramSession,
+    openDiagramEditor,
+    handleCloseDiagramSurface,
+    activeDiagramWorkbenchMode,
+  } = useDiagramEditorSession({
+    currentFile,
+    blocks,
+    route,
+    viewMode,
+    urlBlockId,
+    cleanupRef: cleanupDiagramSessionRef,
+    setDiagramDirty,
+    openDiagramSurface,
+    closeDiagramSurface,
+  });
 
   // `vista=` decide el modo del motor (código o visual) una vez cargado el documento.
   useEffect(() => {
@@ -433,54 +239,12 @@ export const MdxWorkbench: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFile, loading, viewMode]);
 
-  // Semantic Linker state
-  const linkerRangeRef = useRef<Range | null>(null);
-  const [linkerState, setLinkerState] = useState<{
-    isOpen: boolean;
-    blockId: string;
-    selectedText: string;
-    selectionStart: number;
-    selectionEnd: number;
-    editingMarkup?: string;
-    editingTag?: string;
-    initialAttrs?: Record<string, unknown>;
-  }>({
-    isOpen: false,
-    blockId: '',
-    selectedText: '',
-    selectionStart: 0,
-    selectionEnd: 0,
-  });
+  const { linkerState, openLinker, closeLinker, handleLinkCreated } = useSemanticLinker(blocks, updateBlock);
 
   const {
     linkedPages: diagramLinkedPages,
     error: diagramUsageError,
   } = useDiagramUsages(isDiagramFile ? currentFile : null, files);
-
-  const openDiagramEditor = (options?: {
-    blockId?: string | null;
-    blockIndex?: number | null;
-    modeOverride?: DiagramWorkbenchMode | null;
-    asRewrite?: boolean;
-  }) => {
-    if (options?.blockId !== undefined) setActiveDiagramBlockId(options.blockId);
-    if (options?.blockIndex !== undefined) setActiveDiagramIndex(options.blockIndex);
-    if (options?.modeOverride !== undefined) setDiagramWorkbenchOverride(options.modeOverride);
-    if (options?.asRewrite && currentFile?.endsWith('.tsx')) {
-      setRewriteDiagramPath(currentFile);
-    }
-    const returnContext =
-      currentFile?.endsWith('.mdx')
-        ? { pagePath: currentFile, blockId: options?.blockId ?? activeDiagramBlockId, viewMode }
-        : null;
-    openDiagramSurface(returnContext);
-  };
-
-  const handleCloseDiagramSurface = () => {
-    // La URL decide adónde se vuelve: a la página (con su vista), a `volver` o a la portada.
-    clearDiagramSession();
-    closeDiagramSurface();
-  };
 
   const setDiagramBuilderOpen = (open: boolean) => {
     if (open) {
@@ -525,46 +289,6 @@ export const MdxWorkbench: React.FC = () => {
     [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, t, validation],
   );
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && pendingFileNavigation) {
-        event.preventDefault();
-        cancelPendingNavigation();
-        return;
-      }
-
-      const isModifier = event.ctrlKey || event.metaKey;
-      if (isModifier && event.key.toLowerCase() === 's') {
-        event.preventDefault();
-        if (currentFile) {
-          void handleSaveDocument();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pendingFileNavigation, cancelPendingNavigation, currentFile, handleSaveDocument]);
-
-  const [focusRange] = useState<{ start: number; end: number } | undefined>(undefined);
-  const [highlightedBlockId, setHighlightedBlockId] = useState<string | null>(null);
-
-  const focusBlock = (targetBlockId: string) => {
-    setEditingBlockId(targetBlockId);
-    setHighlightedBlockId(targetBlockId);
-    setTimeout(() => {
-      const element = document.getElementById(`block-${targetBlockId}`) || document.querySelector(`[data-block-id="${targetBlockId}"]`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        (element as HTMLElement).focus?.();
-      }
-    }, 50);
-    setTimeout(() => {
-      setHighlightedBlockId(null);
-    }, 3500);
-  };
-
   const handleSelectIssue = (issue: EditorValidationIssue) => {
     setViewMode('visual');
 
@@ -578,46 +302,7 @@ export const MdxWorkbench: React.FC = () => {
       return;
     }
 
-    let targetBlockId = issue.blockId;
-
-    if (!targetBlockId && issue.sourceRange && blocks.length > 0) {
-      let currentOffset = 0;
-      for (const block of blocks) {
-        if (!block.content) continue;
-        const pos = rawBody.indexOf(block.content, currentOffset);
-        if (pos !== -1) {
-          const blockEnd = pos + block.content.length;
-          if (issue.sourceRange.start >= pos && issue.sourceRange.start <= blockEnd) {
-            targetBlockId = block.id;
-            break;
-          }
-          currentOffset = pos;
-        }
-      }
-      if (!targetBlockId) {
-        let closestBlock: Block | null = null;
-        let minDistance = Infinity;
-        currentOffset = 0;
-        for (const block of blocks) {
-          if (!block.content) continue;
-          const pos = rawBody.indexOf(block.content, currentOffset);
-          if (pos !== -1) {
-            const dist = Math.abs(pos - issue.sourceRange.start);
-            if (dist < minDistance) {
-              minDistance = dist;
-              closestBlock = block;
-            }
-            currentOffset = pos;
-          }
-        }
-        targetBlockId = closestBlock?.id ?? blocks[0]?.id;
-      }
-    }
-
-    if (!targetBlockId && blocks.length > 0) {
-      targetBlockId = blocks[0].id;
-    }
-
+    const targetBlockId = findBlockIdForIssue(issue, blocks, rawBody);
     if (targetBlockId) focusBlock(targetBlockId);
   };
 
@@ -642,16 +327,6 @@ export const MdxWorkbench: React.FC = () => {
     () => buildPageConnectionSummary(blocks, combinedDiagramTargets),
     [blocks, combinedDiagramTargets],
   );
-
-  const activeDiagramBlock = useMemo(
-    () => blocks.find(b => b.id === activeDiagramBlockId) ?? (activeDiagramIndex !== null ? blocks[activeDiagramIndex] : null),
-    [activeDiagramBlockId, activeDiagramIndex, blocks],
-  );
-
-  const activeDiagramWorkbenchMode = useMemo(() => {
-    if (diagramWorkbenchOverride) return diagramWorkbenchOverride;
-    return getDiagramWorkbenchMode(currentFile, activeDiagramBlock);
-  }, [activeDiagramBlock, currentFile, diagramWorkbenchOverride]);
 
   const insertInteractiveTargetParagraph = (target: { id: string; label?: string; color?: string }) => {
     const label = target.label || target.id;
@@ -860,7 +535,6 @@ export const MdxWorkbench: React.FC = () => {
                   updateRawBody={updateRawBody}
                   isDiagramFile={false}
                   isDark={false}
-                  focusRange={focusRange}
                 />
               </div>
             ) : viewMode === 'translate' ? (
@@ -916,25 +590,7 @@ export const MdxWorkbench: React.FC = () => {
                   removeBlock={removeBlock}
                   updateBlock={updateBlock}
                   handleTextareaSelect={() => {}}
-                  handleEditLink={(blockId, rawMarkup, text, attrs, tag) => {
-                    const targetBlock = blocks.find(b => b.id === blockId);
-                    const selectedText = text || window.getSelection()?.toString() || '';
-                    const sel = window.getSelection();
-                    linkerRangeRef.current = sel?.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
-                    const fromContent = targetBlock && selectedText
-                      ? targetBlock.content.indexOf(selectedText)
-                      : -1;
-                    setLinkerState({
-                      isOpen: true,
-                      blockId,
-                      selectedText,
-                      editingMarkup: rawMarkup || undefined,
-                      editingTag: tag,
-                      initialAttrs: attrs,
-                      selectionStart: fromContent >= 0 ? fromContent : 0,
-                      selectionEnd: fromContent >= 0 ? fromContent + selectedText.length : 0,
-                    });
-                  }}
+                  handleEditLink={openLinker}
                   setActiveDiagramIndex={setActiveDiagramIndex}
                   setActiveDiagramBlockId={setActiveDiagramBlockId}
                   setDiagramBuilderOpen={setDiagramBuilderOpen}
@@ -956,121 +612,10 @@ export const MdxWorkbench: React.FC = () => {
       {linkerState.isOpen && (
         <SemanticLinker
           isOpen={linkerState.isOpen}
-          onClose={() => setLinkerState(prev => ({ ...prev, isOpen: false }))}
+          onClose={closeLinker}
           files={files}
           selectedText={linkerState.selectedText}
-          onLinkCreated={(markup) => {
-            if (!linkerState.blockId) {
-              setLinkerState(prev => ({ ...prev, isOpen: false }));
-              return;
-            }
-
-            // Restore the selection captured before the linker stole focus.
-            if (linkerRangeRef.current) {
-              try {
-                const sel = window.getSelection();
-                sel?.removeAllRanges();
-                sel?.addRange(linkerRangeRef.current);
-              } catch {
-                linkerRangeRef.current = null;
-              }
-            }
-            // Only attempt selection insertion for brand new links.
-            // When editing or removing an existing link (editingMarkup is defined), insertHtmlAtSelection must be skipped.
-            if (!linkerState.editingMarkup && insertHtmlAtSelection(mdxToEditableHtml(markup))) {
-              linkerRangeRef.current = null;
-              const active = document.activeElement as HTMLElement | null;
-              const surface = active?.closest?.('[data-prose-surface="true"]') as HTMLElement | null
-                ?? document.getElementById(`${linkerState.blockId}-body`)
-                ?? document.getElementById(`${linkerState.blockId}-title`)
-                ?? document.getElementById(`prose-${linkerState.blockId}`);
-              if (surface) {
-                const mdx = editableHtmlToMdx(surface);
-                const targetBlock = blocks.find(b => b.id === linkerState.blockId);
-                if (targetBlock?.type === 'demonstration') {
-                  const baseStep = {
-                    ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] as object : {}),
-                    number: targetBlock.metadata?.number ?? 1,
-                    title: targetBlock.metadata?.title ?? '',
-                    target: targetBlock.metadata?.target,
-                    body: targetBlock.content,
-                  };
-                  if (surface.id.endsWith('-title')) {
-                    updateBlock(linkerState.blockId, targetBlock.content, {
-                      ...targetBlock.metadata,
-                      title: mdx,
-                      steps: [{ ...baseStep, title: mdx }],
-                    });
-                  } else {
-                    updateBlock(linkerState.blockId, mdx, {
-                      ...targetBlock.metadata,
-                      steps: [{ ...baseStep, body: mdx }],
-                    });
-                  }
-                } else if (targetBlock) {
-                  updateBlock(linkerState.blockId, mdx, targetBlock.metadata);
-                }
-              }
-              setLinkerState(prev => ({ ...prev, isOpen: false }));
-              return;
-            }
-            linkerRangeRef.current = null;
-
-            const targetBlock = blocks.find(b => b.id === linkerState.blockId);
-            if (!targetBlock) {
-              setLinkerState(prev => ({ ...prev, isOpen: false }));
-              return;
-            }
-
-            if (targetBlock.type === 'demonstration' && linkerState.editingMarkup && targetBlock.metadata?.title?.includes(linkerState.editingMarkup)) {
-              const nextTitle = targetBlock.metadata.title.replace(linkerState.editingMarkup, markup);
-              const baseStep = {
-                ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] as object : {}),
-                number: targetBlock.metadata?.number ?? 1,
-                title: nextTitle,
-                target: targetBlock.metadata?.target,
-                body: targetBlock.content,
-              };
-              updateBlock(linkerState.blockId, targetBlock.content, {
-                ...targetBlock.metadata,
-                title: nextTitle,
-                steps: [{ ...baseStep, title: nextTitle }],
-              });
-              setLinkerState(prev => ({ ...prev, isOpen: false }));
-              return;
-            }
-
-            let nextContent: string;
-            if (linkerState.editingMarkup && targetBlock.content.includes(linkerState.editingMarkup)) {
-              nextContent = targetBlock.content.replace(linkerState.editingMarkup, markup);
-            } else if (
-              typeof linkerState.selectionStart === 'number'
-              && typeof linkerState.selectionEnd === 'number'
-              && linkerState.selectionEnd > linkerState.selectionStart
-            ) {
-              nextContent = `${targetBlock.content.slice(0, linkerState.selectionStart)}${markup}${targetBlock.content.slice(linkerState.selectionEnd)}`;
-            } else if (linkerState.selectedText && targetBlock.content.includes(linkerState.selectedText)) {
-              nextContent = targetBlock.content.replace(linkerState.selectedText, markup);
-            } else {
-              const gap = targetBlock.content.trim() ? ' ' : '';
-              nextContent = `${targetBlock.content}${gap}${markup}`;
-            }
-
-            updateBlock(linkerState.blockId, nextContent, targetBlock.type === 'demonstration'
-              ? {
-                  ...targetBlock.metadata,
-                  steps: [{
-                    ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] : {}),
-                    number: targetBlock.metadata?.number ?? 1,
-                    title: targetBlock.metadata?.title ?? '',
-                    target: targetBlock.metadata?.target,
-                    body: nextContent,
-                  }],
-                }
-              : targetBlock.metadata);
-
-            setLinkerState(prev => ({ ...prev, isOpen: false }));
-          }}
+          onLinkCreated={handleLinkCreated}
           position={{ top: 120, left: 240 }}
           initialAttrs={linkerState.initialAttrs}
           editingTag={linkerState.editingTag}
@@ -1079,118 +624,47 @@ export const MdxWorkbench: React.FC = () => {
         />
       )}
 
-      {/* Diagram Rewrite Dialog */}
-      {rewriteDiagramPath && !diagramSurfaceOpen && (
-        <DiagramRewriteDialog
-          path={rewriteDiagramPath}
-          initialTitle="Diagrama"
-          onClose={() => setRewriteDiagramPath(null)}
-          onStart={() => openDiagramEditor({ asRewrite: true })}
-        />
-      )}
-
-      {/* Create Page Modal */}
-      <CreatePageDialog
-        open={createPageOpen}
-        onClose={() => setCreatePageOpen(false)}
-        onCreate={async (params) => createPage(params)}
-        initialLang={currentLang}
-      />
-
-      {/* Create Diagram Modal */}
-      <CreateDiagramDialog
-        open={createDiagramOpen}
-        onClose={() => setCreateDiagramOpen(false)}
-        onCreate={async (params) => {
-          const result = await createDiagram(params);
-          if (result) {
-            setCreateDiagramOpen(false);
-            openFileSafely(result.path);
-            return true;
-          }
-          return false;
-        }}
-      />
-
-      {/* Add Diagram to Document Modal */}
-      <AddDiagramDialog
-        open={addDiagramOpen}
-        onClose={() => {
-          setAddDiagramOpen(false);
-          setActiveDiagramBlockId(null);
-          setActiveDiagramIndex(null);
-        }}
+      <MdxWorkbenchDialogs
         files={files}
-        onSelectExisting={async (diagramFile) => {
-          const componentName = diagramFile.name.replace(/\.tsx$/, '');
-          if (pageDiagramLinks.length === 0) {
-            if ('hasSimulation' in metadata || metadata.type !== 'modelo') handleMetadataChange('hasSimulation', true);
-            if ('hasDiagram' in metadata || metadata.type === 'modelo') handleMetadataChange('hasDiagram', true);
-          }
-          bindDiagram({
-            componentName,
-            importPath: toDiagramImportPath(diagramFile.path),
-            path: diagramFile.path,
-            category: typeof diagramFile.type === 'string' ? diagramFile.type : '',
-            mode: publishedDiagramMode,
-          });
-          setActiveDiagramBlockId(null);
-          setActiveDiagramIndex(null);
-          setAddDiagramOpen(false);
-        }}
-        onCreateNew={async (params) => {
-          const result = await createDiagram(params);
-          if (!result) return false;
-          if (pageDiagramLinks.length === 0) {
-            if ('hasSimulation' in metadata || metadata.type !== 'modelo') handleMetadataChange('hasSimulation', true);
-            if ('hasDiagram' in metadata || metadata.type === 'modelo') handleMetadataChange('hasDiagram', true);
-          }
-          bindDiagram({
-            componentName: result.componentName,
-            importPath: toDiagramImportPath(result.path),
-            path: result.path,
-            category: params.category,
-            mode: publishedDiagramMode,
-          });
-          setAddDiagramOpen(false);
-          openDiagramEditor({ modeOverride: { kind: 'file', path: result.path } });
-          return true;
-        }}
-      />
-
-      {/* Unsaved changes confirmation dialog */}
-      {pendingFileNavigation && (
-        <UnsavedChangesDialog
-          isOpen={Boolean(pendingFileNavigation)}
-          targetLabel={typeof pendingFileNavigation === 'string' ? pendingFileNavigation : 'Página'}
-          presentation={safetyPresentation}
-          onCancel={() => cancelPendingNavigation()}
-          onSave={() => void handleSaveDocument()}
-          onSaveDraft={() => void saveDraftCurrentFile()}
-          onDiscardAndContinue={() => continuePendingNavigation()}
-          canSave={canSave}
-          canSaveDraft={canSaveDraft}
-        />
-      )}
-
-      {/* Save Error & Validation Feedback Modal */}
-      <DiagramConfirmDialog
-        isOpen={warningSaveOpen}
-        title={translateEditorText(t, warningSaveCopy.title)}
-        message={translateEditorText(t, warningSaveCopy.message)}
-        confirmLabel={t('editor.save.saveAnyway')}
-        cancelLabel={t('editor.common.cancel')}
-        variant="warning"
-        onConfirm={confirmWarningSave}
-        onCancel={() => setWarningSaveOpen(false)}
-      />
-      <SaveErrorModal
-        isOpen={saveErrorModalOpen}
-        onClose={() => setSaveErrorModalOpen(false)}
-        issues={validation.issues.filter(issue => issue.severity === 'error')}
-        saveMessage={saveErrorMessage}
-        onJumpToIssue={handleSelectIssue}
-        onOpenAvisos={() => setIsDiagnosticsOpen(true)}
+        metadata={metadata}
+        currentLang={currentLang}
+        validationIssues={validation.issues}
+        diagramSurfaceOpen={diagramSurfaceOpen}
+        rewriteDiagramPath={rewriteDiagramPath}
+        setRewriteDiagramPath={setRewriteDiagramPath}
+        openDiagramEditor={openDiagramEditor}
+        createPageOpen={createPageOpen}
+        setCreatePageOpen={setCreatePageOpen}
+        createDiagramOpen={createDiagramOpen}
+        setCreateDiagramOpen={setCreateDiagramOpen}
+        addDiagramOpen={addDiagramOpen}
+        setAddDiagramOpen={setAddDiagramOpen}
+        setActiveDiagramBlockId={setActiveDiagramBlockId}
+        setActiveDiagramIndex={setActiveDiagramIndex}
+        hasPageDiagramLinks={pageDiagramLinks.length > 0}
+        publishedDiagramMode={publishedDiagramMode}
+        handleMetadataChange={handleMetadataChange}
+        createPage={createPage}
+        createDiagram={createDiagram}
+        bindDiagram={bindDiagram}
+        openFileSafely={openFileSafely}
+        pendingFileNavigation={pendingFileNavigation}
+        safetyPresentation={safetyPresentation}
+        cancelPendingNavigation={cancelPendingNavigation}
+        continuePendingNavigation={continuePendingNavigation}
+        handleSaveDocument={handleSaveDocument}
+        saveDraftCurrentFile={saveDraftCurrentFile}
+        canSave={canSave}
+        canSaveDraft={canSaveDraft}
+        warningSaveOpen={warningSaveOpen}
+        warningSaveCopy={warningSaveCopy}
+        confirmWarningSave={confirmWarningSave}
+        setWarningSaveOpen={setWarningSaveOpen}
+        saveErrorModalOpen={saveErrorModalOpen}
+        setSaveErrorModalOpen={setSaveErrorModalOpen}
+        saveErrorMessage={saveErrorMessage}
+        onSelectIssue={handleSelectIssue}
+        onOpenDiagnostics={() => setIsDiagnosticsOpen(true)}
       />
     </div>
   );

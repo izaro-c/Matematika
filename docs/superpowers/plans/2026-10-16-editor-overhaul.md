@@ -92,7 +92,7 @@ Decisiones tomadas en la fase 3:
 
 - [x] 4.1 🧠 Primitivas en `src/fixed-pages/editor/ui/primitives/` (`Button`, `IconButton`, `SegmentedControl`, `Panel`, `PanelHeader`, `Field`, `Tabs`, `Modal` y `Toast`), con el estilo de libro antiguo de `paleta-y-estilos.md` (memorias *ui-panel-style* y *diagram-style-coherence*; nada de *eyebrows* ni de una pista bajo cada título). Unificar con `diagrams/ui/primitives`.
 - [x] 4.2 🧠 Esquema único de la página: barra superior (ruta del documento, versiones, estado de guardado y acciones), barra lateral izquierda (archivos), centro (lienzo), inspector a la derecha y panel inferior de diagnósticos. Igual para MDX y para diagramas.
-- [ ] 4.3 🔧 Migrar componentes a las primitivas y, de paso, **partir** los archivos de más de 700 líneas (`MdxWorkbench`, `DiagramWorkbench`, `GroupsAndLayersManager` y `VisualEditorPanel`) en subcomponentes y hooks.
+- [x] 4.3 🔧 Migrar componentes a las primitivas y, de paso, **partir** los archivos de más de 700 líneas (`MdxWorkbench`, `DiagramWorkbench`, `GroupsAndLayersManager` y `VisualEditorPanel`) en subcomponentes y hooks.
 
 Decisiones tomadas en 4.1:
 - Elegido por la autora: botones de «rótulo impreso» (un filete, versalitas en Garamond, ☞ solo en el primario) y el activo de `SegmentedControl` como «índice con manícula» (`☞ Visual · Código · Previa`, subrayado fino); `Tabs` = rúbricas sobre un filete con la activa subrayada.
@@ -109,6 +109,15 @@ Decisiones tomadas en 4.2:
 - Barra lateral izquierda en diagramas: sigue siendo `DiagramDataPanel` (o `leftPanel`), no el árbol de archivos. Mientras se edita un diagrama de una página, salir a otro archivo rompería el retorno.
 - Claves nuevas: `editor.nav.documentPath`, `warnings` y `hideWarnings`. Se eliminan las que quedaron sin uso: `mdx.warningsTab`, `diagramWorkbench.{tabWarnings,resizeExplorer,resizeInspector,detailsPanel}` y `diagnostics.{embeddedTitle,noProblems,problemsOne,problemsOther}`.
 - Comprobado con Puppeteer en una página MDX y en la superficie de diagrama, con el panel de avisos abierto.
+
+Decisiones tomadas en 4.3:
+- Se parten los cuatro archivos, sin cambiar su comportamiento: `MdxWorkbench` 1199 → 675 líneas, `DiagramWorkbench` 1088 → 685, `GroupsAndLayersManager` 1030 → 94 y `VisualEditorPanel` 718 → 518.
+- `MdxWorkbench`: hooks en `ui/workbench/mdx/` (`useDocumentVersionsFlow`, `useDocumentSave`, `useDiagramStepState`, `useBlockSelection`, `useSemanticLinker`, `useDiagramEditorSession`), el módulo puro `issueBlockTarget.ts` y el componente `MdxWorkbenchDialogs`.
+- `DiagramWorkbench`: `useDiagramAuthoringActions`, `useDiagramSaveFlow`, `useDiagramDeletion`, y los componentes `DiagramInspectorTabs` y `DiagramWorkbenchDialogs`.
+- `GroupsAndLayersManager`: queda la cabecera y el selector; cada pestaña es `LayersTab` o `GroupsTab` (con su estado y sus acciones) y `sceneStack.ts` guarda las funciones puras.
+- `VisualEditorPanel`: `VisualEditorHeader`, `VisualEditorStates` (esqueleto y página vacía), `StepAssignmentBar` y `BlockCommandPalette`.
+- Migración a primitivas **parcial**: solo se usó `Button` en los componentes nuevos (página vacía, asignación de pasos, paleta). El resto de los botones y paneles de esos archivos conserva sus cadenas de Tailwind y queda para una pasada posterior.
+- Sin claves i18n nuevas. Pruebas de `tests/features/editor` en verde (866), `typecheck` y `editor:safety:check` sin avisos.
 
 ## Fase 5 — Editor MDX: funciones y UX (por priorizar, 1 sesión cada una)
 
@@ -147,4 +156,5 @@ Decisiones tomadas en 4.2:
 | 2026-10-16 | 2.3(d) | (este commit) | Mensajes de `useEditorCore` como códigos; áreas `errors`, `notices` (éxitos), `status` (estado de persistencia) y `usages`. `failureMessage`, `EditorMessageError` y `saveBlockedByValidation` compartidos; `translateText` obligatorio en `safetyPresentation`. Pruebas en `tests/features/editor/i18n/engineMessages.test.ts`. Pendiente: catálogo del servidor (`capabilityLabel`/`reason` en castellano), textos de `safetyPresentation`, `validation.issues` y `compatibilityReasons`, y `core.message` que ninguna interfaz muestra todavía. |
 | 2026-10-19 | 3 | b148b8a0 | Contenido multilingüe: `conceptVersions`, `UiLanguageSwitch` + `DocumentVersions`, vista `traduccion` alineada por bloques y versiones de diagrama. Pruebas en `tests/features/editor/language/`. Falta probarla a mano en el navegador. |
 | 2026-10-19 | 4.1 | 6e792010 | Primitivas en `ui/primitives/` + `editor-primitives.css`; `diagrams/ui/primitives` como envoltorios. Pruebas en `tests/features/editor/ui/primitives/`. |
-| 2026-10-19 | 4.2 | (este commit) | Esquema único `EditorShell` para MDX y diagramas; avisos en panel inferior (`DiagnosticsDock`); ruta del documento en la cabecera. Pruebas en `tests/features/editor/navigation/` (`EditorWorkspacePanels`, `editorUrlModel`), `workbench/EditorWorkbenchHeader` y `diagrams/workbench/DiagramWorkbench`. |
+| 2026-10-19 | 4.2 | 795ed6e3 | Esquema único `EditorShell` para MDX y diagramas; avisos en panel inferior (`DiagnosticsDock`); ruta del documento en la cabecera. Pruebas en `tests/features/editor/navigation/` (`EditorWorkspacePanels`, `editorUrlModel`), `workbench/EditorWorkbenchHeader` y `diagrams/workbench/DiagramWorkbench`. |
+| 2026-10-19 | 4.3 | (este commit) | Partidos `MdxWorkbench`, `DiagramWorkbench`, `GroupsAndLayersManager` y `VisualEditorPanel` en hooks y subcomponentes; `Button` en los nuevos. |
