@@ -6,8 +6,10 @@ import {
   HeaderPillContainer,
   HeaderPillButton,
   HeaderActionButton,
-  EditorLanguageBadges,
+  DocumentVersions,
 } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { diagramVersionStatuses } from '../../model/scene/translationStatus';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
@@ -92,10 +94,12 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
             </HeaderBadge>
           )}
 
-          <EditorLanguageBadges
-            mode="diagram"
+          <DocumentVersions
+            kind="diagram"
             activeLang={activeLang || 'es'}
-            onSelectLang={onSelectActiveLang}
+            versions={diagramVersionStatuses(model, SUPPORTED_LANGUAGES.map(language => language.code))}
+            onSelect={onSelectActiveLang}
+            onCreate={onSelectActiveLang}
             className="hidden sm:inline-flex"
             aria-label={t('editor.diagramWorkbench.diagramPreviewLanguage')}
           />

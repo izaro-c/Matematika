@@ -40,6 +40,7 @@ export interface UseEditorNavigationFlowOptions {
 
 type EditorUrlPatch = {
   viewMode?: MdxViewMode;
+  originLang?: string | null;
   blockId?: string | null;
   diagramSurface?: boolean;
   step?: string | null;
@@ -101,6 +102,7 @@ export function useEditorNavigationFlow({
     if (!routeFile) return;
     const url = urlForPath(routeFile.path, {
       viewMode: routeFile.viewMode,
+      originLang: routeFile.originLang,
       blockId: routeFile.blockId,
       diagramSurface: routeFile.diagramSurface,
       step: routeFile.step,
@@ -198,7 +200,7 @@ export function useEditorNavigationFlow({
     const returnTo = path.endsWith('.tsx') && routeFile && !isDiagramRoute ? currentUrl : null;
     // Reabrir la página actual conserva vista, bloque y paso; solo cierra la superficie.
     const url = routeFile?.path === path
-      ? urlForPath(path, { viewMode: routeFile.viewMode, blockId: routeFile.blockId, step: routeFile.step, returnTo: routeFile.returnTo })
+      ? urlForPath(path, { viewMode: routeFile.viewMode, originLang: routeFile.originLang, blockId: routeFile.blockId, step: routeFile.step, returnTo: routeFile.returnTo })
       : urlForPath(path, { returnTo });
     const leavingCurrent = Boolean(currentFile && currentFile !== path);
     const leavingDirtySurface = diagramSurfaceOpen && diagramDirty && url !== currentUrl;
@@ -252,9 +254,9 @@ export function useEditorNavigationFlow({
     }));
   };
 
-  const setViewMode = useCallback((viewMode: MdxViewMode) => {
-    updateCurrentUrl({ viewMode });
-  }, [updateCurrentUrl]);
+  const setViewMode = useCallback((viewMode: MdxViewMode, options: { originLang?: string | null } = {}) => {
+    updateCurrentUrl({ viewMode, originLang: options.originLang ?? (viewMode === 'translate' ? routeFile?.originLang : null) });
+  }, [routeFile?.originLang, updateCurrentUrl]);
 
   const setUrlBlockId = useCallback((blockId: string | null) => {
     updateCurrentUrl({ blockId }, { replace: true });
@@ -279,6 +281,7 @@ export function useEditorNavigationFlow({
     toggleFavorite,
     route,
     viewMode: routeFile?.viewMode ?? 'visual',
+    originLang: routeFile?.originLang ?? null,
     setViewMode,
     urlBlockId: routeFile?.blockId ?? null,
     setUrlBlockId,

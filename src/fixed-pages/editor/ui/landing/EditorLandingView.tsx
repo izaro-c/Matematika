@@ -9,7 +9,7 @@ import {
   HeaderPillContainer,
   HeaderPillButton,
   HeaderIconButton,
-  EditorLanguageBadges,
+  UiLanguageSwitch,
 } from '../workbench/EditorHeaderPrimitives';
 import { EditorLandingCard, EditorLandingCardSkeleton } from './EditorLandingCard';
 import { useEditorLanding, type LandingSection } from './useEditorLanding';
@@ -43,7 +43,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState<LandingSection>(initialSection);
   const [isDark, setIsDark] = useState(isDarkMode);
-  const { getLocalizedPath, t, lang: currentLang, setLang } = useI18n();
+  const { getLocalizedPath, t, lang: currentLang } = useI18n();
 
   useEffect(() => {
     setActiveSection(initialSection);
@@ -117,12 +117,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
         {/* Header Right Actions */}
         <div className="flex items-center justify-self-end gap-2">
           {/* Language Switcher */}
-          <EditorLanguageBadges
-            mode="global"
-            activeLang={currentLang}
-            onSelectLang={setLang}
-            aria-label={t('topbar', 'changeLanguage')}
-          />
+          <UiLanguageSwitch aria-label={t('topbar', 'changeLanguage')} />
 
           <HeaderIconButton
             onClick={toggleTheme}

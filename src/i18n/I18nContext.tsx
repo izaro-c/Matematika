@@ -9,7 +9,8 @@ export interface I18nContextType {
   lang: string;
   currentLanguage: LanguageConfig;
   languages: LanguageConfig[];
-  setLang: (lang: string) => void;
+  /** `keepSearch` conserva los parámetros de la URL (el editor guarda en ellos la vista y el bloque). */
+  setLang: (lang: string, options?: { keepSearch?: boolean }) => void;
   t: (...args: [...string[], TranslationParams] | string[]) => string;
   getRouteSegment: (segmentKey: keyof RouteSegmentMap, targetLang?: string) => string;
   getLocalizedPath: (rawPath: string, targetLang?: string) => string;
@@ -138,7 +139,7 @@ export const I18nProvider: React.FC<{ children: React.ReactNode; initialLang?: s
 
   const currentLanguage = useMemo(() => getLanguage(langCode), [langCode]);
 
-  const setLang = useCallback((newLang: string) => {
+  const setLang = useCallback((newLang: string, options: { keepSearch?: boolean } = {}) => {
     if (!isSupportedLanguage(newLang)) return;
     setPersistedLang(newLang);
     try {
@@ -172,7 +173,8 @@ export const I18nProvider: React.FC<{ children: React.ReactNode; initialLang?: s
       remainingSegments = [translatedSegment, ...remainingSegments.slice(1)];
     }
 
-    setLocation(`/${newLang}/${remainingSegments.join('/')}`);
+    const search = options.keepSearch && typeof window !== 'undefined' ? window.location.search : '';
+    setLocation(`/${newLang}/${remainingSegments.join('/')}${search}`);
   }, [location, setLocation]);
 
   const t = useCallback((...args: unknown[]): string => {

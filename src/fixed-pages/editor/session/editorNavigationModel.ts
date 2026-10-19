@@ -257,19 +257,22 @@ export const EDITOR_PANEL_LIMITS = {
 // salen de heurísticas sobre el código fuente y pueden repetirse.
 // ---------------------------------------------------------------------------
 
-export type EditorUrlViewMode = 'visual' | 'code' | 'preview';
+export type EditorUrlViewMode = 'visual' | 'code' | 'preview' | 'translate';
 
 export const EDITOR_DIAGRAM_SEGMENT = 'diagrama';
 export const EDITOR_GENERIC_SEGMENT = 'archivo';
 
-const VIEW_MODE_TO_URL: Record<EditorUrlViewMode, string> = { visual: 'visual', code: 'codigo', preview: 'previa' };
-const URL_TO_VIEW_MODE: Record<string, EditorUrlViewMode> = { visual: 'visual', codigo: 'code', previa: 'preview' };
+const VIEW_MODE_TO_URL: Record<EditorUrlViewMode, string> = { visual: 'visual', code: 'codigo', preview: 'previa', translate: 'traduccion' };
+const URL_TO_VIEW_MODE: Record<string, EditorUrlViewMode> = { visual: 'visual', codigo: 'code', previa: 'preview', traduccion: 'translate' };
+const LANG_PARAM = /^[a-z]{2}(-[A-Z]{2})?$/;
 
 export interface EditorUrlState {
   uiLang: string;
   /** Ruta del corpus del archivo abierto. `null` → portada. */
   path?: string | null;
   viewMode?: EditorUrlViewMode;
+  /** Idioma de la versión original en la vista de traducción (`desde=`). */
+  originLang?: string | null;
   blockId?: string | null;
   /** Superficie de diagrama abierta sobre la página MDX (diagrama en línea o nuevo). */
   diagramSurface?: boolean;
@@ -285,6 +288,7 @@ export type EditorRoute =
       status: 'file';
       path: string;
       viewMode: EditorUrlViewMode;
+      originLang: string | null;
       blockId: string | null;
       diagramSurface: boolean;
       step: string | null;
@@ -351,6 +355,7 @@ export function editorUrlFromState(state: EditorUrlState): string {
 
   const path = `${base}/${editorRouteSegmentsForPath(state.path).map(encodeURIComponent).join('/')}`;
   if (state.viewMode && state.viewMode !== 'visual') params.set('vista', VIEW_MODE_TO_URL[state.viewMode]);
+  if (state.viewMode === 'translate' && state.originLang && LANG_PARAM.test(state.originLang)) params.set('desde', state.originLang);
   if (state.blockId) params.set('bloque', state.blockId);
   if (state.diagramSurface && !isDiagramPath(state.path)) params.set('editar', 'diagrama');
   if (state.step) params.set('paso', state.step);
@@ -393,6 +398,7 @@ export function editorStateFromUrl(
     status: 'file',
     path: match.path,
     viewMode: view,
+    originLang: view === 'translate' && LANG_PARAM.test(params.get('desde') ?? '') ? params.get('desde') : null,
     blockId: params.get('bloque') || null,
     diagramSurface: !isDiagramPath(match.path) && params.get('editar') === 'diagrama',
     step: params.get('paso') || null,

@@ -36,11 +36,20 @@ describe('URL del editor', () => {
     const url = editorUrlFromState({ uiLang: 'es', path: anguloEu.path, viewMode: 'code', blockId: 'block-3' });
     expect(url).toBe('/es/editor/eu/definitions/angulo?vista=codigo&bloque=block-3');
     expect(parse(url)).toEqual({
-      status: 'file', path: anguloEu.path, viewMode: 'code', blockId: 'block-3',
+      status: 'file', path: anguloEu.path, viewMode: 'code', originLang: null, blockId: 'block-3',
       diagramSurface: false, step: null, returnTo: null,
     });
     // Cambiar `:lang` no cambia el documento abierto.
     expect(parse('/en/editor/eu/definitions/angulo')).toMatchObject({ path: anguloEu.path });
+  });
+
+  it('vista de traducción con el idioma del original', () => {
+    const url = editorUrlFromState({ uiLang: 'eu', path: anguloEu.path, viewMode: 'translate', originLang: 'es' });
+    expect(url).toBe('/eu/editor/eu/definitions/angulo?vista=traduccion&desde=es');
+    expect(parse(url)).toMatchObject({ viewMode: 'translate', originLang: 'es' });
+    // `desde` solo tiene sentido en la vista de traducción y solo admite códigos de idioma.
+    expect(editorUrlFromState({ uiLang: 'es', path: anguloEu.path, viewMode: 'code', originLang: 'es' })).not.toContain('desde');
+    expect(parse('/es/editor/eu/definitions/angulo?vista=traduccion&desde=../x')).toMatchObject({ originLang: null });
   });
 
   it('ida y vuelta conserva vista, bloque, superficie de diagrama y paso', () => {

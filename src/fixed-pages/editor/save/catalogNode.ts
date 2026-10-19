@@ -38,6 +38,33 @@ export function extractCatalogTitle(source: string, defaultTitle: string): strin
   return defaultTitle;
 }
 
+/**
+ * Esquema de bloques de un MDX: títulos (`h2`…) y componentes de bloque
+ * (`Definicion`, `Separador`…), en orden. No depende del idioma, así que dos versiones
+ * de un mismo concepto deben compartirlo; si difieren, una de ellas está desfasada.
+ */
+export function documentOutline(source: string): string {
+  const tokens: string[] = [];
+  let inFence = false;
+  for (const line of source.split('\n')) {
+    if (/^(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+    const heading = /^(#{1,6})\s/.exec(line);
+    if (heading) {
+      tokens.push(`h${heading[1].length}`);
+      continue;
+    }
+    // Solo etiquetas que ocupan la línea (bloques); un `<ConceptLink>` al inicio de un
+    // párrafo es texto en línea y su posición cambia con el orden de las palabras.
+    const component = /^<([A-Z][\w.]*)(?:\s[^>]*)?(?:\/?>)?\s*$/.exec(line);
+    if (component) tokens.push(component[1]);
+  }
+  return tokens.join(',');
+}
+
 /** `null` si el archivo no es un documento (.mdx/.md) ni un diagrama (.tsx). */
 export function buildCatalogNode(input: {
   path: string;
@@ -70,6 +97,7 @@ export function buildCatalogNode(input: {
       kind: 'mdx-document',
       lang,
       id,
+      outline: documentOutline(source),
     };
   }
 

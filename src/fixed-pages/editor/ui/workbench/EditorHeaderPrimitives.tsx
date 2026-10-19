@@ -1,5 +1,6 @@
 import React from 'react';
-export { EditorLanguageBadges, type EditorLanguageBadgesProps, type EditorLanguageBadgeMode } from './EditorLanguageBadges';
+export { UiLanguageSwitch, type UiLanguageSwitchProps } from './UiLanguageSwitch';
+export { DocumentVersions, type DocumentVersionsProps } from './DocumentVersions';
 
 export const HeaderContainer: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   className = '',

@@ -4,21 +4,25 @@ import {
   HeaderPillContainer,
   HeaderPillButton,
   HeaderActionButton,
-  EditorLanguageBadges,
+  DocumentVersions,
+  UiLanguageSwitch,
 } from './EditorHeaderPrimitives';
+import type { DocumentVersion } from '@/fixed-pages/editor/session/conceptVersions';
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
 import { useI18n } from '@/i18n';
 
-export type MdxViewMode = 'code' | 'visual' | 'preview';
+export type MdxViewMode = 'code' | 'visual' | 'preview' | 'translate';
 
 interface MdxWorkbenchHeaderProps {
   currentFile: string | null;
   fileTitle: string;
   contentType?: string;
   currentLang?: string;
-  availableLangs?: string[];
+  documentVersions?: DocumentVersion[];
+  /** Hay otra versión de idioma con la que comparar: muestra la vista «Traducir». */
+  canTranslate?: boolean;
   onSwitchLanguage?: (lang: string) => void;
   onCreateTranslation?: (targetLang: string) => void;
   viewMode: MdxViewMode;
@@ -45,7 +49,8 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   fileTitle,
   contentType,
   currentLang,
-  availableLangs,
+  documentVersions = [],
+  canTranslate = false,
   onSwitchLanguage,
   onCreateTranslation,
   viewMode,
@@ -85,12 +90,11 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
             </HeaderBadge>
           ) : null}
 
-          <EditorLanguageBadges
-            mode="document"
+          <DocumentVersions
             activeLang={currentLang || 'es'}
-            availableLangs={availableLangs}
-            onSelectLang={onSwitchLanguage}
-            onCreateTranslation={onCreateTranslation}
+            versions={documentVersions}
+            onSelect={onSwitchLanguage}
+            onCreate={onCreateTranslation}
             className="hidden sm:inline-flex"
             aria-label={t('editor.language.documentEditing')}
           />
@@ -126,6 +130,11 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
                 {t('editor.nav.sourceTab')}
               </HeaderPillButton>
             )}
+            {(canTranslate || viewMode === 'translate') && (
+              <HeaderPillButton active={viewMode === 'translate'} onClick={() => onSetViewMode('translate')}>
+                {t('editor.translation.tab')}
+              </HeaderPillButton>
+            )}
             <HeaderPillButton active={viewMode === 'preview'} onClick={() => onSetViewMode('preview')}>
               {t('editor.nav.publishedTab')}
             </HeaderPillButton>
@@ -134,6 +143,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       }
       actions={
         <>
+          <UiLanguageSwitch size="compact" className="hidden xl:inline-flex" />
           {onToggleWorkspaceLevel && (
             <HeaderActionButton
               onClick={onToggleWorkspaceLevel}

@@ -17,6 +17,8 @@ export interface EditorResourceCatalogEntry {
   reason: string;
   lang?: string;
   id?: string;
+  /** Esquema de bloques de un MDX (`documentOutline`). */
+  outline?: string;
 }
 
 export const RESOURCE_CAPABILITY_LABELS: Record<EditorResourceCapability, string> = {

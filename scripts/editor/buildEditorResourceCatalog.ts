@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseEditorDocument } from '../../src/fixed-pages/editor/document/parseEditorDocument';
+import { documentOutline } from '../../src/fixed-pages/editor/save/catalogNode';
 import {
   RESOURCE_CAPABILITY_LABELS,
   isEditableCatalogResource,
@@ -139,7 +140,10 @@ export function buildEditorResourceCatalog({
       typeDir = 'content';
     }
     const id = path.basename(absolutePath, '.mdx');
-    catalog.push(entry(srcRoot, absolutePath, typeDir, 'mdx-document', classified.capability, classified.reason, title, lang, id));
+    catalog.push({
+      ...entry(srcRoot, absolutePath, typeDir, 'mdx-document', classified.capability, classified.reason, title, lang, id),
+      outline: documentOutline(source),
+    });
   }
 
   for (const absolutePath of walkFiles(diagramsRoot)) {

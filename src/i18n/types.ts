@@ -548,14 +548,36 @@ export interface TranslationDictionary {
     };
     language: {
       versions: string;
-      editing: string;
+      interface: string;
       documentEditing: string;
       active: string;
+      activeOutdated: string;
       switchUi: string;
       switchTo: string;
+      switchToOutdated: string;
       createTranslation: string;
-      viewingIn: string;
-      editViewIn: string;
+      translateLabels: string;
+    };
+    translation: {
+      tab: string;
+      original: string;
+      target: string;
+      originLanguage: string;
+      loading: string;
+      loadError: string;
+      noOrigin: string;
+      untranslatedOne: string;
+      untranslatedOther: string;
+      missingOne: string;
+      missingOther: string;
+      allTranslated: string;
+      statusUntranslated: string;
+      statusMissing: string;
+      statusExtra: string;
+      editVisually: string;
+      readOnlyBlock: string;
+      blockText: string;
+      readOnlyDocument: string;
     };
     landing: {
       newDocument: string;

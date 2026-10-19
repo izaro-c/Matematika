@@ -3,7 +3,8 @@ import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramMode } from '@/diagrams';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
-import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { diagramVersionStatuses } from '../../model/scene/translationStatus';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
 
@@ -125,10 +126,12 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             <span className="text-[10px] font-bold text-canela">{activeLangConfig.name}</span>
           </div>
 
-          <EditorLanguageBadges
-            mode="diagram"
+          <DocumentVersions
+            kind="diagram"
             activeLang={activeLang}
-            onSelectLang={onSelectActiveLang}
+            versions={diagramVersionStatuses(model, SUPPORTED_LANGUAGES.map(language => language.code))}
+            onSelect={onSelectActiveLang}
+            onCreate={onSelectActiveLang}
             aria-label={t('editor.diagramWorkbench.diagramEditingLanguageSelector')}
           />
           {!isDefaultLang && (

@@ -26,6 +26,8 @@ export interface FileNode {
   reason: EditorText;
   lang?: string;
   id?: string;
+  /** Esquema de bloques del documento (`documentOutline`): compara versiones de idioma. */
+  outline?: string;
 }
 
 function escapeAttribute(value: string): string {

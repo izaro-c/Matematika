@@ -21,6 +21,7 @@ const fileListSchema = z.array(z.object({
   reason: z.string(),
   lang: z.string().optional(),
   id: z.string().optional(),
+  outline: z.string().optional(),
 }));
 
 async function readPayload(response: Response): Promise<unknown> {

@@ -49,6 +49,14 @@ import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 
 import { MdxWorkbenchHeader } from './MdxWorkbenchHeader';
 import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
+import { TranslationWorkbench } from './TranslationWorkbench';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import {
+  buildConceptIndex,
+  conceptKey,
+  documentVersionStatuses,
+  translationOriginLang,
+} from '@/fixed-pages/editor/session/conceptVersions';
 
 import {
   buildPageConnectionSummary,
@@ -138,6 +146,7 @@ export const MdxWorkbench: React.FC = () => {
     toggleFavorite,
     route,
     viewMode,
+    originLang: urlOriginLang,
     setViewMode,
     urlBlockId,
     setUrlBlockId,
@@ -185,32 +194,28 @@ export const MdxWorkbench: React.FC = () => {
     return 'es';
   }, [currentFile, metadata]);
 
-  const currentConceptId = useMemo(() => {
-    if (metadata && typeof metadata === 'object' && 'id' in metadata && typeof (metadata as { id?: unknown }).id === 'string') {
-      return (metadata as { id: string }).id;
-    }
-    if (currentFile) {
-      return currentFile.split('/').pop()?.replace(/\.(mdx|tsx)$/, '') || '';
-    }
-    return '';
-  }, [currentFile, metadata]);
+  const currentConceptVariants = useMemo<Record<string, FileNode>>(() => {
+    if (!currentResource || currentResource.kind !== 'mdx-document') return {};
+    return buildConceptIndex(files).get(conceptKey(currentResource)) ?? {};
+  }, [currentResource, files]);
 
-  const currentConceptVariants = useMemo(() => {
-    if (!currentConceptId) return {};
-    const map: Record<string, FileNode> = {};
-    for (const file of files) {
-      if (file.kind !== 'mdx-document') continue;
-      const parts = file.path.split('/');
-      const slug = parts[parts.length - 1]?.replace(/\.mdx$/, '') || file.name.replace(/\.mdx$/, '');
-      const fileLang = file.lang || parts.find(p => /^[a-z]{2}(-[A-Z]{2})?$/.test(p)) || 'es';
-      if ((file.id && file.id === currentConceptId) || slug === currentConceptId) {
-        map[fileLang] = file;
-      }
-    }
-    return map;
-  }, [currentConceptId, files]);
+  const documentVersions = useMemo(
+    () => documentVersionStatuses(currentConceptVariants, SUPPORTED_LANGUAGES.map(language => language.code)),
+    [currentConceptVariants],
+  );
 
-  const availableLangs = useMemo(() => Object.keys(currentConceptVariants), [currentConceptVariants]);
+  // Vista de traducción: el original es el de `desde=` si existe; si no, el de referencia.
+  const translationOrigin = useMemo(() => {
+    const paths = Object.fromEntries(Object.entries(currentConceptVariants).map(([lang, file]) => [lang, file.path]));
+    const lang = urlOriginLang && urlOriginLang !== currentLang && paths[urlOriginLang]
+      ? urlOriginLang
+      : translationOriginLang(paths, currentLang);
+    return {
+      lang,
+      path: lang ? paths[lang] ?? null : null,
+      options: Object.keys(paths).filter(candidate => candidate !== currentLang),
+    };
+  }, [currentConceptVariants, currentLang, urlOriginLang]);
 
   const handleSwitchLanguage = useCallback((targetLang: string) => {
     const targetFile = currentConceptVariants[targetLang];
@@ -421,7 +426,7 @@ export const MdxWorkbench: React.FC = () => {
   useEffect(() => {
     if (loading || !currentFile?.endsWith('.mdx')) return;
     if (viewMode === 'code' && editorMode !== 'code') setEditorMode('code');
-    if (viewMode === 'visual' && editorMode === 'code' && compatibility !== 'unsupported') setEditorMode('visual');
+    if ((viewMode === 'visual' || viewMode === 'translate') && editorMode === 'code' && compatibility !== 'unsupported') setEditorMode('visual');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFile, loading, viewMode]);
 
@@ -542,6 +547,21 @@ export const MdxWorkbench: React.FC = () => {
   const [focusRange] = useState<{ start: number; end: number } | undefined>(undefined);
   const [highlightedBlockId, setHighlightedBlockId] = useState<string | null>(null);
 
+  const focusBlock = (targetBlockId: string) => {
+    setEditingBlockId(targetBlockId);
+    setHighlightedBlockId(targetBlockId);
+    setTimeout(() => {
+      const element = document.getElementById(`block-${targetBlockId}`) || document.querySelector(`[data-block-id="${targetBlockId}"]`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (element as HTMLElement).focus?.();
+      }
+    }, 50);
+    setTimeout(() => {
+      setHighlightedBlockId(null);
+    }, 3500);
+  };
+
   const handleSelectIssue = (issue: EditorValidationIssue) => {
     setViewMode('visual');
 
@@ -595,20 +615,7 @@ export const MdxWorkbench: React.FC = () => {
       targetBlockId = blocks[0].id;
     }
 
-    if (targetBlockId) {
-      setEditingBlockId(targetBlockId);
-      setHighlightedBlockId(targetBlockId);
-      setTimeout(() => {
-        const element = document.getElementById(`block-${targetBlockId}`) || document.querySelector(`[data-block-id="${targetBlockId}"]`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          (element as HTMLElement).focus?.();
-        }
-      }, 50);
-      setTimeout(() => {
-        setHighlightedBlockId(null);
-      }, 3500);
-    }
+    if (targetBlockId) focusBlock(targetBlockId);
   };
 
   const previewPath = useMemo(() => getPreviewPath(metadata), [metadata]);
@@ -666,7 +673,8 @@ export const MdxWorkbench: React.FC = () => {
         fileTitle={currentTitle}
         contentType={currentContentType}
         currentLang={currentLang}
-        availableLangs={availableLangs}
+        documentVersions={documentVersions}
+        canTranslate={translationOrigin.options.length > 0}
         onSwitchLanguage={handleSwitchLanguage}
         onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
         viewMode={viewMode}
@@ -839,6 +847,23 @@ export const MdxWorkbench: React.FC = () => {
                   isDiagramFile={false}
                   isDark={false}
                   focusRange={focusRange}
+                />
+              </div>
+            ) : viewMode === 'translate' ? (
+              <div className="flex-1 h-full min-h-0 overflow-hidden">
+                <TranslationWorkbench
+                  blocks={blocks}
+                  currentLang={currentLang}
+                  originLang={translationOrigin.lang}
+                  originPath={translationOrigin.path}
+                  originOptions={translationOrigin.options}
+                  onOriginChange={lang => setViewMode('translate', { originLang: lang })}
+                  canEdit={!isReadOnly && canMutateVisualStructure}
+                  updateBlock={updateBlock}
+                  onEditVisually={blockId => {
+                    setViewMode('visual');
+                    focusBlock(blockId);
+                  }}
                 />
               </div>
             ) : viewMode === 'preview' ? (

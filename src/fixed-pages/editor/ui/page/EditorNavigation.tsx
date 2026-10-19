@@ -3,7 +3,6 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import { translateEditorText, type EditorText } from '@/fixed-pages/editor/types/editorMessage';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
-  extractResourceIdentity,
   filterCatalogResources,
   getCategoryDisplayName,
   resourceDisplayName,
@@ -13,7 +12,8 @@ import {
 } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { useI18n } from '@/i18n';
-import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+import { buildConceptIndex, conceptKey, documentLang, documentVersionStatuses } from '@/fixed-pages/editor/session/conceptVersions';
 
 interface EditorNavigationProps {
   files: FileNode[];
@@ -65,10 +65,11 @@ function ResourceButton({
   const { t } = useI18n();
   const capability = capabilityPresentation(file, t);
   const isDocument = file.kind === 'mdx-document';
-  const availableLangs = useMemo(() => Object.keys(variants ?? {}), [variants]);
-  const activeLang = current
-    ? (Object.entries(variants ?? {}).find(([_, v]) => v.path === file.path)?.[0] || 'es')
-    : '';
+  const versions = useMemo(
+    () => documentVersionStatuses(variants ?? {}, SUPPORTED_LANGUAGES.map(language => language.code)),
+    [variants],
+  );
+  const activeLang = current ? documentLang(file) : '';
 
   return (
     <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-canela/35 bg-canela/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
@@ -101,16 +102,15 @@ function ResourceButton({
           {capability.label}
         </span>
         {isDocument && (
-          <EditorLanguageBadges
-            mode="document"
+          <DocumentVersions
             size="compact"
             activeLang={activeLang}
-            availableLangs={availableLangs}
-            onSelectLang={code => {
+            versions={versions}
+            onSelect={code => {
               const target = variants?.[code];
               if (target) openFile(target.path);
             }}
-            onCreateTranslation={code => onCreateTranslation?.(file, code)}
+            onCreate={onCreateTranslation ? code => onCreateTranslation(file, code) : undefined}
             aria-label={t('editor.language.versions')}
           />
         )}
@@ -175,18 +175,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
     return Array.from(map.entries()).sort(([a], [b]) => categoryLabel(a).localeCompare(categoryLabel(b), 'es'));
   }, [filtered]);
 
-  const variantsByConcept = useMemo(() => {
-    const map = new Map<string, Record<string, FileNode>>();
-    for (const file of files) {
-      if (file.kind !== 'mdx-document') continue;
-      const { conceptId, lang } = extractResourceIdentity(file);
-      const key = `${file.type}:${conceptId}`;
-      const existing = map.get(key) ?? {};
-      existing[lang || 'es'] = file;
-      map.set(key, existing);
-    }
-    return map;
-  }, [files]);
+  const variantsByConcept = useMemo(() => buildConceptIndex(files), [files]);
 
   const updateFilter = <K extends keyof EditorCatalogFilters>(key: K, value: EditorCatalogFilters[K]) => {
     setFilters(previous => ({ ...previous, [key]: value }));
@@ -371,7 +360,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                   level={level}
                   openFile={openFile}
                   toggleFavorite={toggleFavorite}
-                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(conceptKey(file)) : undefined}
                   onCreateTranslation={onCreateTranslation}
                 />
               ))}
@@ -391,7 +380,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                   level={level}
                   openFile={openFile}
                   toggleFavorite={toggleFavorite}
-                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(conceptKey(file)) : undefined}
                   onCreateTranslation={onCreateTranslation}
                 />
               ))}
@@ -423,7 +412,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                       level={level}
                       openFile={openFile}
                       toggleFavorite={toggleFavorite}
-                      variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                      variants={file.kind === 'mdx-document' ? variantsByConcept.get(conceptKey(file)) : undefined}
                       onCreateTranslation={onCreateTranslation}
                     />
                   ))}

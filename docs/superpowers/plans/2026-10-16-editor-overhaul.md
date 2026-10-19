@@ -75,10 +75,18 @@ Archivos: `src/i18n/types.ts`, `src/i18n/languages/{es,eu,en}.ts` y la carpeta d
 
 Distinguir siempre el **idioma de la interfaz** (`:lang` de la URL) del **idioma del documento** (`lang` del frontmatter o de la carpeta).
 
-- [ ] 3.1 Modelo `conceptVersions(id) → { es?: path, eu?: path, en?: path }` construido a partir de la lista de archivos (un mismo `id` en `content/mdx/{es,eu,en}`).
-- [ ] 3.2 Dividir `EditorLanguageBadges` en dos componentes: `UiLanguageSwitch` (cambia `:lang` sin cerrar el documento) y `DocumentVersions` (salta a otra versión, crea una traducción y muestra el estado: existe / falta / desfasada).
-- [ ] 3.3 Vista de traducción en paralelo: original a la izquierda (solo lectura) y destino a la derecha, alineados por bloque, con un aviso cuando hay bloques sin traducir.
-- [ ] 3.4 Diagramas: el selector de variante de idioma de las etiquetas usa el mismo componente `DocumentVersions`.
+- [x] 3.1 Modelo `conceptVersions(id) → { es?: path, eu?: path, en?: path }` construido a partir de la lista de archivos (un mismo `id` en `content/mdx/{es,eu,en}`).
+- [x] 3.2 Dividir `EditorLanguageBadges` en dos componentes: `UiLanguageSwitch` (cambia `:lang` sin cerrar el documento) y `DocumentVersions` (salta a otra versión, crea una traducción y muestra el estado: existe / falta / desfasada).
+- [x] 3.3 Vista de traducción en paralelo: original a la izquierda (solo lectura) y destino a la derecha, alineados por bloque, con un aviso cuando hay bloques sin traducir.
+- [x] 3.4 Diagramas: el selector de variante de idioma de las etiquetas usa el mismo componente `DocumentVersions`.
+
+Decisiones tomadas en la fase 3:
+- Modelo en `session/conceptVersions.ts`: `buildConceptIndex(files)` (clave `tipo:id`), `conceptVersions(files, id, type?)`, `documentVersionStatuses` y `translationOriginLang`. Sustituye las tres copias que había (`EditorNavigation`, `MdxWorkbench` y `useEditorLanding`). El idioma de referencia es `es`.
+- «Desfasada» = el esquema de bloques (`FileNode.outline`, de `documentOutline` en `save/catalogNode.ts`) no coincide con el del castellano. El esquema solo cuenta títulos y etiquetas JSX que ocupan la línea entera en la columna 0, nunca enlaces en línea (en euskera cambian de posición). En el corpus actual: 240 pares y ninguno desfasado. No hay fechas en el catálogo y las de git no son fiables.
+- `EditorLanguageBadges` eliminado: `UiLanguageSwitch` usa `setLang(code, { keepSearch: true })` (opción nueva de `I18nContext`) para conservar la vista y el bloque, y está en la portada y en la cabecera MDX (`xl`). `DocumentVersions` recibe `DocumentVersion[]` y marca las desfasadas con un punto ocre.
+- Vista de traducción: `vista=traduccion&desde=<idioma>` (pestaña «Traducir», visible si existe otra versión). `session/translationAlignment.ts` empareja los bloques por su forma (tipo, componente y nivel) con la subsecuencia común más larga. Estados: traducido, sin traducir (texto idéntico, como al crear la traducción), sin texto (fórmulas), falta y sobra. El original se lee con `useDocumentVersionBlocks`, al margen de la sesión de edición. A la derecha, la prosa (párrafo, título, lista, nota y cita) se edita en un `textarea` que confirma al perder el foco; el resto de bloques se abre en la vista visual.
+- Diagramas: `diagramVersionStatuses` (`diagrams/model/scene/translationStatus.ts`) aplica el mismo contrato (el castellano siempre existe y otro idioma existe si `translations[lang]` tiene texto). Un idioma que falta se ofrece como «+EU», y al pulsarlo se empieza a traducir en ese idioma.
+- `mapProjectedBlocks` se ha movido a `session/blockView.ts`.
 
 ## Fase 4 — Interfaz uniforme 🧠 + 🔧 (2–3 sesiones)
 
@@ -121,3 +129,4 @@ Distinguir siempre el **idioma de la interfaz** (`:lang` de la URL) del **idioma
 | 2026-10-16 | 2.3(b) | (este commit) | `ui/panels`, `ui/toolbar`, `ui/blocks` y `ui/components` migrados; áreas `blocks`, `stepLink`, `linker`, `metadata`, `source`, `diagnostics`, `preview`, `exercise`, `registered`, `visual`, `format`, `diagramPanel`. Baseline 1289 → 1027. Pendiente: `visualEditorPresets.ts` y etiquetas de `metadataFields`. |
 | 2026-10-16 | 2.3(c) | (este commit) | `diagrams/ui/**` migrado (baseline 1027 → 71; `diagrams/ui` a 0); áreas `diagramEditors`, `diagramCanvas`, `diagramConstraints`, `diagramInspector`, `diagramModals`, `diagramPanels`, `diagramScene`, `diagramToolbar`, `diagramWorkbench`, `diagramOptions`. Helpers `renderRichText` y `diagramLabels`. Fuera de alcance: etiquetas de historial deshacer/rehacer (no se muestran), valores por defecto guardados en el diagrama, y etiquetas del modelo (`COLOR_OPTIONS`, `toolReference*`, `constraintPresentation`, `useDiagramUsages`) para 2.3(d)/posterior. |
 | 2026-10-16 | 2.3(d) | (este commit) | Mensajes de `useEditorCore` como códigos; áreas `errors`, `notices` (éxitos), `status` (estado de persistencia) y `usages`. `failureMessage`, `EditorMessageError` y `saveBlockedByValidation` compartidos; `translateText` obligatorio en `safetyPresentation`. Pruebas en `tests/features/editor/i18n/engineMessages.test.ts`. Pendiente: catálogo del servidor (`capabilityLabel`/`reason` en castellano), textos de `safetyPresentation`, `validation.issues` y `compatibilityReasons`, y `core.message` que ninguna interfaz muestra todavía. |
+| 2026-10-19 | 3 | (este commit) | Contenido multilingüe: `conceptVersions`, `UiLanguageSwitch` + `DocumentVersions`, vista `traduccion` alineada por bloques y versiones de diagrama. Pruebas en `tests/features/editor/language/`. Falta probarla a mano en el navegador. |

@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import {
-  extractResourceIdentity,
   getCategoryDisplayName,
   resourceDisplayName,
 } from '@/fixed-pages/editor/session/editorNavigationModel';
+import { buildConceptIndex, SOURCE_DOCUMENT_LANG } from '@/fixed-pages/editor/session/conceptVersions';
 
 export type LandingSection = 'documents' | 'diagrams';
 export type SortOption = 'name' | 'type' | 'recent';
@@ -43,33 +43,9 @@ export function useEditorLanding({
     }
 
     // Deduplicar documentos MDX por concepto, mostrando solo 1 ficha con preferencia por el idioma actual
-    const conceptMap = new Map<string, FileNode[]>();
-    for (const file of rawSection) {
-      const { conceptId } = extractResourceIdentity(file);
-      const key = `${file.type}:${conceptId}`;
-      const list = conceptMap.get(key) || [];
-      list.push(file);
-      conceptMap.set(key, list);
-    }
-
-    const deduplicated: FileNode[] = [];
-    for (const variants of conceptMap.values()) {
-      if (variants.length === 1) {
-        deduplicated.push(variants[0]);
-        continue;
-      }
-      // 1. Preferir variante en idioma actual
-      const currentMatch = variants.find(f => extractResourceIdentity(f).lang === currentLang);
-      if (currentMatch) {
-        deduplicated.push(currentMatch);
-        continue;
-      }
-      // 2. Fallback: preferir base 'es' o la primera disponible
-      const esMatch = variants.find(f => extractResourceIdentity(f).lang === 'es');
-      deduplicated.push(esMatch || variants[0]);
-    }
-
-    return deduplicated;
+    // Preferir la versión en el idioma de la interfaz; si no, la de referencia o la primera.
+    return Array.from(buildConceptIndex(rawSection).values()).map(versions =>
+      (currentLang ? versions[currentLang] : undefined) ?? versions[SOURCE_DOCUMENT_LANG] ?? Object.values(versions)[0]);
   }, [files, section, currentLang]);
 
   // Archivos base filtrados por los modificadores activos (favoritos y búsqueda)
