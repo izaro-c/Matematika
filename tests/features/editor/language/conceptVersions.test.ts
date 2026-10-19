@@ -71,11 +71,15 @@ describe('esquema de bloques del catálogo', () => {
     ].join('\n');
     expect(documentOutline(source)).toBe('h2,Definicion');
   });
+
+  it('un bloque en una sola línea cuenta igual que partido en varias', () => {
+    expect(documentOutline('<Nota>Testua.</Nota>')).toBe(documentOutline('<Nota>\nTexto.\n</Nota>'));
+  });
 });
 
 describe('variantes de idioma de un diagrama', () => {
   it('el castellano existe siempre; otro idioma, si tiene algún texto', () => {
-    const model = { translations: { eu: { title: 'Angelua' }, en: { labels: { a: '' } } } } as unknown as VisualDiagramModel;
-    expect(diagramVersionStatuses(model, ['es', 'eu', 'en']).map(v => v.status)).toEqual(['present', 'present', 'missing']);
+    const translations = { eu: { title: 'Angelua' }, en: { labels: { a: '' } } } as unknown as VisualDiagramModel['translations'];
+    expect(diagramVersionStatuses(translations, ['es', 'eu', 'en']).map(v => v.status)).toEqual(['present', 'present', 'missing']);
   });
 });

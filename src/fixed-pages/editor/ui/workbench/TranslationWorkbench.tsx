@@ -136,6 +136,7 @@ export const TranslationWorkbench: React.FC<TranslationWorkbenchProps> = ({
                       <textarea
                         key={`${target.id}:${target.content}`}
                         defaultValue={target.content}
+                        data-commit-on-blur=""
                         aria-label={t('editor.translation.blockText')}
                         rows={Math.max(2, target.content.split('\n').length + Math.floor(target.content.length / 80))}
                         onBlur={event => {

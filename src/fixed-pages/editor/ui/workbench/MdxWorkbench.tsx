@@ -50,7 +50,7 @@ import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 import { MdxWorkbenchHeader } from './MdxWorkbenchHeader';
 import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
 import { TranslationWorkbench } from './TranslationWorkbench';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
 import {
   buildConceptIndex,
   conceptKey,
@@ -200,7 +200,7 @@ export const MdxWorkbench: React.FC = () => {
   }, [currentResource, files]);
 
   const documentVersions = useMemo(
-    () => documentVersionStatuses(currentConceptVariants, SUPPORTED_LANGUAGES.map(language => language.code)),
+    () => documentVersionStatuses(currentConceptVariants, SUPPORTED_LANGUAGE_CODES),
     [currentConceptVariants],
   );
 

@@ -254,9 +254,10 @@ export function useEditorNavigationFlow({
     }));
   };
 
+  // `updateCurrentUrl` ya conserva `desde=`, y la URL solo lo escribe en la vista de traducción.
   const setViewMode = useCallback((viewMode: MdxViewMode, options: { originLang?: string | null } = {}) => {
-    updateCurrentUrl({ viewMode, originLang: options.originLang ?? (viewMode === 'translate' ? routeFile?.originLang : null) });
-  }, [routeFile?.originLang, updateCurrentUrl]);
+    updateCurrentUrl({ viewMode, ...options });
+  }, [updateCurrentUrl]);
 
   const setUrlBlockId = useCallback((blockId: string | null) => {
     updateCurrentUrl({ blockId }, { replace: true });

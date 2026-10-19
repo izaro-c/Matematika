@@ -10,7 +10,7 @@ import {
   type EditorResourceSection,
   type EditorWorkspaceLevel,
 } from '@/fixed-pages/editor/session/editorNavigationModel';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { SUPPORTED_LANGUAGES, SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
 import { useI18n } from '@/i18n';
 import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { buildConceptIndex, conceptKey, documentLang, documentVersionStatuses } from '@/fixed-pages/editor/session/conceptVersions';
@@ -66,7 +66,7 @@ function ResourceButton({
   const capability = capabilityPresentation(file, t);
   const isDocument = file.kind === 'mdx-document';
   const versions = useMemo(
-    () => documentVersionStatuses(variants ?? {}, SUPPORTED_LANGUAGES.map(language => language.code)),
+    () => documentVersionStatuses(variants ?? {}, SUPPORTED_LANGUAGE_CODES),
     [variants],
   );
   const activeLang = current ? documentLang(file) : '';

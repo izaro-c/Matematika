@@ -13,9 +13,12 @@ function hasText(value: unknown): boolean {
  * documento: el castellano es la base y existe siempre; otro idioma existe si
  * `translations[lang]` tiene algún texto (si no, el diagrama hereda el castellano).
  */
-export function diagramVersionStatuses(model: VisualDiagramModel | null, langs: readonly string[]): DocumentVersion[] {
+export function diagramVersionStatuses(
+  translations: VisualDiagramModel['translations'],
+  langs: readonly string[],
+): DocumentVersion[] {
   return langs.map(lang => ({
     lang,
-    status: lang === SOURCE_DOCUMENT_LANG || hasText(model?.translations?.[lang]) ? 'present' : 'missing',
+    status: lang === SOURCE_DOCUMENT_LANG || hasText(translations?.[lang]) ? 'present' : 'missing',
   }));
 }

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramMode } from '@/diagrams';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { SUPPORTED_LANGUAGES, SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
 import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { diagramVersionStatuses } from '../../model/scene/translationStatus';
@@ -26,6 +26,8 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
   onClose,
 }) => {
   const { t } = useI18n();
+  const translations = model?.translations;
+  const versions = useMemo(() => diagramVersionStatuses(translations, SUPPORTED_LANGUAGE_CODES), [translations]);
   if (!model) {
     return (
       <aside
@@ -129,7 +131,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
           <DocumentVersions
             kind="diagram"
             activeLang={activeLang}
-            versions={diagramVersionStatuses(model, SUPPORTED_LANGUAGES.map(language => language.code))}
+            versions={versions}
             onSelect={onSelectActiveLang}
             onCreate={onSelectActiveLang}
             aria-label={t('editor.diagramWorkbench.diagramEditingLanguageSelector')}

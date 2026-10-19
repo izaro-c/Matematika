@@ -45,7 +45,9 @@ interface OpenFileOptions {
 
 function flushPendingProse(): void {
   const active = typeof document !== 'undefined' ? document.activeElement : null;
-  if (active instanceof HTMLElement && active.isContentEditable) active.blur();
+  // También los campos que confirman al perder el foco (`data-commit-on-blur`), p. ej. la
+  // vista de traducción; los demás textarea guardan en cada cambio y no deben cerrarse.
+  if (active instanceof HTMLElement && (active.isContentEditable || active.matches('[data-commit-on-blur]'))) active.blur();
 }
 
 const contentRepository = new ContentRepository(editorApiClient);

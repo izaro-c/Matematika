@@ -59,7 +59,10 @@ export function documentOutline(source: string): string {
     }
     // Solo etiquetas que ocupan la línea (bloques); un `<ConceptLink>` al inicio de un
     // párrafo es texto en línea y su posición cambia con el orden de las palabras.
-    const component = /^<([A-Z][\w.]*)(?:\s[^>]*)?(?:\/?>)?\s*$/.exec(line);
+    // Un bloque escrito en una sola línea (`<Nota>…</Nota>`) también cuenta, para que una
+    // versión que lo parte en varias líneas no parezca desfasada.
+    const component = /^<([A-Z][\w.]*)(?:\s[^>]*)?(?:\/?>)?\s*$/.exec(line)
+      ?? /^<([A-Z][\w.]*)(?:\s[^>]*)?>(?:(?!<\/\1>).)*<\/\1>\s*$/.exec(line);
     if (component) tokens.push(component[1]);
   }
   return tokens.join(',');

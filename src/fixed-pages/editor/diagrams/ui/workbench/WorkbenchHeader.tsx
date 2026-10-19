@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { CanvasFrameMode } from '../canvas/canvasFrameMode';
 import {
@@ -8,7 +8,7 @@ import {
   HeaderActionButton,
   DocumentVersions,
 } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
+import { SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
 import { diagramVersionStatuses } from '../../model/scene/translationStatus';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
@@ -73,6 +73,8 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   onToggleInspector,
 }) => {
   const { t } = useI18n();
+  const translations = model?.translations;
+  const versions = useMemo(() => diagramVersionStatuses(translations, SUPPORTED_LANGUAGE_CODES), [translations]);
   const localizedTitle = activeLang && activeLang !== 'es'
     ? (model?.translations?.[activeLang]?.title ?? '')
     : (model?.title ?? '');
@@ -97,7 +99,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           <DocumentVersions
             kind="diagram"
             activeLang={activeLang || 'es'}
-            versions={diagramVersionStatuses(model, SUPPORTED_LANGUAGES.map(language => language.code))}
+            versions={versions}
             onSelect={onSelectActiveLang}
             onCreate={onSelectActiveLang}
             className="hidden sm:inline-flex"
