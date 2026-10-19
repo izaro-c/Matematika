@@ -57,6 +57,7 @@ import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
 import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchAsideTabs';
 import { EditorShell } from '@/fixed-pages/editor/ui/page/EditorShell';
 import { DiagnosticsDock } from '@/fixed-pages/editor/ui/workbench/DiagnosticsDock';
+import { DEFAULT_EDITOR_WORKSPACE_PREFERENCES } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { useI18n } from '@/i18n';
 import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
 import { DiagramDataPanel } from './DiagramDataPanel';
@@ -115,6 +116,9 @@ interface DiagramWorkbenchProps {
   onInspectorWidthChange?: (width: number) => void;
   diagnosticsHeight?: number;
   onDiagnosticsHeightChange?: (height: number) => void;
+  /** Panel inferior de avisos; controlado por la sesión del editor si se pasa. */
+  isDiagnosticsOpen?: boolean;
+  onDiagnosticsOpenChange?: (open: boolean) => void;
 }
 
 export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
@@ -132,6 +136,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   onInspectorWidthChange,
   diagnosticsHeight: diagnosticsHeightProp,
   onDiagnosticsHeightChange,
+  isDiagnosticsOpen: isDiagnosticsOpenProp,
+  onDiagnosticsOpenChange,
 }) => {
   const { t } = useI18n();
   const {
@@ -191,8 +197,10 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [localNavWidth, setLocalNavWidth] = useState(leftPanelWidth);
   const navigationWidth = onLeftPanelWidthChange ? leftPanelWidth : localNavWidth;
   const setNavigationWidth = onLeftPanelWidthChange ?? setLocalNavWidth;
-  const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false);
-  const [localDiagnosticsHeight, setLocalDiagnosticsHeight] = useState(220);
+  const [localDiagnosticsOpen, setLocalDiagnosticsOpen] = useState(false);
+  const isDiagnosticsOpen = isDiagnosticsOpenProp ?? localDiagnosticsOpen;
+  const setIsDiagnosticsOpen = onDiagnosticsOpenChange ?? setLocalDiagnosticsOpen;
+  const [localDiagnosticsHeight, setLocalDiagnosticsHeight] = useState(DEFAULT_EDITOR_WORKSPACE_PREFERENCES.diagnosticsHeight);
   const diagnosticsHeight = diagnosticsHeightProp ?? localDiagnosticsHeight;
   const setDiagnosticsHeight = onDiagnosticsHeightChange ?? setLocalDiagnosticsHeight;
   const navigationOpen = isSidebarOpen ?? true;
@@ -774,7 +782,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
             onOpenGuided={() => setGuidedOpen(true)}
             onResetViewport={handleResetViewport}
             isDiagnosticsOpen={isDiagnosticsOpen}
-            onToggleDiagnostics={() => setIsDiagnosticsOpen(open => !open)}
+            onToggleDiagnostics={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)}
             onTitleChange={handleTitleChange}
             sandboxMode={sandboxMode}
             saveCapability={editorSaveCapability}

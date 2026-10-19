@@ -687,6 +687,8 @@ export const MdxWorkbench: React.FC = () => {
             onInspectorWidthChange={(width) => setWorkspace(prev => ({ ...prev, inspectorWidth: width }))}
             diagnosticsHeight={workspace.diagnosticsHeight}
             onDiagnosticsHeightChange={(height) => setWorkspace(prev => ({ ...prev, diagnosticsHeight: height }))}
+            isDiagnosticsOpen={isDiagnosticsOpen}
+            onDiagnosticsOpenChange={setIsDiagnosticsOpen}
             onConfirm={async (spec: EditorDiagramReference) => {
               await bindDiagram(spec);
               return true;

@@ -20,7 +20,7 @@ export const WorkbenchDiagnosticsPanel: React.FC<WorkbenchDiagnosticsPanelProps>
   const errors = diagnostics.filter(d => d.severity === 'error');
 
   return (
-    <div className="p-4 space-y-4 text-xs font-serif text-carbon bg-lienzo h-full overflow-y-auto">
+    <div className="space-y-4 pt-1 text-xs font-serif text-carbon bg-lienzo">
       <div className="rounded-2xl border border-carbon/15 bg-lienzo p-4 shadow-2xs space-y-2">
         <div className="flex items-center justify-between">
           <div>

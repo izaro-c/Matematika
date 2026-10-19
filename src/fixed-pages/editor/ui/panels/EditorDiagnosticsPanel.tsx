@@ -67,7 +67,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
   const persistenceClass = persistenceIndicator(persistenceStatus);
 
   return (
-    <section className="flex h-full flex-col bg-lienzo" aria-label={t('editor.diagnostics.sectionLabel')}>
+    <section className="flex h-full flex-col bg-lienzo" aria-label={embedded ? undefined : t('editor.diagnostics.sectionLabel')}>
       {!embedded && (
         <header className="flex items-center justify-between border-b border-carbon/15 bg-lienzo px-4 py-3 shadow-2xs">
           <div className="flex items-center gap-3">

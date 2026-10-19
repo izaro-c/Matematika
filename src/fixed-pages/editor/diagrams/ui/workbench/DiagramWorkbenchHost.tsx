@@ -20,6 +20,8 @@ export type DiagramWorkbenchHostProps = {
   onInspectorWidthChange?: (width: number) => void;
   diagnosticsHeight?: number;
   onDiagnosticsHeightChange?: (height: number) => void;
+  isDiagnosticsOpen?: boolean;
+  onDiagnosticsOpenChange?: (open: boolean) => void;
 };
 
 /** Contenedor de superficie diagrama dentro del shell (no modal). */
@@ -41,6 +43,8 @@ export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props)
     onInspectorWidthChange,
     diagnosticsHeight,
     onDiagnosticsHeightChange,
+    isDiagnosticsOpen,
+    onDiagnosticsOpenChange,
   } = props;
   if (!isOpen) return null;
 
@@ -65,6 +69,8 @@ export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props)
         onInspectorWidthChange={onInspectorWidthChange}
         diagnosticsHeight={diagnosticsHeight}
         onDiagnosticsHeightChange={onDiagnosticsHeightChange}
+        isDiagnosticsOpen={isDiagnosticsOpen}
+        onDiagnosticsOpenChange={onDiagnosticsOpenChange}
       />
     </div>
   );
