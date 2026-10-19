@@ -57,15 +57,39 @@ export function documentOutline(source: string): string {
       tokens.push(`h${heading[1].length}`);
       continue;
     }
-    // Solo etiquetas que ocupan la línea (bloques); un `<ConceptLink>` al inicio de un
-    // párrafo es texto en línea y su posición cambia con el orden de las palabras.
-    // Un bloque escrito en una sola línea (`<Nota>…</Nota>`) también cuenta, para que una
-    // versión que lo parte en varias líneas no parezca desfasada.
-    const component = /^<([A-Z][\w.]*)(?:\s[^>]*)?(?:\/?>)?\s*$/.exec(line)
-      ?? /^<([A-Z][\w.]*)(?:\s[^>]*)?>(?:(?!<\/\1>).)*<\/\1>\s*$/.exec(line);
-    if (component) tokens.push(component[1]);
+    tokens.push(...blockComponentsInLine(line));
   }
   return tokens.join(',');
+}
+
+/**
+ * Componentes que van dentro de un párrafo. Su posición cambia con el orden de las
+ * palabras de cada idioma, así que no forman parte del esquema; una línea que empieza
+ * por uno de ellos (`<Capitular letra="A" /> Un…`) es un párrafo.
+ */
+const INLINE_COMPONENTS = new Set(['ConceptLink', 'VisualBind', 'Capitular']);
+
+/**
+ * Etiquetas de apertura de bloque de una línea que empieza en la columna 0 por un bloque.
+ * Se cuentan todas, para que `<Nota>a</Nota><Nota>b</Nota>` o `<Nota>Texto` (cerrado más
+ * abajo) den lo mismo que su forma en varias líneas. Se ignoran las etiquetas dentro de
+ * llaves, como el diagrama de `<DemonstrationSection diagram={<DemoTales />}>`.
+ */
+function blockComponentsInLine(line: string): string[] {
+  const first = /^<([A-Z][\w.]*)/.exec(line);
+  if (!first || INLINE_COMPONENTS.has(first[1])) return [];
+  const names: string[] = [];
+  let braceDepth = 0;
+  for (let index = 0; index < line.length; index++) {
+    const char = line[index];
+    if (char === '{') braceDepth++;
+    else if (char === '}') braceDepth = Math.max(0, braceDepth - 1);
+    else if (char === '<' && braceDepth === 0) {
+      const name = /^<([A-Z][\w.]*)/.exec(line.slice(index))?.[1];
+      if (name && !INLINE_COMPONENTS.has(name)) names.push(name);
+    }
+  }
+  return names;
 }
 
 /** `null` si el archivo no es un documento (.mdx/.md) ni un diagrama (.tsx). */

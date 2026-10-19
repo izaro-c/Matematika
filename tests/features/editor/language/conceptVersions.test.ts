@@ -75,6 +75,27 @@ describe('esquema de bloques del catálogo', () => {
   it('un bloque en una sola línea cuenta igual que partido en varias', () => {
     expect(documentOutline('<Nota>Testua.</Nota>')).toBe(documentOutline('<Nota>\nTexto.\n</Nota>'));
   });
+
+  it('un bloque que se abre con texto y se cierra más abajo cuenta', () => {
+    expect(documentOutline('<Nota>Texto\nmás texto.\n</Nota>')).toBe('Nota');
+  });
+
+  it('cuenta cada bloque de una línea con varios', () => {
+    expect(documentOutline('<Nota>a</Nota><Nota>b</Nota>')).toBe('Nota,Nota');
+  });
+
+  it('un párrafo que es solo un componente en línea no es un bloque', () => {
+    expect(documentOutline('<ConceptLink targetId="x">término</ConceptLink>')).toBe('');
+    expect(documentOutline('<VisualBind target="p">punto</VisualBind>')).toBe('');
+  });
+
+  it('ignora los componentes en línea dentro de un bloque', () => {
+    expect(documentOutline('<Nota>Ver <ConceptLink targetId="x">x</ConceptLink>.</Nota>')).toBe('Nota');
+  });
+
+  it('ignora las etiquetas dentro de las llaves de un atributo', () => {
+    expect(documentOutline('<DemonstrationSection diagram={<DemoTales />}>\n</DemonstrationSection>')).toBe('DemonstrationSection');
+  });
 });
 
 describe('variantes de idioma de un diagrama', () => {
