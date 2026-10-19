@@ -9,6 +9,7 @@ import {
 } from '../model/scene/publishedDiagramLayout';
 import { useI18n } from '@/i18n';
 import { layoutLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramViewportFrameProps {
   title: string;
@@ -52,7 +53,7 @@ export const DiagramViewportFrame: React.FC<DiagramViewportFrameProps> = ({ titl
         </div>
         {!editing && <><label className="text-xs font-bold text-carbon/55">
           {t('editor.diagramEditors.context')}
-          <select aria-label={t('editor.diagramEditors.publicationContext')} className="ml-1 rounded border border-carbon/15 bg-lienzo p-1 text-[9px] text-carbon" value={layout} onChange={event => setLayout(event.target.value as PublishedDiagramLayout)}>
+          <select aria-label={t('editor.diagramEditors.publicationContext')} className={`${controlClassName} ml-1`} value={layout} onChange={event => setLayout(event.target.value as PublishedDiagramLayout)}>
             {(Object.keys(PUBLISHED_LAYOUT_LABELS) as PublishedDiagramLayout[]).map(key => <option key={key} value={key}>{layoutLabel(t, key)}</option>)}
           </select>
         </label>
@@ -60,11 +61,11 @@ export const DiagramViewportFrame: React.FC<DiagramViewportFrameProps> = ({ titl
           {(Object.keys(SCREEN_PRESETS) as Array<Exclude<ScreenPreset, 'custom'>>).map(key => {
             const definition = SCREEN_PRESETS[key];
             const presetArea = publishedDiagramArea(definition, layout);
-            return <button key={key} type="button" title={t('editor.diagramEditors.viewportPresetTitle', { screenWidth: definition.width, screenHeight: definition.height, areaWidth: presetArea.width, areaHeight: presetArea.height })} aria-pressed={preset === key} className={`rounded px-2 py-1 text-[9px] font-bold ${preset === key ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`} onClick={() => choosePreset(key)}>{definition.label}</button>;
+            return <Button size="sm" variant="quiet" key={key} title={t('editor.diagramEditors.viewportPresetTitle', { screenWidth: definition.width, screenHeight: definition.height, areaWidth: presetArea.width, areaHeight: presetArea.height })} aria-pressed={preset === key} onClick={() => choosePreset(key)}>{definition.label}</Button>;
           })}
         </div>
-        <label className="text-[9px] font-bold text-carbon/45">{t('editor.diagramEditors.screen')} <input type="number" min="320" max="2560" aria-label={t('editor.diagramEditors.screenWidth')} className="ml-1 w-16 rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[9px] text-carbon" value={screenSize.width} onChange={event => updateScreenSize('width', Number(event.target.value))} /></label>
-        <label className="text-xs font-bold text-carbon/55">× <input type="number" min="480" max="1600" aria-label={t('editor.diagramEditors.screenHeight')} className="ml-1 w-16 rounded border border-carbon/15 bg-lienzo p-2 font-mono text-xs text-carbon" value={screenSize.height} onChange={event => updateScreenSize('height', Number(event.target.value))} /></label></>}
+        <label className="text-[9px] font-bold text-carbon/45">{t('editor.diagramEditors.screen')} <input type="number" min="320" max="2560" aria-label={t('editor.diagramEditors.screenWidth')} className={`${controlClassName} ml-1 w-16 font-mono`} value={screenSize.width} onChange={event => updateScreenSize('width', Number(event.target.value))} /></label>
+        <label className="text-xs font-bold text-carbon/55">× <input type="number" min="480" max="1600" aria-label={t('editor.diagramEditors.screenHeight')} className={`${controlClassName} ml-1 w-16 font-mono`} value={screenSize.height} onChange={event => updateScreenSize('height', Number(event.target.value))} /></label></>}
       </div>
       {!editing && <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon/10 bg-lienzo px-3 py-1.5 text-xs text-carbon/50">
         <span>{t('editor.diagramEditors.layoutScreenSummary', { layout: layoutLabel(t, layout), width: screenSize.width, height: screenSize.height })}</span>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useI18n } from '@/i18n';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { Button } from '../primitives';
+import { controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface StepAssignmentBarProps {
   stepTargets: DiagramTargetRegistry;
@@ -49,7 +50,7 @@ export const StepAssignmentBar: React.FC<StepAssignmentBarProps> = ({
               onClearSelection();
               onOpenChange(false);
             }}
-            className="rounded border border-terracota/30 bg-lienzo px-2 py-1 font-mono text-[11px] text-carbon outline-none"
+            className={`${controlClassName} font-mono`}
           >
             <option value="">{t('editor.visual.selectStep')}</option>
             {stepTargets.map(target => (

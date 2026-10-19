@@ -12,6 +12,7 @@ import { MdxLinkModal } from '../modals/MdxLinkModal';
 import { GuidedConstructionsModal } from '../modals/GuidedConstructionsModal';
 import { DiagramConfirmDialog } from '../DiagramConfirmDialog';
 import { DiagramDivergenceDialog } from '../DiagramDivergenceDialog';
+import { Callout } from '@/fixed-pages/editor/ui/primitives';
 
 type DiagramStateApi = ReturnType<typeof useDiagramState>;
 
@@ -153,13 +154,9 @@ export const DiagramWorkbenchDialogs: React.FC<DiagramWorkbenchDialogsProps> = (
     )}
 
     {statusMessage && (
-      <div
-        role="status"
-        className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-xl border border-canela/40 bg-lienzo px-4 py-2 text-xs font-bold text-canela shadow-lg"
-        onAnimationEnd={() => setStatusMessage('')}
-      >
+      <Callout className="text-xs" role="status" onAnimationEnd={() => setStatusMessage('')}>
         {statusMessage}
-      </div>
+      </Callout>
     )}
     </>
   );

@@ -5,6 +5,7 @@ import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider } fro
 import { DiagramReferencesPanel } from '../DiagramReferencesPanel';
 import { useI18n } from '@/i18n';
 import { objectTypeLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
+import { Button, Card, Modal, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface MdxLinkModalProps {
   isOpen: boolean;
@@ -102,40 +103,22 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
   };
 
   return (
-    <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/50 backdrop-blur-xs p-4 font-serif">
-      <div role="dialog" aria-modal="true" className="w-full max-w-3xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in fade-in zoom-in duration-200 text-carbon">
-        <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
-          <div>
-            <h2 className="font-bold text-base text-carbon">{t('editor.diagramModals.mdxLinksAndReferences')}</h2>
-            <p className="text-xs text-mora/70 italic">
-              {sandboxMode
-                ? t('editor.diagramModals.sandboxSnippetsNote')
-                : t('editor.diagramModals.linksIntro')}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-carbon/60 hover:text-carbon p-1 rounded-lg text-lg font-bold cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="p-4 space-y-4 text-xs text-carbon overflow-y-auto flex-1">
+    <Modal open onClose={onClose} title={t('editor.diagramModals.mdxLinksAndReferences')} size="lg">
+      <div className="space-y-4">
+        <p className="italic">
+          {sandboxMode
+            ? t('editor.diagramModals.sandboxSnippetsNote')
+            : t('editor.diagramModals.linksIntro')}
+        </p>
           {/* Inserción de Componente Principal */}
-          <div className="p-3 bg-carbon/5 border border-carbon/15 rounded-xl space-y-1.5 shadow-2xs">
+          <div className="space-y-1.5 border-b border-[color:var(--ed-rule-faint)] pb-3">
             <h4 className="font-bold text-sm text-carbon">{t('editor.diagramModals.componentLabelInMdx')}</h4>
-            <div className="flex items-center justify-between bg-carbon/10 p-2 rounded-lg border border-carbon/10 font-mono text-xs">
+            <Card className="flex items-center justify-between text-xs">
               <code>{componentSnippet}</code>
-              <button
-                type="button"
-                onClick={() => copyToClipboard(componentSnippet, 'comp')}
-                className="px-2.5 py-1 bg-canela text-lienzo rounded-lg text-[11px] font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
-              >
+              <Button size="sm" variant="primary" onClick={() => copyToClipboard(componentSnippet, 'comp')}>
                 {copiedTargetId === 'comp' ? t('editor.diagramModals.copied') : t('editor.diagramModals.copyJsx')}
-              </button>
-            </div>
+              </Button>
+            </Card>
           </div>
 
           {!sandboxMode && (
@@ -154,7 +137,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
             <p className="text-[11px] text-mora/70 italic mb-2">
               {t('editor.diagramModals.highlightableHint')}
             </p>
-            <div className="space-y-2 max-h-80 overflow-y-auto p-2 bg-carbon/5 rounded-xl border border-carbon/10">
+            <Card className="space-y-2 max-h-80 overflow-y-auto">
               {targets.map(tg => {
                 const snippet = `<InteractiveElement target="${tg.id}" color="${tg.color}">${tg.label}</InteractiveElement>`;
                 return (
@@ -179,13 +162,9 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                           {objectTypeLabel(t, tg.type)}
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => copyToClipboard(snippet, tg.id)}
-                        className="px-2.5 py-1 bg-carbon/10 text-carbon hover:bg-canela hover:text-lienzo rounded-lg text-[10px] font-bold transition-all cursor-pointer"
-                      >
+                      <Button size="sm" variant="primary" onClick={() => copyToClipboard(snippet, tg.id)}>
                         {copiedTargetId === tg.id ? t('editor.diagramModals.copied') : t('editor.diagramModals.copyElement')}
-                      </button>
+                      </Button>
                     </div>
 
                     <div className="flex items-center space-x-2 mt-1 pt-1 border-t border-carbon/5">
@@ -196,16 +175,15 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                         value={tg.groupIds.join(', ')}
                         onChange={e => handleUpdateGroupIds(tg.id, tg.kind, e.target.value)}
                         placeholder={t('editor.diagramModals.groupIdsPlaceholder')}
-                        className="flex-1 bg-lienzo border border-carbon/20 rounded px-2 py-0.5 font-mono text-[10px] text-carbon"
+                        className={`${controlClassName} flex-1 font-mono`}
                       />
                     </div>
                   </div>
                 );
               })}
-            </div>
+            </Card>
           </div>
-        </div>
       </div>
-    </div>
+    </Modal>
   );
 };

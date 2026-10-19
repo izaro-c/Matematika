@@ -5,6 +5,7 @@ import { parseOptionalNumber } from '../../../workbenchSelection';
 import { modelPoints } from '@/fixed-pages/editor/diagrams/model';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Callout, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 type CurveGeometryPatch = Partial<{
   expression: string;
@@ -59,7 +60,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
             update({ expression: e.target.value })
           }
           placeholder={t('editor.diagramInspector.functionExample')}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+          className={`${controlClassName} font-mono`}
         />
       </div>
     )}
@@ -78,7 +79,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               update({ x: e.target.value })
             }
             placeholder={t('editor.diagramInspector.xtExample')}
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+            className={`${controlClassName} font-mono`}
           />
         </div>
         <div>
@@ -93,7 +94,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               update({ y: e.target.value })
             }
             placeholder={t('editor.diagramInspector.ytExample')}
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+            className={`${controlClassName} font-mono`}
           />
         </div>
       </div>
@@ -114,7 +115,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
             const maxVal = geometry.domain[1];
             update({ domain: [minVal, maxVal] });
           }}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+          className={controlClassName}
         />
       </div>
       <div>
@@ -131,7 +132,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
             const maxVal = parseOptionalNumber(e.target.value, 5);
             update({ domain: [minVal, maxVal] });
           }}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+          className={controlClassName}
         />
       </div>
     </div>
@@ -144,7 +145,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           onChange={e =>
             update({ areaFill: e.target.value as 'none' | 'interior' | 'half-plane', })
           }
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
+          className={controlClassName}
         >
           <option value="none">{t('editor.diagramInspector.noAreaFill')}</option>
           <option value="interior">{t('editor.diagramInspector.fillToXAxis')}</option>
@@ -153,12 +154,12 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       </div>
 
       {geometry.areaFill === 'half-plane' && (
-        <div className="p-2.5 rounded-lg border border-canela/20 bg-canela/5 space-y-1">
+        <Callout className="space-y-1">
           <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">{t('editor.diagramInspector.halfPlaneReferencePoint')}</label>
           <select
             value={geometry.areaSide || ''}
             onChange={e => update({ areaSide: e.target.value || undefined })}
-            className="w-full rounded-md border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
+            className={`${controlClassName} font-mono`}
           >
             <option value="">{t('editor.diagramInspector.selectPoint')}</option>
             {modelPoints(model).map(p => (
@@ -167,7 +168,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               </option>
             ))}
           </select>
-        </div>
+        </Callout>
       )}
     </div>
   </div>

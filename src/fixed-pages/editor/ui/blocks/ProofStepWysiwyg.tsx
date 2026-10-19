@@ -7,6 +7,7 @@ import { RichProseSurface } from '../prose/RichProseSurface';
 import { bodyHasLogicalJustification, extractJustificationIdsFromBody } from '../blocks/demoJustification';
 import { resolveJustification } from '@/lib/justifications/resolveJustification';
 import { ProofStepLinkModal } from '../components/ProofStepLinkModal';
+import { Button, IconButton, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 export interface ProofStepWysiwygProps {
   blockId: string;
@@ -108,40 +109,18 @@ export function ProofStepWysiwyg({
       {/* Controles del Bloque de Paso (Subir, Bajar, Duplicar, Eliminar) */}
       {!isReadOnly && (
         <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded border border-carbon/10 bg-lienzo/95 p-1 opacity-0 shadow-sm transition-opacity group-hover/step:opacity-100 group-focus-within/step:opacity-100">
-          <button
-            type="button"
-            disabled={index === 0}
-            onClick={(e) => { e.stopPropagation(); onMoveStep?.(-1); }}
-            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30"
-            title={t('editor.blocks.stepUp')}
-          >
+          <IconButton size="sm" label={t('editor.blocks.stepUp')} disabled={index === 0} onClick={(e) => { e.stopPropagation(); onMoveStep?.(-1); }}>
             ↑
-          </button>
-          <button
-            type="button"
-            disabled={index === totalSteps - 1}
-            onClick={(e) => { e.stopPropagation(); onMoveStep?.(1); }}
-            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30"
-            title={t('editor.blocks.stepDown')}
-          >
+          </IconButton>
+          <IconButton size="sm" label={t('editor.blocks.stepDown')} disabled={index === totalSteps - 1} onClick={(e) => { e.stopPropagation(); onMoveStep?.(1); }}>
             ↓
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); onDuplicateStep?.(); }}
-            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-pavo/30 bg-lienzo text-[10px] text-pavo hover:bg-pavo/10"
-            title={t('editor.blocks.stepDuplicate')}
-          >
+          </IconButton>
+          <IconButton size="sm" label={t('editor.blocks.stepDuplicate')} onClick={(e) => { e.stopPropagation(); onDuplicateStep?.(); }}>
             ⧉
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); onDeleteStep?.(); }}
-            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-terracota text-[10px] text-lienzo hover:bg-terracota/80"
-            title={t('editor.blocks.stepDelete')}
-          >
+          </IconButton>
+          <IconButton size="sm" label={t('editor.blocks.stepDelete')} onClick={(e) => { e.stopPropagation(); onDeleteStep?.(); }}>
             ✕
-          </button>
+          </IconButton>
         </div>
       )}
 
@@ -179,13 +158,13 @@ export function ProofStepWysiwyg({
         {!isReadOnly && active && (
           <div className="mt-2 flex flex-wrap items-center gap-1.5 font-sans border-t border-carbon/10 pt-2 text-[10px]">
             <span className="font-bold uppercase tracking-wider text-carbon/40 mr-1">{t('editor.blocks.insertInStep')}</span>
-            <button type="button" onClick={() => handleAppendBlockToStep('formula')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-mono font-bold text-ocre hover:bg-ocre/15 cursor-pointer">{t('editor.blocks.addFormula')}</button>
-            <button type="button" onClick={() => setStepModalOpen(true)} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">{t('editor.blocks.addStepRef')}</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('justification')} className="rounded border border-mora/30 bg-mora/5 px-2 py-0.5 font-bold text-mora hover:bg-mora/15 cursor-pointer">{t('editor.blocks.addJustification')}</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('list')} className="rounded border border-pavo/30 bg-pavo/5 px-2 py-0.5 font-bold text-pavo hover:bg-pavo/15 cursor-pointer">{t('editor.blocks.addList')}</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('table')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-bold text-ocre hover:bg-ocre/15 cursor-pointer">{t('editor.blocks.addTable')}</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('note')} className="rounded border border-carbon/20 bg-carbon/5 px-2 py-0.5 font-bold text-carbon/70 hover:bg-carbon/10 cursor-pointer">{t('editor.blocks.addNote')}</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('citation')} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">{t('editor.blocks.addCitation')}</button>
+            <Button size="sm" className="font-mono" onClick={() => handleAppendBlockToStep('formula')}>{t('editor.blocks.addFormula')}</Button>
+            <Button size="sm" onClick={() => setStepModalOpen(true)}>{t('editor.blocks.addStepRef')}</Button>
+            <Button size="sm" onClick={() => handleAppendBlockToStep('justification')}>{t('editor.blocks.addJustification')}</Button>
+            <Button size="sm" onClick={() => handleAppendBlockToStep('list')}>{t('editor.blocks.addList')}</Button>
+            <Button size="sm" onClick={() => handleAppendBlockToStep('table')}>{t('editor.blocks.addTable')}</Button>
+            <Button size="sm" onClick={() => handleAppendBlockToStep('note')}>{t('editor.blocks.addNote')}</Button>
+            <Button size="sm" onClick={() => handleAppendBlockToStep('citation')}>{t('editor.blocks.addCitation')}</Button>
           </div>
         )}
 
@@ -194,28 +173,20 @@ export function ProofStepWysiwyg({
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">{t('editor.blocks.moment')}</span>
               {(['initial', 'auto', 'manual'] as const).map(mode => (
-                <button
-                  key={mode}
-                  type="button"
-                  disabled={isReadOnly || (mode === 'initial' && displayNumber !== 1)}
-                  onClick={() => {
+                <Button size="sm" aria-pressed={moment === mode} key={mode} disabled={isReadOnly || (mode === 'initial' && displayNumber !== 1)} onClick={() => {
                     if (mode === 'initial') onChangeStep({ ...step, number: displayNumber, diagramStep: 'initial' });
                     else if (mode === 'auto') {
                       const rest = { ...step };
                       delete rest.diagramStep;
                       onChangeStep({ ...rest, number: displayNumber });
                     } else onChangeStep({ ...step, number: displayNumber, diagramStep: displayNumber });
-                  }}
-                  className={`rounded-lg border px-2.5 py-1 text-[10px] font-bold cursor-pointer disabled:opacity-30 ${
-                    moment === mode ? 'border-canela bg-canela/10 text-carbon' : 'border-carbon/15 text-carbon/60'
-                  }`}
-                >
+                  }}>
                   {mode === 'initial' ? t('editor.blocks.momentInitial') : mode === 'auto' ? t('editor.blocks.momentAuto') : t('editor.blocks.momentManual')}
-                </button>
+                </Button>
               ))}
               {moment === 'manual' && (
                 <input
-                  className="w-28 rounded-lg border border-carbon/15 bg-lienzo px-2 py-1 font-mono text-[10px]"
+                  className={`${controlClassName} w-28 font-mono`}
                   value={String(step.diagramStep ?? '')}
                   disabled={isReadOnly}
                   onChange={e => {
@@ -271,17 +242,9 @@ export function ProofStepWysiwyg({
                     {diagramTargets.map(target => {
                       const selected = targets.includes(target.id);
                       return (
-                        <button
-                          key={target.qualifiedId ?? target.id}
-                          type="button"
-                          disabled={isReadOnly}
-                          onClick={() => toggleTarget(target.id)}
-                          className={`rounded-lg border px-2 py-0.5 font-mono text-[10px] cursor-pointer ${
-                            selected ? 'border-canela bg-canela text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
-                          }`}
-                        >
+                        <Button size="sm" className="font-mono" aria-pressed={selected} key={target.qualifiedId ?? target.id} disabled={isReadOnly} onClick={() => toggleTarget(target.id)}>
                           {target.id}{target.label ? ` (${target.label})` : ''}
-                        </button>
+                        </Button>
                       );
                     })}
                   </div>

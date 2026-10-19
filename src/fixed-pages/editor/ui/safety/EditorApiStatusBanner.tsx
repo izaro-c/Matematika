@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useI18n } from '@/i18n';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 import {
   editorApiUnavailableInProduction,
   editorRequiresAuthForWrites,
@@ -55,16 +56,12 @@ export const EditorApiStatusBanner: React.FC = () => {
           value={tokenInput}
           onChange={event => setTokenInput(event.target.value)}
           placeholder={t('editor.save.editToken')}
-          className="min-w-[12rem] flex-1 rounded border border-carbon/20 bg-lienzo px-2 py-1 font-mono text-[11px]"
+          className={`${controlClassName} min-w-[12rem] flex-1 font-mono`}
           autoComplete="off"
         />
-        <button
-          type="submit"
-          className="rounded bg-terracota px-3 py-1 font-semibold text-lienzo disabled:opacity-40"
-          disabled={!tokenInput.trim()}
-        >
+        <Button size="sm" variant="primary" type="submit" disabled={!tokenInput.trim()}>
           {t('editor.save.activateSave')}
-        </button>
+        </Button>
       </form>
     </div>
   );

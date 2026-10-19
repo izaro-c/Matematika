@@ -3,6 +3,7 @@ import { parseMathExpression } from '@/diagrams/public';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramExpressionField } from './panels/DiagramExpressionField';
 import { useI18n } from '@/i18n';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramTemplateFieldProps {
   model: VisualDiagramModel;
@@ -78,7 +79,7 @@ export const DiagramTemplateField: React.FC<DiagramTemplateFieldProps> = ({
           ref={textareaRef}
           rows={rows}
           aria-label={ariaLabel ?? label}
-          className={`mt-1 w-full resize-y rounded border border-carbon/15 bg-lienzo p-2 text-xs leading-relaxed focus:border-pavo focus:outline-none focus:ring-2 focus:ring-pavo/20 ${formula ? 'font-mono' : ''}`}
+          className={`${controlClassName} mt-1 resize-y ${formula ? 'font-mono' : ''}`}
           value={value}
           onChange={event => onChange(event.target.value)}
           placeholder={placeholder}
@@ -88,12 +89,12 @@ export const DiagramTemplateField: React.FC<DiagramTemplateFieldProps> = ({
 
       <div className="flex flex-wrap items-center gap-1.5">
         {richText && <>
-          <button type="button" className="min-h-8 rounded px-2 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5" onClick={() => insert('**', '**', true)}>{t('editor.diagramEditors.bold')}</button>
-          <button type="button" className="min-h-8 rounded px-2 text-[10px] italic text-carbon/65 hover:bg-carbon/5" onClick={() => insert('*', '*', true)}>{t('editor.diagramEditors.italic')}</button>
-          <button type="button" className="min-h-8 rounded px-2 text-[10px] font-mono text-carbon/65 hover:bg-carbon/5" onClick={() => insert('$', '$', true)}>{t('editor.diagramEditors.formula')}</button>
+          <Button size="sm" onClick={() => insert('**', '**', true)}>{t('editor.diagramEditors.bold')}</Button>
+          <Button size="sm" onClick={() => insert('*', '*', true)}>{t('editor.diagramEditors.italic')}</Button>
+          <Button size="sm" className="font-mono" onClick={() => insert('$', '$', true)}>{t('editor.diagramEditors.formula')}</Button>
           <select
             aria-label={t('editor.diagramEditors.textColorFor', { label })}
-            className="min-h-8 rounded border-0 bg-carbon/5 px-1 text-[10px] text-carbon/65"
+            className={controlClassName}
             value=""
             onChange={event => {
               if (event.target.value) insert(`[${event.target.value}:`, ']', true);
@@ -103,14 +104,9 @@ export const DiagramTemplateField: React.FC<DiagramTemplateFieldProps> = ({
             {['carbon', 'pavo', 'granada', 'ocre', 'canela', 'musgo', 'terracota', 'mora'].map(color => <option key={color} value={color}>{color}</option>)}
           </select>
         </>}
-        <button
-          type="button"
-          aria-expanded={calculationOpen}
-          className="min-h-8 rounded bg-pavo/10 px-2 text-[10px] font-bold text-pavo hover:bg-pavo/15"
-          onClick={() => setCalculationOpen(open => !open)}
-        >
+        <Button size="sm" aria-expanded={calculationOpen} onClick={() => setCalculationOpen(open => !open)}>
           {calculationOpen ? t('editor.diagramEditors.closeCalculation') : t('editor.diagramEditors.insertCalculation')}
-        </button>
+        </Button>
         <span className="text-[9px] text-carbon/45">{t('editor.diagramEditors.youCanInsertSeveral')}</span>
       </div>
       {formula && <p className="text-[9px] leading-relaxed text-carbon/45">{t('editor.diagramEditors.richTextHint')}</p>}
@@ -127,15 +123,15 @@ export const DiagramTemplateField: React.FC<DiagramTemplateFieldProps> = ({
           />
           <div className="grid grid-cols-[minmax(0,1fr)_7rem] gap-2">
             <label className="text-[10px] font-bold text-carbon/60">{t('editor.diagramEditors.unit')}{' '}<span className="font-normal">{t('editor.diagramEditors.optional')}</span>
-              <input aria-label={t('editor.diagramEditors.unitFor', { label })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={unit} onChange={event => setUnit(event.target.value)} placeholder={t('editor.diagramEditors.cmM')} />
+              <input aria-label={t('editor.diagramEditors.unitFor', { label })} className={`${controlClassName} mt-1`} value={unit} onChange={event => setUnit(event.target.value)} placeholder={t('editor.diagramEditors.cmM')} />
             </label>
             <label className="text-[10px] font-bold text-carbon/60">{t('editor.diagramEditors.decimals')}
-              <input type="number" min="0" max="12" aria-label={t('editor.diagramEditors.decimalsFor', { label })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={precision} onChange={event => setPrecision(Math.max(0, Math.min(12, Number(event.target.value))))} />
+              <input type="number" min="0" max="12" aria-label={t('editor.diagramEditors.decimalsFor', { label })} className={`${controlClassName} mt-1`} value={precision} onChange={event => setPrecision(Math.max(0, Math.min(12, Number(event.target.value))))} />
             </label>
           </div>
           <div className="flex items-center justify-between gap-2">
             <code className="min-w-0 truncate text-[9px] text-carbon/45">{expression.trim() ? `{= ${expression.trim()} …}` : t('editor.diagramEditors.calculationInsertHint')}</code>
-            <button type="button" aria-label={t('editor.diagramEditors.insertCalculationIn', { label })} disabled={!expressionIsValid} className="min-h-10 shrink-0 rounded bg-pavo px-3 text-[10px] font-bold text-lienzo disabled:opacity-35" onClick={insertCalculation}>{t('editor.diagramEditors.insertCalculationButton')}</button>
+            <Button size="sm" variant="primary" className="shrink-0" aria-label={t('editor.diagramEditors.insertCalculationIn', { label })} disabled={!expressionIsValid} onClick={insertCalculation}>{t('editor.diagramEditors.insertCalculationButton')}</Button>
           </div>
         </div>
       )}

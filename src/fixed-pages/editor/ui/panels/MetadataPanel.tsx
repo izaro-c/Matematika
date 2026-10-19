@@ -5,6 +5,7 @@ import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorT
 import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
 import { AccordionSection, useInspectorAccordion } from '../../diagrams/ui/inspector/accordion';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { Button, Callout, Card, RowButton } from '@/fixed-pages/editor/ui/primitives';
 
 export interface PageDiagramLink {
   componentName: string;
@@ -110,36 +111,28 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       <AccordionSection sec="linked" title={t('editor.diagramPanel.linked')} isOpen={openAccordion.linked} onToggle={toggleAccordion}>
         {pageDiagramLinks.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-carbon/20 bg-carbon/5 p-4 text-center">
+          <Card dashed className="text-center">
             <p className="text-xs italic text-carbon/60">{t('editor.diagramPanel.noLinked')}</p>
             {canMutateVisualStructure && (
-              <button
-                type="button"
-                onClick={() => openBuilder(null, blocks.length)}
-                className="mt-3 rounded-lg border border-canela/30 bg-canela/10 px-3 py-1.5 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
-              >
+              <Button size="sm" className="mt-3" onClick={() => openBuilder(null, blocks.length)}>
                 {t('editor.diagramPanel.linkDiagram')}
-              </button>
+              </Button>
             )}
-          </div>
+          </Card>
         ) : (
           <div className="space-y-3">
             {canMutateVisualStructure && (
               <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => openBuilder(null, blocks.length)}
-                  className="rounded-lg border border-canela/30 bg-canela/10 px-2.5 py-1 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
-                >
+                <Button size="sm" onClick={() => openBuilder(null, blocks.length)}>
                   {t('editor.diagramPanel.add')}
-                </button>
+                </Button>
               </div>
             )}
             {pageDiagramLinks.map((link, index) => {
               const cardKey = `${link.componentName}-${link.path || link.importSource}-${index}`;
               const isPreviewCollapsed = Boolean(collapsedPreviews[cardKey]);
               return (
-                <div key={cardKey} className="rounded-xl border border-carbon/12 bg-lienzo/80 p-3.5 shadow-2xs space-y-3 transition-all hover:border-carbon/20">
+                <Card className="space-y-3" key={cardKey}>
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <p className="truncate font-serif text-xs font-bold text-carbon">{link.componentName}</p>
@@ -153,16 +146,10 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                       <span className="text-[10px] font-medium text-carbon/55 block">{t('editor.diagramPanel.linkableTargets')}</span>
                       <div className="flex flex-wrap gap-1.5">
                         {link.targets.slice(0, 6).map(target => (
-                          <button
-                            key={target.qualifiedId ?? target.id}
-                            type="button"
-                            onClick={() => insertInteractiveTargetParagraph(target)}
-                            className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-0.5 font-mono text-[10px] text-carbon/70 hover:border-canela/40 hover:bg-canela/5 hover:text-canela transition-colors cursor-pointer shadow-2xs"
-                            title={t('editor.diagramPanel.insertInteractiveText', { label: target.label ?? target.id })}
-                          >
+                          <Button size="sm" key={target.qualifiedId ?? target.id} onClick={() => insertInteractiveTargetParagraph(target)} title={t('editor.diagramPanel.insertInteractiveText', { label: target.label ?? target.id })}>
                             <span className="text-canela/70 font-sans font-bold">+</span>
                             <span>{target.id}</span>
-                          </button>
+                          </Button>
                         ))}
                       </div>
                     </div>
@@ -170,36 +157,22 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
                   <div className="flex items-center justify-between gap-2 pt-1 border-t border-carbon/10">
                     <div className="flex gap-1.5">
-                      <button
-                        type="button"
-                        disabled={!link.path}
-                        onClick={() => link.path && openFile(link.path)}
-                        className="rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 py-1 text-[11px] font-bold text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:cursor-not-allowed disabled:opacity-40 transition-colors cursor-pointer"
-                      >
+                      <Button size="sm" disabled={!link.path} onClick={() => link.path && openFile(link.path)}>
                         {t('editor.diagramPanel.open')}
-                      </button>
+                      </Button>
                       {canMutateVisualStructure && (
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteDiagram(link)}
-                          className="rounded-lg border border-granada/30 bg-granada/10 px-2.5 py-1 text-[11px] font-bold text-granada hover:bg-granada/20 transition-colors cursor-pointer"
-                          title={t('editor.diagramPanel.removeFromDocument')}
-                        >
+                        <Button size="sm" variant="danger" onClick={() => handleDeleteDiagram(link)} title={t('editor.diagramPanel.removeFromDocument')}>
                           {t('editor.diagramPanel.remove')}
-                        </button>
+                        </Button>
                       )}
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => togglePreview(cardKey)}
-                      className="text-[10px] font-bold text-carbon/55 hover:text-carbon transition-colors cursor-pointer flex items-center gap-1"
-                    >
+                    <Button size="sm" variant="quiet" onClick={() => togglePreview(cardKey)}>
                       <span>{isPreviewCollapsed ? t('editor.diagramPanel.showPreview') : t('editor.diagramPanel.hidePreview')}</span>
                       <svg className={`w-3 h-3 transition-transform ${isPreviewCollapsed ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
-                    </button>
+                    </Button>
                   </div>
 
                   {!isPreviewCollapsed && (
@@ -213,7 +186,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                       />
                     </div>
                   )}
-                </div>
+                </Card>
               );
             })}
           </div>
@@ -224,29 +197,19 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         <div className="space-y-2" aria-label={t('editor.diagramPanel.targetBrowser')}>
           {diagramTargetsLoading && <span className="text-xs italic text-carbon/50">{t('editor.diagramPanel.analyzing')}</span>}
           {diagramTargetsError && (
-            <div className="rounded-xl border border-granada/30 bg-granada/5 p-3 text-xs text-granada" role="alert">
+            <Callout tone="error" className="text-xs" role="alert">
               {diagramTargetsError}
-            </div>
+            </Callout>
           )}
           {!diagramTargetsLoading && !diagramTargetsError && diagramTargets.length === 0 && (
             <p className="text-xs italic text-carbon/50">{t('editor.diagramPanel.noTargets')}</p>
           )}
           <div className="grid grid-cols-1 gap-1.5">
             {diagramTargets.map(target => (
-              <button
-                key={target.qualifiedId ?? target.id}
-                type="button"
-                onMouseEnter={() => setVariable('highlight', target.qualifiedId ?? target.id)}
-                onMouseLeave={() => setVariable('highlight', null)}
-                onFocus={() => setVariable('highlight', target.qualifiedId ?? target.id)}
-                onBlur={() => setVariable('highlight', null)}
-                onClick={() => setVariable('highlight', target.qualifiedId ?? target.id)}
-                className="group flex items-center justify-between rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-left hover:border-canela/40 hover:bg-canela/5 transition-all cursor-pointer shadow-2xs"
-                aria-label={t('editor.diagramPanel.highlightTarget', { label: target.label ?? target.id })}
-              >
+              <RowButton key={target.qualifiedId ?? target.id} onMouseEnter={() => setVariable('highlight', target.qualifiedId ?? target.id)} onMouseLeave={() => setVariable('highlight', null)} onFocus={() => setVariable('highlight', target.qualifiedId ?? target.id)} onBlur={() => setVariable('highlight', null)} onClick={() => setVariable('highlight', target.qualifiedId ?? target.id)} aria-label={t('editor.diagramPanel.highlightTarget', { label: target.label ?? target.id })}>
                 <span className="text-xs font-bold text-carbon group-hover:text-canela transition-colors">{target.label}</span>
                 <span className="font-mono text-[10px] text-carbon/50 bg-carbon/5 px-1.5 py-0.5 rounded border border-carbon/10">{target.qualifiedId ?? target.id}</span>
-              </button>
+              </RowButton>
             ))}
           </div>
         </div>
@@ -255,24 +218,24 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
       <AccordionSection sec="connections" title={t('editor.diagramPanel.connections')} isOpen={openAccordion.connections} onToggle={toggleAccordion}>
         <div className="space-y-2.5">
           {pageConnectionSummary.invalidConnections.length > 0 && (
-            <div className="rounded-xl border border-granada/30 bg-granada/5 p-3 text-xs text-granada space-y-1" role="alert">
+            <Callout tone="error" className="text-xs space-y-1" role="alert">
               <span className="font-bold uppercase tracking-wider text-[10px] text-granada block">{t('editor.diagramPanel.missingReferences')}</span>
               <p className="font-mono text-[11px]">{pageConnectionSummary.invalidConnections.map(item => item.target).join(', ')}</p>
-            </div>
+            </Callout>
           )}
           {pageConnectionSummary.ambiguousConnections.length > 0 && (
-            <div className="rounded-xl border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon space-y-1" role="status">
+            <Callout tone="warning" className="text-xs space-y-1" role="status">
               <span className="font-bold uppercase tracking-wider text-[10px] text-ocre block">{t('editor.diagramPanel.ambiguity')}</span>
               <p className="text-xs text-carbon/80">{t('editor.diagramPanel.ambiguousTargets', { targets: pageConnectionSummary.ambiguousConnections.map(item => item.target).join(', '), format: 'diagrama:target' })}</p>
-            </div>
+            </Callout>
           )}
           {pageConnectionSummary.connected.length > 0 ? (
             <div className="space-y-1.5">
               {pageConnectionSummary.connected.slice(0, 8).map((connection, index) => (
-                <div key={`${connection.target}-${index}`} className="flex items-center justify-between gap-2 rounded-lg border border-carbon/10 bg-lienzo px-3 py-2 text-xs shadow-2xs">
+                <Card className="flex items-center justify-between gap-2 text-xs" key={`${connection.target}-${index}`}>
                   <span className="truncate font-serif font-bold text-carbon">{connection.label || connection.target}</span>
                   <span className="shrink-0 font-mono text-[10px] font-medium text-canela bg-canela/10 px-2 py-0.5 rounded border border-canela/20">{connection.target}</span>
-                </div>
+                </Card>
               ))}
             </div>
           ) : (
@@ -283,16 +246,10 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
               <p className="text-xs font-medium text-carbon/70 mb-2">{t('editor.diagramPanel.unmentionedTargets')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {pageConnectionSummary.missingTargets.slice(0, 10).map(target => (
-                  <button
-                    key={target.id}
-                    type="button"
-                    onClick={() => insertInteractiveTargetParagraph(target)}
-                    className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-1 font-mono text-[10px] text-carbon/70 hover:border-canela/40 hover:bg-canela/5 hover:text-canela transition-colors cursor-pointer shadow-2xs"
-                    title={t('editor.diagramPanel.insertInteractiveRef', { label: target.label ?? target.id })}
-                  >
+                  <Button size="sm" key={target.id} onClick={() => insertInteractiveTargetParagraph(target)} title={t('editor.diagramPanel.insertInteractiveRef', { label: target.label ?? target.id })}>
                     <span className="text-canela font-bold font-sans">+</span>
                     <span>{target.id}</span>
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -301,13 +258,13 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
       </AccordionSection>
 
       <AccordionSection sec="semantic" title={t('editor.diagramPanel.semantic')} isOpen={openAccordion.semantic} onToggle={toggleAccordion}>
-        <div className="rounded-xl border border-carbon/10 bg-lienzo/60 p-3.5 shadow-2xs space-y-2">
+        <Card className="space-y-2">
           <p className="text-xs leading-relaxed text-carbon/60">
             <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">ConceptLink</code> · <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">RefLink</code>
             <br />
             {t('editor.diagramPanel.semanticNote')}
           </p>
-        </div>
+        </Card>
       </AccordionSection>
     </div>
   );

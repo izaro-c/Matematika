@@ -3,6 +3,7 @@ import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramMode } from '@/diagrams';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
 import { useI18n } from '@/i18n';
+import { Button, Modal, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramSettingsModalProps {
   isOpen: boolean;
@@ -32,23 +33,15 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
   };
 
   return (
-    <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/50 backdrop-blur-xs p-4 font-serif">
-      <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 text-carbon">
-        <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
-          <div>
-            <h2 className="font-serif font-bold text-base text-carbon">{t('editor.diagramModals.globalDiagramSettings')}</h2>
-            <p className="text-xs text-mora/70 italic">{t('editor.diagramModals.settingsSubtitle')}</p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-carbon/60 hover:text-carbon p-1 rounded-lg text-lg font-bold cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="p-5 space-y-4 text-xs font-serif text-carbon max-h-[75vh] overflow-y-auto">
+    <Modal
+      open
+      onClose={onClose}
+      title={t('editor.diagramModals.globalDiagramSettings')}
+      size="md"
+      footer={<Button variant="primary" onClick={onClose}>{t('editor.diagramModals.saveAndClose')}</Button>}
+    >
+      <div className="space-y-4">
+        <p className="italic">{t('editor.diagramModals.settingsSubtitle')}</p>
           {/* Título del Diagrama */}
           <div>
             <label className="block text-[11px] font-bold text-carbon/70 mb-1">{t('editor.diagramModals.mainTitle')}</label>
@@ -56,7 +49,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
               type="text"
               value={model.title || ''}
               onChange={(e) => onUpdateModel({ title: e.target.value }, 'Editar título del diagrama')}
-              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs font-bold text-carbon focus:ring-1 focus:ring-canela"
+              className={controlClassName}
             />
           </div>
 
@@ -66,7 +59,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
             <textarea
               value={model.note || ''}
               onChange={(e) => onUpdateModel({ note: e.target.value }, 'Editar nota del diagrama')}
-              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
+              className={controlClassName}
               rows={3}
               placeholder={t('editor.diagramModals.diagramNotePlaceholder')}
             />
@@ -79,7 +72,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
               <select
                 value={model.mode || 'simulation'}
                 onChange={(e) => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
+                className={controlClassName}
               >
                 <option value="simulation">{t('editor.diagramModals.modeSimulation')}</option>
                 <option value="diagram">{t('editor.diagramModals.fixedDiagramStaticDemonstration')}</option>
@@ -92,7 +85,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                 type="text"
                 value={model.category || ''}
                 onChange={(e) => onUpdateModel({ category: e.target.value }, 'Editar categoría')}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
+                className={controlClassName}
                 placeholder="geometria-plana"
               />
             </div>
@@ -156,7 +149,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                         type="number"
                         value={(model.viewport[key] ?? model.viewport.bounds)[index]}
                         onChange={event => updateViewportValue(key, index, event.target.value)}
-                        className="mt-1 w-full rounded border border-carbon/20 bg-carbon/5 px-2 py-1 text-xs text-carbon"
+                        className={`${controlClassName} mt-1`}
                       />
                     </label>
                   ))}
@@ -171,18 +164,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
               onModelEdit={(nextModel, command) => onUpdateModel(nextModel, command?.label ?? 'Editar información de cabecera')}
             />
           </div>
-        </div>
-
-        <div className="flex justify-end p-4 border-t border-carbon/10 bg-carbon/5">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-xs hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
-          >
-            {t('editor.diagramModals.saveAndClose')}
-          </button>
-        </div>
       </div>
-    </div>
+    </Modal>
   );
 };

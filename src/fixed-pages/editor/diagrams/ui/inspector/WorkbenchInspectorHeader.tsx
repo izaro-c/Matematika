@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconTrash } from '../toolbar/WorkbenchIcons';
 import { useI18n } from '@/i18n';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 interface InspectorHeaderProps {
   title: string;
@@ -16,14 +17,10 @@ export const InspectorHeader: React.FC<InspectorHeaderProps> = ({ title, colorCl
       <span className={`h-3 w-3 rounded-full border border-carbon/20 shrink-0 ${colorClass}`} />
       <h3 className="font-bold text-sm truncate max-w-[180px]">{title}</h3>
     </div>
-    <button
-      type="button"
-      onClick={onDelete}
-      className="flex items-center space-x-1 px-2 py-1 text-granada hover:bg-granada/10 rounded transition-colors cursor-pointer text-[11px] font-bold"
-    >
+    <Button size="sm" variant="danger" onClick={onDelete}>
       <IconTrash className="w-3.5 h-3.5" />
       <span>{t('editor.diagramInspector.delete')}</span>
-    </button>
+    </Button>
   </div>
 );
 };

@@ -4,6 +4,7 @@ import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import { alignTranslationBlocks, type TranslationRowStatus } from '@/fixed-pages/editor/session/translationAlignment';
 import { useDocumentVersionBlocks } from '@/fixed-pages/editor/session/useDocumentVersionBlocks';
 import { renderFormattedText } from '../panels/InlineContentPreview';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 /** Bloques de prosa que se traducen como texto; el resto se edita en la vista visual. */
 const TEXT_BLOCK_TYPES: ReadonlySet<BlockType> = new Set(['paragraph', 'heading', 'list', 'note', 'citation']);
@@ -83,7 +84,7 @@ export const TranslationWorkbench: React.FC<TranslationWorkbenchProps> = ({
               value={originLang}
               onChange={event => onOriginChange(event.target.value)}
               aria-label={t('editor.translation.originLanguage')}
-              className="rounded border border-carbon/20 bg-lienzo px-1 py-0.5 text-[11px] uppercase"
+              className={controlClassName}
             >
               {originOptions.map(lang => <option key={lang} value={lang}>{lang.toUpperCase()}</option>)}
             </select>
@@ -142,19 +143,14 @@ export const TranslationWorkbench: React.FC<TranslationWorkbenchProps> = ({
                         onBlur={event => {
                           if (event.target.value !== target.content) updateBlock(target.id, event.target.value, target.metadata);
                         }}
-                        className={`w-full resize-y rounded border border-carbon/15 bg-lienzo px-2 py-1 font-serif leading-relaxed text-carbon focus:border-canela focus:outline-none ${target.type === 'heading' ? 'text-base font-bold' : 'text-sm'}`}
+                        className={`${controlClassName} resize-y ${target.type === 'heading' ? 'font-bold' : ''}`}
                       />
                     ) : target ? (
                       <>
                         <BlockReading block={target} />
-                        <button
-                          type="button"
-                          onClick={() => onEditVisually(target.id)}
-                          title={t('editor.translation.readOnlyBlock')}
-                          className="font-serif text-[11px] text-canela underline-offset-2 hover:underline"
-                        >
+                        <Button size="sm" variant="quiet" onClick={() => onEditVisually(target.id)} title={t('editor.translation.readOnlyBlock')}>
                           {t('editor.translation.editVisually')}
-                        </button>
+                        </Button>
                       </>
                     ) : null}
                   </div>

@@ -5,6 +5,7 @@ import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { ProofStepWysiwyg } from './ProofStepWysiwyg';
 import { proofStepUpdatePayload, stepFromDemoBlock } from '../prose/demoGrouping';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 export interface DemonstrationCanvasProps {
   blocks: Block[];
@@ -79,13 +80,9 @@ export function DemonstrationCanvas({
             {!isReadOnly && (
               <div className="group/gap relative flex h-6 items-center justify-center">
                 <div className="absolute inset-x-8 h-px bg-carbon/10 opacity-0 transition-opacity group-hover/gap:opacity-100" />
-                <button
-                  type="button"
-                  onClick={() => onInsertAfter(block.id)}
-                  className="relative z-[1] rounded-full border border-carbon/15 bg-lienzo px-3 py-0.5 text-[10px] font-bold text-carbon/50 opacity-0 transition-opacity hover:border-terracota/40 hover:text-terracota group-hover/gap:opacity-100 cursor-pointer"
-                >
+                <Button size="sm" className="relative" onClick={() => onInsertAfter(block.id)}>
                   {t('editor.blocks.addStep')}
-                </button>
+                </Button>
               </div>
             )}
           </React.Fragment>

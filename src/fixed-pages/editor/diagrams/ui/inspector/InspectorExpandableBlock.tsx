@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
+import { RowButton } from '@/fixed-pages/editor/ui/primitives';
 
 export interface InspectorExpandableBlockProps {
   title: string;
@@ -28,17 +29,12 @@ export const InspectorExpandableBlock: React.FC<InspectorExpandableBlockProps> =
 
   return (
     <div className={`rounded-2xl border border-carbon/15 bg-lienzo p-4 shadow-2xs transition-all hover:border-carbon/25 ${className}`.trim()}>
-      <button
-        type="button"
-        aria-expanded={expanded}
-        onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between font-serif text-xs font-bold uppercase tracking-wider text-carbon/80 py-0.5 cursor-pointer select-none"
-      >
+      <RowButton aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
         <span>{title}</span>
         <span className="text-carbon/40 hover:text-carbon transition-colors p-0.5 rounded-lg hover:bg-carbon/5">
           {expanded ? <IconChevronDown className="w-4 h-4" /> : <IconChevronRight className="w-4 h-4" />}
         </span>
-      </button>
+      </RowButton>
       {expanded ? (
         <div className="space-y-3 pt-3 border-t border-carbon/10 mt-2">
           {children}

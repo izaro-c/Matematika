@@ -3,6 +3,7 @@ import type { EnrichedDiagramDiagnostic } from '../../checks';
 import type { VisualDiagramModel } from '../../model/types';
 import { InspectorExpandableBlock } from '../inspector/InspectorExpandableBlock';
 import { useI18n } from '@/i18n';
+import { Button, Callout, Card } from '@/fixed-pages/editor/ui/primitives';
 
 interface WorkbenchDiagnosticsPanelProps {
   model: VisualDiagramModel | null;
@@ -21,33 +22,29 @@ export const WorkbenchDiagnosticsPanel: React.FC<WorkbenchDiagnosticsPanelProps>
 
   return (
     <div className="space-y-4 pt-1 text-xs font-serif text-carbon bg-lienzo">
-      <div className="rounded-2xl border border-carbon/15 bg-lienzo p-4 shadow-2xs space-y-2">
+      <Card className="space-y-2">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-serif text-sm font-bold text-carbon">{t('editor.diagramWorkbench.diagnosticsAndHealth')}</h3>
             <p className="text-[11px] text-carbon/60 italic">{t('editor.diagramWorkbench.diagnosticsSubtitle')}</p>
           </div>
           {errors.some(d => d.message.toLowerCase().includes('refer') || d.code?.includes('ref')) && onAutoFixBrokenReferences && (
-            <button
-              type="button"
-              onClick={onAutoFixBrokenReferences}
-              className="px-3 py-1.5 bg-granada text-lienzo rounded-xl font-semibold shadow-2xs hover:bg-granada/90 transition-all cursor-pointer text-[10px] tracking-wide"
-            >
+            <Button size="sm" variant="danger" onClick={onAutoFixBrokenReferences}>
               {t('editor.diagramWorkbench.autoRepairReferences')}
-            </button>
+            </Button>
           )}
         </div>
-      </div>
+      </Card>
 
       <InspectorExpandableBlock title={t('editor.diagramWorkbench.analysisResults')} defaultOpen={true}>
         {diagnostics.length === 0 ? (
-          <div className="p-4 text-center text-canela border border-canela/30 bg-canela/5 rounded-2xl shadow-2xs">
+          <Callout className="text-center">
             <svg className="w-6 h-6 mx-auto mb-1.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <p className="font-serif font-bold text-xs">{t('editor.diagramWorkbench.healthyTitle')}</p>
             <p className="text-[11px] text-carbon/65 mt-0.5">{t('editor.diagramWorkbench.healthyDetail')}</p>
-          </div>
+          </Callout>
         ) : (
           <div className="space-y-2.5">
             {diagnostics.map((d, idx) => {
@@ -74,19 +71,15 @@ export const WorkbenchDiagnosticsPanel: React.FC<WorkbenchDiagnosticsPanelProps>
                       </span>
                     </div>
                     {targetObjectId && (
-                      <button
-                        type="button"
-                        onClick={e => {
+                      <Button size="sm" onClick={e => {
                           e.stopPropagation();
                           onSelectDiagnostic(d);
-                        }}
-                        className="rounded-lg border border-carbon/15 bg-lienzo px-2 py-0.5 text-[10px] font-semibold text-carbon hover:bg-carbon/5 transition-all cursor-pointer flex items-center space-x-1 shadow-2xs"
-                      >
+                        }}>
                         <span>{t('editor.diagramWorkbench.goToElement')}</span>
                         <svg className="w-3 h-3 text-carbon/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
-                      </button>
+                      </Button>
                     )}
                   </div>
                   <p className="mt-2 font-sans text-xs text-carbon/90 leading-relaxed">{d.message}</p>

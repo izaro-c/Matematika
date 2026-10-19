@@ -5,6 +5,7 @@ import { objectKind } from '@/diagrams';
 import { elementReferenceCandidates, elementRefs, handleRenameId, updateElementRef } from '../../utils';
 import { useI18n } from '@/i18n';
 import { objectTypeLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
+import { Card, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 /** Propiedades: id, label, refs */
 export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
@@ -30,7 +31,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
           onKeyDown={e => {
             if (e.key === 'Enter') handleRenameId(model, element.id, e.currentTarget.value, onUpdateModel, onSelectId);
           }}
-          className="mt-1 w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+          className={`${controlClassName} mt-1 font-mono`}
         />
       </label>
     </div>
@@ -43,7 +44,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
           value={element.label || ''}
           onChange={e => onUpdateElement(element.id, { label: e.target.value })}
           placeholder={t('editor.diagramInspector.labelExample')}
-          className="mt-1 w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+          className={`${controlClassName} mt-1`}
         />
       </label>
     </div>
@@ -53,7 +54,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
         <label className="block text-[10px] font-bold text-canela uppercase tracking-wider">
           {t('editor.diagramInspector.elementReferencesCount', { count: refs.length })}
         </label>
-        <div className="space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-2.5 shadow-2xs">
+        <Card className="space-y-2">
           {refs.map((rId, idx) => {
             const candidates = elementReferenceCandidates(model, element.id, kind, idx);
             const options = candidates.some(c => c.id === rId)
@@ -68,7 +69,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
                     const refId = e.target.value;
                     onUpdateElement(element.id, current => updateElementRef(model, current, idx, refId));
                   }}
-                  className="flex-1 rounded-md border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
+                  className={`${controlClassName} flex-1 font-mono`}
                 >
                   {options.map(cand => (
                     <option key={`${idx}-${cand.id}`} value={cand.id}>
@@ -79,7 +80,7 @@ export const ElementIdentitySection: React.FC<ElementPanelProps> = ({
               </div>
             );
           })}
-        </div>
+        </Card>
       </div>
     )}
 

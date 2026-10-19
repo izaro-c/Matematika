@@ -9,6 +9,7 @@ import { PALETTE_TOKENS } from '../inspector/paletteTokens';
 import { IconEye, IconEyeOff, IconLock, IconUnlock, IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
 import { ObjectListBatchToolbar } from '../scene/ObjectListBatchToolbar';
 import { useI18n } from '@/i18n';
+import { Card, IconButton, RowButton } from '@/fixed-pages/editor/ui/primitives';
 
 export interface DiagramObjectLabelProps {
   label?: string;
@@ -150,12 +151,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
   const totalObjects = points.length + (modelElements(model) || []).length + sliders.length;
 
   const renderSectionHeader = (key: string, title: string, count: number) => (
-    <button
-      type="button"
-      aria-expanded={openCategory[key]}
-      onClick={() => toggleCategory(key)}
-      className="flex w-full items-center justify-between font-serif text-xs font-bold uppercase tracking-wider text-carbon/70 py-1 cursor-pointer select-none"
-    >
+    <RowButton aria-expanded={openCategory[key]} onClick={() => toggleCategory(key)}>
       <span className="flex items-center space-x-2">
         <span>{title}</span>
         <span className="text-[9px] font-mono text-carbon/60 bg-carbon/10 px-1.5 py-0.5 rounded border border-carbon/10">
@@ -165,7 +161,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
       <span className="text-carbon/40 hover:text-carbon transition-colors">
         {openCategory[key] ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
       </span>
-    </button>
+    </RowButton>
   );
 
   const renderElementRow = (
@@ -199,34 +195,20 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
         <div className="flex items-center space-x-1.5 shrink-0">
           {typeLabel && <span className="text-[9px] font-mono text-carbon/40">{typeLabel}</span>}
           {onToggleVis && (
-            <button
-              type="button"
-              onClick={e => {
+            <IconButton size="sm" label={visible ? t('editor.diagramWorkbench.hide') : t('editor.diagramWorkbench.show')} onClick={e => {
                 e.stopPropagation();
                 onToggleVis();
-              }}
-              className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
-                !visible ? 'opacity-40' : ''
-              }`}
-              title={visible ? t('editor.diagramWorkbench.hide') : t('editor.diagramWorkbench.show')}
-            >
+              }}>
               {visible ? <IconEye /> : <IconEyeOff />}
-            </button>
+            </IconButton>
           )}
           {onToggleLock && (
-            <button
-              type="button"
-              onClick={e => {
+            <IconButton size="sm" label={locked ? t('editor.diagramWorkbench.unlock') : t('editor.diagramWorkbench.lockFix')} onClick={e => {
                 e.stopPropagation();
                 onToggleLock();
-              }}
-              className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
-                locked ? 'text-canela opacity-100 font-bold' : 'opacity-40'
-              }`}
-              title={locked ? t('editor.diagramWorkbench.unlock') : t('editor.diagramWorkbench.lockFix')}
-            >
+              }}>
               {locked ? <IconLock /> : <IconUnlock />}
-            </button>
+            </IconButton>
           )}
         </div>
       </div>
@@ -237,14 +219,14 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
     if (count === 0) return null;
     const isOpen = openCategory[key];
     return (
-      <div className="rounded-2xl border border-carbon/15 bg-lienzo p-3.5 shadow-2xs mb-3 transition-all hover:border-carbon/25">
+      <Card className="mb-3">
         {renderSectionHeader(key, title, count)}
         {isOpen && (
           <div className="space-y-1.5 pt-2.5 border-t border-carbon/10 mt-2">
             {children}
           </div>
         )}
-      </div>
+      </Card>
     );
   };
 

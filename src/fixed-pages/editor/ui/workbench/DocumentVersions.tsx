@@ -2,6 +2,7 @@ import React from 'react';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { useI18n } from '@/i18n';
 import type { DocumentVersion } from '@/fixed-pages/editor/session/conceptVersions';
+import { Chip } from '../primitives';
 import { languageChipStyles, type LanguageChipSize } from './languageChipStyles';
 
 export interface DocumentVersionsProps {
@@ -46,10 +47,10 @@ export const DocumentVersions: React.FC<DocumentVersionsProps> = ({
             ? t('editor.language.activeOutdated', { name: language.name })
             : t('editor.language.active', { name: language.name });
           return (
-            <span key={language.code} className={styles.active} title={title} aria-label={title}>
+            <Chip key={language.code} state="active" title={title} aria-label={title}>
               {code}
               {outdatedMark}
-            </span>
+            </Chip>
           );
         }
 
@@ -59,9 +60,9 @@ export const DocumentVersions: React.FC<DocumentVersionsProps> = ({
             ? t('editor.language.translateLabels', { name: language.name })
             : t('editor.language.createTranslation', { name: language.name, code });
           return (
-            <button key={language.code} type="button" onClick={() => onCreate(language.code)} className={styles.missing} title={title} aria-label={title}>
+            <Chip key={language.code} state="missing" onClick={() => onCreate(language.code)} title={title} aria-label={title}>
               +{code}
-            </button>
+            </Chip>
           );
         }
 
@@ -69,10 +70,10 @@ export const DocumentVersions: React.FC<DocumentVersionsProps> = ({
           ? t('editor.language.switchToOutdated', { name: language.name })
           : t('editor.language.switchTo', { name: language.name });
         return (
-          <button key={language.code} type="button" onClick={() => onSelect?.(language.code)} className={styles.option} title={title} aria-label={title}>
+          <Chip key={language.code} onClick={() => onSelect?.(language.code)} title={title} aria-label={title}>
             {code}
             {outdatedMark}
-          </button>
+          </Chip>
         );
       })}
     </div>

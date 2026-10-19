@@ -9,6 +9,7 @@ import { DiagramStepObjectAppearanceEditor } from '../DiagramStepObjectAppearanc
 import { IconPlus, IconTrash, IconCopy, IconChevronUp, IconChevronDown } from './WorkbenchIcons';
 import { InspectorExpandableBlock } from '../inspector/InspectorExpandableBlock';
 import { useI18n } from '@/i18n';
+import { Button, Callout, Card, IconButton, controlClassName, inlineFieldClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface WorkbenchStepsEditorProps {
   model: VisualDiagramModel | null;
@@ -118,14 +119,10 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
           <h3 className="font-bold text-sm text-carbon">{t('editor.diagramToolbar.proofSteps')}</h3>
           <p className="text-[11px] text-carbon/50 italic">{t('editor.diagramToolbar.interactiveStepByStep')}</p>
         </div>
-        <button
-          type="button"
-          onClick={onAddStep}
-          className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-lg font-bold shadow-2xs hover:bg-canela/90 transition-all cursor-pointer"
-        >
+        <Button size="sm" variant="primary" onClick={onAddStep}>
           <IconPlus className="w-3.5 h-3.5" />
           <span>{t('editor.diagramToolbar.addStep')}</span>
-        </button>
+        </Button>
       </div>
 
       {/* Acción Masiva */}
@@ -138,7 +135,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
             <select
               value={effectiveBulkId}
               onChange={e => setBulkObjectId(e.target.value)}
-              className="flex-1 bg-lienzo border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon focus:border-canela focus:outline-none"
+              className={`${controlClassName} flex-1`}
             >
               {allObjects.map(obj => (
                 <option key={obj.id} value={obj.id}>
@@ -146,41 +143,27 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 </option>
               ))}
             </select>
-            <button
-              type="button"
-              onClick={() => {
+            <Button size="sm" variant="primary" onClick={() => {
                 if (effectiveBulkId) onToggleObjectInAllSteps(effectiveBulkId, true);
-              }}
-              className="px-2.5 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-[10px] hover:bg-canela/90 transition-colors cursor-pointer"
-              title={t('editor.diagramToolbar.showInAllSteps')}
-            >
+              }} title={t('editor.diagramToolbar.showInAllSteps')}>
               {t('editor.diagramToolbar.show')}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
+            </Button>
+            <Button size="sm" variant="danger" onClick={() => {
                 if (effectiveBulkId) onToggleObjectInAllSteps(effectiveBulkId, false);
-              }}
-              className="px-2.5 py-1.5 bg-granada text-lienzo rounded-lg font-bold text-[10px] hover:bg-granada/90 transition-colors cursor-pointer"
-              title={t('editor.diagramToolbar.hideInAllSteps')}
-            >
+              }} title={t('editor.diagramToolbar.hideInAllSteps')}>
               {t('editor.diagramToolbar.hide')}
-            </button>
+            </Button>
           </div>
         </div>
       </InspectorExpandableBlock>
 
       {steps.length === 0 ? (
-        <div className="p-6 text-center text-carbon/50 border border-dashed border-carbon/20 rounded-xl bg-carbon/5">
+        <Card dashed className="text-center">
           <p className="italic">{t('editor.diagramToolbar.noSteps')}</p>
-          <button
-            type="button"
-            onClick={onAddStep}
-            className="mt-2 text-canela underline font-bold cursor-pointer"
-          >
+          <Button size="sm" variant="quiet" className="mt-2" onClick={onAddStep}>
             {t('editor.diagramToolbar.createTheFirstStep')}
-          </button>
-        </div>
+          </Button>
+        </Card>
       ) : (
         <div className="space-y-3">
           {steps.map((st, idx) => {
@@ -206,80 +189,45 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       type="text"
                       value={st.label || ''}
                       onChange={(e) => onUpdateStep(idx, { label: e.target.value })}
-                      className="font-bold text-xs bg-transparent border-b border-transparent hover:border-carbon/20 focus:border-canela focus:outline-none px-1 py-0.5 text-carbon truncate"
+                      className={`${inlineFieldClassName} font-bold text-xs hover:border-carbon/20 focus:border-canela focus:outline-none px-1 py-0.5 text-carbon truncate`}
                       placeholder={t('editor.diagramToolbar.stepN', { n: idx + 1 })}
                     />
                   </div>
 
                   <div className="flex items-center space-x-1 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => handleMoveStep(st.id, -1)}
-                      disabled={idx === 0}
-                      className="p-1 text-carbon/60 hover:text-carbon disabled:opacity-20 cursor-pointer"
-                      title={t('editor.diagramToolbar.moveStepUp')}
-                    >
+                    <IconButton size="sm" label={t('editor.diagramToolbar.moveStepUp')} onClick={() => handleMoveStep(st.id, -1)} disabled={idx === 0}>
                       <IconChevronUp className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleMoveStep(st.id, 1)}
-                      disabled={idx === steps.length - 1}
-                      className="p-1 text-carbon/60 hover:text-carbon disabled:opacity-20 cursor-pointer"
-                      title={t('editor.diagramToolbar.moveStepDown')}
-                    >
+                    </IconButton>
+                    <IconButton size="sm" label={t('editor.diagramToolbar.moveStepDown')} onClick={() => handleMoveStep(st.id, 1)} disabled={idx === steps.length - 1}>
                       <IconChevronDown className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDuplicateStep(st.id)}
-                      className="p-1 text-canela hover:bg-canela/10 rounded cursor-pointer"
-                      title={t('editor.diagramToolbar.duplicateStep')}
-                    >
+                    </IconButton>
+                    <IconButton size="sm" label={t('editor.diagramToolbar.duplicateStep')} onClick={() => handleDuplicateStep(st.id)}>
                       <IconCopy className="w-3.5 h-3.5" />
-                    </button>
+                    </IconButton>
 
-                    <button
-                      type="button"
-                      onClick={() => handleToggleInitialStep(st.id)}
-                      className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
-                        isInitial ? 'bg-ocre text-carbon' : 'bg-carbon/10 text-carbon/70 hover:bg-carbon/20'
-                      }`}
-                      title={t('editor.diagramToolbar.initialStepTitle')}
-                    >
+                    <Button size="sm" aria-pressed={isInitial} onClick={() => handleToggleInitialStep(st.id)} title={t('editor.diagramToolbar.initialStepTitle')}>
                       {isInitial ? t('editor.diagramToolbar.initial') : t('editor.diagramToolbar.makeInitial')}
-                    </button>
+                    </Button>
 
-                    <button
-                      type="button"
-                      onClick={() => onSelectStepIndex(isActive ? null : idx)}
-                      className={`px-2 py-0.5 rounded-md text-[10px] font-bold cursor-pointer ${
-                        isActive ? 'bg-canela text-lienzo' : 'bg-carbon/10 text-carbon hover:bg-carbon/20'
-                      }`}
-                    >
+                    <Button size="sm" aria-pressed={isActive} onClick={() => onSelectStepIndex(isActive ? null : idx)}>
                       {isActive ? t('editor.diagramToolbar.viewing') : t('editor.diagramToolbar.view')}
-                    </button>
+                    </Button>
 
-                    <button
-                      type="button"
-                      onClick={() => onDeleteStep(idx)}
-                      className="text-granada hover:bg-granada/10 p-1 rounded-md text-[10px] font-bold cursor-pointer"
-                      title={t('editor.diagramToolbar.deleteStep')}
-                    >
+                    <IconButton size="sm" tone="danger" label={t('editor.diagramToolbar.deleteStep')} onClick={() => onDeleteStep(idx)}>
                       <IconTrash className="w-3.5 h-3.5" />
-                    </button>
+                    </IconButton>
                   </div>
                 </div>
 
                 <textarea
                   value={st.description || ''}
                   onChange={(e) => onUpdateStep(idx, { description: e.target.value })}
-                  className="w-full bg-lienzo border border-carbon/15 rounded-lg p-2 text-xs text-carbon focus:ring-1 focus:ring-canela mb-2 placeholder-carbon/30"
+                  className={`${controlClassName} mb-2`}
                   rows={2}
                   placeholder={t('editor.diagramToolbar.stepDescriptionPlaceholder')}
                 />
 
-                <div className="flex items-center justify-between gap-2 mb-2 bg-lienzo/50 px-2 py-1.5 rounded-lg border border-carbon/10">
+                <Card className="flex items-center justify-between gap-2 mb-2">
                   <label className="text-[10px] font-bold text-carbon/70 uppercase tracking-wider">
                     {t('editor.diagramToolbar.transitionMs')}
                   </label>
@@ -294,11 +242,11 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                         onUpdateStep(idx, { durationMs: val });
                       }}
                       placeholder="1800"
-                      className="w-20 bg-lienzo border border-carbon/20 rounded px-2 py-0.5 text-xs text-right text-carbon focus:border-canela focus:outline-none"
+                      className={`${controlClassName} w-20`}
                     />
                     <span className="text-[10px] text-carbon/40 font-mono">{'ms'}</span>
                   </div>
-                </div>
+                </Card>
 
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1">
@@ -307,55 +255,36 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                     </label>
                     <div className="flex flex-wrap items-center gap-1">
                       {onTogglePickingStepIndex && (
-                        <button
-                          type="button"
-                          onClick={() => onTogglePickingStepIndex(pickingStepIndex === idx ? null : idx)}
-                          className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-all border ${
-                            pickingStepIndex === idx
-                              ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
-                              : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
-                          }`}
-                          title={t('editor.diagramToolbar.pickVisibilityHint')}
-                        >
+                        <Button size="sm" aria-pressed={pickingStepIndex === idx} onClick={() => onTogglePickingStepIndex(pickingStepIndex === idx ? null : idx)} title={t('editor.diagramToolbar.pickVisibilityHint')}>
                           {pickingStepIndex === idx ? t('editor.diagramToolbar.selectingOnTheCanvas') : t('editor.diagramToolbar.selectOnTheCanvas')}
-                        </button>
+                        </Button>
                       )}
                       {selectedIds.length > 0 && (
                         <>
-                          <button
-                            type="button"
-                            onClick={() => {
+                          <Button size="sm" onClick={() => {
                               let nextStep = st;
                               selectedIds.forEach(id => {
                                 nextStep = syncStepObjectVisibility(nextStep, id, true);
                               });
                               onUpdateStep(idx, nextStep);
-                            }}
-                            className="px-1.5 py-0.5 bg-canela/10 text-canela hover:bg-canela/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-canela/30"
-                            title={t('editor.diagramToolbar.showSelectedInStepTitle')}
-                          >
+                            }} title={t('editor.diagramToolbar.showSelectedInStepTitle')}>
                             {t('editor.diagramToolbar.showSelected', { count: selectedIds.length })}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
+                          </Button>
+                          <Button size="sm" onClick={() => {
                               let nextStep = st;
                               selectedIds.forEach(id => {
                                 nextStep = syncStepObjectVisibility(nextStep, id, false);
                               });
                               onUpdateStep(idx, nextStep);
-                            }}
-                            className="px-1.5 py-0.5 bg-granada/10 text-granada hover:bg-granada/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-granada/30"
-                            title={t('editor.diagramToolbar.hideSelectedInStepTitle')}
-                          >
+                            }} title={t('editor.diagramToolbar.hideSelectedInStepTitle')}>
                             {t('editor.diagramToolbar.hideSelected', { count: selectedIds.length })}
-                          </button>
+                          </Button>
                         </>
                       )}
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-1 max-h-32 overflow-y-auto p-2 bg-lienzo/60 rounded-lg border border-carbon/10">
+                  <Card className="flex flex-wrap gap-1 max-h-32 overflow-y-auto">
                     {allObjects.map(obj => {
                       const isVisible = (st.visibleTargets || []).includes(obj.id);
                       const isCanvasSelected = selectedIds.includes(obj.id);
@@ -369,36 +298,27 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                             isCanvasSelected ? 'border-canela ring-1 ring-canela/60' : 'border-carbon/15'
                           }`}
                         >
-                          <button
-                            type="button"
-                            onClick={() => {
+                          <Button size="sm" variant="quiet" className="font-mono" aria-pressed={isVisible} onClick={() => {
                               const isVis = (st.visibleTargets || []).includes(obj.id);
                               onUpdateStep(idx, syncStepObjectVisibility(st, obj.id, !isVis));
                               onSelectObjects?.([obj.id]);
-                            }}
-                            className={`font-mono font-bold cursor-pointer ${isVisible ? 'text-canela' : 'text-carbon/30 line-through'}`}
-                          >
+                            }}>
                             {obj.label}
-                          </button>
+                          </Button>
 
                           {isVisible && (
-                            <button
-                              type="button"
-                              onClick={() => handleCycleEmphasis(idx, obj.id)}
-                              className={`px-1.5 py-0.2 rounded text-[9px] font-bold cursor-pointer transition-all ${empInfo.bg}`}
-                              title={t('editor.diagramToolbar.changeEmphasis', { label: t(empInfo.label) })}
-                            >
+                            <Button size="sm" variant="quiet" onClick={() => handleCycleEmphasis(idx, obj.id)} className={empInfo.bg} title={t('editor.diagramToolbar.changeEmphasis', { label: t(empInfo.label) })}>
                               {t(empInfo.label)}
-                            </button>
+                            </Button>
                           )}
                         </div>
                       );
                     })}
-                  </div>
+                  </Card>
                 </div>
 
                 {modelSliders(model).length > 0 && (
-                  <div className="mt-2 p-2 bg-lienzo/50 rounded-lg border border-carbon/10 space-y-1.5">
+                  <Card className="mt-2 space-y-1.5">
                     <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
                       {t('editor.diagramToolbar.stepSliderValues')}
                     </label>
@@ -434,12 +354,10 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                                     },
                                   });
                                 }}
-                                className="w-16 bg-lienzo border border-carbon/20 rounded px-1.5 py-0.5 text-xs text-right font-mono text-carbon focus:border-canela focus:outline-none"
+                                className={`${controlClassName} w-16 font-mono`}
                               />
                               {isOverridden && (
-                                <button
-                                  type="button"
-                                  onClick={() => {
+                                <IconButton size="sm" tone="danger" label={t('editor.diagramToolbar.resetToBaseValue')} onClick={() => {
                                     onUpdateStep(idx, {
                                       objectStates: {
                                         ...(st.objectStates || {}),
@@ -449,22 +367,19 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                                         },
                                       },
                                     });
-                                  }}
-                                  className="text-carbon/40 hover:text-granada p-0.5 text-[10px] cursor-pointer"
-                                  title={t('editor.diagramToolbar.resetToBaseValue')}
-                                >
+                                  }}>
                                   ×
-                                </button>
+                                </IconButton>
                               )}
                             </div>
                           </div>
                         );
                       })}
                     </div>
-                  </div>
+                  </Card>
                 )}
                 {isActive && selectedObject && (
-                  <div className="mt-2 rounded-xl border border-canela/25 bg-canela/5 p-2.5">
+                  <Callout className="mt-2">
                     <div className="mb-2 flex items-center justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-canela">
                         {t('editor.diagramToolbar.appearanceOf', { name: selectedObject.label || selectedObject.id })}
@@ -500,7 +415,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                         },
                       })}
                     />
-                  </div>
+                  </Callout>
                 )}
               </div>
             );

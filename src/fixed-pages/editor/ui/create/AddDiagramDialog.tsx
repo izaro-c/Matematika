@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { CreateDiagramInput } from '@/fixed-pages/editor/review/authoringModel';
 import { idToComponentName } from '@/fixed-pages/editor/review/authoringModel';
-import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import { Button, Field, Modal, Tabs, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 import { DiagramRuntimePreview } from '@/fixed-pages/editor/diagrams/ui/DiagramRuntimePreview';
 import { DIAGRAM_CATEGORY_OPTIONS, DIAGRAM_TEMPLATE_OPTIONS } from './CreateDiagramDialog';
 
@@ -56,8 +56,6 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
     onClose();
   };
 
-  const dialogRef = useModalFocus<HTMLFormElement>(open, cancel, searchInputRef, busy);
-  if (!open) return null;
 
   const validNew = ID_RE.test(newDiagram.id) && newDiagram.title.trim().length > 0;
   const derivedComponentName = newDiagram.id ? idToComponentName(newDiagram.id) : '';
@@ -86,55 +84,45 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/25 p-4" role="presentation">
+    <Modal
+      open={open}
+      onClose={cancel}
+      title="Añadir Diagrama al Documento"
+      size="lg"
+      dismissible={!busy}
+      initialFocusRef={searchInputRef}
+      footer={
+        <>
+          <Button onClick={cancel} disabled={busy}>Cancelar</Button>
+          {tab === 'existing' ? (
+            <Button variant="primary" form="add-diagram-form" type="submit" disabled={!selectedPath || busy}>
+              {busy ? 'Viculando…' : 'Vincular e Insertar Diagrama'}
+            </Button>
+          ) : (
+            <Button variant="primary" form="add-diagram-form" type="submit" disabled={!validNew || busy}>
+              {busy ? 'Creando…' : 'Crear y Vincular'}
+            </Button>
+          )}
+        </>
+      }
+    >
       <form
-        ref={dialogRef}
+        id="add-diagram-form"
         onSubmit={tab === 'new' ? handleCreateSubmit : (e) => { e.preventDefault(); void handleInsertExisting(); }}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Añadir diagrama al documento"
-        aria-labelledby="add-diagram-title"
-        className="flex max-h-[90vh] w-full max-w-2xl flex-col rounded border border-carbon/20 bg-lienzo shadow-xl"
+        className="space-y-4"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-carbon/15 p-4">
-          <div>
-            <h2 id="add-diagram-title" className="font-serif text-lg font-bold text-carbon">Añadir Diagrama al Documento</h2>
-            <p className="mt-0.5 text-xs text-carbon/55">Selecciona un diagrama ya creado o define un diagrama nuevo con su ID.</p>
-          </div>
-          <button type="button" onClick={cancel} className="rounded px-2 py-1 text-xs text-carbon/55 hover:bg-carbon/5">
-            Cerrar
-          </button>
-        </div>
+        <p>Selecciona un diagrama ya creado o define un diagrama nuevo con su ID.</p>
+        <Tabs
+          aria-label="Añadir diagrama al documento"
+          activeTab={tab}
+          onTabChange={id => setTab(id as typeof tab)}
+          tabs={[
+            { id: 'existing', label: `Diagramas ya creados (${diagramFiles.length})` },
+            { id: 'new', label: '＋ Crear diagrama nuevo' },
+          ]}
+        />
 
-        {/* Tab Buttons */}
-        <div className="flex border-b border-carbon/15 bg-carbon/5 px-4 pt-2 gap-2">
-          <button
-            type="button"
-            onClick={() => setTab('existing')}
-            className={`rounded-t border-t border-x px-4 py-2 text-xs font-bold transition-colors ${
-              tab === 'existing'
-                ? 'border-carbon/15 bg-lienzo text-carbon'
-                : 'border-transparent text-carbon/60 hover:text-carbon'
-            }`}
-          >
-            Diagramas ya creados ({diagramFiles.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setTab('new')}
-            className={`rounded-t border-t border-x px-4 py-2 text-xs font-bold transition-colors ${
-              tab === 'new'
-                ? 'border-carbon/15 bg-lienzo text-carbon'
-                : 'border-transparent text-carbon/60 hover:text-carbon'
-            }`}
-          >
-            ＋ Crear diagrama nuevo
-          </button>
-        </div>
-
-        {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="space-y-4">
           {tab === 'existing' && (
             <div className="space-y-4">
               <label className="block">
@@ -145,14 +133,14 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Buscar diagrama por nombre, categoría o ruta…"
-                  className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon placeholder:text-carbon/35 focus:border-canela outline-none"
+                  className={controlClassName}
                 />
               </label>
 
               {filteredFiles.length === 0 ? (
-                <div className="rounded border border-dashed border-carbon/20 p-6 text-center text-xs text-carbon/55">
+                <p className="border border-dashed border-[color:var(--ed-rule)] p-6 text-center text-sm italic text-carbon/60">
                   {search ? 'No se encontraron diagramas coincidentes.' : 'No existen diagramas creados todavía.'}
-                </div>
+                </p>
               ) : (
                 <div className="grid gap-3 sm:grid-cols-2 max-h-[50vh] overflow-y-auto pr-1">
                   {filteredFiles.map(file => {
@@ -162,15 +150,15 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                       <div
                         key={file.path}
                         onClick={() => setSelectedPath(file.path)}
-                        className={`group relative cursor-pointer rounded border p-3 transition-all ${
+                        className={`cursor-pointer border p-3 ${
                           isSelected
-                            ? 'border-canela bg-canela/5 ring-1 ring-canela'
-                            : 'border-carbon/15 bg-lienzo hover:border-carbon/30 hover:bg-carbon/[0.02]'
+                            ? 'border-[color:var(--ed-rule-strong)] bg-[color:var(--ed-wash)]'
+                            : 'border-[color:var(--ed-rule-faint)] hover:border-[color:var(--ed-rule)]'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <span className="ac-label ac-label--2xs ac-label--canela block font-mono text-[9px]">
+                            <span className="block font-mono text-[10px] text-carbon/55">
                               {file.type || 'Geometría'}
                             </span>
                             <h3 className="font-serif text-sm font-bold text-carbon">{componentName}</h3>
@@ -180,7 +168,8 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                             name="selected-diagram"
                             checked={isSelected}
                             onChange={() => setSelectedPath(file.path)}
-                            className="mt-1 accent-canela"
+                            aria-label={componentName}
+                            className="mt-1 accent-[color:var(--theme-carbon)]"
                           />
                         </div>
                         <p className="mt-1 truncate font-mono text-[9px] text-carbon/45">{file.path}</p>
@@ -199,97 +188,58 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
           {tab === 'new' && (
             <div className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-                  Categoría
+                <Field label="Categoría">
                   <select
                     value={newDiagram.category}
                     onChange={e => setNewDiagram(prev => ({ ...prev, category: e.target.value }))}
-                    className="rounded border border-carbon/15 bg-lienzo p-2 text-xs normal-case text-carbon"
                   >
                     {DIAGRAM_CATEGORY_OPTIONS.map(opt => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>
-                </label>
+                </Field>
 
-                <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-                  ID inmutable del diagrama
+                <Field
+                  label="ID inmutable del diagrama"
+                  error={newDiagram.id && !ID_RE.test(newDiagram.id) ? 'Usa minúsculas y guiones (ej. triangulo-pasos).' : undefined}
+                  help={derivedComponentName && ID_RE.test(newDiagram.id) ? <span className="font-mono">Componente: &lt;{derivedComponentName} /&gt;</span> : undefined}
+                >
                   <input
                     value={newDiagram.id}
                     onChange={e => setNewDiagram(prev => ({ ...prev, id: e.target.value.toLowerCase().replace(/\s+/g, '-') }))}
                     placeholder="triangulo-pasos"
-                    className="rounded border border-carbon/15 bg-lienzo p-2 font-mono text-xs normal-case text-carbon"
+                    className="font-mono"
                   />
-                  {newDiagram.id && !ID_RE.test(newDiagram.id) && (
-                    <span className="normal-case text-granada text-[10px]">Usa minúsculas y guiones (ej. triangulo-pasos).</span>
-                  )}
-                  {derivedComponentName && ID_RE.test(newDiagram.id) && (
-                    <span className="normal-case font-mono text-[10px] text-canela">
-                      Componente: &lt;{derivedComponentName} /&gt;
-                    </span>
-                  )}
-                </label>
+                </Field>
 
-                <label className="grid gap-1 ac-label ac-label--sm ac-label--strong sm:col-span-2">
-                  Título
+                <Field className="sm:col-span-2" label="Título">
                   <input
                     value={newDiagram.title}
                     onChange={e => setNewDiagram(prev => ({ ...prev, title: e.target.value }))}
                     placeholder="Triángulo interactivo"
-                    className="rounded border border-carbon/15 bg-lienzo p-2 font-serif text-sm normal-case text-carbon"
                   />
-                </label>
+                </Field>
 
-                <label className="grid gap-1 ac-label ac-label--sm ac-label--strong sm:col-span-2">
-                  Plantilla inicial
+                <Field className="sm:col-span-2" label="Plantilla inicial">
                   <select
                     value={newDiagram.templateType}
                     onChange={e => setNewDiagram(prev => ({ ...prev, templateType: e.target.value as CreateDiagramInput['templateType'] }))}
-                    className="rounded border border-carbon/15 bg-lienzo p-2 text-xs normal-case text-carbon"
                   >
                     {DIAGRAM_TEMPLATE_OPTIONS.map(opt => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>
-                </label>
+                </Field>
               </div>
 
-              <div className="rounded border border-ocre/20 bg-ocre/5 p-3 text-xs text-carbon/65">
-                Se creará el archivo <span className="font-mono text-[10px]">content/diagrams/{newDiagram.category}/{derivedComponentName || '...'}.tsx</span> y se vinculará directamente al documento.
-              </div>
+              <p className="border-t border-[color:var(--ed-rule-faint)] pt-3 text-sm italic text-carbon/65">
+                Se creará el archivo <span className="font-mono text-xs not-italic">content/diagrams/{newDiagram.category}/{derivedComponentName || '...'}.tsx</span> y se vinculará directamente al documento.
+              </p>
             </div>
           )}
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-end gap-2 border-t border-carbon/15 p-4">
-          <button
-            type="button"
-            onClick={cancel}
-            className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60 hover:bg-carbon/5"
-          >
-            Cancelar
-          </button>
-          {tab === 'existing' ? (
-            <button
-              type="button"
-              disabled={!selectedPath || busy}
-              onClick={handleInsertExisting}
-              className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90"
-            >
-              {busy ? 'Viculando…' : 'Vincular e Insertar Diagrama'}
-            </button>
-          ) : (
-            <button
-              type="submit"
-              disabled={!validNew || busy}
-              className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90"
-            >
-              {busy ? 'Creando…' : 'Crear y Vincular'}
-            </button>
-          )}
-        </div>
       </form>
-    </div>
+    </Modal>
   );
 };

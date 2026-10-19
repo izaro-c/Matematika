@@ -4,6 +4,7 @@ import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import { setVisibilityInAllSteps } from '../stepMatrixUtils';
 import { useI18n } from '@/i18n';
+import { Button, Callout } from '@/fixed-pages/editor/ui/primitives';
 
 interface ObjectListBatchToolbarProps {
   model: VisualDiagramModel;
@@ -47,49 +48,30 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-pavo/20 bg-pavo/5 p-2 text-xs">
+    <Callout className="flex flex-wrap items-center justify-between gap-1.5 text-xs">
       <div className="flex items-center gap-1">
         <span className="font-bold text-pavo">{t(selectedIds.length === 1 ? 'editor.diagramScene.selectedCountOne' : 'editor.diagramScene.selectedCountOther', { count: selectedIds.length })}</span>
-        <button
-          type="button"
-          onClick={onClearSelection}
-          className="text-[10px] text-carbon/50 underline hover:text-carbon"
-        >
+        <Button size="sm" variant="quiet" onClick={onClearSelection}>
           {t('editor.diagramScene.deselect')}
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-wrap items-center gap-1">
         {model.steps.length > 0 && (
           <>
-            <button
-              type="button"
-              title={t('editor.diagramScene.showInAllTitle')}
-              onClick={handleShowInAllSteps}
-              className="rounded border border-canela/30 bg-lienzo px-2 py-1 text-[10px] font-bold text-musgo hover:bg-canela/10"
-            >
+            <Button size="sm" title={t('editor.diagramScene.showInAllTitle')} onClick={handleShowInAllSteps}>
               {t('editor.diagramScene.showInAll')}
-            </button>
-            <button
-              type="button"
-              title={t('editor.diagramScene.hideInAllTitle')}
-              onClick={handleHideInAllSteps}
-              className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5"
-            >
+            </Button>
+            <Button size="sm" title={t('editor.diagramScene.hideInAllTitle')} onClick={handleHideInAllSteps}>
               {t('editor.diagramScene.hideInAll')}
-            </button>
+            </Button>
           </>
         )}
-        <button
-          type="button"
-          title={t('editor.diagramScene.toggleLockTitle')}
-          onClick={handleToggleLock}
-          className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/75 hover:bg-carbon/5"
-        >
+        <Button size="sm" title={t('editor.diagramScene.toggleLockTitle')} onClick={handleToggleLock}>
           {t('editor.diagramScene.toggleLock')}
-        </button>
+        </Button>
       </div>
-    </div>
+    </Callout>
   );
 };
 

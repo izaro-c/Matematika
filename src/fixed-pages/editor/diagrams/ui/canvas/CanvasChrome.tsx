@@ -10,6 +10,7 @@ import {
 import { ToolDrawingIcon, IconClose, IconChevronLeft, IconChevronRight } from '../toolbar/WorkbenchIcons';
 import { useI18n } from '@/i18n';
 import { kindLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
+import { Button, IconButton, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 export interface CanvasChromeProps {
   model: VisualDiagramModel;
@@ -90,14 +91,9 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
                 </p>
               )}
             </div>
-            <button
-              type="button"
-              onClick={onCancelTool}
-              className="ml-auto shrink-0 p-1 text-carbon/40 hover:text-granada hover:bg-granada/10 rounded"
-              title={t('editor.diagramCanvas.cancelTool')}
-            >
+            <IconButton size="sm" tone="danger" className="ml-auto shrink-0" label={t('editor.diagramCanvas.cancelTool')} onClick={onCancelTool}>
               <IconClose className="w-3.5 h-3.5" />
-            </button>
+            </IconButton>
           </div>
 
           {isReferenceToolActive && (
@@ -124,7 +120,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
                     if (e.target.value) onChooseReferenceForTool(e.target.value);
                   }}
                   value=""
-                  className="w-full bg-carbon/5 border border-carbon/20 rounded-lg px-2 py-1.5 text-xs text-carbon"
+                  className={controlClassName}
                 >
                   <option value="" disabled>
                     -- {nextLabel} --
@@ -137,14 +133,9 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
                 </select>
               )}
               {(activeTool === 'polygon' || activeTool === 'areaIntersection') && (
-                <button
-                  type="button"
-                  disabled={!toolReferencesAreReady(activeTool, pendingRefs)}
-                  onClick={onCompleteTool}
-                  className="w-full rounded-lg bg-pavo px-3 py-1.5 text-[11px] font-bold text-lienzo hover:bg-pavo/90 disabled:opacity-40"
-                >
+                <Button size="sm" variant="primary" fullWidth disabled={!toolReferencesAreReady(activeTool, pendingRefs)} onClick={onCompleteTool}>
                   {t('editor.diagramCanvas.createTool', { tool: kindLabel(t, activeTool) })}
-                </button>
+                </Button>
               )}
             </div>
           )}
@@ -153,16 +144,9 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
 
       {hasSteps && (
         <div className={`absolute top-3 right-3 z-30 flex items-center gap-1 p-1 pointer-events-auto ${dockShell}`}>
-          <button
-            type="button"
-            onClick={onStepPrev}
-            disabled={activeStepIndex === 0}
-            className="p-1.5 rounded-lg text-carbon/70 hover:bg-carbon/5 disabled:opacity-30 cursor-pointer"
-            title={t('editor.diagramCanvas.previousStep')}
-            aria-label={t('editor.diagramCanvas.previousStep')}
-          >
+          <IconButton size="sm" label={t('editor.diagramCanvas.previousStep')} title={t('editor.diagramCanvas.previousStep')} onClick={onStepPrev} disabled={activeStepIndex === 0}>
             <IconChevronLeft className="w-4 h-4" />
-          </button>
+          </IconButton>
           <div className="px-2 min-w-[7rem] text-center">
             <p className="text-[10px] font-bold text-carbon truncate">{stepLabel}</p>
             <p className="text-[9px] text-carbon/50 font-mono">
@@ -171,24 +155,13 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
                 : `${activeStepIndex + 1} / ${stepCount}`}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={onStepNext}
-            disabled={activeStepIndex === stepCount - 1}
-            className="p-1.5 rounded-lg text-carbon/70 hover:bg-carbon/5 disabled:opacity-30 cursor-pointer"
-            title={t('editor.diagramCanvas.nextStep')}
-            aria-label={t('editor.diagramCanvas.nextStep')}
-          >
+          <IconButton size="sm" label={t('editor.diagramCanvas.nextStep')} title={t('editor.diagramCanvas.nextStep')} onClick={onStepNext} disabled={activeStepIndex === stepCount - 1}>
             <IconChevronRight className="w-4 h-4" />
-          </button>
+          </IconButton>
           {stepPreviewActive && onClearStepPreview && (
-            <button
-              type="button"
-              onClick={onClearStepPreview}
-              className="ml-0.5 px-2 py-1 text-[10px] font-bold text-granada hover:bg-granada/10 rounded-lg"
-            >
+            <Button size="sm" variant="danger" className="ml-0.5" onClick={onClearStepPreview}>
               {t('editor.diagramCanvas.all')}
-            </button>
+            </Button>
           )}
         </div>
       )}
@@ -196,42 +169,19 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
       <div
         className={`absolute bottom-3 left-3 z-30 flex items-center gap-0.5 p-1 pointer-events-auto ${dockShell}`}
       >
-        <button
-          type="button"
-          onClick={onToggleGrid}
-          className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-            model.grid ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
-          }`}
-        >
+        <Button size="sm" aria-pressed={model.grid} onClick={onToggleGrid}>
           {t('editor.diagramCanvas.grid')}
-        </button>
-        <button
-          type="button"
-          onClick={onToggleAxis}
-          className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-            model.axis ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
-          }`}
-        >
+        </Button>
+        <Button size="sm" aria-pressed={model.axis} onClick={onToggleAxis}>
           {t('editor.diagramCanvas.axes')}
-        </button>
-        <button
-          type="button"
-          onClick={onResetViewport}
-          className="px-2.5 py-1 text-[11px] font-medium text-carbon/70 hover:bg-carbon/5 rounded-lg cursor-pointer"
-        >
+        </Button>
+        <Button size="sm" onClick={onResetViewport}>
           {t('editor.diagramCanvas.center')}
-        </button>
+        </Button>
         {onToggleShowAllObjects && hasSteps && (
-          <button
-            type="button"
-            onClick={onToggleShowAllObjects}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-              showAllObjects ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
-            }`}
-            title={t('editor.diagramCanvas.ignoreStepFilter')}
-          >
+          <Button size="sm" aria-pressed={showAllObjects} onClick={onToggleShowAllObjects} title={t('editor.diagramCanvas.ignoreStepFilter')}>
             {showAllObjects ? t('editor.diagramCanvas.noFilter') : t('editor.diagramCanvas.filter')}
-          </button>
+          </Button>
         )}
       </div>
     </>

@@ -17,6 +17,7 @@ import {
   IconTrash,
   IconSparkles,
 } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
+import { Button, Menu, MenuItem } from '../primitives';
 import { ProofStepLinkModal } from '../components/ProofStepLinkModal';
 
 export interface MdxFormatBarProps {
@@ -40,16 +41,6 @@ function keep(handler: () => void) {
     event.preventDefault();
     handler();
   };
-}
-
-function btnClass(active = false, variant: 'default' | 'canela' = 'default') {
-  return `flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela disabled:opacity-40 disabled:cursor-not-allowed ${
-    active
-      ? 'bg-canela text-lienzo shadow-xs font-bold'
-      : variant === 'canela'
-      ? 'bg-canela/10 text-canela border border-canela/30 hover:bg-canela/20 font-bold'
-      : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
-  }`;
 }
 
 export function MdxFormatBar({
@@ -86,14 +77,14 @@ export function MdxFormatBar({
     <>
       <div
         data-mdx-format-bar
-        className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all"
+        className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-[color:var(--ed-rule-faint)] bg-lienzo p-1.5 text-carbon select-none"
         aria-label={t('editor.mdx.toolbar')}
       >
         {/* Formato de Texto */}
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.mdx.bold')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('strong')) after();
@@ -102,12 +93,12 @@ export function MdxFormatBar({
         >
           <span className="font-bold">N</span>
           <span className="hidden sm:inline font-medium">{t('editor.mdx.bold')}</span>
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.mdx.italic')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('em')) after();
@@ -116,12 +107,12 @@ export function MdxFormatBar({
         >
           <span className="italic font-serif">C</span>
           <span className="hidden sm:inline font-medium">{t('editor.mdx.italic')}</span>
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.mdx.inlineFormula')}
           onMouseDown={keep(() => {
             const code = getSelectedPlainText().trim() || 'x';
@@ -131,12 +122,12 @@ export function MdxFormatBar({
         >
           <span className="font-mono text-xs">$x$</span>
           <span className="hidden sm:inline font-medium">{t('editor.mdx.inlineFormula')}</span>
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.format.blockFormulaTitle')}
           onMouseDown={keep(() => {
             if (insertHtmlAtSelection(formulaBlockHtml('$$ x = y $$'))) after();
@@ -145,15 +136,15 @@ export function MdxFormatBar({
         >
           <span className="font-mono text-xs">$$</span>
           <span className="hidden sm:inline font-medium">{t('editor.format.blockFormula')}</span>
-        </button>
+        </Button>
 
-        <div className="mx-1 h-5 w-px bg-carbon/15" />
+        <span className="mx-1 h-5 w-px bg-[color:var(--ed-rule-faint)]" aria-hidden="true" />
 
         {/* Enlaces y Diagrama */}
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.format.linkTitle')}
           onMouseDown={keep(() => {
             if (!getSelectedPlainText().trim()) {
@@ -164,24 +155,24 @@ export function MdxFormatBar({
           })}
         >
           <span>{t('editor.format.link')}</span>
-        </button>
+        </Button>
 
         {/* Insertar Enlace a Paso (ProofStepLink) con Modal */}
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           onClick={() => setStepModalOpen(true)}
           title={t('editor.format.stepRefTitle')}
         >
           <span className="font-mono text-xs font-bold text-pavo">#</span>
           <span>{t('editor.format.stepRef')}</span>
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
           disabled={proseOff}
-          className={btnClass()}
+          variant="quiet"
+          size="sm"
           title={t('editor.format.highlightTitle')}
           onMouseDown={keep(() => {
             const selected = getSelectedPlainText().trim() || 'elemento';
@@ -191,33 +182,30 @@ export function MdxFormatBar({
         >
           <IconSparkles className="w-3.5 h-3.5 text-canela" />
           <span>{t('editor.format.diagram')}</span>
-        </button>
+        </Button>
 
-        <div className="mx-1 h-5 w-px bg-carbon/15" />
+        <span className="mx-1 h-5 w-px bg-[color:var(--ed-rule-faint)]" aria-hidden="true" />
 
-        <button type="button" disabled={structureOff} className={btnClass(false)} aria-keyshortcuts="Control+/" onClick={onOpenPalette}>
+        <Button disabled={structureOff} variant="quiet" size="sm" aria-keyshortcuts="Control+/" onClick={onOpenPalette}>
           <IconPlus className="w-3.5 h-3.5" />
           <span>{t('editor.format.insertBlock')}</span>
-        </button>
+        </Button>
 
         {/* Control Único de Paso */}
         <div className="relative">
-          <button
-            type="button"
+          <Button
             disabled={structureOff}
             aria-expanded={open === 'paso'}
-            className={btnClass(open === 'paso' || hasActiveDemoStep)}
+            variant="quiet"
+            size="sm"
             onClick={() => setOpen(open === 'paso' ? null : 'paso')}
           >
             <span className="font-bold">{t('editor.format.step')}</span>
             <IconChevronDown className="w-3 h-3 opacity-70" />
-          </button>
+          </Button>
           {open === 'paso' && (
-            <div role="menu" className="absolute left-0 top-full z-[80] mt-1.5 w-56 overflow-hidden rounded-2xl border border-carbon/20 bg-lienzo p-1.5 shadow-2xl space-y-0.5">
-              <button
-                type="button"
-                role="menuitem"
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-bold text-canela hover:bg-canela/10 transition-colors cursor-pointer"
+            <Menu className="absolute left-0 top-full mt-1.5 w-56">
+              <MenuItem
                 onClick={() => {
                   onInsertStep();
                   setOpen(null);
@@ -225,36 +213,27 @@ export function MdxFormatBar({
               >
                 <IconPlus className="w-3.5 h-3.5" />
                 <span>{t('editor.format.addStep')}</span>
-              </button>
-              <button
-                type="button"
-                role="menuitem"
+              </MenuItem>
+              <MenuItem
                 disabled={!hasActiveDemoStep}
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs disabled:opacity-40 hover:bg-carbon/5 transition-colors cursor-pointer"
                 onClick={() => {
                   onMoveStep?.(-1);
                   setOpen(null);
                 }}
               >
                 <span>{t('editor.format.moveStepUp')}</span>
-              </button>
-              <button
-                type="button"
-                role="menuitem"
+              </MenuItem>
+              <MenuItem
                 disabled={!hasActiveDemoStep}
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs disabled:opacity-40 hover:bg-carbon/5 transition-colors cursor-pointer"
                 onClick={() => {
                   onMoveStep?.(1);
                   setOpen(null);
                 }}
               >
                 <span>{t('editor.format.moveStepDown')}</span>
-              </button>
-              <button
-                type="button"
-                role="menuitem"
+              </MenuItem>
+              <MenuItem
                 disabled={!hasActiveDemoStep}
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs disabled:opacity-40 hover:bg-carbon/5 transition-colors cursor-pointer"
                 onClick={() => {
                   onDuplicateStep?.();
                   setOpen(null);
@@ -262,28 +241,25 @@ export function MdxFormatBar({
               >
                 <IconCopy className="w-3.5 h-3.5" />
                 <span>{t('editor.format.duplicateStep')}</span>
-              </button>
-              <button
-                type="button"
-                role="menuitem"
+              </MenuItem>
+              <MenuItem
                 disabled={!hasActiveDemoStep}
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs text-granada disabled:opacity-40 hover:bg-granada/5 transition-colors cursor-pointer"
                 onClick={() => {
                   onDeleteStep?.();
                   setOpen(null);
                 }}
+                tone="danger"
               >
                 <IconTrash className="w-3.5 h-3.5" />
                 <span>{t('editor.format.deleteStep')}</span>
-              </button>
-            </div>
+              </MenuItem>
+            </Menu>
           )}
         </div>
 
-        <div className="ml-auto hidden md:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
-          <span className="text-[11px] text-carbon/50">{t('editor.format.mode')}</span>
-          <span className="font-bold text-canela">{t('editor.format.mdxFormat')}</span>
-        </div>
+        <p className="ml-auto hidden md:block text-sm italic text-carbon/60">
+          {t('editor.format.mode')} <span className="not-italic">{t('editor.format.mdxFormat')}</span>
+        </p>
       </div>
 
       <ProofStepLinkModal

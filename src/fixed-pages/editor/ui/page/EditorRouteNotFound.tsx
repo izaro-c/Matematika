@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
+import { Button } from '../primitives';
 
 export interface EditorRouteNotFoundProps {
   /** Parte de la ruta tras `/editor/` que no corresponde a ningún recurso. */
@@ -17,7 +18,7 @@ export const EditorRouteNotFound: React.FC<EditorRouteNotFoundProps> = ({ reques
       role="alert"
       className="flex flex-1 items-center justify-center bg-lienzo px-4 font-serif text-carbon"
     >
-      <div className="max-w-md rounded-2xl border border-carbon/15 bg-lienzo/80 p-6 text-center shadow-sm">
+      <div className="max-w-md border border-[color:var(--ed-rule)] bg-lienzo p-6 text-center">
         <h1 className="text-xl font-bold">
           {onRetry ? t('editor.nav.catalogLoadError') : t('editor.nav.routeNotFoundTitle')}
         </h1>
@@ -27,23 +28,9 @@ export const EditorRouteNotFound: React.FC<EditorRouteNotFoundProps> = ({ reques
         {!onRetry && <p className="mt-2 text-sm text-carbon/70">{t('editor.nav.routeNotFoundBody')}</p>}
         <div className="mt-5 flex justify-center gap-3">
           {onRetry && (
-            <button
-              type="button"
-              onClick={onRetry}
-              className="rounded-xl bg-canela px-5 py-2.5 text-sm font-bold text-lienzo hover:bg-canela/90 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer"
-            >
-              {t('editor.common.retry')}
-            </button>
+            <Button variant="primary" onClick={onRetry}>{t('editor.common.retry')}</Button>
           )}
-          <button
-            type="button"
-            onClick={onBack}
-            className={onRetry
-              ? 'rounded-xl border border-carbon/20 px-5 py-2.5 text-sm font-bold text-carbon hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer'
-              : 'rounded-xl bg-canela px-5 py-2.5 text-sm font-bold text-lienzo hover:bg-canela/90 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer'}
-          >
-            {t('editor.nav.backToCatalog')}
-          </button>
+          <Button variant={onRetry ? 'secondary' : 'primary'} onClick={onBack}>{t('editor.nav.backToCatalog')}</Button>
         </div>
       </div>
     </main>

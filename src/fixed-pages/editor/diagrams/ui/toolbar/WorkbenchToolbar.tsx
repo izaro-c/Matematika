@@ -4,6 +4,7 @@ import { refsNeededForTool, toolReferenceCandidates } from '../../model';
 import { ToolDrawingIcon, IconChevronDown, IconClose, IconSparkles } from './WorkbenchIcons';
 import { useI18n } from '@/i18n';
 import { kindLabel } from '@/fixed-pages/editor/diagrams/ui/diagramLabels';
+import { Button, Card, IconButton, RowButton, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface WorkbenchToolbarProps {
   model?: VisualDiagramModel | null;
@@ -189,47 +190,21 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
 
   return (
     <nav data-workbench-toolbar className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all">
-      <button
-        type="button"
-        aria-label={t('editor.diagramToolbar.moveSelect')}
-        aria-pressed={activeTool === 'select'}
-        onClick={() => onSelectTool('select')}
-        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
-          activeTool === 'select'
-            ? 'bg-canela text-lienzo shadow-xs font-bold'
-            : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
-        }`}
-      >
+      <Button size="sm" aria-label={t('editor.diagramToolbar.moveSelect')} aria-pressed={activeTool === 'select'} onClick={() => onSelectTool('select')}>
         <ToolDrawingIcon tool="select" className="w-3.5 h-3.5" />
         <span>{t('editor.diagramToolbar.move')}</span>
-      </button>
+      </Button>
 
-      <button
-        type="button"
-        aria-label={t('editor.diagramToolbar.freePoint')}
-        aria-pressed={activeTool === 'point'}
-        onClick={() => onSelectTool('point')}
-        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
-          activeTool === 'point'
-            ? 'bg-canela text-lienzo shadow-xs font-bold'
-            : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
-        }`}
-      >
+      <Button size="sm" aria-label={t('editor.diagramToolbar.freePoint')} aria-pressed={activeTool === 'point'} onClick={() => onSelectTool('point')}>
         <ToolDrawingIcon tool="point" className="w-3.5 h-3.5" />
         <span>{t('editor.diagramToolbar.freePointTool')}</span>
-      </button>
+      </Button>
 
       {onOpenGuidedClick && (
-        <button
-          type="button"
-          onClick={onOpenGuidedClick}
-          aria-label={t('editor.diagramToolbar.guidedConstructions')}
-          className="flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold text-canela bg-canela/10 hover:bg-canela/20 border border-canela/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela"
-          title={t('editor.diagramToolbar.openGuidedTitle')}
-        >
+        <Button size="sm" onClick={onOpenGuidedClick} aria-label={t('editor.diagramToolbar.guidedConstructions')} title={t('editor.diagramToolbar.openGuidedTitle')}>
           <IconSparkles className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{t('editor.diagramToolbar.guided')}</span>
-        </button>
+        </Button>
       )}
 
       <div className="mx-1 h-5 w-px bg-carbon/15 shrink-0" />
@@ -242,27 +217,19 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
             value={toolQuery}
             onChange={e => setToolQuery(e.target.value)}
             placeholder={t('editor.diagramToolbar.search')}
-            className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs text-carbon placeholder-carbon/40 focus:bg-lienzo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela transition-colors font-sans"
+            className={`${controlClassName} w-28 sm:w-44`}
           />
         </label>
 
         {isSearching && (
-          <div
-            role="listbox"
-            aria-label={t('editor.diagramToolbar.searchResults')}
-            className="absolute left-0 top-full mt-1.5 w-80 max-h-96 overflow-y-auto bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-2 z-[80] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 duration-200"
-          >
+          <Card className="absolute mt-1.5 w-80 max-h-96 overflow-y-auto" role="listbox" aria-label={t('editor.diagramToolbar.searchResults')}>
             <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-carbon/10">
               <span className="text-[11px] font-bold text-carbon/70">
                 {t(searchHits.length === 1 ? 'editor.diagramToolbar.resultsCountOne' : 'editor.diagramToolbar.resultsCountOther', { count: searchHits.length })}
               </span>
-              <button
-                type="button"
-                onClick={() => setToolQuery('')}
-                className="text-[10px] font-bold text-carbon/50 hover:text-carbon"
-              >
+              <Button size="sm" variant="quiet" onClick={() => setToolQuery('')}>
                 {t('editor.diagramToolbar.clear')}
-              </button>
+              </Button>
             </div>
             {searchHits.length === 0 ? (
               <p className="px-2 py-3 text-[11px] text-carbon/50 italic">{t('editor.diagramToolbar.noToolMatches')}</p>
@@ -273,9 +240,8 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                   const drawingTool = hit.id === 'add_glider' ? 'point' : hit.id;
                   const disabled = (hit.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(hit.toolId);
                   return (
-                    <button
+                    <RowButton
                       key={`${hit.categoryId}-${hit.id}`}
-                      type="button"
                       role="option"
                       aria-selected={isSelected}
                       disabled={disabled}
@@ -283,40 +249,36 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                         handleToolSelect(hit.toolId, hit.action);
                         setToolQuery('');
                       }}
-                      className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 ${
-                        isSelected
-                          ? 'bg-canela text-lienzo border-canela'
-                          : 'bg-carbon/5 border-carbon/10 text-carbon hover:bg-carbon/10'
-                      }`}
+                      className="items-start border border-[color:var(--ed-rule-faint)]"
+                      aria-current={isSelected ? 'true' : undefined}
                     >
                       <div className="flex items-center gap-2">
-                        <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20' : 'bg-canela/10 text-canela'}`}>
+                        <div className="p-1.5 shrink-0 text-canela">
                           <ToolDrawingIcon tool={drawingTool} className="w-4 h-4" />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-xs font-bold truncate">{hit.name}</span>
-                            <span className={`text-[9px] shrink-0 ${isSelected ? 'text-lienzo/70' : 'text-carbon/45'}`}>
+                            <span className="text-[9px] shrink-0 text-carbon/45">
                               {hit.categoryLabel}
                             </span>
                           </div>
-                          <p className={`text-[10px] mt-0.5 truncate ${isSelected ? 'text-lienzo/80' : 'text-carbon/55'}`}>
+                          <p className="text-[10px] mt-0.5 truncate text-carbon/55">
                             {disabled && hit.toolId ? t('editor.diagramToolbar.compatibleReferencesAreMissing') : hit.description}
                           </p>
                         </div>
                       </div>
-                    </button>
+                    </RowButton>
                   );
                 })}
               </div>
             )}
-          </div>
+          </Card>
         )}
       </div>
 
       {toolCategories.map(category => {
         const isOpen = !isSearching && openMenu === category.id;
-        const hasActiveTool = category.tools.some(hit => hit.toolId === activeTool);
         const matchCount = filteredCategories.find(c => c.id === category.id)?.tools.length ?? 0;
 
         return (
@@ -328,54 +290,35 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                 : 'opacity-100 scale-100'
             }`}
           >
-            <button
-              type="button"
-              aria-label={category.label}
-              aria-expanded={isOpen}
-              aria-haspopup="menu"
-              disabled={isSearching}
-              onClick={() => setOpenMenu(isOpen ? null : category.id)}
-              className={`flex h-8 items-center space-x-1.5 px-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
-                hasActiveTool
-                  ? 'bg-canela text-lienzo shadow-xs font-bold'
-                  : isOpen
-                  ? 'bg-carbon/10 border-carbon/20 text-carbon font-bold'
-                  : 'bg-carbon/5 border-carbon/15 text-carbon/80 hover:bg-carbon/10'
-              }`}
-            >
+            <Button size="sm" aria-label={category.label} aria-expanded={isOpen} aria-haspopup="menu" disabled={isSearching} onClick={() => setOpenMenu(isOpen ? null : category.id)}>
               <span>{category.shortLabel || category.label}</span>
               {isSearching && matchCount > 0 && (
                 <span className="text-[9px] font-mono bg-canela/20 text-canela px-1 rounded">{matchCount}</span>
               )}
               <IconChevronDown className="w-3 h-3 opacity-60" />
-            </button>
+            </Button>
 
             {isOpen && (
-              <div role="menu" className="absolute top-full left-0 mt-1.5 w-76 bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-2 z-[80] motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in duration-150">
+              <Card className="absolute mt-1.5 w-76" role="menu">
                 <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-carbon/10">
                   <span className="text-[11px] font-bold text-carbon/70 uppercase tracking-wider">
                     {category.label}
                   </span>
-                  <button
-                    type="button"
-                    aria-label={t('editor.diagramToolbar.closeMenu')}
-                    onClick={() => setOpenMenu(null)}
-                    className="text-carbon/40 hover:text-carbon text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-canela rounded"
-                  >
+                  <IconButton size="sm" label={t('editor.diagramToolbar.closeMenu')} onClick={() => setOpenMenu(null)}>
                     <IconClose className="w-3.5 h-3.5" />
-                  </button>
+                  </IconButton>
                 </div>
 
                 <div className="space-y-1 max-h-80 overflow-y-auto">
                   {category.id === 'points' && onAddGliderPoint && (
-                    <div className="p-2 mb-1 rounded-xl border border-carbon/10 bg-carbon/5 space-y-1.5">
+                    <Card className="mb-1 space-y-1.5">
                       <label className="block text-[10px] font-bold text-carbon/70 uppercase">
                         {t('editor.diagramToolbar.pointSupportOnObject')}
                         <select
                           value={effectiveGliderSupportId}
                           onChange={e => setGliderSupportId(e.target.value)}
                           disabled={gliderSupports.length === 0}
-                          className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs disabled:opacity-40"
+                          className={`${controlClassName} mt-0.5`}
                         >
                           {gliderSupports.length === 0 && <option value="">{t('editor.diagramToolbar.needsLineOrCurve')}</option>}
                           {gliderSupports.map(item => (
@@ -383,68 +326,49 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                           ))}
                         </select>
                       </label>
-                    </div>
+                    </Card>
                   )}
                   {category.tools.map(tool => {
                     const isSelected = tool.toolId ? activeTool === tool.toolId : false;
                     const drawingTool = tool.id === 'add_glider' ? 'point' : tool.id;
                     const disabled = (tool.id === 'add_glider' && !effectiveGliderSupportId) || isToolDisabled(tool.toolId);
                     return (
-                      <button
-                        key={tool.id}
-                        type="button"
-                        disabled={disabled}
-                        aria-pressed={isSelected}
-                        onClick={() => handleToolSelect(tool.toolId, tool.action)}
-                        className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-canela ${
-                          isSelected
-                            ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
-                            : 'bg-carbon/5 border-carbon/10 text-carbon hover:bg-carbon/10'
-                        }`}
-                      >
+                      <RowButton key={tool.id} disabled={disabled} aria-current={isSelected ? 'true' : undefined} onClick={() => handleToolSelect(tool.toolId, tool.action)}>
                         <div className="flex items-center space-x-2.5">
-                          <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20 text-lienzo' : 'bg-canela/10 text-canela'}`}>
+                          <div className="p-1.5 shrink-0 text-canela">
                             <ToolDrawingIcon tool={drawingTool} className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-bold truncate">{tool.name}</span>
                               {tool.toolId && (
-                                <span
-                                  className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${
-                                    isSelected ? 'bg-lienzo/20 text-lienzo' : 'bg-carbon/10 text-carbon/60'
-                                  }`}
-                                >
+                                <span className="text-[9px] px-1.5 py-0.5 font-mono text-carbon/60">
                                   {tool.toolId}
                                 </span>
                               )}
                             </div>
-                            <p
-                              className={`text-[10px] mt-0.5 leading-tight truncate ${
-                                isSelected ? 'text-lienzo/80' : 'text-carbon/60'
-                              }`}
-                            >
+                            <p className="text-[10px] mt-0.5 leading-tight truncate text-carbon/60">
                               {disabled && tool.toolId ? t('editor.diagramToolbar.compatibleReferencesAreMissing') : tool.description}
                             </p>
                           </div>
                         </div>
-                      </button>
+                      </RowButton>
                     );
                   })}
                 </div>
-              </div>
+              </Card>
             )}
           </div>
         );
       })}
 
-      <div className="ml-auto hidden sm:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
+      <Card className="ml-auto sm:flex items-center space-x-2 text-xs">
         <span className="text-[11px] text-carbon/50">{t('editor.diagramToolbar.active')}</span>
         <div className="flex items-center space-x-1">
           <ToolDrawingIcon tool={activeTool} className="w-3.5 h-3.5 text-canela" />
           <span className="font-bold text-canela">{getToolDisplayName(activeTool)}</span>
         </div>
-      </div>
+      </Card>
     </nav>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import { generateDiagramSource } from '../../source/generator';
 import { useI18n } from '@/i18n';
+import { Button, Modal, Tabs, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface CodeModalProps {
   isOpen: boolean;
@@ -88,94 +89,54 @@ export const CodeModal: React.FC<CodeModalProps> = ({
   };
 
   return (
-    <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/50 backdrop-blur-xs p-4 font-serif">
-      <div role="dialog" aria-modal="true" className="w-full max-w-3xl bg-lienzo rounded-2xl border border-carbon/15 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in fade-in zoom-in duration-200 text-carbon">
-        {/* Cabecera del Modal */}
-        <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
-          <div className="flex items-center space-x-3">
-            <h2 className="font-serif font-bold text-base text-carbon">{t('editor.diagramModals.sourceCodeAndSpecification')}</h2>
-            <div className="flex bg-carbon/10 p-0.5 rounded-lg">
-              <button
-                type="button"
-                onClick={() => setActiveTab('tsx')}
-                className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all cursor-pointer ${
-                  activeTab === 'tsx' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-                }`}
-              >
-                {t('editor.diagramModals.diagramSource')}
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('json')}
-                className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all cursor-pointer ${
-                  activeTab === 'json' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-                }`}
-              >
-                {t('editor.diagramModals.specification')}
-              </button>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-carbon/60 hover:text-carbon p-1 rounded-lg text-lg font-bold cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="flex-1 overflow-auto p-4 bg-carbon text-lienzo font-mono text-xs leading-relaxed select-text">
-          <textarea
-            aria-label={t('editor.diagramModals.sourceSpecAria')}
-            value={sandboxMode ? contentToCopy : sourceDraft}
-            readOnly={sandboxMode}
-            onChange={event => {
-              if (!sandboxMode) setSourceDraft(event.target.value);
-            }}
-            onClick={event => (event.target as HTMLTextAreaElement).select()}
-            spellCheck={false}
-            className="min-h-80 w-full resize-y bg-transparent text-lienzo outline-none font-mono text-xs select-all"
-          />
-        </div>
-
-        {/* Pie de Acciones */}
-        <div className="flex items-center justify-between p-4 border-t border-carbon/10 bg-lienzo">
-          <span className="text-xs text-mora/70 italic">
+    <Modal
+      open
+      onClose={onClose}
+      title={t('editor.diagramModals.sourceCodeAndSpecification')}
+      size="lg"
+      footer={
+        <>
+          <span className="mr-auto text-sm italic text-carbon/65">
             {generated.ok
               ? sandboxMode
                 ? t('editor.diagramModals.sandboxReadOnlyNote')
                 : t('editor.diagramModals.applyAnalysisNote')
               : t('editor.diagramModals.generationFailed')}
           </span>
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={!generated.ok && activeTab === 'tsx'}
-              className="px-3 py-1.5 text-xs font-bold text-carbon border border-carbon/20 hover:bg-carbon/5 rounded-lg transition-all cursor-pointer disabled:opacity-40"
-            >
-              {t('editor.diagramModals.downloadAs', { ext: activeTab })}
-            </button>
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="px-4 py-1.5 text-xs font-bold text-lienzo bg-canela hover:bg-canela/90 rounded-lg shadow-sm transition-all cursor-pointer"
-            >
-              {copied ? t('editor.diagramModals.copied') : t('editor.diagramModals.copy')}
-            </button>
-            {!sandboxMode && (
-              <button
-                type="button"
-                onClick={() => onSourceChange?.(sourceDraft)}
-                disabled={!canApplySource}
-                className="px-4 py-1.5 text-xs font-bold text-lienzo bg-pavo hover:bg-pavo/90 rounded-lg shadow-sm transition-all cursor-pointer disabled:opacity-40"
-              >
-                {t('editor.diagramModals.applySource')}
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+          <Button onClick={handleDownload} disabled={!generated.ok && activeTab === 'tsx'}>
+            {t('editor.diagramModals.downloadAs', { ext: activeTab })}
+          </Button>
+          <Button variant={sandboxMode ? 'primary' : 'secondary'} onClick={handleCopy}>
+            {copied ? t('editor.diagramModals.copied') : t('editor.diagramModals.copy')}
+          </Button>
+          {!sandboxMode && (
+            <Button variant="primary" onClick={() => onSourceChange?.(sourceDraft)} disabled={!canApplySource}>
+              {t('editor.diagramModals.applySource')}
+            </Button>
+          )}
+        </>
+      }
+    >
+      <Tabs
+        aria-label={t('editor.diagramModals.sourceCodeAndSpecification')}
+        activeTab={activeTab}
+        onTabChange={id => setActiveTab(id as typeof activeTab)}
+        tabs={[
+          { id: 'tsx', label: t('editor.diagramModals.diagramSource') },
+          { id: 'json', label: t('editor.diagramModals.specification') },
+        ]}
+      />
+      <textarea
+        aria-label={t('editor.diagramModals.sourceSpecAria')}
+        value={sandboxMode ? contentToCopy : sourceDraft}
+        readOnly={sandboxMode}
+        onChange={event => {
+          if (!sandboxMode) setSourceDraft(event.target.value);
+        }}
+        onClick={event => (event.target as HTMLTextAreaElement).select()}
+        spellCheck={false}
+        className={`${controlClassName} mt-3 h-[50vh] font-mono text-xs leading-relaxed`}
+      />
+    </Modal>
   );
 };

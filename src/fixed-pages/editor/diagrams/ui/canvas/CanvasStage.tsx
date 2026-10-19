@@ -9,6 +9,7 @@ import { CanvasChrome } from './CanvasChrome';
 import { isPublicationMode, type CanvasFrameMode } from './canvasFrameMode';
 import { useFitScale } from './useFitScale';
 import { useI18n } from '@/i18n';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 export interface CanvasStageProps {
   model: VisualDiagramModel | null;
@@ -125,9 +126,9 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
               </PublicationFrame>
             </div>
           ) : (
-            <div className="relative h-[calc(100%-2rem)] w-[calc(100%-2rem)] max-w-5xl overflow-hidden rounded-lg border border-carbon/15 bg-lienzo shadow-2xl">
+            <Card className="relative h-[calc(100%-2rem)] w-[calc(100%-2rem)] max-w-5xl overflow-hidden">
               {boardHost}
-            </div>
+            </Card>
           )}
         </WorkshopSurface>
 

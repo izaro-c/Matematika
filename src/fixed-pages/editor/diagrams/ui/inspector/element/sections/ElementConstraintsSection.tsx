@@ -21,14 +21,9 @@ import { constraintScopeForKind } from '../../elementSections';
 import { objectConstructionReferences, objectKind } from '@/diagrams';
 import { elementKind, modelElements, relationDraft } from '@/fixed-pages/editor/diagrams/model';
 import { useI18n } from '@/i18n';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
-const fieldClass =
-  'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none';
 const cardClass = 'space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-3 shadow-2xs';
-const applyBtn =
-  'w-full py-1.5 bg-canela text-lienzo rounded-lg font-bold text-[10px] hover:bg-canela/90 transition-all cursor-pointer disabled:opacity-40';
-const removeBtn =
-  'w-full py-1.5 bg-granada/10 hover:bg-granada/20 text-granada rounded-lg font-bold text-[10px] transition-all cursor-pointer';
 
 const SegmentReflectionCard: React.FC<{
   model: VisualDiagramModel;
@@ -60,7 +55,7 @@ const SegmentReflectionCard: React.FC<{
             <select
               value={centerId || reflectionCandidates[0]?.id || ''}
               onChange={e => setCenterId(e.target.value)}
-              className={fieldClass}
+              className={`${controlClassName} font-mono`}
             >
               {reflectionCandidates.map(c => (
                 <option key={c.id} value={c.id}>{c.label || c.id} ({c.id})</option>
@@ -70,7 +65,7 @@ const SegmentReflectionCard: React.FC<{
           {otherSegments.length > 0 && (
             <div>
               <label className="block text-[11px] text-carbon/75 font-bold mb-1">{t('editor.diagramInspector.sourceSegmentOptional')}</label>
-              <select value={sourceId} onChange={e => setSourceId(e.target.value)} className={fieldClass}>
+              <select value={sourceId} onChange={e => setSourceId(e.target.value)} className={`${controlClassName} font-mono`}>
                 <option value="">{t('editor.diagramInspector.currentPosition')}</option>
                 {otherSegments.map(s => (
                   <option key={s.id} value={s.id}>{s.label || s.id} ({s.id})</option>
@@ -78,29 +73,20 @@ const SegmentReflectionCard: React.FC<{
               </select>
             </div>
           )}
-          <button
-            type="button"
-            disabled={!centerId && !reflectionCandidates[0]}
-            onClick={() => {
+          <Button size="sm" variant="primary" fullWidth disabled={!centerId && !reflectionCandidates[0]} onClick={() => {
               const axis = centerId || reflectionCandidates[0]?.id;
               if (!axis) return;
               onUpdateModel(
                 setReflectionConstraintForSegment(model, element.id, axis, sourceId || undefined),
                 `Reflejo simétrico de ${element.id}`,
               );
-            }}
-            className={applyBtn}
-          >
+            }}>
             {reflection ? t('editor.diagramInspector.updateReflection') : t('editor.diagramInspector.applySymmetricReflection')}
-          </button>
+          </Button>
           {reflection && (
-            <button
-              type="button"
-              onClick={() => onUpdateModel(removeSegmentReflectionConstraint(model, element.id), `Eliminar reflejo de ${element.id}`)}
-              className={removeBtn}
-            >
+            <Button size="sm" variant="danger" fullWidth onClick={() => onUpdateModel(removeSegmentReflectionConstraint(model, element.id), `Eliminar reflejo de ${element.id}`)}>
               {t('editor.diagramInspector.removeSymmetricReflection')}
-            </button>
+            </Button>
           )}
         </>
       )}
@@ -145,7 +131,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                     );
                   }
                 }}
-                className={fieldClass}
+                className={`${controlClassName} font-mono`}
               >
                 {(editablePts.length ? editablePts.map(p => p.id) : objectConstructionReferences(element)).map(r => (
                   <option key={r} value={r}>{t('editor.diagramInspector.pointRef', { id: r })}</option>
@@ -164,7 +150,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                     );
                   }
                 }}
-                className={fieldClass}
+                className={`${controlClassName} font-mono`}
               >
                 <option value="">{t('editor.diagramInspector.none')}</option>
                 {otherSegments.map(s => (
@@ -174,29 +160,20 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
             </div>
           </div>
           {lengthConstraint ? (
-            <button
-              type="button"
-              onClick={() => onUpdateModel(removeConstraintFromModel(model, lengthConstraint.id), `Eliminar igualdad de longitud en ${element.id}`)}
-              className={removeBtn}
-            >
+            <Button size="sm" variant="danger" fullWidth onClick={() => onUpdateModel(removeConstraintFromModel(model, lengthConstraint.id), `Eliminar igualdad de longitud en ${element.id}`)}>
               {t('editor.diagramInspector.removeLengthEquality')}
-            </button>
+            </Button>
           ) : (
-            <button
-              type="button"
-              disabled={!sourceSegId || !movingPtId}
-              onClick={() => {
+            <Button size="sm" variant="primary" fullWidth disabled={!sourceSegId || !movingPtId} onClick={() => {
                 if (sourceSegId) {
                   onUpdateModel(
                     setEqualLengthConstraint(model, element.id, movingPtId, sourceSegId),
                     `Igualar longitud de ${element.id} con ${sourceSegId}`,
                   );
                 }
-              }}
-              className={applyBtn}
-            >
+              }}>
               {t('editor.diagramInspector.applyLengthEquality')}
-            </button>
+            </Button>
           )}
         </div>
 
@@ -232,7 +209,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                   );
                 }
               }}
-              className={fieldClass}
+              className={`${controlClassName} font-mono`}
             >
               {objectConstructionReferences(element).map(r => (
                 <option key={r} value={r}>{t('editor.diagramInspector.pointRef', { id: r })}</option>
@@ -251,7 +228,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
                   );
                 }
               }}
-              className={fieldClass}
+              className={`${controlClassName} font-mono`}
             >
               <option value="">{t('editor.diagramInspector.none')}</option>
               {otherAngles.map(a => (
@@ -261,29 +238,20 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
           </div>
         </div>
         {constraint ? (
-          <button
-            type="button"
-            onClick={() => onUpdateModel(removeConstraintFromModel(model, constraint.id), `Eliminar igualdad de amplitud en ${element.id}`)}
-            className={removeBtn}
-          >
+          <Button size="sm" variant="danger" fullWidth onClick={() => onUpdateModel(removeConstraintFromModel(model, constraint.id), `Eliminar igualdad de amplitud en ${element.id}`)}>
             {t('editor.diagramInspector.removeAngleEquality')}
-          </button>
+          </Button>
         ) : (
-          <button
-            type="button"
-            disabled={!sourceAngleId || !movingPtId}
-            onClick={() => {
+          <Button size="sm" variant="primary" fullWidth disabled={!sourceAngleId || !movingPtId} onClick={() => {
               if (sourceAngleId) {
                 onUpdateModel(
                   setEqualAngleConstraint(model, element.id, movingPtId, sourceAngleId),
                   `Igualar amplitud de ${element.id} con ${sourceAngleId}`,
                 );
               }
-            }}
-            className={applyBtn}
-          >
+            }}>
             {t('editor.diagramInspector.applyAngleEquality')}
-          </button>
+          </Button>
         )}
       </div>
     </div>

@@ -6,6 +6,7 @@ import type { ElementKind, VisualElement, VisualPoint, VisualSlider } from '../m
 import { COLOR_OPTIONS } from '../model';
 import { elementInspectorCapabilities } from '../model/elements/elementInspectorCapabilities';
 import { DiagramField } from './primitives';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 import { useI18n } from '@/i18n';
 
 type StepSceneItem = VisualPoint | VisualElement | VisualSlider;
@@ -90,7 +91,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                 max="72"
                 step="1"
                 aria-label={t('editor.diagramEditors.temporaryLabelSize')}
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                className={`${controlClassName} mt-1`}
                 placeholder={String(baseStyle.labelSize ?? (isPoint(object) ? 14 : 16))}
                 value={stepStyle.labelSize ?? ''}
                 onChange={event => editStyle(
@@ -107,7 +108,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                 type="number"
                 step="1"
                 aria-label={t('editor.diagramEditors.temporaryHorizontalLabelOffset')}
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                className={`${controlClassName} mt-1`}
                 placeholder={String(baseStyle.labelOffset?.[0] ?? 0)}
                 value={stepStyle.labelOffset?.[0] ?? ''}
                 onChange={event => editStyle(
@@ -129,7 +130,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                 type="number"
                 step="1"
                 aria-label={t('editor.diagramEditors.temporaryVerticalLabelOffset')}
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                className={`${controlClassName} mt-1`}
                 placeholder={String(baseStyle.labelOffset?.[1] ?? 0)}
                 value={stepStyle.labelOffset?.[1] ?? ''}
                 onChange={event => editStyle(
@@ -183,17 +184,13 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                   { value: event.target.value !== '' ? Number(event.target.value) : undefined },
                   'Editar valor numérico del deslizador en el paso',
                 )}
-                className="w-20 rounded border border-carbon/20 bg-lienzo p-1 text-xs text-right font-mono"
+                className={`${controlClassName} w-20 font-mono`}
               />
             </div>
             {state.value !== undefined && (
-              <button
-                type="button"
-                onClick={() => onStateChange({ value: undefined }, 'Restablecer valor base del deslizador')}
-                className="text-[10px] text-carbon/60 hover:text-granada underline cursor-pointer"
-              >
+              <Button size="sm" variant="danger" onClick={() => onStateChange({ value: undefined }, 'Restablecer valor base del deslizador')}>
                 {t('editor.diagramEditors.resetBaseValue', { value: object.value })}
-              </button>
+              </Button>
             )}
           </div>
         </fieldset>
@@ -227,7 +224,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                     max="30"
                     step="0.5"
                     aria-label={t('editor.diagramEditors.temporaryPointSize')}
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    className={`${controlClassName} mt-1`}
                     placeholder={String(baseStyle.pointSize ?? 7)}
                     value={stepStyle.pointSize ?? ''}
                     onChange={event => editStyle(
@@ -249,7 +246,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                     max="10"
                     step="0.05"
                     aria-label={t('editor.diagramEditors.stepAngleRadius')}
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    className={`${controlClassName} mt-1`}
                     placeholder={String(baseStyle.angleRadius ?? angleRadiusFallback(object))}
                     value={stepStyle.angleRadius ?? ''}
                     onChange={event => editStyle(
@@ -271,7 +268,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                     max="100"
                     step="0.05"
                     aria-label={t('editor.diagramEditors.temporaryMarkHeight')}
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    className={`${controlClassName} mt-1`}
                     placeholder={String(baseStyle.markHeight ?? markHeightFallback(object))}
                     value={stepStyle.markHeight ?? ''}
                     onChange={event => editStyle(
@@ -294,7 +291,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                       max="20"
                       step="0.1"
                       aria-label={t('editor.diagramEditors.temporaryStrokeWidth')}
-                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      className={`${controlClassName} mt-1`}
                       placeholder={String(baseStyle.strokeWidth ?? 2.4)}
                       value={stepStyle.strokeWidth ?? ''}
                       onChange={event => editStyle(
@@ -313,7 +310,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                       max="1"
                       step="0.01"
                       aria-label={t('editor.diagramEditors.temporaryStrokeOpacity')}
-                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      className={`${controlClassName} mt-1`}
                       placeholder={String(baseStyle.strokeOpacity ?? 1)}
                       value={stepStyle.strokeOpacity ?? ''}
                       onChange={event => editStyle(
@@ -336,7 +333,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
                     max="1"
                     step="0.01"
                     aria-label={t('editor.diagramEditors.temporaryFillOpacity')}
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    className={`${controlClassName} mt-1`}
                     placeholder={String(baseStyle.fillOpacity ?? 0.16)}
                     value={stepStyle.fillOpacity ?? ''}
                     onChange={event => editStyle(

@@ -6,6 +6,7 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
 import type { EditorWorkspaceLevel } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { InspectorExpandableBlock } from '../../diagrams/ui/inspector/InspectorExpandableBlock';
+import { Button, Callout, Card } from '@/fixed-pages/editor/ui/primitives';
 
 interface EditorDiagnosticsPanelProps {
   currentFile: string | null;
@@ -76,32 +77,28 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
               {validationStatus.label}
             </span>
           </div>
-          <button
-            type="button"
-            onClick={close}
-            className="rounded-xl border border-carbon/15 bg-carbon/5 px-3 py-1 text-xs font-medium text-carbon hover:bg-carbon/10 hover:border-carbon/30 transition-all cursor-pointer"
-          >
+          <Button size="sm" onClick={close}>
             {t('editor.common.close')}
-          </button>
+          </Button>
         </header>
       )}
 
       <div className={`flex-1 space-y-4 ${embedded ? 'pt-1' : 'p-4'} overflow-y-auto`}>
         <InspectorExpandableBlock title={t('editor.diagnostics.documentWarnings')} defaultOpen={true}>
           {!currentFile && (
-            <div className="rounded-xl border border-carbon/10 bg-lienzo/50 p-4 text-center text-xs italic text-carbon/50">
+            <Card className="text-center text-xs italic">
               {t('editor.diagnostics.noResource')}
-            </div>
+            </Card>
           )}
 
           {currentFile && validation.issues.length === 0 && (
-            <div className="rounded-2xl border border-canela/30 bg-canela/5 p-4 text-center text-canela shadow-2xs">
+            <Callout className="text-center">
               <svg className="w-6 h-6 mx-auto mb-1.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <p className="font-serif text-xs font-bold">{t('editor.diagnostics.allGood')}</p>
               <p className="text-[11px] text-carbon/65 mt-0.5">{t('editor.diagnostics.allGoodBody')}</p>
-            </div>
+            </Callout>
           )}
 
           <div className="space-y-2.5">
@@ -145,20 +142,15 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                           {isError ? t('editor.diagnostics.severityError') : isWarning ? t('editor.diagnostics.severityWarning') : t('editor.diagnostics.severityInfo')}
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={(e) => {
+                      <Button size="sm" onClick={(e) => {
                           e.stopPropagation();
                           onSelectIssue(issue);
-                        }}
-                        aria-label={issue.message}
-                        className="rounded-lg border border-carbon/15 bg-lienzo px-2 py-0.5 text-[10px] font-semibold text-carbon hover:bg-carbon/5 transition-all cursor-pointer flex items-center space-x-1 shadow-2xs"
-                      >
+                        }} aria-label={issue.message}>
                         <span>{t('editor.diagnostics.goToElement')}</span>
                         <svg className="w-3 h-3 text-carbon/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
-                      </button>
+                      </Button>
                     </div>
                     <p className="mt-2 font-sans text-xs text-carbon/90 leading-relaxed">{issue.message}</p>
                     {(issue.blockId || issue.sourceRange) && (

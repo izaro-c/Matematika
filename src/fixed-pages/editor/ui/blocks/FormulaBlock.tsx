@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useI18n } from '@/i18n';
 import { KatexText } from '@/components/ui/KatexText';
+import { Callout, Card, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface FormulaBlockProps {
   id?: string;
@@ -17,11 +18,11 @@ export const FormulaBlock: React.FC<FormulaBlockProps> = ({ id, content, onChang
       <label className="block ac-label ac-label--xs ac-label--faint">{t('editor.blocks.formulaTitle')}</label>
       
       {isEditing ? (
-        <div className="flex flex-col gap-1.5 bg-carbon/5 p-2.5 rounded border border-carbon/15 animate-in fade-in duration-100">
+        <Card className="flex flex-col gap-1.5">
           <input
             id={id}
             type="text"
-            className="w-full bg-lienzo p-2 text-xs border border-carbon/15 text-carbon rounded focus:outline-none focus:border-ocre font-mono"
+            className={`${controlClassName} font-mono`}
             value={content}
             onChange={(e) => onChange(e.target.value)}
             onBlur={() => setIsEditing(false)}
@@ -34,19 +35,15 @@ export const FormulaBlock: React.FC<FormulaBlockProps> = ({ id, content, onChang
             autoFocus
           />
           <span className="text-[10px] text-carbon/40 italic">{t('editor.blocks.formulaHint')}</span>
-        </div>
+        </Card>
       ) : (
-        <div
-          onClick={() => setIsEditing(true)}
-          className="p-4 bg-ocre/5 border border-ocre/20 rounded-md cursor-pointer hover:bg-ocre/10 transition-colors flex justify-center items-center select-none"
-          title={t('editor.blocks.formulaEditTitle')}
-        >
+        <Callout tone="warning" className="flex justify-center items-center" onClick={() => setIsEditing(true)} title={t('editor.blocks.formulaEditTitle')}>
           {content.trim() ? (
             <KatexText text={content} className="text-sm text-carbon" />
           ) : (
             <span className="text-xs italic text-ocre/50">{t('editor.blocks.formulaEmpty')}</span>
           )}
-        </div>
+        </Callout>
       )}
     </div>
   );

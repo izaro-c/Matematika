@@ -24,6 +24,7 @@ import {
   IconChevronRight,
 } from '../toolbar/WorkbenchIcons';
 import { DiagramObjectLabel } from '../workbench/WorkbenchSceneTree';
+import { Button, Card, IconButton, RowButton, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 export interface SceneItem {
   id: string;
@@ -195,17 +196,12 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
               if (e.key === 'Enter') handleAddLayer();
             }}
             placeholder={t('editor.diagramScene.newLayer')}
-            className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
+            className={`${controlClassName} flex-1`}
           />
-          <button
-            type="button"
-            onClick={handleAddLayer}
-            disabled={!newLayerLabel.trim()}
-            className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
-          >
+          <Button size="sm" variant="primary" className="shrink-0" onClick={handleAddLayer} disabled={!newLayerLabel.trim()}>
             <IconPlus className="w-3.5 h-3.5" />
             <span>{t('editor.diagramScene.layer')}</span>
-          </button>
+          </Button>
         </div>
 
         {/* Lista de Capas */}
@@ -284,11 +280,7 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                       >
                         ⋮⋮
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => setExpandedLayerId(isExpanded ? null : layer.id)}
-                        className="flex items-center space-x-2 min-w-0 flex-1 text-left cursor-pointer"
-                      >
+                      <RowButton className="min-w-0 flex-1" onClick={() => setExpandedLayerId(isExpanded ? null : layer.id)}>
                         <span className="text-carbon/50 hover:text-carbon transition-colors">
                           {isExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
                         </span>
@@ -304,66 +296,30 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                             {t('editor.diagramScene.dropHere')}
                           </span>
                         )}
-                      </button>
+                      </RowButton>
                     </div>
 
                     <div className="flex items-center space-x-1 shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => handleMoveLayer(layer.id, -1)}
-                        disabled={layerIndex <= 0}
-                        className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                        title={t('editor.diagramScene.moveLayerUpTitle')}
-                        aria-label={t('editor.diagramScene.moveLayerUp', { label: layer.label })}
-                      >
+                      <IconButton size="sm" label={t('editor.diagramScene.moveLayerUp', { label: layer.label })} title={t('editor.diagramScene.moveLayerUpTitle')} onClick={() => handleMoveLayer(layer.id, -1)} disabled={layerIndex <= 0}>
                         <IconChevronUp className="w-3.5 h-3.5" />
-                      </button>
+                      </IconButton>
 
-                      <button
-                        type="button"
-                        onClick={() => handleMoveLayer(layer.id, 1)}
-                        disabled={layerIndex >= layers.length - 1}
-                        className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                        title={t('editor.diagramScene.moveLayerDownTitle')}
-                        aria-label={t('editor.diagramScene.moveLayerDown', { label: layer.label })}
-                      >
+                      <IconButton size="sm" label={t('editor.diagramScene.moveLayerDown', { label: layer.label })} title={t('editor.diagramScene.moveLayerDownTitle')} onClick={() => handleMoveLayer(layer.id, 1)} disabled={layerIndex >= layers.length - 1}>
                         <IconChevronDown className="w-3.5 h-3.5" />
-                      </button>
+                      </IconButton>
 
-                      <button
-                        type="button"
-                        onClick={() => handleToggleLayerVisible(layer.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          layer.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')}
-                        aria-label={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')}
-                      >
+                      <Button size="sm" aria-pressed={layer.visible !== false} onClick={() => handleToggleLayerVisible(layer.id)} title={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')} aria-label={layer.visible !== false ? t('editor.diagramScene.hideLayer') : t('editor.diagramScene.showLayer')}>
                         {layer.visible !== false ? <IconEye /> : <IconEyeOff />}
-                      </button>
+                      </Button>
 
-                      <button
-                        type="button"
-                        onClick={() => handleToggleLayerLock(layer.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          layer.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')}
-                        aria-label={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')}
-                      >
+                      <Button size="sm" aria-pressed={layer.locked} onClick={() => handleToggleLayerLock(layer.id)} title={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')} aria-label={layer.locked ? t('editor.diagramScene.unlockLayer') : t('editor.diagramScene.lockLayer')}>
                         {layer.locked ? <IconLock /> : <IconUnlock />}
-                      </button>
+                      </Button>
 
                       {layerItems.length === 0 && (
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteLayer(layer.id)}
-                          className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
-                          title={t('editor.diagramScene.deleteEmptyLayer')}
-                          aria-label={t('editor.diagramScene.deleteEmptyLayer')}
-                        >
+                        <IconButton size="sm" tone="danger" label={t('editor.diagramScene.deleteEmptyLayer')} title={t('editor.diagramScene.deleteEmptyLayer')} onClick={() => handleDeleteLayer(layer.id)}>
                           <IconTrash className="w-3.5 h-3.5" />
-                        </button>
+                        </IconButton>
                       )}
                     </div>
                   </div>
@@ -372,7 +328,7 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                 {isExpanded && (
                   <div className="p-3 border-t border-carbon/10 bg-lienzo space-y-3">
                     {/* Edición rápida ID y Nombre */}
-                    <div className="grid grid-cols-2 gap-2 bg-carbon/5 p-2.5 rounded-xl border border-carbon/10">
+                    <Card className="grid grid-cols-2 gap-2">
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.layerId')}</label>
                         <input
@@ -383,7 +339,7 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                           onKeyDown={e => {
                             if (e.key === 'Enter') handleRenameLayerId(layer.id, e.currentTarget.value);
                           }}
-                          className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-canela focus:border-canela outline-none"
+                          className={`${controlClassName} font-mono`}
                         />
                       </div>
                       <div>
@@ -392,10 +348,10 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                           type="text"
                           value={layer.label}
                           onChange={e => handleRenameLayerLabel(layer.id, e.target.value)}
-                          className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none"
+                          className={controlClassName}
                         />
                       </div>
-                    </div>
+                    </Card>
 
                     {/* Lista de Objetos en esta Capa */}
                     {layerItems.length === 0 ? (
@@ -469,34 +425,20 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                                   </span>
                                 </div>
                                 <div className="flex items-center space-x-1 shrink-0">
-                                  <button
-                                    type="button"
-                                    onClick={e => {
+                                  <IconButton size="sm" label={t('editor.diagramScene.bringForwardItem', { id: item.id })} title={t('editor.diagramScene.bringForward')} onClick={e => {
                                       e.preventDefault();
                                       e.stopPropagation();
                                       handleBringForward(item.id);
-                                    }}
-                                    disabled={frontIndex <= 0}
-                                    className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                                    title={t('editor.diagramScene.bringForward')}
-                                    aria-label={t('editor.diagramScene.bringForwardItem', { id: item.id })}
-                                  >
+                                    }} disabled={frontIndex <= 0}>
                                     <IconChevronUp className="w-3 h-3" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={e => {
+                                  </IconButton>
+                                  <IconButton size="sm" label={t('editor.diagramScene.sendBackwardItem', { id: item.id })} title={t('editor.diagramScene.sendBackward')} onClick={e => {
                                       e.preventDefault();
                                       e.stopPropagation();
                                       handleSendBackward(item.id);
-                                    }}
-                                    disabled={frontIndex < 0 || frontIndex >= frontIds.length - 1}
-                                    className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
-                                    title={t('editor.diagramScene.sendBackward')}
-                                    aria-label={t('editor.diagramScene.sendBackwardItem', { id: item.id })}
-                                  >
+                                    }} disabled={frontIndex < 0 || frontIndex >= frontIds.length - 1}>
                                     <IconChevronDown className="w-3 h-3" />
-                                  </button>
+                                  </IconButton>
                                   <select
                                     value={item.layerId}
                                     onChange={e => {
@@ -506,7 +448,7 @@ export const LayersTab: React.FC<LayersTabProps> = ({ stacked, layers, allItems,
                                       }
                                     }}
                                     onClick={e => e.stopPropagation()}
-                                    className="bg-carbon/5 border border-carbon/15 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-canela hover:border-canela/40 cursor-pointer focus:outline-none"
+                                    className={controlClassName}
                                     aria-label={t('editor.diagramScene.changeLayerOf', { id: item.id })}
                                   >
                                     {layers.map(l => (

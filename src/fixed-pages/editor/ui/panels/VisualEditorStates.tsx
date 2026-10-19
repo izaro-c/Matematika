@@ -1,6 +1,7 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
 import { Button } from '../primitives';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 /** Esqueleto de la página mientras se carga el documento. */
 export const VisualEditorSkeleton: React.FC = () => {
@@ -64,7 +65,7 @@ export const VisualEditorEmpty: React.FC<VisualEditorEmptyProps> = ({ children, 
   return (
     <div className="max-w-2xl mx-auto py-8">
       {children}
-      <div className="flex flex-col items-center justify-center h-64 border border-dashed border-carbon/25 rounded-2xl p-8 text-center bg-carbon/5">
+      <Card dashed className="flex flex-col items-center justify-center h-64 text-center">
         <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
@@ -80,7 +81,7 @@ export const VisualEditorEmpty: React.FC<VisualEditorEmptyProps> = ({ children, 
         >
           {t('editor.visual.addParagraph')}
         </Button>
-      </div>
+      </Card>
     </div>
   );
 };

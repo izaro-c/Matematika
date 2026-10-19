@@ -10,6 +10,7 @@ import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { elementExpression, elementText, labelVisiblePatch, setting, settingPatch, stylePatch, withElementText, withElementTextRules } from '../../elementSettings';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Callout, Card, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 /** Contenido: infoPanel usa el editor completo (bloques + variantes); resto texto/reglas, cotas, medidas, posición/offset y subtítulo. */
 export const ElementContentSection: React.FC<ElementPanelProps> = ({
@@ -103,7 +104,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               onUpdateElement(element.id, current => withElementText({ ...current, label: text }, text));
             }
           }
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-bold text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+          className={controlClassName}
           placeholder={isCota || isMedida ? t('editor.diagramInspector.orCustomLabel', { value: '{value}' }) : t('editor.diagramInspector.titleOrTextPlaceholder')}
         />
         {(isCota || isMedida) && (
@@ -114,7 +115,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       </div>
 
       {/* Visibilidad de la etiqueta en el lienzo */}
-      <div className="flex items-center justify-between rounded-lg border border-carbon/10 bg-carbon/[0.02] p-2">
+      <Card className="flex items-center justify-between">
         <div>
           <span className="block text-[11px] font-bold text-carbon">{t('editor.diagramInspector.showLabelOnCanvas')}</span>
           <span className="block text-[9px] text-carbon/50">
@@ -128,7 +129,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
           onChange={e => onUpdateElement(element.id, labelVisiblePatch(e.target.checked))}
           className="h-4 w-4 rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
         />
-      </div>
+      </Card>
 
       {/* Tamaño de la etiqueta o cota */}
       {isLabelVisible && (
@@ -146,14 +147,14 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
             onChange={e =>
               onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, isCota ? 14 : 16), }))
             }
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+            className={controlClassName}
           />
         </div>
       )}
 
       {/* Mostrar como subtítulo / Información bajo el título */}
       {isMeasurableOrHeadingCandidate && (
-        <div className="space-y-2 rounded-lg border border-canela/20 bg-canela/[0.03] p-2.5">
+        <Callout className="space-y-2">
           <div className="flex items-center justify-between">
             <div>
               <span className="block text-[11px] font-bold text-canela">{t('editor.diagramInspector.showInSubtitle')}</span>
@@ -193,7 +194,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     `Cambiar formato de lectura ${currentReading.id}`
                   );
                 }}
-                className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+                className={controlClassName}
               >
                 <option value="label-value">{t('editor.diagramInspector.formatNameAndValue')}</option>
                 <option value="value">{t('editor.diagramInspector.formatValueOnly')}</option>
@@ -206,7 +207,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               )}
             </div>
           )}
-        </div>
+        </Callout>
       )}
 
       {/* Parámetros específicos de Cota (dimensionLine) */}
@@ -228,7 +229,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('offset', parseOptionalNumber(e.target.value, 0.35)))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -244,7 +245,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
           </div>
@@ -261,7 +262,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
                 placeholder={t('editor.diagramInspector.unitPlaceholder')}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -278,7 +279,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
           </div>
@@ -303,7 +304,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('unit', e.target.value))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -319,7 +320,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, settingPatch('precision', parseOptionalNumber(e.target.value, 2)))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -336,7 +337,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 16), }))
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
           </div>
@@ -392,7 +393,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                       style?.textOffset?.[1] ?? (kind === 'label' ? 0.04 : isCota ? 0 : 0.35),
                     ], }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+              className={controlClassName}
             />
           </div>
           <div>
@@ -410,7 +411,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                       parseOptionalNumber(e.target.value, 0),
                     ], }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+              className={controlClassName}
             />
           </div>
         </div>

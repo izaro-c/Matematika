@@ -2,6 +2,7 @@ import React from 'react';
 import { useI18n } from '@/i18n';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
 import { LATEX_SYMBOLS } from './visualEditorPresets';
+import { Button, controlClassName, inlineFieldClassName } from '@/fixed-pages/editor/ui/primitives';
 
 function insertSymbol(textareaId: string, code: string) {
   const el = document.getElementById(textareaId) as HTMLTextAreaElement | null;
@@ -40,7 +41,7 @@ export const VisualEditorHeader: React.FC<VisualEditorHeaderProps> = ({
           value={String(metadata.title || '')}
           disabled={isReadOnly || !canEditVisualMetadata}
           onChange={(e) => handleMetadataChange('title', e.target.value)}
-          className="w-full bg-transparent border-none outline-none font-serif font-bold text-3xl text-carbon p-0 mt-1 resize-none focus:ring-0 placeholder-carbon/20"
+          className={`${inlineFieldClassName} font-serif font-bold text-3xl text-carbon mt-1 resize-none placeholder-carbon/20`}
           placeholder={t('editor.visual.conceptTitlePlaceholder')}
           rows={1}
           style={{ height: 'auto' }}
@@ -54,7 +55,7 @@ export const VisualEditorHeader: React.FC<VisualEditorHeaderProps> = ({
           value={String(metadata.description || '')}
           disabled={isReadOnly || !canEditVisualMetadata}
           onChange={(e) => handleMetadataChange('description', e.target.value)}
-          className="w-full bg-transparent border-none outline-none font-serif italic text-base text-carbon/70 p-0 mt-2 resize-none focus:ring-0 placeholder-carbon/30"
+          className={`${inlineFieldClassName} font-serif italic text-base text-carbon/70 mt-2 resize-none placeholder-carbon/30`}
           placeholder={t('editor.visual.conceptDescriptionPlaceholder')}
           rows={2}
           style={{ height: 'auto' }}
@@ -71,11 +72,11 @@ export const VisualEditorHeader: React.FC<VisualEditorHeaderProps> = ({
           {metadata.image ? <img src={resolvePublicOrExternalAsset(String(metadata.image))} alt="" className="aspect-[4/5] h-full w-full object-cover" /> : <div className="flex aspect-[4/5] items-center justify-center font-serif text-3xl text-carbon/25">∑</div>}
         </div>
         <div className="grid content-start gap-3 sm:grid-cols-2">
-          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.fullName')}<input value={String(metadata.name || metadata.title || '')} onChange={event => handleMetadataChange('name', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-3 py-2 font-serif text-base font-bold text-carbon" /></label>
-          <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.birth')}<input type="number" value={Number(metadata.birthYear || 0)} onChange={event => handleMetadataChange('birthYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-          <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.death')}<input type="number" value={Number(metadata.deathYear || 0)} onChange={event => handleMetadataChange('deathYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.placeOrTradition')}<input value={String(metadata.country || '')} onChange={event => handleMetadataChange('country', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
-          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.imagePath')}<input value={String(metadata.image || '')} onChange={event => handleMetadataChange('image', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 font-mono text-[10px] text-carbon" /></label>
+          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.fullName')}<input value={String(metadata.name || metadata.title || '')} onChange={event => handleMetadataChange('name', event.target.value)} className={`${controlClassName} mt-1`} /></label>
+          <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.birth')}<input type="number" value={Number(metadata.birthYear || 0)} onChange={event => handleMetadataChange('birthYear', Number(event.target.value))} className={`${controlClassName} mt-1`} /></label>
+          <label className="text-[10px] font-bold text-carbon/55">{t('editor.visual.death')}<input type="number" value={Number(metadata.deathYear || 0)} onChange={event => handleMetadataChange('deathYear', Number(event.target.value))} className={`${controlClassName} mt-1`} /></label>
+          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.placeOrTradition')}<input value={String(metadata.country || '')} onChange={event => handleMetadataChange('country', event.target.value)} className={`${controlClassName} mt-1`} /></label>
+          <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">{t('editor.visual.imagePath')}<input value={String(metadata.image || '')} onChange={event => handleMetadataChange('image', event.target.value)} className={`${controlClassName} mt-1 font-mono`} /></label>
         </div>
       </section>}
 
@@ -86,14 +87,9 @@ export const VisualEditorHeader: React.FC<VisualEditorHeaderProps> = ({
             <div className="flex gap-1 items-center">
               <span className="ac-label ac-label--2xs ac-label--faint mr-1">{t('editor.visual.insert')}</span>
               {LATEX_SYMBOLS.map(sym => (
-                <button
-                  key={sym.label}
-                  type="button"
-                  onClick={() => insertSymbol('statement-editor', sym.code)}
-                  className="px-1 bg-carbon/5 hover:bg-carbon/10 text-carbon text-[9px] rounded font-mono transition-colors cursor-pointer"
-                >
+                <Button size="sm" className="font-mono" key={sym.label} onClick={() => insertSymbol('statement-editor', sym.code)}>
                   {sym.label}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -102,7 +98,7 @@ export const VisualEditorHeader: React.FC<VisualEditorHeaderProps> = ({
             disabled={!canEditVisualMetadata}
             value={String(metadata.statement || '')}
             onChange={(e) => handleMetadataChange('statement', e.target.value)}
-            className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon leading-relaxed p-0 resize-none focus:ring-0 placeholder-carbon/30"
+            className={`${inlineFieldClassName} font-serif text-sm text-carbon leading-relaxed resize-none placeholder-carbon/30`}
             placeholder={t('editor.visual.statementPlaceholder')}
             rows={2}
             style={{ height: 'auto' }}

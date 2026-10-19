@@ -1,6 +1,7 @@
 import React from 'react';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { useI18n } from '@/i18n';
+import { Chip } from '../primitives';
 import { languageChipStyles, type LanguageChipSize } from './languageChipStyles';
 
 export interface UiLanguageSwitchProps {
@@ -26,19 +27,17 @@ export const UiLanguageSwitch: React.FC<UiLanguageSwitchProps> = ({
     <div role="group" aria-label={ariaLabel ?? t('editor.language.interface')} className={`${styles.container} ${className}`}>
       {SUPPORTED_LANGUAGES.map(language =>
         language.code === lang ? (
-          <span key={language.code} className={styles.active} title={t('editor.language.active', { name: language.name })}>
+          <Chip key={language.code} state="active" title={t('editor.language.active', { name: language.name })}>
             {language.code.toUpperCase()}
-          </span>
+          </Chip>
         ) : (
-          <button
+          <Chip
             key={language.code}
-            type="button"
             onClick={() => select(language.code)}
-            className={styles.option}
             title={t('editor.language.switchUi', { name: language.name })}
           >
             {language.code.toUpperCase()}
-          </button>
+          </Chip>
         ),
       )}
     </div>

@@ -7,6 +7,7 @@ import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeader
 import { diagramVersionStatuses } from '../../model/scene/translationStatus';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Button, Card, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramDataPanelProps {
   model: VisualDiagramModel | null;
@@ -108,21 +109,16 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
           <h2 className="font-serif text-sm font-bold text-carbon">{t('editor.diagramWorkbench.diagramData')}</h2>
         </div>
         {onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label={t('editor.diagramWorkbench.hideDataPanel')}
-            className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65 hover:bg-carbon/5 transition-colors cursor-pointer"
-          >
+          <Button size="sm" onClick={onClose} aria-label={t('editor.diagramWorkbench.hideDataPanel')}>
             {t('editor.diagramWorkbench.hide')}
-          </button>
+          </Button>
         )}
       </header>
 
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
         {/* Idioma de edición y traducción */}
-        <div className="rounded-lg border border-carbon/15 bg-carbon/[0.02] p-3 space-y-2">
+        <Card className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.workingLanguage')}</span>
             <span className="text-[10px] font-bold text-canela">{activeLangConfig.name}</span>
@@ -141,7 +137,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
               {renderRichText(t('editor.diagramWorkbench.editingVariantIn', { language: activeLangConfig.name }), { b: c => <strong>{c}</strong> })}
             </p>
           )}
-        </div>
+        </Card>
 
         {/* Título */}
         <div>
@@ -153,7 +149,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             value={currentTitle}
             onChange={e => handleTitleChange(e.target.value)}
             placeholder={isDefaultLang ? t('editor.diagramWorkbench.diagramTitle') : (model.title || t('editor.diagramWorkbench.titleInSpanish'))}
-            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs font-bold text-carbon focus:border-canela outline-none"
+            className={controlClassName}
           />
         </div>
 
@@ -167,7 +163,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             onChange={e => handleNoteChange(e.target.value)}
             rows={3}
             placeholder={isDefaultLang ? t('editor.diagramWorkbench.notePlaceholder') : (model.note || t('editor.diagramWorkbench.instructionsInSpanish'))}
-            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs text-carbon focus:border-canela outline-none"
+            className={controlClassName}
           />
         </div>
 
@@ -178,7 +174,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             <select
               value={model.mode || 'simulation'}
               onChange={e => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
-              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
+              className={controlClassName}
             >
               <option value="simulation">{t('editor.diagramWorkbench.simulation')}</option>
               <option value="diagram">{t('editor.diagramWorkbench.fixed')}</option>
@@ -192,13 +188,13 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
               value={model.category || ''}
               onChange={e => onUpdateModel({ category: e.target.value }, 'Editar categoría')}
               placeholder={t('editor.diagramWorkbench.theorems')}
-              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
+              className={controlClassName}
             />
           </div>
         </div>
 
         {/* Opciones del Lienzo */}
-        <div className="rounded-lg border border-carbon/15 p-2.5 space-y-2">
+        <Card className="space-y-2">
           <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.canvasAndCoordinates')}</span>
           <div className="flex flex-wrap gap-3">
             <label className="flex items-center gap-1.5 text-xs cursor-pointer">
@@ -238,10 +234,10 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
               <span>{t('editor.diagramWorkbench.titleAndSubtitle')}</span>
             </label>
           </div>
-        </div>
+        </Card>
 
         {/* Encuadre / Viewport */}
-        <div className="rounded-lg border border-carbon/15 p-2.5 space-y-2.5">
+        <Card className="space-y-2.5">
           <span className="ac-label ac-label--xs">{t('editor.diagramWorkbench.framingAndInitialView')}</span>
           {(['bounds', 'home'] as const).map(key => (
             <fieldset key={key} className="space-y-1">
@@ -256,22 +252,22 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                       type="number"
                       value={(model.viewport[key] ?? model.viewport.bounds)[index]}
                       onChange={event => updateViewportValue(key, index, event.target.value)}
-                      className="mt-0.5 w-full rounded border border-carbon/20 bg-lienzo px-1.5 py-1 text-xs text-carbon text-center"
+                      className={`${controlClassName} mt-0.5 text-center`}
                     />
                   </label>
                 ))}
               </div>
             </fieldset>
           ))}
-        </div>
+        </Card>
 
         {/* Lecturas de cabecera */}
-        <div className="rounded-lg border border-carbon/15 p-2.5">
+        <Card>
           <DiagramHeaderReadingsEditor
             model={model}
             onModelEdit={(nextModel, command) => onUpdateModel(nextModel, command?.label ?? 'Editar lecturas')}
           />
-        </div>
+        </Card>
       </div>
     </aside>
   );

@@ -7,6 +7,7 @@ import { useI18n } from '@/i18n';
 import { ensureSceneStack } from './sceneStack';
 import { LayersTab } from './LayersTab';
 import { GroupsTab } from './GroupsTab';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 interface GroupsAndLayersManagerProps {
   model: VisualDiagramModel | null;
@@ -49,24 +50,12 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
           <p className="text-xs italic text-carbon/50">{t('editor.diagramScene.subtitle')}</p>
         </div>
         <div className="flex bg-carbon/10 p-0.5 rounded-lg text-[10px]">
-          <button
-            type="button"
-            onClick={() => setActiveTab('layers')}
-            className={`px-2.5 py-1 rounded-md font-bold transition-all cursor-pointer ${
-              activeTab === 'layers' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-            }`}
-          >
+          <Button size="sm" variant="quiet" aria-pressed={activeTab === 'layers'} onClick={() => setActiveTab('layers')}>
             {t('editor.diagramScene.layersCount', { count: layers.length })}
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('groups')}
-            className={`px-2.5 py-1 rounded-md font-bold transition-all cursor-pointer ${
-              activeTab === 'groups' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-            }`}
-          >
+          </Button>
+          <Button size="sm" variant="quiet" aria-pressed={activeTab === 'groups'} onClick={() => setActiveTab('groups')}>
             {t('editor.diagramScene.groupsCount', { count: groups.length })}
-          </button>
+          </Button>
         </div>
       </div>
 

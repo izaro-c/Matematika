@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
+import { IconButton } from '@/fixed-pages/editor/ui/primitives';
 
 interface BlockActionsProps {
   blockId: string;
@@ -14,10 +15,10 @@ export const BlockActions: React.FC<BlockActionsProps> = ({ blockId, index, bloc
   const { t } = useI18n();
   return (
   <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded border border-carbon/10 bg-lienzo/95 p-1 opacity-0 shadow-sm transition-opacity group-hover/block:opacity-100 group-focus-within/block:opacity-100">
-    <button type="button" disabled={index === 0} onClick={() => moveBlock(index, index - 1)} className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30" title={t('editor.visual.blockUp')}>↑</button>
-    <button type="button" disabled={index === blockCount - 1} onClick={() => moveBlock(index, index + 1)} className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-carbon/20 bg-lienzo text-[10px] text-carbon hover:bg-carbon/5 disabled:opacity-30" title={t('editor.visual.blockDown')}>↓</button>
-    <button type="button" onClick={() => duplicateBlock(blockId)} className="flex h-6 w-6 cursor-pointer items-center justify-center rounded border border-pavo/30 bg-lienzo text-[10px] text-pavo hover:bg-pavo/10" title={t('editor.visual.blockDuplicate')}>⧉</button>
-    <button type="button" onClick={() => removeBlock(blockId)} className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-terracota text-[10px] text-lienzo hover:bg-terracota/80" title={t('editor.visual.blockDelete')}>✕</button>
+    <IconButton size="sm" label={t('editor.visual.blockUp')} disabled={index === 0} onClick={() => moveBlock(index, index - 1)}>↑</IconButton>
+    <IconButton size="sm" label={t('editor.visual.blockDown')} disabled={index === blockCount - 1} onClick={() => moveBlock(index, index + 1)}>↓</IconButton>
+    <IconButton size="sm" label={t('editor.visual.blockDuplicate')} onClick={() => duplicateBlock(blockId)}>⧉</IconButton>
+    <IconButton size="sm" label={t('editor.visual.blockDelete')} onClick={() => removeBlock(blockId)}>✕</IconButton>
   </div>
   );
 };

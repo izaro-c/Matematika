@@ -492,6 +492,211 @@ details[open] > .ed-panel__summary .ed-panel-header__title::after {
   color: color-mix(in srgb, var(--ed-toast-tone) 72%, var(--theme-carbon));
 }
 
+/* ── Chips de idioma: «ES · EU · EN» como un índice, el activo con manícula ── */
+.ed-chips {
+  display: inline-flex;
+  align-items: baseline;
+  column-gap: 0.45rem;
+  max-width: 17rem;
+  overflow-x: auto;
+}
+
+.ed-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: var(--ed-control-height-sm);
+  padding: 0 0.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-text-muted);
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.ed-chip:hover {
+  color: var(--ink-text);
+}
+
+.ed-chip:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: 2px;
+}
+
+.ed-chip--active {
+  color: var(--ink-text);
+  cursor: default;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.ed-chip--active::before {
+  content: "☞";
+  font-variant-caps: normal;
+  text-decoration: none;
+}
+
+.ed-chip--missing {
+  font-style: italic;
+  border-bottom: 1px dashed var(--ed-rule);
+}
+
+.ed-chip__mark {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--theme-ocre);
+}
+
+.ed-chips--compact .ed-chip {
+  min-height: 1.25rem;
+  font-size: 0.8125rem;
+}
+
+/* ── Insignia de cabecera: apunte en cursiva, sin píldora ───────────────── */
+.ed-badge {
+  display: inline-flex;
+  align-items: baseline;
+  max-width: 100%;
+  font-family: var(--font-body-family);
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  color: var(--ink-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.ed-badge--canela { color: var(--theme-canela); }
+.ed-badge--ocre { color: var(--theme-ocre); }
+.ed-badge--musgo { color: var(--theme-musgo); }
+.ed-badge--granada { color: var(--theme-granada); }
+
+/* ── Campo de título en cabecera: sin caja hasta que se enfoca ─────────── */
+.ed-title-input {
+  width: 100%;
+  min-height: var(--ed-control-height-sm);
+  padding: 0 0.35rem;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-text);
+  font-family: var(--font-body-family);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.ed-title-input:hover {
+  border-bottom-color: var(--ed-rule-faint);
+}
+
+.ed-title-input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--ed-rule-strong);
+  background: var(--theme-lienzo);
+}
+
+/* ── Menu: lista desplegable sobre papel ────────────────────────────────── */
+.ed-menu {
+  z-index: 80;
+  overflow: hidden auto;
+  max-height: 24rem;
+  padding: 0.25rem;
+  border: 1px solid var(--ed-rule-strong);
+  border-radius: 1px;
+  background: var(--theme-lienzo);
+  box-shadow: 0 0.25rem 0.75rem color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+}
+
+.ed-menu__item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--ed-control-height-sm);
+  padding: 0.2rem 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-text);
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ed-menu__item:hover:not(:disabled),
+.ed-menu__item:focus-visible {
+  background: var(--ed-wash);
+  outline: none;
+}
+
+.ed-menu__item:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ed-menu__item--danger {
+  color: var(--theme-granada);
+}
+
+.ed-menu__meta {
+  display: block;
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--ink-text-muted);
+}
+
+/* ── Fila de lista o de índice: toda la línea es el botón ───────────────── */
+.ed-row {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: var(--ed-control-height-sm);
+  padding: 0.15rem 0.5rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  background: transparent;
+  color: var(--ink-text);
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ed-row:hover:not(:disabled) {
+  background: var(--ed-wash);
+}
+
+.ed-row:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: -2px;
+}
+
+.ed-row[aria-current="page"],
+.ed-row[aria-current="true"] {
+  border-left-color: var(--ink-text);
+  font-weight: 600;
+}
+
+.ed-row:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ── Paleta de bloques: índice por rúbricas, manícula en la opción activa ─ */
 .ed-palette__list {
   overflow-y: auto;
@@ -667,4 +872,101 @@ details[open] > .ed-panel__summary .ed-panel-header__title::after {
 
 .ed-dragging {
   opacity: 0.4;
+}
+
+/* ── Cabecera del editor: controles más compactos para que quepan en una línea ── */
+.ed-header .ed-button--sm {
+  gap: 0.3rem;
+  padding: 0.1rem 0.45rem 0.15rem;
+  font-size: 0.8125rem;
+}
+
+.ed-header .ed-button--primary {
+  padding-left: 0.45rem;
+}
+
+.ed-header .ed-chips {
+  column-gap: 0.3rem;
+}
+
+.ed-header .ed-chip {
+  font-size: 0.8125rem;
+}
+
+/* ── Swatch: muestra de color redonda ──────────────────────────────────── */
+.ed-swatch {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--ed-rule-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ed-swatch:hover {
+  outline: 1px solid var(--ed-rule);
+  outline-offset: 2px;
+}
+
+.ed-swatch:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: 2px;
+}
+
+.ed-swatch[aria-pressed="true"] {
+  outline: 1px solid var(--ink-text);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .ed-swatch {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* ── Card y Callout: caja con un filete y nota con filete de color ──────── */
+.ed-card {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--ed-rule-faint);
+  border-radius: 1px;
+  background: transparent;
+}
+
+.ed-card--dashed {
+  border-style: dashed;
+  border-color: var(--ed-rule);
+}
+
+.ed-callout {
+  --ed-callout-tone: var(--ed-rule-strong);
+  padding: 0.3rem 0 0.3rem 0.75rem;
+  border-left: 2px solid var(--ed-callout-tone);
+  font-size: 0.9375rem;
+}
+
+.ed-callout--warning { --ed-callout-tone: var(--theme-ocre); }
+.ed-callout--error { --ed-callout-tone: var(--theme-granada); }
+.ed-callout--success { --ed-callout-tone: var(--theme-musgo); }
+
+/* ── Campo en línea: se lee como la propia página, sin caja hasta enfocarlo ── */
+.ed-inline-field {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.ed-inline-field:hover {
+  border-bottom-color: var(--ed-rule-faint);
+}
+
+.ed-inline-field:focus-visible {
+  border-bottom-color: var(--ed-rule-strong);
 }

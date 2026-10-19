@@ -1,6 +1,7 @@
 import React from 'react';
 import { publicationContentSize } from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
 import { useI18n } from '@/i18n';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 export interface PublicationFrameProps {
   mode: 'desktop' | 'tablet' | 'mobile';
@@ -60,13 +61,9 @@ export const PublicationFrame: React.FC<PublicationFrameProps> = ({
           </div>
         </header>
 
-        <div
-          data-testid="publication-diagram-slot"
-          className="overflow-hidden rounded border border-carbon/10 bg-lienzo"
-          style={{ width: content.width, height: content.height }}
-        >
+        <Card className="overflow-hidden" data-testid="publication-diagram-slot" style={{ width: content.width, height: content.height }}>
           <div className="h-full w-full">{children}</div>
-        </div>
+        </Card>
       </div>
     </div>
   );

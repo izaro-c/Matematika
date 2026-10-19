@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import type { DiagramInfoPanelBlock, DiagramInfoPanelRule, DiagramColorToken } from '@/diagrams/public';
 import type { AnnotationObject } from '@/diagrams';
 import type { VisualDiagramModel } from '../../model/types';
@@ -10,6 +9,7 @@ import { COLOR_OPTIONS } from '../../model';
 import { DiagramButton, DiagramField, DiagramPanel, DiagramTabBar } from '../primitives';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Button, Callout, Modal } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramInfoPanelContentEditorProps {
   model: VisualDiagramModel;
@@ -212,27 +212,18 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
         {t('editor.diagramPanels.editorDialogTitle')}
       </DiagramButton>
 
-      {isEditorOpen && createPortal(
-      <div className="fixed inset-0 z-[100] m-auto flex items-center justify-center bg-carbon/50 p-2 shadow-2xl backdrop-blur-sm sm:p-4" role="presentation">
-        <div className="flex h-[min(860px,95vh)] w-full min-w-0 max-w-4xl flex-col overflow-hidden rounded-lg border border-carbon/20 bg-lienzo shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="info-panel-dialog-title">
-          <header className="flex flex-shrink-0 items-center justify-between border-b border-carbon/10 bg-carbon/5 px-4 py-4 sm:px-6">
-            <div>
-              <h2 id="info-panel-dialog-title" className="text-base font-bold text-carbon sm:text-lg">{t('editor.diagramPanels.infoPanel')}</h2>
-              <p className="mt-1 hidden text-[11px] leading-relaxed text-carbon/60 sm:block">{t('editor.diagramPanels.editorDialogSubtitle')}</p>
-            </div>
-            <DiagramButton
-              variant="ghost"
-              className="!min-h-0 rounded-full p-2 text-carbon/60 hover:bg-carbon/10 hover:text-carbon hover:no-underline"
-              onClick={() => setIsEditorOpen(false)}
-              aria-label={t('editor.diagramPanels.closeEditor')}
-            >
-              ✕
-            </DiagramButton>
-          </header>
+      <Modal
+        open={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+        title={t('editor.diagramPanels.infoPanel')}
+        size="lg"
+        footer={<Button variant="primary" onClick={() => setIsEditorOpen(false)}>{t('editor.diagramPanels.done')}</Button>}
+      >
+        <p className="mb-3 italic">{t('editor.diagramPanels.editorDialogSubtitle')}</p>
           <DiagramTabBar
             variant="tabs"
             aria-label={t('editor.diagramPanels.infoPanelSections')}
-            className="grid grid-cols-3 border-b border-carbon/10 bg-lienzo p-2"
+            className="mb-3"
             tabs={[
               { id: 'content', label: t('editor.diagramPanels.tabContent') },
               { id: 'blocks', label: t('editor.diagramPanels.tabBlocks', { count: blocks.length }) },
@@ -242,7 +233,7 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             onTabChange={tabId => setEditorTab(tabId as 'content' | 'blocks' | 'position')}
           />
 
-          <div className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
+        <div className="min-w-0">
         <div className={editorTab === 'position' ? 'block' : 'hidden'}>
         <DiagramPanel title={t('editor.diagramPanels.positionInTheDiagram')} className="border-transparent bg-transparent">
           <DiagramField label={t('editor.diagramPanels.anchoringType')}>
@@ -331,11 +322,11 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
                 <option value="columns">{t('editor.diagramPanels.flexible2ColumnGrid')}</option>
               </select>
             </DiagramField>
-            <div className="flex items-center self-end rounded border border-pavo/15 bg-lienzo p-2 text-[9px] leading-relaxed text-carbon/60 shadow-sm">
+            <Callout className="flex items-center text-[9px]">
               <div>
                 {renderRichText(t('editor.diagramPanels.layoutRecommendation'), { b: c => <strong>{c}</strong>, em: c => <em>{c}</em> })}
               </div>
-            </div>
+            </Callout>
           </div>
 
           <DiagramPanel title={t('editor.diagramPanels.formatGuide')} collapsible defaultOpen={false} className="border-l-2 border-pavo/20 bg-transparent pl-3">
@@ -349,10 +340,10 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             </ul>
           </DiagramPanel>
 
-          {blocks.length === 0 && <div className="rounded-md border-2 border-dashed border-pavo/30 bg-lienzo/50 p-6 text-center shadow-inner">
+          {blocks.length === 0 && <Callout className="text-center">
             <p className="mb-2 text-[11px] font-medium text-carbon/60">{t('editor.diagramPanels.noBlocksTitle')}</p>
             <p className="text-[10px] text-carbon/50">{t('editor.diagramPanels.noBlocksHint')}</p>
-          </div>}
+          </Callout>}
 
           <div className="space-y-4">
             {blocks.map((block, index) => (
@@ -375,16 +366,8 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
           </DiagramButton>
         </DiagramPanel>
         </div>
-          </div>
-
-          <footer className="flex justify-end gap-3 border-t border-carbon/10 bg-carbon/5 px-6 py-4">
-            <DiagramButton variant="primary" className="bg-carbon px-6 shadow-md hover:bg-carbon/80" onClick={() => setIsEditorOpen(false)}>
-              {t('editor.diagramPanels.done')}
-            </DiagramButton>
-          </footer>
         </div>
-      </div>
-    , document.body)}
+      </Modal>
     </>
   );
 };

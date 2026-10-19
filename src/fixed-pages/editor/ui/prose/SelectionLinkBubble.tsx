@@ -4,6 +4,7 @@ import {
   selectionIsInProseSurface,
   wrapSelectionWithTag,
 } from './inlineProseOps';
+import { Button, Card, IconButton } from '@/fixed-pages/editor/ui/primitives';
 
 export interface SelectionLinkBubbleProps {
   disabled?: boolean;
@@ -66,50 +67,24 @@ export function SelectionLinkBubble({
   };
 
   return (
-    <div
-      role="toolbar"
-      aria-label="Acciones sobre la selección"
-      className="pointer-events-auto fixed z-[90] flex -translate-x-1/2 items-center gap-0.5 rounded-xl border border-carbon/20 bg-lienzo px-1 py-1 shadow-xl font-serif"
-      style={{ top: pos.top, left: pos.left }}
-      onMouseDown={event => event.preventDefault()}
-    >
-      <button
-        type="button"
-        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-canela hover:bg-canela/10"
-        onMouseDown={keep(onLinkSelection)}
-        title="Enlazar concepto, teorema o definición"
-      >
+    <Card className="flex items-center gap-0.5" role="toolbar" aria-label="Acciones sobre la selección" style={{ top: pos.top, left: pos.left }} onMouseDown={event => event.preventDefault()}>
+      <Button size="sm" onMouseDown={keep(onLinkSelection)} title="Enlazar concepto, teorema o definición">
         Enlazar
-      </button>
-      <button
-        type="button"
-        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-terracota hover:bg-terracota/10"
-        onMouseDown={keep(onHighlightSelection)}
-        title="Resaltar elemento del diagrama"
-      >
+      </Button>
+      <Button size="sm" variant="danger" onMouseDown={keep(onHighlightSelection)} title="Resaltar elemento del diagrama">
         Diagrama
-      </button>
+      </Button>
       <span className="mx-0.5 h-4 w-px bg-carbon/15" />
-      <button
-        type="button"
-        className="rounded-lg px-2 py-1.5 text-xs font-bold hover:bg-carbon/5"
-        onMouseDown={keep(() => {
+      <IconButton size="sm" label="Negrita" onMouseDown={keep(() => {
           if (wrapSelectionWithTag('strong')) onProseMutated?.();
-        })}
-        title="Negrita"
-      >
+        })}>
         N
-      </button>
-      <button
-        type="button"
-        className="rounded-lg px-2 py-1.5 text-xs italic hover:bg-carbon/5"
-        onMouseDown={keep(() => {
+      </IconButton>
+      <IconButton size="sm" label="Cursiva" onMouseDown={keep(() => {
           if (wrapSelectionWithTag('em')) onProseMutated?.();
-        })}
-        title="Cursiva"
-      >
+        })}>
         C
-      </button>
-    </div>
+      </IconButton>
+    </Card>
   );
 }

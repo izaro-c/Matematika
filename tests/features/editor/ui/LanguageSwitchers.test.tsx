@@ -18,7 +18,7 @@ describe('UiLanguageSwitch', () => {
     render(<UiLanguageSwitch onSelect={onSelect} />);
     const active = screen.getByText('ES');
     expect(active.tagName).toBe('SPAN');
-    expect(active.className).toContain('bg-canela');
+    expect(active.className).toContain('ed-chip--active');
     fireEvent.click(screen.getByText('EU'));
     expect(onSelect).toHaveBeenCalledWith('eu');
   });
@@ -40,7 +40,7 @@ describe('DocumentVersions', () => {
     fireEvent.click(screen.getByText('EN'));
     expect(onSelect).toHaveBeenCalledWith('en');
     const create = screen.getByText('+EU');
-    expect(create.className).toContain('border-dashed');
+    expect(create.className).toContain('ed-chip--missing');
     fireEvent.click(create);
     expect(onCreate).toHaveBeenCalledWith('eu');
   });
@@ -55,7 +55,7 @@ describe('DocumentVersions', () => {
     );
     expect(screen.getByText('EU').closest('button')?.getAttribute('title')).toMatch(/desfasada/);
     expect(screen.queryByText('+EN')).toBeNull();
-    expect(screen.getByRole('group').className).toContain('h-6');
+    expect(screen.getByRole('group').className).toContain('ed-chips--compact');
   });
 
   it('en un diagrama, el idioma que falta se ofrece para traducir las etiquetas', () => {
@@ -69,16 +69,16 @@ describe('DocumentVersions', () => {
 });
 
 describe('Header Primitives Cohesion', () => {
-  it('renders HeaderBadge with uniform h-6 class and variants', () => {
+  it('renders HeaderBadge with the shared badge skin and variants', () => {
     const { container } = render(
       <HeaderBadge variant="canela">Teorema</HeaderBadge>
     );
     const badge = container.querySelector('span');
-    expect(badge?.className).toContain('h-6');
-    expect(badge?.className).toContain('text-canela');
+    expect(badge?.className).toContain('ed-badge');
+    expect(badge?.className).toContain('ed-badge--canela');
   });
 
-  it('renders HeaderPillContainer with h-8 and HeaderPillButton with h-7', () => {
+  it('renders HeaderPillButton as a quiet toggle button', () => {
     const onClick = vi.fn();
     render(
       <HeaderPillContainer>
@@ -88,11 +88,12 @@ describe('Header Primitives Cohesion', () => {
     );
 
     const docBtn = screen.getByText('Documentos');
-    expect(docBtn.className).toContain('h-7');
-    expect(docBtn.className).toContain('bg-lienzo');
+    expect(docBtn.className).toContain('ed-button--quiet');
+    expect(docBtn.getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByText('Diagramas').getAttribute('aria-pressed')).toBe('false');
   });
 
-  it('renders HeaderIconButton and HeaderActionButton with h-8 height', () => {
+  it('renders HeaderIconButton and HeaderActionButton with the primitives', () => {
     render(
       <div>
         <HeaderIconButton aria-label="Toggle">Icon</HeaderIconButton>
@@ -100,19 +101,14 @@ describe('Header Primitives Cohesion', () => {
       </div>
     );
 
-    const iconBtn = screen.getByLabelText('Toggle');
-    expect(iconBtn.className).toContain('h-8');
-    expect(iconBtn.className).toContain('w-8');
-
-    const actionBtn = screen.getByText('Guardar');
-    expect(actionBtn.className).toContain('h-8');
+    expect(screen.getByLabelText('Toggle').className).toContain('ed-icon-button');
+    expect(screen.getByText('Guardar').className).toContain('ed-button--primary');
   });
 
-  it('renders HeaderTitleInput with h-8 height', () => {
+  it('renders HeaderTitleInput with the title skin', () => {
     const { container } = render(
       <HeaderTitleInput placeholder="Título" />
     );
-    const input = container.querySelector('input');
-    expect(input?.className).toContain('h-8');
+    expect(container.querySelector('input')?.className).toContain('ed-title-input');
   });
 });

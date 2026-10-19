@@ -14,6 +14,9 @@ import {
 import { EditorLandingCard, EditorLandingCardSkeleton } from './EditorLandingCard';
 import { useEditorLanding, type LandingSection } from './useEditorLanding';
 import { useI18n } from '@/i18n';
+import { Button, IconButton, Tabs, controlClassName } from '../primitives';
+import { cx } from '../primitives/classNames';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 interface EditorLandingViewProps {
   files: FileNode[];
@@ -132,7 +135,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
       {/* Main Landing Area */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-2xl border border-carbon/15 bg-lienzo/80 p-6 sm:p-8 shadow-sm backdrop-blur-xs">
+        <Card className="relative overflow-hidden sm:p-8">
           <div className="absolute top-0 right-0 -mt-8 -mr-8 h-48 w-48 rounded-full bg-canela/10 blur-2xl" />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="max-w-2xl">
@@ -143,18 +146,15 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 {activeSection === 'documents' ? t('editor.landing.docHeroDesc') : t('editor.landing.diagramHeroDesc')}
               </p>
             </div>
-            <button
-              type="button"
+            <Button
+              variant="primary"
+              className="shrink-0"
               onClick={activeSection === 'documents' ? onCreateDocument : onCreateDiagram}
-              className="flex items-center justify-center space-x-2 rounded-xl bg-canela px-5 py-3 text-sm font-bold text-lienzo shadow-xs hover:bg-canela/90 transition-all shrink-0 cursor-pointer"
             >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              <span>{activeSection === 'documents' ? t('editor.landing.newDocument') : t('editor.landing.newDiagram')}</span>
-            </button>
+              {activeSection === 'documents' ? t('editor.landing.newDocument') : t('editor.landing.newDiagram')}
+            </Button>
           </div>
-        </div>
+        </Card>
 
         {/* Toolbar & Filters */}
         <div className="mt-8 space-y-4">
@@ -169,37 +169,30 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder={activeSection === 'documents' ? t('editor.landing.searchDocPlaceholder') : t('editor.landing.searchDiagramPlaceholder')}
-                className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2 pl-9 pr-4 text-xs text-carbon placeholder:text-carbon/40 focus:border-canela focus:outline-none shadow-2xs font-serif"
+                className={cx(controlClassName, 'pl-9 pr-8')}
               />
               {searchQuery && (
-                <button
-                  type="button"
+                <IconButton
+                  size="sm"
+                  label={t('editor.common.close')}
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-2.5 text-xs text-carbon/40 hover:text-carbon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2"
                 >
                   ✕
-                </button>
+                </IconButton>
               )}
             </div>
 
             {/* View Toggles & Sorting */}
             <div className="flex items-center space-x-2">
-              <button
-                type="button"
-                onClick={() => setOnlyFavorites(!onlyFavorites)}
-                className={`flex items-center space-x-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                  onlyFavorites
-                    ? 'border-ocre bg-ocre/10 text-ocre font-bold shadow-2xs'
-                    : 'border-carbon/15 bg-lienzo text-carbon/70 hover:border-carbon/30'
-                }`}
-              >
+              <Button size="sm" aria-pressed={onlyFavorites} onClick={() => setOnlyFavorites(!onlyFavorites)}>
                 ★ {t('editor.landing.favoritesOnly')} ({favoritePaths.length})
-              </button>
+              </Button>
 
               <select
                 value={sortBy}
                 onChange={e => setSortBy(e.target.value as typeof sortBy)}
-                className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-semibold text-carbon/80 focus:border-canela focus:outline-none cursor-pointer"
+                className={cx(controlClassName, 'w-auto')}
               >
                 <option value="name">{t('editor.landing.sortByName')}</option>
                 <option value="type">{t('editor.landing.sortByType')}</option>
@@ -209,22 +202,13 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           </div>
 
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {availableTypes.map(type => (
-              <button
-                key={type.id}
-                type="button"
-                onClick={() => setSelectedType(type.id)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  selectedType === type.id
-                    ? 'bg-carbon text-lienzo shadow-2xs font-bold'
-                    : 'border border-carbon/15 bg-lienzo text-carbon/70 hover:border-carbon/30 hover:bg-carbon/5'
-                }`}
-              >
-                {type.label} <span className="ml-1 opacity-60">({type.count})</span>
-              </button>
-            ))}
-          </div>
+          <Tabs
+            variant="nav"
+            aria-label={t('editor.create.typeLabel')}
+            activeTab={selectedType}
+            onTabChange={setSelectedType}
+            tabs={availableTypes.map(type => ({ id: type.id, label: <>{type.label} <span className="opacity-60">({type.count})</span></> }))}
+          />
         </div>
 
         {/* Results Info */}
@@ -275,7 +259,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             ))}
           </div>
         ) : totalCount === 0 ? (
-          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-12 text-center">
+          <Card dashed className="mt-12 flex flex-col items-center justify-center text-center">
             <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
@@ -285,9 +269,9 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
               {t('editor.landing.createFirstPrompt')}
             </p>
-          </div>
+          </Card>
         ) : (
-          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-12 text-center">
+          <Card dashed className="mt-12 flex flex-col items-center justify-center text-center">
             <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -297,18 +281,17 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
               {t('editor.landing.noMatchingItems')}
             </p>
-            <button
-              type="button"
+            <Button
+              className="mt-4"
               onClick={() => {
                 setSearchQuery('');
                 setSelectedType('all');
                 setOnlyFavorites(false);
               }}
-              className="mt-4 rounded-lg border border-carbon/20 bg-lienzo px-4 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 transition-all cursor-pointer"
             >
               {t('editor.landing.clearFilters')}
-            </button>
-          </div>
+            </Button>
+          </Card>
         )}
       </main>
     </div>

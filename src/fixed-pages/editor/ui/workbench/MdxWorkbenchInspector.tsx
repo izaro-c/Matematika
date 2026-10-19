@@ -4,6 +4,7 @@ import type { Block } from '@/fixed-pages/editor/session/parser';
 import { MetadataPanel } from '../panels/MetadataPanel';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { WorkbenchAsideTabs } from './WorkbenchAsideTabs';
+import { IconButton } from '../primitives';
 import { useI18n } from '@/i18n';
 
 import type { MetadataPanelProps, PageDiagramLink } from '../panels/MetadataPanel';
@@ -54,17 +55,11 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
       activeTab={activeTab}
       onTabChange={id => setActiveTab(id as InspectorTab)}
       trailing={
-        <button
-          type="button"
-          onClick={props.onClose}
-          className="ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-carbon/60 hover:bg-carbon/10 hover:text-carbon transition-colors cursor-pointer"
-          title={t('editor.mdx.hideDetails')}
-          aria-label={t('editor.mdx.hideDetails')}
-        >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <IconButton size="sm" label={t('editor.mdx.hideDetails')} onClick={props.onClose}>
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </button>
+        </IconButton>
       }
     >
       {activeTab === 'page' && (

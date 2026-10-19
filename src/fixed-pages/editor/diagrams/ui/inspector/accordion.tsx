@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
+import { RowButton } from '@/fixed-pages/editor/ui/primitives';
 
 export const DEFAULT_ACCORDION_STATE: Record<string, boolean> = {
   identity: true,
@@ -39,17 +40,12 @@ interface AccordionHeaderProps {
 }
 
 export const AccordionHeader: React.FC<AccordionHeaderProps> = ({ sec, title, isOpen, onToggle }) => (
-  <button
-    type="button"
-    aria-expanded={isOpen}
-    onClick={() => onToggle(sec)}
-    className="flex w-full items-center justify-between font-serif text-xs font-bold uppercase tracking-wider text-carbon/70 py-1 cursor-pointer select-none"
-  >
+  <RowButton aria-expanded={isOpen} onClick={() => onToggle(sec)}>
     <span>{title}</span>
     <span className="text-carbon/40 hover:text-carbon transition-colors">
       {isOpen ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
     </span>
-  </button>
+  </RowButton>
 );
 
 interface AccordionSectionProps {

@@ -4,6 +4,9 @@ import { cx } from './classNames';
 /** Class for a bare input, select or textarea outside a Field. */
 export const controlClassName = 'ed-control';
 
+/** Class for an editor that reads as the page itself (a title, a paragraph): no box until it is focused. */
+export const inlineFieldClassName = 'ed-inline-field';
+
 type ControlProps = {
   id?: string;
   className?: string;

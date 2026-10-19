@@ -27,8 +27,9 @@ import {
 } from '../../model';
 import { withResolvedPointConstraints } from '@/diagrams/geometry/layout/scene';
 import { objectKind } from '@/diagrams';
-import { IconClose, IconPlus, IconTrash } from '../toolbar/WorkbenchIcons';
+import { IconPlus, IconTrash } from '../toolbar/WorkbenchIcons';
 import { useI18n } from '@/i18n';
+import { Button, Card, Field, IconButton, Modal, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface ConstraintEditorProps {
   model: VisualDiagramModel | null;
@@ -128,17 +129,13 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
             {t('editor.diagramConstraints.constraintsSubtitle')}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={() => {
+        <Button size="sm" variant="primary" onClick={() => {
             setNewTargetId(selectedId || points[0]?.id || '');
             setShowAddModal(true);
-          }}
-          className="flex items-center space-x-1 px-2.5 py-1 bg-canela text-lienzo rounded font-bold hover:bg-canela/90 transition-all cursor-pointer text-[11px] shadow-2xs"
-        >
+          }}>
           <IconPlus className="w-3 h-3" />
           <span>{t('editor.diagramConstraints.constraint')}</span>
-        </button>
+        </Button>
       </div>
 
       {activeConstraints.length === 0 ? (
@@ -171,19 +168,14 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                     />
                     <span className="font-bold text-xs text-carbon">{c.label || presentation.label}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteConstraint(c.id)}
-                    className="text-granada hover:bg-granada/10 p-1 rounded text-[10px] cursor-pointer"
-                    title={t('editor.diagramConstraints.deleteConstraint')}
-                  >
+                  <IconButton size="sm" tone="danger" label={t('editor.diagramConstraints.deleteConstraint')} onClick={() => handleDeleteConstraint(c.id)}>
                     <IconTrash className="w-3.5 h-3.5" />
-                  </button>
+                  </IconButton>
                 </div>
 
                 <p className="text-[10px] text-carbon/60 mb-2 leading-tight">{presentation.description}</p>
 
-                <div className="space-y-1.5 bg-carbon/5 p-2 rounded-lg border border-carbon/10">
+                <Card className="space-y-1.5">
                   <span className="text-[10px] font-bold text-carbon/70 block">
                     {t('editor.diagramConstraints.referencesCount', { current: c.refs.length, total: presentation.refs })}
                   </span>
@@ -196,7 +188,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                         ? candidates
                         : [{ id: refId, label: refId }, ...candidates];
                       return (
-                        <div key={slotIdx} className="flex flex-col space-y-0.5 text-[10px] bg-lienzo p-1.5 rounded border border-carbon/10">
+                        <Card className="flex flex-col space-y-0.5 text-[10px]" key={slotIdx}>
                           <div className="flex items-center justify-between">
                             <span className="font-mono text-canela font-bold">{t('editor.diagramConstraints.slotN', { n: slotIdx + 1 })}</span>
                             <span className="text-[10px] text-carbon/60 font-medium italic">
@@ -206,7 +198,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                           <select
                             value={refId}
                             onChange={e => handleUpdateSlotRef(c.id, slotIdx, e.target.value)}
-                            className="w-full bg-carbon/5 border border-carbon/20 rounded px-1.5 py-1 text-xs text-carbon font-mono font-bold"
+                            className={`${controlClassName} font-mono`}
                           >
                             {!refId && <option value="">{t('editor.diagramConstraints.select')}</option>}
                             {options.map(cand => (
@@ -215,11 +207,11 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                               </option>
                             ))}
                           </select>
-                        </div>
+                        </Card>
                       );
                     })}
                   </div>
-                </div>
+                </Card>
 
                 {c.kind === 'distance' && (
                   <label className="mt-2 block text-[10px] font-bold text-carbon/70">
@@ -233,7 +225,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                         value: Number(e.target.value),
                         expression: undefined,
                       })}
-                      className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs font-mono"
+                      className={`${controlClassName} mt-0.5 font-mono`}
                     />
                   </label>
                 )}
@@ -245,7 +237,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       type="text"
                       value={c.expression ?? ''}
                       onChange={e => handleUpdateConstraintField(c.id, { expression: e.target.value })}
-                      className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs font-mono"
+                      className={`${controlClassName} mt-0.5 font-mono`}
                     />
                   </label>
                 )}
@@ -258,7 +250,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       onChange={e => handleUpdateConstraintField(c.id, {
                         areaMembership: e.target.value as AreaMembership,
                       })}
-                      className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs"
+                      className={`${controlClassName} mt-0.5`}
                     >
                       <option value="interior">{t('editor.diagramConstraints.interior')}</option>
                       <option value="boundary">{t('editor.diagramConstraints.perimeterOrBoundary')}</option>
@@ -274,7 +266,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       onChange={e => handleUpdateConstraintField(c.id, {
                         side: Number(e.target.value) as 1 | -1,
                       })}
-                      className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-1.5 py-1 text-xs"
+                      className={`${controlClassName} mt-0.5`}
                     >
                       <option value={1}>{t('editor.diagramConstraints.positive')}</option>
                       <option value={-1}>{t('editor.diagramConstraints.negative')}</option>
@@ -293,26 +285,22 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
         </div>
       )}
 
-      {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-xs p-4">
-          <div className="w-full max-w-md bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-4 space-y-3 font-serif">
-            <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
-              <h3 className="font-bold text-sm text-carbon">{t('editor.diagramConstraints.newConstraint')}</h3>
-              <button
-                type="button"
-                onClick={() => setShowAddModal(false)}
-                className="text-carbon/60 hover:text-carbon p-1 cursor-pointer"
-              >
-                <IconClose />
-              </button>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-carbon/80 mb-1">{t('editor.diagramConstraints.constraintMainObject')}</label>
+      <Modal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        title={t('editor.diagramConstraints.newConstraint')}
+        footer={
+          <>
+            <Button onClick={() => setShowAddModal(false)}>{t('editor.diagramConstraints.cancel')}</Button>
+            <Button variant="primary" onClick={handleAddConstraint}>{t('editor.diagramConstraints.createConstraint')}</Button>
+          </>
+        }
+      >
+        <div className="space-y-3">
+            <Field label={t('editor.diagramConstraints.constraintMainObject')}>
               <select
                 value={newTargetId}
                 onChange={e => setNewTargetId(e.target.value)}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon"
               >
                 <optgroup label={t('editor.diagramConstraints.points')}>
                   {points.map(p => (
@@ -329,14 +317,12 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                   ))}
                 </optgroup>
               </select>
-            </div>
+            </Field>
 
-            <div>
-              <label className="block text-xs font-bold text-carbon/80 mb-1">{t('editor.diagramConstraints.constraintType')}</label>
+            <Field label={t('editor.diagramConstraints.constraintType')}>
               <select
                 value={newKind}
                 onChange={e => setNewKind(e.target.value as RelationIntent)}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon"
               >
                 {(() => {
                   const targetScope: RelationScope | undefined = points.some(p => p.id === (newTargetId || selectedId))
@@ -364,35 +350,17 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                   });
                 })()}
               </select>
-            </div>
+            </Field>
 
-            <div className="bg-carbon/5 p-2 rounded-lg border border-carbon/10 text-[11px]">
+            <div className="border-l-2 border-[color:var(--ed-rule-strong)] pl-3 text-sm">
               <span className="font-bold block text-carbon">{t('editor.diagramConstraints.informationAndCompatibility')}</span>
               <p className="text-carbon/70">{constraintPresentation(newKind).description}</p>
               <p className="text-carbon/50 mt-1">
                 {t(constraintPresentation(newKind).refs === 1 ? 'editor.diagramConstraints.requiresRefsOne' : 'editor.diagramConstraints.requiresRefsOther', { count: constraintPresentation(newKind).refs })}
               </p>
             </div>
-
-            <div className="flex justify-end space-x-2 pt-2 border-t border-carbon/10">
-              <button
-                type="button"
-                onClick={() => setShowAddModal(false)}
-                className="px-3 py-1.5 border border-carbon/20 rounded-lg text-xs font-bold text-carbon/70 hover:bg-carbon/5 cursor-pointer"
-              >
-                {t('editor.diagramConstraints.cancel')}
-              </button>
-              <button
-                type="button"
-                onClick={handleAddConstraint}
-                className="px-4 py-1.5 bg-canela text-lienzo rounded-lg text-xs font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
-              >
-                {t('editor.diagramConstraints.createConstraint')}
-              </button>
-            </div>
-          </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 };

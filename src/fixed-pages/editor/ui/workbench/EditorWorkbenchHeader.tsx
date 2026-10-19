@@ -4,6 +4,7 @@ import { useI18n } from '@/i18n';
 import { isDarkMode, setTheme } from '@/lib/theme/theme';
 import { routePath } from '@/lib/routes';
 import { Logo } from '@/components/ui/Logo';
+import { Button, Modal } from '../primitives';
 import { IconSun, IconMoon, IconClose } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
 import {
   HeaderContainer,
@@ -59,25 +60,20 @@ function AvisosButton({ errorCount, warningCount, onOpen, open, healthyLabel }: 
   const healthy = healthyLabel ?? t('editor.nav.warnings');
   const summary = hasErrors || hasWarnings ? t('editor.common.errorsAndWarnings', { errors: errorCount, warnings: warningCount }) : healthy;
   return (
-    <button
-      type="button"
+    <Button
+      size="sm"
+      variant={hasErrors ? 'danger' : 'secondary'}
       onClick={onOpen}
       aria-expanded={open}
-      className={`inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border px-2.5 text-xs font-semibold tabular-nums transition-all cursor-pointer select-none ${
-        hasErrors
-          ? 'border-granada/30 bg-granada/10 text-granada animate-pulse'
-          : hasWarnings
-            ? 'border-ocre/30 bg-ocre/10 text-ocre'
-            : 'border-canela/30 bg-canela/10 text-canela'
-      }`}
       title={summary}
       aria-label={summary}
+      className="tabular-nums"
     >
-      <span className={`h-2 w-2 rounded-full ${hasErrors ? 'bg-granada' : hasWarnings ? 'bg-ocre' : 'bg-canela'}`} />
       <span className="hidden sm:inline">
         {hasErrors ? t('editor.common.errorsShort', { count: errorCount }) : hasWarnings ? t('editor.common.warningsShort', { count: warningCount }) : healthy}
       </span>
-    </button>
+      <span className="sm:hidden" aria-hidden="true">{hasErrors ? errorCount : hasWarnings ? warningCount : '✓'}</span>
+    </Button>
   );
 }
 
@@ -182,7 +178,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
 
         <div className="flex min-w-0 items-center gap-2">
           {pathCrumbs.length > 0 && (
-            <nav aria-label={t('editor.nav.documentPath')} className="hidden min-w-0 shrink md:block">
+            <nav aria-label={t('editor.nav.documentPath')} className="hidden min-w-0 shrink 2xl:block">
               <ol className="flex min-w-0 items-center gap-1 font-serif text-xs italic text-carbon/55">
                 {pathCrumbs.map((crumb, index) => (
                   <li key={`${index}-${crumb}`} className="flex min-w-0 items-center gap-1">
@@ -235,29 +231,28 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
       </div>
     </HeaderContainer>
 
-      {pendingAction && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 p-4" role="dialog" aria-modal="true" aria-labelledby="editor-header-close-title">
-          <div className="w-full max-w-sm rounded-xl border border-carbon/15 bg-lienzo p-4 shadow-xl">
-            <h2 id="editor-header-close-title" className="font-serif text-sm font-bold text-carbon">{t('editor.save.unsavedChanges')}</h2>
-            <p className="mt-2 text-xs text-carbon/70">{closeConfirmMessage ?? t('editor.save.unsavedCloseConfirm')}</p>
-            <div className="mt-4 flex justify-end gap-2">
-              <HeaderActionButton onClick={() => setPendingAction(null)} variant="secondary">
-                {t('editor.save.stay')}
-              </HeaderActionButton>
-              <HeaderActionButton
-                onClick={() => {
-                  const action = pendingAction;
-                  setPendingAction(null);
-                  action();
-                }}
-                variant="pavo"
-              >
-                {t('editor.save.exitWithoutSaving')}
-              </HeaderActionButton>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        open={Boolean(pendingAction)}
+        onClose={() => setPendingAction(null)}
+        title={t('editor.save.unsavedChanges')}
+        footer={
+          <>
+            <Button onClick={() => setPendingAction(null)}>{t('editor.save.stay')}</Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                const action = pendingAction;
+                setPendingAction(null);
+                action?.();
+              }}
+            >
+              {t('editor.save.exitWithoutSaving')}
+            </Button>
+          </>
+        }
+      >
+        <p>{closeConfirmMessage ?? t('editor.save.unsavedCloseConfirm')}</p>
+      </Modal>
     </>
   );
 };

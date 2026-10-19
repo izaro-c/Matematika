@@ -10,6 +10,7 @@ import type { VisualDiagramModel } from '../../model/types';
 import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramExpressionFieldProps {
   model: VisualDiagramModel;
@@ -224,13 +225,13 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
                     </optgroup>
                   ))}
                 </select>
-                <button type="button" disabled={!chosenVariable} className="rounded border border-pavo/25 bg-lienzo px-2 text-[10px] font-bold text-pavo disabled:opacity-35" onClick={() => insert(chosenVariable)}>{t('editor.diagramPanels.insert')}</button>
+                <Button size="sm" disabled={!chosenVariable} onClick={() => insert(chosenVariable)}>{t('editor.diagramPanels.insert')}</Button>
               </div>
               <p className="text-[9px] text-carbon/45">{t('editor.diagramPanels.variablesHint')}</p>
             </div>
           )}
           <div className="flex flex-wrap gap-1" aria-label={t('editor.diagramPanels.shortcutsFor', { label })}>
-            {EXPRESSION_SHORTCUTS.map(shortcut => <button key={shortcut.display} type="button" className="rounded-md border border-carbon/20 bg-lienzo shadow-sm px-2 py-1 font-mono text-[9px] text-carbon/70 hover:bg-carbon/5 hover:-translate-y-[0.5px] hover:shadow transition-all duration-200 active:translate-y-0 active:scale-95" onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</button>)}
+            {EXPRESSION_SHORTCUTS.map(shortcut => <Button size="sm" className="font-mono" key={shortcut.display} onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</Button>)}
           </div>
             <div className="space-y-1 border-t border-carbon/10 pt-2 text-[9px] leading-relaxed text-carbon/55 break-words">
               <p>{renderRichText(t('editor.diagramPanels.exprHelpOperators'), { code: c => <code>{c}</code> })}</p>

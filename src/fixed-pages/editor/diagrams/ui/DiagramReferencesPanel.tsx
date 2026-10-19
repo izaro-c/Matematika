@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { getDiagramUsages } from '../references/usageIndex';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { Button, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramReferencesPanelProps {
   filePath: string | null;
@@ -44,15 +45,12 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
               value={mdxPath}
               onChange={event => setMdxPath(event.target.value)}
               placeholder="database/content/definitions/ejemplo.mdx"
-              className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 font-mono text-xs"
+              className={`${controlClassName} mt-1 font-mono`}
             />
           </label>
-          <button
-            type="submit"
-            className="min-h-10 rounded border border-pavo/20 bg-pavo/10 px-3 text-[10px] font-bold text-pavo hover:bg-pavo/15"
-          >
+          <Button size="sm" type="submit">
             {t('editor.diagramEditors.linkToMdxPage')}
-          </button>
+          </Button>
         </form>
       )}
 

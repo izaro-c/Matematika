@@ -15,6 +15,7 @@ import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapabil
 import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
 import { documentPathCrumbs } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { useI18n } from '@/i18n';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
@@ -138,40 +139,23 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       center={
         <>
           <HeaderPillContainer>
-            <button
-              type="button"
-              onClick={onUndo}
-              disabled={!canUndo}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
-              title={t('editor.diagramWorkbench.undoLastActionCtrl')}
-            >
+            <Button size="sm" className="w-7" onClick={onUndo} disabled={!canUndo} title={t('editor.diagramWorkbench.undoLastActionCtrl')}>
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
               </svg>
-            </button>
-            <button
-              type="button"
-              onClick={onRedo}
-              disabled={!canRedo}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
-              title={t('editor.diagramWorkbench.redoActionCtrlY')}
-            >
+            </Button>
+            <Button size="sm" className="w-7" onClick={onRedo} disabled={!canRedo} title={t('editor.diagramWorkbench.redoActionCtrlY')}>
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 10H11a8 8 0 00-8 8v2m18-10l-6 6m6-6l-6-6" />
               </svg>
-            </button>
+            </Button>
             <div className="mx-0.5 h-4 w-px bg-carbon/15" />
-            <button
-              type="button"
-              onClick={onResetViewport}
-              className="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium text-carbon/80 transition-all hover:bg-carbon/10 cursor-pointer leading-none"
-              title={t('editor.diagramWorkbench.centerTitle')}
-            >
+            <Button size="sm" onClick={onResetViewport} title={t('editor.diagramWorkbench.centerTitle')}>
               <svg className="h-3.5 w-3.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
               <span className="hidden md:inline">{t('editor.diagramWorkbench.center')}</span>
-            </button>
+            </Button>
           </HeaderPillContainer>
           <HeaderPillContainer className="hidden lg:inline-flex">
             <HeaderPillButton active={frameMode === 'editor'} onClick={() => onSelectFrameMode('editor')}>

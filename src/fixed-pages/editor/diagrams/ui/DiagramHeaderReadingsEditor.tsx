@@ -4,6 +4,7 @@ import React from 'react';
 import type { DiagramHeaderConfiguration, DiagramHeaderReading } from '@/diagrams/public';
 import type { VisualDiagramModel } from '../model/types';
 import { useI18n } from '@/i18n';
+import { Button, IconButton, SegmentedControl, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramHeaderReadingsEditorProps {
   model: VisualDiagramModel;
@@ -67,7 +68,7 @@ function EqualityTermsEditor({ reading, candidates, onChange }: EqualityTermsEdi
           <span className="text-center font-serif text-sm font-bold text-carbon/45">{index === 0 ? '' : '='}</span>
           <select
             aria-label={t('editor.diagramEditors.equalityTermN', { n: index + 1 })}
-            className="min-h-10 min-w-0 rounded border border-carbon/15 bg-lienzo px-2 text-xs"
+            className={`${controlClassName} min-w-0`}
             value={sourceId}
             onChange={event => onChange(replaceSource(sourceIds, index, event.target.value))}
           >
@@ -75,10 +76,10 @@ function EqualityTermsEditor({ reading, candidates, onChange }: EqualityTermsEdi
               <option key={candidate.id} value={candidate.id} disabled={candidate.id !== sourceId && sourceIds.includes(candidate.id)}>{candidate.label}</option>
             ))}
           </select>
-          <button type="button" aria-label={t('editor.diagramEditors.removeTermN', { n: index + 1 })} disabled={sourceIds.length <= 2} onClick={() => onChange(sourceIds.filter((_, sourceIndex) => sourceIndex !== index))} className="min-h-10 rounded text-sm font-bold text-granada hover:bg-granada/5 disabled:opacity-20">×</button>
+          <IconButton size="sm" tone="danger" label={t('editor.diagramEditors.removeTermN', { n: index + 1 })} disabled={sourceIds.length <= 2} onClick={() => onChange(sourceIds.filter((_, sourceIndex) => sourceIndex !== index))}>×</IconButton>
         </div>
       ))}
-      <button type="button" disabled={!unusedCandidate} onClick={() => unusedCandidate && onChange([...sourceIds, unusedCandidate.id])} className="min-h-10 w-full rounded border border-dashed border-carbon/20 text-[10px] font-bold text-carbon/55 hover:bg-carbon/5 disabled:opacity-35">{t('editor.diagramEditors.addTerm')}</button>
+      <Button size="sm" fullWidth disabled={!unusedCandidate} onClick={() => unusedCandidate && onChange([...sourceIds, unusedCandidate.id])}>{t('editor.diagramEditors.addTerm')}</Button>
     </div>
   );
 }
@@ -109,10 +110,16 @@ export const DiagramHeaderReadingsEditor: React.FC<DiagramHeaderReadingsEditorPr
 
       {header.readingsMode !== 'hidden' && (
         <>
-          <div className="mt-2 grid grid-cols-2 rounded border border-carbon/10 bg-carbon/[0.02] p-0.5" role="radiogroup" aria-label={t('editor.diagramEditors.headerModeAria')}>
-            <button type="button" role="radio" aria-checked={header.readingsMode === 'automatic'} onClick={() => setMode('automatic')} className={`min-h-10 rounded px-2 text-[10px] font-bold ${header.readingsMode === 'automatic' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>{t('editor.diagramEditors.automatic')}</button>
-            <button type="button" role="radio" aria-checked={header.readingsMode === 'custom'} onClick={() => setMode('custom')} className={`min-h-10 rounded px-2 text-[10px] font-bold ${header.readingsMode === 'custom' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>{t('editor.diagramEditors.custom')}</button>
-          </div>
+          <SegmentedControl
+            className="mt-2"
+            aria-label={t('editor.diagramEditors.headerModeAria')}
+            value={header.readingsMode as 'automatic' | 'custom'}
+            onChange={setMode}
+            options={[
+              { value: 'automatic', label: t('editor.diagramEditors.automatic') },
+              { value: 'custom', label: t('editor.diagramEditors.custom') },
+            ]}
+          />
 
           {header.readingsMode === 'automatic' && <p className="mt-2 text-[10px] text-carbon/45">{t('editor.diagramEditors.automaticModeHint')}</p>}
 
@@ -122,10 +129,10 @@ export const DiagramHeaderReadingsEditor: React.FC<DiagramHeaderReadingsEditorPr
                 <article key={reading.id} className="rounded border border-carbon/10 bg-carbon/[0.015] p-2.5">
                   <div className="mb-2 flex items-center justify-between gap-2">
                     <strong className="text-[10px] text-carbon/55">{t('editor.diagramEditors.readingN', { n: index + 1 })}</strong>
-                    <button type="button" className="text-[10px] font-bold text-granada hover:underline" onClick={() => commit({ ...header, readings: header.readings.filter(item => item.id !== reading.id) }, 'Quitar información de cabecera')}>{t('editor.diagramEditors.remove')}</button>
+                    <Button size="sm" variant="danger" onClick={() => commit({ ...header, readings: header.readings.filter(item => item.id !== reading.id) }, 'Quitar información de cabecera')}>{t('editor.diagramEditors.remove')}</Button>
                   </div>
                   <label className="block text-[10px] font-bold text-carbon/55">{t('editor.diagramEditors.showAs')}
-                    <select aria-label={t('editor.diagramEditors.readingPresentationN', { n: index + 1 })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={reading.presentation} onChange={event => {
+                    <select aria-label={t('editor.diagramEditors.readingPresentationN', { n: index + 1 })} className={`${controlClassName} mt-1`} value={reading.presentation} onChange={event => {
                       const presentation = event.target.value as DiagramHeaderReading['presentation'];
                       updateReading(reading.id, {
                         presentation,
@@ -148,7 +155,7 @@ export const DiagramHeaderReadingsEditor: React.FC<DiagramHeaderReadingsEditorPr
                       </div>
                     ) : (
                       <label className="block text-[10px] font-bold text-carbon/55">{t('editor.diagramEditors.value')}
-                        <select aria-label={t('editor.diagramEditors.readingSourceN', { n: index + 1 })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={reading.sourceIds[0] ?? ''} onChange={event => updateReading(reading.id, { sourceIds: [event.target.value] })}>
+                        <select aria-label={t('editor.diagramEditors.readingSourceN', { n: index + 1 })} className={`${controlClassName} mt-1`} value={reading.sourceIds[0] ?? ''} onChange={event => updateReading(reading.id, { sourceIds: [event.target.value] })}>
                           {candidates.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label}</option>)}
                         </select>
                       </label>
@@ -161,7 +168,7 @@ export const DiagramHeaderReadingsEditor: React.FC<DiagramHeaderReadingsEditorPr
               {candidates.length === 0 ? (
                 <p className="rounded border border-dashed border-carbon/15 p-3 text-center text-[10px] text-carbon/45">{t('editor.diagramEditors.addMeasurementHint')}</p>
               ) : (
-                <button type="button" className="min-h-11 w-full rounded border border-dashed border-carbon/20 text-xs font-bold text-carbon/60 hover:bg-carbon/5" onClick={() => commit({ ...header, readings: [...header.readings, { id: nextReadingId(header.readings), sourceIds: [candidates[0].id], presentation: 'label-value' }] }, 'Añadir información de cabecera')}>{t('editor.diagramEditors.addReading')}</button>
+                <Button size="sm" fullWidth onClick={() => commit({ ...header, readings: [...header.readings, { id: nextReadingId(header.readings), sourceIds: [candidates[0].id], presentation: 'label-value' }] }, 'Añadir información de cabecera')}>{t('editor.diagramEditors.addReading')}</Button>
               )}
             </div>
           )}

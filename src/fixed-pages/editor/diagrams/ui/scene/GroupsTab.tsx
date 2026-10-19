@@ -16,6 +16,7 @@ import {
 } from '../toolbar/WorkbenchIcons';
 import { DiagramObjectLabel } from '../workbench/WorkbenchSceneTree';
 import type { SceneItem } from './LayersTab';
+import { Button, Card, IconButton, RowButton, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface GroupsTabProps {
   model: VisualDiagramModel;
@@ -196,43 +197,31 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
               if (e.key === 'Enter') handleAddGroup();
             }}
             placeholder={t('editor.diagramScene.newGroup')}
-            className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
+            className={`${controlClassName} flex-1`}
           />
-          <button
-            type="button"
-            onClick={handleAddGroup}
-            disabled={!newGroupLabel.trim()}
-            className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
-          >
+          <Button size="sm" variant="primary" className="shrink-0" onClick={handleAddGroup} disabled={!newGroupLabel.trim()}>
             <IconPlus className="w-3.5 h-3.5" />
             <span>{t('editor.diagramScene.group')}</span>
-          </button>
+          </Button>
         </div>
 
         {/* Lista de Grupos */}
         <div className="space-y-2">
           {groups.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-6 text-center text-carbon/60 space-y-1">
+            <Card dashed className="text-center space-y-1">
               <p className="font-serif text-xs font-bold text-carbon">{t('editor.diagramScene.noGroupsCreated')}</p>
               <p className="text-xs italic font-sans text-carbon/50">{t('editor.diagramScene.noGroupsHint')}</p>
-            </div>
+            </Card>
           ) : (
             groups.map(grp => {
               const isExpanded = expandedGroupId === grp.id;
               const memberCount = (grp.memberIds || []).length;
 
               return (
-                <div
-                  key={grp.id}
-                  className="rounded-2xl border border-carbon/15 bg-lienzo shadow-2xs overflow-hidden transition-all hover:border-carbon/30"
-                >
+                <Card className="overflow-hidden" key={grp.id}>
                   {/* Header del Grupo */}
                   <div className="flex items-center justify-between p-2.5 bg-carbon/5">
-                    <button
-                      type="button"
-                      onClick={() => setExpandedGroupId(isExpanded ? null : grp.id)}
-                      className="flex items-center space-x-2 min-w-0 flex-1 text-left cursor-pointer"
-                    >
+                    <RowButton className="min-w-0 flex-1" onClick={() => setExpandedGroupId(isExpanded ? null : grp.id)}>
                       <span className="text-carbon/50 hover:text-carbon transition-colors">
                         {isExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
                       </span>
@@ -248,47 +237,25 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                       <span className="text-[10px] text-carbon/50 font-mono bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10 shrink-0">
                         {t(memberCount === 1 ? 'editor.diagramScene.membersCountOne' : 'editor.diagramScene.membersCountOther', { count: memberCount })}
                       </span>
-                    </button>
+                    </RowButton>
 
                     <div className="flex items-center space-x-1 shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleGroupVisible(grp.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          grp.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={grp.visible !== false ? t('editor.diagramScene.hideGroup') : t('editor.diagramScene.showGroup')}
-                        aria-label={grp.visible !== false ? t('editor.diagramScene.hideGroupNamed', { label: grp.label }) : t('editor.diagramScene.showGroupNamed', { label: grp.label })}
-                      >
+                      <Button size="sm" aria-pressed={grp.visible !== false} onClick={() => handleToggleGroupVisible(grp.id)} title={grp.visible !== false ? t('editor.diagramScene.hideGroup') : t('editor.diagramScene.showGroup')} aria-label={grp.visible !== false ? t('editor.diagramScene.hideGroupNamed', { label: grp.label }) : t('editor.diagramScene.showGroupNamed', { label: grp.label })}>
                         {grp.visible !== false ? <IconEye /> : <IconEyeOff />}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleToggleGroupLock(grp.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          grp.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={grp.locked ? t('editor.diagramScene.unlockGroup') : t('editor.diagramScene.lockGroup')}
-                        aria-label={grp.locked ? t('editor.diagramScene.unlockGroupNamed', { label: grp.label }) : t('editor.diagramScene.lockGroupNamed', { label: grp.label })}
-                      >
+                      </Button>
+                      <Button size="sm" aria-pressed={grp.locked} onClick={() => handleToggleGroupLock(grp.id)} title={grp.locked ? t('editor.diagramScene.unlockGroup') : t('editor.diagramScene.lockGroup')} aria-label={grp.locked ? t('editor.diagramScene.unlockGroupNamed', { label: grp.label }) : t('editor.diagramScene.lockGroupNamed', { label: grp.label })}>
                         {grp.locked ? <IconLock /> : <IconUnlock />}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteGroup(grp.id)}
-                        className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
-                        title={t('editor.diagramScene.deleteGroup')}
-                        aria-label={t('editor.diagramScene.deleteGroupNamed', { label: grp.label })}
-                      >
+                      </Button>
+                      <IconButton size="sm" tone="danger" label={t('editor.diagramScene.deleteGroupNamed', { label: grp.label })} title={t('editor.diagramScene.deleteGroup')} onClick={() => handleDeleteGroup(grp.id)}>
                         <IconTrash className="w-3.5 h-3.5" />
-                      </button>
+                      </IconButton>
                     </div>
                   </div>
 
                   {/* Cuerpo Expandido del Grupo */}
                   {isExpanded && (
                     <div className="p-3 border-t border-carbon/10 bg-lienzo space-y-3">
-                      <div className="grid grid-cols-2 gap-2 bg-carbon/5 p-2.5 rounded-xl border border-carbon/10">
+                      <Card className="grid grid-cols-2 gap-2">
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">{t('editor.diagramScene.groupId')}</label>
                           <input
@@ -299,7 +266,7 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                             onKeyDown={e => {
                               if (e.key === 'Enter') handleRenameGroupId(grp.id, e.currentTarget.value);
                             }}
-                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-pavo focus:border-pavo outline-none"
+                            className={`${controlClassName} font-mono`}
                           />
                         </div>
                         <div>
@@ -308,13 +275,13 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                             type="text"
                             value={grp.label}
                             onChange={e => handleRenameGroupLabel(grp.id, e.target.value)}
-                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none"
+                            className={controlClassName}
                           />
                         </div>
-                      </div>
+                      </Card>
 
                       {/* Enlazable desde MDX (Target) */}
-                      <div className="bg-carbon/5 p-2.5 rounded-xl border border-carbon/10 space-y-2">
+                      <Card className="space-y-2">
                         <label className="flex items-center justify-between text-xs font-bold text-carbon cursor-pointer select-none">
                           <span>{t('editor.diagramScene.mdxLinkable')}</span>
                           <input
@@ -333,7 +300,7 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                                 value={grp.targetId ?? grp.id}
                                 onChange={e => handleUpdateGroupTargetId(grp.id, e.target.value)}
                                 placeholder={grp.id}
-                                className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-carbon focus:border-canela outline-none"
+                                className={`${controlClassName} font-mono`}
                               />
                             </div>
                             <div>
@@ -341,7 +308,7 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                               <select
                                 value={grp.color || ''}
                                 onChange={e => handleUpdateGroupColor(grp.id, e.target.value || undefined)}
-                                className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none cursor-pointer"
+                                className={controlClassName}
                               >
                                 <option value="">{t('editor.diagramScene.automaticByMembers')}</option>
                                 <option value="canela">{'canela'}</option>
@@ -355,7 +322,7 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                             </div>
                           </div>
                         )}
-                      </div>
+                      </Card>
 
                       <div className="space-y-2">
                         <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-carbon/10 pb-2">
@@ -364,59 +331,37 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                           </span>
                           <div className="flex flex-wrap items-center gap-1">
                             {onTogglePickingGroupId && (
-                              <button
-                                type="button"
-                                onClick={() => onTogglePickingGroupId(pickingGroupId === grp.id ? null : grp.id)}
-                                className={`px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer transition-all border ${
-                                  pickingGroupId === grp.id
-                                    ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
-                                    : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
-                                }`}
-                                title={t('editor.diagramScene.pickMembersHint')}
-                              >
+                              <Button size="sm" aria-pressed={pickingGroupId === grp.id} onClick={() => onTogglePickingGroupId(pickingGroupId === grp.id ? null : grp.id)} title={t('editor.diagramScene.pickMembersHint')}>
                                 {pickingGroupId === grp.id ? t('editor.diagramScene.selectingOnTheCanvas') : t('editor.diagramScene.selectOnTheCanvas')}
-                              </button>
+                              </Button>
                             )}
                             {selectedIds.length > 0 && (
                               <>
-                                <button
-                                  type="button"
-                                  onClick={() => handleAddSelectedToGroup(grp.id)}
-                                  className="px-2 py-1 bg-canela/10 text-canela hover:bg-canela/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-canela/30"
-                                  title={t('editor.diagramScene.addSelectedTitle')}
-                                >
+                                <Button size="sm" onClick={() => handleAddSelectedToGroup(grp.id)} title={t('editor.diagramScene.addSelectedTitle')}>
                                   {t('editor.diagramScene.addSelected', { count: selectedIds.length })}
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleRemoveSelectedFromGroup(grp.id)}
-                                  className="px-2 py-1 bg-granada/10 text-granada hover:bg-granada/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-granada/30"
-                                  title={t('editor.diagramScene.removeSelectedTitle')}
-                                >
+                                </Button>
+                                <Button size="sm" onClick={() => handleRemoveSelectedFromGroup(grp.id)} title={t('editor.diagramScene.removeSelectedTitle')}>
                                   {t('editor.diagramScene.removeSelected', { count: selectedIds.length })}
-                                </button>
+                                </Button>
                               </>
                             )}
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-2 bg-carbon/5 rounded-xl border border-carbon/10">
+                        <Card className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
                           {allItems.map(item => {
                             const isMember = (grp.memberIds || []).includes(item.id);
                             const isCanvasSelected = selectedIds.includes(item.id);
                             return (
-                              <button
+                              <Button
                                 key={item.id}
-                                type="button"
+                                size="sm"
+                                aria-pressed={isMember}
+                                className={isCanvasSelected ? 'font-mono ring-1 ring-carbon' : 'font-mono'}
                                 onClick={() => {
                                   handleToggleGroupMember(grp.id, item.id);
                                   onSelectObjects?.([item.id]);
                                 }}
-                                className={`flex items-center space-x-1.5 px-2 py-1 rounded-lg border text-[10px] font-mono transition-all cursor-pointer select-none ${
-                                  isMember
-                                    ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
-                                    : 'bg-lienzo text-carbon/70 border-carbon/20 hover:border-canela/50 hover:text-carbon'
-                                } ${isCanvasSelected ? 'ring-2 ring-canela/60' : ''}`}
                                 title={isMember ? t('editor.diagramScene.removeFromGroup', { label: item.label, id: item.id }) : t('editor.diagramScene.addToGroup', { label: item.label, id: item.id })}
                               >
                                 <span className={`w-1.5 h-1.5 rounded-full ${isMember ? 'bg-lienzo' : 'bg-carbon/30'}`} />
@@ -426,14 +371,14 @@ export const GroupsTab: React.FC<GroupsTabProps> = ({
                                 }`}>
                                   {item.kind}
                                 </span>
-                              </button>
+                              </Button>
                             );
                           })}
-                        </div>
+                        </Card>
                       </div>
                     </div>
                   )}
-                </div>
+                </Card>
               );
             })
           )}

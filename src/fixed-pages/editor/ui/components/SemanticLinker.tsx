@@ -4,6 +4,7 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
+import { Button, IconButton, RowButton, Swatch, Tabs, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface ConceptOption {
   id: string;
@@ -242,7 +243,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     >
       <div className="flex justify-between items-center border-b border-carbon/15 pb-1">
         <span className="ac-label ac-label--sm text-carbon/60 font-serif">{t('editor.linker.title')}</span>
-        <button ref={closeButtonRef} type="button" onClick={onClose} className="text-xs text-carbon/40 hover:text-carbon font-bold" aria-label={t('editor.linker.close')}>✕</button>
+        <IconButton size="sm" label={t('editor.linker.close')} ref={closeButtonRef} onClick={onClose}>✕</IconButton>
       </div>
       
       <p className="text-xs italic text-carbon/75 truncate select-none">
@@ -250,44 +251,17 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       </p>
 
       {/* Pestañas de tipo de enlace */}
-      <div className="flex bg-carbon/5 rounded p-0.5 text-[10px] font-sans font-bold" role="tablist" aria-label={t('editor.linker.linkType')}>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={linkType === 'concept'}
-          onClick={() => setLinkType('concept')}
-          className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'concept' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
-        >
-          {t('editor.linker.typeConcept')}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={linkType === 'reference'}
-          onClick={() => setLinkType('reference')}
-          className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'reference' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
-        >
-          {t('editor.linker.typeReference')}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={linkType === 'graphic'}
-          onClick={() => setLinkType('graphic')}
-          className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'graphic' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
-        >
-          {t('editor.linker.typeGraphic')}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={linkType === 'combined'}
-          onClick={() => setLinkType('combined')}
-          className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'combined' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
-        >
-          {t('editor.linker.typeCombined')}
-        </button>
-      </div>
+      <Tabs
+        aria-label={t('editor.linker.linkType')}
+        activeTab={linkType}
+        onTabChange={id => setLinkType(id as LinkType)}
+        tabs={[
+          { id: 'concept', label: t('editor.linker.typeConcept') },
+          { id: 'reference', label: t('editor.linker.typeReference') },
+          { id: 'graphic', label: t('editor.linker.typeGraphic') },
+          { id: 'combined', label: t('editor.linker.typeCombined') },
+        ]}
+      />
 
       {/* Contenido según pestaña */}
       {(linkType === 'concept' || linkType === 'reference' || linkType === 'combined') && (
@@ -296,20 +270,16 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           {selectedConcept ? (
             <div className="flex items-center justify-between p-1.5 bg-canela/5 border border-canela/20 rounded text-xs">
               <span className="font-serif font-bold text-canela">{Array.isArray(selectedConcept) ? selectedConcept.join(', ') : selectedConcept}</span>
-              <button
-                type="button"
-                onClick={() => setSelectedConcept(null)}
-                className="text-[10px] text-carbon/40 hover:text-carbon font-bold"
-              >
+              <Button size="sm" variant="quiet" onClick={() => setSelectedConcept(null)}>
                 {t('editor.linker.change')}
-              </button>
+              </Button>
             </div>
           ) : (
             <div className="space-y-1">
               <input
                 type="text"
                 placeholder={t('editor.linker.searchPlaceholder')}
-                className="w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-canela/50 text-carbon"
+                className={controlClassName}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
@@ -319,18 +289,13 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
                   <p className="text-[10px] text-carbon/40 p-2 italic text-center">{t('editor.linker.noConcepts')}</p>
                 ) : (
                   suggestions.map(s => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => setSelectedConcept(s.id)}
-                      className="w-full text-left px-2 py-1.5 text-[11px] hover:bg-carbon/5 hover:text-carbon transition-colors cursor-pointer"
-                    >
+                    <RowButton key={s.id} className="min-w-0 flex-col items-stretch text-[11px]" onClick={() => setSelectedConcept(s.id)}>
                       <span className="block truncate font-serif font-bold capitalize">{s.name}</span>
                       <span className="mt-0.5 flex items-center justify-between gap-2">
                         <span className="truncate text-[9px] text-carbon/45">{s.type}</span>
                         <span className="truncate font-mono text-[8px] text-carbon/35">{s.id}</span>
                       </span>
-                    </button>
+                    </RowButton>
                   ))
                 )}
               </div>
@@ -356,14 +321,14 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             {diagramTargets.length > 0 && (
               <div className="mt-1 max-h-36 space-y-1 overflow-y-auto rounded border border-carbon/10 bg-lienzo p-1">
                 {diagramTargets.map(target => (
-                  <button
+                  <RowButton
                     key={target.id}
-                    type="button"
+                    aria-current={graphElementId === target.id ? 'true' : undefined}
                     onClick={() => {
                       setGraphElementId(target.id);
                       setSelectedColor(target.kind === 'step' ? 'terracota' : target.color);
                     }}
-                    className={`block w-full rounded border px-2 py-1 text-left transition-colors hover:border-canela/30 hover:bg-canela/5 ${graphElementId === target.id ? 'border-canela/40 bg-canela/10' : 'border-carbon/10 bg-carbon/5'}`}
+                    className="block"
                     title={target.label}
                   >
                     <div className="flex items-center justify-between">
@@ -375,14 +340,14 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
                       )}
                     </div>
                     <span className="block truncate font-mono text-[9px] text-carbon/45">{target.id}</span>
-                  </button>
+                  </RowButton>
                 ))}
               </div>
             )}
             <input
               type="text"
               placeholder={t('editor.linker.manualTarget')}
-              className="mt-1 w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-canela/50 text-carbon font-mono"
+              className={`${controlClassName} mt-1 font-mono`}
               value={graphElementId}
               onChange={(e) => setGraphElementId(e.target.value)}
             />
@@ -393,20 +358,13 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             <label className="block ac-label ac-label--xs">{t('editor.linker.highlightColor')}</label>
             <div className="flex gap-1.5">
               {ARTS_CRAFTS_COLORS.map(c => (
-                <button
+                <Swatch
                   key={c.name}
-                  type="button"
+                  label={c.name}
+                  selected={selectedColor === c.name}
                   onClick={() => setSelectedColor(c.name)}
-                  className={`w-6 h-6 rounded-full transition-transform relative flex items-center justify-center ${
-                    selectedColor === c.name ? 'scale-110 ring-2 ring-carbon/25' : 'hover:scale-105'
-                  }`}
                   style={{ backgroundColor: `var(--theme-${c.name})` }}
-                  title={c.name}
-                >
-                  {selectedColor === c.name && (
-                    <span className="text-[9px] text-lienzo font-bold select-none">✓</span>
-                  )}
-                </button>
+                />
               ))}
             </div>
           </div>
@@ -414,32 +372,23 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       )}
 
       <div className="space-y-1.5 mt-1">
-        <button
-          type="button"
-          disabled={
+        <Button size="sm" variant="primary" fullWidth disabled={
             (linkType === 'concept' && !selectedConcept) ||
             (linkType === 'reference' && !selectedConcept) ||
             (linkType === 'graphic' && !graphElementId.trim()) ||
             (linkType === 'combined' && (!selectedConcept || !graphElementId.trim())) ||
             ((linkType === 'graphic' || linkType === 'combined') && !selectedTargetIsValid)
-          }
-          onClick={handleCreate}
-          className="w-full py-1.5 bg-canela text-lienzo rounded text-xs font-serif font-bold hover:bg-canela/80 disabled:opacity-40 transition-all shadow-sm"
-        >
+          } onClick={handleCreate}>
           {editingMarkup ? t('editor.linker.saveChanges') : t('editor.linker.createLink')}
-        </button>
+        </Button>
 
         {editingMarkup && (
-          <button
-            type="button"
-            onClick={() => {
+          <Button size="sm" variant="danger" fullWidth onClick={() => {
               onLinkCreated(selectedText);
               onClose();
-            }}
-            className="w-full py-1 bg-terracota/10 text-terracota border border-terracota/20 rounded text-xs font-serif font-bold hover:bg-terracota/20 transition-all"
-          >
+            }}>
             {t('editor.linker.removeLink')}
-          </button>
+          </Button>
         )}
       </div>
     </div>

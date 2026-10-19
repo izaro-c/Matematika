@@ -12,6 +12,7 @@ import { ExerciseBlockEditor } from './ExerciseBlockEditor';
 import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
 import { RichProseSurface } from '../prose/RichProseSurface';
 import { autoCapitularLetter } from '../prose/demoGrouping';
+import { Button, Callout, Card, controlClassName, inlineFieldClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface VisualEditorBlockProps {
   block: Block;
@@ -172,7 +173,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       onChange={(e) => updateBlock(block.id, e.target.value)}
                       onBlur={() => setEditingBlockId(null)}
                       placeholder={t('editor.visual.headingPlaceholder')}
-                      className="w-full bg-transparent border-none outline-none font-serif font-bold text-xl text-carbon p-0 focus:ring-0"
+                      className={`${inlineFieldClassName} font-serif font-bold text-xl text-carbon`}
                     />
                   ) : (
                     <h3
@@ -209,12 +210,12 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
-                        className="min-h-24 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 text-sm leading-relaxed text-carbon outline-none focus:border-canela"
+                        className={controlClassName}
                         placeholder={t('editor.visual.listPlaceholder')}
                       />
                     </div>
                   ) : (
-                    <div onClick={() => !isReadOnly && setEditingBlockId(block.id)} className="cursor-text rounded border border-carbon/10 bg-carbon/5 p-4">
+                    <Card onClick={() => !isReadOnly && setEditingBlockId(block.id)}>
                       {block.metadata?.ordered === true ? (
                         <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-carbon">
                           {block.content.split('\n').filter(Boolean).map((item, itemIndex) => (
@@ -228,7 +229,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           ))}
                         </ul>
                       )}
-                    </div>
+                    </Card>
                   )}
                 </div>
               )}
@@ -248,12 +249,12 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
-                        className="min-h-32 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-canela"
+                        className={`${controlClassName} font-mono`}
                         placeholder={t('editor.visual.tablePlaceholder')}
                       />
                     </div>
                   ) : (
-                    <div onClick={() => !isReadOnly && setEditingBlockId(block.id)} className="overflow-x-auto rounded border border-carbon/15 bg-lienzo cursor-text">
+                    <Card className="overflow-x-auto" onClick={() => !isReadOnly && setEditingBlockId(block.id)}>
                       <table className="w-full border-collapse text-sm text-carbon">
                         <tbody>
                           {parseMarkdownTable(block.content).map((row, rowIndex) => (
@@ -270,7 +271,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           ))}
                         </tbody>
                       </table>
-                    </div>
+                    </Card>
                   )}
                 </div>
               )}
@@ -300,7 +301,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           onChange={(e) => updateBlock(block.id, e.target.value)}
                           onSelect={(e) => handleTextareaSelect(e, block.id)}
                           onBlur={() => setEditingBlockId(null)}
-                          className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon leading-relaxed p-0 resize-none focus:ring-0 min-h-[40px]"
+                          className={`${inlineFieldClassName} font-serif text-sm text-carbon leading-relaxed resize-none min-h-[40px]`}
                           placeholder={t('editor.visual.notePlaceholder')}
                         />
                       </div>
@@ -330,14 +331,14 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         value={block.content}
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
-                        className="w-full bg-transparent border-none outline-none font-serif italic text-sm text-carbon p-0 resize-none focus:ring-0"
+                        className={`${inlineFieldClassName} font-serif italic text-sm text-carbon resize-none`}
                         placeholder={t('editor.visual.quotePlaceholder')}
                       />
                       <input
                         value={block.metadata?.author || ''}
                         onChange={(e) => updateBlock(block.id, block.content, { author: e.target.value })}
                         onBlur={() => setEditingBlockId(null)}
-                        className="w-full bg-transparent border-none outline-none text-[10px] font-sans text-carbon/60 p-0 focus:ring-0 text-right"
+                        className={`${inlineFieldClassName} text-[10px] font-sans text-carbon/60 text-right`}
                         placeholder={t('editor.visual.quoteAuthor')}
                       />
                     </div>
@@ -366,7 +367,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       <input
                         value={block.metadata?.title || ''}
                         onChange={(e) => updateBlock(block.id, block.content, { title: e.target.value })}
-                        className="w-full bg-transparent border-none outline-none text-xs font-serif font-bold text-canela p-0 focus:ring-0"
+                        className={`${inlineFieldClassName} text-xs font-serif font-bold text-canela`}
                         placeholder={t('editor.visual.definitionTitlePlaceholder')}
                       />
                       {renderInlineToolbar(block)}
@@ -376,7 +377,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
-                        className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon p-0 resize-none focus:ring-0"
+                        className={`${inlineFieldClassName} font-serif text-sm text-carbon resize-none`}
                         placeholder={t('editor.visual.definitionPlaceholder')}
                       />
                     </div>
@@ -401,14 +402,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <div className="flex gap-1 items-center">
                       <span className="ac-label ac-label--2xs ac-label--faint mr-1">{t('editor.visual.insert')}</span>
                       {LATEX_SYMBOLS.map(sym => (
-                        <button
-                          key={sym.label}
-                          type="button"
-                          onClick={() => insertSymbol('formula-editor-' + block.id, sym.code)}
-                          className="px-1 bg-carbon/5 hover:bg-carbon/10 text-carbon text-[9px] rounded font-mono transition-colors cursor-pointer"
-                        >
+                        <Button size="sm" className="font-mono" key={sym.label} onClick={() => insertSymbol('formula-editor-' + block.id, sym.code)}>
                           {sym.label}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </div>
@@ -426,12 +422,12 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
 
               {block.type === 'advancedMdx' && (
                 block.metadata?.editable ? <RegisteredMdxBlockEditor block={block} isReadOnly={isReadOnly} updateBlock={updateBlock} handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink} renderInlineToolbar={renderInlineToolbar} /> :
-                <div className="space-y-2"><div className="rounded border border-pavo/20 bg-pavo/5 p-4"><>
+                <div className="space-y-2"><Callout><>
                       <p className="mb-3 text-xs italic text-carbon/55 select-none">
                         {t('editor.visual.preservedNote')}
                       </p>
                       <pre className="max-h-48 overflow-auto whitespace-pre-wrap rounded border border-carbon/10 bg-lienzo p-3 font-mono text-[10px] leading-relaxed text-carbon/65">{block.content}</pre>
-                    </></div></div>
+                    </></Callout></div>
               )}
 
               {block.type === 'diagram' && (
@@ -441,20 +437,16 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       {t('editor.visual.canonicalDiagram', { name: block.content })}
                     </label>
                     {canMutateVisualStructure && (
-                      <button
-                        type="button"
-                        onClick={() => {
+                      <Button size="sm" onClick={() => {
                           setActiveDiagramBlockId(block.id);
                           setActiveDiagramIndex(null);
                           setDiagramBuilderOpen(true);
-                        }}
-                        className="text-[9px] bg-canela/10 text-canela hover:bg-canela/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
-                      >
+                        }}>
                         {t('editor.visual.replace')}
-                      </button>
+                      </Button>
                     )}
                   </div>
-                  <div className="rounded-lg border border-carbon/15 bg-carbon/5 p-4 space-y-3">
+                  <Card className="space-y-3">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-serif text-sm font-bold text-carbon">{block.content}</p>
@@ -476,7 +468,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <div className="w-full">
                       <DiagramRuntimePreview filePath={typeof block.metadata?.path === 'string' ? block.metadata.path : null} componentName={block.content} />
                     </div>
-                  </div>
+                  </Card>
                 </div>
               )}
 

@@ -13,6 +13,8 @@ import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/typ
 import { DiagramRenderer } from '@/diagrams/public';
 import { DiagramSkeleton } from '@/components/ui/skeletons';
 import { useI18n } from '@/i18n';
+import { IconButton } from '../primitives';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 interface EditorLandingCardProps {
   file: FileNode;
@@ -220,21 +222,17 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
               {capabilityBadge.label}
             </span>
             {onToggleFavorite && (
-              <button
-                type="button"
+              <IconButton
+                size="sm"
+                aria-pressed={isFavorite}
+                label={isFavorite ? t('editor.landing.removeFromFavorites') : t('editor.landing.addToFavorites')}
                 onClick={(e) => {
                   e.stopPropagation();
                   onToggleFavorite(file.path);
                 }}
-                title={isFavorite ? t('editor.landing.removeFromFavorites') : t('editor.landing.addToFavorites')}
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all cursor-pointer active:scale-90 ${
-                  isFavorite
-                    ? 'bg-ocre text-lienzo shadow-sm ring-2 ring-ocre/30 scale-105'
-                    : 'bg-lienzo/90 text-carbon/40 hover:text-ocre hover:bg-ocre/10 border border-carbon/20'
-                }`}
               >
                 ★
-              </button>
+              </IconButton>
             )}
           </div>
         </div>
@@ -254,7 +252,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
 
         {/* Diagram Lazy-Loaded Preview */}
         {file.kind === 'diagram' && (
-          <div className="mt-3 relative h-36 w-full overflow-hidden rounded-lg border border-carbon/10 bg-lienzo/60 pointer-events-none">
+          <Card className="mt-3 relative h-36 w-full overflow-hidden">
             {isLoadingContent && !diagramModel ? (
               <DiagramSkeleton label={t('editor.nav.loadingContent')} />
             ) : diagramModel ? (
@@ -271,7 +269,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
                 {isVisible ? t('editor.landing.tsxDiagram') : t('editor.diagram.waitingForScroll')}
               </div>
             )}
-          </div>
+          </Card>
         )}
       </div>
 
@@ -323,9 +321,9 @@ export const EditorLandingCardSkeleton: React.FC<{ isDiagram?: boolean }> = ({ i
 
         {/* Diagram preview box placeholder */}
         {isDiagram && (
-          <div className="mt-3 h-36 w-full rounded-lg border border-carbon/10 bg-carbon/5 flex items-center justify-center">
+          <Card className="mt-3 h-36 w-full flex items-center justify-center">
             <div className="h-8 w-8 rounded-full bg-carbon/10" />
-          </div>
+          </Card>
         )}
       </div>
 

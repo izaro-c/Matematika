@@ -2,6 +2,7 @@ import React from 'react';
 import type { DiagramObject } from '@/diagrams';
 import { useI18n } from '@/i18n';
 import { renderRichText } from '@/fixed-pages/editor/diagrams/ui/primitives/richText';
+import { controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 interface ElementVisibilitySectionProps {
   object: DiagramObject;
@@ -25,7 +26,7 @@ export const ElementVisibilitySection: React.FC<ElementVisibilitySectionProps> =
         value={object.visibleWhen || ''}
         onChange={e => onUpdate({ visibleWhen: e.target.value || undefined })}
         placeholder={t('editor.diagramInspector.visibleWhenExample')}
-        className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+        className={`${controlClassName} font-mono`}
       />
     </div>
 

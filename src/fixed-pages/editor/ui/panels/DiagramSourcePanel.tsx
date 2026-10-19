@@ -1,6 +1,7 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import { Button, RowButton } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramSourcePanelProps {
   currentFile: string | null;
@@ -61,15 +62,10 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
     return (
       <div className="mt-3 space-y-2">
         {diagramLinkedPages.map(page => (
-          <button
-            key={page.path}
-            type="button"
-            onClick={() => openFile(page.path)}
-            className="block w-full rounded border border-carbon/10 bg-carbon/5 px-3 py-2 text-left hover:border-canela/30 hover:bg-canela/5 cursor-pointer"
-          >
-            <span className="block truncate font-serif text-xs font-bold text-carbon">{formatFileName(page.name)}</span>
-            <span className="mt-1 block truncate font-mono text-[9px] text-carbon/45">{page.path}</span>
-          </button>
+          <RowButton key={page.path} className="min-w-0 flex-col items-start" onClick={() => openFile(page.path)}>
+            <span className="block w-full truncate font-serif text-xs font-bold text-carbon">{formatFileName(page.name)}</span>
+            <span className="mt-1 block w-full truncate font-mono text-[9px] text-carbon/45">{page.path}</span>
+          </RowButton>
         ))}
       </div>
     );
@@ -87,25 +83,17 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
           {renderLinkedPages()}
         </section>
         <section className="border-t border-carbon/15 p-4">
-          <button
-            type="button"
-            onClick={() => {
+          <Button size="sm" fullWidth className="mb-3" onClick={() => {
               setActiveDiagramBlockId(null);
               setActiveDiagramIndex(null);
               setDiagramBuilderOpen(true);
-            }}
-            className="mb-3 w-full rounded bg-canela/10 px-3 py-2 text-xs font-bold text-canela hover:bg-canela/20 cursor-pointer"
-          >
+            }}>
             {capability === 'visual-exact' ? t('editor.source.openVisual') : t('editor.source.openCode')}
-          </button>
+          </Button>
           {capability === 'code-preview' && (
-            <button
-              type="button"
-              onClick={onRewriteVisually}
-              className="mb-3 w-full rounded border border-ocre/30 bg-ocre/10 px-3 py-2 text-xs font-bold text-ocre hover:bg-ocre/20"
-            >
+            <Button size="sm" fullWidth className="mb-3" onClick={onRewriteVisually}>
               {t('editor.source.rewriteVisually')}
-            </button>
+            </Button>
           )}
           <p className="text-xs italic text-carbon/55 select-none">
             {capabilityDescription(capability, t)}

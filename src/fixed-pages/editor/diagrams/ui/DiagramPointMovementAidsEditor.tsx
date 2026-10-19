@@ -4,6 +4,7 @@ import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/scene/pointMovement';
 import { InspectorExpandableBlock } from './inspector/InspectorExpandableBlock';
 import { useI18n } from '@/i18n';
+import { IconButton } from '@/fixed-pages/editor/ui/primitives';
 
 interface DiagramPointMovementAidsEditorProps {
   model: VisualDiagramModel;
@@ -91,24 +92,12 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                     <strong>{index + 1}.</strong> {attractor?.label ?? attractorId}
                   </span>
                   <span className="flex shrink-0 gap-1">
-                    <button
-                      type="button"
-                      aria-label={t('editor.diagramEditors.moveAttractorUp', { label: attractor?.label ?? attractorId })}
-                      disabled={index === 0}
-                      className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors"
-                      onClick={() => moveAttractor(attractorId, -1)}
-                    >
+                    <IconButton size="sm" label={t('editor.diagramEditors.moveAttractorUp', { label: attractor?.label ?? attractorId })} disabled={index === 0} onClick={() => moveAttractor(attractorId, -1)}>
                       ↑
-                    </button>
-                    <button
-                      type="button"
-                      aria-label={t('editor.diagramEditors.moveAttractorDown', { label: attractor?.label ?? attractorId })}
-                      disabled={index === selectedAttractors.length - 1}
-                      className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors"
-                      onClick={() => moveAttractor(attractorId, 1)}
-                    >
+                    </IconButton>
+                    <IconButton size="sm" label={t('editor.diagramEditors.moveAttractorDown', { label: attractor?.label ?? attractorId })} disabled={index === selectedAttractors.length - 1} onClick={() => moveAttractor(attractorId, 1)}>
                       ↓
-                    </button>
+                    </IconButton>
                   </span>
                 </li>
               );

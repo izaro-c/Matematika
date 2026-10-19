@@ -16,6 +16,7 @@ import { parseOptionalNumber } from '../../workbenchSelection';
 import { ConstraintEditor } from '../../constraints/ConstraintEditor';
 import { ElementVisibilitySection } from '../element/sections/ElementVisibilitySection';
 import { useI18n } from '@/i18n';
+import { Callout, Card, Swatch, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 export const PointInspector: React.FC<PointPanelProps & {
   openAccordion: Record<string, boolean>;
@@ -67,7 +68,7 @@ export const PointInspector: React.FC<PointPanelProps & {
               onKeyDown={e => {
                 if (e.key === 'Enter') handleRenameId(model, point.id, e.currentTarget.value, onUpdateModel, onSelectId);
               }}
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              className={`${controlClassName} font-mono`}
               title={t('editor.diagramInspector.renameConfirmHint')}
             />
           </div>
@@ -81,13 +82,13 @@ export const PointInspector: React.FC<PointPanelProps & {
               value={point.label || ''}
               onChange={e => onUpdatePoint(point.id, { label: e.target.value })}
               placeholder={t('editor.diagramInspector.labelExampleKatex')}
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
+              className={controlClassName}
             />
             {point.label && (
-              <div className="mt-2 flex items-center space-x-2 rounded-lg border border-carbon/10 bg-lienzo/80 p-2 shadow-2xs">
+              <Card className="mt-2 flex items-center space-x-2">
                 <span className="text-[10px] uppercase font-bold text-carbon/50">{t('editor.diagramInspector.preview')}</span>
                 <KatexText text={point.label} className="text-xs font-bold text-canela" />
-              </div>
+              </Card>
             )}
           </div>
 
@@ -120,7 +121,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                   const x = parseOptionalNumber(e.target.value, position.x);
                   onUpdatePoint(point.id, current => withEditedPosition(current, { ...pointPosition(current)!, x }));
                 }}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -135,7 +136,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                   const y = parseOptionalNumber(e.target.value, position.y);
                   onUpdatePoint(point.id, current => withEditedPosition(current, { ...pointPosition(current)!, y }));
                 }}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
           </div>
@@ -153,7 +154,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                     ? { gliderTarget: gliderSupports[0].id }
                     : {});
                 }}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
+                className={controlClassName}
               >
                 <option value="free">{t('editor.diagramInspector.freePointOption')}</option>
                 <option value="fixed">{t('editor.diagramInspector.fixedPointLocked')}</option>
@@ -166,14 +167,14 @@ export const PointInspector: React.FC<PointPanelProps & {
             </div>
 
             {mode === 'glider' && (
-              <div className="space-y-1.5 rounded-lg border border-canela/20 bg-canela/5 p-2.5">
+              <Callout className="space-y-1.5">
                 <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">
                   {t('editor.diagramInspector.supportObjectGlidertarget')}
                 </label>
                 <select
                   value={gliderTarget || ''}
                   onChange={e => changeMode('glider', { gliderTarget: e.target.value || undefined })}
-                  className="w-full rounded-lg border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
+                  className={`${controlClassName} font-mono`}
                 >
                   <option value="">{t('editor.diagramInspector.selectSupport')}</option>
                   {gliderSupports.map(e => (
@@ -182,7 +183,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                     </option>
                   ))}
                 </select>
-              </div>
+              </Callout>
             )}
           </div>
 
@@ -229,14 +230,12 @@ export const PointInspector: React.FC<PointPanelProps & {
             <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">{t('editor.diagramInspector.pointColor')}</label>
             <div className="flex flex-wrap gap-2">
               {PALETTE_TOKENS.map(c => (
-                <button
+                <Swatch
                   key={c.id}
-                  type="button"
+                  label={c.name}
+                  selected={point.color === c.id}
                   onClick={() => onUpdatePoint(point.id, { color: c.id })}
-                  className={`h-6 w-6 rounded-full border-2 transition-all cursor-pointer ${c.bgClass} ${
-                    point.color === c.id ? 'border-carbon scale-110 shadow-xs ring-2 ring-carbon/20' : 'border-transparent opacity-80 hover:opacity-100'
-                  }`}
-                  title={c.name}
+                  className={c.bgClass}
                 />
               ))}
             </div>
@@ -253,7 +252,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                 max="20"
                 value={style?.pointSize ?? 7}
                 onChange={e => updateStyle({ pointSize: parseOptionalNumber(e.target.value, 7) })}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
             <div>
@@ -266,7 +265,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                 max="24"
                 value={style?.highlightPointSize ?? 10}
                 onChange={e => updateStyle({ highlightPointSize: parseOptionalNumber(e.target.value, 10) })}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+                className={controlClassName}
               />
             </div>
           </div>
@@ -308,7 +307,7 @@ export const PointInspector: React.FC<PointPanelProps & {
             <select
               value={point.layerId || 'geometry'}
               onChange={e => onUpdatePoint(point.id, { layerId: e.target.value })}
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
+              className={controlClassName}
             >
               {layers.map(l => (
                 <option key={l.id} value={l.id}>

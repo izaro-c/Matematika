@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import { createPortal } from 'react-dom';
 import { useI18n } from '@/i18n';
 import type { SafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
-import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import { Button, Modal } from '@/fixed-pages/editor/ui/primitives';
 
 interface UnsavedChangesDialogProps {
   isOpen: boolean;
@@ -29,71 +28,32 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
 }) => {
   const { t } = useI18n();
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const dialogRef = useModalFocus<HTMLElement>(isOpen, onCancel, cancelRef);
 
-  if (!isOpen || typeof document === 'undefined') return null;
-
-  return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-carbon/40 backdrop-blur-xs p-4" role="presentation">
-      <section
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="unsaved-dialog-title"
-        aria-describedby="unsaved-dialog-description"
-        className="w-full max-w-xl rounded-xl border border-carbon/20 bg-lienzo shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150"
-      >
-        <header className="border-b border-carbon/15 bg-ocre/10 p-4">
-          <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">{t('editor.save.unsavedChanges')}</h2>
-          <p id="unsaved-dialog-description" className="mt-1 text-sm leading-snug text-carbon/70">
-            La acción hacia {targetLabel} descartaría cambios que todavía no están aplicados al archivo real.
-          </p>
-        </header>
-        <div className="space-y-3 p-4 text-sm text-carbon/70">
-          <p>{presentation.description}</p>
-          <div className="rounded border border-carbon/10 bg-carbon/5 p-3">
-            <p className="font-bold text-carbon">{presentation.title}</p>
-            {presentation.recommendedAction && (
-              <p className="mt-1 text-xs">Acción recomendada: {presentation.recommendedAction.label}.</p>
-            )}
-          </div>
-        </div>
-        <footer className="flex flex-wrap justify-end gap-2 border-t border-carbon/15 bg-carbon/5 p-4">
-          <button
-            ref={cancelRef}
-            type="button"
-            onClick={onCancel}
-            className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5"
-          >
-            {t('editor.save.stay')}
-          </button>
-          <button
-            type="button"
-            onClick={onSaveDraft}
-            disabled={!canSaveDraft}
-            className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45"
-          >
-            {t('editor.save.saveDraft')}
-          </button>
-          <button
-            type="button"
-            onClick={onSave}
-            disabled={!canSave}
-            className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
-          >
-            {t('editor.common.save')}
-          </button>
-          <button
-            type="button"
-            onClick={onDiscardAndContinue}
-            className="rounded border border-granada/30 bg-granada/5 px-3 py-2 text-xs font-bold text-granada hover:bg-granada/10"
-          >
-            {t('editor.common.discard')}
-          </button>
-        </footer>
-      </section>
-    </div>,
-    document.body
+  return (
+    <Modal
+      open={isOpen}
+      onClose={onCancel}
+      title={t('editor.save.unsavedChanges')}
+      size="md"
+      initialFocusRef={cancelRef}
+      footer={
+        <>
+          <Button variant="danger" className="mr-auto" onClick={onDiscardAndContinue}>{t('editor.common.discard')}</Button>
+          <Button ref={cancelRef} onClick={onCancel}>{t('editor.save.stay')}</Button>
+          <Button onClick={onSaveDraft} disabled={!canSaveDraft}>{t('editor.save.saveDraft')}</Button>
+          <Button variant="primary" onClick={onSave} disabled={!canSave}>{t('editor.common.save')}</Button>
+        </>
+      }
+    >
+      <div className="space-y-3">
+        <p>La acción hacia {targetLabel} descartaría cambios que todavía no están aplicados al archivo real.</p>
+        <p>{presentation.description}</p>
+        <p className="font-semibold">{presentation.title}</p>
+        {presentation.recommendedAction && (
+          <p className="italic">Acción recomendada: {presentation.recommendedAction.label}.</p>
+        )}
+      </div>
+    </Modal>
   );
 };
 

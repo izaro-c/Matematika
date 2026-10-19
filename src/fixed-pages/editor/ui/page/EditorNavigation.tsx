@@ -12,6 +12,7 @@ import {
 } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { SUPPORTED_LANGUAGES, SUPPORTED_LANGUAGE_CODES } from '@/i18n/config';
 import { useI18n } from '@/i18n';
+import { Button, IconButton, RowButton, Tabs, controlClassName } from '../primitives';
 import { DocumentVersions } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { buildConceptIndex, conceptKey, documentLang, documentVersionStatuses } from '@/fixed-pages/editor/session/conceptVersions';
 
@@ -72,30 +73,26 @@ function ResourceButton({
   const activeLang = current ? documentLang(file) : '';
 
   return (
-    <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-canela/35 bg-canela/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
+    <div className="flex flex-col py-0.5">
       <div className="flex items-start justify-between gap-1">
-        <button
-          type="button"
+        <RowButton
           data-resource-path={file.path}
           onClick={() => openFile(file.path)}
           aria-current={current ? 'page' : undefined}
           title={`${translateEditorText(t, file.capabilityLabel)}. ${translateEditorText(t, file.reason)}`}
-          className="min-w-0 flex-1 text-left"
+          className="min-w-0 flex-1"
         >
-          <span className={`block truncate font-serif text-xs ${current ? 'font-bold text-carbon' : 'text-carbon/75'}`}>
-            {resourceDisplayName(file)}
-          </span>
-        </button>
-        <button
-          type="button"
+          <span className="block truncate">{resourceDisplayName(file)}</span>
+        </RowButton>
+        <IconButton
+          size="sm"
           onClick={() => toggleFavorite(file.path)}
-          aria-label={favorite ? t('editor.nav.removeNamedFromFavorites', { name: resourceDisplayName(file) }) : t('editor.nav.addNamedToFavorites', { name: resourceDisplayName(file) })}
+          label={favorite ? t('editor.nav.removeNamedFromFavorites', { name: resourceDisplayName(file) }) : t('editor.nav.addNamedToFavorites', { name: resourceDisplayName(file) })}
           aria-pressed={favorite}
           title={favorite ? t('editor.landing.removeFromFavorites') : t('editor.landing.addToFavorites')}
-          className={`rounded px-1 text-sm ${favorite ? 'text-ocre' : 'text-carbon/25 opacity-70 group-hover:opacity-100'}`}
         >
           {favorite ? '★' : '☆'}
-        </button>
+        </IconButton>
       </div>
       <div className="mt-1 flex flex-wrap items-center justify-between gap-1">
         <span className={`inline-flex rounded border px-1.5 py-0.5 text-[9px] font-bold ${capability.className}`}>
@@ -214,29 +211,22 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
           <p className="ac-label ac-label--sm ac-label--canela">{t('editor.nav.editorLabel')}</p>
           <h2 className="font-serif text-base font-bold text-carbon">{t('editor.landing.docHeroTitle')}</h2>
         </div>
-        <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label={t('editor.common.close')}>{t('editor.common.close')}</button>
+        <Button size="sm" onClick={close}>{t('editor.common.close')}</Button>
       </header>
 
-      <div className="grid grid-cols-2 border-b border-carbon/15 p-2" role="tablist" aria-label={t('editor.create.typeLabel')}>
-        {([
-          ['documents', t('editor.nav.documents'), sectionCounts.documents],
-          ['diagrams', t('editor.nav.diagrams'), sectionCounts.diagrams],
-        ] as const).map(([id, label, count]) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={section === id}
-            onClick={() => {
-              setSection(id);
-              setFilters(DEFAULT_EDITOR_CATALOG_FILTERS);
-            }}
-            className={`rounded px-2 py-2 text-xs font-bold ${section === id ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`}
-          >
-            {label} <span className="font-mono text-[9px] opacity-70">{count}</span>
-          </button>
-        ))}
-      </div>
+      <Tabs
+        className="px-3"
+        aria-label={t('editor.create.typeLabel')}
+        activeTab={section}
+        onTabChange={id => {
+          setSection(id as typeof section);
+          setFilters(DEFAULT_EDITOR_CATALOG_FILTERS);
+        }}
+        tabs={[
+          { id: 'documents', label: <>{t('editor.nav.documents')} <span className="font-mono text-[9px] opacity-70">{sectionCounts.documents}</span></> },
+          { id: 'diagrams', label: <>{t('editor.nav.diagrams')} <span className="font-mono text-[9px] opacity-70">{sectionCounts.diagrams}</span></> },
+        ]}
+      />
 
       <div className="space-y-2 border-b border-carbon/15 p-3">
         <div className="flex items-center justify-between gap-2">
@@ -248,28 +238,18 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               value={filters.query}
               onChange={event => updateFilter('query', event.target.value)}
               placeholder={section === 'documents' ? t('editor.landing.searchDocPlaceholder') : t('editor.landing.searchDiagramPlaceholder')}
-              className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-canela"
+              className={controlClassName}
             />
           </label>
           {section === 'documents' && onCreatePage && (
-            <button
-              type="button"
-              onClick={onCreatePage}
-              className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
-              title={t('editor.create.newStructuredPage')}
-            >
+            <Button size="sm" onClick={onCreatePage} title={t('editor.create.newStructuredPage')}>
               {t('editor.mdx.addPage')}
-            </button>
+            </Button>
           )}
           {section === 'diagrams' && onCreateDiagram && (
-            <button
-              type="button"
-              onClick={onCreateDiagram}
-              className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
-              title={t('editor.landing.newDiagram')}
-            >
+            <Button size="sm" onClick={onCreateDiagram} title={t('editor.landing.newDiagram')}>
               {t('editor.mdx.addDiagram')}
-            </button>
+            </Button>
           )}
         </div>
         <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
@@ -281,14 +261,14 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <label className="ac-label ac-label--xs">
                 {t('editor.create.typeLabel')}
-                <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className={`${controlClassName} mt-1`}>
                   <option value="all">{t('editor.landing.allTypes')}</option>
                   {types.map(type => <option key={type} value={type}>{categoryLabel(type)}</option>)}
                 </select>
               </label>
               <label className="ac-label ac-label--xs">
                 {t('editor.mdx.diagnostics')}
-                <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className={`${controlClassName} mt-1`}>
                   <option value="all">{t('editor.common.all')}</option>
                   <option value="available">{t('editor.landing.editable')}</option>
                   <option value="attention">{t('editor.landing.attentionNeeded')}</option>
@@ -299,7 +279,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <label className="block ac-label ac-label--xs">
                 {t('editor.nav.howToEdit')}
-                <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className={`${controlClassName} mt-1`}>
                   <option value="all">{t('editor.common.all')}</option>
                   <option value="visual-exact">{t('editor.landing.editable')}</option>
                   <option value="code-preview">{t('editor.landing.sourceOnly')}</option>
@@ -308,7 +288,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               </label>
               <label className="block ac-label ac-label--xs">
                 {t('editor.nav.language')}
-                <select value={filters.language || 'all'} onChange={event => updateFilter('language', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                <select value={filters.language || 'all'} onChange={event => updateFilter('language', event.target.value)} className={`${controlClassName} mt-1`}>
                   <option value="all">{t('editor.common.all')}</option>
                   {SUPPORTED_LANGUAGES.map(lang => (
                     <option key={lang.code} value={lang.code}>{lang.name} ({lang.code})</option>
@@ -316,7 +296,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                 </select>
               </label>
             </div>
-            {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">{t('editor.landing.clearFilters')}</button>}
+            {advancedFilterCount > 0 && <Button size="sm" fullWidth onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))}>{t('editor.landing.clearFilters')}</Button>}
           </div>
         </details>
       </div>
@@ -332,7 +312,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
           <div role="alert" className="rounded border border-granada/25 bg-granada/5 p-3 text-xs text-carbon/70">
             <p className="font-bold text-granada">{t('editor.nav.catalogLoadError')}</p>
             <p className="mt-1">{translateEditorText(t, error)}</p>
-            <button type="button" onClick={retry} className="mt-3 rounded bg-granada px-3 py-1 font-bold text-lienzo">{t('editor.common.retry')}</button>
+            <Button variant="danger" size="sm" className="mt-3" onClick={retry}>{t('editor.common.retry')}</Button>
           </div>
         )}
         {!isLoading && !error && files.length === 0 && (
@@ -343,7 +323,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         {!isLoading && !error && files.length > 0 && filtered.length === 0 && (
           <div className="rounded border border-dashed border-carbon/20 p-4 text-center text-xs text-carbon/55">
             <p>{t('editor.landing.noMatchingItems')}</p>
-            {filtersActive && <button type="button" onClick={() => setFilters(DEFAULT_EDITOR_CATALOG_FILTERS)} className="mt-3 rounded border border-carbon/20 px-3 py-1 font-bold text-carbon">{t('editor.landing.clearFilters')}</button>}
+            {filtersActive && <Button size="sm" className="mt-3" onClick={() => setFilters(DEFAULT_EDITOR_CATALOG_FILTERS)}>{t('editor.landing.clearFilters')}</Button>}
           </div>
         )}
 
@@ -392,15 +372,13 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
           const expanded = expandedGroups[type] ?? true;
           return (
             <section key={type} className="mb-2">
-              <button
-                type="button"
+              <RowButton
                 aria-expanded={expanded}
                 onClick={() => setExpandedGroups(previous => ({ ...previous, [type]: !expanded }))}
-                className="flex w-full items-center justify-between rounded px-2 py-1.5 text-left font-serif text-xs font-bold text-carbon/70 hover:bg-carbon/5"
               >
-                <span>{categoryLabel(type)}</span>
+                <span className="font-semibold">{categoryLabel(type)}</span>
                 <span className="font-mono text-[9px] text-carbon/40">{resources.length} {expanded ? '▾' : '▸'}</span>
-              </button>
+              </RowButton>
               {expanded && (
                 <div className="ml-2 space-y-1 border-l border-carbon/10 pl-2">
                   {resources.map(file => (

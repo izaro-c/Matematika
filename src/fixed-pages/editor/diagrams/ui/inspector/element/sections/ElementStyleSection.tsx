@@ -15,6 +15,7 @@ import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { dashedPatch, stylePatch } from '../../elementSettings';
 import { curveAreaFill, objectDashed, objectStyle, withObjectLabelVisible, withObjectStylePatch } from '@/diagrams';
 import { useI18n } from '@/i18n';
+import { Callout, Swatch, controlClassName } from '@/fixed-pages/editor/ui/primitives';
 
 /** Propiedades: color, strokeWidth, highlightStrokeWidth, fillOpacity, highlightFillOpacity, angleRadius, dashed, preserveColorOnHighlight, highlightable, layerId */
 export const ElementStyleSection: React.FC<ElementPanelProps> = ({
@@ -42,14 +43,12 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">{t('editor.diagramInspector.mainColor')}</label>
         <div className="flex flex-wrap gap-2">
           {PALETTE_TOKENS.map(c => (
-            <button
+            <Swatch
               key={c.id}
-              type="button"
+              label={c.name}
+              selected={element.color === c.id}
               onClick={() => onUpdateElement(element.id, { color: c.id })}
-              className={`h-6 w-6 rounded-full border-2 transition-all cursor-pointer ${c.bgClass} ${
-                element.color === c.id ? 'border-carbon scale-110 shadow-xs ring-2 ring-carbon/20' : 'border-transparent opacity-80 hover:opacity-100'
-              }`}
-              title={c.name}
+              className={c.bgClass}
             />
           ))}
         </div>
@@ -71,7 +70,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ strokeWidth: parseOptionalNumber(e.target.value, 2.4) }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
+              className={controlClassName}
             />
           </div>
           <div>
@@ -88,7 +87,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
+              className={controlClassName}
             />
           </div>
         </div>
@@ -110,7 +109,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ fillOpacity: parseOptionalNumber(e.target.value, 0) }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              className={controlClassName}
             />
           </div>
           <div>
@@ -126,7 +125,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               onChange={e =>
                 onUpdateElement(element.id, stylePatch({ highlightFillOpacity: parseOptionalNumber(e.target.value, 0.35) }))
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              className={controlClassName}
             />
           </div>
         </div>
@@ -146,7 +145,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             onChange={e =>
               onUpdateElement(element.id, stylePatch({ angleRadius: parseOptionalNumber(e.target.value, 1) }))
             }
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+            className={controlClassName}
           />
         </div>
       )}
@@ -166,7 +165,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             onChange={e =>
               onUpdateElement(element.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, kind === 'dimensionLine' ? 14 : 16), }))
             }
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+            className={controlClassName}
           />
         </div>
       ) : (capabilities.fontSize || capabilities.textOffset) ? (
@@ -183,7 +182,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       ) : null}
 
       {capabilities.attachedLabel && (
-        <div className="rounded-lg border border-canela/20 bg-canela/5 p-2.5 text-xs">
+        <Callout className="text-xs">
           <p className="font-bold text-carbon">{t('editor.diagramInspector.linkedLabel')}</p>
           {attachedLabel ? (
             <div className="mt-1.5 space-y-2">
@@ -209,7 +208,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                     onChange={e =>
                       onUpdateElement(attachedLabel.id, stylePatch({ labelSize: parseOptionalNumber(e.target.value, 14), }))
                     }
-                    className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+                    className={controlClassName}
                   />
                 </div>
               )}
@@ -217,7 +216,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           ) : (
             <p className="mt-1 text-[10px] text-carbon/55">{t('editor.diagramInspector.linkedLabelHint')}</p>
           )}
-        </div>
+        </Callout>
       )}
 
       <div className="space-y-2 pt-2 border-t border-carbon/10">
@@ -274,7 +273,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         <select
           value={element.layerId || 'geometry'}
           onChange={e => onUpdateElement(element.id, { layerId: e.target.value })}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
+          className={controlClassName}
         >
           {layers.map(l => (
             <option key={l.id} value={l.id}>

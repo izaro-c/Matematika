@@ -4,6 +4,7 @@ import { diagramControlClassName } from '../../primitives';
 import { DiagramFormField } from '../../primitives/DiagramFormField';
 import { useReferencePick } from './useReferencePick';
 import { useI18n } from '@/i18n';
+import { Button } from '@/fixed-pages/editor/ui/primitives';
 
 interface RelationSlotFieldProps {
   label: string;
@@ -72,18 +73,9 @@ export const RelationSlotField: React.FC<RelationSlotFieldProps> = ({
       {candidates.length === 0 && !optionalEmptyOption ? (
         <p className="text-[10px] leading-relaxed text-ocre" role="status">{emptyHint}</p>
       ) : (
-        <button
-          type="button"
-          aria-pressed={picking}
-          aria-label={picking ? t('editor.diagramConstraints.cancelCanvasPick') : t('editor.diagramConstraints.chooseOnTheCanvas')}
-          className={picking
-            ? 'min-h-11 rounded bg-pavo px-2 text-xs font-bold text-lienzo'
-            : 'min-h-11 rounded border border-pavo/25 bg-lienzo px-2 text-xs font-bold text-pavo disabled:cursor-not-allowed disabled:opacity-35'}
-          onClick={togglePick}
-          disabled={allowedIds.length === 0}
-        >
+        <Button size="sm" variant="primary" aria-pressed={picking} aria-label={picking ? t('editor.diagramConstraints.cancelCanvasPick') : t('editor.diagramConstraints.chooseOnTheCanvas')} onClick={togglePick} disabled={allowedIds.length === 0}>
           {picking ? t('editor.diagramConstraints.cancelChoice') : t('editor.diagramConstraints.chooseOnTheCanvas')}
-        </button>
+        </Button>
       )}
     </div>
   );

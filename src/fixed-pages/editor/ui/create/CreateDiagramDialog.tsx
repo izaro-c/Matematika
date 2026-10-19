@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import type { CreateDiagramInput } from '@/fixed-pages/editor/review/authoringModel';
 import { idToComponentName } from '@/fixed-pages/editor/review/authoringModel';
-import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import { Button, Field, Modal } from '@/fixed-pages/editor/ui/primitives';
 
 interface CreateDiagramDialogProps {
   open: boolean;
@@ -50,8 +50,6 @@ export const CreateDiagramDialog: React.FC<CreateDiagramDialogProps> = ({ open, 
     onClose();
   };
 
-  const dialogRef = useModalFocus<HTMLFormElement>(open, cancel, idRef, creating);
-  if (!open) return null;
 
   const valid = ID_RE.test(value.id) && value.title.trim().length > 0;
   const derivedComponentName = value.id ? idToComponentName(value.id) : '';
@@ -70,99 +68,74 @@ export const CreateDiagramDialog: React.FC<CreateDiagramDialogProps> = ({ open, 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/25 p-4" role="presentation">
-      <form
-        ref={dialogRef}
-        onSubmit={submit}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Crear diagrama matemático"
-        aria-labelledby="create-diagram-title"
-        aria-describedby="create-diagram-description"
-        className="w-full max-w-xl rounded border border-carbon/20 bg-lienzo p-5 shadow-xl"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 id="create-diagram-title" className="font-serif text-lg font-bold text-carbon">Nuevo diagrama interactivo</h2>
-            <p id="create-diagram-description" className="mt-1 text-xs text-carbon/55">
-              Se define el ID y categoría para crear un componente TSX único en el catálogo autoritativo.
-            </p>
-          </div>
-          <button type="button" onClick={cancel} className="rounded px-2 py-1 text-xs text-carbon/55 hover:bg-carbon/5">
-            Cerrar
-          </button>
-        </div>
-
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-            Categoría
+    <Modal
+      open={open}
+      onClose={cancel}
+      title="Nuevo diagrama interactivo"
+      size="md"
+      dismissible={!creating}
+      initialFocusRef={idRef}
+      footer={
+        <>
+          <Button onClick={cancel} disabled={creating}>Cancelar</Button>
+          <Button variant="primary" type="submit" form="create-diagram-form" disabled={!valid || creating}>
+            {creating ? 'Creando…' : 'Crear y abrir'}
+          </Button>
+        </>
+      }
+    >
+      <form id="create-diagram-form" onSubmit={submit} className="space-y-4">
+        <p>Se define el ID y categoría para crear un componente TSX único en el catálogo autoritativo.</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Categoría">
             <select
               value={value.category}
               onChange={event => setValue(previous => ({ ...previous, category: event.target.value }))}
-              className="rounded border border-carbon/15 bg-lienzo p-2 text-xs normal-case text-carbon"
             >
               {DIAGRAM_CATEGORY_OPTIONS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
               ))}
             </select>
-          </label>
+          </Field>
 
-          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
-            ID inmutable
+          <Field
+            label="ID inmutable"
+            error={value.id && !ID_RE.test(value.id) ? 'Usa minúsculas y guiones (ej. triangulo-pasos).' : undefined}
+            help={derivedComponentName && ID_RE.test(value.id) ? <span className="font-mono">Componente: &lt;{derivedComponentName} /&gt;</span> : undefined}
+          >
             <input
               ref={idRef}
               value={value.id}
               onChange={event => setValue(previous => ({ ...previous, id: event.target.value.toLowerCase().replace(/\s+/g, '-') }))}
               placeholder="triangulo-pasos"
-              className="rounded border border-carbon/15 bg-lienzo p-2 font-mono text-xs normal-case text-carbon"
+              className="font-mono"
             />
-            {value.id && !ID_RE.test(value.id) && (
-              <span className="normal-case text-granada text-[10px]">Usa minúsculas y guiones (ej. triangulo-pasos).</span>
-            )}
-            {derivedComponentName && ID_RE.test(value.id) && (
-              <span className="normal-case font-mono text-[10px] text-canela">
-                Componente: &lt;{derivedComponentName} /&gt;
-              </span>
-            )}
-          </label>
+          </Field>
 
-          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong sm:col-span-2">
-            Título
+          <Field className="sm:col-span-2" label="Título">
             <input
               value={value.title}
               onChange={event => setValue(previous => ({ ...previous, title: event.target.value }))}
               placeholder="Triángulo interactivo con altura"
-              className="rounded border border-carbon/15 bg-lienzo p-2 font-serif text-sm normal-case text-carbon"
             />
-          </label>
+          </Field>
 
-          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong sm:col-span-2">
-            Plantilla inicial
+          <Field className="sm:col-span-2" label="Plantilla inicial">
             <select
               value={value.templateType}
               onChange={event => setValue(previous => ({ ...previous, templateType: event.target.value as CreateDiagramInput['templateType'] }))}
-              className="rounded border border-carbon/15 bg-lienzo p-2 text-xs normal-case text-carbon"
             >
               {DIAGRAM_TEMPLATE_OPTIONS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
               ))}
             </select>
-          </label>
+          </Field>
         </div>
 
-        <div className="mt-5 rounded border border-ocre/20 bg-ocre/5 p-3 text-xs text-carbon/65">
-          El diagrama se creará como un componente TSX autoritativo en <span className="font-mono text-[10px]">content/diagrams/{value.category}/{derivedComponentName || '...'}.tsx</span>.
-        </div>
-
-        <div className="mt-5 flex justify-end gap-2">
-          <button type="button" onClick={cancel} className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60 hover:bg-carbon/5">
-            Cancelar
-          </button>
-          <button disabled={!valid || creating} className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90">
-            {creating ? 'Creando…' : 'Crear y abrir'}
-          </button>
-        </div>
+        <p className="border-t border-[color:var(--ed-rule-faint)] pt-3 text-sm italic text-carbon/65">
+          El diagrama se creará como un componente TSX autoritativo en <span className="font-mono text-xs not-italic">content/diagrams/{value.category}/{derivedComponentName || '...'}.tsx</span>.
+        </p>
       </form>
-    </div>
+    </Modal>
   );
 };

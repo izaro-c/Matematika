@@ -8,6 +8,7 @@ import { toEditorModel } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 import { useI18n } from '@/i18n';
+import { Card } from '@/fixed-pages/editor/ui/primitives';
 
 type DiagramModule = Record<string, unknown>;
 type DiagramComponent = React.ComponentType;
@@ -223,12 +224,9 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
     );
   } else if (Component) {
     previewContent = (
-      <div
-        className="relative w-full overflow-hidden rounded-xl border border-carbon/15 bg-lienzo p-2"
-        style={{ minHeight: height }}
-      >
+      <Card className="relative w-full overflow-hidden" style={{ minHeight: height }}>
         <Component />
-      </div>
+      </Card>
     );
   }
 
