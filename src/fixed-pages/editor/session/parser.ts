@@ -22,7 +22,8 @@ export type InlineNode =
   | { type: 'inlineLatex'; value: string }
   | { type: 'conceptLink'; value: string; attrs: Record<string, any>; raw: string }
   | { type: 'refLink'; value: string; attrs: Record<string, any>; raw: string }
-  | { type: 'interactiveElement'; value: string; attrs: Record<string, any>; raw: string }
+  /** `<InteractiveElement target>` or the canonical `<VisualBind element>`; `raw` keeps it lossless. */
+  | { type: 'interactiveElement'; tag?: 'InteractiveElement' | 'VisualBind'; value: string; attrs: Record<string, any>; raw: string }
   | { type: 'proofStepLink'; step: number; raw: string };
 
 export interface ProofStepData {
@@ -98,7 +99,7 @@ function combinedConceptLink(
 
 export function parseInlineNodes(text: string): InlineNode[] {
   const nodes: InlineNode[] = [];
-  const componentRegex = /<(ConceptLink|InteractiveElement|RefLink)\b([^>]*)>([\s\S]*?)<\/\1>/g;
+  const componentRegex = /<(ConceptLink|InteractiveElement|VisualBind|RefLink)\b([^>]*)>([\s\S]*?)<\/\1>/g;
   const proofStepLinkRegex = /<ProofStepLink\b([^>]*)\/>/g;
   const latexRegex = /\$([^$\n]+)\$/g;
   const boldRegex = /(\*\*|__)([^*_\n]+)\1/g;
@@ -133,6 +134,7 @@ export function parseInlineNodes(text: string): InlineNode[] {
       if (tag === 'InteractiveElement') {
         nodes.push(combinedConceptLink(value, attrs, raw) ?? { type: 'interactiveElement', value, attrs, raw });
       }
+      if (tag === 'VisualBind') nodes.push({ type: 'interactiveElement', tag: 'VisualBind', value, attrs, raw });
     } else if (next.kind === 'proofStepLink') {
       const attrs = parseAttributes(next.match[1] || '');
       const step = Number(attrs.step ?? 1);

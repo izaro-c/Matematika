@@ -128,9 +128,9 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           setLinkType('reference');
           setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
           setGraphElementId('');
-        } else if (editingTag === 'InteractiveElement') {
+        } else if (editingTag === 'InteractiveElement' || editingTag === 'VisualBind') {
           setLinkType('graphic');
-          setGraphElementId(initialAttrs.target || '');
+          setGraphElementId(initialAttrs.target || initialAttrs.element || '');
           setSelectedColor(initialAttrs.color || 'canela');
           setSelectedConcept(null);
         }
@@ -216,7 +216,9 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       markup = `<RefLink ${targetIdAttribute(selectedConcept)}>${selectedText}</RefLink>`;
     } else if (linkType === 'graphic') {
       if (!graphElementId.trim()) return;
-      markup = `<InteractiveElement target="${graphElementId.trim()}" color="${selectedColor}">${selectedText}</InteractiveElement>`;
+      markup = editingTag === 'VisualBind'
+        ? `<VisualBind element="${graphElementId.trim()}" color="${selectedColor}">${selectedText}</VisualBind>`
+        : `<InteractiveElement target="${graphElementId.trim()}" color="${selectedColor}">${selectedText}</InteractiveElement>`;
     } else if (linkType === 'combined') {
       if (!selectedConcept || !graphElementId.trim()) return;
       markup = `<ConceptLink ${targetIdAttribute(selectedConcept)} isDependency={${isDependency}} highlightTarget="${graphElementId.trim()}" highlightColor="${selectedColor}">${selectedText}</ConceptLink>`;

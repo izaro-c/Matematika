@@ -76,6 +76,10 @@ export const MdxWorkbench: React.FC = () => {
     removeBlock,
     addBlock,
     moveBlock,
+    relocateBlock,
+    relocateSection,
+    stepSection,
+    sectionBlocks,
     duplicateBlock,
     saveCurrentFile,
     saveDraftCurrentFile,
@@ -586,6 +590,10 @@ export const MdxWorkbench: React.FC = () => {
                   handleMetadataChange={handleMetadataChange}
                   addBlock={addBlock}
                   moveBlock={moveBlock}
+                  relocateBlock={relocateBlock}
+                  relocateSection={relocateSection}
+                  stepSection={stepSection}
+                  sectionBlocks={sectionBlocks}
                   duplicateBlock={duplicateBlock}
                   removeBlock={removeBlock}
                   updateBlock={updateBlock}

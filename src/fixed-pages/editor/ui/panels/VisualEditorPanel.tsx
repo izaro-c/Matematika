@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useI18n } from '@/i18n';
 import { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
-import { GENERAL_BLOCK_PRESETS, PAGE_PROFILE_PRESETS, type BlockPreset } from './visualEditorPresets';
+import { blockCatalog, type BlockCatalogEntry } from './blockCatalog';
+import { BlockDragHandle, BlockInsertGap } from './VisualBlockControls';
+import type { RelocationPlacement } from '@/fixed-pages/editor/document';
 import { VisualEditorBlock } from './VisualEditorBlock';
 import { VisualEditorHeader } from './VisualEditorHeader';
 import { VisualEditorEmpty, VisualEditorSkeleton } from './VisualEditorStates';
@@ -22,6 +24,14 @@ import { SelectionLinkBubble } from '../prose/SelectionLinkBubble';
 import { buildInteractiveReference } from '@/fixed-pages/editor/types/editorContracts';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
+/** The caret in the prose being edited, kept so an inline entry can go back to it. */
+function proseCaret(): Range | null {
+  const selection = window.getSelection();
+  const anchor = selection?.anchorNode;
+  const inProse = (anchor instanceof Element ? anchor : anchor?.parentElement)?.closest('[contenteditable="true"]');
+  return inProse && selection && selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
+}
+
 interface VisualEditorPanelProps {
   currentFile: string | null;
   isLoading?: boolean;
@@ -37,6 +47,11 @@ interface VisualEditorPanelProps {
   handleMetadataChange: (key: string, value: unknown) => void;
   addBlock: (index: number, type: BlockType, content?: string, metadata?: Record<string, unknown>) => void;
   moveBlock: (from: number, to: number) => void;
+  relocateBlock?: (blockId: string, anchorId: string, placement: RelocationPlacement) => void;
+  relocateSection?: (headingId: string, anchorId: string, placement: RelocationPlacement) => void;
+  stepSection?: (headingId: string, direction: -1 | 1) => void;
+  /** Ids of the blocks that move with a heading. */
+  sectionBlocks?: (headingId: string) => string[];
   duplicateBlock: (id: string) => void;
   removeBlock: (id: string) => void;
   updateBlock: (id: string, content: string, metadata?: Record<string, unknown>) => void;
@@ -67,6 +82,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   handleMetadataChange,
   addBlock,
   moveBlock,
+  relocateBlock,
+  relocateSection,
+  stepSection,
+  sectionBlocks,
   duplicateBlock,
   removeBlock,
   updateBlock,
@@ -86,7 +105,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   const stepTargets = useMemo(() => diagramTargets.filter(target => target.kind === 'step'), [diagramTargets]);
 
   const setVariable = useMathStore(state => state.setVariable);
-  const [commandOpen, setCommandOpen] = useState(false);
+  /** Open palette: where it inserts (null = next to the selection) and the caret it had in the prose. */
+  const [palette, setPalette] = useState<{ index: number | null; range: Range | null } | null>(null);
+  const [drag, setDrag] = useState<{ blockId: string; section: boolean; movingIds: string[] } | null>(null);
+  const [drop, setDrop] = useState<{ anchorId: string; placement: RelocationPlacement } | null>(null);
   const [activeDemoBlockId, setActiveDemoBlockId] = useState<string | null>(null);
   const [focusedSurfaceId, setFocusedSurfaceId] = useState<string | null>(null);
   const [formatHint, setFormatHint] = useState<string | null>(null);
@@ -94,7 +116,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   const pendingDeleteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingRenumber = useRef(false);
 
-  const closeCommand = () => setCommandOpen(false);
+  const openPalette = (index: number | null) => setPalette({ index, range: proseCaret() });
+  const closePalette = () => setPalette(null);
   const visualGroups = useMemo(() => groupVisualBlocks(blocks), [blocks]);
   const firstParagraphId = useMemo(() => blocks.find(block => block.type === 'paragraph')?.id ?? null, [blocks]);
   const demoBlocks = useMemo(() => blocks.filter(b => b.type === 'demonstration'), [blocks]);
@@ -114,9 +137,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === '/') {
         event.preventDefault();
-        setCommandOpen(value => !value);
+        const range = proseCaret();
+        setPalette(current => (current ? null : { index: null, range }));
       }
-      if (event.key === 'Escape') setCommandOpen(false);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
@@ -168,21 +191,92 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
   const renderInlineToolbar = (_block: Block) => null;
 
-  const insertPresetAt = (index: number, preset: BlockPreset) => {
-    addBlock(index, preset.type, preset.content, preset.metadata);
-    if (preset.type === 'demonstration') requestRenumber();
-    setCommandOpen(false);
-  };
-  const insertPresetNearSelection = (preset: BlockPreset) => {
+  const indexNearSelection = () => {
     const anchorId = activeDemoBlock?.id ?? editingBlockId;
     const index = anchorId ? blocks.findIndex(b => b.id === anchorId) : -1;
-    insertPresetAt(index >= 0 ? index + 1 : blocks.length, preset);
+    return index >= 0 ? index + 1 : blocks.length;
   };
-  const allPresets = useMemo(
-    () => [...(PAGE_PROFILE_PRESETS[String(metadata.type || '')] || []), ...GENERAL_BLOCK_PRESETS]
-      .filter((preset, index, all) => all.findIndex(item => item.label === preset.label && item.type === preset.type) === index),
-    [metadata.type],
-  );
+  const insertEntry = (entry: BlockCatalogEntry) => {
+    const target = palette;
+    setPalette(null);
+    const index = target?.index ?? indexNearSelection();
+    const { action } = entry;
+    if (action.kind === 'diagram') {
+      setActiveDiagramIndex(index);
+      setActiveDiagramBlockId(null);
+      setDiagramBuilderOpen(true);
+      return;
+    }
+    if (action.kind === 'inline') {
+      const range = target?.range;
+      if (!range) {
+        addBlock(index, 'paragraph', action.markup(''));
+        return;
+      }
+      // Tras cerrar la paleta, el foco vuelve a la prosa: se restaura el cursor y se inserta ahí.
+      window.requestAnimationFrame(() => {
+        const editable = (range.startContainer instanceof Element ? range.startContainer : range.startContainer.parentElement)?.closest<HTMLElement>('[contenteditable="true"]');
+        editable?.focus();
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        if (insertHtmlAtSelection(mdxToEditableHtml(action.markup(range.toString().trim())))) persistFocusedProse();
+      });
+      return;
+    }
+    addBlock(index, action.type, action.content, action.metadata);
+    if (action.type === 'demonstration') requestRenumber();
+  };
+  const catalog = useMemo(() => blockCatalog(String(metadata.type || '')), [metadata.type]);
+
+  const canDrag = !isReadOnly && canMutateVisualStructure && Boolean(relocateBlock);
+  const startDrag = (block: Block, event: React.DragEvent<HTMLElement>) => {
+    const section = block.type === 'heading' && Boolean(relocateSection);
+    const movingIds = section && sectionBlocks ? sectionBlocks(block.id) : [block.id];
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', block.id);
+    const element = document.getElementById(`block-${block.id}`);
+    if (element) event.dataTransfer.setDragImage(element, 16, 16);
+    setDrag({ blockId: block.id, section, movingIds });
+  };
+  const endDrag = () => { setDrag(null); setDrop(null); };
+  /** Drop targets: a block slot; the pointer half decides before or after. */
+  const dropProps = (anchorBefore: string, anchorAfter: string) => ({
+    onDragOver: (event: React.DragEvent<HTMLElement>) => {
+      if (!drag || drag.movingIds.includes(anchorBefore) || drag.movingIds.includes(anchorAfter)) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
+      const box = event.currentTarget.getBoundingClientRect();
+      const next = event.clientY < box.top + box.height / 2
+        ? { anchorId: anchorBefore, placement: 'before' as const }
+        : { anchorId: anchorAfter, placement: 'after' as const };
+      if (drop?.anchorId !== next.anchorId || drop.placement !== next.placement) setDrop(next);
+    },
+    onDrop: (event: React.DragEvent<HTMLElement>) => {
+      event.preventDefault();
+      const target = drop;
+      const moving = drag;
+      endDrag();
+      if (!target || !moving) return;
+      const ids = blocks.map(b => b.id);
+      const first = ids.indexOf(moving.movingIds[0]);
+      const last = ids.indexOf(moving.movingIds[moving.movingIds.length - 1]);
+      const anchor = ids.indexOf(target.anchorId);
+      // Soltar justo al lado de lo que se arrastra no lo mueve.
+      if ((target.placement === 'after' && anchor === first - 1) || (target.placement === 'before' && anchor === last + 1)) return;
+      if (moving.section) relocateSection?.(moving.blockId, target.anchorId, target.placement);
+      else relocateBlock?.(moving.blockId, target.anchorId, target.placement);
+    },
+  });
+  const dropLine = (anchorBefore: string, anchorAfter: string) => {
+    if (!drop) return null;
+    if (drop.anchorId === anchorBefore && drop.placement === 'before') return <div className="ed-drop-line ed-drop-line--before" aria-hidden="true" />;
+    if (drop.anchorId === anchorAfter && drop.placement === 'after') return <div className="ed-drop-line ed-drop-line--after" aria-hidden="true" />;
+    return null;
+  };
+  const insertGap = (index: number) => (!isReadOnly && canMutateVisualStructure
+    ? <BlockInsertGap label={index === 0 ? t('editor.palette.insertAtStart') : t('editor.palette.insertHere')} onOpen={() => openPalette(index)} />
+    : null);
 
   const openLinkerForSelection = () => {
     const selected = getSelectedPlainText().trim();
@@ -295,7 +389,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     openLinkerForSelection,
     handleInsertStepFromToolbar,
     handleMoveActiveStep,
-    insertPresetNearSelection,
+    openPalette,
     persistFocusedProse,
     duplicateBlock,
     removeBlock,
@@ -307,7 +401,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       openLinkerForSelection,
       handleInsertStepFromToolbar,
       handleMoveActiveStep,
-      insertPresetNearSelection,
+      openPalette,
       persistFocusedProse,
       duplicateBlock,
       removeBlock,
@@ -330,7 +424,6 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
         canMutateStructure={canMutateVisualStructure}
         hasActiveProse={Boolean(focusedSurfaceId) || Boolean(editingBlockId)}
         hasActiveDemoStep={Boolean(activeDemoBlockId)}
-        blockPresets={allPresets}
         onOpenLinker={() => api().openLinkerForSelection()}
         onInsertStep={() => api().handleInsertStepFromToolbar()}
         onMoveStep={dir => api().handleMoveActiveStep(dir)}
@@ -357,7 +450,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
             pendingDeleteTimer.current = setTimeout(() => setPendingDeleteStepId(null), 3000);
           }
         }}
-        onInsertPreset={preset => api().insertPresetNearSelection(preset)}
+        onOpenPalette={() => api().openPalette(null)}
         onNotify={setFormatHint}
         onProseMutated={() => api().persistFocusedProse()}
       />
@@ -369,7 +462,6 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     focusedSurfaceId,
     editingBlockId,
     activeDemoBlockId,
-    allPresets,
   ]);
 
   useEffect(() => () => onFormatBarChange?.(null), [onFormatBarChange]);
@@ -409,11 +501,18 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           />
         )}
 
+        {insertGap(0)}
+
         {visualGroups.map((group, groupIndex) => {
           if (group.kind === 'demonstration') {
+            const firstId = group.blocks[0]?.id ?? '';
+            const lastId = group.blocks[group.blocks.length - 1]?.id ?? '';
+            const lastIndex = blocks.findIndex(item => item.id === lastId);
             return (
+              <React.Fragment key={`demo-group-${firstId || groupIndex}`}>
+              <div className="ed-block-slot" {...(drag ? dropProps(firstId, lastId) : {})}>
+              {dropLine(firstId, lastId)}
               <DemonstrationCanvas
-                key={`demo-group-${group.blocks[0]?.id ?? groupIndex}`}
                 blocks={group.blocks}
                 activeBlockId={activeDemoBlockId}
                 isReadOnly={isReadOnly}
@@ -427,14 +526,29 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                 onFocusSurface={setFocusedSurfaceId}
                 onEditChip={(blockId, raw, text, attrs, tag, event) => handleEditLink(blockId, raw, text, attrs, tag, event)}
               />
+              </div>
+              {insertGap(lastIndex + 1)}
+              </React.Fragment>
             );
           }
 
           const block = group.block;
           const index = blocks.findIndex(item => item.id === block.id);
           const isSelected = selectedBlockIds.includes(block.id);
+          const isMoving = drag?.movingIds.includes(block.id) ?? false;
+          const isSourceOnly = block.metadata?.preserved === true || block.metadata?.opaque === true;
           return (
-            <div key={block.id} className="relative">
+            <React.Fragment key={block.id}>
+            <div className={`ed-block-slot${isMoving ? ' ed-dragging' : ''}`} {...(drag ? dropProps(block.id, block.id) : {})}>
+              {dropLine(block.id, block.id)}
+              {canDrag && !assignStepOpen && !isSourceOnly && (
+                <BlockDragHandle
+                  section={block.type === 'heading' && Boolean(relocateSection)}
+                  label={block.type === 'heading' && relocateSection ? t('editor.visual.dragSection') : t('editor.visual.dragBlock')}
+                  onDragStart={event => startDrag(block, event)}
+                  onDragEnd={endDrag}
+                />
+              )}
               {assignStepOpen && (
                 <div className="absolute -left-7 top-4 z-10">
                   <input
@@ -458,7 +572,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                 setEditingBlockId={setEditingBlockId}
                 highlightedBlockId={highlightedBlockId}
                 issues={issues}
-                addBlock={addBlock}
+                onOpenPalette={() => openPalette(index + 1)}
+                onStepSection={stepSection ? direction => stepSection(block.id, direction) : undefined}
                 moveBlock={moveBlock}
                 duplicateBlock={duplicateBlock}
                 removeBlock={removeBlock}
@@ -472,6 +587,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                 diagramTargets={diagramTargets}
               />
             </div>
+            {insertGap(index + 1)}
+            </React.Fragment>
           );
 
         })}
@@ -507,10 +624,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       </div>
 
       <BlockCommandPalette
-        open={commandOpen}
-        presets={allPresets}
-        onClose={closeCommand}
-        onInsert={insertPresetNearSelection}
+        open={palette !== null}
+        entries={catalog}
+        onClose={closePalette}
+        onInsert={insertEntry}
       />
     </div>
   );

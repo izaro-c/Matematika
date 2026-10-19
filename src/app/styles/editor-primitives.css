@@ -491,3 +491,180 @@ details[open] > .ed-panel__summary .ed-panel-header__title::after {
   display: block;
   color: color-mix(in srgb, var(--ed-toast-tone) 72%, var(--theme-carbon));
 }
+
+/* ── Paleta de bloques: índice por rúbricas, manícula en la opción activa ─ */
+.ed-palette__list {
+  overflow-y: auto;
+  max-height: min(60dvh, 28rem);
+  margin: 0.5rem -0.25rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ed-palette__group {
+  margin: 0.75rem 0 0.15rem;
+  padding: 0 0.5rem 0.1rem;
+  border-bottom: 1px solid var(--ed-rule-faint);
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  font-size: 0.875rem;
+  color: var(--ink-text-muted);
+}
+
+.ed-palette__group:first-child {
+  margin-top: 0;
+}
+
+.ed-palette__option {
+  cursor: pointer;
+}
+
+.ed-palette__option::before {
+  content: "☞";
+  flex: none;
+  width: 1.25rem;
+  visibility: hidden;
+}
+
+.ed-palette__option[aria-selected="true"] {
+  border-left-color: var(--ink-text);
+  background: var(--ed-wash);
+}
+
+.ed-palette__option[aria-selected="true"]::before {
+  visibility: visible;
+}
+
+.ed-palette__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.ed-palette__syntax {
+  flex: none;
+  font-family: var(--font-mono-family, ui-monospace, monospace);
+  font-size: 0.75rem;
+  color: var(--ink-text-muted);
+}
+
+.ed-palette__empty {
+  margin: 1rem 0.5rem;
+  font-style: italic;
+  color: var(--ink-text-muted);
+}
+
+/* ── Hueco entre bloques: filete con ＋ al acercarse ────────────────────── */
+.ed-insert-gap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 1.25rem;
+  margin: 0.25rem 0;
+}
+
+.ed-insert-gap::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--ed-rule-faint);
+  opacity: 0;
+  transition: opacity 120ms;
+}
+
+.ed-insert-gap__button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 1px solid var(--ed-rule);
+  border-radius: 1px;
+  background: var(--theme-lienzo);
+  color: var(--ink-text-muted);
+  font-size: 0.875rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms;
+}
+
+.ed-insert-gap:hover::before,
+.ed-insert-gap:focus-within::before,
+.ed-insert-gap:hover .ed-insert-gap__button,
+.ed-insert-gap__button:focus-visible {
+  opacity: 1;
+}
+
+.ed-insert-gap__button:hover {
+  border-color: var(--ed-rule-strong);
+  color: var(--ink-text);
+}
+
+.ed-insert-gap__button:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .ed-insert-gap { height: var(--target-min, 44px); }
+  .ed-insert-gap__button { width: var(--target-min, 44px); height: var(--target-min, 44px); opacity: 1; }
+}
+
+/* ── Arrastre de bloques: asa en el margen y filete de destino ──────────── */
+.ed-drag-handle {
+  position: absolute;
+  top: 0.75rem;
+  left: -1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-text-muted);
+  font-size: 0.875rem;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 120ms;
+}
+
+.ed-drag-handle:active {
+  cursor: grabbing;
+}
+
+.ed-block-slot {
+  position: relative;
+}
+
+.ed-block-slot:hover .ed-drag-handle,
+.ed-block-slot:focus-within .ed-drag-handle,
+.ed-drag-handle:focus-visible {
+  opacity: 1;
+}
+
+.ed-drag-handle--section {
+  color: var(--ink-text);
+}
+
+.ed-drop-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 2px solid var(--theme-canela);
+  pointer-events: none;
+}
+
+.ed-drop-line--before { top: -0.75rem; }
+.ed-drop-line--after { bottom: -0.75rem; }
+
+.ed-dragging {
+  opacity: 0.4;
+}

@@ -29,6 +29,9 @@ describe('Visual authoring interactions', () => {
   it('offers outline, quick command, complete presets and keyboard reordering', () => {
     const addBlock = vi.fn();
     const moveBlock = vi.fn();
+    const stepSection = vi.fn();
+    const setDiagramBuilderOpen = vi.fn();
+    const setActiveDiagramIndex = vi.fn();
     const setEditingBlockId = vi.fn();
     render(
       <MathProvider>
@@ -44,14 +47,18 @@ describe('Visual authoring interactions', () => {
           handleMetadataChange={vi.fn()}
           addBlock={addBlock}
           moveBlock={moveBlock}
+          relocateBlock={vi.fn()}
+          relocateSection={vi.fn()}
+          stepSection={stepSection}
+          sectionBlocks={id => [id]}
           duplicateBlock={vi.fn()}
           removeBlock={vi.fn()}
           updateBlock={vi.fn()}
           handleTextareaSelect={vi.fn()}
           handleEditLink={vi.fn()}
-          setActiveDiagramIndex={vi.fn()}
+          setActiveDiagramIndex={setActiveDiagramIndex}
           setActiveDiagramBlockId={vi.fn()}
-          setDiagramBuilderOpen={vi.fn()}
+          setDiagramBuilderOpen={setDiagramBuilderOpen}
           diagramTargets={[{ id: 'lado-ab', label: 'Lado AB', color: 'terracota', kind: 'segment' }]}
         />
       </MathProvider>,
@@ -65,9 +72,30 @@ describe('Visual authoring interactions', () => {
     fireEvent.keyDown(window, { key: '/', ctrlKey: true });
     const dialog = screen.getByRole('dialog', { name: 'Insertar bloque' });
     expect(dialog).toBeTruthy();
-    fireEvent.change(screen.getByPlaceholderText(/Buscar bloque/), { target: { value: 'Casos límite' } });
-    fireEvent.click(within(dialog).getByRole('button', { name: /Casos límite/ }));
+    expect(within(dialog).getByRole('option', { name: /Definición formal/ })).toBeTruthy();
+    fireEvent.change(within(dialog).getByRole('combobox'), { target: { value: 'casos limite' } });
+    fireEvent.click(within(dialog).getByRole('option', { name: /Casos límite/ }));
     expect(addBlock).toHaveBeenCalledWith(2, 'note', expect.stringContaining('casos degenerados'), undefined);
+
+    // ＋ al principio: Enter inserta la primera coincidencia en esa posición.
+    fireEvent.click(screen.getByRole('button', { name: 'Insertar un bloque al principio' }));
+    const search = within(screen.getByRole('dialog', { name: 'Insertar bloque' })).getByRole('combobox');
+    fireEvent.change(search, { target: { value: 'separador' } });
+    fireEvent.keyDown(search, { key: 'Enter' });
+    expect(addBlock).toHaveBeenLastCalledWith(0, 'separator', '', undefined);
+
+    // «/» sobre un bloque abre la paleta tras él; el diagrama abre el constructor en ese hueco.
+    fireEvent.keyDown(screen.getByLabelText(/Bloque 1: heading/), { key: '/' });
+    const diagramSearch = within(screen.getByRole('dialog', { name: 'Insertar bloque' })).getByRole('combobox');
+    fireEvent.change(diagramSearch, { target: { value: 'simulation' } });
+    fireEvent.keyDown(diagramSearch, { key: 'ArrowDown' });
+    fireEvent.keyDown(diagramSearch, { key: 'Enter' });
+    expect(setActiveDiagramIndex).toHaveBeenCalledWith(1);
+    expect(setDiagramBuilderOpen).toHaveBeenCalledWith(true);
+
+    fireEvent.keyDown(screen.getByLabelText(/Bloque 1: heading/), { key: 'ArrowDown', altKey: true, shiftKey: true });
+    expect(stepSection).toHaveBeenCalledWith('heading', 1);
+    expect(screen.getByRole('button', { name: /mover la sección entera/ })).toBeTruthy();
 
     fireEvent.keyDown(screen.getByLabelText(/Bloque 2: paragraph/), { key: 'ArrowUp', altKey: true });
     expect(moveBlock).toHaveBeenCalledWith(1, 0);

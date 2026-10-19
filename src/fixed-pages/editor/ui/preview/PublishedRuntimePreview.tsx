@@ -79,7 +79,6 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
                       canMutateVisualStructure={false}
                       editingBlockId={null}
                       setEditingBlockId={noop}
-                      addBlock={noop}
                       moveBlock={noop}
                       duplicateBlock={noop}
                       removeBlock={noop}

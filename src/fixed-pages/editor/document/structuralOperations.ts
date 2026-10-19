@@ -90,6 +90,14 @@ function rangeWithAdjacentGap(list: Array<{ location: { range: SourceRange } }>,
   return block.location.range;
 }
 
+/** Shared with relocationOperations; not part of the public engine vocabulary. */
+export {
+  operationId as structuralOperationId,
+  preview as mutationPreview,
+  plan as mutationPlan,
+  defaultGap as siblingGap,
+};
+
 function assertMetadataIdentityPreserved(before: EditorDocument, after: EditorDocument): void {
   const beforeId = before.metadata.value?.id;
   const afterId = after.metadata.value?.id;

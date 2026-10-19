@@ -47,10 +47,11 @@ export function renderFormattedText(text: string, blockId: string, onEditLink: E
     }
 
     const color = node.attrs.color || 'canela';
-    return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag="InteractiveElement"
-      target={String(node.attrs.target || '')} colorClass={`text-${color} border-b border-dashed border-${color}/30`}
-      title={t('editor.preview.highlightTitle', { target: String(node.attrs.target || '') })} onEditLink={onEditLink}
-      tooltip={t('editor.preview.highlightTooltip', { target: String(node.attrs.target || ''), color: String(color) })}>
+    const target = String(node.attrs.target || node.attrs.element || '');
+    return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag={node.tag ?? 'InteractiveElement'}
+      target={target} colorClass={`text-${color} border-b border-dashed border-${color}/30`}
+      title={t('editor.preview.highlightTitle', { target })} onEditLink={onEditLink}
+      tooltip={t('editor.preview.highlightTooltip', { target, color: String(color) })}>
       {renderFormattedText(node.value, blockId, onEditLink, t)}
     </InteractivePreviewToken>;
   });

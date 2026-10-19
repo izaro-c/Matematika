@@ -121,8 +121,24 @@ Decisiones tomadas en 4.3:
 
 ## Fase 5 — Editor MDX: funciones y UX (por priorizar, 1 sesión cada una)
 
-- [ ] 5.1 Paleta para insertar bloques (`/` o un botón «+» entre bloques) con todos los tipos (definición, teorema, demostración, ejercicio, `Simulation`, `VisualBind`…).
-- [ ] 5.2 Arrastrar para reordenar bloques y mover secciones.
+- [x] 5.1 Paleta para insertar bloques (`/` o un botón «+» entre bloques) con todos los tipos (definición, teorema, demostración, ejercicio, `Simulation`, `VisualBind`…).
+- [x] 5.2 Arrastrar para reordenar bloques y mover secciones.
+
+Decisiones tomadas en 5.1:
+- Catálogo único en `ui/panels/blockCatalog.ts` (sustituye a `GENERAL_BLOCK_PRESETS`/`PAGE_PROFILE_PRESETS`): grupos «Propios de esta página», «Texto», «Matemáticas», «Ejercicios», «Diagrama» y «Dentro del texto». Cada entrada lleva su etiqueta como código i18n (área nueva `editor.palette`), la sintaxis MDX que escribe y palabras clave en los tres idiomas; la búsqueda ignora tildes y pone primero las etiquetas que empiezan por la consulta.
+- Acciones: `block` (inserta con `addBlock`), `diagram` (abre el constructor de diagramas en el hueco: la `Simulation` de la página o una figura) e `inline` (`VisualBind`, fórmula en línea: van al cursor de la prosa activa, que se guarda al abrir la paleta; sin prosa activa, en un párrafo nuevo). Nuevos tipos: apartado (`####`), lista numerada, enunciado (`<Definicion title="Enunciado">`), `StepSection`, `Pregunta`, `Apoyo` y `ErrorComun`.
+- Tres maneras de abrirla: `Ctrl+/` (junto a la selección), `/` sobre un bloque enfocado o en una prosa vacía (tras ese bloque) y el ＋ del filete entre bloques y al principio (`BlockInsertGap`). El botón «Insertar bloque» de `MdxFormatBar` abre la misma paleta; desaparecen su desplegable y `BlockInsertMenu`.
+- La paleta usa `Modal` y el patrón combobox (`aria-activedescendant`, flechas, Enter); la opción activa lleva la manícula ☞ (`.ed-palette__*` en `editor-primitives.css`).
+- `VisualBind` es ahora una ficha en la prosa (`parseInlineNodes` → `interactiveElement` con `tag: 'VisualBind'`), sin pérdidas gracias a `raw`; al editarla, `SemanticLinker` la reescribe como `VisualBind`. Pendiente para la 5.4: el resaltado nuevo (`buildInteractiveReference` y el enlace «gráfico» del selector) sigue escribiendo `<InteractiveElement target>`, que no usa ningún MDX del corpus.
+- El texto inicial de los bloques sigue en castellano, aunque el documento esté en otro idioma.
+
+Decisiones tomadas en 5.2:
+- Motor: `document/relocationOperations.ts`. Un traslado corta el código y lo pega byte a byte (dos `SourceEdit` de una sola operación); solo cambian los huecos de al lado. `BlockContainer` guarda ahora `range` y `parentId`, así que un `StepSection` se mueve como una unidad y un bloque puede entrar o salir de él. Se rechaza vaciar un contenedor JSX y soltar un bloque dentro de sí mismo.
+- Sección = un título y lo que le sigue hasta el siguiente título del mismo nivel o superior (subapartados y `StepSection` incluidos): `sectionBlockIds`, `planSectionRelocation` y `planSectionStep` (intercambia la sección con la vecina).
+- Interfaz: un asa en el margen de cada bloque (⠿; § en los títulos, que arrastran su sección entera), un filete canela de destino (mitad superior = antes, inferior = después) y los bloques que se mueven atenuados. Los grupos de demostración son destinos, pero sus pasos se siguen moviendo con sus controles. Teclado: `Alt+↑/↓` mueve el bloque (como antes) y `Alt+Mayús+↑/↓` mueve la sección de un título.
+- `useEditorCore` expone `relocateBlock`, `relocateSection`, `stepSection` y `sectionBlocks`; aviso nuevo `notices.sectionMoved`.
+- No se ha probado a mano en el navegador.
+
 - [ ] 5.3 LaTeX en línea con vista previa en directo y errores de KaTeX señalados.
 - [ ] 5.4 Selector de enlaces y referencias (`SemanticLinker`): búsqueda por título en los tres idiomas y aviso de IDs inexistentes (TODO: «link ez ebatziak»).
 - [ ] 5.5 Panel de validación: clic en un error → salta al bloque o a la línea.
@@ -157,4 +173,5 @@ Decisiones tomadas en 4.3:
 | 2026-10-19 | 3 | b148b8a0 | Contenido multilingüe: `conceptVersions`, `UiLanguageSwitch` + `DocumentVersions`, vista `traduccion` alineada por bloques y versiones de diagrama. Pruebas en `tests/features/editor/language/`. Falta probarla a mano en el navegador. |
 | 2026-10-19 | 4.1 | 6e792010 | Primitivas en `ui/primitives/` + `editor-primitives.css`; `diagrams/ui/primitives` como envoltorios. Pruebas en `tests/features/editor/ui/primitives/`. |
 | 2026-10-19 | 4.2 | 795ed6e3 | Esquema único `EditorShell` para MDX y diagramas; avisos en panel inferior (`DiagnosticsDock`); ruta del documento en la cabecera. Pruebas en `tests/features/editor/navigation/` (`EditorWorkspacePanels`, `editorUrlModel`), `workbench/EditorWorkbenchHeader` y `diagrams/workbench/DiagramWorkbench`. |
-| 2026-10-19 | 4.3 | (este commit) | Partidos `MdxWorkbench`, `DiagramWorkbench`, `GroupsAndLayersManager` y `VisualEditorPanel` en hooks y subcomponentes; `Button` en los nuevos. |
+| 2026-10-19 | 4.3 | e310e5a3 | Partidos `MdxWorkbench`, `DiagramWorkbench`, `GroupsAndLayersManager` y `VisualEditorPanel` en hooks y subcomponentes; `Button` en los nuevos. |
+| 2026-10-19 | 5.1 + 5.2 | (este commit) | Paleta de bloques sobre `blockCatalog` (`/`, `Ctrl+/` y ＋ entre bloques), `VisualBind` como ficha en la prosa; arrastre de bloques y secciones con `relocationOperations`. Pruebas en `tests/features/editor/document/relocationOperations.test.ts`, `ui/blockCatalog.test.ts` y `navigation/visualAuthoring.test.tsx`. |

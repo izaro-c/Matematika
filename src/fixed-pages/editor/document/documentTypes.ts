@@ -58,6 +58,10 @@ export interface BlockContainer {
   kind: 'root' | 'jsx-container';
   name?: string;
   contentRange: SourceRange;
+  /** Whole element, tags included (jsx-container only); a container moves as one unit. */
+  range?: SourceRange;
+  /** Container that holds this one (jsx-container only). */
+  parentId?: string;
   /** Parsed JSX attributes for jsx-container nodes (e.g. step="step2" on StepSection). */
   attributes?: Record<string, string>;
 }

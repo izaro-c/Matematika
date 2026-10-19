@@ -21,7 +21,7 @@ export interface RichProseSurfaceProps {
   onEditStepLink?: (step: number, chipElement: HTMLElement) => void;
 }
 
-const CHIP_SELECTOR = '[data-mdx="ConceptLink"], [data-mdx="RefLink"], [data-mdx="InteractiveElement"], [data-mdx="ProofStepLink"]';
+const CHIP_SELECTOR = '[data-mdx="ConceptLink"], [data-mdx="RefLink"], [data-mdx="InteractiveElement"], [data-mdx="VisualBind"], [data-mdx="ProofStepLink"]';
 
 export function RichProseSurface({
   value,

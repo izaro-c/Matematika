@@ -6,3 +6,4 @@ export * from './editorTransitions';
 export * from './metadataProjection';
 export * from './blockRegistry';
 export * from './structuralOperations';
+export * from './relocationOperations';

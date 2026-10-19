@@ -72,7 +72,7 @@ export function projectBlocks(source: string, bodyNodes: MdxAstNode[]): BlockPro
       const containerId = `container-${containers.length}`;
       const rawAttrs = readJsxAttributes(source, node);
       const attributes = Object.fromEntries(Object.entries(rawAttrs).map(([k, v]) => [k, String(v)]));
-      containers.push({ id: containerId, kind: 'jsx-container', name: node.name, contentRange, attributes });
+      containers.push({ id: containerId, kind: 'jsx-container', name: node.name, contentRange, range: location.range, parentId, attributes });
       for (const child of node.children ?? []) projectNode(child, containerId);
       return;
     }

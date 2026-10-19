@@ -7,8 +7,8 @@ import {
   parseEditorDocument, getVisualCapabilities,
   applyMutationPlan, planBlockUpdate, planBlockInsertion, planBlockDeletion,
   planBlockDuplication, planBlockMove, planMetadataUpdate, planDiagramBinding,
-  planAssignDiagramStep,
-  type DocumentMutationPlan, type EditorDocument
+  planAssignDiagramStep, planBlockRelocation, planSectionRelocation, planSectionStep, sectionBlockIds,
+  type DocumentMutationPlan, type RelocationPlacement, type EditorDocument
 } from '../document';
 import { mapProjectedBlocks } from './blockView';
 
@@ -389,6 +389,34 @@ export const useEditorCore = () => {
     catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
   }, [blockUnsafeAction, commitMutation]);
 
+  const relocateBlock = useCallback((blockId: string, anchorId: string, placement: RelocationPlacement) => {
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(blockId); return; }
+    try { commitMutation(planBlockRelocation(current, blockId, anchorId, placement), editorMessage('notices.blockMoved')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
+  }, [blockUnsafeAction, commitMutation]);
+
+  const relocateSection = useCallback((headingId: string, anchorId: string, placement: RelocationPlacement) => {
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(headingId); return; }
+    try { commitMutation(planSectionRelocation(current, headingId, anchorId, placement), editorMessage('notices.sectionMoved')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
+  }, [blockUnsafeAction, commitMutation]);
+
+  const stepSection = useCallback((headingId: string, direction: -1 | 1) => {
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(headingId); return; }
+    try { commitMutation(planSectionStep(current, headingId, direction), editorMessage('notices.sectionMoved')); }
+    catch (error) { setMessage(failureMessage(error, 'errors.changeRejected')); }
+  }, [blockUnsafeAction, commitMutation]);
+
+  const sectionBlocks = useCallback((headingId: string): string[] => {
+    const current = docRef.current;
+    if (!current) return [headingId];
+    try { return sectionBlockIds(current, headingId); }
+    catch { return [headingId]; }
+  }, []);
+
   const duplicateBlock = useCallback((id: string) => {
     const current = docRef.current;
     if (!current) { blockUnsafeAction(id); return; }
@@ -615,7 +643,7 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, closeFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, assignDiagramStep, createPage, createDiagram, createTranslation, setMetadata, setImports, setExports, setBlocks,
+    removeBlock, addBlock, moveBlock, relocateBlock, relocateSection, stepSection, sectionBlocks, duplicateBlock, bindDiagram, assignDiagramStep, createPage, createDiagram, createTranslation, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
   };

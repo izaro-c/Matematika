@@ -94,7 +94,7 @@ function nodeToHtml(node: InlineNode): string {
     case 'refLink':
       return chipHtml('RefLink', node.attrs, node.value, node.raw);
     case 'interactiveElement':
-      return chipHtml('InteractiveElement', node.attrs, node.value, node.raw);
+      return chipHtml(node.tag ?? 'InteractiveElement', node.attrs, node.value, node.raw);
     default:
       return '';
   }
@@ -154,7 +154,7 @@ function nodeToMdx(node: Node): string {
     if (body.startsWith('$$')) return `<Formula>\n  ${body}\n</Formula>`;
     return `<Formula>\n  $$${body}$$\n</Formula>`;
   }
-  if (mdx === 'ConceptLink' || mdx === 'RefLink' || mdx === 'InteractiveElement') {
+  if (mdx === 'ConceptLink' || mdx === 'RefLink' || mdx === 'InteractiveElement' || mdx === 'VisualBind') {
     if (el.dataset.raw) return decodeURIComponent(el.dataset.raw);
     const attrs = JSON.parse(decodeURIComponent(el.dataset.attrs || '{}')) as Record<string, unknown>;
     const inner = childrenToMdx(el);

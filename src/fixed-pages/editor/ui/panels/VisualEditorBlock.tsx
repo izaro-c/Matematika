@@ -2,11 +2,11 @@ import React from 'react';
 import { useI18n } from '@/i18n';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
-import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 import { insertSymbol, parseMarkdownTable, renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 import { PublishedEditSurface } from './PublishedEditSurface';
 import { INLINE_EDITABLE_BLOCKS, LATEX_SYMBOLS } from './visualEditorPresets';
-import { BlockActions, BlockInsertMenu } from './VisualBlockControls';
+import { BlockActions } from './VisualBlockControls';
 import { RegisteredMdxBlockEditor } from './RegisteredMdxBlockEditor';
 import { ExerciseBlockEditor } from './ExerciseBlockEditor';
 import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
@@ -23,7 +23,10 @@ interface VisualEditorBlockProps {
   setEditingBlockId: (id: string | null) => void;
   highlightedBlockId?: string | null;
   issues?: EditorValidationIssue[];
-  addBlock: (index: number, type: BlockType, content?: string, metadata?: Record<string, unknown>) => void;
+  /** Opens the block palette to insert after this block («/» on the block or in an empty text). */
+  onOpenPalette?: () => void;
+  /** Alt+Shift+↑/↓ on a heading: moves its whole section. */
+  onStepSection?: (direction: -1 | 1) => void;
   moveBlock: (from: number, to: number) => void;
   duplicateBlock: (id: string) => void;
   removeBlock: (id: string) => void;
@@ -39,7 +42,7 @@ interface VisualEditorBlockProps {
 
 export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   block, blocks, index, isReadOnly, canMutateVisualStructure, editingBlockId,
-  setEditingBlockId, highlightedBlockId, issues = [], addBlock, moveBlock, duplicateBlock, removeBlock, updateBlock,
+  setEditingBlockId, highlightedBlockId, issues = [], onOpenPalette, onStepSection, moveBlock, duplicateBlock, removeBlock, updateBlock,
   handleTextareaSelect, handleEditLink, renderInlineToolbar, setActiveDiagramIndex,
   setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets: _diagramTargets,
 }) => {
@@ -78,7 +81,21 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                   setEditingBlockId(block.id);
                   return;
                 }
+                if (event.key === '/' && !event.ctrlKey && !event.metaKey && !isReadOnly && canMutateVisualStructure && onOpenPalette) {
+                  const target = event.target as HTMLElement;
+                  const emptyProse = target.isContentEditable && !(target.textContent ?? '').trim();
+                  if (target === event.currentTarget || emptyProse) {
+                    event.preventDefault();
+                    onOpenPalette();
+                    return;
+                  }
+                }
                 if (!event.altKey || !canMutateVisualStructure || isSourceOnly) return;
+                if (event.shiftKey && block.type === 'heading' && onStepSection && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+                  event.preventDefault();
+                  onStepSection(event.key === 'ArrowUp' ? -1 : 1);
+                  return;
+                }
                 if (event.key === 'ArrowUp' && index > 0) { event.preventDefault(); moveBlock(index, index - 1); }
                 if (event.key === 'ArrowDown' && index < blocks.length - 1) { event.preventDefault(); moveBlock(index, index + 1); }
               }}
@@ -463,17 +480,6 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 </div>
               )}
 
-              {!isReadOnly && canMutateVisualStructure && (
-                <BlockInsertMenu
-                  index={index}
-                  addBlock={addBlock}
-                  openDiagramBuilder={(insertIndex) => {
-                    setActiveDiagramIndex(insertIndex);
-                    setActiveDiagramBlockId(null);
-                    setDiagramBuilderOpen(true);
-                  }}
-                />
-              )}
             </div>
   );
 };
