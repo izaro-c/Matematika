@@ -18,6 +18,7 @@
 | `templates/` | Resource catalog / templates |
 | `diagrams/` | Diagram workbench (model + UI) |
 | `ui/page/` | Editor page chrome |
+| `ui/primitives/` | Shared UI primitives (see below) |
 
 ## Diagrams workbench
 
@@ -33,6 +34,15 @@
 | `diagrams/ui/toolbar/` | Tools chrome |
 | `diagrams/ui/inspector/` | Element inspectors |
 | `diagrams/ui/constraints/` | Constraint editors |
+
+## UI primitives
+
+`ui/primitives/` holds `Button`, `IconButton`, `SegmentedControl`, `Tabs`, `Panel`/`PanelHeader`, `Field`, `Modal` and `Toast`/`ToastRegion`. Their look lives in `src/app/styles/editor-primitives.css` (`.ed-*` classes), not in Tailwind strings: an old printed book with plain paper, one rule, small caps in Garamond, and the ☞ manicule only where it means "here" (the primary button, the checked segment). No eyebrows, no hint under every heading, no pills or shadows.
+
+- `diagrams/ui/primitives` (`DiagramButton`, `DiagramField`, `DiagramPanel`, `DiagramTabBar`, `diagramControlClassName`) are thin wrappers over these; new code imports `ui/primitives` directly.
+- `SegmentedControl` is a radio group and `Tabs` (`variant="tabs"`) a tab list, both with arrow keys; `Tabs variant="nav"` is a row of section links with `aria-current`.
+- `Field` takes a single control and links its label, help and error (`aria-describedby`, `aria-invalid`); a bare control uses `controlClassName`.
+- `Modal` traps focus with `useModalFocus`; pass `dismissible={false}` while an action must finish.
 
 ## Public API
 

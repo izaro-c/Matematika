@@ -1,0 +1,493 @@
+/* ==========================================================================
+   EDITOR-PRIMITIVES — piel de las primitivas del editor (.ed-*)
+   Componentes: src/fixed-pages/editor/ui/primitives/.
+   Libro antiguo: papel, un solo filete, versalitas en Garamond y manícula ☞
+   solo donde indica «aquí». Sin píldoras, sombras, antetítulos ni MAYÚSCULAS.
+   Guía: .agents/skills/matematika-diagram-generator/references/paleta-y-estilos.md
+   ========================================================================== */
+
+:root {
+  --ed-rule: color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  --ed-rule-strong: color-mix(in srgb, var(--theme-carbon) 55%, transparent);
+  --ed-rule-faint: color-mix(in srgb, var(--theme-carbon) 14%, transparent);
+  --ed-wash: color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  --ed-control-height: 2.25rem;
+  --ed-control-height-sm: 1.75rem;
+}
+
+@media (pointer: coarse) {
+  :root {
+    --ed-control-height: var(--target-min, 44px);
+    --ed-control-height-sm: 2.25rem;
+  }
+}
+
+/* ── Rúbrica compartida: versalitas en la letra de cuerpo ───────────────── */
+.ed-button,
+.ed-segmented__option,
+.ed-tab,
+.ed-panel-header__title,
+.ed-toast__title {
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+
+.ed-button:focus-visible,
+.ed-icon-button:focus-visible,
+.ed-segmented__option:focus-visible,
+.ed-tab:focus-visible,
+.ed-panel__summary:focus-visible,
+.ed-control:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: 2px;
+}
+
+/* ── Button: rótulo impreso ─────────────────────────────────────────────── */
+.ed-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: var(--ed-control-height);
+  padding: 0.25rem 0.85rem 0.3rem;
+  border: 1px solid var(--ed-rule);
+  border-radius: 1px;
+  background: transparent;
+  color: var(--ink-text);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-normal, 0.2s) var(--ease-interactive, ease),
+    background-color var(--transition-normal, 0.2s) var(--ease-interactive, ease),
+    color var(--transition-normal, 0.2s) var(--ease-interactive, ease);
+}
+
+.ed-button:not(:disabled):hover {
+  border-color: var(--ed-rule-strong);
+}
+
+.ed-button--sm {
+  min-height: var(--ed-control-height-sm);
+  padding: 0.15rem 0.6rem 0.2rem;
+  font-size: 0.875rem;
+}
+
+.ed-button--full {
+  width: 100%;
+}
+
+.ed-button--primary {
+  padding-left: 0.7rem;
+  border-color: var(--ed-rule-strong);
+}
+
+.ed-button--primary::before {
+  content: "☞";
+  flex: none;
+  font-size: 1.1em;
+  font-variant-caps: normal;
+  line-height: 1;
+  color: var(--ink-text-muted);
+}
+
+.ed-button--primary:not(:disabled):hover {
+  border-color: var(--theme-carbon);
+}
+
+.ed-button--danger {
+  border-color: color-mix(in srgb, var(--theme-granada) 40%, transparent);
+  color: var(--theme-granada);
+}
+
+.ed-button--danger:not(:disabled):hover {
+  border-color: var(--theme-granada);
+}
+
+.ed-button--quiet {
+  border-color: transparent;
+  color: var(--ink-text-muted);
+}
+
+.ed-button--quiet:not(:disabled):hover {
+  border-color: transparent;
+  background: var(--ed-wash);
+  color: var(--ink-text);
+}
+
+.ed-button[aria-pressed="true"] {
+  border-color: var(--theme-carbon);
+  background: var(--ed-wash);
+}
+
+.ed-button--primary[aria-pressed="true"]::before {
+  content: "☜";
+}
+
+.ed-button:disabled,
+.ed-icon-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── IconButton: glifo sin filete ───────────────────────────────────────── */
+.ed-icon-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--ed-control-height);
+  height: var(--ed-control-height);
+  border: 1px solid transparent;
+  border-radius: 1px;
+  background: transparent;
+  color: var(--ink-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-normal, 0.2s) var(--ease-interactive, ease),
+    color var(--transition-normal, 0.2s) var(--ease-interactive, ease);
+}
+
+.ed-icon-button--sm {
+  width: var(--ed-control-height-sm);
+  height: var(--ed-control-height-sm);
+}
+
+.ed-icon-button:not(:disabled):hover {
+  background: var(--ed-wash);
+  color: var(--ink-text);
+}
+
+.ed-icon-button--danger:not(:disabled):hover {
+  color: var(--theme-granada);
+}
+
+.ed-icon-button[aria-pressed="true"] {
+  border-color: var(--ed-rule);
+  background: var(--ed-wash);
+  color: var(--ink-text);
+}
+
+.ed-icon-button > svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── SegmentedControl: índice con manícula ──────────────────────────────── */
+.ed-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.15rem;
+}
+
+.ed-segmented__sep {
+  color: var(--ink-text-subtle);
+  user-select: none;
+}
+
+.ed-segmented__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: var(--ed-control-height-sm);
+  padding: 0 0.3rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-text-muted);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.ed-segmented__option:hover {
+  color: var(--ink-text);
+}
+
+.ed-segmented__option[aria-checked="true"] {
+  color: var(--ink-text);
+}
+
+.ed-segmented__option[aria-checked="true"] .ed-segmented__label {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.ed-segmented__option[aria-checked="true"]::before {
+  content: "☞";
+  font-variant-caps: normal;
+}
+
+.ed-segmented__option:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Tabs: rúbricas sobre un filete ─────────────────────────────────────── */
+.ed-tabs {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--ed-rule-faint);
+}
+
+.ed-tab {
+  min-height: var(--ed-control-height);
+  margin-bottom: -1px;
+  padding: 0 0.1rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--ink-text-muted);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ed-tab:hover {
+  color: var(--ink-text);
+}
+
+.ed-tab[aria-selected="true"],
+.ed-tab[aria-current="page"] {
+  border-bottom-color: var(--ink-text);
+  color: var(--ink-text);
+}
+
+/* ── Panel: papel liso, un filete entre secciones ───────────────────────── */
+.ed-panel {
+  background: var(--theme-lienzo);
+  padding: 0.75rem 0;
+}
+
+.ed-panel + .ed-panel {
+  border-top: 1px solid var(--ed-rule-faint);
+}
+
+.ed-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.ed-panel__summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ed-panel__summary::-webkit-details-marker {
+  display: none;
+}
+
+.ed-panel__summary .ed-panel-header__title::after {
+  content: "▸";
+  margin-left: 0.4rem;
+  font-variant-caps: normal;
+  font-size: 0.75em;
+  color: var(--ink-text-subtle);
+}
+
+details[open] > .ed-panel__summary .ed-panel-header__title::after {
+  content: "▾";
+}
+
+.ed-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: var(--ed-control-height-sm);
+}
+
+.ed-panel-header__title {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink-text);
+}
+
+.ed-panel-header__meta {
+  margin-left: 0.5rem;
+  font-family: var(--font-body-family);
+  font-style: italic;
+  font-weight: 400;
+  font-variant-caps: normal;
+  font-variant-numeric: oldstyle-nums;
+  color: var(--ink-text-muted);
+}
+
+.ed-panel-header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ── Field ──────────────────────────────────────────────────────────────── */
+.ed-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ed-field__label {
+  font-family: var(--font-body-family);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink-text-muted);
+}
+
+.ed-field__help {
+  font-family: var(--font-body-family);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink-text-subtle);
+}
+
+.ed-field__error {
+  font-family: var(--font-body-family);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--theme-granada);
+}
+
+.ed-control {
+  width: 100%;
+  min-height: var(--ed-control-height);
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--ed-rule);
+  border-radius: 1px;
+  background: var(--theme-lienzo);
+  color: var(--ink-text);
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  transition: border-color var(--transition-normal, 0.2s) var(--ease-interactive, ease);
+}
+
+.ed-control:hover:not(:disabled) {
+  border-color: var(--ed-rule-strong);
+}
+
+.ed-control:focus-visible {
+  outline-offset: 0;
+  border-color: var(--ed-rule-strong);
+}
+
+.ed-control[aria-invalid="true"] {
+  border-color: var(--theme-granada);
+}
+
+.ed-control:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Modal ──────────────────────────────────────────────────────────────── */
+.ed-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+}
+
+.ed-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 32rem;
+  max-height: min(90dvh, 56rem);
+  overflow: hidden;
+  border: 1px solid var(--ed-rule);
+  border-radius: 1px;
+  background: var(--theme-lienzo);
+  color: var(--ink-text-body);
+}
+
+.ed-modal--md { max-width: 44rem; }
+.ed-modal--lg { max-width: 64rem; }
+
+.ed-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.75rem 0.5rem 1.25rem;
+}
+
+.ed-modal__title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  color: var(--ink-text);
+}
+
+.ed-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.25rem 1.25rem 1rem;
+  font-family: var(--font-body-family);
+}
+
+.ed-modal__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--ed-rule-faint);
+}
+
+/* ── Toast: nota impresa al pie ─────────────────────────────────────────── */
+.ed-toast-region {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  max-width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.ed-toast {
+  --ed-toast-tone: var(--theme-carbon);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.25rem 0.55rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--ed-toast-tone) 45%, transparent);
+  border-radius: 1px;
+  background: var(--diagram-folio-bg, var(--theme-lienzo));
+  color: var(--ink-text-body);
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  pointer-events: auto;
+}
+
+.ed-toast--success { --ed-toast-tone: var(--theme-musgo); }
+.ed-toast--warning { --ed-toast-tone: var(--theme-ocre); }
+.ed-toast--error { --ed-toast-tone: var(--theme-granada); }
+
+.ed-toast__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 0.2rem;
+}
+
+.ed-toast__title {
+  display: block;
+  color: color-mix(in srgb, var(--ed-toast-tone) 72%, var(--theme-carbon));
+}
