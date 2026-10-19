@@ -310,16 +310,15 @@ export function editorRouteSegmentsForPath(path: string): string[] {
 }
 
 /**
- * Ruta del documento para la barra superior: carpetas y nombre, sin el prefijo del
- * corpus ni el idioma (lo muestran las versiones).
+ * Ruta del documento para la barra superior: solo las carpetas, sin el prefijo del
+ * corpus ni el idioma (lo muestran las versiones). El nombre no entra: el campo del
+ * título va justo después.
  */
 export function documentPathCrumbs(path: string): string[] {
-  const parts = path.split('/').filter(Boolean);
-  if (parts.length === 0) return [];
-  const name = parts[parts.length - 1].replace(/\.(mdx|tsx)$/, '');
-  if (parts[0] === 'content' && parts[1] === 'mdx' && parts.length === 5) return [parts[3], name];
-  if (parts[0] === 'content' && parts[1] === 'diagrams') return [...parts.slice(2, -1), name];
-  return [...parts.slice(0, -1), name];
+  const parts = path.split('/').filter(Boolean).slice(0, -1);
+  if (parts[0] === 'content' && parts[1] === 'mdx' && parts.length === 4) return [parts[3]];
+  if (parts[0] === 'content' && parts[1] === 'diagrams') return parts.slice(2);
+  return parts;
 }
 
 function isDiagramPath(path: string): boolean {

@@ -120,10 +120,11 @@ describe('URL del editor', () => {
 });
 
 describe('ruta del documento en la barra superior', () => {
-  it('muestra carpeta y nombre, sin el prefijo del corpus ni el idioma', () => {
-    expect(documentPathCrumbs('content/mdx/es/definitions/angulo.mdx')).toEqual(['definitions', 'angulo']);
-    expect(documentPathCrumbs('content/diagrams/geometria/Triangulo.tsx')).toEqual(['geometria', 'Triangulo']);
-    expect(documentPathCrumbs('widgets/diagrams/Punto.tsx')).toEqual(['widgets', 'diagrams', 'Punto']);
+  it('muestra solo las carpetas, sin el prefijo del corpus, el idioma ni el nombre', () => {
+    expect(documentPathCrumbs('content/mdx/es/definitions/angulo.mdx')).toEqual(['definitions']);
+    expect(documentPathCrumbs('content/diagrams/geometria/Triangulo.tsx')).toEqual(['geometria']);
+    expect(documentPathCrumbs('content/diagrams/Punto.tsx')).toEqual([]);
+    expect(documentPathCrumbs('widgets/diagrams/Punto.tsx')).toEqual(['widgets', 'diagrams']);
     expect(documentPathCrumbs('')).toEqual([]);
   });
 });

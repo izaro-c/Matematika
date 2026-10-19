@@ -26,13 +26,13 @@ describe('EditorWorkbenchHeader', () => {
     render(
       <EditorWorkbenchHeader
         {...base}
-        pathCrumbs={['definitions', 'angulo']}
+        pathCrumbs={['definitions']}
         avisos={{ ...base.avisos, open: true }}
       />,
     );
     const path = screen.getByRole('navigation', { name: 'Ruta del documento' });
     expect(path.textContent).toContain('definitions');
-    expect(screen.getByText('angulo').getAttribute('aria-current')).toBe('page');
+    expect(path.querySelector('[aria-current]')).toBeNull();
     expect(screen.getByRole('button', { name: 'Avisos' }).getAttribute('aria-expanded')).toBe('true');
   });
 

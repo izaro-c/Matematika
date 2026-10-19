@@ -31,7 +31,7 @@ export interface EditorWorkbenchHeaderProps {
   onTitleChange: (value: string) => void;
   titleDisabled?: boolean;
   fileBadge?: string;
-  /** Ruta del documento (carpetas y nombre), delante del título. */
+  /** Carpetas del documento, delante del título. */
   pathCrumbs?: string[];
   badges?: React.ReactNode;
   isDirty?: boolean;
@@ -187,7 +187,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
                 {pathCrumbs.map((crumb, index) => (
                   <li key={`${index}-${crumb}`} className="flex min-w-0 items-center gap-1">
                     {index > 0 && <span aria-hidden="true" className="text-carbon/30">/</span>}
-                    <span className="truncate" aria-current={index === pathCrumbs.length - 1 ? 'page' : undefined}>{crumb}</span>
+                    <span className="truncate">{crumb}</span>
                   </li>
                 ))}
                 <li aria-hidden="true" className="text-carbon/30">›</li>
