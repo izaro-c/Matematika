@@ -55,9 +55,8 @@ import { WorkbenchElementInspector } from './WorkbenchElementInspector';
 import { WorkbenchStepsEditor } from '../toolbar/WorkbenchStepsEditor';
 import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
 import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchAsideTabs';
-import { EDITOR_PANEL_LIMITS } from '@/fixed-pages/editor/session/editorNavigationModel';
-import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
-import { UI } from '@/design';
+import { EditorShell } from '@/fixed-pages/editor/ui/page/EditorShell';
+import { DiagnosticsDock } from '@/fixed-pages/editor/ui/workbench/DiagnosticsDock';
 import { useI18n } from '@/i18n';
 import { translateEditorText } from '@/fixed-pages/editor/types/editorMessage';
 import { DiagramDataPanel } from './DiagramDataPanel';
@@ -84,7 +83,7 @@ import {
   toggleAdditiveSelection,
 } from '../workbenchSelection';
 
-type InspectorTab = 'scene' | 'layers' | 'properties' | 'steps' | 'diagnostics';
+type InspectorTab = 'scene' | 'layers' | 'properties' | 'steps';
 
 const ANNOTATION_KINDS = new Set(['infoPanel', 'text', 'label', 'formula']);
 
@@ -114,6 +113,8 @@ interface DiagramWorkbenchProps {
   onLeftPanelWidthChange?: (width: number) => void;
   inspectorWidth?: number;
   onInspectorWidthChange?: (width: number) => void;
+  diagnosticsHeight?: number;
+  onDiagnosticsHeightChange?: (height: number) => void;
 }
 
 export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
@@ -129,6 +130,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   onLeftPanelWidthChange,
   inspectorWidth: inspectorWidthProp,
   onInspectorWidthChange,
+  diagnosticsHeight: diagnosticsHeightProp,
+  onDiagnosticsHeightChange,
 }) => {
   const { t } = useI18n();
   const {
@@ -188,21 +191,11 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [localNavWidth, setLocalNavWidth] = useState(leftPanelWidth);
   const navigationWidth = onLeftPanelWidthChange ? leftPanelWidth : localNavWidth;
   const setNavigationWidth = onLeftPanelWidthChange ?? setLocalNavWidth;
-  const isSidebarCurrentlyOpen = isSidebarOpen !== undefined ? isSidebarOpen : true;
-  const navigationOpen = Boolean(isSidebarCurrentlyOpen);
-  const navigationResize = usePanelResize({
-    direction: 'horizontal',
-    value: navigationWidth,
-    ...EDITOR_PANEL_LIMITS.navigation,
-    onChange: setNavigationWidth,
-  });
-  const inspectorResize = usePanelResize({
-    direction: 'horizontal',
-    value: inspectorWidth,
-    inverted: true,
-    ...EDITOR_PANEL_LIMITS.inspector,
-    onChange: setInspectorWidth,
-  });
+  const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false);
+  const [localDiagnosticsHeight, setLocalDiagnosticsHeight] = useState(220);
+  const diagnosticsHeight = diagnosticsHeightProp ?? localDiagnosticsHeight;
+  const setDiagnosticsHeight = onDiagnosticsHeightChange ?? setLocalDiagnosticsHeight;
+  const navigationOpen = isSidebarOpen ?? true;
   const [activeStepIndex, setActiveStepIndex] = useState<number | null>(null);
   const [frameMode, setFrameMode] = useState<CanvasFrameMode>('editor');
   const [showAllObjects, setShowAllObjects] = useState(false);
@@ -757,55 +750,59 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      <WorkbenchHeader
-        model={model}
-        metadataType={metadataType}
-        componentName={state.componentName}
-        activeLang={diagramLang}
-        onSelectActiveLang={setDiagramLang}
-        canUndo={canUndo}
-        canRedo={canRedo}
-        frameMode={frameMode}
-        onSelectFrameMode={setFrameMode}
-        onUndo={undo}
-        onRedo={redo}
-        onOpenPresets={() => setPresetsOpen(true)}
-        onOpenCode={() => setCodeOpen(true)}
-        onOpenSettings={() => setSettingsOpen(true)}
-        onOpenMdxLinks={() => setMdxLinksOpen(true)}
-        onOpenGuided={() => setGuidedOpen(true)}
-        onResetViewport={handleResetViewport}
-        onOpenAvisos={() => {
-          setIsInspectorOpen(true);
-          setActiveTab('diagnostics');
-        }}
-        onTitleChange={handleTitleChange}
-        sandboxMode={sandboxMode}
-        saveCapability={editorSaveCapability}
-        onSave={handleSave}
-        onCloseEditor={handleCloseEditor}
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={onToggleSidebar}
-        isInspectorOpen={isInspectorOpen}
-        onToggleInspector={() => setIsInspectorOpen(open => !open)}
-      />
-
-      <div className="relative z-40">
-        <WorkbenchToolbar
-          model={model}
-          activeTool={activeTool}
-          onSelectTool={handleSelectTool}
-          onAddSliderClick={handleAddSliderClick}
-          onAddStepClick={handleAddStepClick}
-          onOpenGuidedClick={() => setGuidedOpen(true)}
-          onAddGliderPoint={handleAddGliderPoint}
-          gliderSupports={model ? supportElements(model) : []}
-        />
-      </div>
-
-      <div className="flex min-h-0 w-full flex-1 overflow-hidden">
-        {navigationOpen && (
-          leftPanel ? leftPanel : (
+      <EditorShell
+        className="font-serif"
+        mainLabel={t('editor.diagramWorkbench.diagramCanvas')}
+        header={
+          <WorkbenchHeader
+            model={model}
+            filePath={state.filePath}
+            metadataType={metadataType}
+            componentName={state.componentName}
+            activeLang={diagramLang}
+            onSelectActiveLang={setDiagramLang}
+            canUndo={canUndo}
+            canRedo={canRedo}
+            frameMode={frameMode}
+            onSelectFrameMode={setFrameMode}
+            onUndo={undo}
+            onRedo={redo}
+            onOpenPresets={() => setPresetsOpen(true)}
+            onOpenCode={() => setCodeOpen(true)}
+            onOpenSettings={() => setSettingsOpen(true)}
+            onOpenMdxLinks={() => setMdxLinksOpen(true)}
+            onOpenGuided={() => setGuidedOpen(true)}
+            onResetViewport={handleResetViewport}
+            isDiagnosticsOpen={isDiagnosticsOpen}
+            onToggleDiagnostics={() => setIsDiagnosticsOpen(open => !open)}
+            onTitleChange={handleTitleChange}
+            sandboxMode={sandboxMode}
+            saveCapability={editorSaveCapability}
+            onSave={handleSave}
+            onCloseEditor={handleCloseEditor}
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={onToggleSidebar}
+            isInspectorOpen={isInspectorOpen}
+            onToggleInspector={() => setIsInspectorOpen(open => !open)}
+          />
+        }
+        toolbar={
+          <WorkbenchToolbar
+            model={model}
+            activeTool={activeTool}
+            onSelectTool={handleSelectTool}
+            onAddSliderClick={handleAddSliderClick}
+            onAddStepClick={handleAddStepClick}
+            onOpenGuidedClick={() => setGuidedOpen(true)}
+            onAddGliderPoint={handleAddGliderPoint}
+            gliderSupports={model ? supportElements(model) : []}
+          />
+        }
+        navigationOpen={navigationOpen}
+        navigationWidth={navigationWidth}
+        setNavigationWidth={setNavigationWidth}
+        navigation={
+          leftPanel ?? (
             <DiagramDataPanel
               model={model}
               activeLang={diagramLang}
@@ -815,72 +812,11 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               onClose={onToggleSidebar}
             />
           )
-        )}
-        {navigationOpen && (
-          <div
-            {...navigationResize}
-            aria-label={t('editor.diagramWorkbench.resizeExplorer')}
-            className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
-          />
-        )}
-
-        <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label={t('editor.diagramWorkbench.diagramCanvas')}>
-        <CanvasStage
-          model={editingModel}
-          lang={diagramLang}
-          selectedIds={effectiveSelectedIds}
-          activeTool={activeTool}
-          pendingRefs={pendingRefs}
-          frameMode={frameMode}
-          stepPreviewActive={activeStepIndex !== null && !showAllObjects}
-          activeStepIndex={showAllObjects ? null : activeStepIndex}
-          stepCount={model?.steps?.length ?? 0}
-          errorHighlightedIds={passiveErrorHighlightIds}
-          showAllObjects={showAllObjects || activeStepIndex === null}
-          onToggleShowAllObjects={() => setShowAllObjects(prev => !prev)}
-          onClearStepPreview={() => {
-            handleSelectStepIndex(null);
-            setShowAllObjects(true);
-          }}
-          onStepPrev={() => {
-            if (!model?.steps?.length) return;
-            setShowAllObjects(false);
-            const idx = activeStepIndex === null ? model.steps.length - 1 : Math.max(0, activeStepIndex - 1);
-            handleSelectStepIndex(idx);
-          }}
-          onStepNext={() => {
-            if (!model?.steps?.length) return;
-            setShowAllObjects(false);
-            const idx = activeStepIndex === null ? 0 : Math.min(model.steps.length - 1, activeStepIndex + 1);
-            handleSelectStepIndex(idx);
-          }}
-          onSelect={handleSelectObjects}
-          onModelEdit={commitEdit}
-          onChooseReferenceForTool={handleChooseReferenceForTool}
-          onCompleteTool={handleCompleteTool}
-          onCancelTool={handleCancelTool}
-          onResetViewport={handleResetViewport}
-          onToggleGrid={() =>
-            model && handleVisualEdit({ ...model, grid: !model.grid }, { label: 'Alternar rejilla' })
-          }
-          onToggleAxis={() =>
-            model && handleVisualEdit({ ...model, axis: !model.axis }, { label: 'Alternar ejes' })
-          }
-        />
-        </main>
-
-        {isInspectorOpen && (
-          <>
-            <div
-              {...inspectorResize}
-              aria-label={t('editor.diagramWorkbench.resizeInspector')}
-              className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
-            />
-            <aside
-              aria-label={t('editor.diagramWorkbench.detailsPanel')}
-              className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 flex max-w-[92vw] flex-col overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
-              style={{ width: inspectorWidth }}
-            >
+        }
+        inspectorOpen={isInspectorOpen}
+        inspectorWidth={inspectorWidth}
+        setInspectorWidth={setInspectorWidth}
+        inspector={
           <WorkbenchAsideTabs
             aria-label={t('editor.diagramWorkbench.diagramInspectorSections')}
             tabs={[
@@ -888,13 +824,6 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               { id: 'layers', label: t('editor.diagramWorkbench.tabLayers') },
               { id: 'properties', label: t('editor.diagramWorkbench.tabProperties') },
               { id: 'steps', label: t('editor.diagramWorkbench.tabSteps', { count: (model?.steps || []).length }) },
-              {
-                id: 'diagnostics',
-                label: t('editor.diagramWorkbench.tabWarnings'),
-                endAdornment: errorCount > 0 ? (
-                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
-                ) : undefined,
-              },
             ]}
             activeTab={activeTab}
             onTabChange={id => setActiveTab(id as typeof activeTab)}
@@ -979,26 +908,76 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
                 }}
               />
             )}
-
-            {activeTab === 'diagnostics' && (
-              <WorkbenchDiagnosticsPanel
-                model={model}
-                diagnostics={enrichedDiagnostics}
-                onSelectDiagnostic={d => {
-                  const objId = d.location?.objectId;
-                  if (objId) {
-                    selectMany([objId]);
-                    setActiveTab('properties');
-                  }
-                }}
-                onAutoFixBrokenReferences={handleAutoFixBrokenReferences}
-              />
-            )}
           </WorkbenchAsideTabs>
-            </aside>
-          </>
-        )}
-      </div>
+        }
+        diagnosticsOpen={isDiagnosticsOpen}
+        diagnosticsHeight={diagnosticsHeight}
+        setDiagnosticsHeight={setDiagnosticsHeight}
+        diagnostics={
+          <DiagnosticsDock
+            errorCount={editorSaveCapability.errorCount}
+            warningCount={editorSaveCapability.warningCount}
+            onClose={() => setIsDiagnosticsOpen(false)}
+          >
+            <WorkbenchDiagnosticsPanel
+              model={model}
+              diagnostics={enrichedDiagnostics}
+              onSelectDiagnostic={d => {
+                const objId = d.location?.objectId;
+                if (objId) {
+                  selectMany([objId]);
+                  setIsInspectorOpen(true);
+                  setActiveTab('properties');
+                }
+              }}
+              onAutoFixBrokenReferences={handleAutoFixBrokenReferences}
+            />
+          </DiagnosticsDock>
+        }
+      >
+        <CanvasStage
+          model={editingModel}
+          lang={diagramLang}
+          selectedIds={effectiveSelectedIds}
+          activeTool={activeTool}
+          pendingRefs={pendingRefs}
+          frameMode={frameMode}
+          stepPreviewActive={activeStepIndex !== null && !showAllObjects}
+          activeStepIndex={showAllObjects ? null : activeStepIndex}
+          stepCount={model?.steps?.length ?? 0}
+          errorHighlightedIds={passiveErrorHighlightIds}
+          showAllObjects={showAllObjects || activeStepIndex === null}
+          onToggleShowAllObjects={() => setShowAllObjects(prev => !prev)}
+          onClearStepPreview={() => {
+            handleSelectStepIndex(null);
+            setShowAllObjects(true);
+          }}
+          onStepPrev={() => {
+            if (!model?.steps?.length) return;
+            setShowAllObjects(false);
+            const idx = activeStepIndex === null ? model.steps.length - 1 : Math.max(0, activeStepIndex - 1);
+            handleSelectStepIndex(idx);
+          }}
+          onStepNext={() => {
+            if (!model?.steps?.length) return;
+            setShowAllObjects(false);
+            const idx = activeStepIndex === null ? 0 : Math.min(model.steps.length - 1, activeStepIndex + 1);
+            handleSelectStepIndex(idx);
+          }}
+          onSelect={handleSelectObjects}
+          onModelEdit={commitEdit}
+          onChooseReferenceForTool={handleChooseReferenceForTool}
+          onCompleteTool={handleCompleteTool}
+          onCancelTool={handleCancelTool}
+          onResetViewport={handleResetViewport}
+          onToggleGrid={() =>
+            model && handleVisualEdit({ ...model, grid: !model.grid }, { label: 'Alternar rejilla' })
+          }
+          onToggleAxis={() =>
+            model && handleVisualEdit({ ...model, axis: !model.axis }, { label: 'Alternar ejes' })
+          }
+        />
+      </EditorShell>
 
       <PresetsModal
         isOpen={presetsOpen}

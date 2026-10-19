@@ -13,11 +13,14 @@ import { diagramVersionStatuses } from '../../model/scene/translationStatus';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
+import { documentPathCrumbs } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { useI18n } from '@/i18n';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
   componentName: string;
+  /** Archivo del diagrama; `null` en un diagrama en línea o nuevo. */
+  filePath?: string | null;
   metadataType?: string;
   activeLang?: string;
   onSelectActiveLang?: (lang: string) => void;
@@ -33,7 +36,8 @@ interface WorkbenchHeaderProps {
   onOpenMdxLinks: () => void;
   onOpenGuided?: () => void;
   onResetViewport: () => void;
-  onOpenAvisos: () => void;
+  isDiagnosticsOpen: boolean;
+  onToggleDiagnostics: () => void;
   onTitleChange: (newTitle: string) => void;
   onCloseEditor?: () => void;
   sandboxMode?: boolean;
@@ -47,6 +51,7 @@ interface WorkbenchHeaderProps {
 
 export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   model,
+  filePath,
   metadataType,
   activeLang,
   onSelectActiveLang,
@@ -61,7 +66,8 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   onOpenSettings,
   onOpenMdxLinks,
   onResetViewport,
-  onOpenAvisos,
+  isDiagnosticsOpen,
+  onToggleDiagnostics,
   onTitleChange,
   onCloseEditor,
   sandboxMode = false,
@@ -86,6 +92,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       title={title}
       titlePlaceholder={activeLang && activeLang !== 'es' ? t('editor.diagramWorkbench.titleInLang', { lang: activeLang.toUpperCase(), base: model?.title || t('editor.diagramWorkbench.baseSpanish') }) : t('editor.diagramWorkbench.diagramNamePlaceholder')}
       onTitleChange={onTitleChange}
+      pathCrumbs={filePath ? documentPathCrumbs(filePath) : []}
       badges={
         <div className="flex items-center gap-2">
           {sandboxMode ? (
@@ -119,8 +126,9 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       avisos={{
         errorCount: saveCapability.errorCount,
         warningCount: saveCapability.warningCount,
-        onOpen: onOpenAvisos,
-        healthyLabel: 'Avisos',
+        onOpen: onToggleDiagnostics,
+        open: isDiagnosticsOpen,
+        healthyLabel: t('editor.nav.warnings'),
       }}
       save={{
         ...saveChrome,

@@ -13,7 +13,7 @@ describe('DiagramWorkbench Component', () => {
     expect(screen.getByRole('button', { name: 'Editor' })).toBeDefined();
   });
 
-  it('permite cambiar entre las pestañas del inspector (Objetos, Propiedades, Pasos, Avisos)', () => {
+  it('permite cambiar entre las pestañas del inspector (Objetos, Propiedades, Pasos)', () => {
     render(<DiagramWorkbench />);
 
     const propTab = screen.getByRole('tab', { name: /^Propiedades$/i });
@@ -23,11 +23,7 @@ describe('DiagramWorkbench Component', () => {
     const stepsTab = screen.getByRole('tab', { name: /^Pasos \(/i });
     fireEvent.click(stepsTab);
     expect(stepsTab.getAttribute('aria-selected')).toBe('true');
-
-    const diagTabs = screen.getAllByRole('tab', { name: /Avisos/i });
-    expect(diagTabs.length).toBeGreaterThan(0);
-    fireEvent.click(diagTabs[diagTabs.length - 1]);
-    expect(diagTabs[diagTabs.length - 1].getAttribute('aria-selected')).toBe('true');
+    expect(screen.queryByRole('tab', { name: /Avisos/i })).toBeNull();
   });
 
   it('permite colapsar el panel de detalles desde la cabecera', () => {
@@ -40,12 +36,18 @@ describe('DiagramWorkbench Component', () => {
     expect(screen.getByRole('tab', { name: /^Propiedades$/i })).toBeDefined();
   });
 
-  it('Avisos abre el panel de detalles en la pestaña Avisos', () => {
+  it('Avisos abre y cierra el panel inferior sin tocar el inspector', () => {
     render(<DiagramWorkbench />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ocultar detalles' }));
-    expect(screen.queryByRole('tab', { name: /^Propiedades$/i })).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: 'Avisos' }));
-    expect(screen.getByRole('tab', { name: /^Avisos$/i }).getAttribute('aria-selected')).toBe('true');
+    const avisos = screen.getByRole('button', { name: 'Avisos' });
+    expect(avisos.getAttribute('aria-expanded')).toBe('false');
+    expect(screen.queryByRole('region', { name: 'Avisos' })).toBeNull();
+    fireEvent.click(avisos);
+    expect(avisos.getAttribute('aria-expanded')).toBe('true');
+    expect(screen.getByRole('region', { name: 'Avisos' })).toBeDefined();
+    expect(screen.getByRole('separator', { name: 'Redimensionar diagnósticos' })).toBeDefined();
+    expect(screen.getByRole('tab', { name: /^Propiedades$/i })).toBeDefined();
+    fireEvent.click(screen.getByRole('button', { name: 'Ocultar avisos' }));
+    expect(screen.queryByRole('region', { name: 'Avisos' })).toBeNull();
   });
 
   it('muestra el explorador izquierdo cuando se pasa leftPanel', () => {

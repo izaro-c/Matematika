@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
-import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
-import type { EditorText } from '@/fixed-pages/editor/types/editorMessage';
-import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import type { Block } from '@/fixed-pages/editor/session/parser';
 import { MetadataPanel } from '../panels/MetadataPanel';
-import { EditorDiagnosticsPanel } from '../panels/EditorDiagnosticsPanel';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { WorkbenchAsideTabs } from './WorkbenchAsideTabs';
 import { useI18n } from '@/i18n';
 
 import type { MetadataPanelProps, PageDiagramLink } from '../panels/MetadataPanel';
 
-export type InspectorTab = 'page' | 'diagrams' | 'avisos';
+/** Los avisos no son una pestaña: van en el panel inferior del esquema (`DiagnosticsDock`). */
+export type InspectorTab = 'page' | 'diagrams';
 
 interface MdxWorkbenchInspectorProps {
-  currentFile: string | null;
-  resource?: FileNode;
   metadata: Record<string, unknown>;
   canEditVisualMetadata: boolean;
   canMutateVisualStructure: boolean;
@@ -24,9 +19,6 @@ interface MdxWorkbenchInspectorProps {
   handleRemoveMetadataField: (key: string) => void;
   handleAddCustomMetadataField: (key: string) => void;
   removeBlock?: (id: string) => void;
-  validation: EditorValidationResult;
-  persistenceStatus: EditorPersistenceStatus;
-  persistenceLabel: EditorText;
   blocks: Block[];
   openFile: (path: string) => void;
   pageDiagramLinks: PageDiagramLink[];
@@ -38,7 +30,6 @@ interface MdxWorkbenchInspectorProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
   insertInteractiveTargetParagraph: (target: { id: string; label?: string; color?: string }) => void;
-  onSelectIssue?: (issue: EditorValidationIssue) => void;
   onClose: () => void;
   activeTab?: InspectorTab;
   onActiveTabChange?: (tab: InspectorTab) => void;
@@ -49,7 +40,6 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
   const controlled = props.activeTab !== undefined && props.onActiveTabChange !== undefined;
   const activeTab = controlled ? props.activeTab! : uncontrolledTab;
   const setActiveTab = controlled ? props.onActiveTabChange! : setUncontrolledTab;
-  const errorCount = props.validation.errorCount;
 
   const { t } = useI18n();
 
@@ -60,15 +50,6 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
       tabs={[
         { id: 'page', label: t('editor.mdx.pageTab') },
         { id: 'diagrams', label: t('editor.mdx.diagramsTab') },
-        {
-          id: 'avisos',
-          label: t('editor.mdx.warningsTab'),
-          endAdornment: errorCount > 0 ? (
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
-          ) : props.validation.warningCount > 0 ? (
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-ocre" />
-          ) : undefined,
-        },
       ]}
       activeTab={activeTab}
       onTabChange={id => setActiveTab(id as InspectorTab)}
@@ -114,22 +95,6 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
           removeBlock={props.removeBlock}
           handleMetadataChange={props.handleMetadataChange}
         />
-      )}
-
-      {activeTab === 'avisos' && (
-        <div className="flex-1 space-y-3 overflow-y-auto bg-lienzo p-4">
-          <EditorDiagnosticsPanel
-            currentFile={props.currentFile}
-            resource={props.resource}
-            validation={props.validation}
-            persistenceStatus={props.persistenceStatus}
-            persistenceLabel={props.persistenceLabel}
-            level="basic"
-            embedded
-            onSelectIssue={props.onSelectIssue || (() => {})}
-            close={() => setActiveTab('page')}
-          />
-        </div>
       )}
     </WorkbenchAsideTabs>
   );

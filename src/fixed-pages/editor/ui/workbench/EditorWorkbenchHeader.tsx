@@ -17,7 +17,10 @@ import {
 export type EditorHeaderAvisosState = {
   errorCount: number;
   warningCount: number;
+  /** Abre o cierra el panel inferior de avisos. */
   onOpen: () => void;
+  /** Panel de avisos abierto (`aria-expanded`). */
+  open?: boolean;
   /** Accessible / tooltip label when healthy. */
   healthyLabel?: string;
 };
@@ -28,6 +31,8 @@ export interface EditorWorkbenchHeaderProps {
   onTitleChange: (value: string) => void;
   titleDisabled?: boolean;
   fileBadge?: string;
+  /** Ruta del documento (carpetas y nombre), delante del título. */
+  pathCrumbs?: string[];
   badges?: React.ReactNode;
   isDirty?: boolean;
   /** Explorer / nav toggle — omit when not applicable. */
@@ -47,16 +52,17 @@ export interface EditorWorkbenchHeaderProps {
   closeConfirmMessage?: string;
 }
 
-function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel }: EditorHeaderAvisosState) {
+function AvisosButton({ errorCount, warningCount, onOpen, open, healthyLabel }: EditorHeaderAvisosState) {
   const { t } = useI18n();
   const hasErrors = errorCount > 0;
   const hasWarnings = warningCount > 0;
-  const healthy = healthyLabel ?? t('editor.mdx.warningsTab');
+  const healthy = healthyLabel ?? t('editor.nav.warnings');
   const summary = hasErrors || hasWarnings ? t('editor.common.errorsAndWarnings', { errors: errorCount, warnings: warningCount }) : healthy;
   return (
     <button
       type="button"
       onClick={onOpen}
+      aria-expanded={open}
       className={`inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border px-2.5 text-xs font-semibold tabular-nums transition-all cursor-pointer select-none ${
         hasErrors
           ? 'border-granada/30 bg-granada/10 text-granada animate-pulse'
@@ -81,6 +87,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   onTitleChange,
   titleDisabled = false,
   fileBadge,
+  pathCrumbs = [],
   badges,
   isDirty = false,
   isSidebarOpen,
@@ -174,6 +181,19 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         )}
 
         <div className="flex min-w-0 items-center gap-2">
+          {pathCrumbs.length > 0 && (
+            <nav aria-label={t('editor.nav.documentPath')} className="hidden min-w-0 shrink md:block">
+              <ol className="flex min-w-0 items-center gap-1 font-serif text-xs italic text-carbon/55">
+                {pathCrumbs.map((crumb, index) => (
+                  <li key={`${index}-${crumb}`} className="flex min-w-0 items-center gap-1">
+                    {index > 0 && <span aria-hidden="true" className="text-carbon/30">/</span>}
+                    <span className="truncate" aria-current={index === pathCrumbs.length - 1 ? 'page' : undefined}>{crumb}</span>
+                  </li>
+                ))}
+                <li aria-hidden="true" className="text-carbon/30">›</li>
+              </ol>
+            </nav>
+          )}
           <HeaderTitleInput
             value={title}
             onChange={e => onTitleChange(e.target.value)}

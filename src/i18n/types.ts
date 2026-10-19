@@ -536,6 +536,9 @@ export interface TranslationDictionary {
       resizeInspector: string;
       detailsPanel: string;
       resizeDiagnostics: string;
+      documentPath: string;
+      warnings: string;
+      hideWarnings: string;
       goHome: string;
       hideExplorer: string;
       showExplorer: string;
@@ -634,7 +637,6 @@ export interface TranslationDictionary {
       inspectorAriaLabel: string;
       pageTab: string;
       diagramsTab: string;
-      warningsTab: string;
       hideDetails: string;
       toolbar: string;
       bold: string;
@@ -884,10 +886,6 @@ export interface TranslationDictionary {
       noErrors: string;
       sectionLabel: string;
       title: string;
-      embeddedTitle: string;
-      noProblems: string;
-      problemsOne: string;
-      problemsOther: string;
       documentWarnings: string;
       noResource: string;
       allGood: string;
@@ -2082,10 +2080,7 @@ export interface TranslationDictionary {
       framingAndInitialView: string;
       canvasBoundsBounds: string;
       defaultViewHome: string;
-      resizeExplorer: string;
       diagramCanvas: string;
-      resizeInspector: string;
-      detailsPanel: string;
       diagramInspectorSections: string;
       deleteObject: string;
       deleteSelection: string;
@@ -2137,7 +2132,6 @@ export interface TranslationDictionary {
       tabLayers: string;
       tabProperties: string;
       tabSteps: string;
-      tabWarnings: string;
       deleteOneMessage: string;
       deleteManyMessage: string;
       untitledDiagram: string;

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { FileNode } from '../../../../src/fixed-pages/editor/types/editorContracts';
 import {
+  documentPathCrumbs,
   editorDocumentKey,
   editorStateFromUrl,
   editorUrlFromState,
@@ -115,5 +116,14 @@ describe('URL del editor', () => {
     expect(key('/es/editor/es/definitions/angulo')).not.toBe(key('/es/editor/eu/definitions/angulo'));
     expect(key('/base/es/editor/x/y/z')).toBe(key('/es/editor/x/y/z'));
     expect(key('/es/teorema/tales')).toBe('outside:/es/teorema/tales');
+  });
+});
+
+describe('ruta del documento en la barra superior', () => {
+  it('muestra carpeta y nombre, sin el prefijo del corpus ni el idioma', () => {
+    expect(documentPathCrumbs('content/mdx/es/definitions/angulo.mdx')).toEqual(['definitions', 'angulo']);
+    expect(documentPathCrumbs('content/diagrams/geometria/Triangulo.tsx')).toEqual(['geometria', 'Triangulo']);
+    expect(documentPathCrumbs('widgets/diagrams/Punto.tsx')).toEqual(['widgets', 'diagrams', 'Punto']);
+    expect(documentPathCrumbs('')).toEqual([]);
   });
 });

@@ -22,6 +22,20 @@ describe('EditorWorkbenchHeader', () => {
     expect(screen.getByRole('button', { name: /Cerrar/i })).toBeDefined();
   });
 
+  it('muestra la ruta del documento y el estado del panel de avisos', () => {
+    render(
+      <EditorWorkbenchHeader
+        {...base}
+        pathCrumbs={['definitions', 'angulo']}
+        avisos={{ ...base.avisos, open: true }}
+      />,
+    );
+    const path = screen.getByRole('navigation', { name: 'Ruta del documento' });
+    expect(path.textContent).toContain('definitions');
+    expect(screen.getByText('angulo').getAttribute('aria-current')).toBe('page');
+    expect(screen.getByRole('button', { name: 'Avisos' }).getAttribute('aria-expanded')).toBe('true');
+  });
+
   it('muestra toggles de panel solo cuando hay handlers', () => {
     const onToggleSidebar = vi.fn();
     const onToggleInspector = vi.fn();

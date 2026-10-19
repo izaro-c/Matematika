@@ -8,6 +8,7 @@ import {
   UiLanguageSwitch,
 } from './EditorHeaderPrimitives';
 import type { DocumentVersion } from '@/fixed-pages/editor/session/conceptVersions';
+import { documentPathCrumbs } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability, translateSaveChrome } from '@/fixed-pages/editor/save/saveCapability';
@@ -31,7 +32,8 @@ interface MdxWorkbenchHeaderProps {
   onToggleSidebar: () => void;
   isInspectorOpen: boolean;
   onToggleInspector: () => void;
-  onOpenAvisos: () => void;
+  isDiagnosticsOpen: boolean;
+  onToggleDiagnostics: () => void;
   onTitleChange: (newTitle: string) => void;
   onSave: () => void;
   onSaveDraft?: () => void;
@@ -59,7 +61,8 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   onToggleSidebar,
   isInspectorOpen,
   onToggleInspector,
-  onOpenAvisos,
+  isDiagnosticsOpen,
+  onToggleDiagnostics,
   onTitleChange,
   onSave,
   onSaveDraft,
@@ -82,6 +85,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       titlePlaceholder={t('editor.mdx.pageTitlePlaceholder')}
       onTitleChange={onTitleChange}
       titleDisabled={isReadOnly}
+      pathCrumbs={currentFile ? documentPathCrumbs(currentFile) : []}
       badges={
         <div className="flex items-center gap-2">
           {contentType ? (
@@ -112,8 +116,9 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       avisos={{
         errorCount: saveCapability.errorCount,
         warningCount: saveCapability.warningCount,
-        onOpen: onOpenAvisos,
-        healthyLabel: t('editor.mdx.diagnostics'),
+        onOpen: onToggleDiagnostics,
+        open: isDiagnosticsOpen,
+        healthyLabel: t('editor.nav.warnings'),
       }}
       save={{
         ...saveChrome,

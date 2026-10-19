@@ -309,6 +309,19 @@ export function editorRouteSegmentsForPath(path: string): string[] {
   return [EDITOR_GENERIC_SEGMENT, ...parts];
 }
 
+/**
+ * Ruta del documento para la barra superior: carpetas y nombre, sin el prefijo del
+ * corpus ni el idioma (lo muestran las versiones).
+ */
+export function documentPathCrumbs(path: string): string[] {
+  const parts = path.split('/').filter(Boolean);
+  if (parts.length === 0) return [];
+  const name = parts[parts.length - 1].replace(/\.(mdx|tsx)$/, '');
+  if (parts[0] === 'content' && parts[1] === 'mdx' && parts.length === 5) return [parts[3], name];
+  if (parts[0] === 'content' && parts[1] === 'diagrams') return [...parts.slice(2, -1), name];
+  return [...parts.slice(0, -1), name];
+}
+
 function isDiagramPath(path: string): boolean {
   return path.endsWith('.tsx');
 }

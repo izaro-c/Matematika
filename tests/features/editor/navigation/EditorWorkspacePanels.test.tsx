@@ -46,6 +46,40 @@ describe('paneles del espacio de trabajo', () => {
     expect(screen.queryByText('Diagnósticos')).toBeNull();
   });
 
+  it('sigue el esquema único: cabecera, barra, explorador, lienzo con avisos debajo e inspector', () => {
+    render(
+      <EditorShell
+        header={<header>Cabecera</header>}
+        toolbar={<div>Barra</div>}
+        navigation={<nav>Árbol</nav>}
+        navigationOpen
+        navigationWidth={304}
+        setNavigationWidth={vi.fn()}
+        inspector={<div>Inspector</div>}
+        inspectorOpen
+        inspectorWidth={336}
+        setInspectorWidth={vi.fn()}
+        diagnostics={<div>Lista de avisos</div>}
+        diagnosticsOpen
+        diagnosticsHeight={184}
+        setDiagnosticsHeight={vi.fn()}
+        mainLabel="Lienzo del diagrama"
+      >
+        <div>Documento</div>
+      </EditorShell>,
+    );
+    const main = screen.getByRole('main', { name: 'Lienzo del diagrama' });
+    const warnings = screen.getByRole('region', { name: 'Avisos' });
+    const inspector = screen.getByRole('complementary', { name: 'Panel de detalles' });
+    // Los avisos comparten columna con el lienzo; los paneles laterales ocupan toda la altura.
+    expect(warnings.parentElement).toBe(main.parentElement);
+    expect(inspector.parentElement).toBe(main.parentElement?.parentElement);
+    const order = [screen.getByText('Cabecera'), screen.getByText('Barra'), screen.getByText('Árbol'), main, warnings, inspector];
+    for (let i = 1; i < order.length; i++) {
+      expect(order[i - 1].compareDocumentPosition(order[i]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    }
+  });
+
   it('muestra errores, conflicto y capacidad real en el panel inferior', () => {
     const onSelectIssue = vi.fn();
     render(

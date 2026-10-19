@@ -16,7 +16,7 @@ interface EditorDiagnosticsPanelProps {
   level: EditorWorkspaceLevel;
   onSelectIssue: (issue: EditorValidationIssue) => void;
   close: () => void;
-  /** When true, omit the standalone header/close (parent tab chrome owns it). */
+  /** When true, omit the standalone header/close (`DiagnosticsDock` owns it). */
   embedded?: boolean;
 }
 
@@ -86,23 +86,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
         </header>
       )}
 
-      {embedded && (
-        <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
-          <div>
-            <h3 className="font-serif text-base font-bold text-carbon">{t('editor.diagnostics.embeddedTitle')}</h3>
-            <p className="text-xs italic text-carbon/50">
-              {validation.issues.length === 0
-                ? t('editor.diagnostics.noProblems')
-                : t(validation.issues.length === 1 ? 'editor.diagnostics.problemsOne' : 'editor.diagnostics.problemsOther', { count: validation.issues.length })}
-            </p>
-          </div>
-          <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${validationStatus.className}`}>
-            {validationStatus.label}
-          </span>
-        </div>
-      )}
-
-      <div className={`flex-1 space-y-4 ${embedded ? 'pt-3' : 'p-4'} overflow-y-auto`}>
+      <div className={`flex-1 space-y-4 ${embedded ? 'pt-1' : 'p-4'} overflow-y-auto`}>
         <InspectorExpandableBlock title={t('editor.diagnostics.documentWarnings')} defaultOpen={true}>
           {!currentFile && (
             <div className="rounded-xl border border-carbon/10 bg-lienzo/50 p-4 text-center text-xs italic text-carbon/50">

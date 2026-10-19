@@ -29,6 +29,8 @@ import { DiagramStepSyncContext, type DiagramStepSyncContextValue } from '@/lib/
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import { editableHtmlToMdx, insertHtmlAtSelection, mdxToEditableHtml } from '@/fixed-pages/editor/ui/prose/inlineProseOps';
 import { EditorShell } from '../page/EditorShell';
+import { DiagnosticsDock } from './DiagnosticsDock';
+import { EditorDiagnosticsPanel } from '../panels/EditorDiagnosticsPanel';
 import { EditorNavigation } from '../page/EditorNavigation';
 import { VisualEditorPanel } from '../panels/VisualEditorPanel';
 import { CodeEditorPanel } from '../panels/CodeEditorPanel';
@@ -142,6 +144,7 @@ export const MdxWorkbench: React.FC = () => {
     isInspectorOpen,
     setIsInspectorOpen,
     isDiagnosticsOpen,
+    setIsDiagnosticsOpen,
     openFileSafely,
     toggleFavorite,
     route,
@@ -666,47 +669,6 @@ export const MdxWorkbench: React.FC = () => {
       {/* API Status Banners */}
       <EditorApiStatusBanner />
 
-      {/* Header Unificado */}
-      {!diagramSurfaceOpen && currentFile && (
-      <MdxWorkbenchHeader
-        currentFile={currentFile}
-        fileTitle={currentTitle}
-        contentType={currentContentType}
-        currentLang={currentLang}
-        documentVersions={documentVersions}
-        canTranslate={translationOrigin.options.length > 0}
-        onSwitchLanguage={handleSwitchLanguage}
-        onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
-        viewMode={viewMode}
-        onSetViewMode={setViewMode}
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-        isInspectorOpen={isInspectorOpen}
-        onToggleInspector={() => setIsInspectorOpen(!isInspectorOpen)}
-        onOpenAvisos={() => {
-          setIsInspectorOpen(true);
-          setInspectorTab('avisos');
-        }}
-        onTitleChange={(newTitle) => handleMetadataChange('title', newTitle)}
-        onSave={handleSaveDocument}
-        onSaveDraft={() => void saveDraftCurrentFile()}
-        onCreatePage={() => setCreatePageOpen(true)}
-        onCloseEditor={() => {
-          clearDiagramSession();
-          goToLanding(isDiagramFile ? 'diagrams' : 'documents');
-        }}
-        canSaveDraft={canSaveDraft}
-        isReadOnly={isReadOnly}
-        workspaceLevel={workspace.level}
-        onToggleWorkspaceLevel={() =>
-          setWorkspace(prev => ({
-            ...prev,
-            level: prev.level === 'advanced' ? 'basic' : 'advanced',
-          }))
-        }
-        saveCapability={saveCapability}
-      />
-      )}
 
       {/* Superficie diagrama: header a ancho completo; paneles debajo */}
       {diagramSurfaceOpen && activeDiagramWorkbenchMode ? (
@@ -723,6 +685,8 @@ export const MdxWorkbench: React.FC = () => {
             onLeftPanelWidthChange={(width) => setWorkspace(prev => ({ ...prev, navigationWidth: width }))}
             inspectorWidth={workspace.inspectorWidth}
             onInspectorWidthChange={(width) => setWorkspace(prev => ({ ...prev, inspectorWidth: width }))}
+            diagnosticsHeight={workspace.diagnosticsHeight}
+            onDiagnosticsHeightChange={(height) => setWorkspace(prev => ({ ...prev, diagnosticsHeight: height }))}
             onConfirm={async (spec: EditorDiagramReference) => {
               await bindDiagram(spec);
               return true;
@@ -755,10 +719,47 @@ export const MdxWorkbench: React.FC = () => {
       <>
       <MathProviderBoundary>
       <DiagramStepSyncContext.Provider value={diagramStepSyncValue}>
-      {/* Shell Principal de 3 Columnas */}
+      {/* Esquema único del editor (EditorShell) */}
       <EditorShell
-        toolbar={null}
-        subToolbar={viewMode === 'visual' && !isDiagramFile ? formatBarNode : null}
+        header={
+          <MdxWorkbenchHeader
+            currentFile={currentFile}
+            fileTitle={currentTitle}
+            contentType={currentContentType}
+            currentLang={currentLang}
+            documentVersions={documentVersions}
+            canTranslate={translationOrigin.options.length > 0}
+            onSwitchLanguage={handleSwitchLanguage}
+            onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
+            viewMode={viewMode}
+            onSetViewMode={setViewMode}
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+            isInspectorOpen={isInspectorOpen}
+            onToggleInspector={() => setIsInspectorOpen(!isInspectorOpen)}
+            isDiagnosticsOpen={isDiagnosticsOpen}
+            onToggleDiagnostics={() => setIsDiagnosticsOpen(open => !open)}
+            onTitleChange={(newTitle) => handleMetadataChange('title', newTitle)}
+            onSave={handleSaveDocument}
+            onSaveDraft={() => void saveDraftCurrentFile()}
+            onCreatePage={() => setCreatePageOpen(true)}
+            onCloseEditor={() => {
+              clearDiagramSession();
+              goToLanding(isDiagramFile ? 'diagrams' : 'documents');
+            }}
+            canSaveDraft={canSaveDraft}
+            isReadOnly={isReadOnly}
+            workspaceLevel={workspace.level}
+            onToggleWorkspaceLevel={() =>
+              setWorkspace(prev => ({
+                ...prev,
+                level: prev.level === 'advanced' ? 'basic' : 'advanced',
+              }))
+            }
+            saveCapability={saveCapability}
+          />
+        }
+        toolbar={viewMode === 'visual' && !isDiagramFile ? formatBarNode : null}
         navigationOpen={isSidebarOpen}
         navigationWidth={workspace.navigationWidth}
         setNavigationWidth={(width) => setWorkspace(prev => ({ ...prev, navigationWidth: width }))}
@@ -786,8 +787,6 @@ export const MdxWorkbench: React.FC = () => {
         setInspectorWidth={(width) => setWorkspace(prev => ({ ...prev, inspectorWidth: width }))}
         inspector={
           <MdxWorkbenchInspector
-            currentFile={currentFile}
-            resource={currentResource}
             metadata={metadata}
             canEditVisualMetadata={canEditVisualMetadata}
             canMutateVisualStructure={canMutateVisualStructure}
@@ -795,9 +794,6 @@ export const MdxWorkbench: React.FC = () => {
             handleRemoveMetadataField={handleRemoveMetadataField}
             handleAddCustomMetadataField={() => {}}
             removeBlock={removeBlock}
-            validation={validation}
-            persistenceStatus={persistenceStatus}
-            persistenceLabel={persistenceLabel}
             blocks={blocks}
             openFile={openFileSafely}
             pageDiagramLinks={pageDiagramLinks}
@@ -809,7 +805,6 @@ export const MdxWorkbench: React.FC = () => {
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
             insertInteractiveTargetParagraph={insertInteractiveTargetParagraph}
-            onSelectIssue={handleSelectIssue}
             onClose={() => setIsInspectorOpen(false)}
             activeTab={inspectorTab}
             onActiveTabChange={setInspectorTab}
@@ -818,8 +813,25 @@ export const MdxWorkbench: React.FC = () => {
         diagnosticsOpen={isDiagnosticsOpen}
         diagnosticsHeight={workspace.diagnosticsHeight}
         setDiagnosticsHeight={(height) => setWorkspace(prev => ({ ...prev, diagnosticsHeight: height }))}
-        diagnostics={null}
-        persistPanelSizes={() => {}}
+        diagnostics={
+          <DiagnosticsDock
+            errorCount={validation.errorCount}
+            warningCount={validation.warningCount}
+            onClose={() => setIsDiagnosticsOpen(false)}
+          >
+            <EditorDiagnosticsPanel
+              currentFile={currentFile}
+              resource={currentResource}
+              validation={validation}
+              persistenceStatus={persistenceStatus}
+              persistenceLabel={persistenceLabel}
+              level={workspace.level}
+              embedded
+              onSelectIssue={handleSelectIssue}
+              close={() => setIsDiagnosticsOpen(false)}
+            />
+          </DiagnosticsDock>
+        }
       >
         {/* Central Workspace Area */}
         <div className="flex h-full w-full flex-1 overflow-hidden">
@@ -1176,10 +1188,7 @@ export const MdxWorkbench: React.FC = () => {
         issues={validation.issues.filter(issue => issue.severity === 'error')}
         saveMessage={saveErrorMessage}
         onJumpToIssue={handleSelectIssue}
-        onOpenAvisos={() => {
-          setIsInspectorOpen(true);
-          setInspectorTab('avisos');
-        }}
+        onOpenAvisos={() => setIsDiagnosticsOpen(true)}
       />
     </div>
   );
