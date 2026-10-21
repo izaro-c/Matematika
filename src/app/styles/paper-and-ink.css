@@ -11,11 +11,6 @@
   --ink-noise-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* En el sitio desplegado el grano se percibe más fuerte y deslavado que en dev:
-   se atenúa para conservar los colores intensos y oscuros. */
-:root[data-build="prod"] { --ink-grain-opacity: 0.09; }
-:root[data-build="prod"].dark { --ink-grain-opacity: 0.13; }
-
 /* Grano de papel: capa fija, muy tenue */
 .ac-paper-grain {
   position: fixed;

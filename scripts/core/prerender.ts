@@ -101,6 +101,12 @@ async function prerenderRoute(browser: Browser, routePath: string, attempt = 1):
     // Pequeño margen extra para efectos posteriores al primer paint (SeoHead, KaTeX, etc.)
     await new Promise((r) => setTimeout(r, 150));
 
+    // El grano es un portal en <body>, fuera de #root: createRoot no lo
+    // reemplaza al montar y quedarían dos capas superpuestas (grano más denso).
+    await page.evaluate(() => {
+      document.querySelectorAll('body > .ac-paper-grain').forEach((el) => el.remove());
+    });
+
     const html = await page.content();
     const outFile = outputFileFor(routePath);
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
