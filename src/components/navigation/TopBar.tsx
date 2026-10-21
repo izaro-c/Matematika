@@ -5,6 +5,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { Logo } from '@/components/ui/Logo';
 import { useI18n, isSupportedLanguage } from '@/i18n';
+import { TopBarProto, readHeaderProtoVariant } from './TopBarProto';
 
 export function TopBar() {
   const [location] = useLocation();
@@ -13,7 +14,8 @@ export function TopBar() {
 
   const cleanParts = location.split('/').filter(Boolean);
   const isHome = location === '/' || cleanParts.length === 0 || (cleanParts.length === 1 && isSupportedLanguage(cleanParts[0]));
-
+  const protoVariant = readHeaderProtoVariant();
+  if (protoVariant) return <TopBarProto variant={protoVariant} isHome={isHome} />;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[60] pointer-events-none flex items-center justify-between px-6 py-6">

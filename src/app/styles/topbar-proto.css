@@ -1,0 +1,231 @@
+/* PROTOTIPO DESECHABLE (fase A.3): variantes de cabecera ?hdr=a|b|c. Borrar tras decidir. */
+
+html[data-hdr="a"] .content-layout,
+html[data-hdr="b"] .content-layout { --content-top: 3.5rem; }
+html[data-hdr="a"],
+html[data-hdr="b"] { --codex-top: 3.5rem; }
+html[data-hdr="b"][data-hdr-hidden] .content-layout { --content-top: 0.75rem; }
+html[data-hdr="b"][data-hdr-hidden] { --codex-top: 0.75rem; }
+html[data-hdr="c"] .content-layout { --content-top: 4rem; }
+html[data-hdr="c"] { --codex-top: 4rem; }
+
+
+.hdr-proto {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+.hdr-proto > * { pointer-events: auto; }
+
+.hdr-proto[data-variant="a"],
+.hdr-proto[data-variant="b"] {
+  height: 2.75rem;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+  background: var(--theme-lienzo);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+}
+
+.hdr-proto[data-variant="b"] { transition: transform 220ms ease; }
+.hdr-proto[data-variant="b"][data-hidden] { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) {
+  .hdr-proto[data-variant="b"] { transition: none; }
+}
+
+.hdr-proto[data-variant="c"] {
+  padding: 0.75rem clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.hdr-proto__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  color: var(--ink-text);
+  text-decoration: none;
+}
+
+.hdr-proto__logo { width: 1.5rem; height: 1.5rem; }
+.hdr-proto[data-variant="c"] .hdr-proto__logo { width: 1.75rem; height: 1.75rem; }
+
+.hdr-proto__name { font-size: 1.0625rem; color: var(--ink-text); }
+
+.hdr-proto__rubrics {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.hdr-proto__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding-inline: 0.375rem;
+  font-size: 1.0625rem;
+  color: var(--ink-text-muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.hdr-proto__item:hover { color: var(--theme-terracota); }
+.hdr-proto__item:focus-visible { outline: 2px solid var(--theme-pavo); outline-offset: -4px; }
+
+@media (max-width: 767px) {
+  .hdr-proto__label { display: none; }
+}
+
+.hdr-proto__sep { color: color-mix(in srgb, var(--theme-carbon) 35%, transparent); }
+
+/* C: rúbricas sueltas sobre un halo de papel, sin franja */
+.hdr-proto[data-variant="c"] .hdr-proto__home,
+.hdr-proto[data-variant="c"] .hdr-proto__rubrics {
+  padding-inline: 0.25rem;
+  border-radius: var(--radius-sm, 4px);
+  background: color-mix(in srgb, var(--theme-lienzo) 88%, transparent);
+  box-shadow: 0 0 0.75rem 0.5rem color-mix(in srgb, var(--theme-lienzo) 88%, transparent);
+}
+
+/* D: impresa en la página — se va con el scroll, sin franja ni halo */
+html[data-hdr="d"] .content-layout,
+html[data-hdr="e"] .content-layout { --content-top: 4rem; }
+html[data-hdr="d"],
+html[data-hdr="e"] { --codex-top: 4rem; }
+
+/* Sin cabecera fija, la franja de papel del móvil sobra */
+html[data-hdr="d"] .mobile-content-header-separator,
+html[data-hdr="e"] .mobile-content-header-separator { display: none; }
+@media (max-width: 1023px) {
+  html[data-hdr="d"] .content-diagram,
+  html[data-hdr="e"] .content-diagram {
+    top: 0;
+    padding-top: 0.5rem;
+    background: var(--theme-lienzo);
+  }
+}
+
+.hdr-proto[data-variant="d"],
+.hdr-proto[data-variant="e"] {
+  position: absolute;
+  padding: 0.75rem clamp(0.75rem, 2.5vw, 2rem);
+}
+
+.hdr-proto[data-variant="d"] .hdr-proto__logo,
+.hdr-proto[data-variant="e"] .hdr-proto__logo { width: 1.75rem; height: 1.75rem; }
+
+/* E: marcapáginas de tela colgando de la esquina superior derecha; se recoge dejando solo la punta */
+.hdr-bookmark {
+  --bookmark-w: 2.25rem;
+  --bookmark-tail: 2.25rem;
+  --bookmark-drag: 0px;
+  /* tela de sobra por encima del borde: el rebote y la pista de 6 px nunca dejan ver el corte */
+  --bookmark-overhang: 1.5rem;
+  --bookmark-closed: calc(-100% + var(--bookmark-tail) + var(--bookmark-overhang));
+  position: fixed;
+  top: calc(-1 * var(--bookmark-overhang));
+  padding-top: var(--bookmark-overhang);
+  right: 0.5rem;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: var(--bookmark-w);
+  color: var(--theme-lienzo);
+  background-color: var(--hdr-accent, var(--theme-terracota));
+  /* rayado de grabado como los lomos y el uñero */
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 3px,
+    color-mix(in srgb, var(--theme-carbon) 10%, transparent) 3px 4px
+  );
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 0.7rem), 0 100%);
+  touch-action: none;
+  transform: translateY(calc(var(--bookmark-closed) + var(--bookmark-drag)));
+  /* la tela cae con un leve rebote */
+  transition: transform 340ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.hdr-bookmark[data-open] { transform: translateY(var(--bookmark-drag)); }
+.hdr-bookmark[data-dragging] { transition: none; }
+
+/* Pistas al señalar la punta: recogida asoma 6 px; abierta sube 6 px */
+.hdr-bookmark:not([data-open]):not([data-dragging]):has(.hdr-bookmark__tail:hover) {
+  transform: translateY(calc(var(--bookmark-closed) + 6px));
+}
+.hdr-bookmark[data-open]:not([data-dragging]):has(.hdr-bookmark__tail:hover) {
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hdr-bookmark[data-settle] { animation: bookmark-drop 700ms cubic-bezier(0.34, 1.4, 0.64, 1) 250ms backwards; }
+}
+
+@keyframes bookmark-drop {
+  from { transform: translateY(var(--bookmark-closed)); }
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hdr-bookmark { transition: none; }
+}
+
+:root.dark .hdr-bookmark { color: color-mix(in srgb, var(--theme-lienzo) 85%, black); }
+
+.hdr-bookmark__cloth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.125rem;
+}
+
+.hdr-bookmark__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0;
+  font-size: 1.0625rem;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hdr-bookmark__item:hover { opacity: 0.75; }
+.hdr-bookmark__item:focus-visible,
+.hdr-bookmark__tail:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
+
+/* inicial bordada en la tela, sin marco ni sombra */
+.hdr-bookmark__mark {
+  height: 3rem;
+  font-family: var(--font-brand-initial);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+/* la punta: siempre visible, abre y cierra */
+.hdr-bookmark__tail {
+  height: var(--bookmark-tail);
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: grab;
+}
+
+.hdr-bookmark[data-dragging] .hdr-bookmark__tail { cursor: grabbing; }
+
+
+/* deja sitio a la cinta a la derecha de la lámina */
+@media (min-width: 1024px) {
+  html[data-hdr="e"] .content-diagram-sticky { padding-right: 3.25rem; }
+}

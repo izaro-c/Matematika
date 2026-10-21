@@ -28,3 +28,4 @@
 /* Utilidades adicionales */
 @import "./styles/scrollbars.css" layer(utilities);
 @import "./styles/utilities.css" layer(components);
+@import "./styles/topbar-proto.css" layer(components);
