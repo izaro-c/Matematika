@@ -9,7 +9,7 @@
   /* Proporciones — editar aquí.
      Escritorio (≥1024px): diagrama = --content-diagram-share; texto = resto.
      Texto dentro de su columna: tope --content-reading-measure + inset. */
-  --content-top: 5.5rem;                 /* offset bajo la cabecera (móvil) */
+  --content-top: 4rem;                   /* aire sobre la página (sin cabecera fija: el marcapáginas va en la esquina) */
   --content-shell-max: 112rem;           /* ancho máximo de la página */
   --content-diagram-share: 50%;          /* % de pantalla del diagrama (escritorio) */
   --content-reading-measure: 110ch;       /* tope tipográfico del texto (con diagrama) */
@@ -39,38 +39,6 @@
 .content-layout--embedded {
   min-height: 0;
   padding-top: 0;
-}
-
-.mobile-content-header-separator {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 45;
-  height: var(--content-top, var(--codex-top, 5.5rem));
-  pointer-events: none;
-  background: var(--theme-lienzo);
-}
-
-.mobile-content-header-separator::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
-  height: 1.75rem;
-  background: linear-gradient(
-    to bottom,
-    var(--theme-lienzo) 0,
-    color-mix(in srgb, var(--theme-lienzo) 55%, transparent) 55%,
-    transparent 100%
-  );
-}
-
-.mobile-content-header-separator--diagram-fallback {
-  z-index: 35;
-}
-
-.mobile-content-header-separator--diagram-fallback.is-diagram-leaving {
-  z-index: 55;
 }
 
 .content-content {
@@ -225,12 +193,14 @@
 
   .content-diagram {
     position: sticky;
-    top: var(--content-top);
+    top: 0;
     z-index: 40;
     width: 100%;
     height: var(--content-diagram-mobile-height);
     margin-left: 0;
-    background: transparent;
+    /* pegada arriba: el papel tapa el texto que pasa por detrás */
+    padding-top: 0.5rem;
+    background: var(--theme-lienzo);
     border: 0;
     box-shadow: none;
     transition: height 180ms ease;
@@ -354,7 +324,6 @@
 }
 
 @media (min-width: 1024px) {
-  .mobile-content-header-separator,
   .mobile-diagram-toolbar {
     display: none;
   }
@@ -407,8 +376,8 @@
        the diagram shell (and MathBoard RO) oscillate ~954↔859 without user resize. */
     height: 100vh;
     min-height: var(--content-diagram-sticky-min);
-    /* La lámina empieza bajo la cabecera global y deja margen a la derecha. */
-    padding: var(--content-top) clamp(1rem, 2.5vw, 2rem) 1.25rem 0;
+    /* Margen derecho para el marcapáginas de la esquina. */
+    padding: var(--content-top) 3.25rem 1.25rem 0;
     overflow: visible;
     background: transparent;
   }

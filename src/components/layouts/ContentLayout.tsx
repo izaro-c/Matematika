@@ -4,7 +4,7 @@ import { DiagramSlot } from '@/components/ui/skeletons';
 import { useOptionalMathStore } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
 import { useI18n } from '@/i18n';
-import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
+import { MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface ContentLayoutProps {
   /** Texto principal, limitado por el layout a una medida de lectura cómoda. */
@@ -210,13 +210,6 @@ export function ContentLayout({
         data-layout-variant={variant}
         style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
       >
-        {!embedded && (
-          <MobileContentHeaderSeparator
-            hasDiagram={hasDiagram}
-            isDiagramExpanded={isDiagramExpanded}
-          />
-        )}
-
         <div className="content-content">
           <section className="content-primary">
             {hasTopbar && <div className="content-top-bar">{aboveDiagram}</div>}

@@ -54,9 +54,12 @@ export const enLanguage: LanguageConfig = {
     },
     topbar: {
       backToLibrary: 'Library',
-      search: 'Search catalog',
+      search: 'Search',
       toggleTheme: 'Toggle light/dark theme',
       changeLanguage: 'Change language',
+      bookmark: 'Bookmark',
+      openBookmark: 'Expand the bookmark',
+      closeBookmark: 'Collapse the bookmark',
     },
     navigation: {
       dictionary: 'Dictionary',

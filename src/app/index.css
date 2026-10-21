@@ -17,6 +17,7 @@
 @import "./styles/ac-pill.css" layer(components);
 @import "./styles/ac-spines.css" layer(components);
 @import "./styles/ac-library.css" layer(components);
+@import "./styles/ac-bookmark.css" layer(components);
 @import "./styles/editor-primitives.css" layer(components);
 @import "./styles/mdx-prose.css" layer(components);
 @import "./styles/content-layout.css" layer(components);
@@ -28,4 +29,3 @@
 /* Utilidades adicionales */
 @import "./styles/scrollbars.css" layer(utilities);
 @import "./styles/utilities.css" layer(components);
-@import "./styles/topbar-proto.css" layer(components);

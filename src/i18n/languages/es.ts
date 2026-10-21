@@ -54,9 +54,12 @@ export const esLanguage: LanguageConfig = {
     },
     topbar: {
       backToLibrary: 'Biblioteca',
-      search: 'Buscar en el catálogo',
+      search: 'Buscar',
       toggleTheme: 'Cambiar tema claro/oscuro',
       changeLanguage: 'Cambiar idioma',
+      bookmark: 'Marcapáginas',
+      openBookmark: 'Desplegar el marcapáginas',
+      closeBookmark: 'Recoger el marcapáginas',
     },
     navigation: {
       dictionary: 'Diccionario',

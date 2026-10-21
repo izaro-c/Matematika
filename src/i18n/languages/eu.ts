@@ -54,9 +54,12 @@ export const euLanguage: LanguageConfig = {
     },
     topbar: {
       backToLibrary: 'Liburutegia',
-      search: 'Bilatu katalogoan',
+      search: 'Bilatu',
       toggleTheme: 'Aldatu gai argia/iluna',
       changeLanguage: 'Aldatu hizkuntza',
+      bookmark: 'Liburu-marka',
+      openBookmark: 'Zabaldu liburu-marka',
+      closeBookmark: 'Bildu liburu-marka',
     },
     navigation: {
       dictionary: 'Hiztegia',

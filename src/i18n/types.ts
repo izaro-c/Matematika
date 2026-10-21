@@ -59,6 +59,9 @@ export interface TranslationDictionary {
     search: string;
     toggleTheme: string;
     changeLanguage: string;
+    bookmark: string;
+    openBookmark: string;
+    closeBookmark: string;
   };
   navigation: {
     dictionary: string;
