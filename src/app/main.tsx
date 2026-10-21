@@ -10,6 +10,9 @@ import { publicAsset } from '@/lib/routes';
 document.documentElement.style.setProperty('--bg-arts-and-crafts-light-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')})`);
 document.documentElement.style.setProperty('--bg-arts-and-crafts-dark-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-dark.webp')})`);
 
+// Marca de build: permite ajustar en CSS la materialidad (grano) del sitio desplegado.
+if (import.meta.env.PROD) document.documentElement.dataset.build = 'prod';
+
 /**
  * Punto de entrada principal de la aplicación React.
  * Inicializa el árbol de componentes dentro de `StrictMode`.

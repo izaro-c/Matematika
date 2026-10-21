@@ -225,16 +225,16 @@ export const SearchOmnibar = () => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center sm:px-4 sm:pt-[8vh]"
+      className="fixed inset-0 z-[99] flex items-start justify-center sm:px-4 sm:pt-[8vh]"
       onKeyDown={handleKeyDown}
     >
-      <div className="absolute inset-0 bg-carbon/45 backdrop-blur-sm" onClick={resetAndClose} aria-hidden="true" />
+      <div className="absolute inset-0 bg-carbon/45 backdrop-blur-sm [.dark_&]:bg-black/70" onClick={resetAndClose} aria-hidden="true" />
 
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="search-title"
-        className="relative flex h-[100dvh] w-full flex-col overflow-hidden border-carbon/30 bg-lienzo font-sans shadow-parchment outline-carbon/15 sm:h-auto sm:max-h-[84vh] sm:max-w-2xl sm:overflow-visible sm:rounded-[2px] sm:border sm:outline sm:outline-1 sm:outline-offset-[-5px]"
+        className="relative flex h-[100dvh] w-full flex-col overflow-hidden border-carbon/30 bg-lienzo font-sans shadow-parchment [.dark_&]:shadow-[0_12px_36px_-4px_rgb(0_0_0/0.6),0_4px_16px_-2px_rgb(0_0_0/0.45)] outline-carbon/15 sm:h-auto sm:max-h-[84vh] sm:max-w-2xl sm:overflow-visible sm:rounded-[2px] sm:border sm:outline sm:outline-1 sm:outline-offset-[-5px]"
       >
         <h2 id="search-title" className="sr-only">{t('search', 'searchTitle')}</h2>
         <div className="flex min-h-16 items-center border-b border-carbon/15 px-4 sm:px-5">

@@ -81,7 +81,7 @@
   /* ── 4e. Materialidad de papel y tinta (lectura) ─────────────────────────── */
   --ink-grain-opacity: 0.20;
   --ink-stroke-opacity: 0.82;
-  --ink-grain-z: 98;
+  --ink-grain-z: 100;
   --ink-grain-size: 200px;
 
   /* ── 5. Paleta Arts & Crafts – Modo Pergamino ─────────────────────────── */
