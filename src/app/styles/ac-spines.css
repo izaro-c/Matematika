@@ -1,0 +1,237 @@
+/* ==========================================================================
+   AC-SPINES — Accesos de la home como libros (.ac-shelf)
+   <1024 px: lomos horizontales apilados en una columna.
+   ≥1024 px: cuatro tapas esbeltas (5:7), con bisagra a la izquierda.
+   Libros impresos, no iluminados: tinta plana, filetes y bisagra a línea,
+   y la sombra como un rayado de grabado. Sin degradados ni sombras difusas.
+   Estructura: <a.ac-spine> (zona de hover, inmóvil, lleva el rayado)
+   > <span.ac-spine__body> (lo que se ve y se mueve). Si el propio enlace se
+   moviera, el cursor en el borde de entrada quedaría fuera y el hover parpadearía.
+   Pigmento en --spine; tela en --spine-cloth; texto y hierros en --spine-ink.
+   ========================================================================== */
+
+.ac-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
+.ac-spine {
+  --spine: var(--theme-carbon);
+  --spine-cloth: var(--spine);
+  --spine-ink: var(--on-accent);
+  --spine-rule: color-mix(in srgb, var(--spine-ink) 50%, transparent);
+  --spine-edge: color-mix(in srgb, var(--spine) 70%, #120e0b);
+  --spine-hatch: color-mix(in srgb, var(--theme-carbon) 38%, transparent);
+  --spine-rest: 3px;
+  display: block;
+  position: relative;
+  isolation: isolate;
+  color: var(--spine-ink);
+}
+
+.ac-spine--pavo { --spine: var(--theme-pavo); }
+.ac-spine--musgo { --spine: var(--theme-musgo); }
+.ac-spine--terracota { --spine: var(--theme-terracota); }
+.ac-spine--carbon { --spine: var(--theme-carbon); }
+
+/* Códice nocturno: tela oscura bajo la lámpara, letras crema y hierros dorados */
+.dark .ac-spine {
+  --spine-cloth: color-mix(in srgb, var(--spine) 40%, var(--theme-lienzo));
+  --spine-ink: var(--ink-text);
+  --spine-rule: color-mix(in srgb, var(--theme-ocre) 55%, transparent);
+  --spine-edge: color-mix(in srgb, var(--spine) 55%, var(--theme-lienzo));
+  --spine-hatch: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+}
+.dark .ac-spine--carbon { --spine-cloth: color-mix(in srgb, var(--spine) 24%, var(--theme-lienzo)); }
+
+/* Sombra de grabado: rayado fijo bajo el libro. Al moverse el libro, asoma más. */
+.ac-spine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate(var(--spine-rest), var(--spine-rest));
+  background: repeating-linear-gradient(-45deg, var(--spine-hatch) 0 1px, transparent 1px 4px);
+  border-radius: 2px 4px 4px 2px;
+  pointer-events: none;
+}
+
+.ac-spine__body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  height: 100%;
+  min-height: 4.25rem;
+  padding: 0.625rem 1.5rem;
+  background: var(--spine-cloth);
+  border: 1px solid var(--spine-edge);
+  border-radius: 2px 4px 4px 2px;
+  transition: transform var(--transition-slow) var(--ease-panels);
+}
+
+/* Nervios del lomo: dos filetes finos cerca de los extremos */
+.ac-spine__body::before,
+.ac-spine__body::after {
+  content: "";
+  position: absolute;
+  inset-block: 0.5rem;
+  width: 3px;
+  border-inline: 1px solid var(--spine-rule);
+  pointer-events: none;
+  transition: border-color var(--transition-slow) var(--ease-panels);
+}
+.ac-spine__body::before { inset-inline-start: 0.5rem; }
+.ac-spine__body::after { inset-inline-end: 0.5rem; }
+
+.ac-spine__title {
+  order: 2;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-title-family);
+  font-size: 1.375rem;
+  line-height: 1.15;
+  text-align: start;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.ac-spine__emblem {
+  order: 1;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  fill: none;
+  stroke: var(--spine-ink);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.88;
+}
+.ac-spine__emblem-dot { fill: var(--spine-ink); stroke: none; }
+
+.ac-spine__volume {
+  order: 3;
+  flex: none;
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+/* En el lomo basta el numeral; el rótulo completo queda para lectores */
+.ac-spine__volume-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ac-spine__volume-numeral { font-size: 1rem; opacity: 0.9; }
+
+.ac-spine:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 4px;
+}
+
+/* El desplazamiento es feedback de estado, no decoración: con "reducir
+   movimiento" se mantiene, pero sin transición (instantáneo). */
+.ac-spine:hover .ac-spine__body,
+.ac-spine:active .ac-spine__body,
+.ac-spine:focus-visible .ac-spine__body {
+  transform: translateX(0.75rem);
+}
+.ac-spine:hover .ac-spine__body::before,
+.ac-spine:hover .ac-spine__body::after,
+.ac-spine:focus-visible .ac-spine__body::before,
+.ac-spine:focus-visible .ac-spine__body::after { border-color: var(--spine-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-spine__body,
+  .ac-spine__body::before,
+  .ac-spine__body::after { transition: none; }
+}
+
+@media (min-width: 1024px) {
+  .ac-shelf {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: 52rem;
+  }
+
+  .ac-spine {
+    --spine-rest: 5px;
+    aspect-ratio: 5 / 7;
+  }
+
+  .ac-spine__body {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.75rem 1rem 1.25rem 2rem;
+    text-align: center;
+    border-radius: 2px 5px 5px 2px;
+  }
+
+  /* Filete de tapa: deja libre la zona de la bisagra */
+  .ac-spine__body::after {
+    inset: 0.625rem 0.625rem 0.625rem 1.625rem;
+    width: auto;
+    border: 1px solid var(--spine-rule);
+  }
+
+  /* Bisagra: dos líneas de tinta entre la tapa y el lomo */
+  .ac-spine__body::before {
+    inset: 0 auto 0 1rem;
+    width: 4px;
+    border-block: 0;
+    border-inline: 1px solid var(--spine-rule);
+  }
+
+  .ac-spine__title {
+    order: 1;
+    flex: none;
+    min-height: 2.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    text-align: center;
+    text-wrap: balance;
+    hyphens: manual;
+  }
+
+  .ac-spine__emblem {
+    order: 2;
+    width: 3.5rem;
+    height: 3.5rem;
+    stroke-width: 1.2;
+  }
+
+  .ac-spine__volume { order: 3; font-size: 0.8125rem; }
+  .ac-spine__volume-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+  .ac-spine__volume-numeral { display: none; }
+
+  .ac-spine:hover .ac-spine__body,
+  .ac-spine:active .ac-spine__body,
+  .ac-spine:focus-visible .ac-spine__body {
+    transform: translate(-3px, -6px);
+  }
+}
+
+@media (prefers-contrast: more) {
+  .ac-spine { --spine-rule: var(--spine-ink); }
+}

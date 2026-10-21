@@ -15,6 +15,7 @@
 /* Componentes UI (sobrescribibles por utilidades de Tailwind) */
 @import "./styles/ac-classes.css" layer(components);
 @import "./styles/ac-pill.css" layer(components);
+@import "./styles/ac-spines.css" layer(components);
 @import "./styles/editor-primitives.css" layer(components);
 @import "./styles/mdx-prose.css" layer(components);
 @import "./styles/content-layout.css" layer(components);

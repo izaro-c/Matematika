@@ -69,16 +69,13 @@ export interface TranslationDictionary {
   };
   hero: {
     tagline: string;
-    studyPlanEyebrow: string;
+    volume: string;
     studyPlanTitle: string;
     studyPlanCta: string;
-    proofMethodsEyebrow: string;
     proofMethodsTitle: string;
     proofMethodsCta: string;
-    axiomsEyebrow: string;
     axiomsTitle: string;
     axiomsCta: string;
-    graphEyebrow: string;
     graphTitle: string;
     graphCta: string;
   };
