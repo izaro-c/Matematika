@@ -181,7 +181,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-2 min-w-0">
                     <span className={`flex h-5 w-5 items-center justify-center rounded-full font-mono font-bold text-[10px] shrink-0 ${
-                      isInitial ? 'bg-ocre text-carbon' : 'bg-carbon/20 text-carbon'
+                      isInitial ? 'bg-ocre text-on-accent' : 'bg-carbon/20 text-carbon'
                     }`}>
                       {isInitial ? '0' : idx + 1}
                     </span>

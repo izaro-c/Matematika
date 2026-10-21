@@ -110,7 +110,11 @@ export const BranchLibrary = () => {
         key={section.slug}
         className="ac-chapter"
         data-accent={section.accent}
-        style={{ ['--acc' as string]: `var(--theme-${section.accent})`, order: index }}
+        style={{
+          ['--acc' as string]: `var(--theme-${section.accent})`,
+          ['--acc-cloth' as string]: `var(--cloth-${section.accent})`,
+          order: index,
+        }}
       >
         {/* El uñero repite el enlace del título para el ratón; el teclado usa el título */}
         <Link href={href} className="ac-chapter__tab" tabIndex={-1} aria-hidden="true">

@@ -431,6 +431,14 @@ export interface TranslationDictionary {
     viewportControls: string;
     zoomInTitle: string;
     zoomOutTitle: string;
+    recoverView: string;
+    recoverViewLabel: string;
+    recoverViewTitle: string;
+    recoverViewNone: string;
+    homeView: string;
+    homeViewLabel: string;
+    figureNumber: string;
+    stepJustifications: string;
   };
   common: {
     loading: string;

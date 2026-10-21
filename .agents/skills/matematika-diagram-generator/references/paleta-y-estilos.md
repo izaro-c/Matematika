@@ -9,10 +9,12 @@ píldoras, puntos de estado, mayúsculas con tracking).
 | Pieza | Fuente de verdad |
 |---|---|
 | Pigmentos `--theme-*`, `--ink-text*`, fuentes | `src/app/theme.css` |
+| Tela o macizo (cuándo rellenar con el pigmento) | «Color de acento» en `src/app/styles/README.md` |
 | Panel en el lienzo (`annotation` · `panel`) | `.matematika-info-panel*` en `src/app/styles/mdx-prose.css`; HTML en `annotationTextHtml` (`src/diagrams/render/diagramRuntimeUtils.ts`) |
 | Panel de paso (overlay) | `DiagramInfoPanel` (`src/components/ui/DiagramOverlay.tsx`) + `StepOverlayPanels` (`src/diagrams/render/DiagramKatexOverlay.tsx`) |
 | Botón de control en el lienzo | `.diagram-control-button` en `mdx-prose.css`; `render/elements/diagramButton.ts` solo fija `--diagram-button-accent` |
 | Papel de folio compartido | `--diagram-folio-bg` (`:root` en `mdx-prose.css`) |
+| Lámina, pie de figura y barra de controles | `DiagramRenderer` (`<figure>` · `[data-diagram-plate]` · `figcaption`) y `.diagram-figure-caption` / `.diagram-rubric*` en `mdx-prose.css`; filete y radio por defecto en `MathBoard` |
 
 ## 2. Paneles informativos: «folio»
 
@@ -33,6 +35,13 @@ píldoras, puntos de estado, mayúsculas con tracking).
 - Manícula **☞** en el color del control antes del texto. Activo: filete en el color del control,
   lavado del 7 % y la manícula se vuelve **☜**.
 - Foco `outline 2px pavo`; deshabilitado `opacity .35`. Sin `transform`, sombras ni puntos.
+
+## 3 bis. Lámina
+
+- Tablero con filete de 2 px en `--page-accent` y radio `--radius-sm` (4 px), el mismo de los números de paso.
+- Debajo, fuera del dibujo: pie «Fig. N · título» (número en versalitas, título en cursiva) y barra de rúbricas en versalitas sin bordes; ☞ delante de «Reproducir».
+- Lámina pequeña (ancho < 480 px o figura < 400 px de alto, p. ej. móvil): las rúbricas vuelven dentro del tablero como raíles laterales de solo glifos (zoom a la izquierda, pasos a la derecha) para no robar altura al dibujo; el pie sigue debajo.
+- La nota de exploración (`note`) y las lecturas quedan dentro, arriba. El título ya no va dentro del tablero salvo en el lienzo del editor y en miniaturas.
 
 ## 4. Preferir objetos editables
 

@@ -161,6 +161,76 @@ describe('useEditorCore lossless integration', () => {
     expect(payload.source).not.toContain('## Título');
   });
 
+  describe('relocation of blocks and sections', () => {
+    const sectioned = `export const metadata = {
+  "id": "secciones-prueba",
+  "type": "definicion",
+  "title": "Secciones",
+  "description": "Documento con dos secciones."
+};
+
+## Primera
+
+Texto uno.
+
+## Segunda
+
+Texto dos.`;
+
+    async function openSectioned() {
+      vi.mocked(fetch).mockResolvedValueOnce(readResponse(sectioned, 'content/sections.mdx'));
+      const hook = renderHook(() => useEditorCore());
+      await act(() => hook.result.current.openFile('content/sections.mdx'));
+      const [first, firstText, second, secondText] = hook.result.current.blocks;
+      return { ...hook, first, firstText, second, secondText };
+    }
+
+    it('lists the blocks that belong to a section', async () => {
+      const { result, first, firstText, second } = await openSectioned();
+      expect(result.current.sectionBlocks(first.id)).toEqual([first.id, firstText.id]);
+      expect(result.current.sectionBlocks(second.id)).toHaveLength(2);
+      expect(result.current.sectionBlocks('missing-id')).toEqual(['missing-id']);
+    });
+
+    it('moves a block next to an anchor', async () => {
+      const { result, firstText, second } = await openSectioned();
+      act(() => result.current.relocateBlock(firstText.id, second.id, 'after'));
+      expect(result.current.rawBody.indexOf('Texto uno.')).toBeGreaterThan(result.current.rawBody.indexOf('## Segunda'));
+    });
+
+    it('moves a whole section before another one', async () => {
+      const { result, first, second } = await openSectioned();
+      act(() => result.current.relocateSection(second.id, first.id, 'before'));
+      const body = result.current.rawBody;
+      expect(body.indexOf('## Segunda')).toBeLessThan(body.indexOf('## Primera'));
+      expect(body.indexOf('Texto dos.')).toBeLessThan(body.indexOf('## Primera'));
+    });
+
+    it('steps a section up and down', async () => {
+      const { result, second } = await openSectioned();
+      act(() => result.current.stepSection(second.id, -1));
+      expect(result.current.rawBody.indexOf('## Segunda')).toBeLessThan(result.current.rawBody.indexOf('## Primera'));
+      const [movedHeading] = result.current.blocks;
+      act(() => result.current.stepSection(movedHeading.id, 1));
+      expect(result.current.rawBody.indexOf('## Primera')).toBeLessThan(result.current.rawBody.indexOf('## Segunda'));
+    });
+
+    it('reports a rejected change when the section cannot move further', async () => {
+      const { result, first } = await openSectioned();
+      act(() => result.current.stepSection(first.id, -1));
+      expect(result.current.message).toEqual({ code: 'errors.changeRejected', params: expect.any(Object) });
+    });
+
+    it('ignores relocation when no document is open', () => {
+      const { result } = renderHook(() => useEditorCore());
+      expect(result.current.sectionBlocks('x')).toEqual(['x']);
+      act(() => result.current.relocateBlock('a', 'b', 'before'));
+      act(() => result.current.relocateSection('a', 'b', 'before'));
+      act(() => result.current.stepSection('a', 1));
+      expect(result.current.rawBody).toBe('');
+    });
+  });
+
   it('manual code save sends the exact current source and checks HTTP status', async () => {
     const fetchMock = vi.mocked(fetch)
       .mockResolvedValueOnce(readResponse(source))

@@ -4,7 +4,7 @@
    izquierda (como el índice de canto de un diccionario) que lleva el símbolo
    y el numeral de la rama. Entradas con puntos guía hasta el tipo.
    La tela, los nervios y el rayado de sombra son los de los libros del hero
-   (ac-spines.css). Pigmento de la rama en --acc.
+   (ac-spines.css). Pigmento de la rama en --acc; tinte de su tela en --acc-cloth.
    Dos pilas alternas (I III V VII | II IV VI) desde 768 px: se lee en zigzag
    y no quedan huecos bajo las ramas cortas. En móvil las pilas desaparecen
    (display: contents) y 'order' devuelve el orden I…VII.
@@ -44,6 +44,7 @@
 
 .ac-chapter {
   --acc: var(--theme-carbon);
+  --acc-cloth: var(--cloth-carbon);
   --acc-ink: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
   display: grid;
   grid-template-columns: 3.25rem minmax(0, 1fr);
@@ -125,11 +126,11 @@
 /* ── Uñero ────────────────────────────────────────────────────────────── */
 
 .ac-chapter__tab {
-  --tab-cloth: var(--acc);
-  --tab-ink: var(--on-accent);
-  --tab-rule: color-mix(in srgb, var(--tab-ink) 50%, transparent);
-  --tab-edge: color-mix(in srgb, var(--acc) 70%, #120e0b);
-  --tab-hatch: color-mix(in srgb, var(--theme-carbon) 38%, transparent);
+  --tab-cloth: color-mix(in srgb, var(--acc-cloth) var(--cloth-share), var(--theme-lienzo));
+  --tab-ink: var(--cloth-ink);
+  --tab-rule: var(--cloth-rule);
+  --tab-edge: color-mix(in srgb, var(--acc-cloth) var(--cloth-edge-share), var(--cloth-edge-base));
+  --tab-hatch: var(--cloth-hatch);
   grid-row: 1 / span 2;
   position: relative;
   isolation: isolate;
@@ -137,16 +138,8 @@
   color: var(--tab-ink);
 }
 
-/* Códice nocturno: tela oscura, letras crema y nervios dorados */
-.dark .ac-chapter__tab {
-  --tab-cloth: color-mix(in srgb, var(--acc) 40%, var(--theme-lienzo));
-  --tab-ink: var(--ink-text);
-  --tab-rule: color-mix(in srgb, var(--theme-ocre) 55%, transparent);
-  --tab-edge: color-mix(in srgb, var(--acc) 55%, var(--theme-lienzo));
-  --tab-hatch: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
-}
-.dark .ac-chapter[data-accent="carbon"] .ac-chapter__tab {
-  --tab-cloth: color-mix(in srgb, var(--acc) 24%, var(--theme-lienzo));
+.ac-chapter[data-accent="carbon"] .ac-chapter__tab {
+  --tab-cloth: color-mix(in srgb, var(--acc-cloth) var(--cloth-share-neutral), var(--theme-lienzo));
 }
 
 /* Sombra de grabado, fija bajo la tira */
@@ -223,8 +216,4 @@
   .ac-chapter__cloth,
   .ac-chapter__cloth::before,
   .ac-chapter__cloth::after { transition: none; }
-}
-
-@media (prefers-contrast: more) {
-  .ac-chapter__tab { --tab-rule: var(--tab-ink); }
 }

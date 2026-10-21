@@ -35,7 +35,7 @@ export const UntranslatedFallbackBanner: React.FC<UntranslatedFallbackBannerProp
               key={langCode}
               type="button"
               onClick={() => setLang(langCode)}
-              className="px-3 py-1 text-xs font-medium border border-ocre/30 text-carbon hover:text-lienzo hover:bg-ocre transition-colors duration-150"
+              className="px-3 py-1 text-xs font-medium border border-ocre/30 text-carbon hover:border-ocre hover:bg-ocre/15 transition-colors duration-150"
             >
               {langInfo.name}
             </button>

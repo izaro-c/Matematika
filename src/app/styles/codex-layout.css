@@ -139,6 +139,10 @@
     grid-row: 1;
     background: transparent;
   }
+  /* La lámina empieza bajo la cabecera global y deja margen a la derecha. */
+  .codex-diagram-sticky {
+    padding: var(--codex-top) clamp(1rem, 2.5vw, 2rem) 1.25rem 0;
+  }
   .codex-reading {
     grid-column: 1;
     grid-row: 1;
@@ -205,8 +209,7 @@
   margin-top: auto; /* pegado al fondo de la columna; el diagrama usa el resto */
   background: transparent;
   padding: 1rem 0 0.5rem 0;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-inline: 0;
   margin-bottom: 0;
   font-family: ui-serif, Georgia, serif;
   font-size: 0.9rem;
@@ -242,12 +245,13 @@
 }
 
 .codex-justifications h4 {
-  font-family: var(--font-sans-family);
-  font-size: 0.7rem;
+  font-family: var(--font-diagram-family);
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.03em;
   text-transform: none;
-  color: var(--theme-terracota);
+  color: var(--ink-text-muted);
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-style: normal;

@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import fixture from '../fixtures/diagrams/diagram-spec.json';
 import type { DiagramSpec } from '@/diagrams/public';
 import { MathProvider } from '@/lib/page-context/MathStoreContext';
+import { DiagramFigureContext } from '@/lib/page-context/DiagramFigureContext';
 
 vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
   MathBoard: ({ children }: { children?: React.ReactNode }) => <div data-testid="math-board">{children}</div>,
@@ -37,16 +38,39 @@ describe('DiagramRenderer shared runtime', () => {
     expect(screen.getByTestId('math-board')).toBeTruthy();
     const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]');
     expect(renderer).toBeTruthy();
-    expect(renderer?.className).toContain('rounded-[20px]');
+    expect(renderer?.tagName).toBe('FIGURE');
     const board = renderer?.querySelector('[data-testid="math-board"]');
     expect(board).toBeTruthy();
-    expect(board?.querySelector('[data-diagram-header]')).toBeTruthy();
-    expect(renderer?.querySelector('[data-diagram-toolbar] [aria-label="Controles del viewport"]')).toBeTruthy();
-    expect(board?.querySelector('[aria-label="Controles del viewport"]')).toBeTruthy();
+    // El pie de figura va debajo de la lámina, fuera del dibujo.
+    expect(renderer?.querySelector('[data-diagram-caption]')?.textContent).toContain('Fig. 1');
+    expect(board?.querySelector('[data-diagram-caption]')).toBeNull();
+    // jsdom mide 0×0: lámina pequeña, así que las rúbricas van dentro como raíles.
+    expect(renderer?.getAttribute('data-diagram-layout')).toBe('rails');
+    expect(board?.querySelector('[data-diagram-toolbar-layout="rails"] [aria-label="Controles del viewport"]')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
     expect(renderer?.getAttribute('data-diagram-viewport-bounds')).not.toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /Ajustar.*contenido/ }));
     expect(onViewportChange).not.toHaveBeenCalled();
+  });
+
+  it('keeps the rubric bar below the board on a wide plate', () => {
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue(
+      { x: 0, y: 0, top: 0, left: 0, right: 900, bottom: 700, width: 900, height: 700, toJSON: () => ({}) } as DOMRect,
+    );
+    try {
+      render(
+        <MathProvider>
+          <DiagramRenderer spec={(fixture as DiagramSpec)} mode="preview" />
+        </MathProvider>,
+      );
+      const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]');
+      const board = renderer?.querySelector('[data-testid="math-board"]');
+      expect(renderer?.getAttribute('data-diagram-layout')).toBe('bar');
+      expect(renderer?.querySelector('[data-diagram-toolbar-layout="bar"] [aria-label="Controles del viewport"]')).toBeTruthy();
+      expect(board?.querySelector('[data-diagram-toolbar]')).toBeNull();
+    } finally {
+      rect.mockRestore();
+    }
   });
 
   it('opens the real Pitágoras editor preview without requiring an outer MathProvider', () => {
@@ -105,18 +129,28 @@ describe('DiagramRenderer shared runtime', () => {
     expect(renderer?.getAttribute('data-diagram-viewport-bounds')).toBe(initialBounds);
   });
 
-  it('provides accessible, consistently sized viewport and fit buttons with centered icons', () => {
+  it('provides accessible viewport controls as printed rubrics', () => {
     render(<DiagramRenderer spec={(fixture as DiagramSpec)} activeStepId="step1" />);
     const fitButton = screen.getByRole('button', { name: /Ajustar.*contenido/ });
-    expect(fitButton).toBeTruthy();
     expect(fitButton.textContent).toContain('⌖');
-    expect(fitButton.className).toContain('h-11');
-    expect(fitButton.className).toContain('items-center');
-    expect(fitButton.className).toContain('justify-center');
+    expect(fitButton.className).toContain('diagram-rubric');
 
     const zoomIn = screen.getByRole('button', { name: 'Acercar' });
     const zoomOut = screen.getByRole('button', { name: 'Alejar' });
-    expect(zoomIn.className).toContain('size-11');
-    expect(zoomOut.className).toContain('size-11');
+    expect(zoomIn.className).toContain('diagram-rubric--glyph');
+    expect(zoomOut.className).toContain('diagram-rubric--glyph');
+    expect(screen.getByRole('button', { name: 'Traer a la vista los objetos que quedan fuera' }).textContent).toBe('Recuperar');
+    expect(screen.getByRole('button', { name: 'Volver a la vista inicial' }).textContent).toBe('Inicio');
+  });
+
+  it('numbers the caption from the figure context', () => {
+    render(
+      <DiagramFigureContext.Provider value={2}>
+        <DiagramRenderer spec={(fixture as DiagramSpec)} activeStepId="step1" />
+      </DiagramFigureContext.Provider>,
+    );
+    const caption = document.querySelector('[data-diagram-caption]');
+    expect(caption?.textContent).toContain('Fig. 2');
+    expect(caption?.textContent).toContain((fixture as DiagramSpec).title);
   });
 });

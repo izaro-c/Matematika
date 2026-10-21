@@ -66,7 +66,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       <div className="flex flex-col items-center text-center">
         
         {/* RETRATO */}
-        <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-lienzo/10 shadow-2xl relative mb-8 bg-carbon flex items-center justify-center">
+        <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-lienzo/10 shadow-2xl relative mb-8 bg-lienzo/5 flex items-center justify-center">
           {image ? (
             <img 
               src={resolvePublicOrExternalAsset(image)} 
@@ -138,7 +138,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
     >
 
       {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) — colapsa en móvil */}
-      <div className="lg:w-[40%] bg-carbon lg:border-r border-carbon/20 text-lienzo lg:overflow-y-auto custom-scrollbar relative">
+      <div className="lg:w-[40%] ac-cloth lg:border-r border-carbon/20 lg:overflow-y-auto custom-scrollbar relative">
         <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
 
         <div className="p-6 sm:p-8 lg:p-12 relative z-10 flex flex-col min-h-full">

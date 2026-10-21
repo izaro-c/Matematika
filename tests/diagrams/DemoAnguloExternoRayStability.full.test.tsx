@@ -110,9 +110,8 @@ describe('DemoAnguloExterno: rayBC estable al acercar C a B', () => {
     const pB = points.find(p => p.name === 'B')!;
     const pC = points.find(p => p.name === 'C')!;
     const rays = lines.filter(l => !l.evalVisProp('straightfirst') && l.evalVisProp('straightlast'));
-    const rayBC = rays.find(l => (
-      (l.point1 === pB && l.point2 === pC) || (l.point2 === pB && l.point1 === pC)
-    ));
+    // Origen en B: el diagrama también tiene rayCB sobre la misma recta, en sentido contrario.
+    const rayBC = rays.find(l => l.point1 === pB && l.point2 === pC);
     expect(pB && pC && rayBC).toBeTruthy();
 
     const badFrames: Array<{ step: number; cos: number; cx: number; cy: number }> = [];

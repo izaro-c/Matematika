@@ -20,12 +20,12 @@
 }
 
 .ac-spine {
-  --spine: var(--theme-carbon);
-  --spine-cloth: var(--spine);
-  --spine-ink: var(--on-accent);
-  --spine-rule: color-mix(in srgb, var(--spine-ink) 50%, transparent);
-  --spine-edge: color-mix(in srgb, var(--spine) 70%, #120e0b);
-  --spine-hatch: color-mix(in srgb, var(--theme-carbon) 38%, transparent);
+  --spine: var(--cloth-carbon);
+  --spine-cloth: color-mix(in srgb, var(--spine) var(--cloth-share), var(--theme-lienzo));
+  --spine-ink: var(--cloth-ink);
+  --spine-rule: var(--cloth-rule);
+  --spine-edge: color-mix(in srgb, var(--spine) var(--cloth-edge-share), var(--cloth-edge-base));
+  --spine-hatch: var(--cloth-hatch);
   --spine-rest: 3px;
   display: block;
   position: relative;
@@ -33,20 +33,13 @@
   color: var(--spine-ink);
 }
 
-.ac-spine--pavo { --spine: var(--theme-pavo); }
-.ac-spine--musgo { --spine: var(--theme-musgo); }
-.ac-spine--terracota { --spine: var(--theme-terracota); }
-.ac-spine--carbon { --spine: var(--theme-carbon); }
-
-/* Códice nocturno: tela oscura bajo la lámpara, letras crema y hierros dorados */
-.dark .ac-spine {
-  --spine-cloth: color-mix(in srgb, var(--spine) 40%, var(--theme-lienzo));
-  --spine-ink: var(--ink-text);
-  --spine-rule: color-mix(in srgb, var(--theme-ocre) 55%, transparent);
-  --spine-edge: color-mix(in srgb, var(--spine) 55%, var(--theme-lienzo));
-  --spine-hatch: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+.ac-spine--pavo { --spine: var(--cloth-pavo); }
+.ac-spine--musgo { --spine: var(--cloth-musgo); }
+.ac-spine--terracota { --spine: var(--cloth-terracota); }
+.ac-spine--carbon {
+  --spine: var(--cloth-carbon);
+  --spine-cloth: color-mix(in srgb, var(--spine) var(--cloth-share-neutral), var(--theme-lienzo));
 }
-.dark .ac-spine--carbon { --spine-cloth: color-mix(in srgb, var(--spine) 24%, var(--theme-lienzo)); }
 
 /* Sombra de grabado: rayado fijo bajo el libro. Al moverse el libro, asoma más. */
 .ac-spine::before {
@@ -230,8 +223,4 @@
   .ac-spine:focus-visible .ac-spine__body {
     transform: translate(-3px, -6px);
   }
-}
-
-@media (prefers-contrast: more) {
-  .ac-spine { --spine-rule: var(--spine-ink); }
 }

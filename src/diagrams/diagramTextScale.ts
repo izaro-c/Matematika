@@ -6,7 +6,7 @@
  */
 export const DIAGRAM_TEXT_SCALE_REF_PX = 400;
 /** Minimum scale so chrome stays readable while freeing vertical space for the board. */
-export const DIAGRAM_TEXT_SCALE_MIN = 0.7;
+export const DIAGRAM_TEXT_SCALE_MIN = 0.85;
 
 /** Unitless scale from container height; written onto the diagram root for inheritance. */
 export function diagramTextScaleFromHeight(heightPx: number): number {

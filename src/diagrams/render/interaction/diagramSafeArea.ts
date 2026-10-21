@@ -21,6 +21,12 @@ export type DiagramHeaderLayout = 'top' | 'side';
 export interface DiagramChromeMetrics {
   rootWidth: number;
   rootHeight: number;
+  /**
+   * Height of the whole figure (board + caption + bar) when the bar can sit
+   * outside the board. The rails decision uses it so moving the bar in or out
+   * does not flip the layout back. Defaults to rootHeight.
+   */
+  layoutHeight?: number;
   /** Bottom of visible header content (title / readouts) relative to root top. */
   visibleHeaderContentBottom: number;
   /** Full header element height (includes invisible readout slots). */
@@ -37,6 +43,8 @@ export interface DiagramSafeAreaOptions {
   hasTopViewportPanel: boolean;
   /** When false, never reserve / flip to a side header column. Default true. */
   hasHeader?: boolean;
+  /** In bar layout the toolbar sits below the board and reserves no inset. */
+  barOutsideBoard?: boolean;
 }
 
 export interface DiagramSafeAreas {
@@ -146,14 +154,15 @@ export function computeDiagramSafeAreas(
     ? Math.ceil(measuredHeaderBottom) + DIAGRAM_CHROME.headerGap
     : (useSideHeader ? sidePad : (isSmallSurface ? 8 : 12));
 
-  const toolbarBottom = showToolbar
+  const toolbarBottom = showToolbar && !options.barOutsideBoard
     ? Math.ceil(metrics.toolbarHeight) + DIAGRAM_CHROME.toolbarGapWithToolbar
     : (isSmallSurface ? 8 : headerInset);
 
   const useRails = Boolean(
     showToolbar
     && !useSideHeader
-    && (metrics.rootWidth < DIAGRAM_CHROME.railsMinWidth || metrics.rootHeight < DIAGRAM_CHROME.railsMinHeight),
+    && (metrics.rootWidth < DIAGRAM_CHROME.railsMinWidth
+      || (metrics.layoutHeight ?? metrics.rootHeight) < DIAGRAM_CHROME.railsMinHeight),
   );
   const panelExtra = (hasHeader && hasTopViewportPanel) ? DIAGRAM_CHROME.topViewportPanelExtra : 0;
   const sideLeft = sideChromeWidth + DIAGRAM_CHROME.headerGap;

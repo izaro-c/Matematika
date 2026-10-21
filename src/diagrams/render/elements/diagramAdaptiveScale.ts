@@ -19,7 +19,7 @@ export const MIN_HIGHLIGHT_POINT_SIZE = 6;
 /** Holgura mínima en píxeles entre el borde del punto del vértice y el marcador de ángulo. */
 export const MIN_ANGLE_MARKER_CLEARANCE_PX = 8;
 
-/** Factor de escala actual del contenedor del diagrama (entre 0.7 y 1.0). */
+/** Factor de escala actual del contenedor del diagrama (entre DIAGRAM_TEXT_SCALE_MIN y 1.0). */
 export function getDiagramScale(board: any): number {
   const el = board?.containerObj;
   if (!el || typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') return 1;

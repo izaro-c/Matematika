@@ -59,9 +59,13 @@ export interface UseDiagramViewportOptions {
   viewportControls?: boolean;
   showStepControls?: boolean;
   showToolbar?: boolean;
+  /** See DiagramSafeAreaOptions.barOutsideBoard. */
+  barOutsideBoard?: boolean;
   hasHeader?: boolean;
   onViewportChange?: (bounds: DiagramBounds, options?: ViewportChangeOptions) => void;
   rendererRef: RefObject<HTMLDivElement | null>;
+  /** Whole figure; its height drives the rails decision. */
+  layoutRef?: RefObject<HTMLElement | null>;
   headerRef: RefObject<HTMLElement | null>;
   toolbarRef: RefObject<HTMLDivElement | null>;
 }
@@ -99,11 +103,13 @@ export function useDiagramViewport({
   viewportControls = true,
   showStepControls = false,
   showToolbar = true,
+  barOutsideBoard = false,
   hasHeader = true,
   onViewportChange,
   rendererRef,
   headerRef,
   toolbarRef,
+  layoutRef,
 }: UseDiagramViewportOptions) {
   const configuredBounds = useMemo(() => resolveInitialCamera(spec), [spec]);
   const configuredBoundsKey = configuredBounds.join(',');
@@ -165,13 +171,14 @@ export function useDiagramViewport({
         {
           rootWidth: rootBounds?.width ?? 0,
           rootHeight: rootBounds?.height ?? 0,
+          layoutHeight: layoutRef?.current?.getBoundingClientRect().height,
           visibleHeaderContentBottom: measureVisibleHeaderContentBottom(rootBounds, header, hasHeader),
           headerHeight: hasHeader ? (header?.getBoundingClientRect().height ?? DIAGRAM_CHROME.headerFallbackHeight) : 0,
           toolbarHeight: toolbar?.getBoundingClientRect().height
             ?? (showToolbar ? DIAGRAM_CHROME.toolbarFallbackHeight : 0),
           isSmUp: readSmUp(),
         },
-        { showToolbar, showStepControls, viewportControls, hasTopViewportPanel, hasHeader },
+        { showToolbar, showStepControls, viewportControls, hasTopViewportPanel, hasHeader, barOutsideBoard },
       );
       setToolbarLayout(current => current === next.toolbarLayout ? current : next.toolbarLayout);
       setHeaderLayout(current => current === next.headerLayout ? current : next.headerLayout);
@@ -186,6 +193,7 @@ export function useDiagramViewport({
     if (headerRef.current) resizeObserver?.observe(headerRef.current);
     if (toolbarRef.current) resizeObserver?.observe(toolbarRef.current);
     if (rendererRef.current) resizeObserver?.observe(rendererRef.current);
+    if (layoutRef?.current) resizeObserver?.observe(layoutRef.current);
 
     const rendererNode = rendererRef.current;
     const mutationObserver = typeof MutationObserver === 'undefined' || !rendererNode
@@ -210,7 +218,8 @@ export function useDiagramViewport({
       resizeObserver?.disconnect();
       mutationObserver?.disconnect();
     };
-  }, [effectiveStepId, hasHeader, hasTopViewportPanel, headerRef, rendererRef, showStepControls, showToolbar, spec.componentId, toolbarRef, viewportControls]);
+  // toolbarLayout: the toolbar node moves in or out of the board, so re-observe it.
+  }, [barOutsideBoard, effectiveStepId, hasHeader, hasTopViewportPanel, headerRef, layoutRef, rendererRef, showStepControls, showToolbar, spec.componentId, toolbarLayout, toolbarRef, viewportControls]);
 
   return {
     bounds: cameraBounds,

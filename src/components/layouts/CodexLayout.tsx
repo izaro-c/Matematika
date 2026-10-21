@@ -42,7 +42,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const setVariable = useMathStore((state) => state.setVariable);
   const activeJustifications = useMathStore((state) => state.variables?.['activeJustifications']) as string[] | undefined;
   const [location] = useLocation();
-  const { lang, getLocalizedPath } = useI18n();
+  const { lang, getLocalizedPath, t } = useI18n();
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
   const [activeDiagramStepId, setActiveDiagramStepId] = useState<string | null>(null);
@@ -433,7 +433,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
 
                 {/* Panel de Justificaciones Activas con altura máxima preservada por CSS Grid */}
                 <div className="codex-justifications">
-                  <h4>Justificaciones del Paso</h4>
+                  <h4>{t('diagram', 'stepJustifications')}</h4>
                   <div className="codex-justifications-grid">
                     {allSets.map((set, idx) => {
                       const isActive = JSON.stringify(set) === activeKey;

@@ -447,7 +447,7 @@ describe('Shared geometry renderer', () => {
         highlightStrokeColor: 'carbon',
       },
     });
-    expect(screen.getByText(spec.title).className).toContain('font-diagram');
+    expect(screen.getByText(spec.title).closest('figcaption')?.className).toContain('font-diagram');
   });
 
   it('uses the current point-creation callback after the editor tool changes', () => {

@@ -314,7 +314,7 @@
 .content-layout[data-page-type="metodo"] .content-diagram-surface:not(:has([data-math-board])) {
   overflow: hidden;
   border: 2px solid var(--page-accent);
-  border-radius: 20px;
+  border-radius: var(--radius-sm, 0.25rem);
 }
 
 .content-diagram-surface [class*="min-h-"] {
@@ -407,7 +407,8 @@
        the diagram shell (and MathBoard RO) oscillate ~954↔859 without user resize. */
     height: 100vh;
     min-height: var(--content-diagram-sticky-min);
-    padding: 0;
+    /* La lámina empieza bajo la cabecera global y deja margen a la derecha. */
+    padding: var(--content-top) clamp(1rem, 2.5vw, 2rem) 1.25rem 0;
     overflow: visible;
     background: transparent;
   }

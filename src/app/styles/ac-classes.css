@@ -414,3 +414,12 @@
 .text-pretty {
   text-wrap: pretty;
 }
+
+/* Superficie grande de tela carbón (p. ej. panel del retrato en biografías).
+   Dentro, --color-lienzo pasa a la tinta de la tela: text-lienzo/50,
+   border-lienzo/10… siguen legibles en los dos temas. */
+.ac-cloth {
+  --color-lienzo: var(--cloth-ink);
+  background-color: color-mix(in srgb, var(--cloth-carbon) var(--cloth-share-neutral), var(--theme-lienzo));
+  color: var(--cloth-ink);
+}

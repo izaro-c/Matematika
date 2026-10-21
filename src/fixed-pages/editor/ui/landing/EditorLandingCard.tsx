@@ -254,7 +254,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         {file.kind === 'diagram' && (
           <Card className="mt-3 relative h-36 w-full overflow-hidden">
             {isLoadingContent && !diagramModel ? (
-              <DiagramSkeleton label={t('editor.nav.loadingContent')} />
+              <DiagramSkeleton label={t('editor.nav.loadingContent')} figure={false} />
             ) : diagramModel ? (
               <DiagramRenderer
                 spec={diagramModel}

@@ -40,9 +40,13 @@ function SkeletonShell({
   );
 }
 
-/** Skeleton del slot de diagrama — misma cáscara visual que MathBoard. */
-export function DiagramSkeleton({ label = 'Preparando visualización…' }: { label?: string }) {
-  return (
+/**
+ * Skeleton del slot de diagrama — misma lámina que DiagramRenderer: tablero con
+ * filete de color y, debajo, las franjas del pie de figura y de la barra.
+ * `figure={false}` deja solo el tablero (miniaturas sin pie ni barra).
+ */
+export function DiagramSkeleton({ label = 'Preparando visualización…', figure = true }: { label?: string; figure?: boolean }) {
+  const shell = (
     <SkeletonShell variant="diagram" label={label}>
       <svg className="sk__figure" viewBox="0 0 120 120">
         <polygon points="28,88 92,88 60,28" fill="none" stroke="currentColor" strokeWidth="1.25" />
@@ -50,6 +54,14 @@ export function DiagramSkeleton({ label = 'Preparando visualización…' }: { la
         <line x1="28" y1="88" x2="92" y2="88" stroke="currentColor" strokeWidth="1.25" />
       </svg>
     </SkeletonShell>
+  );
+  if (!figure) return shell;
+  return (
+    <div className="sk-figure">
+      {shell}
+      <div className="sk-figure__caption" aria-hidden="true" />
+      <div className="sk-figure__bar" aria-hidden="true" />
+    </div>
   );
 }
 

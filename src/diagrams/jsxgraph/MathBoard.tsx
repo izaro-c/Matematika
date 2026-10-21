@@ -95,7 +95,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   children,
   borderWidth = 2,
   borderColor = 'var(--page-accent, var(--theme-mora))',
-  borderRadius = 20,
+  borderRadius = 'var(--radius-sm, 0.25rem)',
   ariaLabel = 'Diagrama matemático interactivo',
   keyboardInstructions = 'Use Tab para recorrer los objetos interactivos. En puntos móviles y deslizadores, use las flechas para cambiar el valor.',
   safeArea,

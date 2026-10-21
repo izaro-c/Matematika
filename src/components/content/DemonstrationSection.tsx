@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { CodexLayout } from '@/components/layouts/CodexLayout';
 import { DiagramSlot } from '@/components/ui/skeletons';
+import { DiagramFigureContext } from '@/lib/page-context/DiagramFigureContext';
 import { useI18n } from '@/i18n';
 import { insertQedAfterLastProofStep } from './insertQedAfterLastProofStep';
 
@@ -23,7 +24,8 @@ interface DiagramFrame {
 }
 
 const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[] }> = ({ activeKey, frames }) => {
-  const active = frames.find((frame) => frame.key === activeKey) ?? frames[0];
+  const activeIndex = Math.max(0, frames.findIndex((frame) => frame.key === activeKey));
+  const active = frames[activeIndex];
   if (!active) return null;
   // Un solo tablero montado: montar todos los frames en paralelo multiplica el coste JSXGraph.
   return (
@@ -33,9 +35,11 @@ const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[]
         className="diagram-transition-frame is-current"
         data-diagram-transition-state="current"
       >
-        <DiagramSlot>
-          {active.node}
-        </DiagramSlot>
+        <DiagramFigureContext.Provider value={activeIndex + 1}>
+          <DiagramSlot>
+            {active.node}
+          </DiagramSlot>
+        </DiagramFigureContext.Provider>
       </div>
     </div>
   );

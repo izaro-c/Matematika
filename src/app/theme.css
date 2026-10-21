@@ -104,6 +104,26 @@
   --on-accent: #F3EFE7; /* texto sobre CTAs de color sólido */
   --ink-pigment-mix: 26%;
 
+  /* Tela de encuadernación: superficies grandes de color (tapas, lomos, uñeros).
+     Fondo = color-mix(pigmento var(--cloth-share), var(--theme-lienzo)).
+     Los controles pequeños y los estados activos usan pigmento macizo + --on-accent. */
+  --cloth-share: 100%;
+  --cloth-share-neutral: 100%; /* pigmento carbon */
+  /* Tinte de la tela: en claro, el mismo pigmento; en oscuro, el vivo */
+  --cloth-terracota: var(--theme-terracota);
+  --cloth-ocre:      var(--theme-ocre);
+  --cloth-granada:   var(--theme-granada);
+  --cloth-musgo:     var(--theme-musgo);
+  --cloth-canela:    var(--theme-canela);
+  --cloth-pavo:      var(--theme-pavo);
+  --cloth-mora:      var(--theme-mora);
+  --cloth-carbon:    var(--theme-carbon);
+  --cloth-ink: var(--on-accent);
+  --cloth-rule: color-mix(in srgb, var(--on-accent) 50%, transparent);
+  --cloth-edge-share: 70%;
+  --cloth-edge-base: #120e0b;
+  --cloth-hatch: color-mix(in srgb, var(--theme-carbon) 38%, transparent);
+
   --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/backgrounds/bg-arts-crafts-1.webp'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 }
@@ -113,13 +133,26 @@
   --theme-lienzo:    #161514;  /* Midnight mate profundo */
   --theme-carbon:    #DFD9CF;  /* Crema suave de códice nocturno */
   
-  --theme-terracota: #E68571;  /* Teoremas (Alta luminancia) */
-  --theme-ocre:      #E5C355;  /* Axiomas (Alta luminancia) */
-  --theme-granada:   #D9738E;  /* Demostraciones (Alta luminancia) */
-  --theme-musgo:     #88BE8D;  /* Biografías (Alta luminancia) */
-  --theme-canela:    #E08643;  /* Definiciones (Alta luminancia) */
-  --theme-pavo:      #7DA2DA;  /* Modelos (Alta luminancia) */
-  --theme-mora:   #B392CD;  /* Ejemplos (Alta luminancia) */
+  /* Pigmentos suaves: el tinte vivo de --cloth-* al 70 % con #B8AFA2 (misma
+     claridad, menos saturación; ≥6,4:1 sobre el lienzo). Hex literales: los
+     diagramas leen estos valores tal cual (MathBoard). */
+  --theme-terracota: #D89280;  /* Teoremas */
+  --theme-ocre:      #D8BD6C;  /* Axiomas */
+  --theme-granada:   #CF8594;  /* Demostraciones */
+  --theme-musgo:     #96BA93;  /* Biografías */
+  --theme-canela:    #D99A5C;  /* Definiciones (más ámbar: se separa de terracota) */
+  --theme-pavo:      #8FA6C9;  /* Modelos */
+  --theme-mora:      #B49BC0;  /* Ejemplos */
+
+  /* Tinte vivo de la tela (solo superficies grandes, ver --cloth-share) */
+  --cloth-terracota: #E68571;
+  --cloth-ocre:      #E5C355;
+  --cloth-granada:   #D9738E;
+  --cloth-musgo:     #88BE8D;
+  --cloth-canela:    #E08643;
+  --cloth-pavo:      #7DA2DA;
+  --cloth-mora:      #B392CD;
+  --cloth-carbon:    #DFD9CF;
   --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/backgrounds/bg-arts-crafts-dark.webp'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 
@@ -146,6 +179,22 @@
   --on-accent: #161514;
   --ink-pigment-mix: 14%;
 
+  /* Tela oscura bajo la lámpara: letras crema (≥5,9:1) y nervios dorados.
+     Un pigmento brillante a toda superficie deslumbra. */
+  --cloth-share: 40%;
+  --cloth-share-neutral: 24%;
+  --cloth-ink: var(--ink-text);
+  --cloth-rule: color-mix(in srgb, var(--cloth-ocre) 55%, transparent);
+  --cloth-edge-share: 55%;
+  --cloth-edge-base: var(--theme-lienzo);
+  --cloth-hatch: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  .dark { --cloth-rule: var(--cloth-ink); }
+  /* La tela oscura apenas se separa del fondo (~2:1): canto en pigmento pleno */
+  .dark { --cloth-edge-share: 100%; }
 }
 
 /* Utilidades de tinta (evitar Tailwind opacity en texto semántico) */

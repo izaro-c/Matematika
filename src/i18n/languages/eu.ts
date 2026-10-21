@@ -413,7 +413,7 @@ export const euLanguage: LanguageConfig = {
       completed: 'Kontrol-puntua osatua',
     },
     diagram: {
-      resetView: 'Berrezarri bista',
+      resetView: 'Berrabiarazi sekuentzia',
       previousStep: 'Aurreko urratsa',
       nextStep: 'Hurrengo urratsa',
       play: 'Sekuentzia erreproduzitu',
@@ -429,6 +429,14 @@ export const euLanguage: LanguageConfig = {
       viewportControls: 'Bistaratze-kontrolak',
       zoomInTitle: 'Hurbildu (+)',
       zoomOutTitle: 'Urrundu (-)',
+      recoverView: 'Berreskuratu',
+      recoverViewLabel: 'Ekarri bistara kanpoan geratu diren objektuak',
+      recoverViewTitle: 'Bistatik kanpoko objektuak: {n}',
+      recoverViewNone: 'Ez dago objekturik bistatik kanpo',
+      homeView: 'Hasiera',
+      homeViewLabel: 'Itzuli hasierako bistara',
+      figureNumber: '{n}. irudia',
+      stepJustifications: 'Urratsaren justifikazioak',
     },
     common: {
       loading: 'Kargatzen...',

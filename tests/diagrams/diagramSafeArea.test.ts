@@ -100,6 +100,21 @@ describe('computeDiagramSafeAreas', () => {
     expect(result.viewportSafeArea.top).toBe(130);
   });
 
+  it('reserves no bottom inset for a bar below the board, and decides rails on the figure height', () => {
+    const outside = { ...baseOptions, barOutsideBoard: true };
+    const wide = computeDiagramSafeAreas(metrics(), outside);
+    expect(wide.toolbarLayout).toBe('bar');
+    expect(wide.safeArea.bottom).toBe(24);
+
+    // Bar outside shrinks the board below the threshold; the figure still clears it,
+    // so the layout must not flip to rails (which would grow the board back).
+    const borderline = computeDiagramSafeAreas(metrics({ rootWidth: 500, rootHeight: 380, layoutHeight: 440 }), outside);
+    expect(borderline.toolbarLayout).toBe('bar');
+
+    const small = computeDiagramSafeAreas(metrics({ rootWidth: 500, rootHeight: 260, layoutHeight: 300 }), outside);
+    expect(small.toolbarLayout).toBe('rails');
+  });
+
   it('sameInsets compares by value', () => {
     expect(sameInsets({ top: 1, right: 2, bottom: 3, left: 4 }, { top: 1, right: 2, bottom: 3, left: 4 })).toBe(true);
     expect(sameInsets({ top: 1, right: 2, bottom: 3, left: 4 }, { top: 1, right: 2, bottom: 3, left: 5 })).toBe(false);
