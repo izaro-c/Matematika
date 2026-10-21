@@ -299,6 +299,10 @@ export const CONTENT_TYPE_LABELS_PLURAL: Record<string, string> = {
   ),
 };
 
+/** Los tipos del buscador llevan tilde y guion bajo («matemático», «caso_uso»). */
+const normalizeTypeKey = (key: string): string =>
+  key.toLowerCase().trim().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/_/g, '-');
+
 export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular', lang?: string): string {
   const langConfig = getLanguage(lang);
   if (typeof rawKey !== 'string' || !rawKey.trim()) {
@@ -306,7 +310,7 @@ export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | '
     return form === 'plural' ? fallbackEntry.plural : fallbackEntry.singular;
   }
   const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
-  const normalized = cleanKey.toLowerCase().trim();
+  const normalized = normalizeTypeKey(cleanKey);
   const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
 
   const typeEntry = langConfig.dictionary.contentTypes[canonical] || langConfig.dictionary.contentTypes[normalized];
@@ -339,7 +343,7 @@ export function getContentTypeBadge(rawKey?: string | null, lang?: string): stri
     return langConfig.dictionary.contentTypes.teorema?.badge ?? 'TEOREMA';
   }
   const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
-  const normalized = cleanKey.toLowerCase().trim();
+  const normalized = normalizeTypeKey(cleanKey);
   const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
 
   const typeEntry = langConfig.dictionary.contentTypes[canonical] || langConfig.dictionary.contentTypes[normalized];

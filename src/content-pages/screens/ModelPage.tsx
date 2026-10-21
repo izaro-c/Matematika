@@ -9,6 +9,7 @@ import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Página de visualización de un Modelo Matemático concreto.
@@ -75,12 +76,7 @@ export function ModelPage() {
   );
 
   if (!model) {
-    return (
-      <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
-        <h1 className="font-serif text-3xl mb-4">{t('notFound', 'title')}</h1>
-        <p className="text-mora mb-6">{t('notFound', 'description')}</p>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const breadcrumbs = db.getBreadcrumbs(

@@ -13,6 +13,7 @@ import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { DOMAIN_ICONS, DOMAIN_COLORS } from '@/lib/theme/constants';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Componente interno para mostrar un chip visual con la disciplina (dominio) donde se aplica el caso de uso.
@@ -59,14 +60,7 @@ export const UseCasePage: React.FC = () => {
   }, [slug, usecase, markUseCaseVisited]);
 
   if (!usecase) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4 opacity-20">◎</div>
-          <h1 className="text-2xl italic text-carbon/50">{t('notFound', 'description')}</h1>
-        </div>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const concept = usecase.concept

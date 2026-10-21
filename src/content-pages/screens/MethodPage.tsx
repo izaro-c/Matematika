@@ -10,11 +10,12 @@ import { ContentLayout } from '@/components/layouts/ContentLayout';
 import { DiagramSlot } from '@/components/ui/skeletons';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /** Página canónica para procedimientos matemáticos reutilizables. */
 export const MethodPage = () => {
   const { id = '' } = useParams();
-  const { lang, t, currentLanguage } = useI18n();
+  const { lang, currentLanguage } = useI18n();
   const method = db.getMethod(id, lang);
   const isFallback = id ? db.isFallback(id, lang) : false;
   const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
@@ -34,11 +35,7 @@ export const MethodPage = () => {
   }, [method, setMetadata, currentLanguage]);
 
   if (!method) {
-    return (
-      <main className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl">{t('notFound', 'description')}</h1>
-      </main>
-    );
+    return <NotFoundState />;
   }
 
   const Diagram = method.Simulation;

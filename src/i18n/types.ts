@@ -2260,7 +2260,14 @@ export interface TranslationDictionary {
   notFound: {
     title: string;
     description: string;
+    /** Título con la ruta pedida; `{query}` = último tramo legible. */
+    noEntry: string;
+    hint: string;
+    /** Rúbrica sobre las sugerencias, en minúscula (versalitas). */
+    seeAlso: string;
     backHome: string;
+    search: string;
+    folioLabel: string;
     siteTitle: string;
     constructionTitle: string;
   };

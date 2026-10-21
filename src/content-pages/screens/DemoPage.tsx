@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
-import { useParams, Link } from 'wouter';
+import { useParams } from 'wouter';
 import { db } from '@/data/content';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
 import { DemonstrationHeaderProvider } from '@/lib/page-context/DemonstrationHeaderContext';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Página aislada para visualizar una Demostración paso a paso.
@@ -16,21 +17,12 @@ import { useI18n } from '@/i18n';
 export const DemoPage: React.FC = () => {
   const { id } = useParams();
   const demoId = id || '';
-  const { lang, getLocalizedPath, t } = useI18n();
+  const { lang, t } = useI18n();
 
   const demo = db.getDemo(demoId, lang);
 
   if (!demo) {
-    return (
-      <div className="min-h-viewport bg-lienzo font-serif flex items-center justify-center text-carbon">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">{t('notFound', 'title')}</h1>
-          <Link href={getLocalizedPath('/')} className="page-accent-text hover:underline">
-            {t('topbar', 'backToLibrary')}
-          </Link>
-        </div>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   return (

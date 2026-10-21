@@ -27,6 +27,7 @@ import {
   Solucion,
   Apoyo,
 } from '@/content-pages/exercise';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 const mdxComponents = {
   StudyTask,
@@ -224,11 +225,7 @@ const isLocked = useCallback(
   }, [plan, isNodeDone]);
 
   if (!plan) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl italic opacity-50">{t('notFound', 'description')}</h1>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const requiredNodes = plan.requiredNodes || [];

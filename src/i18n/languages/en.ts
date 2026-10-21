@@ -2258,7 +2258,12 @@ export const enLanguage: LanguageConfig = {
     notFound: {
       title: 'Page not found',
       description: 'Requested mathematical resource does not exist or has been relocated.',
-      backHome: 'Back to Library',
+      noEntry: 'No entry for “{query}”',
+      hint: 'It may have moved to another chapter, or the link has a typo.',
+      seeAlso: 'see',
+      backHome: 'back to the library',
+      search: 'search',
+      folioLabel: 'Error 404',
       siteTitle: 'Matematika | Interactive Encyclopedia',
       constructionTitle: 'Page Under Construction',
     },

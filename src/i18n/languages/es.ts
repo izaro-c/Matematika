@@ -2258,7 +2258,12 @@ export const esLanguage: LanguageConfig = {
     notFound: {
       title: 'Página no encontrada',
       description: 'El recurso matemático solicitado no existe o ha sido reubicado en la biblioteca.',
-      backHome: 'Volver a la Biblioteca',
+      noEntry: 'No hay ninguna entrada para «{query}»',
+      hint: 'Quizá se movió de capítulo o el enlace tiene una errata.',
+      seeAlso: 'véase',
+      backHome: 'volver a la biblioteca',
+      search: 'buscar',
+      folioLabel: 'Error 404',
       siteTitle: 'Matematika | La Enciclopedia Interactiva',
       constructionTitle: 'Página en Construcción',
     },

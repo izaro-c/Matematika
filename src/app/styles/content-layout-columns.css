@@ -343,7 +343,7 @@
   }
 
   .content-reading {
-    padding-top: 6rem;
+    padding-top: 2rem;
     padding-inline: var(--content-reading-inset);
     width: min(100%, var(--content-reading-measure));
   }

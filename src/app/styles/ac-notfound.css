@@ -1,0 +1,84 @@
+/* Página no encontrada (404): entrada de índice con «véase» y el 404 como folio al pie.
+   Los puntos guía son .ac-chapter__dots (ac-library.css). */
+
+.ac-notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1.25rem 2rem;
+}
+
+.ac-notfound__sheet {
+  margin-block: auto;
+  width: min(100%, 34rem);
+  color: var(--ink-text-body);
+}
+
+.ac-notfound__title {
+  font-family: var(--font-title-family);
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--ink-text);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.ac-notfound__lead {
+  margin-top: 0.75rem;
+  font-style: italic;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-text-muted);
+  text-wrap: pretty;
+}
+
+.ac-notfound__see {
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.ac-notfound__list { margin-top: 0.25rem; }
+
+/* Con títulos de dos líneas, los puntos guía van en la última, como en un índice impreso */
+.ac-notfound__row {
+  display: flex;
+  align-items: baseline;
+  align-items: last baseline;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-block: 0.5rem;
+  color: var(--ink-text-body);
+}
+.ac-notfound__row-title { font-size: 1.0625rem; }
+.ac-notfound__row:hover .ac-notfound__row-title { color: var(--ink-text); }
+.ac-notfound__row .ac-rubric { flex: none; font-size: 0.9375rem; }
+
+.ac-notfound__actions {
+  margin-top: 1.5rem;
+  font-size: 1.0625rem;
+  color: var(--ink-text-muted);
+}
+.ac-notfound__actions a,
+.ac-notfound__actions button {
+  display: inline-block;
+  padding-block: 0.625rem;
+  color: var(--theme-terracota);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ac-notfound a:focus-visible,
+.ac-notfound button:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+
+/* Número de página al pie, como un folio */
+.ac-notfound__folio {
+  margin-top: 3rem;
+  font-family: var(--font-body-family);
+  font-variant-numeric: oldstyle-nums;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-text-subtle);
+}

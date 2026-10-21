@@ -9,6 +9,7 @@ import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Página para visualizar un Sistema Axiomático.
@@ -25,12 +26,7 @@ export function AxiomaticSystemPage() {
   const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
 
   if (!system) {
-    return (
-      <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
-        <h1 className="font-serif text-3xl mb-4">{t('notFound', 'title')}</h1>
-        <p className="text-mora mb-6">{t('notFound', 'description')}</p>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);

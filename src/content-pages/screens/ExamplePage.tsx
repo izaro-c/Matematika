@@ -10,6 +10,7 @@ import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Página para visualizar un Ejemplo Resuelto.
@@ -25,11 +26,7 @@ export const ExamplePage: React.FC = () => {
   const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
 
   if (!example) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl italic text-carbon/50">{t('notFound', 'description')}</h1>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const relatedTheorem = example.relatedTheorem ? db.getTheorem(example.relatedTheorem, lang) : null;

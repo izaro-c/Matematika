@@ -2258,7 +2258,12 @@ export const euLanguage: LanguageConfig = {
     notFound: {
       title: 'Ez da orria aurkitu',
       description: 'Eskatutako baliabide matematikoa ez da existitzen edo liburutegian lekuz aldatu da.',
-      backHome: 'Itzuli Liburutegira',
+      noEntry: 'Ez dago «{query}» izeneko sarrerarik',
+      hint: 'Agian beste kapitulu batera eraman da, edo estekak akatsen bat du.',
+      seeAlso: 'ikusi',
+      backHome: 'itzuli liburutegira',
+      search: 'bilatu',
+      folioLabel: '404 errorea',
       siteTitle: 'Matematika | Entziklopedia Interaktiboa',
       constructionTitle: 'Eraikuntzan dagoen orria',
     },

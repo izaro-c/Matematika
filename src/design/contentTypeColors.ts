@@ -143,6 +143,7 @@ export const CONTENT_TYPE_ALIASES: Record<string, string> = {
   'use-cases': 'caso-de-uso',
   'casos-de-uso': 'caso-de-uso',
   casosuso: 'caso-de-uso',
+  'caso-uso': 'caso-de-uso',
   'caso-de-uso': 'caso-de-uso',
   'axiomatic-system': 'sistema-axiomatico',
   'axiomatic-systems': 'sistema-axiomatico',

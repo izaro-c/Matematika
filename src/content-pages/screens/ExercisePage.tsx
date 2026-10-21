@@ -10,6 +10,7 @@ import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { VintageSeal } from '@/components/ui/VintageSeal';
 import { useI18n } from '@/i18n';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 
 /**
  * Barra de progreso interactiva que se fija en el top del ExercisePage.
@@ -60,7 +61,7 @@ const ProgressBar: React.FC<{ onReset?: () => void; isCompleted?: boolean }> = (
 };
 
 const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
-  const { lang, getLocalizedPath, t } = useI18n();
+  const { lang, getLocalizedPath } = useI18n();
   const exercise = db.getExercise(id, lang);
   const isFallback = id ? db.isFallback(id, lang) : false;
   const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
@@ -82,11 +83,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
   }, [score.total, score.correct, id, markExerciseComplete]);
 
   if (!exercise) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl italic text-carbon/50">{t('notFound', 'description')}</h1>
-      </div>
-    );
+    return <NotFoundState />;
   }
 
   const relatedTheorem = exercise.relatedTheorem ? db.getTheorem(exercise.relatedTheorem, lang) : null;
