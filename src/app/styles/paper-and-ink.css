@@ -13,8 +13,8 @@
 
 /* En el sitio desplegado el grano se percibe más fuerte y deslavado que en dev:
    se atenúa para conservar los colores intensos y oscuros. */
-:root[data-build="prod"] { --ink-grain-opacity: 0.12; }
-:root[data-build="prod"].dark { --ink-grain-opacity: 0.2; }
+:root[data-build="prod"] { --ink-grain-opacity: 0.09; }
+:root[data-build="prod"].dark { --ink-grain-opacity: 0.13; }
 
 /* Grano de papel: capa fija, muy tenue */
 .ac-paper-grain {
