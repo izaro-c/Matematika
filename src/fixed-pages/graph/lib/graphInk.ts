@@ -3,15 +3,16 @@
  * Funciones puras de tiempo y trazo; el lienzo las consulta en cada fotograma.
  */
 
-/** Duraciones en ms. Las respuestas a la usuaria no pasan de 700 ms; la entrada, al cargar la página, ronda 1 s. */
+/** Duraciones en ms. Las respuestas a la usuaria no pasan de 700 ms; la entrada, al cargar la página, ronda 2,5 s para que se aprecie. */
 export const INK_TIMING = {
   veilIn: 260,
   veilOut: 200,
   trace: 320,
   mark: 450,
-  stamp: 240,
-  introSpread: 520,
-  introLink: 300,
+  stamp: 380,
+  introLead: 380,
+  introSpread: 1300,
+  introLink: 560,
 } as const;
 
 export const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
@@ -85,7 +86,9 @@ export function traceSegment(
 
 /**
  * Retardo de entrada de cada nodo: el centro, después las ramas y luego el contenido
- * de dentro hacia fuera según la distancia al centro del encuadre.
+ * de dentro hacia fuera. El contenido se reparte por su puesto en el orden de distancia
+ * al centro del encuadre, no por la distancia misma: así los nodos descolgados no
+ * comprimen la entrada del resto en un instante.
  */
 export function introDelays<T extends { id: string; x?: number; y?: number }>(
   nodes: T[],
@@ -93,14 +96,15 @@ export function introDelays<T extends { id: string; x?: number; y?: number }>(
   center: { x: number; y: number },
 ): Map<string, number> {
   const delays = new Map<string, number>();
-  const distances = nodes.map(n => Math.hypot((n.x ?? 0) - center.x, (n.y ?? 0) - center.y));
-  const maxDistance = Math.max(1, ...distances);
-  nodes.forEach((node, i) => {
+  const content: Array<{ id: string; distance: number }> = [];
+  nodes.forEach((node) => {
     const rank = rankOf(node);
-    const base = [0, 60, 120, 160][rank] ?? 160;
-    const spread = rank === 3 ? INK_TIMING.introSpread * (distances[i] / maxDistance) : 0;
-    delays.set(node.id, base + spread);
+    if (rank < 3) delays.set(node.id, [0, 130, 260][rank]);
+    else content.push({ id: node.id, distance: Math.hypot((node.x ?? 0) - center.x, (node.y ?? 0) - center.y) });
   });
+  content.sort((a, b) => a.distance - b.distance);
+  const last = Math.max(1, content.length - 1);
+  content.forEach(({ id }, index) => delays.set(id, INK_TIMING.introLead + INK_TIMING.introSpread * (index / last)));
   return delays;
 }
 

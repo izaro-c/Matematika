@@ -56,6 +56,8 @@ const labelRank = (node: GraphNode) => {
   return 3;
 };
 
+const EMPTY_GRAPH: GraphData<GraphNode, GraphLink> = { nodes: [], links: [] };
+
 const endpointId = (end: string | GraphNode | undefined) => (typeof end === 'object' ? end.id : end);
 
 /** Conjunto resaltado: el vecindario de un nodo (con su origen, para trazar desde él) o un tipo de la leyenda. */
@@ -322,7 +324,7 @@ export const GraphPage: React.FC = () => {
     ctx.fillText(label, nodeX, textY);
   }, [theme]);
 
-  // Progreso de entrada de un nodo: -1 mientras el mapa es boceto, 0→1 al estamparse.
+  // Progreso de entrada de un nodo: -1 antes de la entrada, 0→1 al estamparse.
   const introProgress = (id: string, now: number) => {
     if (introPending.current) return -1;
     const intro = introRef.current;
@@ -342,12 +344,6 @@ export const GraphPage: React.FC = () => {
     ctx.globalAlpha = inFocus ? 1 : 1 - 0.8 * veil;
 
     if (stamp <= 0) {
-      // Boceto a lápiz mientras el grafo se asienta.
-      ctx.beginPath();
-      ctx.arc(node.x!, node.y!, radius, 0, 2 * Math.PI, false);
-      ctx.strokeStyle = `${theme.carbon}33`;
-      ctx.lineWidth = 0.6 / globalScale;
-      ctx.stroke();
       ctx.globalAlpha = 1;
       return;
     }
@@ -426,12 +422,7 @@ export const GraphPage: React.FC = () => {
     const a = { x: source.x!, y: source.y! };
     const b = { x: target.x!, y: target.y! };
 
-    if (introPending.current) {
-      ctx.strokeStyle = `${theme.carbon}0D`;
-      ctx.lineWidth = 0.5 / globalScale;
-      traceSegment(ctx, a, b, 1);
-      return;
-    }
+    if (introPending.current) return;
 
     let drawn = 1;
     let start = a;
@@ -443,11 +434,6 @@ export const GraphPage: React.FC = () => {
       // La tinta sale del extremo que se estampa antes, así el mapa crece hacia fuera.
       if (targetDelay < sourceDelay) { start = b; end = a; }
       drawn = easeOut(progress(now, intro.start + Math.min(sourceDelay, targetDelay) + 80, INK_TIMING.introLink));
-      if (drawn < 1) {
-        ctx.strokeStyle = `${theme.carbon}0D`;
-        ctx.lineWidth = 0.5 / globalScale;
-        traceSegment(ctx, a, b, 1);
-      }
     }
 
     const bothInFocus = !focus.nodes || (focus.nodes.has(source.id) && focus.nodes.has(target.id));
@@ -528,77 +514,75 @@ export const GraphPage: React.FC = () => {
     }
   };
 
-  // Ajustar cámara y física del grafo
-  useEffect(() => {
-    if (graphRef.current) {
-      setTimeout(() => {
-        const fg = graphRef.current;
-        if (!fg) return;
+  // Fuerzas: repulsión por tipo de nodo y distancias jerárquicas de los enlaces.
+  const configureForces = useCallback((fg: KnowledgeGraphRef) => {
+    (fg.d3Force('charge') as { strength: (fn: (d: GraphNode) => number) => unknown } | undefined)?.strength((node: GraphNode) => {
+      if (node.group === 'central') return -1200;
+      if (node.group === 'branch') return node.id?.startsWith('rama-') ? -700 : -400;
+      if (node.group === 'sistema-axiomatico') return -300;
+      return proto ? -420 : -220;
+    });
 
-        // Ajustes de repulsión gravitatoria por tipo de nodo
-        (fg.d3Force('charge') as { strength: (fn: (d: GraphNode) => number) => unknown } | undefined)?.strength((node: GraphNode) => {
-          if (node.group === 'central') return -1200;
-          if (node.group === 'branch') return node.id?.startsWith('rama-') ? -700 : -400;
-          if (node.group === 'sistema-axiomatico') return -300;
-          return proto ? -420 : -220;
-        });
+    (fg.d3Force('link') as { distance: (fn: (l: ResolvedGraphLink) => number) => unknown } | undefined)?.distance((link: ResolvedGraphLink) => {
+      const isCentral = link.source.group === 'central' || link.target.group === 'central';
+      if (isCentral) return proto ? 120 : 180;
 
-        // Distancias de enlaces jerárquicos armónicos
-        (fg.d3Force('link') as { distance: (fn: (l: ResolvedGraphLink) => number) => unknown } | undefined)?.distance((link: ResolvedGraphLink) => {
-          const isCentral = link.source.group === 'central' || link.target.group === 'central';
-          if (isCentral) return proto ? 120 : 180;
+      const isBranch = link.source.group === 'branch' || link.target.group === 'branch';
+      if (isBranch) {
+        const isSubToMainBranch = (link.source.id?.startsWith('subrama-') && link.target.id?.startsWith('rama-')) ||
+                                  (link.target.id?.startsWith('subrama-') && link.source.id?.startsWith('rama-'));
+        return isSubToMainBranch ? (proto ? 80 : 110) : 70;
+      }
 
-          const isBranch = link.source.group === 'branch' || link.target.group === 'branch';
-          if (isBranch) {
-            const isSubToMainBranch = (link.source.id?.startsWith('subrama-') && link.target.id?.startsWith('rama-')) ||
-                                      (link.target.id?.startsWith('subrama-') && link.source.id?.startsWith('rama-'));
-            return isSubToMainBranch ? (proto ? 80 : 110) : 70;
-          }
-
-          return proto ? 90 : 55;
-        });
-
-        fg.d3ReheatSimulation();
-        fitPending.current = true;
-        if (!proto) fg.zoomToFit(400, 60);
-      }, 300);
-    }
+      return proto ? 90 : 55;
+    });
   }, [proto]);
 
-  // Encuadre cuando la simulación se asienta (antes se encuadraba a los 300 ms, con el grafo aún sin abrir).
-  const handleEngineStop = useCallback(() => {
+  // Prototipo: el lienzo arranca vacío; con las fuerzas puestas recibe los datos y el
+  // reparto se calcula entero antes del primer fotograma (warmupTicks), sin nodos que se muevan.
+  const [forcesReady, setForcesReady] = useState(!proto);
+  useEffect(() => {
     if (!proto || !graphRef.current) return;
-    if (!fitPending.current && !introPending.current) return;
+    configureForces(graphRef.current);
+    fitPending.current = true;
+    setForcesReady(true);
+  }, [proto, configureForces]);
+
+  // Página actual: se ajustan las fuerzas a los 300 ms y la simulación se ve asentarse.
+  useEffect(() => {
+    if (proto || !graphRef.current) return;
+    setTimeout(() => {
+      const fg = graphRef.current;
+      if (!fg) return;
+      configureForces(fg);
+      fg.d3ReheatSimulation();
+      fg.zoomToFit(400, 60);
+    }, 300);
+  }, [proto, configureForces]);
+
+  // Encuadre sobre el reparto ya asentado y, si toca, comienzo de la entrada dibujada.
+  const handleEngineStop = useCallback(() => {
+    if (!proto || !graphRef.current || !fitPending.current) return;
+    const content = graphData.nodes.filter(n => n.group !== 'branch' && n.group !== 'central' && Number.isFinite(n.x) && Number.isFinite(n.y));
+    if (content.length === 0) return;
     fitPending.current = false;
     const narrow = window.innerWidth < 768;
     // Se encuadra el núcleo del contenido (percentiles 5–95): los nodos sueltos no encogen el mapa.
-    const content = graphData.nodes.filter(n => n.group !== 'branch' && n.group !== 'central' && Number.isFinite(n.x) && Number.isFinite(n.y));
     const quantile = (values: number[], q: number) => values.sort((a, b) => a - b)[Math.floor(q * (values.length - 1))];
     const xs = content.map(n => n.x!);
     const ys = content.map(n => n.y!);
     const [x0, x1, y0, y1] = [quantile([...xs], 0.05), quantile([...xs], 0.95), quantile([...ys], 0.05), quantile([...ys], 0.95)];
-    const playIntro = introPending.current;
-    // Con entrada dibujada el encuadre es inmediato: el boceto apenas se ve y la tinta llega después.
-    graphRef.current.zoomToFit(playIntro ? 0 : 600, narrow ? 16 : 48, (n) => n.x! >= x0 && n.x! <= x1 && n.y! >= y0 && n.y! <= y1 && n.group !== 'branch' && n.group !== 'central');
+    graphRef.current.zoomToFit(0, narrow ? 16 : 48, (n) => n.x! >= x0 && n.x! <= x1 && n.y! >= y0 && n.y! <= y1 && n.group !== 'branch' && n.group !== 'central');
 
-    if (playIntro) {
+    if (introPending.current) {
       introPending.current = false;
       introRef.current = {
-        start: performance.now() + 40,
+        start: performance.now() + 120,
         delays: introDelays(graphData.nodes, labelRank, { x: (x0 + x1) / 2, y: (y0 + y1) / 2 }),
       };
-      kick(40 + 160 + 80 + INK_TIMING.introSpread + INK_TIMING.stamp + INK_TIMING.introLink);
+      kick(120 + INK_TIMING.introLead + INK_TIMING.introSpread + INK_TIMING.stamp + INK_TIMING.introLink + 80);
     }
   }, [proto, graphData, kick]);
-
-  // Red de seguridad: si la simulación no avisa de que se ha asentado, se entinta igualmente.
-  useEffect(() => {
-    if (!playIntro) return;
-    const timer = window.setTimeout(() => {
-      if (introPending.current) handleEngineStop();
-    }, 4000);
-    return () => window.clearTimeout(timer);
-  }, [playIntro, handleEngineStop]);
 
   // El lienzo toma el tamaño de su contenedor.
   const canvasBoxRef = useRef<HTMLDivElement>(null);
@@ -721,7 +705,7 @@ export const GraphPage: React.FC = () => {
           ref={graphRef}
           width={dimensions.width}
           height={dimensions.height}
-          graphData={graphData}
+          graphData={forcesReady ? graphData : EMPTY_GRAPH}
           nodeLabel={() => ''}
           nodeCanvasObject={drawNode}
           nodeCanvasObjectMode={() => 'replace'}
@@ -738,9 +722,8 @@ export const GraphPage: React.FC = () => {
           linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 5 : 1.5}
           linkDirectionalParticleSpeed={0.005}
           d3VelocityDecay={0.3}
-          warmupTicks={40}
-          cooldownTicks={proto ? 90 : 150}
-          d3AlphaDecay={proto ? 0.035 : undefined}
+          warmupTicks={proto ? 300 : 40}
+          cooldownTicks={proto ? 0 : 150}
           onNodeClick={handleNodeClick}
           backgroundColor="transparent"
         />
