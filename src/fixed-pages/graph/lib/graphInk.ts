@@ -3,7 +3,7 @@
  * Funciones puras de tiempo y trazo; el lienzo las consulta en cada fotograma.
  */
 
-/** Duraciones en ms. Las respuestas a la usuaria no pasan de 700 ms; la entrada, al cargar la página, ronda 2,5 s para que se aprecie. */
+/** Duraciones en ms. Las respuestas a hover, toque o búsqueda no pasan de 700 ms; la entrada, al cargar la página, ronda 2,5 s para que se aprecie. */
 export const INK_TIMING = {
   veilIn: 260,
   veilOut: 200,

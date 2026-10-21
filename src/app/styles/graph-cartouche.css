@@ -1,11 +1,13 @@
-/* PROTOTIPO desechable del grafo (?g=f). Borrar al pasar a los componentes. */
+/* Grafo visual (/grafo): damasco atenuado y cartela con título, búsqueda y leyenda.
+   Componente: src/fixed-pages/graph/ui/components/GraphCartouche.tsx.
+   Las microinteracciones del lienzo viven en src/fixed-pages/graph/lib/graphInk.ts. */
 
-.graph-proto {
+.graph-page {
   isolation: isolate;
 }
 
 /* Damasco atenuado: un velo de papel por encima del dibujo de fondo. */
-.graph-proto::before {
+.graph-page::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -14,13 +16,13 @@
   pointer-events: none;
 }
 
-.dark .graph-proto::before {
+.dark .graph-page::before {
   background: color-mix(in srgb, var(--theme-lienzo) 45%, transparent);
 }
 
-/* ── Piezas comunes ───────────────────────────── */
+/* ── Búsqueda subrayada ──────────────────────── */
 
-.graph-proto-search {
+.graph-cartouche-search {
   position: relative;
   display: flex;
   align-items: baseline;
@@ -28,15 +30,15 @@
   border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 35%, transparent);
 }
 
-.graph-proto-search:focus-within {
+.graph-cartouche-search:focus-within {
   border-bottom-color: var(--theme-carbon);
 }
 
-.graph-proto-search__glyph {
+.graph-cartouche-search__glyph {
   color: var(--ink-text-subtle);
 }
 
-.graph-proto-search input {
+.graph-cartouche-search input {
   flex: 1;
   min-width: 0;
   border: 0;
@@ -48,12 +50,12 @@
   outline: none;
 }
 
-.graph-proto-search input::placeholder {
+.graph-cartouche-search input::placeholder {
   font-style: italic;
   color: var(--ink-text-subtle);
 }
 
-.graph-proto-search__results {
+.graph-cartouche-search__results {
   position: absolute;
   inset-inline: 0;
   top: calc(100% + 1px);
@@ -63,7 +65,7 @@
   padding: 0.25rem 0.75rem;
 }
 
-.graph-proto-search__results button {
+.graph-cartouche-search__results button {
   width: 100%;
   padding: 0.5rem 0;
   text-align: left;
@@ -71,7 +73,9 @@
   color: var(--ink-text);
 }
 
-.graph-proto-key {
+/* ── Leyenda impresa: muestra, nombre, puntos guía y recuento ── */
+
+.graph-key {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -83,13 +87,13 @@
   color: var(--ink-text-body);
 }
 
-.graph-proto-key__item {
+.graph-key__item {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
 }
 
-.graph-proto-key__swatch {
+.graph-key__swatch {
   align-self: center;
   width: 0.625rem;
   height: 0.625rem;
@@ -98,22 +102,22 @@
   flex-shrink: 0;
 }
 
-.graph-proto-key__dots {
+.graph-key__dots {
   flex: 1 1 auto;
   min-width: 1rem;
   border-bottom: 1px dotted color-mix(in srgb, var(--theme-carbon) 45%, transparent);
   transform: translateY(-0.3em);
 }
 
-.graph-proto-key__count {
+.graph-key__count {
   font-variant-numeric: oldstyle-nums;
   font-style: italic;
   color: var(--ink-text-muted);
 }
 
-/* ── F · Índice en cartela (C dentro del marco de E, sin fleurón ni sombra) ── */
+/* ── Cartela: doble filete y radio de 4 px, sin sombra ── */
 
-.graph-proto-cartouche {
+.graph-cartouche {
   position: absolute;
   left: 1.5rem;
   bottom: 1.5rem;
@@ -130,7 +134,7 @@
   outline-offset: 4px;
 }
 
-.graph-proto-cartouche__title {
+.graph-cartouche__title {
   margin: 0 0 0.25rem;
   font-size: 1.5rem;
   line-height: 1.15;
@@ -138,13 +142,13 @@
   color: var(--ink-text);
 }
 
-.graph-proto-cartouche__link {
+.graph-cartouche__link {
   border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
   padding-top: 0.25rem;
 }
 
 /* El rótulo «Leyenda»: en escritorio es solo rótulo; en móvil abre y cierra. */
-.graph-proto-cartouche__toggle {
+.graph-cartouche__toggle {
   display: inline-flex;
   align-items: baseline;
   gap: 0.4rem;
@@ -154,16 +158,16 @@
   pointer-events: none;
 }
 
-.graph-proto-cartouche__chevron {
+.graph-cartouche__chevron {
   display: none;
 }
 
-.graph-proto-cartouche__link {
+.graph-cartouche__link {
   position: relative;
 }
 
 @media (max-width: 767px) {
-  .graph-proto-cartouche {
+  .graph-cartouche {
     left: 0.75rem;
     right: 0.75rem;
     bottom: 0.75rem;
@@ -171,80 +175,80 @@
     padding: 0.75rem 1rem 0.5rem;
     gap: 0.25rem;
   }
-  .graph-proto-cartouche__title { font-size: 1.25rem; }
+  .graph-cartouche__title { font-size: 1.25rem; }
 
-  .graph-proto-cartouche__toggle {
+  .graph-cartouche__toggle {
     pointer-events: auto;
     min-height: 2.75rem;
     margin-top: 0;
     color: var(--ink-text-muted);
     -webkit-tap-highlight-color: transparent;
   }
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__toggle { color: var(--ink-text); }
+  .graph-cartouche.is-open .graph-cartouche__toggle { color: var(--ink-text); }
   /* Abierta: el subrayado a mano se traza bajo «Leyenda». */
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__toggle .ac-ink-underline {
+  .graph-cartouche.is-open .graph-cartouche__toggle .ac-ink-underline {
     background-size: 100% var(--ink-band);
   }
-  .graph-proto-cartouche__chevron {
+  .graph-cartouche__chevron {
     display: inline-block;
     font-size: 0.75em;
   }
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__chevron { transform: rotate(90deg); }
+  .graph-cartouche.is-open .graph-cartouche__chevron { transform: rotate(90deg); }
 
   /* El pliegue: la cartela crece hasta el alto de su contenido. */
-  .graph-proto-cartouche__fold {
+  .graph-cartouche__fold {
     display: grid;
     grid-template-rows: 0fr;
     visibility: hidden;
   }
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__fold {
+  .graph-cartouche.is-open .graph-cartouche__fold {
     grid-template-rows: 1fr;
     visibility: visible;
   }
-  .graph-proto-cartouche__fold-inner {
+  .graph-cartouche__fold-inner {
     min-height: 0;
     overflow: hidden;
   }
-  .graph-proto-cartouche__fold-inner > .graph-proto-key { padding-top: 0.25rem; }
+  .graph-cartouche__fold-inner > .graph-key { padding-top: 0.25rem; }
 }
 
-/* Todo se escribe: cada entrada entra en su turno, la muestra se estampa,
+/* Nada aparece, se escribe: cada entrada entra en su turno, la muestra se estampa,
    los puntos guía se trazan de izquierda a derecha y el número llega el último. */
 @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
-  .graph-proto-cartouche__toggle:active { transform: translateY(1px); }
-  .graph-proto-cartouche__chevron { transition: transform 260ms var(--ease-panels); }
+  .graph-cartouche__toggle:active { transform: translateY(1px); }
+  .graph-cartouche__chevron { transition: transform 260ms var(--ease-panels); }
 
-  .graph-proto-cartouche__fold {
+  .graph-cartouche__fold {
     transition:
       grid-template-rows 220ms var(--ease-panels),
       visibility 0s linear 220ms;
   }
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__fold {
+  .graph-cartouche.is-open .graph-cartouche__fold {
     transition:
       grid-template-rows 320ms var(--ease-panels),
       visibility 0s;
   }
 
-  .graph-proto-cartouche .graph-proto-key__item,
-  .graph-proto-cartouche .graph-proto-cartouche__link {
+  .graph-cartouche .graph-key__item,
+  .graph-cartouche .graph-cartouche__link {
     opacity: 0;
     transform: translateY(0.3rem);
     transition: opacity 120ms ease-in, transform 120ms ease-in;
   }
-  .graph-proto-cartouche .graph-proto-key__swatch {
+  .graph-cartouche .graph-key__swatch {
     transform: scale(0.3);
     transition: transform 120ms ease-in;
   }
-  .graph-proto-cartouche .graph-proto-key__dots {
+  .graph-cartouche .graph-key__dots {
     transform: translateY(-0.3em) scaleX(0);
     transform-origin: left center;
     transition: transform 120ms ease-in;
   }
-  .graph-proto-cartouche .graph-proto-key__count {
+  .graph-cartouche .graph-key__count {
     opacity: 0;
     transition: opacity 120ms ease-in;
   }
-  .graph-proto-cartouche__link::before {
+  .graph-cartouche__link::before {
     content: "";
     position: absolute;
     inset: 0 0 auto;
@@ -253,10 +257,10 @@
     transform-origin: left center;
     transition: transform 120ms ease-in;
   }
-  .graph-proto-cartouche .graph-proto-cartouche__link { border-top-color: transparent; }
+  .graph-cartouche .graph-cartouche__link { border-top-color: transparent; }
 
-  .graph-proto-cartouche.is-open .graph-proto-key__item,
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__link {
+  .graph-cartouche.is-open .graph-key__item,
+  .graph-cartouche.is-open .graph-cartouche__link {
     --delay: calc(90ms + var(--i, 0) * 40ms);
     opacity: 1;
     transform: none;
@@ -264,19 +268,19 @@
       opacity 220ms var(--ease-panels) var(--delay),
       transform 260ms var(--ease-panels) var(--delay);
   }
-  .graph-proto-cartouche.is-open .graph-proto-key__swatch {
+  .graph-cartouche.is-open .graph-key__swatch {
     transform: none;
     transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay);
   }
-  .graph-proto-cartouche.is-open .graph-proto-key__dots {
+  .graph-cartouche.is-open .graph-key__dots {
     transform: translateY(-0.3em) scaleX(1);
     transition: transform 300ms var(--ease-panels) calc(var(--delay) + 80ms);
   }
-  .graph-proto-cartouche.is-open .graph-proto-key__count {
+  .graph-cartouche.is-open .graph-key__count {
     opacity: 1;
     transition: opacity 200ms ease-out calc(var(--delay) + 260ms);
   }
-  .graph-proto-cartouche.is-open .graph-proto-cartouche__link::before {
+  .graph-cartouche.is-open .graph-cartouche__link::before {
     transform: scaleX(1);
     transition: transform 360ms var(--ease-panels) var(--delay);
   }
@@ -284,7 +288,7 @@
 
 /* ── Leyenda que filtra ───────────────────────── */
 
-.graph-proto-key__btn {
+.graph-key__btn {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
@@ -300,42 +304,42 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.graph-proto-key__btn:focus-visible {
+.graph-key__btn:focus-visible {
   outline: 2px solid var(--theme-terracota);
   outline-offset: 2px;
 }
 
-.graph-proto-key__item > .graph-proto-key__btn > span:nth-child(2) {
+.graph-key__label {
   transition: color 160ms ease-out;
 }
 
-.graph-proto-key.has-focus .graph-proto-key__item:not(.is-focus) .graph-proto-key__btn {
+.graph-key.has-focus .graph-key__item:not(.is-focus) .graph-key__btn {
   color: var(--ink-text-subtle);
 }
 
-.graph-proto-key__item.is-focus .graph-proto-key__btn > span:nth-child(2) {
+.graph-key__item.is-focus .graph-key__label {
   color: var(--ink-text);
 }
 
-.graph-proto-key__btn[aria-pressed="true"] > span:nth-child(2) {
+.graph-key__btn[aria-pressed="true"] > span:nth-child(2) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
 @media (max-width: 767px) {
-  .graph-proto-key__btn { min-height: 2.25rem; }
+  .graph-key__btn { min-height: 2.25rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .graph-proto-key.has-focus .graph-proto-key__item .graph-proto-key__btn { transition: color 160ms ease-out; }
+  .graph-key.has-focus .graph-key__item .graph-key__btn { transition: color 160ms ease-out; }
   /* El punto de color late una vez al activarse. */
-  .graph-proto-key__item.is-focus .graph-proto-key__swatch {
-    animation: graph-proto-pulse 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  .graph-key__item.is-focus .graph-key__swatch {
+    animation: graph-key-pulse 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 }
 
-@keyframes graph-proto-pulse {
+@keyframes graph-key-pulse {
   0% { transform: scale(1); }
   45% { transform: scale(1.6); }
   100% { transform: scale(1); }

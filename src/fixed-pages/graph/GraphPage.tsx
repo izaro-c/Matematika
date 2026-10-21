@@ -12,9 +12,7 @@ import type {
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/fixed-pages/graph/lib/knowledgeGraphBuilder';
-import { GraphLegend } from '@/fixed-pages/graph/ui/components/GraphLegend';
-import { GraphSearch } from '@/fixed-pages/graph/ui/components/GraphSearch';
-import { GraphExplorerLink } from '@/fixed-pages/graph/ui/components/GraphExplorerLink';
+import { GraphCartouche, type GraphLegendEntry } from '@/fixed-pages/graph/ui/components/GraphCartouche';
 import { getKnowledgeGraphContentType, getKnowledgeGraphLegendTypes } from '@/fixed-pages/graph/lib/graphUtils';
 import {
   INK_TIMING,
@@ -29,7 +27,6 @@ import {
   tweenValue,
   type Tween,
 } from '@/fixed-pages/graph/lib/graphInk';
-import { CONTENT_TYPE_CONFIG, getContentTypeLabel } from '@/lib/theme/constants';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
 import { useI18n } from '@/i18n';
 
@@ -41,10 +38,6 @@ type ResolvedGraphLink = KnowledgeGraphLink & {
   source: KnowledgeGraphNode;
   target: KnowledgeGraphNode;
 };
-
-// PROTOTIPO desechable: ?g=f (índice en cartela y microinteracciones de tinta).
-type GraphProto = 'f' | null;
-const readProto = (): GraphProto => (new URLSearchParams(window.location.search).get('g') === 'f' ? 'f' : null);
 
 type LabelRect = { x0: number; y0: number; x1: number; y1: number };
 const overlaps = (a: LabelRect, b: LabelRect) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
@@ -69,19 +62,18 @@ interface InkFocus {
 }
 
 /**
- * Página Explorador (Knowledge Graph).
- * Renderiza una red tridimensional (2D proyectada) de todos los conceptos matemáticos.
- * Permite explorar conexiones entre teoremas, métodos, biografías y demostraciones.
+ * Página del grafo visual (/grafo): todos los conceptos y sus conexiones, en tinta sobre el damasco.
+ *
+ * El reparto se calcula entero antes del primer fotograma y la entrada se dibuja del centro hacia
+ * fuera. Al señalar un nodo se trazan sus aristas; la leyenda de la cartela resalta tipos y la
+ * búsqueda rodea el resultado con un círculo de pluma. Tiempos y trazos: `lib/graphInk.ts`.
  */
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
-  const { lang, t } = useI18n();
+  const { lang } = useI18n();
   const { openTerm } = useGlossaryStore();
   const theme = useThemeColors();
   const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
-  const [proto] = useState<GraphProto>(readProto);
-  const [legendOpen, setLegendOpen] = useState(() => new URLSearchParams(window.location.search).has('legend'));
-  const fitPending = useRef(false);
   const graphBackgroundStyle = {
     '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')}")`,
     '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.webp')}")`,
@@ -94,25 +86,33 @@ export const GraphPage: React.FC = () => {
     [graphData],
   );
   const nodeById = useMemo(() => new Map(graphData.nodes.map(n => [n.id, n as KnowledgeGraphNode])), [graphData]);
+  const legend: GraphLegendEntry[] = useMemo(() => {
+    const counts = new Map<string, number>();
+    graphData.nodes.forEach((node) => {
+      const type = getKnowledgeGraphContentType(node.group);
+      if (type) counts.set(type, (counts.get(type) ?? 0) + 1);
+    });
+    return getKnowledgeGraphLegendTypes(graphData.nodes.map(node => node.group))
+      .map(type => ({ type, count: counts.get(type) ?? 0 }));
+  }, [graphData]);
 
   const [hoverNode, setHoverNode] = useState<KnowledgeGraphNode | null>(null);
-  const [highlightNodes, setHighlightNodes] = useState(new Set<KnowledgeGraphNode>());
-  const [highlightLinks, setHighlightLinks] = useState(new Set<KnowledgeGraphLink>());
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<GraphNode[]>([]);
-
-  // Estado de tinta (prototipo). Lo que cambia en cada fotograma vive en refs.
-  const [reducedMotion] = useState(prefersReducedMotion);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoverType, setHoverType] = useState<string | null>(null);
   const [pinnedType, setPinnedType] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<GraphNode[]>([]);
+
+  // Estado de tinta. Lo que cambia en cada fotograma vive en refs, no en estado de React.
+  const [reducedMotion] = useState(prefersReducedMotion);
   const [animating, setAnimating] = useState(false);
   const focusRef = useRef<InkFocus>({ nodes: null, links: null, origin: null, start: 0 });
   const veilRef = useRef<Tween>({ from: 0, to: 0, start: 0, duration: 0 });
   const markRef = useRef<{ id: string; start: number } | null>(null);
-  const [playIntro] = useState(() => (proto ? shouldPlayIntro() : false));
+  const [playIntro] = useState(shouldPlayIntro);
   const introPending = useRef(playIntro);
   const introRef = useRef<{ start: number; delays: Map<string, number> } | null>(null);
+  const fitPending = useRef(false);
   const animTimer = useRef<number | undefined>(undefined);
   const duration = useCallback((ms: number) => (reducedMotion ? 0 : ms), [reducedMotion]);
 
@@ -141,56 +141,24 @@ export const GraphPage: React.FC = () => {
     }
   };
 
-  const handleSearchResultClick = (node: GraphNode, clickedAt: number) => {
+  // La cámara se desliza hasta el nodo y, al llegar, se le traza un círculo de pluma.
+  const handleSearchSelect = (node: GraphNode, clickedAt: number) => {
     setSearchQuery('');
     setSearchResults([]);
-    if (proto) {
-      // La cámara se desliza hasta el nodo y, al llegar, se le traza un círculo de pluma.
-      const fg = graphRef.current;
-      const glide = duration(600);
-      if (fg && node.x !== undefined && node.y !== undefined) {
-        fg.centerAt(node.x, node.y, glide);
-        fg.zoom(Math.max(fg.zoom(), 2.5), glide);
-      }
-      setSelectedId(node.id);
-      markRef.current = { id: node.id, start: clickedAt + glide };
-      kick(glide + duration(INK_TIMING.mark));
-      return;
+    const fg = graphRef.current;
+    const glide = duration(600);
+    if (fg && node.x !== undefined && node.y !== undefined) {
+      fg.centerAt(node.x, node.y, glide);
+      fg.zoom(Math.max(fg.zoom(), 2.5), glide);
     }
-    if (graphRef.current && node.x !== undefined && node.y !== undefined) {
-      graphRef.current.centerAt(node.x, node.y, 1000);
-      graphRef.current.zoom(3, 1000);
-    }
-    handleNodeHover(node, hoverNode);
+    setSelectedId(node.id);
+    markRef.current = { id: node.id, start: clickedAt + glide };
+    kick(glide + duration(INK_TIMING.mark));
   };
 
   const handleNodeHover: NonNullable<KnowledgeGraphProps['onNodeHover']> = useCallback((node) => {
-    const newHighlightNodes = new Set<KnowledgeGraphNode>();
-    const newHighlightLinks = new Set<KnowledgeGraphLink>();
-
-    if (node) {
-      newHighlightNodes.add(node);
-      graphData.links.forEach((link) => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-
-        if (sourceId === node.id) {
-          newHighlightLinks.add(link);
-          const tgt = typeof link.target === 'object' ? link.target : graphData.nodes.find(n => n.id === link.target);
-          if (tgt) newHighlightNodes.add(tgt);
-        }
-        if (targetId === node.id) {
-          newHighlightLinks.add(link);
-          const src = typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source);
-          if (src) newHighlightNodes.add(src);
-        }
-      });
-    }
-
     setHoverNode(node || null);
-    setHighlightNodes(newHighlightNodes);
-    setHighlightLinks(newHighlightLinks);
-  }, [graphData]);
+  }, []);
 
   const navigateToNode = useCallback((node: GraphNode) => {
     if (node.group === 'branch' || node.group === 'central') {
@@ -215,13 +183,13 @@ export const GraphPage: React.FC = () => {
 
   const handleNodeClick: NonNullable<KnowledgeGraphProps['onNodeClick']> = useCallback((node) => {
     // En táctil no hay hover: el primer toque muestra el vecindario y el segundo abre la página.
-    if (proto && window.matchMedia('(hover: none)').matches && selectedId !== node.id) {
+    if (window.matchMedia('(hover: none)').matches && selectedId !== node.id) {
       markRef.current = null;
       setSelectedId(node.id);
       return;
     }
     navigateToNode(node);
-  }, [proto, selectedId, navigateToNode]);
+  }, [selectedId, navigateToNode]);
 
   const handleBackgroundClick = useCallback(() => {
     markRef.current = null;
@@ -233,7 +201,6 @@ export const GraphPage: React.FC = () => {
   const focusNodeId = hoverNode?.id ?? selectedId;
   const focusType = hoverType ?? pinnedType;
   useEffect(() => {
-    if (!proto) return;
     const now = performance.now();
     const current = tweenValue(veilRef.current, now);
 
@@ -260,68 +227,12 @@ export const GraphPage: React.FC = () => {
     }
     veilRef.current = { from: current, to: 1, start: now, duration: duration(INK_TIMING.veilIn) };
     kick(duration(Math.max(INK_TIMING.veilIn, INK_TIMING.trace)));
-  }, [proto, focusNodeId, focusType, graphData, duration, kick]);
+  }, [focusNodeId, focusType, graphData, duration, kick]);
 
   const getNodeColor = useCallback((node: GraphNode) => {
     if (node.group === 'central') return theme.getHex('matematico');
     if (node.group === 'branch') return theme.getHex('teorema');
     return theme.getHex(getKnowledgeGraphContentType(node.group) ?? node.group);
-  }, [theme]);
-
-  const drawNodeLabel = useCallback((
-    ctx: CanvasRenderingContext2D,
-    node: KnowledgeGraphNode,
-    globalScale: number,
-    isHighlighted: boolean,
-    hoverNode: KnowledgeGraphNode | null,
-    highlightNodes: Set<KnowledgeGraphNode>,
-    radius: number,
-  ) => {
-    const isMainBranch = node.id?.startsWith('rama-');
-    const isSubBranch = node.id?.startsWith('subrama-');
-    const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
-
-    if (!isActivelyHovered && node.group !== 'central' &&
-        !(isMainBranch && globalScale >= 0.4) &&
-        !(isSubBranch && globalScale >= 0.8) &&
-        globalScale < 1.2) return;
-
-    const label = node.name;
-    const nodeX = node.x!;
-    const nodeY = node.y!;
-
-    let baseSize: number;
-    if (node.group === 'central') {
-      baseSize = 18;
-    } else if (isMainBranch || isSubBranch) {
-      baseSize = 14;
-    } else {
-      baseSize = 10;
-    }
-    const fontSize = baseSize / globalScale;
-    ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    const textY = nodeY + radius + (fontSize / 2) + (4 / globalScale);
-
-    // Shadow for readability
-    ctx.shadowColor = `${theme.lienzo}E6`;
-    ctx.shadowBlur = 4 / globalScale;
-    ctx.lineWidth = 3 / globalScale;
-    ctx.strokeStyle = `${theme.lienzo}E6`;
-    ctx.strokeText(label, nodeX, textY);
-
-    ctx.shadowBlur = 0;
-    let textColor: string;
-    if (node.group === 'central') {
-      textColor = isHighlighted ? theme.getHex('teorema') : theme.getHex('teorema') + '80';
-    } else {
-      textColor = isHighlighted ? theme.carbon : theme.carbon + '80';
-    }
-
-    ctx.fillStyle = textColor;
-    ctx.fillText(label, nodeX, textY);
   }, [theme]);
 
   // Progreso de entrada de un nodo: -1 antes de la entrada, 0→1 al estamparse.
@@ -332,32 +243,30 @@ export const GraphPage: React.FC = () => {
     return progress(now, intro.start + (intro.delays.get(id) ?? 0), INK_TIMING.stamp);
   };
 
-  const drawInkNode = (node: KnowledgeGraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+  // Nodos de tinta plana: el color pleno con filete fino; ramas y centro, anillos de tinta sobre papel.
+  const drawNode: NonNullable<KnowledgeGraphProps['nodeCanvasObject']> = (node, ctx, globalScale) => {
+    if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
     const now = performance.now();
+    const stamp = introProgress(node.id, now);
+    if (stamp <= 0) return;
+
     const veil = tweenValue(veilRef.current, now);
     const focus = focusRef.current;
     const inFocus = !focus.nodes || focus.nodes.has(node.id);
     const isStructure = node.group === 'branch' || node.group === 'central';
-    const radius = node.val / 2;
-    const stamp = introProgress(node.id, now);
+    const r = (node.val / 2) * Math.max(0, easeStamp(stamp));
 
     ctx.globalAlpha = inFocus ? 1 : 1 - 0.8 * veil;
-
-    if (stamp <= 0) {
-      ctx.globalAlpha = 1;
-      return;
-    }
-
-    const r = radius * Math.max(0, easeStamp(stamp));
+    // Leído: anillo concéntrico de estilo astrolabio sin alterar el color del nodo.
     if (useProgressStore.getState().isRead(node.id) && !isStructure) {
       ctx.beginPath();
-      ctx.arc(node.x!, node.y!, r + (2.5 / globalScale), 0, 2 * Math.PI, false);
+      ctx.arc(node.x, node.y, r + (2.5 / globalScale), 0, 2 * Math.PI, false);
       ctx.strokeStyle = theme.carbon;
       ctx.lineWidth = 0.8 / globalScale;
       ctx.stroke();
     }
     ctx.beginPath();
-    ctx.arc(node.x!, node.y!, r, 0, 2 * Math.PI, false);
+    ctx.arc(node.x, node.y, r, 0, 2 * Math.PI, false);
     ctx.fillStyle = isStructure ? theme.lienzo : getNodeColor(node);
     ctx.fill();
     ctx.strokeStyle = isStructure ? theme.carbon : `${theme.carbon}99`;
@@ -365,54 +274,17 @@ export const GraphPage: React.FC = () => {
     ctx.stroke();
     if (node.group === 'central') {
       ctx.beginPath();
-      ctx.arc(node.x!, node.y!, Math.max(0, r - 4), 0, 2 * Math.PI, false);
+      ctx.arc(node.x, node.y, Math.max(0, r - 4), 0, 2 * Math.PI, false);
       ctx.lineWidth = 0.7 / globalScale;
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
   };
 
-  const drawNode: NonNullable<KnowledgeGraphProps['nodeCanvasObject']> = (node, ctx, globalScale) => {
-    if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
-    if (proto) {
-      drawInkNode(node, ctx, globalScale);
-      return;
-    }
-
-    const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
-    const isCompleted = useProgressStore.getState().isRead(node.id);
-
-    // Configuración base
-    const radius = node.val / 2;
-    const color = getNodeColor(node);
-
-    // Si está completado, dibujar un anillo concéntrico de estilo astrolabio clásico sin alterar el color del nodo
-    if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      const ringColor = isHighlighted ? theme.carbon : theme.carbon + '80';
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
-      ctx.strokeStyle = ringColor;
-      ctx.lineWidth = 1.2 / globalScale;
-      ctx.stroke();
-    }
-
-    // Dibujar Círculo
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = isHighlighted ? color : color + '40'; // Añadir transparencia si no está resaltado
-    ctx.fill();
-
-    // Borde de tinta clásico
-    ctx.strokeStyle = theme.carbon;
-    ctx.lineWidth = (isHighlighted ? 1.5 : 0.6) / globalScale;
-    ctx.stroke();
-
-    drawNodeLabel(ctx, node, globalScale, isHighlighted, hoverNode, highlightNodes, radius);
-  };
-
-  // Aristas de tinta: boceto mientras se asienta, trazo de origen a destino en la entrada
-  // y, al señalar un nodo, sus aristas se dibujan desde él hacia fuera.
-  const drawInkLink = (link: KnowledgeGraphLink, ctx: CanvasRenderingContext2D, globalScale: number) => {
+  // Aristas de tinta: en la entrada se trazan desde el extremo que se estampa antes y, al
+  // señalar un nodo, sus aristas se dibujan desde él hacia fuera.
+  const drawLink = (link: KnowledgeGraphLink, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    if (introPending.current) return;
     const source = link.source as KnowledgeGraphNode;
     const target = link.target as KnowledgeGraphNode;
     if (!Number.isFinite(source?.x) || !Number.isFinite(target?.x)) return;
@@ -422,8 +294,6 @@ export const GraphPage: React.FC = () => {
     const a = { x: source.x!, y: source.y! };
     const b = { x: target.x!, y: target.y! };
 
-    if (introPending.current) return;
-
     let drawn = 1;
     let start = a;
     let end = b;
@@ -431,7 +301,6 @@ export const GraphPage: React.FC = () => {
     if (intro) {
       const sourceDelay = intro.delays.get(source.id) ?? 0;
       const targetDelay = intro.delays.get(target.id) ?? 0;
-      // La tinta sale del extremo que se estampa antes, así el mapa crece hacia fuera.
       if (targetDelay < sourceDelay) { start = b; end = a; }
       drawn = easeOut(progress(now, intro.start + Math.min(sourceDelay, targetDelay) + 80, INK_TIMING.introLink));
     }
@@ -520,49 +389,37 @@ export const GraphPage: React.FC = () => {
       if (node.group === 'central') return -1200;
       if (node.group === 'branch') return node.id?.startsWith('rama-') ? -700 : -400;
       if (node.group === 'sistema-axiomatico') return -300;
-      return proto ? -420 : -220;
+      return -420;
     });
 
     (fg.d3Force('link') as { distance: (fn: (l: ResolvedGraphLink) => number) => unknown } | undefined)?.distance((link: ResolvedGraphLink) => {
       const isCentral = link.source.group === 'central' || link.target.group === 'central';
-      if (isCentral) return proto ? 120 : 180;
+      if (isCentral) return 120;
 
       const isBranch = link.source.group === 'branch' || link.target.group === 'branch';
       if (isBranch) {
         const isSubToMainBranch = (link.source.id?.startsWith('subrama-') && link.target.id?.startsWith('rama-')) ||
                                   (link.target.id?.startsWith('subrama-') && link.source.id?.startsWith('rama-'));
-        return isSubToMainBranch ? (proto ? 80 : 110) : 70;
+        return isSubToMainBranch ? 80 : 70;
       }
 
-      return proto ? 90 : 55;
+      return 90;
     });
-  }, [proto]);
+  }, []);
 
-  // Prototipo: el lienzo arranca vacío; con las fuerzas puestas recibe los datos y el
-  // reparto se calcula entero antes del primer fotograma (warmupTicks), sin nodos que se muevan.
-  const [forcesReady, setForcesReady] = useState(!proto);
+  // El lienzo arranca vacío; con las fuerzas puestas recibe los datos y el reparto se calcula
+  // entero antes del primer fotograma (warmupTicks), sin nodos que se muevan.
+  const [forcesReady, setForcesReady] = useState(false);
   useEffect(() => {
-    if (!proto || !graphRef.current) return;
+    if (!graphRef.current) return;
     configureForces(graphRef.current);
     fitPending.current = true;
     setForcesReady(true);
-  }, [proto, configureForces]);
-
-  // Página actual: se ajustan las fuerzas a los 300 ms y la simulación se ve asentarse.
-  useEffect(() => {
-    if (proto || !graphRef.current) return;
-    setTimeout(() => {
-      const fg = graphRef.current;
-      if (!fg) return;
-      configureForces(fg);
-      fg.d3ReheatSimulation();
-      fg.zoomToFit(400, 60);
-    }, 300);
-  }, [proto, configureForces]);
+  }, [configureForces]);
 
   // Encuadre sobre el reparto ya asentado y, si toca, comienzo de la entrada dibujada.
   const handleEngineStop = useCallback(() => {
-    if (!proto || !graphRef.current || !fitPending.current) return;
+    if (!graphRef.current || !fitPending.current) return;
     const content = graphData.nodes.filter(n => n.group !== 'branch' && n.group !== 'central' && Number.isFinite(n.x) && Number.isFinite(n.y));
     if (content.length === 0) return;
     fitPending.current = false;
@@ -582,7 +439,7 @@ export const GraphPage: React.FC = () => {
       };
       kick(120 + INK_TIMING.introLead + INK_TIMING.introSpread + INK_TIMING.stamp + INK_TIMING.introLink + 80);
     }
-  }, [proto, graphData, kick]);
+  }, [graphData, kick]);
 
   // El lienzo toma el tamaño de su contenedor.
   const canvasBoxRef = useRef<HTMLDivElement>(null);
@@ -598,107 +455,22 @@ export const GraphPage: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  const legendTypes = getKnowledgeGraphLegendTypes(graphData.nodes.map(node => node.group));
-  const typeCounts = new Map<string, number>();
-  graphData.nodes.forEach((node) => {
-    const type = getKnowledgeGraphContentType(node.group);
-    if (type) typeCounts.set(type, (typeCounts.get(type) ?? 0) + 1);
-  });
-  const canHover = () => window.matchMedia('(hover: hover)').matches;
-  const keyItems = legendTypes.map((type, index) => {
-    const config = CONTENT_TYPE_CONFIG[type];
-    if (!config) return null;
-    return (
-      <li
-        key={type}
-        className={`graph-proto-key__item ${focusType === type ? 'is-focus' : ''}`}
-        style={{ '--i': index } as React.CSSProperties}
-      >
-        <button
-          type="button"
-          className="graph-proto-key__btn"
-          aria-pressed={pinnedType === type}
-          onMouseEnter={() => canHover() && setHoverType(type)}
-          onMouseLeave={() => setHoverType(null)}
-          onFocus={() => canHover() && setHoverType(type)}
-          onBlur={() => setHoverType(null)}
-          onClick={() => setPinnedType(p => (p === type ? null : type))}
-        >
-          <span className="graph-proto-key__swatch" style={{ backgroundColor: config.graphColor }} aria-hidden="true" />
-          <span>{getContentTypeLabel(type, 'plural', lang)}</span>
-          <span className="graph-proto-key__dots" aria-hidden="true" />
-          <span className="graph-proto-key__count">{typeCounts.get(type) ?? 0}</span>
-        </button>
-      </li>
-    );
-  });
-  const protoSearch = (
-    <label className="graph-proto-search">
-      <span className="sr-only">{t('graph', 'searchMapAria')}</span>
-      <span className="graph-proto-search__glyph" aria-hidden="true">⌕</span>
-      <input
-        type="search"
-        value={searchQuery}
-        onChange={(e) => handleSearchChange(e.target.value)}
-        placeholder={t('graph', 'searchConceptPlaceholder')}
-        className="graph-search-input"
-      />
-      {searchResults.length > 0 && (
-        <ul className="graph-proto-search__results">
-          {searchResults.map(node => (
-            <li key={node.id}>
-              <button type="button" onClick={(e) => handleSearchResultClick(node, e.timeStamp)}>{node.name}</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </label>
-  );
-
   return (
     <div
-      className={`graph-theme-background ${proto ? 'graph-proto' : ''} w-full h-screen bg-lienzo overflow-hidden font-serif relative`}
+      className="graph-theme-background graph-page w-full h-screen bg-lienzo overflow-hidden font-serif relative"
       style={graphBackgroundStyle}
     >
-
-      {!proto && (
-        <>
-          <GraphSearch
-            searchQuery={searchQuery}
-            setSearchQuery={handleSearchChange}
-            searchResults={searchResults}
-            onSearchSelect={(node) => handleSearchResultClick(node, 0)}
-          />
-          <GraphLegend nodeGroups={graphData.nodes.map(node => node.group)} />
-        </>
-      )}
-
-      {proto && (
-        <aside className={`graph-proto-cartouche ${legendOpen ? 'is-open' : ''}`}>
-          <h1 className="graph-proto-cartouche__title">{t('navigation', 'graph')}</h1>
-          {protoSearch}
-          <button
-            type="button"
-            className="graph-proto-cartouche__toggle ac-rubric"
-            aria-expanded={legendOpen}
-            aria-controls="graph-legend-fold"
-            onClick={() => setLegendOpen(o => !o)}
-          >
-            <span className="ac-ink-underline">{t('graph', 'legendHeading')}</span>
-            <span className="graph-proto-cartouche__chevron" aria-hidden="true">▸</span>
-          </button>
-          <div id="graph-legend-fold" className="graph-proto-cartouche__fold">
-            <div className="graph-proto-cartouche__fold-inner">
-              <ul className={`graph-proto-key graph-proto-key--index ${focusType ? 'has-focus' : ''}`}>{keyItems}</ul>
-              <div className="graph-proto-cartouche__link mt-2 flex" style={{ '--i': legendTypes.length } as React.CSSProperties}>
-                <GraphExplorerLink href="/axiomas" direction="forward">
-                  {t('graph', 'axiomaticDependencies')}
-                </GraphExplorerLink>
-              </div>
-            </div>
-          </div>
-        </aside>
-      )}
+      <GraphCartouche
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        searchResults={searchResults}
+        onSearchSelect={handleSearchSelect}
+        legend={legend}
+        focusType={focusType}
+        pinnedType={pinnedType}
+        onHoverType={setHoverType}
+        onTogglePin={(type) => setPinnedType(current => (current === type ? null : type))}
+      />
 
       <div ref={canvasBoxRef} className="absolute inset-0 cursor-move">
         <ForceGraph2D<GraphNode, GraphLink>
@@ -709,22 +481,17 @@ export const GraphPage: React.FC = () => {
           nodeLabel={() => ''}
           nodeCanvasObject={drawNode}
           nodeCanvasObjectMode={() => 'replace'}
-          linkCanvasObject={proto ? drawInkLink : undefined}
-          linkCanvasObjectMode={proto ? () => 'replace' : undefined}
-          onRenderFramePost={proto ? drawLabels : undefined}
+          linkCanvasObject={drawLink}
+          linkCanvasObjectMode={() => 'replace'}
+          onRenderFramePost={drawLabels}
           autoPauseRedraw={!animating}
           onEngineStop={handleEngineStop}
           onNodeHover={handleNodeHover}
-          onBackgroundClick={proto ? handleBackgroundClick : undefined}
-          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '18'}
-          linkWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 2 : 1}
-          linkDirectionalParticles={(link: KnowledgeGraphLink) => proto ? 0 : highlightLinks.has(link) ? 4 : 1}
-          linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 5 : 1.5}
-          linkDirectionalParticleSpeed={0.005}
-          d3VelocityDecay={0.3}
-          warmupTicks={proto ? 300 : 40}
-          cooldownTicks={proto ? 0 : 150}
           onNodeClick={handleNodeClick}
+          onBackgroundClick={handleBackgroundClick}
+          d3VelocityDecay={0.3}
+          warmupTicks={300}
+          cooldownTicks={0}
           backgroundColor="transparent"
         />
       </div>

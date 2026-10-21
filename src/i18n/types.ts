@@ -259,9 +259,6 @@ export interface TranslationDictionary {
     legend: string;
     legendHeading: string;
     legendTitle: string;
-    mapLegendTitle: string;
-    showLegendAria: string;
-    closeLegendAria: string;
     hilbertBrace: string;
     mathCentralNode: string;
   };
