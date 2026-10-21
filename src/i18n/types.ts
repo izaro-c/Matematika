@@ -308,7 +308,6 @@ export interface TranslationDictionary {
     derivedCorollaries: string;
     markAsRead: string;
     completed: string;
-    subBranches: string;
     fundamentalConcepts: string;
     explore: string;
     axiomaticSystem: string;
@@ -411,7 +410,6 @@ export interface TranslationDictionary {
     correct: string;
     pedagogicalExplanation: string;
     pedagogicalJustification: string;
-    dependencyGraphTitle: string;
     completed: string;
   };
   diagram: {
@@ -2251,6 +2249,15 @@ export interface TranslationDictionary {
       layerControls: string;
       layerBackground: string;
     };
+  };
+  branch: {
+    /** Recuento en singular; el plural es library.entriesCount. */
+    entryCount: string;
+    noEntries: string;
+    /** Precede al enlace a la rama madre: «Véase …». */
+    see: string;
+    /** aria-label de la fila de tomos (secciones de la rama). */
+    volumes: string;
   };
   fallback: {
     notAvailableInLang: string;

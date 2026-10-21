@@ -8,7 +8,7 @@
 
 | Ruta | Rol |
 |---|---|
-| `ui/` | StudyPlan*, ReadingButton, TaxonomyGraph, StudyTask |
+| `ui/` | StudyPlan*, ReadingButton, StudyTask |
 | `context/` | contexto React del plan si existe |
 | `constants.ts` | geometría minimapa / highlight ms |
 

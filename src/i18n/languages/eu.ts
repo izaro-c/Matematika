@@ -306,7 +306,6 @@ export const euLanguage: LanguageConfig = {
       derivedCorollaries: 'Eratorritako korolarioak',
       markAsRead: 'Markatu irakurrita bezala',
       completed: 'Irakurrita',
-      subBranches: 'Azpi-adarrak',
       fundamentalConcepts: 'Oinarrizko kontzeptuak',
       explore: 'Arakatu',
       axiomaticSystem: 'Sistema axiomatikoa',
@@ -409,7 +408,6 @@ export const euLanguage: LanguageConfig = {
       correct: 'Zuzen',
       pedagogicalExplanation: 'Justifikazio pedagogikoa',
       pedagogicalJustification: 'Justifikazio pedagogikoa',
-      dependencyGraphTitle: 'Mendekotasun-grafoa: {name}',
       completed: 'Kontrol-puntua osatua',
     },
     diagram: {
@@ -2249,6 +2247,12 @@ export const euLanguage: LanguageConfig = {
         layerControls: 'Kontrolak',
         layerBackground: 'Atzeko planoa',
       },
+    },
+    branch: {
+      entryCount: '{count} sarrera',
+      noEntries: 'Adar honek ez du sarrerarik oraindik.',
+      see: 'Ikus',
+      volumes: 'Liburukiak',
     },
     fallback: {
       notAvailableInLang: 'Edukia ez dago eskuragarri hizkuntza honetan.',

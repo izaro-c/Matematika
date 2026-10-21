@@ -2,6 +2,8 @@ import { TopBar } from "@/components/navigation/TopBar";
 import { MarginaliaPanel } from "@/components/content/MarginaliaPanel";
 import { SymbolDictionaryManager } from "@/components/content/SymbolDictionaryManager";
 import { db } from "@/data/content";
+import { resolveBranchCode } from "@/data/content/msc2020";
+import { getLibrarySection } from "@/data/content/librarySections";
 import { getContentPageAccent, UI, CONTENT_PAGE_ACCENTS } from "@/design";
 import { useLocation } from "wouter";
 import { createPortal } from "react-dom";
@@ -40,6 +42,9 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     pageType = canonical;
   }
 
+  // En una rama, el marcapáginas es de la misma tela que el uñero y los tomos
+  const branchAccent = canonical === 'rama' && routeId ? getLibrarySection(resolveBranchCode(routeId))?.accent : undefined;
+
   // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en editores (/editor)
   const isEditor = location.split('/').includes('editor');
 
@@ -47,7 +52,12 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     <div
       className={`ac-page ${!isEditor ? 'ac-ink-scope' : ''} ${pageType ? 'page-accent-scope' : ''}`}
       data-page-type={pageType}
-      style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
+      data-branch-accent={branchAccent}
+      style={
+        pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties)
+        : branchAccent ? ({ '--bookmark-pigment': `var(--cloth-${branchAccent})` } as React.CSSProperties)
+        : undefined
+      }
     >
       {!isEditor && (
         <a href="#contenido-principal" className="ac-skip-link">

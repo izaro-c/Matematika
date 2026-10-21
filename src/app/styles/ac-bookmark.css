@@ -60,6 +60,15 @@
 
 :root.dark .ac-bookmark { color: color-mix(in srgb, var(--theme-lienzo) 85%, black); }
 
+/* En una página de rama: la tela del uñero y los tomos (AppShell pone --bookmark-pigment) */
+:root [data-branch-accent] .ac-bookmark {
+  color: var(--cloth-ink);
+  background-color: color-mix(in srgb, var(--bookmark-pigment) var(--cloth-share), var(--theme-lienzo));
+}
+:root [data-branch-accent="carbon"] .ac-bookmark {
+  background-color: color-mix(in srgb, var(--bookmark-pigment) var(--cloth-share-neutral), var(--theme-lienzo));
+}
+
 .ac-bookmark__cloth {
   display: flex;
   flex-direction: column;

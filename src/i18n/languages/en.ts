@@ -306,7 +306,6 @@ export const enLanguage: LanguageConfig = {
       derivedCorollaries: 'Derived corollaries',
       markAsRead: 'Mark as read',
       completed: 'Read',
-      subBranches: 'Sub-branches',
       fundamentalConcepts: 'Fundamental concepts',
       explore: 'Explore',
       axiomaticSystem: 'Axiomatic system',
@@ -409,7 +408,6 @@ export const enLanguage: LanguageConfig = {
       correct: 'Correct',
       pedagogicalExplanation: 'Pedagogical Justification',
       pedagogicalJustification: 'Pedagogical Justification',
-      dependencyGraphTitle: 'Dependency graph: {name}',
       completed: 'Check completed',
     },
     diagram: {
@@ -2249,6 +2247,12 @@ export const enLanguage: LanguageConfig = {
         layerControls: 'Controls',
         layerBackground: 'Background',
       },
+    },
+    branch: {
+      entryCount: '{count} entry',
+      noEntries: 'There are no entries in this branch yet.',
+      see: 'See',
+      volumes: 'Volumes',
     },
     fallback: {
       notAvailableInLang: 'Content not available in this language.',
