@@ -9,7 +9,7 @@ import { Link, useLocation } from 'wouter';
 import { getContentPageAccent } from '@/design';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
-import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
+import { MobileDiagramToolbar } from './MobileDiagramChrome';
 import { useI18n } from '@/i18n';
 
 interface CodexLayoutProps {
@@ -408,11 +408,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
         data-page-type="demostracion"
         style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
       >
-        <MobileContentHeaderSeparator
-          hasDiagram={hasDiagram}
-          isDiagramExpanded={isDiagramExpanded}
-        />
-
         <div className={`codex-content ${!hasDiagram ? 'is-single-column' : ''}`}>
           {/* Columna del Diagrama (va primero en el DOM para móvil, pero ordenado por CSS grid en escritorio) */}
           {hasDiagram && (

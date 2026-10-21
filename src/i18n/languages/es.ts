@@ -54,9 +54,12 @@ export const esLanguage: LanguageConfig = {
     },
     topbar: {
       backToLibrary: 'Biblioteca',
-      search: 'Buscar en el catálogo',
+      search: 'Buscar',
       toggleTheme: 'Cambiar tema claro/oscuro',
       changeLanguage: 'Cambiar idioma',
+      bookmark: 'Marcapáginas',
+      openBookmark: 'Desplegar el marcapáginas',
+      closeBookmark: 'Recoger el marcapáginas',
     },
     navigation: {
       dictionary: 'Diccionario',
@@ -254,9 +257,6 @@ export const esLanguage: LanguageConfig = {
       legend: 'Leyenda',
       legendHeading: 'Leyenda',
       legendTitle: 'Leyenda del mapa',
-      mapLegendTitle: 'Leyenda del mapa',
-      showLegendAria: 'Mostrar leyenda del mapa',
-      closeLegendAria: 'Cerrar leyenda',
       hilbertBrace: 'Axiomática de Hilbert',
       mathCentralNode: 'MATEMÁTICAS',
     },

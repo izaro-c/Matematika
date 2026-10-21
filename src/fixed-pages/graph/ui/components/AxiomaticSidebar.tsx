@@ -120,10 +120,8 @@ export function AxiomaticSidebar({
         ? 'fixed inset-x-0 bottom-0 top-24 z-50 flex w-full flex-col border-t border-carbon/15 bg-[var(--axiomatic-panel-bg)] shadow-2xl'
         : 'flex h-full w-[320px] shrink-0 flex-col border-r border-carbon/15 bg-[var(--axiomatic-panel-bg)]'}
     >
-      {/* Franja fija bajo el logo flotante: así las pestañas fijas nunca quedan tapadas por él. */}
-      {!isMobile && <div aria-hidden="true" className="h-20 shrink-0" />}
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-        <header className={isMobile ? 'px-5 pb-5 pt-5' : 'px-5 pb-5 pt-4'}>
+        <header className={isMobile ? 'px-5 pb-5 pt-5' : 'px-5 pb-5 pt-10'}>
           <div className="flex items-start gap-3">
             <div className="min-w-0 flex-1">
               <h1 className="text-2xl leading-tight text-ink">

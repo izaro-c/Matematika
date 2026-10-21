@@ -17,6 +17,8 @@
 @import "./styles/ac-pill.css" layer(components);
 @import "./styles/ac-spines.css" layer(components);
 @import "./styles/ac-library.css" layer(components);
+@import "./styles/ac-bookmark.css" layer(components);
+@import "./styles/graph-cartouche.css" layer(components);
 @import "./styles/editor-primitives.css" layer(components);
 @import "./styles/mdx-prose.css" layer(components);
 @import "./styles/content-layout.css" layer(components);

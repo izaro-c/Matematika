@@ -4,7 +4,7 @@
    ========================================================================== */
 
 .codex-layout {
-  --codex-top: 5.5rem;
+  --codex-top: 4rem;
   width: 100%;
   min-height: 100dvh;
   overflow-x: clip;
@@ -75,12 +75,14 @@
 @media (max-width: 1023px) {
   .codex-diagram {
     position: sticky;
-    top: var(--codex-top);
+    top: 0;
     z-index: 40;
     width: 100%;
     height: clamp(14rem, 36svh, 20rem);
     margin-left: 0;
-    background: transparent;
+    /* pegada arriba: el papel tapa el texto que pasa por detrás */
+    padding-top: 0.5rem;
+    background: var(--theme-lienzo);
     border: 0;
     box-shadow: none;
     transition: height 180ms ease;
@@ -139,9 +141,9 @@
     grid-row: 1;
     background: transparent;
   }
-  /* La lámina empieza bajo la cabecera global y deja margen a la derecha. */
+  /* Margen derecho para el marcapáginas de la esquina. */
   .codex-diagram-sticky {
-    padding: var(--codex-top) clamp(1rem, 2.5vw, 2rem) 1.25rem 0;
+    padding: var(--codex-top) 3.25rem 1.25rem 0;
   }
   .codex-reading {
     grid-column: 1;

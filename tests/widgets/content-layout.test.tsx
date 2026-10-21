@@ -17,7 +17,6 @@ describe('ContentLayout', () => {
     const layout = container.querySelector('.content-layout');
     expect(layout?.getAttribute('data-layout-variant')).toBe('balanced');
     expect(container.querySelectorAll('[data-testid="diagram"]')).toHaveLength(1);
-    expect(container.querySelector('.mobile-content-header-separator--diagram-fallback')).not.toBeNull();
   });
 
   it('permite plegar el diagrama sin desmontarlo', () => {
@@ -31,18 +30,7 @@ describe('ContentLayout', () => {
 
     expect(screen.getByRole('button', { name: 'Mostrar diagrama' }).getAttribute('aria-expanded')).toBe('false');
     expect(container.querySelector('.content-diagram')?.getAttribute('data-mobile-collapsed')).toBe('true');
-    expect(container.querySelector('.mobile-content-header-separator--collapsed')).not.toBeNull();
     expect(screen.getByTestId('diagram')).not.toBeNull();
   });
 
-  it('añade un separador móvil cuando no existe diagrama', () => {
-    const { container } = render(
-      <ContentLayout>
-        <p>Texto</p>
-      </ContentLayout>,
-    );
-
-    const separator = container.querySelector('.mobile-content-header-separator--empty');
-    expect(separator).not.toBeNull();
-  });
 });

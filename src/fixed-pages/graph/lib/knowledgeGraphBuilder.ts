@@ -92,8 +92,8 @@ export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode
   // Asegurar que las 7 ramas raíz siempre estén presentes para estructura del cosmos
   TOP_LEVEL_ROOTS.forEach(root => usedBranchCodes.add(root));
 
-  // 3. Nodo Central: MATEMÁTICAS / MATHEMATICS / MATEMATIKA
-  const centralNodeName = lang === 'eu' ? 'MATEMATIKA' : lang === 'en' ? 'MATHEMATICS' : 'MATEMÁTICAS';
+  // 3. Nodo Central: Matemáticas / Mathematics / Matematika (el lienzo lo rotula en versalitas)
+  const centralNodeName = lang === 'eu' ? 'Matematika' : lang === 'en' ? 'Mathematics' : 'Matemáticas';
   nodes.push({ id: 'matematicas', name: centralNodeName, group: 'central', val: 40 });
   registerAlias('matematicas');
 
@@ -101,7 +101,7 @@ export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode
   usedBranchCodes.forEach(code => {
     const isRoot = TOP_LEVEL_ROOTS.has(code);
     const nodeId = isRoot ? `rama-${code}` : `subrama-${code}`;
-    const branchTitle = (getMscName(code, lang) || mscNames[code] || code).toUpperCase();
+    const branchTitle = getMscName(code, lang) || mscNames[code] || code;
 
     nodes.push({
       id: nodeId,

@@ -59,6 +59,9 @@ export interface TranslationDictionary {
     search: string;
     toggleTheme: string;
     changeLanguage: string;
+    bookmark: string;
+    openBookmark: string;
+    closeBookmark: string;
   };
   navigation: {
     dictionary: string;
@@ -256,9 +259,6 @@ export interface TranslationDictionary {
     legend: string;
     legendHeading: string;
     legendTitle: string;
-    mapLegendTitle: string;
-    showLegendAria: string;
-    closeLegendAria: string;
     hilbertBrace: string;
     mathCentralNode: string;
   };

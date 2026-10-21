@@ -54,9 +54,12 @@ export const euLanguage: LanguageConfig = {
     },
     topbar: {
       backToLibrary: 'Liburutegia',
-      search: 'Bilatu katalogoan',
+      search: 'Bilatu',
       toggleTheme: 'Aldatu gai argia/iluna',
       changeLanguage: 'Aldatu hizkuntza',
+      bookmark: 'Liburu-marka',
+      openBookmark: 'Zabaldu liburu-marka',
+      closeBookmark: 'Bildu liburu-marka',
     },
     navigation: {
       dictionary: 'Hiztegia',
@@ -254,9 +257,6 @@ export const euLanguage: LanguageConfig = {
       legend: 'Legenda',
       legendHeading: 'Legenda',
       legendTitle: 'Maparen legenda',
-      mapLegendTitle: 'Maparen legenda',
-      showLegendAria: 'Erakutsi maparen legenda',
-      closeLegendAria: 'Itxi legenda',
       hilbertBrace: 'Hilberten Axiomatika',
       mathCentralNode: 'MATEMATIKA',
     },
