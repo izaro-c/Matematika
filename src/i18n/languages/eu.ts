@@ -83,7 +83,6 @@ export const euLanguage: LanguageConfig = {
       entriesCount: '{count} sarrera',
       read: 'Irakurriak',
       exercises: 'Ariketak',
-      section: 'Atala',
       inProgress: 'Prestatzen',
       seeMore: 'Ikusi beste {count} sarrera →',
       sectionI: 'Oinarriak eta Logika',

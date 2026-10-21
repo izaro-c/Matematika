@@ -85,7 +85,6 @@ export interface TranslationDictionary {
     entriesCount: string;
     read: string;
     exercises: string;
-    section: string;
     inProgress: string;
     seeMore: string;
     sectionI: string;

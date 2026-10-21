@@ -83,7 +83,6 @@ export const esLanguage: LanguageConfig = {
       entriesCount: '{count} entradas',
       read: 'Leídos',
       exercises: 'Ejercicios',
-      section: 'Sección',
       inProgress: 'En preparación',
       seeMore: 'Ver {count} entradas más →',
       sectionI: 'Fundamentos y Lógica',

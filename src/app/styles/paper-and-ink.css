@@ -145,10 +145,6 @@
   );
 }
 
-.ac-ink-scope .ac-cta-card {
-  border-color: color-mix(in srgb, var(--theme-carbon) calc(var(--ink-stroke-opacity) * 100%), transparent);
-}
-
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .ac-paper-grain {
     display: none;

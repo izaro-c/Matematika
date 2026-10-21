@@ -45,12 +45,6 @@ export const UI = {
   breadcrumbsCurrent: 'ac-breadcrumbs__current',
   breadcrumbsEllipsis: 'ac-breadcrumbs__ellipsis',
 
-  ctaCard: 'ac-cta-card ac-interactive',
-  ctaCardHero: 'ac-cta-card ac-cta-card--hero ac-interactive',
-  ctaEyebrow: 'ac-cta-card__eyebrow',
-  ctaTitle: 'ac-cta-card__title',
-  ctaAction: 'ac-cta-card__action',
-
   editorShell: 'ac-editor-shell',
   editorPanel: 'ac-editor-panel',
   editorBadgeTerracota: 'ac-editor-badge ac-editor-badge--terracota',

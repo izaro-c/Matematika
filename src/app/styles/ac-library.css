@@ -1,0 +1,230 @@
+/* ==========================================================================
+   AC-LIBRARY — Biblioteca de ramas de la home (.ac-library)
+   Un índice impreso: cada rama es un capítulo con un uñero de tela a su
+   izquierda (como el índice de canto de un diccionario) que lleva el símbolo
+   y el numeral de la rama. Entradas con puntos guía hasta el tipo.
+   La tela, los nervios y el rayado de sombra son los de los libros del hero
+   (ac-spines.css). Pigmento de la rama en --acc.
+   Dos pilas alternas (I III V VII | II IV VI) desde 768 px: se lee en zigzag
+   y no quedan huecos bajo las ramas cortas. En móvil las pilas desaparecen
+   (display: contents) y 'order' devuelve el orden I…VII.
+   ========================================================================== */
+
+.ac-library {
+  --library-rule: color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+}
+
+.ac-library__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--library-rule);
+}
+.ac-library__heading { font-size: 1.75rem; color: var(--ink-text); }
+.ac-library__meta { display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 1rem; }
+.ac-library__meta strong { color: var(--ink-text); font-weight: 600; }
+
+.ac-library__grid { display: flex; flex-direction: column; gap: 3rem; }
+.ac-library__stack { display: contents; }
+
+@media (min-width: 768px) {
+  .ac-library__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 3.5rem;
+  }
+  .ac-library__stack { display: flex; flex-direction: column; gap: 3rem; }
+}
+
+/* ── Capítulo ─────────────────────────────────────────────────────────── */
+
+.ac-chapter {
+  --acc: var(--theme-carbon);
+  --acc-ink: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  column-gap: 1.25rem;
+}
+
+.ac-chapter__body { min-width: 0; }
+
+/* El título se alinea con el centro del símbolo; la tira asoma por encima */
+/* Interlineado justo: un solo trazo bajo todo el título, como un filete de cabecera */
+.ac-chapter__title {
+  display: inline-block;
+  font-family: var(--font-title-family);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--ink-text);
+  text-wrap: balance;
+}
+.ac-chapter__title-row { padding-top: 1rem; }
+
+.ac-chapter__desc {
+  margin-top: 0.375rem;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-text-muted);
+}
+
+.ac-chapter__subs {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-text-subtle);
+}
+.ac-chapter__subs a { color: var(--acc-ink); }
+.ac-chapter__codes { font-variant-numeric: oldstyle-nums; }
+
+.ac-chapter__list { margin-top: 0.75rem; display: flex; flex-direction: column; }
+
+/* Con títulos de dos líneas, los puntos guía van en la última, como en un índice impreso */
+.ac-chapter__row {
+  display: flex;
+  align-items: baseline;
+  align-items: last baseline;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-block: 0.5rem;
+  color: var(--ink-text-body);
+}
+.ac-chapter__row-title { font-size: 1.0625rem; }
+.ac-chapter__row:hover .ac-chapter__row-title { color: var(--ink-text); }
+
+.ac-chapter__dots {
+  flex: 1 1 auto;
+  min-width: 1.5rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+  transform: translateY(-0.3em);
+}
+.ac-chapter__type { flex: none; font-size: 0.9375rem; }
+
+.ac-chapter__more {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--acc-ink);
+}
+
+.ac-chapter__empty { margin-top: 0.75rem; font-style: italic; color: var(--ink-text-subtle); }
+
+.ac-chapter a:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+
+/* ── Uñero ────────────────────────────────────────────────────────────── */
+
+.ac-chapter__tab {
+  --tab-cloth: var(--acc);
+  --tab-ink: var(--on-accent);
+  --tab-rule: color-mix(in srgb, var(--tab-ink) 50%, transparent);
+  --tab-edge: color-mix(in srgb, var(--acc) 70%, #120e0b);
+  --tab-hatch: color-mix(in srgb, var(--theme-carbon) 38%, transparent);
+  grid-row: 1 / span 2;
+  position: relative;
+  isolation: isolate;
+  display: block;
+  color: var(--tab-ink);
+}
+
+/* Códice nocturno: tela oscura, letras crema y nervios dorados */
+.dark .ac-chapter__tab {
+  --tab-cloth: color-mix(in srgb, var(--acc) 40%, var(--theme-lienzo));
+  --tab-ink: var(--ink-text);
+  --tab-rule: color-mix(in srgb, var(--theme-ocre) 55%, transparent);
+  --tab-edge: color-mix(in srgb, var(--acc) 55%, var(--theme-lienzo));
+  --tab-hatch: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+}
+.dark .ac-chapter[data-accent="carbon"] .ac-chapter__tab {
+  --tab-cloth: color-mix(in srgb, var(--acc) 24%, var(--theme-lienzo));
+}
+
+/* Sombra de grabado, fija bajo la tira */
+.ac-chapter__tab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate(3px, 3px);
+  background: repeating-linear-gradient(-45deg, var(--tab-hatch) 0 1px, transparent 1px 4px);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.ac-chapter__cloth {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  height: 100%;
+  padding: 1rem 0 0.9rem;
+  background: var(--tab-cloth);
+  border: 1px solid var(--tab-edge);
+  border-radius: 2px;
+  transition: transform var(--transition-slow) var(--ease-panels);
+}
+
+/* Nervios arriba y abajo */
+.ac-chapter__cloth::before,
+.ac-chapter__cloth::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0.45rem;
+  height: 3px;
+  border-block: 1px solid var(--tab-rule);
+  pointer-events: none;
+  transition: border-color var(--transition-slow) var(--ease-panels);
+}
+.ac-chapter__cloth::before { top: 0.4rem; }
+.ac-chapter__cloth::after { bottom: 0.4rem; }
+
+.ac-chapter__symbol {
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  font-family: var(--font-body-family);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.ac-chapter__numeral {
+  font-family: var(--font-body-family);
+  font-variant-caps: small-caps;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+/* Al señalar el capítulo (tira o título), el uñero se saca hacia fuera.
+   Feedback de estado: se mantiene con "reducir movimiento", sin transición. */
+.ac-chapter:has(.ac-chapter__tab:hover, .ac-chapter__title:hover, .ac-chapter__title:focus-visible) .ac-chapter__cloth {
+  transform: translateX(-0.375rem);
+}
+.ac-chapter:has(.ac-chapter__tab:hover, .ac-chapter__title:hover, .ac-chapter__title:focus-visible) .ac-chapter__cloth::before,
+.ac-chapter:has(.ac-chapter__tab:hover, .ac-chapter__title:hover, .ac-chapter__title:focus-visible) .ac-chapter__cloth::after {
+  border-color: var(--tab-ink);
+}
+/* El título se subraya también al señalar la tira */
+.ac-chapter:has(.ac-chapter__tab:hover) .ac-chapter__title { background-size: 100% var(--ink-band); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-chapter__cloth,
+  .ac-chapter__cloth::before,
+  .ac-chapter__cloth::after { transition: none; }
+}
+
+@media (prefers-contrast: more) {
+  .ac-chapter__tab { --tab-rule: var(--tab-ink); }
+}
