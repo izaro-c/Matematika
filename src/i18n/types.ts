@@ -149,14 +149,10 @@ export interface TranslationDictionary {
     historicalDensity: string;
   };
   biography: {
-    birth: string;
-    death: string;
-    universalContributions: string;
-    exploreTheorem: string;
-    backToCodex: string;
     bc: string;
     ad: string;
-    scrollLoading: string;
+    plates: string;
+    portraitAlt: string;
   };
   construction: {
     title: string;

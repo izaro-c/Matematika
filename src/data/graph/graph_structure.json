@@ -744,7 +744,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Luzera",
-      "description": "Segmento bakoitzari zenbaki erreal positibo bat esleitzen dion dimentsio bakarreko neurri-funtzio metrikoa, kongruentziarekiko aldaezina eta bitartekotasunarekiko aditiboa.",
+      "description": "Segmentu bakoitzari zenbaki erreal positibo bat esleitzen dion dimentsio bakarreko neurri-funtzio metrikoa, kongruentziarekiko aldaezina eta bitartekotasunarekiko aditiboa.",
       "proofs": [],
       "directDependencies": [
         "segmento",

@@ -25,6 +25,8 @@ export interface BaseContent {
 
 export interface Mathematician extends BaseContent {
   name: string;
+  /** Nombre completo con su epíteto (ej. «Euclides de Alejandría») */
+  title?: string;
   fullName?: string;
   country?: string;
   description: string;

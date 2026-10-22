@@ -22,6 +22,8 @@
 @import "./styles/ac-vocab.css" layer(components);
 @import "./styles/ac-marginalia.css" layer(components);
 @import "./styles/ac-branch.css" layer(components);
+@import "./styles/ac-bio.css" layer(components);
+@import "./styles/ac-bio-proto.css" layer(components);
 @import "./styles/graph-cartouche.css" layer(components);
 @import "./styles/editor-primitives.css" layer(components);
 @import "./styles/mdx-prose.css" layer(components);

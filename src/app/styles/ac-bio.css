@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Biografía (BiographyLayout.tsx)
+   Frontispicio fijo a la izquierda (retrato en óvalo con filete del color de
+   la página, nombre, lugar y fechas) y texto a la derecha; la obra al pie con
+   la voz de vocabulario (ac-vocab.css). Color de la página en --page-accent.
+   ========================================================================== */
+
+.ac-bio {
+  --bio-acc: var(--page-accent, var(--theme-carbon));
+  --bio-ink: color-mix(in srgb, var(--bio-acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+  width: min(100% - 2rem, 72rem);
+  margin-inline: auto;
+  padding: calc(var(--content-top, 4rem) + 1rem) 0 6rem;
+  color: var(--ink-text-body);
+}
+
+.ac-bio a:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+
+/* ── Frontispicio ─────────────────────────────────────────────────────── */
+
+.ac-bio__plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ac-bio__portrait {
+  display: grid;
+  place-items: center;
+  width: 7.5rem;
+  aspect-ratio: 4 / 5;
+  margin: 0 0 1.5rem;
+  overflow: hidden;
+  border: 2px solid var(--bio-acc);
+  border-radius: 50%;
+  /* rayado de grabado, como las tapas de la biblioteca */
+  background:
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--bio-acc) 14%, transparent) 0 1px, transparent 1px 5px),
+    var(--theme-lienzo);
+}
+.ac-bio__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.35) sepia(0.2);
+}
+.ac-bio__portrait span {
+  font-family: var(--font-title-family);
+  font-size: 3.75rem;
+  line-height: 1;
+  color: var(--bio-ink);
+}
+
+.ac-bio__name {
+  font-family: var(--font-title-family);
+  font-size: clamp(2rem, 1.6rem + 1.5vw, 2.625rem);
+  line-height: 1.1;
+  color: var(--ink-text);
+  text-wrap: balance;
+}
+
+.ac-bio__rule {
+  display: block;
+  width: 3rem;
+  height: 1px;
+  margin-block: 1rem 0.875rem;
+  background: var(--bio-acc);
+}
+
+.ac-bio__place {
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  color: var(--ink-text-muted);
+  text-wrap: balance;
+}
+
+.ac-bio__dates {
+  margin-top: 0.25rem;
+  font-size: 1.0625rem;
+  font-variant-numeric: oldstyle-nums;
+  --ac-rubric-color: var(--bio-ink);
+}
+
+.ac-bio__back {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding-block: 0.375rem;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.ac-bio__back:hover { --ac-rubric-color: var(--bio-ink); }
+
+/* ── Texto y obra ─────────────────────────────────────────────────────── */
+
+.ac-bio__text { min-width: 0; max-width: 44rem; margin-inline: auto; }
+
+.ac-bio__works {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+}
+
+/* ── Láminas ─────────────────────────────────────────────────────────────
+   Los diagramas de sus teoremas como la lámina de la página de contenido:
+   filete de color y radio de 4 px, pie «Fig. N · título» debajo. */
+
+.ac-bio-plates { margin-bottom: 4rem; }
+.ac-bio-plates .ac-vocab__heading { color: var(--bio-ink); }
+.ac-bio-plates .ac-vocab__rule { background: color-mix(in srgb, var(--bio-acc) 35%, transparent); }
+.ac-bio-plates__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 2rem 1.5rem;
+}
+.ac-bio-plate { display: block; color: var(--ink-text-body); text-decoration: none; }
+.ac-bio-plate__board {
+  height: 13rem;
+  overflow: hidden;
+  border: 2px solid var(--bio-acc);
+  border-radius: var(--radius-sm, 4px);
+  pointer-events: none;
+}
+.ac-bio-plate__board figure { height: 100%; margin: 0; }
+.ac-bio-plate__board .diagram-figure-caption,
+.ac-bio-plate__board .diagram-rubric-bar { display: none; }
+.ac-bio-plate__board [data-diagram-plate] { height: 100%; min-height: 0; border: 0; }
+.ac-bio-plate__caption { display: block; margin-top: 0.5rem; font-size: 1rem; line-height: 1.35; }
+.ac-bio-plate__caption .ac-rubric { --ac-rubric-color: var(--ink-text); }
+.ac-bio-plate:hover .ac-bio-plate__caption i,
+.ac-bio-plate:focus-visible .ac-bio-plate__caption i { color: var(--bio-ink); }
+
+/* Desde 768 px el marcapáginas está abierto: margen para que no tape el texto */
+@media (min-width: 768px) {
+  .ac-bio { width: min(100% - 6.5rem, 72rem); }
+}
+
+/* Escritorio: frontispicio fijo a la izquierda, texto a la derecha */
+@media (min-width: 1024px) {
+  .ac-bio {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 4.5rem;
+    align-items: start;
+  }
+  .ac-bio__plate {
+    position: sticky;
+    top: calc(var(--content-top, 4rem) + 1rem);
+    margin-bottom: 0;
+  }
+  .ac-bio__portrait { width: 13rem; margin-bottom: 1.75rem; }
+  .ac-bio__portrait span { font-size: 6.5rem; }
+  .ac-bio__text { margin-inline: 0; }
+}

@@ -147,14 +147,10 @@ export const enLanguage: LanguageConfig = {
       historicalDensity: 'Historical density',
     },
     biography: {
-      birth: 'Birth',
-      death: 'Death',
-      universalContributions: 'Universal contributions',
-      exploreTheorem: 'Explore Theorem →',
-      backToCodex: 'Back to Codex',
-      bc: 'BC',
-      ad: 'AD',
-      scrollLoading: 'Unrolling parchment…',
+      bc: '{year} BC',
+      ad: 'AD {year}',
+      plates: 'Plates',
+      portraitAlt: 'Portrait of {name}',
     },
     construction: {
       title: 'Under Construction',

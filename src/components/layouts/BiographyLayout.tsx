@@ -1,174 +1,142 @@
 import { Suspense } from 'react';
 import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
-import { getContentPageAccent } from '@/design';
-import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
+import { ContentBody } from '@/components/ui/ContentBody';
+import { getContentTypeLabel } from '@/lib/theme/constants';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
+import { CanvasControlContext } from '@/diagrams/render/CanvasControlContext';
+import type { Mathematician, Theorem } from '@/data/content/types';
+import { getBioProto, ProtoTime } from './BiographyProto';
 
-const THEOREM_COLOR_CLASSES: Record<string, { text: string; hover: string }> = {
-  canela: { text: 'text-canela', hover: 'group-hover:text-canela' },
-  terracota: { text: 'text-terracota', hover: 'group-hover:text-terracota-light' },
+// Lámina de muestra: sin cabecera ni barra; el tablero no responde (la lámina es un enlace).
+const PLATE_CONTROL = { onComplete: () => {}, isCompleted: false, hideHeader: true };
+
+/** Láminas: los diagramas de sus teoremas como figuras con pie, cada una enlazada a su teorema. */
+const BioPlates: React.FC<{ theorems: Theorem[] }> = ({ theorems }) => {
+  const { t, getLocalizedPath } = useI18n();
+  const figures = theorems.filter((th) => th.Simulation);
+  if (figures.length === 0) return null;
+  return (
+    <section className="ac-bio-plates">
+      <div className="ac-vocab__head">
+        <h2 className="ac-vocab__heading">{t('biography', 'plates')}</h2>
+        <span className="ac-vocab__rule" aria-hidden="true" />
+        <span className="ac-vocab__count ac-rubric">{figures.length}</span>
+      </div>
+      <div className="ac-bio-plates__grid">
+        {figures.map((th, i) => {
+          const Figure = th.Simulation!;
+          return (
+            <Link key={th.id} href={getLocalizedPath(`/teorema/${th.id}`)} className="ac-bio-plate">
+              <div className="ac-bio-plate__board" aria-hidden="true">
+                <CanvasControlContext.Provider value={PLATE_CONTROL}>
+                  <Suspense fallback={null}><Figure /></Suspense>
+                </CanvasControlContext.Provider>
+              </div>
+              <span className="ac-bio-plate__caption">
+                <span className="ac-rubric">{t('diagram', 'figureNumber', { n: i + 1 })}</span> · <i>{th.title}</i>
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
 };
 
-/**
- * Metadatos requeridos para renderizar el perfil de un matemático histórico.
- */
-interface BiographyMetadata {
-  id: string;
-  name: string;
-  fullName?: string;
-  country?: string;
-  description: string;
-  image?: string;
-  birthYear?: number;
-  deathYear?: number;
-}
-
-/**
- * Propiedades de entrada para el BiographyLayout.
- */
 interface BiographyLayoutProps {
   Component: React.ComponentType<Record<string, unknown>>;
-  Sidebar?: React.ComponentType<Record<string, unknown>> | null;
-  metadata?: BiographyMetadata | null;
+  metadata: Mathematician;
 }
 
 /**
- * Layout principal para la vista de Matemáticos (Biografía).
- * 
- * Muestra un panel izquierdo fijo (oscuro) con el retrato, fechas y aportes,
- * y un panel derecho con scroll para el contenido de la vida y obra en formato MDX.
- * 
- * @param props - Propiedades que incluyen el componente a renderizar y sus metadatos.
+ * Biografía de un matemático: frontispicio a la izquierda (retrato en óvalo
+ * con filete del color de la página, nombre, lugar y fechas) y texto a la
+ * derecha; al pie, las láminas de sus teoremas y su obra en la enciclopedia
+ * con la voz de vocabulario.
+ * En móvil el frontispicio va arriba, más pequeño.
  */
-export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sidebar, metadata }) => {
+export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, metadata }) => {
   const { lang, t, getLocalizedPath } = useI18n();
+  const isRead = useProgressStore((s) => s.isRead);
 
-  const renderSidebarContent = () => {
-    if (!metadata) return Sidebar ? <Sidebar /> : null;
+  const { id, name, title, country, image, birthYear, deathYear } = metadata;
+  const displayName = title || name;
 
-    const { id, name, fullName, birthYear, deathYear, country, image } = metadata;
-    const theorems = db.getTheoremsByAuthor(id, lang);
-    const displayName = fullName || name;
-    
-    // Extraer partes del nombre (ej: "Pitágoras" y "de Samos")
-    const nameParts = displayName.split(' de ');
-    const firstName = nameParts[0];
-    const lastName = nameParts.length > 1 ? `de ${nameParts[1]}` : (country ? `de ${country}` : '');
+  const bc = (year: string) => t('biography', 'bc', { year });
+  // Misma era en las dos fechas: «325–265 a. C.», «1862–1943»; si cruzan la era, cada una con la suya.
+  const formatDates = () => {
+    if (birthYear === undefined && deathYear === undefined) return null;
+    const one = (year: number) => (year < 0 ? bc(String(-year)) : String(year));
+    if (birthYear === undefined) return `– ${one(deathYear!)}`;
+    if (deathYear === undefined) return `${one(birthYear)} –`;
+    if (birthYear < 0 && deathYear < 0) return bc(`${-birthYear}–${-deathYear}`);
+    if (birthYear >= 0) return `${birthYear}–${deathYear}`;
+    return `${bc(String(-birthYear))} – ${t('biography', 'ad', { year: deathYear })}`;
+  };
+  const dates = formatDates();
 
-    const formatYear = (year?: number) => {
-      if (year === undefined) return null;
-      return year < 0 ? `${Math.abs(year)} ${t('biography', 'bc')}` : `${year} ${t('biography', 'ad')}`;
-    };
+  const byAuthor = <T extends { authors?: string[] }>(items: T[]) => items.filter((item) => item.authors?.includes(id));
+  const theorems = db.getTheoremsByAuthor(id, lang);
+  const proto = getBioProto();
+  const demos = byAuthor(db.getAllDemos(lang));
+  const systems = byAuthor(db.getAllAxiomaticSystems(lang));
 
-    return (
-      <div className="flex flex-col items-center text-center">
-        
-        {/* RETRATO */}
-        <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-lienzo/10 shadow-2xl relative mb-8 bg-lienzo/5 flex items-center justify-center">
+  return (
+    <article className="ac-bio" data-proto={proto ?? undefined}>
+      <header className="ac-bio__plate">
+        <figure className="ac-bio__portrait" data-empty={!image || undefined}>
           {image ? (
-            <img 
-              src={resolvePublicOrExternalAsset(image)} 
-              alt={`Retrato de ${name}`} 
-              className="w-full h-full object-cover grayscale-[0.2] contrast-125 hover:grayscale-0 transition-all duration-700"
-            />
+            <img src={resolvePublicOrExternalAsset(image)} alt={t('biography', 'portraitAlt', { name })} />
           ) : (
-            <span className="font-serif text-8xl text-lienzo/20">{firstName.charAt(0)}</span>
+            <span aria-hidden="true">{name.charAt(0)}</span>
           )}
-        </div>
-        
-        {/* NOMBRES */}
-        <h1 className="text-5xl font-serif text-lienzo tracking-tight mb-2">{firstName}</h1>
-        {lastName && <h2 className="text-2xl font-serif text-lienzo/50 mb-8">{lastName}</h2>}
-        {!lastName && <div className="mb-8" />}
-        
-        <div className="page-accent-bg w-16 h-px opacity-80 mb-8"></div>
-        
-        {/* FECHAS */}
-        <ul className="space-y-4 text-lienzo/70 text-sm ac-eyebrow mb-12 w-full">
-          {birthYear !== undefined && (
-            <li>
-              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">{t('biography', 'birth')}</span>
-              <span>{formatYear(birthYear)}</span>
-            </li>
-          )}
-          {deathYear !== undefined && (
-            <li>
-              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">{t('biography', 'death')}</span>
-              <span>{formatYear(deathYear)}</span>
-            </li>
-          )}
-        </ul>
+        </figure>
+        <h1 className="ac-bio__name">{displayName}</h1>
+        <span className="ac-bio__rule" aria-hidden="true" />
+        {country && <p className="ac-bio__place">{country}</p>}
+        {dates && <p className="ac-bio__dates ac-rubric">{dates}</p>}
+        <Link href={getLocalizedPath('/historia')} className="ac-bio__back ac-rubric">
+          ← {t('timeline', 'title')}
+        </Link>
+      </header>
 
-        {/* APORTES Y TEOREMAS (Automático) */}
-        {theorems && theorems.length > 0 && (
-          <div className="w-full text-left mt-4 border-t border-lienzo/10 pt-8">
-            <h3 className="ac-label ac-label--xs text-lienzo/40 mb-6">{t('biography', 'universalContributions')}</h3>
-            
-            <div className="flex flex-col gap-4">
-              {theorems.map((th, idx) => {
-                const color = THEOREM_COLOR_CLASSES[th.color ?? ''] ?? { text: 'text-lienzo/80', hover: 'group-hover:text-lienzo' };
+      <div className="ac-bio__text font-serif">
+        {proto === 'time' && <ProtoTime id={id} />}
+        <ContentBody>
+          <Component />
+        </ContentBody>
 
-                return (
-                  <Link key={idx} href={getLocalizedPath(`/teorema/${th.id}`)}>
-                    <a className="block bg-lienzo/5 border border-lienzo/10 p-4 rounded-md hover:bg-lienzo/10 transition-colors group cursor-pointer">
-                       <h4 className={`${color.text} font-serif text-lg mb-1 ${color.hover}`}>{th.title}</h4>
-                      <p className="text-xs text-lienzo/60 line-clamp-2 mb-2">{th.description}</p>
-                      
-                      <span className="ac-label ac-label--md text-lienzo/40 group-hover:text-lienzo transition-colors">
-                        {t('biography', 'exploreTheorem')}
-                      </span>
-                    </a>
-                  </Link>
-                );
-              })}
-            </div>
+        {(theorems.length > 0 || demos.length > 0 || systems.length > 0) && (
+          <div className="ac-bio__works">
+            <BioPlates theorems={theorems} />
+            {theorems.length > 0 && (
+              <VocabSection heading={getContentTypeLabel('teorema', 'plural', lang)} accentType="teorema" count={theorems.length}>
+                {theorems.map((th) => (
+                  <VocabEntry key={th.id} href={getLocalizedPath(`/teorema/${th.id}`)} title={th.title} description={th.description} read={isRead(th.id)} />
+                ))}
+              </VocabSection>
+            )}
+            {demos.length > 0 && (
+              <VocabSection heading={getContentTypeLabel('demostracion', 'plural', lang)} accentType="demostracion" count={demos.length}>
+                {demos.map((demo) => (
+                  <VocabEntry key={demo.id} href={getLocalizedPath(`/demo/${demo.id}`)} title={demo.title} description={demo.description} read={isRead(demo.id)} />
+                ))}
+              </VocabSection>
+            )}
+            {systems.length > 0 && (
+              <VocabSection heading={getContentTypeLabel('sistema-axiomatico', 'plural', lang)} accentType="sistema-axiomatico" count={systems.length}>
+                {systems.map((sys) => (
+                  <VocabEntry key={sys.id} href={getLocalizedPath(`/sistema/${sys.id}`)} title={sys.title} description={sys.description} read={isRead(sys.id)} />
+                ))}
+              </VocabSection>
+            )}
           </div>
         )}
       </div>
-    );
-  };
-
-  return (
-    <div
-      className="min-h-viewport w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo page-accent-scope"
-      data-page-type="matematico"
-      style={{ '--page-accent': getContentPageAccent('matematico') } as React.CSSProperties}
-    >
-
-      {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) — colapsa en móvil */}
-      <div className="lg:w-[40%] ac-cloth lg:border-r border-carbon/20 lg:overflow-y-auto custom-scrollbar relative">
-        <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
-
-        <div className="p-6 sm:p-8 lg:p-12 relative z-10 flex flex-col min-h-full">
-          {renderSidebarContent()}
-
-          {/* Navegación de retorno */}
-          <div className="mt-auto pt-8 lg:pt-16 w-full text-center">
-            <Link href={getLocalizedPath('/historia')}>
-              <a className="ac-link-back ac-interactive text-xs text-lienzo/50 font-serif font-semibold hover:text-lienzo">
-                <span>&larr;</span> {t('biography', 'backToCodex')}
-              </a>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* PANEL DERECHO: LECTURA CON SCROLL */}
-      <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
-        <div className="prose prose-mora prose-lg max-w-none mx-auto biography-mdx editorial-reading text-carbon font-serif">
-          <Suspense fallback={<PageLoadingScreen embedded message={t('biography', 'scrollLoading')} />}>
-            <Component />
-          </Suspense>
-        </div>
-
-        {/* Ornamentación final */}
-        <div className="mt-16 lg:mt-24 pb-12 flex justify-center text-carbon/20">
-          <span className="text-3xl">❦</span>
-        </div>
-      </div>
-
-    </div>
+    </article>
   );
 };

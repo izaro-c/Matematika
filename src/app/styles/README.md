@@ -92,4 +92,4 @@ No duplicar hex ni listas de color fuera de theme/design.
 - Oscuro: los `--theme-*` son **pigmentos suaves** (menos saturados, ≥6,4:1 sobre el lienzo) para texto, trazos, diagramas y controles. La tela se tiñe con el pigmento vivo (`--cloth-<pigmento>`) al 40 % (carbon 24 %), con letras crema y nervios ocre. Un pigmento brillante en toda una superficie deslumbra; en un control pequeño marca bien el estado activo. La tela solo se separa del fondo ~2:1, así que no sirve para distinguir activo/inactivo.
 - `--theme-*` va en hex literal: los diagramas leen el valor tal cual (`MathBoard`), y un `color-mix` no les sirve.
 - `prefers-contrast: more`: nervios en `--cloth-ink` y, en oscuro, canto en pigmento pleno.
-- Ejemplos: `ac-spines.css`, `ac-library.css`, `.ac-cloth` (`ac-classes.css`, panel de biografías).
+- Ejemplos: `ac-spines.css`, `ac-library.css`, `ac-bio.css`.

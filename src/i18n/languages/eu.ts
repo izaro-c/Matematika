@@ -147,14 +147,10 @@ export const euLanguage: LanguageConfig = {
       historicalDensity: 'Dentsitate historikoa',
     },
     biography: {
-      birth: 'Jaiotza',
-      death: 'Heriotza',
-      universalContributions: 'Ekarpen unibertsalak',
-      exploreTheorem: 'Arakatu teorema',
-      backToCodex: 'Itzuli Kodexera',
-      bc: 'K.a.',
-      ad: 'K.o.',
-      scrollLoading: 'Kargatzen...',
+      bc: 'K.a. {year}',
+      ad: 'K.o. {year}',
+      plates: 'Irudiak',
+      portraitAlt: 'Erretratua: {name}',
     },
     construction: {
       title: 'Eraikuntzan',

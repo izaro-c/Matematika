@@ -35,6 +35,7 @@ export const MathematicianSchema = z.object({
   id: z.string(),
   type: z.literal('matematico'),
   name: z.string(),
+  title: z.string().optional(),
   birthYear: z.number().optional(),
   deathYear: z.number().optional(),
   country: z.string().optional(),
