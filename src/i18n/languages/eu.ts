@@ -246,7 +246,11 @@ export const euLanguage: LanguageConfig = {
       legend: 'Legenda',
       legendHeading: 'Legenda',
       legendTitle: 'Maparen legenda',
-      hilbertBrace: 'Hilberten Axiomatika',
+      primitivesRow: 'Nozio primitiboak',
+      fallLost: 'Oinarririk gabe',
+      fallRestored: 'Berreskuratuak',
+      proofsHeading: 'Frogapenak',
+      allProofs: 'Guztiak',
       mathCentralNode: 'MATEMATIKA',
     },
     marginalia: {

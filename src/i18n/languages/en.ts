@@ -246,7 +246,11 @@ export const enLanguage: LanguageConfig = {
       legend: 'Legend',
       legendHeading: 'Legend',
       legendTitle: 'Map Legend',
-      hilbertBrace: 'Hilbert Axioms',
+      primitivesRow: 'Primitive notions',
+      fallLost: 'Left unsupported',
+      fallRestored: 'Restored',
+      proofsHeading: 'Proofs',
+      allProofs: 'All',
       mathCentralNode: 'MATHEMATICS',
     },
     marginalia: {

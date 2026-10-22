@@ -27,6 +27,20 @@ Prioridad: 🔴 bloqueante para publicar · 🟠 importante · 🟡 mejora.
 
 ## 🟠 Importantes
 
+### Rigor del DAG (auditoría del 2026-10-22)
+- [ ] `demo-existencia-bisectriz`: construye el triángulo equilátero de Euclides I.1, que exige cortar dos circunferencias y no se deduce de ningún nodo; además da por supuesto que $C$ está en el interior del ángulo. Reescribir sin I.1 (p. ej. $OA \cong OB$, $OA' \cong OB'$ en los lados, $AB'$ y $A'B$ se cortan por Pasch, y LAL) y rehacer `DemoExistenciaBisectriz`
+- [ ] `demo-angulo-exterior`: usa el punto medio (`punto-medio` sin nodo, y su existencia es un teorema) y justifica la congruencia con la *definición* `angulos-opuestos-vertice` en vez de con `teorema-angulos-opuestos-verticales`. Opción limpia: probarlo a partir de I.27 (alternos internos congruentes ⇒ paralelas) y del teorema de la travesaña
+- [ ] `demo-congruencia-lll`: solo trata el caso en que $C'C^*$ corta $\overline{A'B'}$ por dentro; faltan los casos en que pasa por un vértice o por fuera (ángulo obtuso). La suma de ángulos congruentes no tiene nodo y `angulos-adyacentes` no existe
+- [ ] Partir `teorema-angulos-alternos-internos` en I.27 (absoluto: congruentes ⇒ paralelas) e I.29 (euclídeo: paralelas ⇒ congruentes). Hoy todo el nodo depende de Playfair y la mitad absoluta se apaga al desactivar IV
+- [ ] Rama hiperbólica vacía: 12 nodos solo euclídeos y ninguno solo hiperbólico
+- [ ] `isDependency` hacia IDs sin nodo: `relacion-binaria`, `clase-equivalencia`, `conjunto-convexo`, `angulos-adyacentes`, `altura` (no canónico: debería ser `altura-triangulo`), `cota-superior`, `orden-total`
+
+### Grafo axiomático (`/axiomas`)
+- [ ] Al pasar el ratón por una arista, mostrar la frase del MDX donde está su `ConceptLink` (el validador tendría que guardar ese contexto)
+- [ ] `countCrossings` de `lib/dagLayout.ts` compara todos los pares de segmentos (O(S²)) en cada pasada; cambiarlo por un conteo O(S log S) si el primer layout se nota lento
+- [ ] `selectedProofId` se reinicia en un efecto tras cambiar de nodo (un render de más); reiniciarlo en el mismo manejador
+- [ ] El recuento de «Sin fundamento / Recuperados» distingue los axiomas por el prefijo `axioma-` y no por su tipo
+
 ### UI / UX
 - [ ] Texto de instrucción del diagrama cortado en escritorio: los botones de idioma / tema / búsqueda se superponen al panel del diagrama (p. ej. `/es/teorema/teorema-triangulo-isosceles`)
 - [ ] Texto de instrucción del diagrama demasiado pequeño y con poco contraste (sobre todo en móvil)

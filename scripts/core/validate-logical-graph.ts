@@ -16,6 +16,7 @@ console.log("Iniciando validación del DAG lógico y reconstrucción del árbol.
 const contentDir = path.resolve(process.cwd(), 'content/mdx');
 const mdxFiles = listMdxFiles(contentDir);
 
+const CANONICAL_LANG = 'es';
 const allNodes = new Set<string>();
 /** Campos de metadatos que usa la validación del grafo; el resto se conserva sin tipar. */
 interface NodeMeta extends Record<string, unknown> {
@@ -28,6 +29,8 @@ interface NodeMeta extends Record<string, unknown> {
 
 const metadataMap = new Map<string, NodeMeta>();
 const contentDepsMap = new Map<string, string[]>();
+/** Sistemas por idioma: `metadataMap` conserva solo la última traducción de cada ID. */
+const systemsByLang = new Map<string, NodeMeta>();
 
 function extractConceptLinkDependencies(content: string): string[] {
   const deps: string[] = [];
@@ -65,21 +68,27 @@ function processMdxFile(file: string) {
   if (metadata) {
     const slug = path.basename(file, '.mdx');
     const id = (metadata.id as string) || slug;
+    // El castellano es el idioma canónico: las traducciones solo rellenan IDs que aún no lo tengan.
+    if (metadataMap.has(id) && metadata.lang !== CANONICAL_LANG) {
+      if (metadata.type === 'sistema-axiomatico') systemsByLang.set(`${metadata.lang}:${id}`, metadata as NodeMeta);
+      return;
+    }
     metadata._filePath = file;
     metadataMap.set(id, metadata as NodeMeta);
+    if (metadata.type === 'sistema-axiomatico') systemsByLang.set(`${metadata.lang}:${id}`, metadata as NodeMeta);
     allNodes.add(id);
 
-    // Graph edges come from explicit metadata arrays and ConceptLink with isDependency={true}
+    // Graph edges come from explicit metadata arrays and ConceptLink with isDependency={true}.
+    // `demos`, `corollaries` y `parentTheorem` apuntan en sentido inverso y no son antecedentes.
     const contentDeps: string[] = [];
     if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
     if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
     if (Array.isArray(metadata.dependencias)) contentDeps.push(...metadata.dependencias);
     if (Array.isArray(metadata.axiomas)) contentDeps.push(...metadata.axiomas);
     if (Array.isArray(metadata.lemmas)) contentDeps.push(...metadata.lemmas);
-    if (Array.isArray(metadata.demos)) contentDeps.push(...metadata.demos);
-    if (metadata.parentTheorem && typeof metadata.parentTheorem === 'string') contentDeps.push(metadata.parentTheorem);
-    if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
     if (Array.isArray(metadata.axioms_verified)) contentDeps.push(...metadata.axioms_verified);
+    if (Array.isArray(metadata.extends)) contentDeps.push(...metadata.extends);
+    if (metadata.builtIn && typeof metadata.builtIn === 'string') contentDeps.push(metadata.builtIn);
     contentDeps.push(...extractConceptLinkDependencies(content));
 
     // Remove duplicates
@@ -91,7 +100,7 @@ mdxFiles.forEach(processMdxFile);
 
 // Un sistema formal no puede contener dos axiomas declarados como alternativas
 // del mismo grupo. Esta condición lógica no se manifiesta como un ciclo del DAG.
-let alternativeGroupErrors = 0;
+let axiomaticErrors = 0;
 for (const [systemId, systemMeta] of metadataMap) {
   if (systemMeta.type !== 'sistema-axiomatico' || !Array.isArray(systemMeta.axiomas)) continue;
 
@@ -107,15 +116,30 @@ for (const [systemId, systemMeta] of metadataMap) {
 
   for (const [group, alternatives] of alternativesByGroup) {
     if (alternatives.length < 2) continue;
-    alternativeGroupErrors += 1;
+    axiomaticErrors += 1;
     console.error(
       `[ERROR] ${systemId} contiene alternativas incompatibles del grupo ${group}: ${alternatives.join(', ')}`,
     );
   }
 }
 
-if (alternativeGroupErrors > 0) {
-  console.error(`\nValidación detenida: ${alternativeGroupErrors} conflicto(s) axiomático(s).`);
+// Un sistema que amplía otro contiene todos sus axiomas: `extends` es inclusión de teorías.
+for (const [key, systemMeta] of systemsByLang) {
+  if (!Array.isArray(systemMeta.extends)) continue;
+  const [lang, systemId] = key.split(':');
+  const own = new Set(Array.isArray(systemMeta.axiomas) ? systemMeta.axiomas : []);
+  for (const baseId of systemMeta.extends) {
+    const baseMeta = systemsByLang.get(`${lang}:${baseId}`);
+    if (!baseMeta || !Array.isArray(baseMeta.axiomas)) continue;
+    const missing = baseMeta.axiomas.filter((axiomId: unknown) => typeof axiomId === 'string' && !own.has(axiomId));
+    if (missing.length === 0) continue;
+    axiomaticErrors += 1;
+    console.error(`[ERROR] ${lang}/${systemId} amplía ${baseId} pero no incluye sus axiomas: ${missing.join(', ')}`);
+  }
+}
+
+if (axiomaticErrors > 0) {
+  console.error(`\nValidación detenida: ${axiomaticErrors} conflicto(s) axiomático(s).`);
   process.exit(1);
 }
 
@@ -131,10 +155,11 @@ interface GraphNode {
   id: string;
   type: string;
   alternativeGroup?: string;
+  axiomFamily?: string;
   subtype?: string;
   title: string;
   description: string;
-  proofs: { id: string; dependencies: string[] }[];
+  proofs: { id: string; dependencies: string[]; methods: string[] }[];
   directDependencies: string[];
 }
 
@@ -146,6 +171,7 @@ for (const id of allNodes) {
     id,
     type: meta.type || 'unknown',
     alternativeGroup: typeof meta.alternativeGroup === 'string' ? meta.alternativeGroup : undefined,
+    axiomFamily: typeof meta.axiomFamily === 'string' ? meta.axiomFamily : undefined,
     subtype: meta.subtype || undefined,
     title: meta.title || id,
     description: meta.description || '',
@@ -154,47 +180,49 @@ for (const id of allNodes) {
   };
 }
 
-const HIERARCHY_LEVEL: Record<string, number> = {
-  'axioma': 0,
-  'lema': 2,
-  'definicion': 3,
-  'teorema': 3,
-  'corolario': 4,
-  'demostracion': 5,
-  'sistema-axiomatico': 6,
-  'modelo': 7,
-  'matematico': 10,
-  'metodo': 10,
-  'ejercicio': 10,
-  'ejemplo': 10,
-  'caso_de_uso': 10,
-  'plan_de_estudio': 10
-};
+// Tipos que pueden actuar como antecedente deductivo de cualquier nodo.
+const DEDUCTIVE_TYPES = new Set(['axioma', 'definicion', 'teorema', 'lema', 'corolario']);
+// Los sistemas amplían sistemas (`extends`) y los modelos se construyen en sistemas (`builtIn`).
+const SYSTEM_LEVEL_SOURCES = new Set(['sistema-axiomatico', 'modelo']);
 
 let linkedProofs = 0;
+let droppedEdges = 0;
+let selfDependencies = 0;
+
+/** Arista válida del DAG: el destino existe y es un antecedente deductivo (o un sistema, desde el nivel de sistemas). */
+function isValidDependency(sourceId: string, sourceType: string | undefined, depId: string): boolean {
+  if (depId === sourceId) {
+    console.error(`[ERROR] '${sourceId}' se declara dependencia de sí mismo.`);
+    selfDependencies++;
+    return false;
+  }
+  const depMeta = metadataMap.get(depId);
+  if (!depMeta) return false; // página futura: la avisa validate-cross-references
+  if (DEDUCTIVE_TYPES.has(depMeta.type ?? '')) return true;
+  if (depMeta.type === 'sistema-axiomatico' && SYSTEM_LEVEL_SOURCES.has(sourceType ?? '')) return true;
+  console.warn(`[WARN] Arista descartada: '${sourceId}' (${sourceType}) -> '${depId}' (${depMeta.type}) no es un antecedente deductivo.`);
+  droppedEdges++;
+  return false;
+}
 
 // Map proofs to their parent theorems
 for (const id of allNodes) {
   const meta = metadataMap.get(id)!;
   const deps = contentDepsMap.get(id) || [];
-  const nodeLevel = HIERARCHY_LEVEL[meta.type ?? ''] ?? 100;
 
   if (meta.type === 'demostracion') {
     const parentTheoremId = meta.parentTheorem;
     if (parentTheoremId && graphNodes[parentTheoremId]) {
-      // Exclude parentTheorem from dependencies — it's the theorem being proved, not a dependency
-      const filteredDeps = deps.filter(depId => {
-        if (depId === parentTheoremId) return false;
-        const depMeta = metadataMap.get(depId);
-        if (!depMeta) return false;
-        // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
-        const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
-        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type ?? ''] ?? 100);
-        return depLevel <= nodeLevel;
-      });
+      // El teorema demostrado no es antecedente de su demostración; los métodos se registran aparte.
+      const methods = deps.filter(depId => metadataMap.get(depId)?.type === 'metodo');
+      const filteredDeps = deps.filter(depId =>
+        depId !== parentTheoremId
+        && metadataMap.get(depId)?.type !== 'metodo'
+        && isValidDependency(id, meta.type, depId));
       graphNodes[parentTheoremId].proofs.push({
         id: id,
-        dependencies: filteredDeps
+        dependencies: filteredDeps,
+        methods,
       });
       linkedProofs++;
     } else {
@@ -203,23 +231,9 @@ for (const id of allNodes) {
   } else {
     // Las definiciones primitivas no propagan dependencias (cortafuegos topológico)
     const isPrimitive = meta.type === 'definicion' && meta.subtype === 'primitivo';
-    if (isPrimitive) {
-      graphNodes[id].directDependencies = [];
-    } else {
-      const filteredDeps = deps.filter(depId => {
-        if (!allNodes.has(depId)) return false;
-        const depMeta = metadataMap.get(depId);
-        if (!depMeta) {
-          console.warn(`[INFO] Enlace filtrado: El nodo '${id}' referencia a '${depId}', pero este último no se indexó en el grafo.`);
-          return false;
-        }
-        // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
-        const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
-        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type ?? ''] ?? 100);
-        return depLevel <= nodeLevel;
-      });
-      graphNodes[id].directDependencies = filteredDeps;
-    }
+    graphNodes[id].directDependencies = isPrimitive
+      ? []
+      : deps.filter(depId => isValidDependency(id, meta.type, depId));
   }
 }
 
@@ -245,43 +259,25 @@ for (const node of allNodes) {
 }
 const topologicalOrder: string[] = [];
 
-function breakCycle(node: string, dep: string) {
-  console.warn(`[INFO] Ciclo roto forzosamente: "${node}" -> "${dep}". Se ignorará esta arista.`);
-  const gNode = graphNodes[node];
-  if (!gNode) return;
-  
-  if (gNode.directDependencies.includes(dep)) {
-    gNode.directDependencies = gNode.directDependencies.filter(d => d !== dep);
-  } else if (gNode.proofs) {
-    for (const proof of gNode.proofs) {
-      if (proof.dependencies.includes(dep)) {
-        proof.dependencies = proof.dependencies.filter(d => d !== dep);
-      }
-    }
-  }
-}
+const stack: string[] = [];
 
 function dfs(node: string) {
-  const c = color.get(node);
-  if (c === 'black') return;
-  if (c === 'gray') {
-    console.error(`\n[ERROR FATAL] Ciclo lógico detectado en el nodo: ${node}`);
-    process.exit(1);
-  }
+  if (color.get(node) === 'black') return;
 
   color.set(node, 'gray');
+  stack.push(node);
 
-  const deps = adjacencyList[node] || [];
-
-  for (const dep of deps) {
+  for (const dep of adjacencyList[node] || []) {
     if (!allNodes.has(dep)) continue;
     if (color.get(dep) === 'gray') {
-      breakCycle(node, dep);
-      continue;
+      const cycle = [...stack.slice(stack.indexOf(dep)), dep].reverse();
+      console.error(`\n[ERROR FATAL] Ciclo lógico: ${cycle.join(' -> ')}`);
+      process.exit(1);
     }
     dfs(dep);
   }
 
+  stack.pop();
   color.set(node, 'black');
   topologicalOrder.push(node);
 }
@@ -294,6 +290,11 @@ for (const node of allNodes) {
 
 console.log(`\nValidación completada: ${allNodes.size} nodos procesados.`);
 console.log(`Ensambladas ${linkedProofs} demostraciones a sus teoremas correspondientes.`);
+if (droppedEdges > 0) console.warn(`${droppedEdges} arista(s) descartada(s); revisa los avisos anteriores.`);
+if (selfDependencies > 0) {
+  console.error(`\nValidación detenida: ${selfDependencies} nodo(s) dependen de sí mismos.`);
+  process.exit(1);
+}
 
 // Pass 4: Export Graph Structure
 const graphStructure = {

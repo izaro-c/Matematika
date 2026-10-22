@@ -12,6 +12,8 @@ export interface GraphNodeProof {
   id: string;
   /** Lista de identificadores (slugs) de los nodos de los cuales depende esta prueba */
   dependencies: string[];
+  /** Métodos de demostración que emplea (metodo-directo, metodo-contradiccion…); no condicionan la validez */
+  methods?: string[];
 }
 
 /**

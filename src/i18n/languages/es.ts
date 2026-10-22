@@ -246,7 +246,11 @@ export const esLanguage: LanguageConfig = {
       legend: 'Leyenda',
       legendHeading: 'Leyenda',
       legendTitle: 'Leyenda del mapa',
-      hilbertBrace: 'Axiomática de Hilbert',
+      primitivesRow: 'Nociones primitivas',
+      fallLost: 'Sin fundamento',
+      fallRestored: 'Recuperados',
+      proofsHeading: 'Demostraciones',
+      allProofs: 'Todas',
       mathCentralNode: 'MATEMÁTICAS',
     },
     marginalia: {

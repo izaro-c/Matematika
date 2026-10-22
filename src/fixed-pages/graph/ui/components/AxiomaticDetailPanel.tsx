@@ -11,6 +11,10 @@ interface AxiomaticDetailPanelProps {
   systems: { id: string; title: string; axioms: string[] }[];
   dependencyList: { id: string; label: string; nodeType: string }[];
   onDependencyClick: (depId: string) => void;
+  /** Demostraciones del nodo; con más de una, el lector elige cuál resaltar. */
+  proofs?: { id: string; label: string }[];
+  selectedProofId?: string | null;
+  onProofSelect?: (proofId: string | null) => void;
 }
 
 export function AxiomaticDetailPanel({
@@ -21,6 +25,9 @@ export function AxiomaticDetailPanel({
   systems,
   dependencyList,
   onDependencyClick,
+  proofs = [],
+  selectedProofId = null,
+  onProofSelect,
 }: AxiomaticDetailPanelProps) {
   const { lang, t, getLocalizedPath } = useI18n();
 
@@ -88,6 +95,26 @@ export function AxiomaticDetailPanel({
                 </span>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {proofs.length > 1 && onProofSelect && (
+        <div className="mb-2">
+          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">{t('graph', 'proofsHeading')}</h4>
+          <div className="axiomatic-proof-switch" role="radiogroup" aria-label={t('graph', 'proofsHeading')}>
+            {[{ id: null, label: t('graph', 'allProofs') }, ...proofs].map((proof) => (
+              <button
+                key={proof.id ?? 'all'}
+                type="button"
+                role="radio"
+                aria-checked={selectedProofId === proof.id}
+                className="axiomatic-proof-switch__option"
+                onClick={() => onProofSelect(proof.id)}
+              >
+                {proof.label}
+              </button>
+            ))}
           </div>
         </div>
       )}

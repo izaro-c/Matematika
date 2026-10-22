@@ -13,6 +13,7 @@ import {
 import type {
   FlowEdge,
   FlowNode,
+  GraphAxiomGroup,
   GraphWorkerError,
 } from './lib/graphWorkerContract';
 import { graphWorkerClient } from './lib/graphWorkerClient';
@@ -81,6 +82,8 @@ interface GraphState {
   baseNodes: FlowNode[];
   /** Aristas de dependencia (flechas) a renderizar en el motor gráfico. */
   edges: FlowEdge[];
+  /** Grupos de la fila de axiomas, para dibujar sus cartelas. */
+  axiomGroups: GraphAxiomGroup[];
   /** Lista de adyacencia (Hacia Adelante) para algoritmos de BFS/DFS locales en la UI. */
   adjacency: Record<string, string[]>;
   /** Mapa inverso de dependencias: Para cada nodo, lista de IDs de los que depende directamente. */
@@ -199,6 +202,7 @@ function ensureGraphInitialized(
       set({
         baseNodes: result.nodes,
         edges: result.edges,
+        axiomGroups: result.axiomGroups ?? [],
         adjacency: result.adjacency,
         dependsOn: result.dependsOn,
         activeStates: result.activeStates,
@@ -279,6 +283,7 @@ export const useGraphStore = create<GraphState>()(
     (set, get) => ({
       baseNodes: [],
       edges: [],
+      axiomGroups: [],
       adjacency: {},
       dependsOn: {},
       activeStates: {},

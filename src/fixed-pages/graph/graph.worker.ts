@@ -12,6 +12,8 @@ import type {
   GraphWorkerNode,
 } from './lib/graphWorkerContract';
 import { findAxiomSelectionConflicts } from '@/data/graph/axiomSelection';
+import { computeDagLayout, edgeKey } from './lib/dagLayout';
+import { AXIOMATIC_NODE_SIZE } from './constants';
 
 export type {
   FlowEdge,
@@ -38,8 +40,8 @@ let structure: GraphWorkerStructure | null = null;
 let preparedNodes: Record<string, JsonNode> | null = null;
 let previousActiveStates: Record<string, boolean> | null = null;
 
-const NODE_W = 150;
-const NODE_H = 150;
+const NODE_W = AXIOMATIC_NODE_SIZE;
+const NODE_H = AXIOMATIC_NODE_SIZE;
 
 function filterNodes(): Record<string, JsonNode> {
   if (!structure) return {};
@@ -162,254 +164,52 @@ function evaluateActiveNodes(
   return active;
 }
 
-// ── Layout Sugiyama con Network Simplex ────────────────────────────────────
+// ── Layout ──────────────────────────────────────────────────────────────────
 
-function computeLayers(
-  topologicalOrder: string[],
+/** Orden de las familias en la fila de axiomas, como en los *Grundlagen*. */
+const FAMILY_ORDER = ['incidencia', 'orden', 'congruencia', 'paralelas', 'continuidad'];
+
+/** Lado de la teoría que fija cada axioma alternativo: euclídeo a la derecha, hiperbólico a la izquierda. */
+const THEORY_SIDE: Record<string, number> = {
+  'axioma-paralelas-euclides': 1,
+  'axioma-paralelas-hiperbolico': -1,
+};
+
+/** Nodos sin ningún primitivo geométrico entre sus antecedentes: conjuntos, funciones, álgebra. */
+function computeFoundationIds(
+  sortedIds: string[],
   edgeList: Array<{ source: string; target: string }>,
-  axiomIds: Set<string>,
-  primitiveIds: Set<string>,
+  filtered: Record<string, JsonNode>,
+): Set<string> {
+  const preds: Record<string, string[]> = {};
+  for (const id of sortedIds) preds[id] = [];
+  for (const { source, target } of edgeList) preds[target]?.push(source);
+  const geometric = new Set<string>();
+  for (const id of sortedIds) {
+    const node = filtered[id];
+    const isPrimitive = node.type === 'definicion' && node.subtype === 'primitivo';
+    if (isPrimitive || node.type === 'axioma' || preds[id].some((p) => geometric.has(p))) geometric.add(id);
+  }
+  return new Set(sortedIds.filter((id) => !geometric.has(id)));
+}
+
+function computeSides(
+  sortedIds: string[],
+  edgeList: Array<{ source: string; target: string }>,
 ): Record<string, number> {
   const preds: Record<string, string[]> = {};
-  for (const id of topologicalOrder) preds[id] = [];
-  for (const { source, target } of edgeList) {
-    preds[target].push(source);
+  for (const id of sortedIds) preds[id] = [];
+  for (const { source, target } of edgeList) preds[target]?.push(source);
+  const reaches: Record<string, Set<number>> = {};
+  const side: Record<string, number> = {};
+  for (const id of sortedIds) {
+    const own = new Set<number>(THEORY_SIDE[id] ? [THEORY_SIDE[id]] : []);
+    for (const p of preds[id]) for (const s of reaches[p] ?? []) own.add(s);
+    reaches[id] = own;
+    // Un nodo que necesita ambas alternativas no es de ninguna teoría concreta.
+    side[id] = own.size === 1 ? [...own][0] : 0;
   }
-
-  const layers: Record<string, number> = {};
-
-  for (const id of topologicalOrder) {
-    if (primitiveIds.has(id)) {
-      layers[id] = 0;
-    } else if (axiomIds.has(id)) {
-      layers[id] = 1;
-    } else if (preds[id].length === 0) {
-      layers[id] = 2;
-    } else {
-      let l = 0;
-      for (const p of preds[id]) {
-        if (layers[p] !== undefined) {
-          l = Math.max(l, layers[p] + 1);
-        }
-      }
-      layers[id] = Math.max(2, l);
-    }
-  }
-
-  return layers;
-}
-
-// ── Cruce mínimo: baricentro en 2 pasadas ──────────────────────────────────
-function minimizeCrossings(
-  layers: Record<string, number>,
-  edgeList: Array<{ source: string; target: string }>,
-  layerKeys: number[],
-  byLayer: Record<number, string[]>,
-): void {
-  const succs: Record<string, string[]> = {};
-  const preds: Record<string, string[]> = {};
-  for (const id of Object.keys(layers)) { succs[id] = []; preds[id] = []; }
-  for (const { source, target } of edgeList) {
-    succs[source].push(target);
-    preds[target].push(source);
-  }
-
-  const sortByNeighborBarycenter = (
-    nodes: string[],
-    neighbors: Record<string, string[]>,
-    neighborLayer: number,
-  ): void => {
-    const neighborPositions = new Map(
-      (byLayer[neighborLayer] ?? []).map((id, index) => [id, index]),
-    );
-    const barycenters = new Map<string, number>();
-
-    for (const id of nodes) {
-      const positions = neighbors[id]
-        .filter((neighborId) => layers[neighborId] === neighborLayer)
-        .map((neighborId) => neighborPositions.get(neighborId))
-        .filter((position): position is number => position !== undefined);
-      barycenters.set(
-        id,
-        positions.length > 0
-          ? positions.reduce((sum, position) => sum + position, 0) / positions.length
-          : Infinity,
-      );
-    }
-
-    nodes.sort((left, right) => (
-      (barycenters.get(left) ?? Infinity) - (barycenters.get(right) ?? Infinity)
-    ));
-  };
-
-  // 4 iteraciones: 2 pasadas completas (top-down + bottom-up)
-  for (let iter = 0; iter < 4; iter++) {
-    // Top-down: ordenar capa i+1 según baricentro de padres en capa i
-    for (let i = 1; i < layerKeys.length; i++) {
-      const l = layerKeys[i];
-      const prevL = layerKeys[i - 1];
-      sortByNeighborBarycenter(byLayer[l], preds, prevL);
-    }
-    // Bottom-up: ordenar capa i según baricentro de hijos en capa i+1
-    for (let i = layerKeys.length - 2; i >= 0; i--) {
-      const l = layerKeys[i];
-      const nextL = layerKeys[i + 1];
-      sortByNeighborBarycenter(byLayer[l], succs, nextL);
-    }
-  }
-}
-
-// ── Posicionamiento horizontal: Network Simplex relajado ────────────────────
-
-// eslint-disable-next-line sonarjs/cognitive-complexity
-function initTopDownPositions(
-  layerKeys: number[],
-  byLayer: Record<number, string[]>,
-  preds: Record<string, string[]>,
-  layers: Record<string, number>,
-  minDist: number,
-): { xPos: Record<string, number>; topDown: Record<string, number> } {
-  const xPos: Record<string, number> = {};
-  const topDown: Record<string, number> = {};
-
-  for (const l of layerKeys) {
-    const nodes = byLayer[l];
-    if (l === 0) {
-      const totalW = (nodes.length - 1) * minDist;
-      let cx = -totalW / 2;
-      for (const id of nodes) { topDown[id] = cx; cx += minDist; }
-    } else {
-      for (const id of nodes) {
-        const parents = preds[id].filter(p => layers[p] === l - 1);
-        topDown[id] = parents.length > 0
-          ? parents.reduce((s, p) => s + (topDown[p] ?? 0), 0) / parents.length
-          : 0;
-      }
-      const sorted = [...nodes].sort((a, b) => (topDown[a] ?? 0) - (topDown[b] ?? 0));
-      let cursor = -Infinity;
-      for (const id of sorted) {
-        const placed = Math.max(topDown[id] ?? 0, cursor);
-        xPos[id] = placed;
-        cursor = placed + minDist;
-      }
-    }
-  }
-  for (const id of byLayer[0] ?? []) xPos[id] = topDown[id];
-
-  return { xPos, topDown };
-}
-
-function relaxLayerPositions(
-  layerKeys: number[],
-  byLayer: Record<number, string[]>,
-  preds: Record<string, string[]>,
-  succs: Record<string, string[]>,
-  xPos: Record<string, number>,
-  layers: Record<string, number>,
-  damping: number,
-  minDist: number,
-  nodeIds: string[],
-): { xPos: Record<string, number>; maxChange: number } {
-  const newX: Record<string, number> = {};
-  let maxChange = 0;
-
-  for (const l of layerKeys) {
-    const nodes = byLayer[l];
-
-    for (const id of nodes) {
-      const neighbors = [
-        ...preds[id].filter(p => layers[p] !== undefined),
-        ...succs[id].filter(c => layers[c] !== undefined),
-      ];
-      if (neighbors.length > 0) {
-        const avg = neighbors.reduce((s, n) => s + (xPos[n] ?? 0), 0) / neighbors.length;
-        const desired = xPos[id] + (avg - xPos[id]) * damping;
-        newX[id] = desired;
-        maxChange = Math.max(maxChange, Math.abs(desired - xPos[id]));
-      } else {
-        newX[id] = xPos[id];
-      }
-    }
-
-    const sorted = [...nodes].sort((a, b) => (newX[a] ?? 0) - (newX[b] ?? 0));
-    let cursor = -Infinity;
-    for (const id of sorted) {
-      const placed = Math.max(newX[id] ?? 0, cursor);
-      newX[id] = placed;
-      cursor = placed + minDist;
-    }
-  }
-
-  for (const id of nodeIds) {
-    if (newX[id] !== undefined) xPos[id] = newX[id];
-  }
-
-  return { xPos, maxChange };
-}
-
-function horizontalPlacement(
-  layers: Record<string, number>,
-  layerKeys: number[],
-  byLayer: Record<number, string[]>,
-  edgeList: Array<{ source: string; target: string }>,
-  nodeIds: string[],
-  minDist: number,
-): Record<string, number> {
-  const succs: Record<string, string[]> = {};
-  const preds: Record<string, string[]> = {};
-  for (const id of nodeIds) { succs[id] = []; preds[id] = []; }
-  for (const { source, target } of edgeList) {
-    succs[source].push(target);
-    preds[target].push(source);
-  }
-
-  const { xPos } = initTopDownPositions(layerKeys, byLayer, preds, layers, minDist);
-
-  const MAX_ITER = 200;
-  const DAMPING_START = 0.45;
-  const DAMPING_END = 0.05;
-  const CONVERGENCE_THRESHOLD = 1.0;
-
-  for (let iter = 0; iter < MAX_ITER; iter++) {
-    const progress = iter / MAX_ITER;
-    const damping = DAMPING_START + (DAMPING_END - DAMPING_START) * progress;
-    const result = relaxLayerPositions(layerKeys, byLayer, preds, succs, xPos, layers, damping, minDist, nodeIds);
-    if (result.maxChange < CONVERGENCE_THRESHOLD) break;
-  }
-
-  return xPos;
-}
-
-function arrangeLayers(
-  nodeIds: string[],
-  layers: Record<string, number>,
-  edgeList: Array<{ source: string; target: string }>,
-): Record<string, { x: number; y: number }> {
-  const hgap = 70;
-  const vgap = 250;
-  const minDist = NODE_W + hgap;
-
-  const byLayer: Record<number, string[]> = {};
-  for (const id of nodeIds) {
-    const l = layers[id];
-    if (!byLayer[l]) byLayer[l] = [];
-    byLayer[l].push(id);
-  }
-
-  const layerKeys = Object.keys(byLayer).map(Number).sort((a, b) => a - b);
-
-  // Paso 1: minimizar cruces de aristas
-  minimizeCrossings(layers, edgeList, layerKeys, byLayer);
-
-  // Paso 2: posicionamiento horizontal con Network Simplex
-  const xPos = horizontalPlacement(layers, layerKeys, byLayer, edgeList, nodeIds, minDist);
-
-  const positions: Record<string, { x: number; y: number }> = {};
-  for (const id of nodeIds) {
-    positions[id] = { x: xPos[id] ?? 0, y: layers[id] * vgap };
-  }
-
-  return positions;
+  return side;
 }
 
  
@@ -428,13 +228,37 @@ export async function initializeGraph(
 
   const nodeIds = Object.keys(filtered);
   const nodeIdSet = new Set(nodeIds);
-  const axiomIds = new Set(nodeIds.filter(id => filtered[id].type === 'axioma'));
-  const primitiveIds = new Set(nodeIds.filter(id => filtered[id].type === 'definicion' && filtered[id].subtype === 'primitivo'));
 
   const sortedIds = structure.topologicalOrder.filter(id => nodeIdSet.has(id));
-  const layers = computeLayers(sortedIds, edgeList, axiomIds, primitiveIds);
-
-  const positions = arrangeLayers(nodeIds, layers, edgeList);
+  const primitiveIds = new Set(nodeIds.filter((id) => filtered[id].type === 'definicion' && filtered[id].subtype === 'primitivo'));
+  const axiomFamily: Record<string, string> = {};
+  for (const id of nodeIds) {
+    if (filtered[id].type === 'axioma') axiomFamily[id] = filtered[id].axiomFamily ?? 'otros';
+  }
+  const familyRank = (id: string) => {
+    const index = FAMILY_ORDER.indexOf(axiomFamily[id]);
+    return index === -1 ? FAMILY_ORDER.length : index;
+  };
+  const side = computeSides(sortedIds, edgeList);
+  // Dentro de cada familia, el orden de los Grundlagen (I.1, I.2…); en paralelas, el hiperbólico a la izquierda.
+  const axiomIds = sortedIds
+    .filter((id) => id in axiomFamily)
+    .sort((left, right) => familyRank(left) - familyRank(right)
+      || (side[left] ?? 0) - (side[right] ?? 0)
+      || left.localeCompare(right, 'es', { numeric: true }));
+  const layout = computeDagLayout({
+    ids: sortedIds,
+    edges: edgeList,
+    primitiveIds,
+    axiomIds,
+    axiomFamily,
+    side,
+    freeIds: computeFoundationIds(sortedIds, edgeList, filtered),
+    nodeWidth: NODE_W,
+    nodeHeight: NODE_H,
+  });
+  const positions = layout.positions;
+  const pointsByEdge = new Map(layout.displayEdges.map((e) => [edgeKey(e.source, e.target), e.points]));
 
   const adjacency: Record<string, string[]> = {};
   const dependsOn: Record<string, string[]> = {};
@@ -468,6 +292,8 @@ export async function initializeGraph(
         isActive: activeStates[id] ?? true,
         scale: 1,
         isHighlighted: false,
+        layer: layout.layers[id],
+        side: side[id],
       },
       style: {},
     };
@@ -487,7 +313,13 @@ export async function initializeGraph(
       id: `e-${source}-${target}`,
       source,
       target,
-      type: 'default',
+      type: 'ink',
+      data: {
+        points: pointsByEdge.get(edgeKey(source, target)) ?? [],
+        implied: layout.impliedEdges.has(edgeKey(source, target)),
+        back: layout.backEdges.has(edgeKey(source, target)),
+        fromPrimitive: primitiveIds.has(source),
+      },
       style: {
         ...(strokeDasharray ? { strokeDasharray } : {}),
       },
@@ -499,7 +331,7 @@ export async function initializeGraph(
     };
   });
 
-  return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn };
+  return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn, axiomGroups: layout.axiomGroups };
 }
 
 export async function evaluateGraph(

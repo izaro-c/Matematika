@@ -19,6 +19,16 @@ export interface MathNodeData {
   axiomGroupColor?: string;
   axiomGroupLabel?: string;
   badge?: string;
+  /** Ola tras cambiar un axioma: el nodo se tacha (`lost`) o se vuelve a sellar (`restored`). */
+  waveKind?: 'lost' | 'restored';
+  /** Momento (ms) en que le llega la línea que lo enciende o lo apaga. */
+  activationDelay?: number;
+  /** Ola de una selección: el nodo parte apagado y se ilumina cuando le llega su línea (ms). */
+  lightDelay?: number;
+  /** Cambia con cada selección para repetir la ola. */
+  lightKey?: string;
+  waveDelay?: number;
+  waveKey?: number;
 }
 
 /**
@@ -28,7 +38,10 @@ export interface MathNodeData {
  */
 export function MathNode({ data }: NodeProps) {
   const { lang } = useI18n();
-  const { label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor, badge } = (data as unknown) as MathNodeData;
+  const {
+    label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor, badge,
+    waveKind, waveDelay, waveKey, activationDelay, lightDelay, lightKey,
+  } = (data as unknown) as MathNodeData;
   const nodeConfig = CONTENT_TYPE_CONFIG[nodeType] ?? CONTENT_TYPE_CONFIG.teorema;
   const badgeLabel = badge || getContentTypeBadge(nodeType, lang);
   const nodeColor = nodeConfig.graphColor;
@@ -88,7 +101,8 @@ export function MathNode({ data }: NodeProps) {
           transform: `scale(${scale})`,
           transformOrigin: 'center center',
           opacity: effectiveOpacity,
-          transition: 'transform 0.22s ease, opacity 0.22s ease',
+          // El cambio de estado espera a que llegue su línea; el resto de cambios es inmediato.
+          transition: `transform 0.22s ease, opacity ${activationDelay !== undefined ? 0.35 : 0.22}s ease ${activationDelay ?? 0}ms`,
         }}
       >
         {/* Handle target: arista entrante en la parte superior */}
@@ -106,7 +120,10 @@ export function MathNode({ data }: NodeProps) {
         />
 
         <div
+          key={lightDelay !== undefined ? lightKey : undefined}
+          className={lightDelay !== undefined ? 'axiomatic-node-light' : undefined}
           style={{
+            ...(lightDelay !== undefined ? { '--light-delay': `${lightDelay}ms` } : {}),
             width: '100%',
             height: '100%',
             backgroundColor: nodeColor,
@@ -160,6 +177,20 @@ export function MathNode({ data }: NodeProps) {
             {label}
           </span>
         </div>
+
+        {waveKind && (
+          <svg
+            key={waveKey}
+            className={`axiomatic-node-wave axiomatic-node-wave--${waveKind}`}
+            style={{ '--wave-delay': `${waveDelay ?? 0}ms` } as React.CSSProperties}
+            viewBox="0 0 100 100"
+            aria-hidden="true"
+          >
+            {waveKind === 'lost'
+              ? <path d="M18,70 C38,58 60,44 84,28" pathLength={1} />
+              : <circle cx="50" cy="50" r="47" pathLength={1} />}
+          </svg>
+        )}
 
         {/* Handle source: arista saliente en la parte inferior */}
         <Handle

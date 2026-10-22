@@ -248,7 +248,11 @@ export interface TranslationDictionary {
     legend: string;
     legendHeading: string;
     legendTitle: string;
-    hilbertBrace: string;
+    primitivesRow: string;
+    fallLost: string;
+    fallRestored: string;
+    proofsHeading: string;
+    allProofs: string;
     mathCentralNode: string;
   };
   marginalia: {

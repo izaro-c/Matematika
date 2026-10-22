@@ -63,3 +63,33 @@ describe('graph_structure.json', () => {
     expect(hasExtractedDeps).toBe(true);
   });
 });
+
+describe('graph_structure.json: rigor del DAG', () => {
+  const deductive = new Set(['axioma', 'definicion', 'teorema', 'lema', 'corolario']);
+
+  it('axiomas conservan sus dependencias hacia definiciones derivadas', () => {
+    // III.5 se enuncia sobre triángulos y ángulos; el validador no debe descartar esas aristas.
+    expect(graph.nodes['axioma-congruencia-5'].directDependencies).toEqual(
+      expect.arrayContaining(['triangulo', 'angulo']),
+    );
+  });
+
+  it('las dependencias solo apuntan a antecedentes deductivos', () => {
+    for (const [id, node] of Object.entries(graph.nodes)) {
+      const systemLevel = node.type === 'sistema-axiomatico' || node.type === 'modelo';
+      for (const dep of [...node.directDependencies, ...node.proofs.flatMap(p => p.dependencies)]) {
+        const depType = graph.nodes[dep].type;
+        const ok = deductive.has(depType) || (systemLevel && depType === 'sistema-axiomatico');
+        expect(ok, `${id} -> ${dep} (${depType})`).toBe(true);
+      }
+    }
+  });
+
+  it('los métodos de demostración se registran aparte', () => {
+    const proofs = Object.values(graph.nodes).flatMap(n => n.proofs);
+    expect(proofs.some(p => (p.methods ?? []).length > 0)).toBe(true);
+    for (const p of proofs) {
+      for (const m of p.methods ?? []) expect(graph.nodes[m].type).toBe('metodo');
+    }
+  });
+});

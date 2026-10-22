@@ -121,3 +121,111 @@ export function computeDependencyChain(nodeId: string, dependsOn: Record<string,
   }
   return chain;
 }
+
+export type GraphDirection = 'up' | 'down' | 'left' | 'right';
+
+/**
+ * Nodo al que lleva una flecha del teclado desde `currentId`: arriba, la dependencia más
+ * próxima en horizontal; abajo, el consecuente más próximo; a los lados, el vecino de fila.
+ */
+export function stepSelection(
+  currentId: string,
+  direction: GraphDirection,
+  positions: Record<string, { x: number; y: number }>,
+  dependsOn: Record<string, string[]>,
+): string | null {
+  const here = positions[currentId];
+  if (!here) return null;
+  let candidates: string[];
+  if (direction === 'up') {
+    candidates = (dependsOn[currentId] ?? []).filter((id) => positions[id]);
+  } else if (direction === 'down') {
+    candidates = Object.keys(dependsOn).filter((id) => positions[id] && dependsOn[id].includes(currentId));
+  } else {
+    const sign = direction === 'right' ? 1 : -1;
+    candidates = Object.keys(positions).filter((id) =>
+      id !== currentId && positions[id].y === here.y && (positions[id].x - here.x) * sign > 0);
+  }
+  let best: string | null = null;
+  let bestDistance = Infinity;
+  for (const id of candidates) {
+    const distance = Math.abs(positions[id].x - here.x) + Math.abs(positions[id].y - here.y) * 0.01;
+    if (distance < bestDistance) { best = id; bestDistance = distance; }
+  }
+  return best;
+}
+
+export interface ActivationFlow {
+  kind: 'on' | 'off';
+  /** Momento (ms) en que la tinta sale del origen. */
+  start: number;
+}
+
+export interface ActivationSchedule {
+  /** Momento (ms) en que cada nodo cambia de estado. */
+  nodeAt: Map<string, number>;
+  /** Recorrido de cada arista cuyo estado (viva o muerta) cambia, por clave `source→target`. */
+  edgeAt: Map<string, ActivationFlow>;
+  /** Lo que tarda la tinta en recorrer una arista (ms). */
+  travel: number;
+  total: number;
+}
+
+/**
+ * Horario de la propagación tras un cambio de axiomas. Un nodo se enciende cuando le llega
+ * la última línea que necesita y se apaga cuando le llega la primera que se rompe; cada línea
+ * sale de su origen en el momento en que este cambia. Si la cascada dura más de `maxTotal`,
+ * se comprime entera. Con `arrival: 'first'` un nodo se enciende con la primera línea que le
+ * llega (útil para recorrer una cadena hacia arriba, donde los fundamentos reciben muchas).
+ */
+export function activationSchedule(
+  order: string[],
+  previous: Record<string, boolean>,
+  next: Record<string, boolean>,
+  edges: Array<{ source: string; target: string }>,
+  travel = 240,
+  maxTotal = 2800,
+  arrival: 'last' | 'first' = 'last',
+): ActivationSchedule {
+  const preds = new Map<string, string[]>();
+  for (const { source, target } of edges) {
+    const list = preds.get(target) ?? [];
+    list.push(source);
+    preds.set(target, list);
+  }
+  const changed = (id: string) => (previous[id] ?? false) !== (next[id] ?? false);
+
+  const nodeAt = new Map<string, number>();
+  for (const id of order) {
+    if (!changed(id)) continue;
+    const causes = (preds.get(id) ?? []).filter((p) => nodeAt.has(p) && next[p] === next[id]);
+    if (causes.length === 0) {
+      nodeAt.set(id, 0);
+      continue;
+    }
+    const arrivals = causes.map((p) => nodeAt.get(p)! + travel);
+    const waitsForAll = next[id] && arrival === 'last';
+    nodeAt.set(id, waitsForAll ? Math.max(...arrivals) : Math.min(...arrivals));
+  }
+
+  const rawTotal = Math.max(0, ...nodeAt.values());
+  const scale = rawTotal > maxTotal ? maxTotal / rawTotal : 1;
+  for (const [id, t] of nodeAt) nodeAt.set(id, t * scale);
+  const scaledTravel = travel * scale;
+
+  const at = (id: string) => nodeAt.get(id);
+  const edgeAt = new Map<string, ActivationFlow>();
+  for (const { source, target } of edges) {
+    const before = (previous[source] ?? false) && (previous[target] ?? false);
+    const after = (next[source] ?? false) && (next[target] ?? false);
+    if (before === after) continue;
+    const sourceAt = at(source);
+    const targetAt = at(target);
+    let start: number;
+    if (after) start = Math.max(sourceAt ?? 0, (targetAt ?? 0) - scaledTravel);
+    else start = sourceAt ?? (targetAt ?? 0) - scaledTravel;
+    edgeAt.set(`${source}→${target}`, { kind: after ? 'on' : 'off', start: Math.max(0, start) });
+  }
+
+  return { nodeAt, edgeAt, travel: scaledTravel, total: rawTotal * scale + scaledTravel };
+}

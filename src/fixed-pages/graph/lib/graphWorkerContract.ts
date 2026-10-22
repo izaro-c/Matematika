@@ -1,12 +1,14 @@
 export interface GraphWorkerProof {
   id: string;
   dependencies: string[];
+  methods?: string[];
 }
 
 export interface GraphWorkerNode {
   id: string;
   type: string;
   alternativeGroup?: string;
+  axiomFamily?: string;
   subtype?: string;
   title: string;
   description: string;
@@ -27,6 +29,10 @@ export interface FlowNodeData {
   isActive: boolean;
   scale: number;
   isHighlighted: boolean;
+  /** Capa del layout (0 arriba). */
+  layer?: number;
+  /** −1 hiperbólico, 0 absoluto, +1 euclídeo. */
+  side?: number;
 }
 
 export interface FlowNode {
@@ -46,7 +52,16 @@ export interface FlowEdge {
   type?: string;
   style?: Record<string, unknown>;
   markerEnd?: Record<string, unknown>;
-  data?: { points: Array<{ x: number; y: number }> };
+  /**
+   * `points`: centros de paso de la arista; `implied`: se deduce de otras aristas (reducción
+   * transitiva); `back`: sube hacia la fila de axiomas; `fromPrimitive`: sale de un primitivo.
+   */
+  data?: {
+    points: Array<{ x: number; y: number }>;
+    implied?: boolean;
+    back?: boolean;
+    fromPrimitive?: boolean;
+  };
 }
 
 export interface GraphWorkerOutput {
@@ -55,6 +70,15 @@ export interface GraphWorkerOutput {
   adjacency: Record<string, string[]>;
   activeStates: Record<string, boolean>;
   dependsOn: Record<string, string[]>;
+  /** Grupos de la fila de axiomas (incidencia, orden…), para sus cartelas. */
+  axiomGroups?: GraphAxiomGroup[];
+}
+
+export interface GraphAxiomGroup {
+  family: string;
+  left: number;
+  right: number;
+  top: number;
 }
 
 export interface GraphWorkerEvaluationOutput {
@@ -143,7 +167,8 @@ function isRequestId(value: unknown): value is number {
 function isGraphWorkerProof(value: unknown): value is GraphWorkerProof {
   return isRecord(value)
     && typeof value.id === 'string'
-    && isStringArray(value.dependencies);
+    && isStringArray(value.dependencies)
+    && (value.methods === undefined || isStringArray(value.methods));
 }
 
 function isGraphWorkerNode(value: unknown): value is GraphWorkerNode {
@@ -151,6 +176,7 @@ function isGraphWorkerNode(value: unknown): value is GraphWorkerNode {
     && typeof value.id === 'string'
     && typeof value.type === 'string'
     && (value.alternativeGroup === undefined || typeof value.alternativeGroup === 'string')
+    && (value.axiomFamily === undefined || typeof value.axiomFamily === 'string')
     && (value.subtype === undefined || typeof value.subtype === 'string')
     && typeof value.title === 'string'
     && typeof value.description === 'string'

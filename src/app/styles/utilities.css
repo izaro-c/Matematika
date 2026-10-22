@@ -136,6 +136,169 @@
   fill: currentColor;
 }
 
+/* ── Microinteracciones del árbol axiomático: «nada aparece, se escribe» ── */
+
+/* La cadena de un nodo elegido se escribe con pluma, de los fundamentos al nodo. */
+.axiomatic-graph .ink-edge--draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: axiomatic-ink-draw var(--ink-duration, 520ms) linear var(--ink-delay, 0ms) forwards;
+}
+
+@keyframes axiomatic-ink-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Cada nodo de la cadena elegida espera apagado a que le llegue su línea. */
+.axiomatic-node-light {
+  animation: axiomatic-node-light 320ms ease-out var(--light-delay, 0ms) backwards;
+}
+
+@keyframes axiomatic-node-light {
+  from { opacity: 0.18; filter: saturate(0.4); }
+}
+
+/* La ola de una selección sube: la línea se escribe desde el consecuente hacia su dependencia. */
+.axiomatic-graph .ink-edge--draw-reverse {
+  stroke-dashoffset: -1;
+}
+
+/*
+ * Propagación tras un cambio de axiomas: la tinta sale del nodo que cambia y recorre la línea
+ * hasta el siguiente (encendido) o la abandona desde el origen (apagado).
+ */
+.ink-edge-flow {
+  fill: none;
+  pointer-events: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+}
+
+.ink-edge-flow--on {
+  stroke-dashoffset: 1;
+  animation: axiomatic-ink-draw var(--flow-duration, 240ms) linear var(--flow-start, 0ms) forwards;
+}
+
+.ink-edge-flow--off {
+  stroke-dashoffset: 0;
+  animation: axiomatic-ink-retract var(--flow-duration, 240ms) linear var(--flow-start, 0ms) forwards;
+}
+
+@keyframes axiomatic-ink-retract {
+  to { stroke-dashoffset: -1; }
+}
+
+/* Al cambiar un axioma, lo que pierde su fundamento se tacha y lo que lo recupera se vuelve a sellar. */
+.axiomatic-node-wave {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  pointer-events: none;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.axiomatic-node-wave path,
+.axiomatic-node-wave circle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation:
+    axiomatic-ink-draw 380ms cubic-bezier(0.33, 1, 0.68, 1) var(--wave-delay, 0ms) forwards,
+    axiomatic-wave-fade 900ms ease-in calc(var(--wave-delay, 0ms) + 1600ms) forwards;
+}
+
+.axiomatic-node-wave--lost path {
+  stroke: var(--theme-terracota);
+  stroke-width: 4;
+}
+
+.axiomatic-node-wave--restored circle {
+  stroke: var(--theme-carbon);
+  stroke-width: 2.5;
+}
+
+@keyframes axiomatic-wave-fade {
+  to { opacity: 0; }
+}
+
+.axiomatic-wave-notice {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  z-index: 30;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.axiomatic-wave-notice__text {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 25%, transparent);
+  border-top: 3px solid var(--theme-terracota);
+  border-radius: 4px;
+  background: var(--theme-lienzo);
+  color: var(--theme-carbon);
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-variant-numeric: oldstyle-nums;
+  animation: axiomatic-notice 4200ms ease both;
+}
+
+@keyframes axiomatic-notice {
+  0% { opacity: 0; transform: translateY(6px); }
+  8%, 85% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
+}
+
+/* Selector de demostración del panel de detalle. */
+.axiomatic-proof-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.axiomatic-proof-switch__option {
+  padding: 0.25rem 0.5rem;
+  border-left: 2px solid transparent;
+  color: color-mix(in srgb, var(--theme-carbon) 70%, transparent);
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  text-align: left;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.axiomatic-proof-switch__option:hover {
+  color: var(--theme-carbon);
+}
+
+.axiomatic-proof-switch__option[aria-checked='true'] {
+  border-left-color: var(--hover-accent, var(--theme-terracota));
+  color: var(--theme-carbon);
+}
+
+.axiomatic-proof-switch__option:focus-visible {
+  outline: 2px solid var(--theme-terracota);
+  outline-offset: 2px;
+}
+
+/*
+ * Las propagaciones solo cambian trazo, color y opacidad, sin desplazar nada, y explican qué
+ * depende de qué: se mantienen con movimiento reducido. Solo la cartela deja de deslizarse.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .axiomatic-wave-notice__text {
+    animation-name: axiomatic-notice-still;
+  }
+}
+
+@keyframes axiomatic-notice-still {
+  0% { opacity: 0; }
+  8%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* Los nodos axiomáticos conservan el acento editorial pleno. El lienzo actúa
    como tinta y se invierte con el tema: papel claro de día, códice de noche. */
 .axiomatic-math-node {
