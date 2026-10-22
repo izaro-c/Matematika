@@ -9,7 +9,6 @@ import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
 import { CanvasControlContext } from '@/diagrams/render/CanvasControlContext';
 import type { Mathematician, Theorem } from '@/data/content/types';
-import { getBioProto, ProtoTime } from './BiographyProto';
 
 // Lámina de muestra: sin cabecera ni barra; el tablero no responde (la lámina es un enlace).
 const PLATE_CONTROL = { onComplete: () => {}, isCompleted: false, hideHeader: true };
@@ -81,12 +80,11 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, met
 
   const byAuthor = <T extends { authors?: string[] }>(items: T[]) => items.filter((item) => item.authors?.includes(id));
   const theorems = db.getTheoremsByAuthor(id, lang);
-  const proto = getBioProto();
   const demos = byAuthor(db.getAllDemos(lang));
   const systems = byAuthor(db.getAllAxiomaticSystems(lang));
 
   return (
-    <article className="ac-bio" data-proto={proto ?? undefined}>
+    <article className="ac-bio">
       <header className="ac-bio__plate">
         <figure className="ac-bio__portrait" data-empty={!image || undefined}>
           {image ? (
@@ -105,7 +103,6 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, met
       </header>
 
       <div className="ac-bio__text font-serif">
-        {proto === 'time' && <ProtoTime id={id} />}
         <ContentBody>
           <Component />
         </ContentBody>
