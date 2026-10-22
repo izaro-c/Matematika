@@ -10,7 +10,6 @@ describe('ConceptLink & MarginaliaPanel Integration', () => {
     useGlossaryStore.setState({
       activeTerms: null,
       activeFormulaTerms: null,
-      displayMode: 'sidebar',
     });
   });
 
@@ -50,7 +49,7 @@ describe('ConceptLink & MarginaliaPanel Integration', () => {
     expect(link.getAttribute('href')).toContain('/construccion/concepto-inexistente-123');
   });
 
-  it('shows article content and "Leer artículo completo" link in MarginaliaPanel for DB entities', () => {
+  it('shows article content and a «Véase» link to the article in MarginaliaPanel for DB entities', () => {
     useGlossaryStore.getState().openTerm('punto');
 
     render(<MarginaliaPanel />);
@@ -58,8 +57,8 @@ describe('ConceptLink & MarginaliaPanel Integration', () => {
     // Shows title in panel
     expect(screen.getByRole('heading', { name: /Punto/i, level: 2 })).toBeDefined();
 
-    // Shows "Leer artículo completo" link pointing to the article
-    const fullArticleLink = screen.getByRole('link', { name: /Leer artículo completo/i });
+    // «Véase Punto.» links to the article
+    const fullArticleLink = screen.getByRole('link', { name: /Punto/i });
     expect(fullArticleLink).toBeDefined();
     expect(fullArticleLink.getAttribute('href')).toContain('/definicion/punto');
 
@@ -87,6 +86,6 @@ describe('ConceptLink & MarginaliaPanel Integration', () => {
     expect(screen.queryByRole('heading', { name: /Punto/i, level: 2 })).toBeNull();
     expect(screen.getByRole('heading', { name: /Implicación/i, level: 2 })).toBeDefined();
     expect(screen.getByRole('heading', { name: /Cuantificador Universal/i, level: 2 })).toBeDefined();
-    expect(screen.queryByRole('link', { name: /Leer artículo completo/i })).toBeNull();
+    expect(screen.queryByRole('link')).toBeNull();
   });
 });

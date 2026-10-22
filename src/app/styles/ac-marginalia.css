@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Marginalia (MarginaliaPanel.tsx)
+   Ficha de los ConceptLink y del analizador de fórmulas, en la voz del
+   vocabulario (ac-vocab.css): palabra en Fondamento, tipo en versalitas,
+   filete corto del color del tipo, definición en cursiva y «Véase …».
+   Panel lateral a la derecha; por debajo de 40 rem, hoja desde abajo.
+   Color del tipo en --type-acc. La sombra es oscura en los dos temas
+   (--theme-carbon se aclara en oscuro), en --marg-shade.
+   ========================================================================== */
+
+:root { --marg-shade: #16120e; }
+
+.ac-marg-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: color-mix(in srgb, var(--marg-shade) 45%, transparent);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transition: opacity 300ms var(--ease-panels);
+}
+.ac-marg-veil[data-open] { opacity: 1; pointer-events: auto; }
+
+.ac-marg {
+  --type-acc: var(--theme-carbon);
+  position: fixed;
+  z-index: 80;
+  inset-block: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 28rem);
+  background: var(--theme-lienzo);
+  border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+  box-shadow: -18px 0 40px -24px color-mix(in srgb, var(--marg-shade) 60%, transparent);
+  color: var(--ink-text-body);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 300ms var(--ease-panels), visibility 0s linear 300ms;
+}
+.ac-marg[data-open] {
+  transform: none;
+  visibility: visible;
+  transition: transform 300ms var(--ease-panels), visibility 0s;
+}
+
+.ac-marg__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--ink-text-muted);
+  border-radius: 2px;
+}
+.ac-marg__close:hover { color: var(--ink-text); }
+
+.ac-marg__scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4rem 2.5rem 3rem;
+}
+
+.ac-marg__entry {
+  --type-ink: color-mix(in srgb, var(--type-acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+}
+.ac-marg__entry + .ac-marg__entry { margin-top: 2.5rem; }
+
+.ac-marg__head { text-wrap: balance; }
+.ac-marg__word {
+  display: inline;
+  font-family: var(--font-title-family);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: var(--ink-text);
+  text-wrap: balance;
+}
+.ac-marg__type { margin-left: 0.5rem; font-size: 1.0625rem; color: var(--type-ink); white-space: nowrap; }
+
+.ac-marg__line {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin-block: 0.75rem 0.875rem;
+  background: var(--type-acc);
+}
+
+.ac-marg__def {
+  font-style: italic;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.ac-marg__statement {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 1px solid color-mix(in srgb, var(--type-acc) 55%, transparent);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.ac-marg__statement .ac-rubric { color: var(--type-ink); }
+
+.ac-marg__equation {
+  margin-top: 1rem;
+  overflow-x: auto;
+  font-size: 1.25rem;
+  color: var(--ink-text);
+}
+
+.ac-marg__see {
+  margin-top: 0.875rem;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ink-text-muted);
+}
+.ac-marg__see a {
+  font-style: normal;
+  color: var(--theme-terracota);
+}
+.ac-marg__see a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.ac-marg__empty {
+  margin-top: 3rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-text-muted);
+}
+
+.ac-marg a:focus-visible,
+.ac-marg button:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+
+/* Móvil: hoja desde abajo con la altura del contenido */
+@media (max-width: 40rem) {
+  .ac-marg {
+    inset-block: auto 0;
+    left: 0;
+    width: 100%;
+    max-height: 80dvh;
+    border-left: none;
+    border-top: 3px solid var(--type-acc);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -18px 40px -24px color-mix(in srgb, var(--marg-shade) 60%, transparent);
+    transform: translateY(100%);
+  }
+  .ac-marg__scroll { padding: 3.5rem 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px)); }
+  .ac-marg__word { font-size: 1.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-marg, .ac-marg[data-open], .ac-marg-veil { transition: none; }
+}

@@ -4,16 +4,16 @@ import { db } from "@/data/content";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { FadeIn } from '@/components/ui/FadeIn';
-import { ContentCard } from '@/components/ui/ContentCard';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { DiagramSlot } from '@/components/ui/skeletons';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { MaterialPracticoSection } from '@/components/content/MaterialPracticoSection';
 import { AplicacionesSection } from '@/components/content/AplicacionesSection';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
-import { SectionTitle } from '@/components/ui/SectionTitle';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { NotFoundState } from '@/components/ui/NotFoundState';
+import { getContentTypeLabel } from '@/lib/theme/constants';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 
 /**
@@ -23,6 +23,7 @@ export const TheoremPage = () => {
   const { id } = useParams();
   const slug = id || '';
   const { lang, t, currentLanguage, getLocalizedPath } = useI18n();
+  const { isRead } = useProgressStore();
 
   const theorem = id ? db.getTheorem(id, lang) : undefined;
   const isFallback = id ? db.isFallback(id, lang) : false;
@@ -34,7 +35,7 @@ export const TheoremPage = () => {
   const parentTheorem = theorem?.parentTheorem ? db.getTheorem(theorem.parentTheorem, lang) : null;
   const examples = theorem ? db.getExamplesByTheorem(theorem.id, lang) : [];
   const exercises = theorem ? db.getExercisesByTheorem(theorem.id, lang) : [];
-  const useCases = theorem ? db.getUseCasesByConcept(theorem.id) : [];
+  const useCases = theorem ? db.getUseCasesByConcept(theorem.id, lang) : [];
 
   const typesDict = currentLanguage.dictionary.metadata.types;
   const displayType = theorem ? (typesDict[theorem.type as keyof typeof typesDict] || typesDict['teorema'] || 'Teorema') : 'Teorema';
@@ -87,72 +88,48 @@ export const TheoremPage = () => {
   const renderSecondaryContent = () => (
     <FadeIn>
       {demos.length > 0 && (
-        <section id="demostraciones" className="mb-20">
-          <SectionTitle>{t('content', 'availableDemos')}</SectionTitle>
-          <div className="grid gap-4 lg:grid-cols-2">
-            {demos.map(demo => (
-              <ContentCard
-                key={demo.slug}
-                href={getLocalizedPath(`/demo/${demo.id}`)}
-                title={demo.title}
-                description={demo.description}
-                type="demostracion"
-                layout="default"
-                actionLabel={t('content', 'explore')}
-              />
-            ))}
-          </div>
-        </section>
+        <VocabSection id="demostraciones" heading={getContentTypeLabel('demostracion', 'plural', lang)} accentType="demostracion" count={demos.length}>
+          {demos.map(demo => (
+            <VocabEntry
+              key={demo.slug}
+              href={getLocalizedPath(`/demo/${demo.id}`)}
+              title={demo.title}
+              description={demo.description}
+              read={isRead(demo.id)}
+            />
+          ))}
+        </VocabSection>
       )}
 
-      {(examples.length > 0 || exercises.length > 0) && (
-        <section id="material-practico" className="mb-20">
-          <MaterialPracticoSection examples={examples} exercises={exercises} />
-        </section>
-      )}
-
-      {useCases.length > 0 && (
-        <section id="aplicaciones" className="mb-20">
-          <AplicacionesSection useCases={useCases} />
-        </section>
-      )}
+      <MaterialPracticoSection examples={examples} exercises={exercises} />
+      <AplicacionesSection useCases={useCases} />
 
       {lemmas.length > 0 && (
-        <section id="lemas" className="my-16">
-          <SubtleSeparator />
-          <SectionTitle>{t('content', 'previousLemmas')}</SectionTitle>
-          <div className="grid gap-4 lg:grid-cols-2">
-            {lemmas.map(lem => (
-              <ContentCard
-                key={lem.slug}
-                href={getLocalizedPath(`/teorema/${lem.id}`)}
-                title={lem.title}
-                description={lem.description}
-                type="lema"
-                layout="row"
-              />
-            ))}
-          </div>
-        </section>
+        <VocabSection id="lemas" heading={t('content', 'previousLemmas')} accentType="lema" count={lemmas.length}>
+          {lemmas.map(lem => (
+            <VocabEntry
+              key={lem.slug}
+              href={getLocalizedPath(`/teorema/${lem.id}`)}
+              title={lem.title}
+              description={lem.description}
+              read={isRead(lem.id)}
+            />
+          ))}
+        </VocabSection>
       )}
 
       {corollaries.length > 0 && (
-        <section id="corolarios" className="my-16">
-          <SubtleSeparator />
-          <SectionTitle>{t('content', 'derivedCorollaries')}</SectionTitle>
-          <div className="grid gap-4 lg:grid-cols-2">
-            {corollaries.map(cor => (
-              <ContentCard
-                key={cor.slug}
-                href={getLocalizedPath(`/teorema/${cor.id}`)}
-                title={cor.title}
-                description={cor.description}
-                type="corolario"
-                layout="row"
-              />
-            ))}
-          </div>
-        </section>
+        <VocabSection id="corolarios" heading={t('content', 'derivedCorollaries')} accentType="corolario" count={corollaries.length}>
+          {corollaries.map(cor => (
+            <VocabEntry
+              key={cor.slug}
+              href={getLocalizedPath(`/teorema/${cor.id}`)}
+              title={cor.title}
+              description={cor.description}
+              read={isRead(cor.id)}
+            />
+          ))}
+        </VocabSection>
       )}
     </FadeIn>
   );

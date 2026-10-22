@@ -3,9 +3,9 @@ import { db } from '@/data/content';
 import { mscNames, getMscName } from '@/data/content/msc2020';
 import { getLibrarySection } from '@/data/content/librarySections';
 import { NotFoundState } from '@/components/ui/NotFoundState';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { getContentTypeLabel } from '@/lib/theme/constants';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
-import { getContentPageAccent } from '@/design/pageAccents';
 import { useI18n } from '@/i18n';
 
 type Entry = {
@@ -163,27 +163,19 @@ export const BranchPage = () => {
         )}
 
         {groupByType(entries).map(({ type, list }) => (
-          <section key={type} className="ac-vocab" style={{ ['--type-acc' as string]: getContentPageAccent(ACCENT_TYPES[type]) }}>
-            <div className="ac-vocab__head">
-              <h2 className="ac-vocab__heading">{getContentTypeLabel(typeLabelKey(type), 'plural', lang)}</h2>
-              <span className="ac-vocab__rule" aria-hidden="true" />
-              <span className="ac-vocab__count ac-rubric">{list.length}</span>
-            </div>
-            <dl className="ac-vocab__list">
-              {list.map(entry => (
-                <div key={entry.item.id} className="ac-vocab__entry" data-read={isRead(entry.item.id) || undefined}>
-                  <dt>
-                    <Link href={getLocalizedPath(itemHref(entry))} className="ac-vocab__word">{entryTitle(entry)}</Link>
-                    {entry.subBranchSlug && isMscCode(entry.subBranchSlug) && (
-                      <span className="ac-vocab__tome ac-rubric" title={getMscName(entry.subBranchSlug, lang)}>{entry.subBranchSlug}</span>
-                    )}
-                  </dt>
-                  <span className="ac-vocab__line" aria-hidden="true" />
-                  {entry.item.description && <dd>{entry.item.description}</dd>}
-                </div>
-              ))}
-            </dl>
-          </section>
+          <VocabSection key={type} heading={getContentTypeLabel(typeLabelKey(type), 'plural', lang)} accentType={ACCENT_TYPES[type]} count={list.length}>
+            {list.map(entry => (
+              <VocabEntry
+                key={entry.item.id}
+                href={getLocalizedPath(itemHref(entry))}
+                title={entryTitle(entry)}
+                description={entry.item.description}
+                read={isRead(entry.item.id)}
+                aside={entry.subBranchSlug && isMscCode(entry.subBranchSlug) ? entry.subBranchSlug : undefined}
+                asideTitle={entry.subBranchSlug ? getMscName(entry.subBranchSlug, lang) : undefined}
+              />
+            ))}
+          </VocabSection>
         ))}
       </div>
     </main>

@@ -848,49 +848,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 2px;
 }
 
-/* === SEPARADOR SUTIL PARA SECCIONES RELACIONALES ===
- * Usado entre bloques relacionales (Material Práctico, Aplicaciones, etc.)
- * Más sutil que el <Separador /> MDX (que lleva ornamento ✦).
- */
-.subtle-separator {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 4rem 0;
-  opacity: 0.5;
-}
-
-.subtle-separator::before,
-.subtle-separator::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: color-mix(in srgb, var(--theme-carbon) 25%, transparent);
-}
-
-.subtle-separator-ornament {
-  color: color-mix(in srgb, var(--theme-terracota) 60%, transparent);
-  font-size: 0.75rem;
-}
-
-/* === PAPPER/PERGAMINO TEXTURE para MarginaliaPanel === */
-.parchment-panel {
-  background-color: var(--theme-lienzo);
-  background-image:
-    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--theme-ocre) 5%, transparent) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--theme-terracota) 4%, transparent) 0%, transparent 40%);
-}
-
-.parchment-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 8%, transparent);
-  outline-offset: -6px;
-  pointer-events: none;
-}
-
 /* === TOUCH TARGETS MÓVIL ===
  * Aumenta áreas tocables en pantallas pequeñas para mejor UX móvil.
  */

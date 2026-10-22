@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import type React from 'react';
 import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import type { 
@@ -8,7 +9,7 @@ import type {
 } from '@/data/content';
 import katex from 'katex';
 import { Link } from 'wouter';
-import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
+import { getContentTypeLabel } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design/pageAccents';
 import { useI18n } from '@/i18n';
 
@@ -149,18 +150,6 @@ function buildActiveTermDataList(activeTerms: string[] | null, lang: string = 'e
   return result;
 }
 
-function computePanelClassName(isSidebar: boolean, isActive: boolean): string {
-  let base = 'parchment-panel fixed z-[80] shadow-2xl flex flex-col font-serif transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
-  if (isSidebar) {
-    base += ' inset-y-0 right-0 h-dvh min-h-[100dvh] w-full max-w-md';
-    base += isActive ? ' translate-x-0' : ' translate-x-full pointer-events-none';
-  } else {
-    base += ' top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xl max-h-[85dvh]';
-    base += isActive ? ' opacity-100 scale-100' : ' opacity-0 scale-95 pointer-events-none';
-  }
-  return base;
-}
-
 function buildFormulaData(activeFormulaTerms: string[] | null, lang: string = 'es'): TermData[] | null {
   if (!activeFormulaTerms) return null;
   const dict = getGlossaryDictionary(lang);
@@ -173,23 +162,6 @@ function renderMathString(mathString: string): { __html: string } {
   } catch {
     return { __html: mathString };
   }
-}
-
-function renderTitleParts(title: string): React.ReactNode {
-  // Split on parenthesized groups, keeping the delimiters as captured groups
-  const parts = title.split(/(\([^)]*\))/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('(') && part.endsWith(')')) {
-      // Keep the preceding space glued to the opening paren so "Word (X)"
-      // doesn't break between "Word" and "(X)"
-      return (
-        <span key={i} style={{ whiteSpace: 'nowrap' }}>
-          {part}
-        </span>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
 }
 
 function renderTextWithMath(text: string): React.ReactNode {
@@ -208,9 +180,53 @@ function renderTextWithMath(text: string): React.ReactNode {
   });
 }
 
-export const MarginaliaPanel = () => {
-  const { activeTerms, activeFormulaTerms, closeTerm, displayMode, toggleDisplayMode } = useGlossaryStore();
+interface MarginaliaEntryProps {
+  term: TermData;
+  /** Enlace «Véase …» al artículo completo (solo entradas de la base de datos) */
+  href?: string;
+  /** Sin tipo en el análisis de fórmulas: todos los símbolos son del glosario */
+  showType?: boolean;
+  onFollow: () => void;
+}
+
+/** Voz de la marginalia: la de vocabulario (palabra, tipo en versalitas, filete corto) en entrada compacta con «Véase». */
+const MarginaliaEntry = ({ term, href, showType = true, onFollow }: MarginaliaEntryProps) => {
   const { lang, t, getLocalizedPath } = useI18n();
+  const type = term.type ?? 'glosario';
+  const typeLabel = (term.typeLabel ?? getContentTypeLabel(type, 'singular', lang)).toLocaleLowerCase(lang);
+
+  return (
+    <article className="ac-marg__entry" style={{ ['--type-acc' as string]: getContentPageAccent(type) }}>
+      <div className="ac-marg__head">
+        <h2 className="ac-marg__word">{term.title}</h2>
+        {showType && <span className="ac-marg__type ac-rubric">{typeLabel}</span>}
+      </div>
+      <span className="ac-marg__line" aria-hidden="true" />
+      {term.definition && <p className="ac-marg__def">{renderTextWithMath(term.definition)}</p>}
+      {term.statement && (
+        <p className="ac-marg__statement">
+          <span className="ac-rubric">{t('marginalia', 'statement').toLocaleLowerCase(lang)}.</span> {renderTextWithMath(term.statement)}
+        </p>
+      )}
+      {term.equation && (
+        <div className="ac-marg__equation" dangerouslySetInnerHTML={renderMathString(term.equation)} />
+      )}
+      {href && (
+        <p className="ac-marg__see">
+          {t('marginalia', 'see')} <Link href={getLocalizedPath(href)} onClick={onFollow}>{term.title}</Link>.
+        </p>
+      )}
+    </article>
+  );
+};
+
+/**
+ * Marginalia: ficha que abren `ConceptLink` y el analizador de fórmulas.
+ * Panel lateral a la derecha; en móvil, hoja desde abajo (ac-marginalia.css).
+ */
+export const MarginaliaPanel = () => {
+  const { activeTerms, activeFormulaTerms, closeTerm } = useGlossaryStore();
+  const { lang, t } = useI18n();
   const activeTermsKey = activeTerms ? activeTerms.join(',') : '';
   const activeFormulaTermsKey = activeFormulaTerms ? activeFormulaTerms.join(',') : '';
 
@@ -241,6 +257,13 @@ export const MarginaliaPanel = () => {
     }
   }, [isTermsActive, isFormulaActive, activeTermDataList, formulaData]);
 
+  useEffect(() => {
+    if (!isActive) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeTerm(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isActive, closeTerm]);
+
   const currentType = isTermsActive
     ? 'terms'
     : isFormulaActive
@@ -250,184 +273,46 @@ export const MarginaliaPanel = () => {
   const displayedTermDataList = isTermsActive ? activeTermDataList : cachedTerms;
   const displayedFormulaData = isFormulaActive ? formulaData : cachedFormulas;
 
-  const isSidebar = displayMode === 'sidebar';
-  const panelClassName = computePanelClassName(isSidebar, isActive);
-
-  // Resolver el color del panel a partir del primer término visible (fallback glosario -> piedra)
+  // Color del panel: el del primer término visible (glosario por defecto)
   const firstType = currentType === 'formula'
     ? (displayedFormulaData?.[0]?.type || 'glosario')
     : (displayedTermDataList[0]?.type || 'glosario');
-  const panelAccent = getContentPageAccent(firstType);
 
   let panelContent: React.ReactNode;
   if (currentType === 'terms' && displayedTermDataList.length > 0) {
-    panelContent = (
-      <div className="flex flex-col">
-        {displayedTermDataList.map((term, idx) => {
-          const accent = getContentPageAccent(term.type);
-          return (
-            <article
-              key={idx}
-              className="mb-12 last:mb-0"
-              style={{ '--page-accent': accent } as React.CSSProperties}
-            >
-              {term.type && (
-                <div className="mb-4">
-                  <ContentTypeBadge type={term.type} label={term.typeLabel} />
-                </div>
-              )}
-              <h2
-                className="text-4xl md:text-5xl text-carbon mb-4 font-bold leading-tight"
-              >
-                <span className="page-accent-text float-left text-5xl md:text-6xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
-                  {term.title.charAt(0)}
-                </span>
-                {renderTitleParts(term.title.slice(1))}
-              </h2>
-              <div className="flex items-center gap-3 my-6 opacity-50">
-                <div className="page-accent-bg w-12 h-px opacity-60" />
-                <span className="page-accent-text opacity-60 text-xs">✦</span>
-                <div className="flex-1 h-px bg-carbon/15" />
-              </div>
-              <p className="page-accent-border text-lg text-carbon/85 leading-relaxed italic border-l-2 pl-5 mb-6">
-                {term.definition}
-              </p>
-              {term.statement && (
-                <div className="page-accent-border mt-6 p-5 border-l-4" style={{ backgroundColor: 'color-mix(in srgb, var(--page-accent) 4%, transparent)' }}>
-                  <h5 className="page-accent-text ac-label ac-label--sm mb-3">
-                    {t('marginalia', 'statement')}
-                  </h5>
-                  <p className="italic text-carbon/90 m-0 leading-relaxed text-base">
-                    {renderTextWithMath(term.statement)}
-                  </p>
-                </div>
-              )}
-              {term.equation && (
-                <div
-                  className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
-                  dangerouslySetInnerHTML={renderMathString(term.equation)}
-                />
-              )}
-              {term.isDefinition && term.href && (
-                <div className="mt-10 text-center">
-                  <Link
-                    href={getLocalizedPath(term.href)}
-                    onClick={closeTerm}
-                    className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"
-                  >
-                    {t('glossary', 'readFullArticle')}
-                  </Link>
-                </div>
-              )}
-              {idx < displayedTermDataList.length - 1 && (
-                <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
-              )}
-            </article>
-          );
-        })}
-      </div>
-    );
+    panelContent = displayedTermDataList.map((term, idx) => (
+      <MarginaliaEntry key={idx} term={term} href={term.isDefinition ? term.href : undefined} onFollow={closeTerm} />
+    ));
   } else if (displayedFormulaData && displayedFormulaData.length > 0) {
-    panelContent = (
-      <div className="flex flex-col">
-        {displayedFormulaData.map((data, idx) => {
-          const accent = getContentPageAccent(data.type ?? 'glosario');
-          return (
-            <article
-              key={idx}
-              className="mb-12 last:mb-0"
-              style={{ '--page-accent': accent } as React.CSSProperties}
-            >
-              <h2 className="text-4xl text-carbon mb-4 font-bold">
-                <span className="page-accent-text float-left text-5xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
-                  {data.title.charAt(0)}
-                </span>
-                {renderTitleParts(data.title.slice(1))}
-              </h2>
-              <div className="flex items-center gap-3 my-6 opacity-50">
-                <div className="page-accent-bg w-12 h-px opacity-60" />
-                <span className="page-accent-text opacity-60 text-xs">✦</span>
-                <div className="flex-1 h-px bg-carbon/15" />
-              </div>
-              <p className="page-accent-border text-lg text-carbon/85 leading-relaxed italic border-l-2 pl-5">
-                {data.definition}
-              </p>
-              {data.equation && (
-                <div
-                  className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
-                  dangerouslySetInnerHTML={renderMathString(data.equation)}
-                />
-              )}
-              {idx < displayedFormulaData.length - 1 && (
-                <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
-              )}
-            </article>
-          );
-        })}
-      </div>
-    );
+    panelContent = displayedFormulaData.map((data, idx) => (
+      <MarginaliaEntry key={idx} term={data} showType={false} onFollow={closeTerm} />
+    ));
   } else {
-    panelContent = (
-      <p className="italic text-ink-muted text-center mt-12">{t('marginalia', 'noSymbolsFound')}</p>
-    );
+    panelContent = <p className="ac-marg__empty">{t('marginalia', 'noSymbolsFound')}</p>;
   }
 
   return (
     <>
+      <div className="ac-marg-veil" data-open={isActive || undefined} onClick={closeTerm} aria-hidden="true" />
       <div
-        className={`fixed inset-0 bg-carbon/30 backdrop-blur-sm z-[70] touch-none transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={closeTerm}
-        aria-hidden="true"
-      />
-
-      <div
-        className={panelClassName}
-        style={{ '--page-accent': panelAccent } as React.CSSProperties}
+        className="ac-marg"
+        data-open={isActive || undefined}
+        style={{ ['--type-acc' as string]: getContentPageAccent(firstType) }}
         role="dialog"
         aria-modal={isActive}
         aria-hidden={!isActive}
         aria-label={t('marginalia', 'dialogAriaLabel')}
+        inert={!isActive}
       >
-        <div className="h-full flex flex-col relative overflow-hidden">
-          <div className="absolute top-4 right-4 flex gap-2 text-ink-muted font-sans z-20">
-            <button
-              type="button"
-              onClick={toggleDisplayMode}
-              className="ac-hit-target page-accent-hover transition-colors text-sm inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              title={isSidebar ? t('marginalia', 'switchToFloating') : t('marginalia', 'switchToSidebar')}
-              aria-label={t('marginalia', 'changeDisplayMode')}
-            >
-              {isSidebar ? '⧉' : '◫'}
-            </button>
-            <button
-              type="button"
-              onClick={closeTerm}
-              className="ac-hit-target page-accent-hover transition-colors text-2xl leading-none inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              aria-label={t('marginalia', 'closePanel')}
-            >
-              ×
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto overscroll-contain h-full relative">
-            <div className="p-10 md:p-12 min-h-full flex flex-col relative">
-              <div className="page-accent-border absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 opacity-40 pointer-events-none" aria-hidden />
-              <div className="page-accent-border absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 opacity-40 pointer-events-none" aria-hidden />
-              <div className="page-accent-border absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 opacity-40 pointer-events-none" aria-hidden />
-              <div className="page-accent-border absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 opacity-40 pointer-events-none" aria-hidden />
-
-              <div className="mt-2 flex-1">
-                {panelContent}
-              </div>
-
-              {isSidebar && (
-                <div className="page-accent-text mt-auto pt-8 flex-none flex justify-center opacity-30 text-sm">❦</div>
-              )}
-            </div>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={closeTerm}
+          className="ac-marg__close ac-hit-target"
+          aria-label={t('marginalia', 'closePanel')}
+        >
+          ×
+        </button>
+        <div className="ac-marg__scroll">{panelContent}</div>
       </div>
     </>
   );

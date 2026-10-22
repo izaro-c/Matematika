@@ -1,37 +1,32 @@
 import React from 'react';
-import { SectionTitle } from '@/components/ui/SectionTitle';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
-import { ContentCard } from '@/components/ui/ContentCard';
-import { DOMAIN_ICONS } from '@/lib/theme/constants';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import type { UseCase } from '@/data/content/types';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 
 interface AplicacionesSectionProps {
   useCases: UseCase[];
+  heading?: React.ReactNode;
 }
 
-export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCases }) => {
+/** Casos de uso al pie de la página; el dominio va en versalitas junto a la voz. */
+export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCases, heading }) => {
   const { t, getLocalizedPath } = useI18n();
+  const { isRead } = useProgressStore();
   if (useCases.length === 0) return null;
 
   return (
-    <section className="my-24">
-      <SubtleSeparator />
-      <SectionTitle>{t('common', 'realWorldApplications')}</SectionTitle>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {useCases.map(uc => (
-          <ContentCard
-            key={uc.slug}
-            href={getLocalizedPath(`/caso/${uc.slug}`)}
-            title={uc.title}
-            description={uc.description}
-            type="caso-de-uso"
-            domain={uc.domain}
-            domainIcon={uc.domain ? DOMAIN_ICONS[uc.domain.toLowerCase()] : undefined}
-            actionLabel={t('content', 'exploreCase')}
-          />
-        ))}
-      </div>
-    </section>
+    <VocabSection id="aplicaciones" heading={heading ?? t('common', 'realWorldApplications')} accentType="caso-de-uso" count={useCases.length}>
+      {useCases.map(uc => (
+        <VocabEntry
+          key={uc.slug}
+          href={getLocalizedPath(`/caso/${uc.slug}`)}
+          title={uc.title}
+          description={uc.description}
+          read={isRead(uc.id)}
+          aside={uc.domain?.toLowerCase()}
+        />
+      ))}
+    </VocabSection>
   );
 };

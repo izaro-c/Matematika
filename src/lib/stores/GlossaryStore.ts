@@ -8,11 +8,9 @@ export type { GlossaryEntry, GlossaryCategory } from '@content/glossary/dictiona
 export interface GlossaryState {
   activeTerms: string[] | null;
   activeFormulaTerms: string[] | null;
-  displayMode: 'sidebar' | 'modal';
   openTerm: (termId: string | string[]) => void;
   openFormulaTerms: (termIds: string[]) => void;
   closeTerm: () => void;
-  toggleDisplayMode: () => void;
 }
 
 /**
@@ -22,9 +20,7 @@ export interface GlossaryState {
 export const useGlossaryStore = create<GlossaryState>((set) => ({
   activeTerms: null,
   activeFormulaTerms: null,
-  displayMode: 'sidebar',
   openTerm: (termId) => set({ activeTerms: Array.isArray(termId) ? termId : [termId], activeFormulaTerms: null }),
   openFormulaTerms: (termIds) => set({ activeFormulaTerms: termIds, activeTerms: null }),
   closeTerm: () => set({ activeTerms: null, activeFormulaTerms: null }),
-  toggleDisplayMode: () => set((state) => ({ displayMode: state.displayMode === 'sidebar' ? 'modal' : 'sidebar' }))
 }));

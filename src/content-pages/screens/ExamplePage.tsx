@@ -2,13 +2,13 @@ import { useParams } from 'wouter';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
-import { ContentCard } from '@/components/ui/ContentCard';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 import { NotFoundState } from '@/components/ui/NotFoundState';
 
@@ -20,6 +20,7 @@ import { NotFoundState } from '@/components/ui/NotFoundState';
 export const ExamplePage: React.FC = () => {
   const { id } = useParams();
   const { lang, getLocalizedPath, t } = useI18n();
+  const { isRead, isExerciseComplete } = useProgressStore();
   const slug = id || '';
   const example = db.getExample(slug, lang);
   const isFallback = slug ? db.isFallback(slug, lang) : false;
@@ -67,25 +68,17 @@ export const ExamplePage: React.FC = () => {
           <ReadingButton id={slug} />
 
           {relatedExercises.length > 0 && (
-            <section className="mt-16">
-              <SubtleSeparator />
-              <h3 className="ac-label ac-label--md ac-label--faint mb-4">
-                {t('content', 'practiceWithExercises')}
-              </h3>
-              <div className="flex flex-col gap-3 max-w-2xl">
-                {relatedExercises.map(ex => (
-                  <ContentCard
-                    key={ex.id}
-                    href={getLocalizedPath(`/ejercicio/${ex.id}`)}
-                    title={ex.title}
-                    description={ex.description}
-                    type="ejercicio"
-                    layout="row"
-                    actionLabel={t('content', 'practice')}
-                  />
-                ))}
-              </div>
-            </section>
+            <VocabSection heading={t('content', 'practiceWithExercises')} accentType="ejercicio" count={relatedExercises.length} className="mt-16">
+              {relatedExercises.map(ex => (
+                <VocabEntry
+                  key={ex.id}
+                  href={getLocalizedPath(`/ejercicio/${ex.id}`)}
+                  title={ex.title}
+                  description={ex.description}
+                  read={isExerciseComplete(ex.id) || isRead(ex.id)}
+                />
+              ))}
+            </VocabSection>
           )}
         </FadeIn>
       </div>

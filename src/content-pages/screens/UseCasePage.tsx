@@ -7,9 +7,8 @@ import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
-import { ContentCard } from '@/components/ui/ContentCard';
+import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { DOMAIN_ICONS, DOMAIN_COLORS } from '@/lib/theme/constants';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
@@ -125,24 +124,7 @@ export const UseCasePage: React.FC = () => {
 
         {related.length > 0 && (
           <div className="w-full px-6 md:px-10 pb-16">
-            <SubtleSeparator />
-            <h3 className="ac-label ac-label--md ac-label--faint mb-6">
-              {t('content', 'moreApplications')}
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {related.map(rel => (
-                <ContentCard
-                  key={rel.id}
-                  href={getLocalizedPath(`/caso/${rel.slug}`)}
-                  title={rel.title}
-                  description={rel.description}
-                  type="caso-de-uso"
-                  domain={rel.domain}
-                  domainIcon={rel.domain ? DOMAIN_ICONS[rel.domain.toLowerCase()] : undefined}
-                  actionLabel={t('content', 'explore')}
-                />
-              ))}
-            </div>
+            <AplicacionesSection useCases={related} heading={t('content', 'moreApplications')} />
           </div>
         )}
       </FadeIn>

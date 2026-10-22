@@ -4,10 +4,10 @@ import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayou
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
-import { ContentCard } from '@/components/ui/ContentCard';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 import { NotFoundState } from '@/components/ui/NotFoundState';
 
@@ -20,6 +20,7 @@ import { NotFoundState } from '@/components/ui/NotFoundState';
 export function AxiomaticSystemPage() {
   const { id } = useParams();
   const { lang, getLocalizedPath, t } = useI18n();
+  const { isRead } = useProgressStore();
   const slug = id || '';
   const system = slug ? db.getAxiomaticSystem(slug, lang) : undefined;
   const isFallback = slug ? db.isFallback(slug, lang) : false;
@@ -69,45 +70,31 @@ export function AxiomaticSystemPage() {
     <div className="w-full px-6 md:px-12 pb-32">
       <FadeIn>
         {axioms.length > 0 && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
-              {`${t('content', 'systemAxioms')} (${axioms.length})`}
-            </h2>
-            <div className="grid gap-4 lg:grid-cols-2">
-              {axioms.map(ax => ax && (
-                <ContentCard
-                  key={ax.id}
-                  href={getLocalizedPath(`/axioma/${ax.id}`)}
-                  title={ax.title}
-                  description={ax.description}
-                  type="axioma"
-                  layout="default"
-                />
-              ))}
-            </div>
-          </section>
+          <VocabSection heading={t('content', 'systemAxioms')} accentType="axioma" count={axioms.length} className="mt-16">
+            {axioms.map(ax => ax && (
+              <VocabEntry
+                key={ax.id}
+                href={getLocalizedPath(`/axioma/${ax.id}`)}
+                title={ax.title}
+                description={ax.description}
+                read={isRead(ax.id)}
+              />
+            ))}
+          </VocabSection>
         )}
 
         {models.length > 0 && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
-              {`${t('content', 'modelsSatisfyingSystem')} (${models.length})`}
-            </h2>
-            <div className="grid gap-4 lg:grid-cols-2">
-              {models.map(m => (
-                <ContentCard
-                  key={m.id}
-                  href={getLocalizedPath(`/modelo/${m.id}`)}
-                  title={m.title}
-                  description={m.description}
-                  type="modelo"
-                  layout="default"
-                />
-              ))}
-            </div>
-          </section>
+          <VocabSection heading={t('content', 'modelsSatisfyingSystem')} accentType="modelo" count={models.length} className="mt-16">
+            {models.map(m => m && (
+              <VocabEntry
+                key={m.id}
+                href={getLocalizedPath(`/modelo/${m.id}`)}
+                title={m.title}
+                description={m.description}
+                read={isRead(m.id)}
+              />
+            ))}
+          </VocabSection>
         )}
 
 

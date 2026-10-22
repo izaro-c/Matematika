@@ -131,9 +131,7 @@
 }
 
 /* Ornamentos */
-.ac-ink-scope .content-header__accent-rule,
-.ac-ink-scope .subtle-separator::before,
-.ac-ink-scope .subtle-separator::after {
+.ac-ink-scope .content-header__accent-rule {
   opacity: var(--ink-stroke-opacity);
 }
 

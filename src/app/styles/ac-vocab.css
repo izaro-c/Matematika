@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Vocabulario (Vocabulary.tsx)
+   Encabezado de cada tipo en su color, con filete y recuento; cada voz con
+   el filete corto que se alarga al señalarla (como en /diccionario).
+   Lo usan las páginas de rama y los enlaces al pie de las páginas de contenido.
+   Color del tipo en --type-acc.
+   ========================================================================== */
+
+.ac-vocab {
+  --type-acc: var(--theme-carbon);
+  --type-ink: color-mix(in srgb, var(--type-acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+  container-type: inline-size;
+  color: var(--ink-text-body);
+}
+.ac-vocab + .ac-vocab { margin-top: 4rem; }
+
+.ac-vocab__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+.ac-vocab__heading {
+  font-family: var(--font-title-family);
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.125rem);
+  line-height: 1.1;
+  color: var(--type-ink);
+  text-wrap: balance;
+}
+.ac-vocab__rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: color-mix(in srgb, var(--type-acc) 35%, transparent);
+  transform: translateY(-0.35em);
+}
+.ac-vocab__count { flex: none; font-size: 1rem; font-variant-numeric: oldstyle-nums; color: var(--ink-text-muted); }
+
+/* Dos columnas según el ancho de la sección, no de la ventana: al pie de una
+   página con diagrama la columna de texto es estrecha. */
+.ac-vocab__list { display: grid; gap: 2.25rem 3rem; }
+@container (min-width: 40rem) {
+  .ac-vocab__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.ac-vocab__entry dt {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.ac-vocab__word {
+  min-width: 0;
+  font-family: var(--font-title-family);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--ink-text);
+  text-decoration: none;
+  text-wrap: balance;
+}
+.ac-vocab__word:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+.ac-vocab__aside { flex: none; font-size: 0.9375rem; font-variant-numeric: oldstyle-nums; color: var(--aside-ink, var(--type-ink)); }
+
+.ac-vocab__line {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin-block: 0.625rem 0.75rem;
+  background: color-mix(in srgb, var(--type-acc) 55%, transparent);
+  transition: width 500ms var(--ease-panels), background-color 500ms var(--ease-panels);
+}
+.ac-vocab__entry:hover .ac-vocab__line,
+.ac-vocab__entry:focus-within .ac-vocab__line { width: 100%; background: var(--type-acc); }
+.ac-vocab__entry:hover .ac-vocab__word { color: var(--type-ink); }
+
+.ac-vocab__entry dd {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Leída: la voz en tinta más clara */
+.ac-vocab__entry[data-read] .ac-vocab__word { color: var(--ink-text-subtle); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-vocab__line { transition: none; }
+}

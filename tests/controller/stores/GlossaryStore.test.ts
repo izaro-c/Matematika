@@ -6,7 +6,6 @@ describe('useGlossaryStore', () => {
     useGlossaryStore.setState({
       activeTerms: null,
       activeFormulaTerms: null,
-      displayMode: 'sidebar',
     });
   });
 
@@ -29,14 +28,6 @@ describe('useGlossaryStore', () => {
     useGlossaryStore.getState().closeTerm();
     expect(useGlossaryStore.getState().activeTerms).toBeNull();
     expect(useGlossaryStore.getState().activeFormulaTerms).toBeNull();
-  });
-
-  it('toggles display mode', () => {
-    expect(useGlossaryStore.getState().displayMode).toBe('sidebar');
-    useGlossaryStore.getState().toggleDisplayMode();
-    expect(useGlossaryStore.getState().displayMode).toBe('modal');
-    useGlossaryStore.getState().toggleDisplayMode();
-    expect(useGlossaryStore.getState().displayMode).toBe('sidebar');
   });
 });
 

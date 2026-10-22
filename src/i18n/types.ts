@@ -266,9 +266,7 @@ export interface TranslationDictionary {
     statement: string;
     noSymbolsFound: string;
     dialogAriaLabel: string;
-    switchToFloating: string;
-    switchToSidebar: string;
-    changeDisplayMode: string;
+    see: string;
     closePanel: string;
     analyzeFormulaSymbols: string;
     clickToAnalyzeExpression: string;
@@ -301,8 +299,6 @@ export interface TranslationDictionary {
     axioms: string;
     models: string;
     useCases: string;
-    availableDemos: string;
-    practicalMaterial: string;
     applications: string;
     previousLemmas: string;
     derivedCorollaries: string;
@@ -317,11 +313,7 @@ export interface TranslationDictionary {
     modelsSatisfyingSystem: string;
     resolvedExample: string;
     practiceWithExercises: string;
-    practice: string;
     moreApplications: string;
-    seeExample: string;
-    exploreCase: string;
-    seeContent: string;
     modelPrefix: string;
   };
   properties: {

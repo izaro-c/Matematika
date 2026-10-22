@@ -4,10 +4,10 @@ import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayou
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
-import { ContentCard } from '@/components/ui/ContentCard';
-import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
+import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useI18n } from '@/i18n';
 import { NotFoundState } from '@/components/ui/NotFoundState';
 
@@ -20,6 +20,7 @@ import { NotFoundState } from '@/components/ui/NotFoundState';
 export function ModelPage() {
   const { id } = useParams();
   const { lang, getLocalizedPath, t } = useI18n();
+  const { isRead } = useProgressStore();
   const slug = id || '';
   const isFallback = slug ? db.isFallback(slug, lang) : false;
   const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
@@ -32,45 +33,31 @@ export function ModelPage() {
   const renderSecondaryContent = () => (
     <FadeIn>
       {systems.length > 0 && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
-              {systems.length > 1 ? `${t('content', 'axiomaticSystems')} (${systems.length})` : t('content', 'axiomaticSystem')}
-            </h2>
-            <div className="grid gap-4 lg:grid-cols-2">
-              {systems.map(sys => sys && (
-                <ContentCard
-                  key={sys.id}
-                  href={getLocalizedPath(`/sistema/${sys.id}`)}
-                  title={sys.title}
-                  description={sys.description}
-                  type="sistema-axiomatico"
-                  layout="default"
-                />
-              ))}
-            </div>
-          </section>
+          <VocabSection heading={systems.length > 1 ? t('content', 'axiomaticSystems') : t('content', 'axiomaticSystem')} accentType="sistema-axiomatico" count={systems.length} className="mt-16">
+            {systems.map(sys => sys && (
+              <VocabEntry
+                key={sys.id}
+                href={getLocalizedPath(`/sistema/${sys.id}`)}
+                title={sys.title}
+                description={sys.description}
+                read={isRead(sys.id)}
+              />
+            ))}
+          </VocabSection>
         )}
 
         {verifiedAxioms.length > 0 && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
-              {`${t('content', 'verifiedAxioms')} (${verifiedAxioms.length})`}
-            </h2>
-            <div className="grid gap-4 lg:grid-cols-2">
-              {verifiedAxioms.map(ax => ax && (
-                <ContentCard
-                  key={ax.id}
-                  href={getLocalizedPath(`/axioma/${ax.id}`)}
-                  title={ax.title}
-                  description={ax.description}
-                  type="axioma"
-                  layout="default"
-                />
-              ))}
-            </div>
-          </section>
+          <VocabSection heading={t('content', 'verifiedAxioms')} accentType="axioma" count={verifiedAxioms.length} className="mt-16">
+            {verifiedAxioms.map(ax => ax && (
+              <VocabEntry
+                key={ax.id}
+                href={getLocalizedPath(`/axioma/${ax.id}`)}
+                title={ax.title}
+                description={ax.description}
+                read={isRead(ax.id)}
+              />
+            ))}
+          </VocabSection>
         )}
     </FadeIn>
   );
