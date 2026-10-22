@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
+import { formatLifeDates } from '@/lib/lifeDates';
 import { VocabSection, VocabEntry } from '@/components/ui/Vocabulary';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { getContentTypeLabel } from '@/lib/theme/constants';
@@ -65,18 +66,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, met
   const { id, name, title, country, image, birthYear, deathYear } = metadata;
   const displayName = title || name;
 
-  const bc = (year: string) => t('biography', 'bc', { year });
-  // Misma era en las dos fechas: «325–265 a. C.», «1862–1943»; si cruzan la era, cada una con la suya.
-  const formatDates = () => {
-    if (birthYear === undefined && deathYear === undefined) return null;
-    const one = (year: number) => (year < 0 ? bc(String(-year)) : String(year));
-    if (birthYear === undefined) return `– ${one(deathYear!)}`;
-    if (deathYear === undefined) return `${one(birthYear)} –`;
-    if (birthYear < 0 && deathYear < 0) return bc(`${-birthYear}–${-deathYear}`);
-    if (birthYear >= 0) return `${birthYear}–${deathYear}`;
-    return `${bc(String(-birthYear))} – ${t('biography', 'ad', { year: deathYear })}`;
-  };
-  const dates = formatDates();
+  const dates = formatLifeDates(t, birthYear, deathYear);
 
   const byAuthor = <T extends { authors?: string[] }>(items: T[]) => items.filter((item) => item.authors?.includes(id));
   const theorems = db.getTheoremsByAuthor(id, lang);

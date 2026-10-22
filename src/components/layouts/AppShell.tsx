@@ -44,6 +44,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   // En una rama, el marcapáginas es de la misma tela que el uñero y los tomos
   const branchAccent = canonical === 'rama' && routeId ? getLibrarySection(resolveBranchCode(routeId))?.accent : undefined;
+  // El índice biográfico lleva el marcapáginas del color de las biografías
+  const historyAccent = canonical === 'historia' ? getContentPageAccent('matematico') : undefined;
 
   // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en editores (/editor)
   const isEditor = location.split('/').includes('editor');
@@ -56,6 +58,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       style={
         pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties)
         : branchAccent ? ({ '--bookmark-pigment': `var(--cloth-${branchAccent})` } as React.CSSProperties)
+        : historyAccent ? ({ '--page-accent': historyAccent } as React.CSSProperties)
         : undefined
       }
     >

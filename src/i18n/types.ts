@@ -136,17 +136,10 @@ export interface TranslationDictionary {
   timeline: {
     title: string;
     eyebrow: string;
-    subtitle: string;
-    all: string;
-    noEntries: string;
-    antiquity: string;
-    classical: string;
-    medieval: string;
-    renaissance: string;
-    enlightenment: string;
-    modern: string;
-    contributions: string;
-    historicalDensity: string;
+    centuries: string;
+    century: string;
+    centuryBC: string;
+    gap: string;
   };
   biography: {
     bc: string;

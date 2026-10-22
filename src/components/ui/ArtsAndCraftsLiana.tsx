@@ -9,6 +9,8 @@ interface ArtsAndCraftsLianaProps {
   lianaHeadY: number;
   totalHeight: number;
   eraStops?: EraColorStop[];
+  /** Liana estrecha para el margen izquierdo en móvil: ondas y follaje más pequeños */
+  narrow?: boolean;
 }
 
 // ── 1. Constantes y Utilidades Matemáticas ────────────────────────────────────
@@ -112,20 +114,23 @@ const ArtsAndCraftsLeaf: React.FC<{ variant?: 'large' | 'small' }> = ({ variant 
   return (
     <g transform={`scale(${scale})`}>
       {/* Peciolo (tallito que une la hoja a la liana) */}
-      <path d="M 0,0 Q 8,-3 14,-1" className="stroke-canela/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
+      <path d="M 0,0 Q 8,-3 14,-1" fill="none" stroke="var(--leaf)" strokeOpacity="0.7" strokeWidth="0.9" strokeLinecap="round" />
       {/* Limbo foliar exterior */}
       <path
         d="M 14,-1 C 22,-12 42,-14 54,-2 C 40,6 26,8 14,-1 Z"
-        className="fill-canela/20 stroke-canela/60"
+        fill="var(--leaf)"
+        fillOpacity="0.2"
+        stroke="var(--leaf)"
+        strokeOpacity="0.6"
         strokeWidth="0.8"
         strokeLinejoin="round"
       />
       {/* Nervadura central */}
-      <path d="M 14,-1 Q 32,-3 48,-2" className="stroke-canela/40 fill-none" strokeWidth="0.5" />
+      <path d="M 14,-1 Q 32,-3 48,-2" fill="none" stroke="var(--leaf)" strokeOpacity="0.4" strokeWidth="0.5" />
       {/* Nervaduras secundarias */}
-      <path d="M 24,-2 Q 28,-7 34,-8" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
-      <path d="M 32,-2 Q 38,-6 44,-6" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
-      <path d="M 28,-1 Q 32,3 36,4" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
+      <path d="M 24,-2 Q 28,-7 34,-8" fill="none" stroke="var(--leaf)" strokeOpacity="0.3" strokeWidth="0.4" />
+      <path d="M 32,-2 Q 38,-6 44,-6" fill="none" stroke="var(--leaf)" strokeOpacity="0.3" strokeWidth="0.4" />
+      <path d="M 28,-1 Q 32,3 36,4" fill="none" stroke="var(--leaf)" strokeOpacity="0.3" strokeWidth="0.4" />
     </g>
   );
 };
@@ -137,7 +142,9 @@ const BotanicalSpiralTendril: React.FC = () => (
   <g>
     <path
       d="M 0,0 C 10,-8 18,-4 16,6 C 14,16 4,14 6,6 C 7.5,1.5 13,1 12,4 C 11.5,5.5 9.5,5 9.8,4.2"
-      className="stroke-canela/70 fill-none"
+      fill="none"
+      stroke="var(--leaf)"
+      strokeOpacity="0.7"
       strokeWidth="0.75"
       strokeLinecap="round"
     />
@@ -149,17 +156,23 @@ const BotanicalSpiralTendril: React.FC = () => (
  */
 const BotanicalBud: React.FC = () => (
   <g>
-    <path d="M 0,0 Q 6,-4 11,-2" className="stroke-canela/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
-    <path d="M 11,-2 L 15,-7 L 18,-2 Z" className="fill-canela/40 stroke-canela/70" strokeWidth="0.6" />
+    <path d="M 0,0 Q 6,-4 11,-2" fill="none" stroke="var(--leaf)" strokeOpacity="0.7" strokeWidth="0.9" strokeLinecap="round" />
+    <path d="M 11,-2 L 15,-7 L 18,-2 Z" fill="var(--leaf)" fillOpacity="0.4" stroke="var(--leaf)" strokeOpacity="0.7" strokeWidth="0.6" />
     <g transform="translate(15, -4) rotate(12)">
       <path
         d="M 0,0 C 6,-10 16,-12 16,-1 C 11,2 5,3 0,0 Z"
-        className="fill-terracota/35 stroke-terracota/70"
+        fill="var(--leaf)"
+        fillOpacity="0.35"
+        stroke="var(--leaf)"
+        strokeOpacity="0.7"
         strokeWidth="0.6"
       />
       <path
         d="M 0,0 C 7,-7 17,2 14,-2 C 10,4 4,3 0,0 Z"
-        className="fill-ocre/30 stroke-ocre/60"
+        fill="var(--leaf)"
+        fillOpacity="0.2"
+        stroke="var(--leaf)"
+        strokeOpacity="0.5"
         strokeWidth="0.5"
       />
     </g>
@@ -183,8 +196,12 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
   lianaHeadY,
   totalHeight,
   eraStops,
+  narrow = false,
 }) => {
-  const X_CENTER = 150;
+  const WIDTH = narrow ? 56 : 300;
+  const X_CENTER = WIDTH / 2;
+  const AMP = narrow ? 0.24 : 1;
+  const FOLIAGE = narrow ? 0.5 : 1;
   const SAMPLE_STEP = 28; // Muestreo denso para curvas de alta frecuencia
 
   // ── Generación de topología matemática ─────────────────────────────────────
@@ -199,17 +216,17 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
 
     // Ondas botánicas alargadas, fluidas y majestuosas (cruces cada ~330px)
     const samplePri = (y: number): Point => {
-      const w1 = Math.sin(y * 0.0095) * 46; // Curvas alargadas
-      const w2 = Math.cos(y * 0.0035 / PHI + 0.5) * 18; // Modulación áurea amplia
-      const w3 = Math.sin(y * 0.02 + 1.2) * 5; // Textura botánica sutil
+      const w1 = Math.sin(y * 0.0095) * 46 * AMP; // Curvas alargadas
+      const w2 = Math.cos(y * 0.0035 / PHI + 0.5) * 18 * AMP; // Modulación áurea amplia
+      const w3 = Math.sin(y * 0.02 + 1.2) * 5 * AMP; // Textura botánica sutil
       return { x: X_CENTER + w1 + w2 + w3, y };
     };
 
     const sampleSec = (y: number): Point => {
       // Fase π para cruce alargado y elegante
-      const w1 = Math.sin(y * 0.0095 + Math.PI) * 42;
-      const w2 = Math.cos(y * 0.0035 * PHI + 2.1) * 16;
-      const w3 = Math.sin(y * 0.02 + Math.PI) * 4;
+      const w1 = Math.sin(y * 0.0095 + Math.PI) * 42 * AMP;
+      const w2 = Math.cos(y * 0.0035 * PHI + 2.1) * 16 * AMP;
+      const w3 = Math.sin(y * 0.02 + Math.PI) * 4 * AMP;
       return { x: X_CENTER + w1 + w2 + w3, y };
     };
 
@@ -257,7 +274,7 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
       nodes.push({
         id: `node-pri-${i}`,
         globalY: y,
-        transform: `translate(${pPri.x.toFixed(2)}, ${y.toFixed(2)}) rotate(${leafAngle.toFixed(1)})`,
+        transform: `translate(${pPri.x.toFixed(2)}, ${y.toFixed(2)}) rotate(${leafAngle.toFixed(1)}) scale(${FOLIAGE})`,
         type: nodeType,
       });
 
@@ -272,7 +289,7 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
         nodes.push({
           id: `node-sec-${i}`,
           globalY: y + 40,
-          transform: `translate(${pSec.x.toFixed(2)}, ${(y + 40).toFixed(2)}) rotate(${secAngle.toFixed(1)})`,
+          transform: `translate(${pSec.x.toFixed(2)}, ${(y + 40).toFixed(2)}) rotate(${secAngle.toFixed(1)}) scale(${FOLIAGE})`,
           type: i % 4 === 0 ? 'leaf-small' : 'tendril',
         });
       }
@@ -285,7 +302,7 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
       totalSecondaryLength: lenSec,
       botanicalNodes: nodes,
     };
-  }, [totalHeight]);
+  }, [totalHeight, X_CENTER, AMP, FOLIAGE]);
 
   // ── Cinemática Dinámica de Crecimiento (Adelantamiento Alterno) ─────────────
   const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -298,14 +315,22 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
   const progressPri = Math.min(1, Math.max(0, curYPri / totalHeight));
   const progressSec = Math.min(1, Math.max(0, curYSec / totalHeight));
 
+  // El follaje toma el color del tramo de liana donde brota
+  const leafColorAt = (y: number) => {
+    const pct = (y / Math.max(1, totalHeight)) * 100;
+    let color = 'var(--theme-canela)';
+    for (const stop of eraStops ?? []) if (parseFloat(stop.offset) <= pct) color = stop.color;
+    return color;
+  };
+
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10 flex justify-center">
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none z-10 flex ${narrow ? 'justify-start' : 'justify-center'}`}>
       <svg
         width="100%"
-        style={{ maxWidth: '300px' }}
+        style={{ maxWidth: `${WIDTH}px` }}
         height={totalHeight}
-        viewBox={`0 0 300 ${totalHeight}`}
+        viewBox={`0 0 ${WIDTH} ${totalHeight}`}
         preserveAspectRatio="xMidYMin slice"
       >
         <defs>
@@ -380,6 +405,7 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
             <g
               key={node.id}
               transform={`${node.transform} scale(${scale.toFixed(3)})`}
+              style={{ '--leaf': leafColorAt(node.globalY) } as React.CSSProperties}
             >
               {node.type === 'leaf-large' && <ArtsAndCraftsLeaf variant="large" />}
               {node.type === 'leaf-small' && <ArtsAndCraftsLeaf variant="small" />}

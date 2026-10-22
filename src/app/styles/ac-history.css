@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Índice biográfico (/historia, HistoryTimeline.tsx)
+   La liana (ArtsAndCraftsLiana) es el tiempo: crece al bajar y de ella brotan
+   las entradas, primero el tallo y después la tarjeta. Siglos como rótulos
+   sobre la liana, cada uno con su pigmento en --acc.
+   ========================================================================== */
+
+.ac-history {
+  min-height: 100dvh;
+  padding: calc(var(--content-top, 4rem) + 1rem) 0 6rem;
+  color: var(--ink-text-body);
+}
+
+.ac-history__head,
+.ac-history__line {
+  width: min(100% - 2rem, 60rem);
+  margin-inline: auto;
+}
+
+.ac-history a:focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--theme-terracota));
+  outline-offset: 2px;
+}
+
+/* ── Cabecera ─────────────────────────────────────────────────────────── */
+
+.ac-history__back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding-block: 0.375rem;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.ac-history__back:hover { --ac-rubric-color: var(--ink-text); }
+
+.ac-history__title {
+  font-family: var(--font-title-family);
+  font-size: clamp(2.25rem, 1.8rem + 2vw, 3rem);
+  line-height: 1.1;
+  color: var(--ink-text);
+  text-wrap: balance;
+}
+
+.ac-history__index {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  margin-top: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+  font-size: 1rem;
+  color: var(--ink-text-subtle);
+}
+.ac-history__index a {
+  display: inline-block;
+  padding-block: 0.375rem;
+  text-decoration: none;
+  white-space: nowrap;
+  --ac-rubric-color: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+}
+.ac-history__index a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.ac-history__count { font-variant-numeric: oldstyle-nums; }
+
+/* ── Liana y entradas ─────────────────────────────────────────────────── */
+
+.ac-history__line {
+  position: relative;
+  margin-top: 2.5rem;
+}
+
+.ac-history__list {
+  position: relative;
+  z-index: 20;
+  padding-block: 1rem 3rem;
+}
+
+.ac-history__century { scroll-margin-top: 2rem; }
+
+/* Rótulo del siglo: un recorte de papel sobre la liana */
+.ac-history__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-block: 3.5rem 1.5rem;
+}
+.ac-history__century:first-child .ac-history__label { margin-top: 0; }
+.ac-history__label h2,
+.ac-history__gap {
+  padding: 0.125rem 0.75rem;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--theme-lienzo);
+}
+.ac-history__label h2 {
+  font-size: 1.1875rem;
+  font-variant-numeric: oldstyle-nums;
+  --ac-rubric-color: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+}
+/* Los siglos vacíos: un rem por siglo (hasta 20) */
+.ac-history__void {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min(calc(var(--gap-centuries, 1) * 1rem), 20rem);
+  margin-bottom: 1.5rem;
+}
+
+.ac-history__gap {
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-text-subtle);
+}
+
+/* Fila: nudo en la liana, tallo y tarjeta. En escritorio, a uno y otro lado. */
+.ac-history__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10rem minmax(0, 1fr);
+  align-items: center;
+}
+.ac-history__row + .ac-history__row { margin-top: 3rem; }
+
+.ac-history__node {
+  grid-row: 1;
+  grid-column: 2;
+  position: relative;
+  align-self: stretch;
+}
+.ac-history__node::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--theme-lienzo);
+  border-radius: 50%;
+  background: var(--acc);
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0.5;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.ac-history__node[data-grown]::before {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.ac-history__stem {
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 1px;
+  background: var(--acc);
+  transform: scaleX(var(--stem, 0));
+}
+.ac-history__row[data-side='right'] .ac-history__stem { left: 50%; transform-origin: left center; }
+.ac-history__row[data-side='left'] .ac-history__stem { right: 50%; transform-origin: right center; }
+
+.ac-history__bud {
+  grid-row: 1;
+  min-width: 0;
+  transform: scale(0);
+  visibility: hidden;
+  transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), visibility 0s 0.45s;
+}
+/* Se despliega con un pequeño rebote, como un brote */
+.ac-history__bud[data-grown] {
+  transform: scale(1);
+  visibility: visible;
+  transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), visibility 0s;
+}
+.ac-history__row[data-side='right'] .ac-history__bud { grid-column: 3; transform-origin: left center; }
+.ac-history__row[data-side='left'] .ac-history__bud { grid-column: 1; transform-origin: right center; }
+
+/* ── Tarjeta ──────────────────────────────────────────────────────────── */
+
+.ac-history-card {
+  position: relative;
+  padding: 1.125rem 1.375rem 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--theme-lienzo);
+  isolation: isolate;
+  transition: border-color 0.2s ease;
+}
+.ac-history-card:hover,
+.ac-history-card:focus-within { border-color: var(--acc); }
+
+/* Año de nacimiento grande al fondo, como una marca de agua */
+.ac-history-card__year {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-family: var(--font-body-family);
+  font-size: 3rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+  pointer-events: none;
+  user-select: none;
+  z-index: -1; /* detrás del texto, sobre el papel de la tarjeta (isolation) */
+}
+
+.ac-history-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+.ac-history-card__heading { flex: 1; min-width: 0; }
+
+.ac-history-card__name {
+  font-family: var(--font-title-family);
+  font-size: 1.375rem;
+  line-height: 1.2;
+  color: var(--ink-text);
+  text-decoration: none;
+}
+/* Toda la tarjeta lleva a la biografía; los «véase» quedan por encima */
+.ac-history-card__name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.ac-history-card:hover .ac-history-card__name {
+  color: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+}
+
+.ac-history-card__place {
+  margin-top: 0.125rem;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--ink-text-muted);
+}
+
+.ac-history-card__dates {
+  flex: none;
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  font-variant-numeric: oldstyle-nums;
+  white-space: nowrap;
+}
+
+.ac-history-card__portrait {
+  flex: none;
+  width: 2.75rem;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 2px solid var(--acc);
+  border-radius: 50%;
+}
+.ac-history-card__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.35) sepia(0.2);
+}
+
+.ac-history-card__rule {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin-block: 0.75rem 0.625rem;
+  background: var(--acc);
+  transition: width 0.3s ease;
+}
+.ac-history-card:hover .ac-history-card__rule { width: 4rem; }
+
+.ac-history-card__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.ac-history-card__see {
+  margin-top: 0.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.ac-history-card__see a {
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+  color: var(--ink-text-body);
+  text-decoration: underline dotted color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+  text-underline-offset: 0.2em;
+}
+.ac-history-card__see a:hover {
+  color: color-mix(in srgb, var(--acc) calc(100% - var(--ink-pigment-mix)), var(--ink-text));
+}
+
+/* Desde 768 px el marcapáginas está abierto: margen para que no tape las tarjetas */
+@media (min-width: 768px) {
+  .ac-history__head,
+  .ac-history__line { width: min(100% - 6.5rem, 60rem); }
+}
+
+/* Móvil: la liana estrecha va al margen izquierdo y todas las tarjetas brotan a la derecha */
+@media (max-width: 767px) {
+  .ac-history__label { align-items: flex-start; }
+  .ac-history__label h2,
+  .ac-history__gap { padding-inline: 0.5rem; }
+  .ac-history__void { justify-content: flex-start; padding-left: 3.5rem; }
+  .ac-history__row,
+  .ac-history__row[data-side] { grid-template-columns: 3.5rem minmax(0, 1fr); }
+  .ac-history__node { grid-column: 1; }
+  .ac-history__row[data-side] .ac-history__stem { left: 50%; right: auto; transform-origin: left center; }
+  .ac-history__row[data-side] .ac-history__bud { grid-column: 2; transform-origin: left center; }
+  .ac-history-card { padding: 1rem 1.125rem 1.125rem; }
+  .ac-history-card__head { flex-wrap: wrap; row-gap: 0.25rem; }
+  .ac-history-card__dates { order: 3; flex-basis: 100%; margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-history__node::before,
+  .ac-history__bud,
+  .ac-history__bud[data-grown],
+  .ac-history-card,
+  .ac-history-card__rule { transition: none; }
+}
