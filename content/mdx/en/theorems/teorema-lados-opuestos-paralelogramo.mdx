@@ -1,0 +1,76 @@
+export const metadata = {
+  id: "teorema-lados-opuestos-paralelogramo",
+  lang: "en",
+  type: "teorema",
+  title: "Opposite sides of a parallelogram theorem",
+  description: "In any parallelogram, opposite sides are mutually congruent and opposite angles are mutually congruent.",
+  statement: "In any parallelogram ABCD, opposite sides are mutually congruent (AB ≅ CD and BC ≅ DA), and opposite angles are mutually congruent (∠ABC ≅ ∠CDA and ∠BCD ≅ ∠DAB).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "teorema"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-lados-opuestos-paralelogramo"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="I" />n any <ConceptLink targetId="paralelogramo" isDependency={true}>parallelogram</ConceptLink>, opposite <ConceptLink targetId="lado">sides</ConceptLink> are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink> and opposite <ConceptLink targetId="angulo">angles</ConceptLink> are mutually congruent.
+
+This result constitutes Proposition I.34 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and is revisited by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §7 of the *Grundlagen der Geometrie*. Its deduction substantially requires the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink> via the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink>, and is completed by applying the <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ASA congruence criterion</ConceptLink> to the two <ConceptLink targetId="triangulo">triangles</ConceptLink> determined by a <ConceptLink targetId="diagonal">diagonal</ConceptLink>. In the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink>, since the Euclidean postulate does not hold, the relationship between equidistance, parallelism, and quadrilateral congruence exhibits essentially different properties.
+
+<Definicion title="Formal statement of the opposite sides of a parallelogram theorem">
+Let $A, B, C, D \in \mathcal{P}$ be four coplanar <ConceptLink targetId="punto">points</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma \in \Pi$ that determine a convex <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> $ABCD$.
+
+If $ABCD$ is a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>, that is, the supporting <ConceptLink targetId="recta">lines</ConceptLink> of its pairs of opposite sides are <ConceptLink targetId="paralelas">parallel</ConceptLink>:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+then the corresponding opposite sides are mutually congruent:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+and the interior opposite angles are mutually congruent:
+
+$$
+\angle ABC \cong \angle CDA \quad \land \quad \angle BCD \cong \angle DAB
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Deductive consequences and converses">
+    <PropiedadItem 
+      id="teorema-reciproco-lados-opuestos-paralelogramo" 
+      title="Converse characterization by opposite sides"
+      formula="\overline{AB} \cong \overline{CD} \land \overline{BC} \cong \overline{DA} \implies \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \land \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      If in a convex <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> the opposite sides are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>, the supporting lines of the opposite sides are <ConceptLink targetId="paralelas">parallel</ConceptLink> and the figure is a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>; this is proved by drawing a <ConceptLink targetId="diagonal">diagonal</ConceptLink> and applying the <ConceptLink targetId="teorema-congruencia-lll">SSS criterion</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="biseccion-diagonales-paralelogramo" 
+      title="Mutual bisection of the diagonals"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) = \{M\} \implies \overline{AM} \cong \overline{MC} \land \overline{BM} \cong \overline{MD}"
+    >
+      The two <ConceptLink targetId="diagonal">diagonals</ConceptLink> of a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> intersect at a common interior point $M$ that is the <ConceptLink targetId="punto-medio">midpoint</ConceptLink> of both; this is proved by applying the <ConceptLink targetId="teorema-congruencia-ala">ASA criterion</ConceptLink> to the opposite triangles with vertex at $M$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

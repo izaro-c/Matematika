@@ -1,0 +1,78 @@
+export const metadata = {
+  id: "rectangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Laukizuzena",
+  description: "Lau barne-angeluak angelu zuzenak dituen lauki ganbila.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "cuadrilatero", "angulo-recto", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 22. Definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="L" />aukizuzena lau <ConceptLink targetId="angulo-interior">barne-angeluak</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> dituen <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbila da.
+
+Nozioa era absolutuan enuntzatzen da poligonoen teoriaren barruko konfigurazio angeluar gisa. Hala ere, haren benetako existentziak geometria euklidearra bereizten du: <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>, laukizuzen bakar baten existentzia Euklidesen <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> baliokidea da; beraz, <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink> ezin da lau angelu zuzen dituen laukirik existitu, <ConceptLink targetId="cuadrilatero-saccheri">Saccheriren laukien</ConceptLink> eta <ConceptLink targetId="cuadrilatero-lambert">Lamberten laukien</ConceptLink> propietateek frogatzen duten bezala.
+
+<Definicion title="Laukizuzenaren definizio formala">
+Izan bedi $ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}$ $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbil bat, haietatik hirukote bat ere <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez duten lau $A$, $B$, $C$ eta $D$ <ConceptLink targetId="punto">puntu</ConceptLink> koplanarrek zehaztua.
+
+$ABCD$ **laukizuzena** dela esaten da baldin eta haren lau <ConceptLink targetId="angulo-interior">barne-angeluak</ConceptLink> $R$ <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzen</ConceptLink> baten <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira:
+
+$$
+\angle DAB \cong R \quad \land \quad \angle ABC \cong R \quad \land \quad \angle BCD \cong R \quad \land \quad \angle CDA \cong R
+$$
+
+$A, B, C, D$ puntuak laukizuzenaren <ConceptLink targetId="vertice">erpinak</ConceptLink> dira, eta $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ zuzenkiak haren <ConceptLink targetId="lado">aldeak</ConceptLink> dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Laukizuzenaren propietate euklidearrak">
+    <PropiedadItem 
+      id="paralelismo-lados-opuestos-rectangulo" 
+      title="Aurkako aldeen paralelotasuna"
+      formula="\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, laukizuzen baten aurkako aldeen zuzen euskarriak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira. Ebakitzaile komun berarekiko bi zuzen perpendikularrek elkar ebakitzen ez dutenez <ConceptLink targetId="teorema-angulos-alternos-internos">angelu alterno barnekoen teoremaren</ConceptLink> arabera, laukizuzen oro <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink> da bereziki.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-lados-opuestos-rectangulo" 
+      title="Aurkako aldeen kongruentzia"
+      formula="\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}"
+    >
+      Laukizuzen baten aurkako aldeak elkarren artean kongruenteak dira. Paralelogramoa denez, $\overline{AC}$ diagonalak bi triangelu angeluzuzen kongruente zehazten ditu, $\triangle ABC \cong \triangle CDA$, <ConceptLink targetId="teorema-congruencia-ala">ALA irizpidearen</ConceptLink> bidez; horrek aurkako aldeen kongruentzia bermatzen du.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-diagonales-rectangulo" 
+      title="Diagonalen kongruentzia"
+      formula="\overline{AC} \cong \overline{BD}"
+    >
+      Laukizuzen baten $\overline{AC}$ eta $\overline{BD}$ <ConceptLink targetId="diagonal">diagonalak</ConceptLink> elkarren artean kongruenteak dira. Izan ere, $\triangle DAB$ eta $\triangle CBA$ triangelu angeluzuzenek $\overline{AB}$ katetoa partekatzen dute eta $\overline{AD} \cong \overline{BC}$ kateto kongruenteak dituzte; <ConceptLink targetId="teorema-congruencia-lal">LAL irizpidearen</ConceptLink> arabera, bi triangeluak kongruenteak dira eta haien hipotenusak kongruenteak gertatzen dira.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Paraleloen postulatu euklidearrak erabateko garrantzia du laukizuzenen existentzian: definizioak lau angeluren perpendikulartasuna soilik eskatzen badu ere, irudi hori kontraesanik gabe ixteko aukerak lauki baten barne-angeluen batura zehazki lau angelu zuzen izatea eskatzen du.
+</Nota>

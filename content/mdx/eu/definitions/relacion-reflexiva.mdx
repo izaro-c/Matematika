@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "relacion-reflexiva",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Erlazio erreflexiboa",
+  description: "Erlazio bitar baten propietatea, zeinaren arabera multzo bateko elementu orok bere buruarekin erlazioa duen.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "3. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />rlazio bitar homogeneo bat **erreflexiboa** da baldin eta hura definituta dagoen multzoko elementu orok bere buruarekin erlazioa badu.
+
+Egitura matematikoen formalizazioan maizen agertzen den oinarrizko baldintzetako bat da, baliokidetasun-nozioetarako eta ordena partzial edo osoko erlazioetarako ezinbesteko aldez aurreko baldintza gisa jokatuz.
+
+<Definicion title="Erlazio erreflexiboaren definizio formala">
+  Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat. $R$ erlazioa **erreflexiboa** da baldin eta soilik baldin:
+  $$
+  \forall x \in A, \quad x \, R \, x \quad (\text{hau da, } (x, x) \in R)
+  $$
+  Multzo-teoriaren terminoetan, $\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$ diagonala edo $A$-ren gaineko identitate-erlazioa adieraziz, erreflexibotasuna inklusio honen baliokidea da:
+  $$
+  \Delta_A \subseteq R
+  $$
+</Definicion>
+
+<Separador />
+
+### Agerraldiak geometria formalean
+
+Hilberten geometriaren oinarri deduktiboetan, erreflexibotasuna konparaketa-erlazioen ezinbesteko propietate gisa postulatzen edo ondorioztatzen da:
+
+- **Zuzenkien eta angeluen kongruentzia:** <ConceptLink targetId="axioma-congruencia-1">III.1 axiomak</ConceptLink> ezartzen du zuzenki oro bere buruarekin kongruentea dela ($\overline{AB} \cong \overline{AB}$), zuzenkien <ConceptLink targetId="congruencia">kongruentziari</ConceptLink> izaera erreflexiboa emanez. Era berean, <ConceptLink targetId="axioma-congruencia-4">III.4 axioman</ConceptLink>, angelu propio oro bere buruarekin kongruentea da ($\angle AOB \cong \angle AOB$).
+- **Zuzenen paralelotasuna:** Geometria modernoan, zuzen oro bere buruarekiko <ConceptLink targetId="paralelas">paralelotzat</ConceptLink> jotzen da identitateagatik ($\ell \parallel \ell$); horri esker, plano euklidearreko paralelotasunak edozein <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlaziori</ConceptLink> eskatutako erreflexibotasuna betetzen du.

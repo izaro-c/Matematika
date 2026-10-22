@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "teoria-modelos",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Ereduen teoria",
+  description: "Hizkuntza formal bateko formulen (sintaxia) eta haien interpretazio edo egitura matematikoen (semantika) arteko erlazioak ikertzen dituen logika matematikoaren adarra.",
+  branch: "03C",
+  branches: ["03", "03B"],
+  hasSimulation: false,
+  sources: [
+    { title: "Model Theory", author: "Wilfrid Hodges", locator: "1. Kapitulua", role: "primary" },
+    { title: "Model Theory", author: "C. C. Chang, H. J. Keisler", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />**reduen teoria** teoria formalen esanahi semantikoa ikertzen duen logika matematikoaren adarra da, hizkuntza bateko formulen eta formula horiek zentzua hartzen duten edo egiazko gertatzen diren egituren arteko erlazioak sistematikoki aztertuz.
+
+Zubi formala eratzen du sintaxi abstraktuaren —enuntziatu eta postulatutako <ConceptLink targetId="axioma" isDependency={true}>axiomen</ConceptLink> multzoa— eta semantika zehatzaren artean, zeina postulatutako horiek interpretatzen dituzten <ConceptLink targetId="estructura-geometrica">egitura matematikoetan</ConceptLink> gauzatzen den.
+
+<Definicion title="Egitura, gogobetetzea eta eredua">
+  $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> bat emanda, $\mathcal{M}$ **$\sigma$-egitura** batek hutsik ez dauden <ConceptLink targetId="dominio">domeinu</ConceptLink> bat edo gehiago ditu, unibertso horien gainean $\sigma$-ko erlazio-, funtzio- edo konstante-ikur bakoitza interpretatzen duen esleipen batekin batera.
+  
+  Esleipen baten pean $\mathcal{M}$ egiturak $\varphi$ formula bat betetzen duela esaten da ($\mathcal{M} \models \varphi$ idatzita), baldin eta formula egiazkotzat jotzen bada egituran Tarskiren arau semantiko klasikoen arabera.
+  
+  $\mathcal{M}$ egitura bat $\mathcal{T}$ teoria edo <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> baten **eredua** da ($\mathcal{M} \models \mathcal{T}$ idatzita), baldin eta teoria osatzen duten axioma guztiak aldi berean betetzen baditu:
+  $$
+  \mathcal{M} \models \mathcal{T} \iff \forall \varphi \in \mathcal{T}, \ \mathcal{M} \models \varphi
+  $$
+</Definicion>
+
+<Separador />
+
+### Koherentzia erlatiboa, independentzia eta kategorikotasuna
+
+Matematikaren oinarrietan, eredu-teoriak zeregin frogatzaile erabakigarria betetzen du:
+
+1. **<ConceptLink targetId="consistencia-logica">Koherentzia logiko</ConceptLink> erlatiboa:** Gödelen osotasun-teoremaren arabera, lehen mailako teoria bat koherentea da baldin eta soilik baldin gutxienez eredu bat badu. Horrela, $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarraren</ConceptLink> eraikuntza analitikoak geometria euklidearraren koherentzia frogatzen du, eta <ConceptLink targetId="modelo-poincare">Poincareren diskoak</ConceptLink> geometria hiperbolikoaren koherentzia erlatiboa bermatzen du.
+2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink> axiomatikoa:** Axioma bat gainerakoetatik ondorioztatu ezin dela frogatzeko, nahikoa da auzitan dagoen axioma izan ezik beste postilatu guztiak betetzen dituen eredu bat eraikitzea.
+3. **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink> eta <ConceptLink targetId="isomorfismo">isomorfismoa</ConceptLink>:** Teoria bat kategorikoa da $\kappa$ <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> jakin batean, baldin eta $\kappa$ tamainako bere eredu guztiak elkarren artean isomorfoak badira; horrek bermatzen du teoriak funtsean egitura bakarra deskribatzen duela bere elementuen izen-aldaketa alde batera utzita.

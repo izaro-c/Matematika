@@ -1,31 +1,31 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 120,
+    "total": 182,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
-      "definicion": 39,
-      "demostracion": 12,
+      "definicion": 83,
+      "demostracion": 21,
       "ejemplo": 1,
       "ejercicio": 2,
       "matematico": 21,
       "metodo": 3,
       "modelo": 4,
       "plan-de-estudio": 1,
-      "teorema": 11,
+      "teorema": 20,
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 60,
-      "exported": 60
+      "none": 115,
+      "exported": 67
     },
     "theoremLike": {
-      "total": 11,
-      "withDeclaredDiagram": 7
+      "total": 20,
+      "withDeclaredDiagram": 8
     },
     "demonstrations": {
-      "total": 12
+      "total": 21
     }
   },
   "items": [
@@ -397,6 +397,21 @@
       "demos": []
     },
     {
+      "id": "altura-triangulo",
+      "type": "definicion",
+      "title": "Triangeluaren altuera",
+      "filePath": "eu/definitions/altura-triangulo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "angulo-recto",
       "type": "definicion",
       "title": "Angelu zuzena",
@@ -427,6 +442,32 @@
       "demos": []
     },
     {
+      "id": "angulos-alternos-internos",
+      "type": "definicion",
+      "title": "Barne-angelu alternoak",
+      "filePath": "eu/definitions/angulos-alternos-internos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "angulos-opuestos-vertice",
+      "type": "definicion",
+      "title": "Erpinez aurkako angeluak",
+      "filePath": "eu/definitions/angulos-opuestos-vertice.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "angulos-suplementarios",
       "type": "definicion",
       "title": "Angelu betegarriak",
@@ -436,6 +477,58 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "asociatividad",
+      "type": "definicion",
+      "title": "Elkartze-propietatea",
+      "filePath": "eu/definitions/asociatividad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma",
+      "type": "definicion",
+      "title": "Axioma",
+      "filePath": "eu/definitions/axioma.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "biyeccion",
+      "type": "definicion",
+      "title": "Bijekzioa",
+      "filePath": "eu/definitions/biyeccion.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "cardinalidad",
+      "type": "definicion",
+      "title": "Kardinaltasuna",
+      "filePath": "eu/definitions/cardinalidad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -472,6 +565,19 @@
       "demos": []
     },
     {
+      "id": "cociente-incremental",
+      "type": "definicion",
+      "title": "Gehikuntza-zatidura",
+      "filePath": "eu/definitions/cociente-incremental.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "colinealidad",
       "type": "definicion",
       "title": "Kolinealtasuna",
@@ -487,6 +593,19 @@
       "demos": []
     },
     {
+      "id": "completitud-reales",
+      "type": "definicion",
+      "title": "Zenbaki errealen osotasuna",
+      "filePath": "eu/definitions/completitud-reales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "concepto-primitivo",
       "type": "definicion",
       "title": "Oinarrizko kontzeptua",
@@ -495,6 +614,21 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "congruencia-triangulos",
+      "type": "definicion",
+      "title": "Triangeluen kongruentzia",
+      "filePath": "eu/definitions/congruencia-triangulos.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -517,6 +651,58 @@
       "type": "definicion",
       "title": "Multzo disjuntuak",
       "filePath": "eu/definitions/conjunto-disjunto.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "conjunto",
+      "type": "definicion",
+      "title": "Multzoa",
+      "filePath": "eu/definitions/conjunto.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "consistencia-logica",
+      "type": "definicion",
+      "title": "Koherentzia logikoa (Kontsistentzia)",
+      "filePath": "eu/definitions/consistencia-logica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "continuidad",
+      "type": "definicion",
+      "title": "Jarraitutasuna",
+      "filePath": "eu/definitions/continuidad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "coplanaridad",
+      "type": "definicion",
+      "title": "Koplanartasuna",
+      "filePath": "eu/definitions/coplanaridad.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -556,6 +742,19 @@
       "demos": []
     },
     {
+      "id": "cuerpo",
+      "type": "definicion",
+      "title": "Gorputza",
+      "filePath": "eu/definitions/cuerpo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "derivada",
       "type": "definicion",
       "title": "Deribatua",
@@ -582,6 +781,21 @@
       "demos": []
     },
     {
+      "id": "distancia",
+      "type": "definicion",
+      "title": "Distantzia metrikoa",
+      "filePath": "eu/definitions/distancia.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "dominio",
       "type": "definicion",
       "title": "Domeinua",
@@ -590,6 +804,32 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "elemento-inverso",
+      "type": "definicion",
+      "title": "Alderantzizko elementua",
+      "filePath": "eu/definitions/elemento-inverso.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "elemento-neutro",
+      "type": "definicion",
+      "title": "Elementu neutroa",
+      "filePath": "eu/definitions/elemento-neutro.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -627,6 +867,19 @@
       "type": "definicion",
       "title": "Egitura geometrikoa",
       "filePath": "eu/definitions/estructura-geometrica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "funcion",
+      "type": "definicion",
+      "title": "Funtzioa",
+      "filePath": "eu/definitions/funcion.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -675,6 +928,21 @@
       "demos": []
     },
     {
+      "id": "hipotenusa",
+      "type": "definicion",
+      "title": "Hipotenusa",
+      "filePath": "eu/definitions/hipotenusa.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "incidencia",
       "type": "definicion",
       "title": "Intzidentzia",
@@ -683,6 +951,47 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "interior-triangulo",
+      "type": "definicion",
+      "title": "Triangeluaren barrualdea",
+      "filePath": "eu/definitions/interior-triangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "interseccion",
+      "type": "definicion",
+      "title": "Ebakidura",
+      "filePath": "eu/definitions/interseccion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "isomorfismo",
+      "type": "definicion",
+      "title": "Isomorfismoa",
+      "filePath": "eu/definitions/isomorfismo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -703,6 +1012,32 @@
       "demos": []
     },
     {
+      "id": "limite",
+      "type": "definicion",
+      "title": "Muga",
+      "filePath": "eu/definitions/limite.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "logica",
+      "type": "definicion",
+      "title": "Logika matematikoa",
+      "filePath": "eu/definitions/logica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "longitud",
       "type": "definicion",
       "title": "Luzera",
@@ -711,6 +1046,32 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "operacion-binaria",
+      "type": "definicion",
+      "title": "Eragiketa bitarra",
+      "filePath": "eu/definitions/operacion-binaria.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "orden-angulos",
+      "type": "definicion",
+      "title": "Angeluen ordena",
+      "filePath": "eu/definitions/orden-angulos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -806,6 +1167,125 @@
       "demos": []
     },
     {
+      "id": "rectangulo",
+      "type": "definicion",
+      "title": "Laukizuzena",
+      "filePath": "eu/definitions/rectangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "region-poligonal",
+      "type": "definicion",
+      "title": "Eskualde poligonala",
+      "filePath": "eu/definitions/region-poligonal.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "region-triangular",
+      "type": "definicion",
+      "title": "Eskualde triangeluarra",
+      "filePath": "eu/definitions/region-triangular.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "relacion-equivalencia",
+      "type": "definicion",
+      "title": "Baliokidetasun-erlazioa",
+      "filePath": "eu/definitions/relacion-equivalencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "relacion-reflexiva",
+      "type": "definicion",
+      "title": "Erlazio erreflexiboa",
+      "filePath": "eu/definitions/relacion-reflexiva.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "relacion-simetrica",
+      "type": "definicion",
+      "title": "Erlazio simetrikoa",
+      "filePath": "eu/definitions/relacion-simetrica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "relacion-transitiva",
+      "type": "definicion",
+      "title": "Erlazio iragankorra",
+      "filePath": "eu/definitions/relacion-transitiva.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "secante",
+      "type": "definicion",
+      "title": "Zuzen ebakitzailea",
+      "filePath": "eu/definitions/secante.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "segmento-unidad",
+      "type": "definicion",
+      "title": "Unitate-zuzenkia",
+      "filePath": "eu/definitions/segmento-unidad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "segmento",
       "type": "definicion",
       "title": "Zuzenkia",
@@ -864,10 +1344,49 @@
       "demos": []
     },
     {
+      "id": "semirrectas-opuestas",
+      "type": "definicion",
+      "title": "Aurkako zuzenerdiak",
+      "filePath": "eu/definitions/semirrectas-opuestas.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "signatura",
       "type": "definicion",
       "title": "Signatura",
       "filePath": "eu/definitions/signatura.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "sistema-axiomatico",
+      "type": "definicion",
+      "title": "Sistema axiomatikoa",
+      "filePath": "eu/definitions/sistema-axiomatico.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "teorema",
+      "type": "definicion",
+      "title": "Teorema",
+      "filePath": "eu/definitions/teorema.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -890,10 +1409,75 @@
       "demos": []
     },
     {
+      "id": "teoria-modelos",
+      "type": "definicion",
+      "title": "Ereduen teoria",
+      "filePath": "eu/definitions/teoria-modelos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "traza",
       "type": "definicion",
       "title": "Puntu-trazadura",
       "filePath": "eu/definitions/traza.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "triangulo-acutangulo",
+      "type": "definicion",
+      "title": "Triangelu zorrotza",
+      "filePath": "eu/definitions/triangulo-acutangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "triangulo-equilatero",
+      "type": "definicion",
+      "title": "Triangelu aldeberdina",
+      "filePath": "eu/definitions/triangulo-equilatero.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "triangulo-isosceles",
+      "type": "definicion",
+      "title": "Triangelu isoszelea",
+      "filePath": "eu/definitions/triangulo-isosceles.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "triangulo-obtusangulo",
+      "type": "definicion",
+      "title": "Triangelu kamutsa",
+      "filePath": "eu/definitions/triangulo-obtusangulo.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -945,6 +1529,19 @@
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "demo-angulo-exterior",
+      "type": "demostracion",
+      "title": "Demostrazioa: Kanpo-angeluaren teorema",
+      "filePath": "eu/demonstrations/demo-angulo-exterior.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 11,
+      "parentTheorem": "teorema-angulo-exterior",
       "demos": []
     },
     {
@@ -1026,6 +1623,58 @@
       "demos": []
     },
     {
+      "id": "demo-congruencia-angulos-equivalencia",
+      "type": "demostracion",
+      "title": "Demostrazioa: Angeluen kongruentziaren baliokidetasun-teorema",
+      "filePath": "eu/demonstrations/demo-congruencia-angulos-equivalencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-congruencia-angulos-equivalencia",
+      "demos": []
+    },
+    {
+      "id": "demo-congruencia-lal",
+      "type": "demostracion",
+      "title": "Demostrazioa: LAL kongruentzia-teorema",
+      "filePath": "eu/demonstrations/demo-congruencia-lal.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 6,
+      "parentTheorem": "teorema-congruencia-lal",
+      "demos": []
+    },
+    {
+      "id": "demo-congruencia-lll",
+      "type": "demostracion",
+      "title": "Demostrazioa: LLL kongruentzia-teorema",
+      "filePath": "eu/demonstrations/demo-congruencia-lll.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-congruencia-lll",
+      "demos": []
+    },
+    {
+      "id": "demo-congruencia-suplementos",
+      "type": "demostracion",
+      "title": "Demostrazioa: Angelu betegarrien kongruentzia-teorema",
+      "filePath": "eu/demonstrations/demo-congruencia-suplementos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 5,
+      "parentTheorem": "teorema-congruencia-suplementos",
+      "demos": []
+    },
+    {
       "id": "demo-existencia-bisectriz",
       "type": "demostracion",
       "title": "Frogapena: Erdikariaren existentzia eta bakartasuna",
@@ -1036,6 +1685,32 @@
       "sourcesCount": 2,
       "proofSteps": 5,
       "parentTheorem": "teorema-existencia-bisectriz",
+      "demos": []
+    },
+    {
+      "id": "demo-existencia-perpendicular",
+      "type": "demostracion",
+      "title": "Demostrazioa: Perpendikularraren existentziaren teorema",
+      "filePath": "eu/demonstrations/demo-existencia-perpendicular.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 6,
+      "parentTheorem": "teorema-existencia-perpendicular",
+      "demos": []
+    },
+    {
+      "id": "demo-lados-opuestos-paralelogramo",
+      "type": "demostracion",
+      "title": "Demostrazioa: Paralelogramoaren aurkako aldeen teorema",
+      "filePath": "eu/demonstrations/demo-lados-opuestos-paralelogramo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 7,
+      "parentTheorem": "teorema-lados-opuestos-paralelogramo",
       "demos": []
     },
     {
@@ -1062,6 +1737,32 @@
       "sourcesCount": 2,
       "proofSteps": 7,
       "parentTheorem": "teorema-pitagoras",
+      "demos": []
+    },
+    {
+      "id": "demo-pitagoras-reciproco",
+      "type": "demostracion",
+      "title": "Demostrazioa: Pitagorasen teoremaren alderantzizkoa",
+      "filePath": "eu/demonstrations/demo-pitagoras-reciproco.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 6,
+      "parentTheorem": "teorema-pitagoras-reciproco",
+      "demos": []
+    },
+    {
+      "id": "demo-separacion-plano",
+      "type": "demostracion",
+      "title": "Demostrazioa: Planoaren banaketa-teorema",
+      "filePath": "eu/demonstrations/demo-separacion-plano.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 5,
+      "parentTheorem": "teorema-separacion-plano",
       "demos": []
     },
     {
@@ -1538,6 +2239,21 @@
       "demos": []
     },
     {
+      "id": "teorema-angulo-exterior",
+      "type": "teorema",
+      "title": "Kanpo-angeluaren teorema",
+      "filePath": "eu/theorems/teorema-angulo-exterior.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-angulo-exterior"
+      ]
+    },
+    {
       "id": "teorema-angulos-alternos-internos",
       "type": "teorema",
       "title": "Barne-angelu alternoen teorema",
@@ -1632,6 +2348,68 @@
       ]
     },
     {
+      "id": "teorema-congruencia-angulos-equivalencia",
+      "type": "teorema",
+      "title": "Angeluen kongruentziaren baliokidetasun-teorema",
+      "filePath": "eu/theorems/teorema-congruencia-angulos-equivalencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-congruencia-angulos-equivalencia"
+      ]
+    },
+    {
+      "id": "teorema-congruencia-lal",
+      "type": "teorema",
+      "title": "Alde-Angelu-Alde (AlAnAl) kongruentzia-teorema",
+      "filePath": "eu/theorems/teorema-congruencia-lal.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-congruencia-lal"
+      ]
+    },
+    {
+      "id": "teorema-congruencia-lll",
+      "type": "teorema",
+      "title": "Alde-Alde-Alde (AlAlAl) kongruentzia-teorema",
+      "filePath": "eu/theorems/teorema-congruencia-lll.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-congruencia-lll"
+      ]
+    },
+    {
+      "id": "teorema-congruencia-suplementos",
+      "type": "teorema",
+      "title": "Angelu betegarrien kongruentzia-teorema",
+      "filePath": "eu/theorems/teorema-congruencia-suplementos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-congruencia-suplementos"
+      ]
+    },
+    {
       "id": "teorema-existencia-bisectriz",
       "type": "teorema",
       "title": "Erdikariaren existentzia eta bakartasunaren teorema",
@@ -1646,6 +2424,51 @@
       "parentTheorem": null,
       "demos": [
         "demo-existencia-bisectriz"
+      ]
+    },
+    {
+      "id": "teorema-existencia-perpendicular",
+      "type": "teorema",
+      "title": "Perpendikularraren existentziaren teorema",
+      "filePath": "eu/theorems/teorema-existencia-perpendicular.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-existencia-perpendicular"
+      ]
+    },
+    {
+      "id": "teorema-lados-opuestos-paralelogramo",
+      "type": "teorema",
+      "title": "Paralelogramoaren aurkako aldeen teorema",
+      "filePath": "eu/theorems/teorema-lados-opuestos-paralelogramo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-lados-opuestos-paralelogramo"
+      ]
+    },
+    {
+      "id": "teorema-pitagoras-reciproco",
+      "type": "teorema",
+      "title": "Pitagorasen teoremaren alderantzizkoa",
+      "filePath": "eu/theorems/teorema-pitagoras-reciproco.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-pitagoras-reciproco"
       ]
     },
     {
@@ -1664,6 +2487,21 @@
       "demos": [
         "demo-pitagoras-euclides",
         "demo-pitagoras-areas"
+      ]
+    },
+    {
+      "id": "teorema-separacion-plano",
+      "type": "teorema",
+      "title": "Planoaren banaketa-teorema",
+      "filePath": "eu/theorems/teorema-separacion-plano.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-separacion-plano"
       ]
     },
     {

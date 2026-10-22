@@ -1,0 +1,81 @@
+export const metadata = {
+  id: "demo-separacion-plano",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Planoaren banaketa-teorema",
+  description: "Paschen axioman eta ordena-axiometan oinarritutako frogapen sintetiko zuzena, zuzenkiek elkar ez ebakitzea bi klase konexu zehatz dituen baliokidetasun-erlazioa dela frogatzeko.",
+  parentTheorem: "teorema-separacion-plano",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "pasch"],
+  tags: ["geometria-sintetica", "orden", "pasch", "separacion", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="P" />lanoaren <ConceptLink targetId="teorema-separacion-plano">banaketa-teoremaren</ConceptLink> frogapenak <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzena</ConceptLink> jarraitzen du <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>en <ConceptLink targetId="estar-entre" isDependency={true}>ordena-axiomen</ConceptLink> bidez, <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen axioman</ConceptLink> modu erabakigarrian oinarrituz.
+
+Arrazoibideak frogatzen du banaketa-zuzenarekin ebakidurarik ez izateko erlazioa erreflexiboa, simetrikoa eta iragankorra dela, eta planoan ezin direla elkarrekiko disjuntuak diren hiru klase existitu.
+
+<Separador />
+
+### Frogapena urratsez urrats
+
+<ProofStep number={1} title="Erlazioaren definizioa, erreflexibotasuna eta simetria">
+Izan bedi $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta izan bedi $\ell$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat non $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. $A, B \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ <ConceptLink targetId="punto" isDependency={true}>puntuetarako</ConceptLink>, erlazioa honela definitzen da:
+$$
+A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+Definizioz, $A = A$ berdintzak $A \sim_\ell A$ dakar, <ConceptLink targetId="relacion-reflexiva" isDependency={true}>erreflexibotasuna</ConceptLink> betez. <ConceptLink targetId="segmento" isDependency={true}>Zuzenki</ConceptLink> baten muturrak ordenatu gabeko bikote bat direnez ($\operatorname{seg}(AB) = \operatorname{seg}(BA)$), $\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \iff \operatorname{seg}(BA) \cap \operatorname{tr}(\ell) = \emptyset$ betetzen da, eta horrek <ConceptLink targetId="relacion-simetrica" isDependency={true}>simetria</ConceptLink> bermatzen du:
+$$
+A \sim_\ell B \implies B \sim_\ell A
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Iragankortasuna Paschen axiomaren bidez">
+Demagun $A \sim_\ell B$ eta $B \sim_\ell C$. Baldin eta $A = B$ edo $B = C$ edo $A = C$ bada, ondorioa berehalakoa da. $A, B, C$ desberdinak eta ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> badira, $\triangle ABC$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat zehazten dute, non haren erpinek ez duten $\ell$ zuzenarekin intziditzen. Hipotesiz, $\ell$ zuzenak ez du $\operatorname{seg}(AB)$ ezta $\operatorname{seg}(BC)$ ebakitzen:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \quad \land \quad \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+Baldin $\ell$ zuzenak hirugarren $\operatorname{seg}(AC)$ aldea ebakiko balu, <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen axioma</ConceptLink>k (<ConceptLink targetId="pasch">Pasch</ConceptLink>, II.4 axioma) $\ell$ zuzenak $\operatorname{seg}(AB)$ edo $\operatorname{seg}(BC)$ ebakitzea eskatuko luke, hipotesiaren aurka. Beraz, $\operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \emptyset$, eta horrek $A \sim_\ell C$ frogatzen du. Ondorioz, $\sim_\ell$ erlazioak <ConceptLink targetId="relacion-transitiva" isDependency={true}>iragankortasuna</ConceptLink> betetzen du eta <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazioa</ConceptLink> da.
+</ProofStep>
+
+<ProofStep number={3} title="Gutxienez bi baliokidetasun-klase existitzea">
+Finkatu ditzagun $\ell$ zuzenarekin intziditzen duen $O$ puntu bat ($O \in \operatorname{tr}(\ell)$) eta $\ell$ zuzenarekin intziditzen ez duen planoko $A$ puntu bat. <ConceptLink targetId="axioma-orden-2" isDependency={true}>II.2 axioma</ConceptLink>ren arabera, $A'$ puntu bat existitzen da non $O$ puntua $A$ eta $A'$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean dagoen</ConceptLink>:
+$$
+A * O * A'
+$$
+$O \in \operatorname{tr}(\ell)$ eta $O \in \operatorname{seg}(AA')$ denez, $\operatorname{seg}(AA')$ zuzenkiak $\ell$ zuzena $O$ puntuan ebakitzen du. Beraz, $A \not\sim_\ell A'$, eta horrek gutxienez bi <ConceptLink targetId="clase-equivalencia" isDependency={true}>baliokidetasun-klase</ConceptLink> desberdin existitzen direla frogatzen du.
+</ProofStep>
+
+<ProofStep number={4} title="Gehienez bi baliokidetasun-klase existitzea">
+Izan bitez $\ell$ zuzenarekin intziditzen ez duten $A, B, C$ puntuak non $A \not\sim_\ell B$ eta $A \not\sim_\ell C$. Horrek esan nahi du $\operatorname{seg}(AB)$ zuzenkiak $\ell$ ebakitzen duela $X$ puntu batean, eta $\operatorname{seg}(AC)$ zuzenkiak $\ell$ ebakitzen duela $Y$ puntu batean:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \{X\} \quad \land \quad \operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \{Y\}
+$$
+$\triangle ABC$ triangeluan, $\ell$ zuzenak $\operatorname{seg}(AB)$ eta $\operatorname{seg}(AC)$ bi aldeak ebakitzen ditu $X$ eta $Y$ puntuetan. <ConceptLink targetId="estar-entre">Ordena-axiomen</ConceptLink> arabera (<ConceptLink targetId="axioma-orden-1" isDependency={true}>II.1 axioma</ConceptLink> eta <ConceptLink targetId="axioma-orden-3" isDependency={true}>II.3 axioma</ConceptLink>), zuzen batek ezin ditu triangelu baten hiru aldeak ebakitu barne-puntuetan. Ondorioz, $\ell$ zuzenak ezin du $\operatorname{seg}(BC)$ zuzenkia ebaki:
+$$
+\operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset \implies B \sim_\ell C
+$$
+Hortaz, $A$ puntuari baliokidea ez zaion puntu orok $B$ puntuaren baliokidetasun-klase berekoa izan behar du, zehazki bi baliokidetasun-klase existitzen direla ondorioztatuz.
+</ProofStep>
+
+<ProofStep number={5} title="Baliokidetasun-klase bakoitzaren konbexutasuna">
+Izan bedi $\mathcal{H}$ bi baliokidetasun-klaseetako bat eta izan bitez $A, B \in \mathcal{H}$. Edozein $P \in \operatorname{seg}(AB)$ punturentzat, $P$ ez balitz $\mathcal{H}$ klasekoa, kontrako klasekoa litzateke eta $\operatorname{seg}(AP)$ zuzenkiak $\ell$ ebakiko luke. Baina $P$ puntua $A$ eta $B$ puntuen artean dagoenez, $\operatorname{seg}(AP) \subset \operatorname{seg}(AB)$ betetzen da, eta horrek $\operatorname{seg}(AB)$ zuzenkiak $\ell$ ebakitzea inplikatuko luke, $A \sim_\ell B$ hipotesiarekin kontraesanean. Beraz:
+$$
+P \in \operatorname{seg}(AB) \implies P \in \mathcal{H}
+$$
+Frogatuta geratzen da klase bakoitza <ConceptLink targetId="conjunto-convexo" isDependency={true}>multzo konbexua</ConceptLink> dela, frogapena osatuz.
+</ProofStep>
+
+</DemonstrationSection>

@@ -1,0 +1,74 @@
+export const metadata = {
+  id: "teorema-congruencia-lll",
+  lang: "en",
+  type: "teorema",
+  title: "Side-Side-Side (SSS) Congruence Theorem",
+  description: "If two triangles have all three pairs of corresponding sides congruent, then the two triangles are mutually congruent.",
+  statement: "In two triangles △ABC and △A'B'C', if AB ≅ A'B', BC ≅ B'C', and CA ≅ C'A', then △ABC ≅ △A'B'C'.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-congruencia-lll"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 8",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { CongruenciaLLL } from '@content/diagrams/Teoremas/CongruenciaLLL';
+export const Simulation = CongruenciaLLL;
+
+<Capitular letra="I" />f two <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> have all three pairs of corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, then the two triangles are mutually congruent.
+
+Formulated by <ConceptLink targetId="euclides">Euclid</ConceptLink> as Proposition I.8 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and deductively grounded by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, this result is one of the fundamental congruence criteria of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its proof does not appeal to rigid motions or the parallel postulate, but is deduced from the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> and the <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>isosceles triangle theorem</ConceptLink> via an auxiliary construction involving the transport of angles and segments.
+
+<Definicion title="Formal statement of the SSS congruence theorem">
+Let <VisualBind element="pA1" color="terracota">$A$</VisualBind>, <VisualBind element="pB1" color="terracota">$B$</VisualBind>, <VisualBind element="pC1" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ and <VisualBind element="pA2" color="pavo">$A'$</VisualBind>, <VisualBind element="pB2" color="pavo">$B'$</VisualBind>, <VisualBind element="pC2" color="pavo">$C'$</VisualBind> $\in \mathcal{P}$ be two triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$, determining the triangles <VisualBind element="polygonA1B1C1" color="terracota">$\triangle ABC$</VisualBind> and <VisualBind element="polygonA2B2C2" color="pavo">$\triangle A'B'C'$</VisualBind>.
+
+If all three pairs of corresponding <ConceptLink targetId="lado">sides</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink>:
+1. First pair of sides: <VisualBind element="segA1B1" color="terracota">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="segA2B2" color="pavo">$\overline{A'B'}$</VisualBind>
+2. Second pair of sides: <VisualBind element="segB1C1" color="terracota">$\overline{BC}$</VisualBind> $\cong$ <VisualBind element="segB2C2" color="pavo">$\overline{B'C'}$</VisualBind>
+3. Third pair of sides: <VisualBind element="segA1C1" color="terracota">$\overline{CA}$</VisualBind> $\cong$ <VisualBind element="segA2C2" color="pavo">$\overline{C'A'}$</VisualBind>
+
+then both triangles are congruent (<ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangle congruence</ConceptLink>) with respect to the ordered correspondence $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$:
+
+$$
+\overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \implies \triangle ABC \cong \triangle A'B'C'
+$$
+
+Consequently, all three pairs of corresponding <ConceptLink targetId="angulo">angles</ConceptLink> are mutually congruent: $\angle ABC \cong \angle A'B'C'$, $\angle BCA \cong \angle B'C'A'$, and $\angle CAB \cong \angle C'A'B'$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Deductive consequences and applications">
+    <PropiedadItem 
+      id="rigidez-triangular" 
+      title="Geometric rigidity of the triangle"
+      formula="\overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \implies \angle ABC \cong \angle A'B'C'"
+    >
+      Unlike polygons with four or more <ConceptLink targetId="lado">sides</ConceptLink>, the side lengths uniquely determine all interior <ConceptLink targetId="angulo">angles</ConceptLink> of the <ConceptLink targetId="triangulo">triangle</ConceptLink>, conferring indeformability and structural rigidity upon it.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="teorema-existencia-bisectriz" 
+      title="Construction and existence of the angle bisector"
+      formula="\overline{OA} \cong \overline{OB} \land \overline{AC} \cong \overline{BC} \implies \angle AOC \cong \angle BOC"
+    >
+      The SSS criterion underpins the synthetic construction of the <ConceptLink targetId="bisectriz">bisector</ConceptLink> of an <ConceptLink targetId="angulo">angle</ConceptLink> (Proposition I.9 of <ConceptLink targetId="euclides">Euclid</ConceptLink>): laying off <ConceptLink targetId="congruencia">congruent</ConceptLink> <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{OA} \cong \overline{OB}$ along the sides from the vertex and joining their endpoints to a common point $C$, the triangles $\triangle OAC$ and $\triangle OBC$ are congruent by SSS, yielding $\angle AOC \cong \angle BOC$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

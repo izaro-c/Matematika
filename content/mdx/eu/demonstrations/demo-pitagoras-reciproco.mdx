@@ -1,0 +1,117 @@
+export const metadata = {
+  id: "demo-pitagoras-reciproco",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Pitagorasen teoremaren alderantzizkoa",
+  description: "Frogapen sintetiko zuzena Euklidesen arabera (I.48): kateto kongruenteak dituen triangelu angeluzuzen laguntzaile baten eraikuntza eta LLL kongruentzia-irizpidearen aplikazioa.",
+  parentTheorem: "teorema-pitagoras-reciproco",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  layout: "split",
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 48. proposizioa",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="P" />itagorasen <ConceptLink targetId="teorema-pitagoras-reciproco">teoremaren alderantzizkoaren</ConceptLink> frogapenak <ConceptLink targetId="euclides">Euklidesek</ConceptLink> bere <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.48 Proposizioan azaldutako <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzenari</ConceptLink> jarraitzen dio. Frogapenak <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> laguntzaile bat eraikitzen du, zeinaren <ConceptLink targetId="cateto">katetoak</ConceptLink> aztertzen ari den angelua osatzen duten aldeen <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren. Triangelu laguntzaile horri zuzeneko <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teorema</ConceptLink> aplikatuz —<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axiomaren</ConceptLink> mende dagoena— eta hasierako hipotesiarekin konbinatuz, hirugarren aldearen kongruentzia ondorioztatzen da, frogapena <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL kongruentzia-teoremaren</ConceptLink> bidez osatuz.
+
+<Separador />
+
+### Frogapena pausoz pauso
+
+<ProofStep number={1} title="Hasierako triangeluaren gaineko hipotesia">
+Izan bedi $\triangle ABC$ edozein <ConceptLink targetId="triangulo">triangelu</ConceptLink>, haren <ConceptLink targetId="lado">aldeen</ConceptLink> <ConceptLink targetId="longitud">luzerak</ConceptLink> $a = |BC|$, $b = |AC|$ eta $c = |AB|$ izanik.
+
+Hasierako hipotesiaren arabera, hiru luzera horiek erlazio aljebraiko pitagorikoa betetzen dute:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+hau da, erpinei dagokienez $|BC|^2 + |AC|^2 = |AB|^2$ moduan adierazten dena.
+
+Xede deduktiboa $\overline{AB}$ aldearen aurrez aurreko $\angle ACB$ <ConceptLink targetId="angulo">angelua</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> dela frogatzea da.
+</ProofStep>
+
+<ProofStep number={2} title="Triangelu angeluzuzen laguntzailearen eraikuntza">
+<ConceptLink targetId="plano">Plano</ConceptLink> berean, $\triangle DEF$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> laguntzaile bat eraikitzen dugu, bere $D$ <ConceptLink targetId="vertice">erpinean</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> bat duena, $\angle EDF$ zuzena izan dadin.
+
+$\overline{DE}$ eta $\overline{DF}$ <ConceptLink targetId="cateto">katetoak</ConceptLink> dituzten zuzenerdietan zehar, haien <ConceptLink targetId="longitud">luzerak</ConceptLink> finkatzen ditugu, $\overline{BC}$ eta $\overline{AC}$ aldeen luzerekin bat etor daitezen:
+
+$$
+|DE| = a = |BC| \quad \text{eta} \quad |DF| = b = |AC|
+$$
+
+<ConceptLink targetId="segmento">Zuzenkien</ConceptLink> kongruentziaren definizioaren arabera, horrek $\overline{DE} \cong \overline{BC}$ eta $\overline{DF} \cong \overline{AC}$ direla ezartzen du.
+</ProofStep>
+
+<ProofStep number={3} title="Zuzeneko Pitagorasen teoremaren aplikazioa triangelu laguntzaileari">
+$\triangle DEF$ eraikuntzaz $D$ erpinean angelu zuzena duen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink> denez, zuzeneko <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teoremaren</ConceptLink> baldintzak betetzen ditu <ConceptLink targetId="sistema-euclidiano">sistema euklidearrean</ConceptLink>, zeina <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axioman</ConceptLink> oinarritzen baita.
+
+Teorema $\overline{EF}$ <ConceptLink targetId="hipotenusa">hipotenusari</ConceptLink> aplikatuz:
+
+$$
+|EF|^2 = |DE|^2 + |DF|^2
+$$
+
+Eraikuntzan finkatutako katetoen balioak ordezkatuz ($|DE| = a$ eta $|DF| = b$):
+
+$$
+|EF|^2 = a^2 + b^2
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Hipotesi metrikoaren ordezkapena eta hipotenusen kongruentzia">
+$\overline{AB}$ aldearen gainean ezarritako hipotesiaren arabera, badakigu $a^2 + b^2 = c^2 = |AB|^2$ dela.
+
+Berdintza hori hipotenusa laguntzailerako lortutako erlazio koadratikoan ordezkatuz:
+
+$$
+|EF|^2 = |AB|^2
+$$
+
+Luzerak kantitate erreal positiboak direnez, erro karratu positiboa hartzeak berdintza mantentzen du:
+
+$$
+|EF| = |AB|
+$$
+
+horrek zuzenkiak kongruenteak direla frogatzen duelarik: $\overline{EF} \cong \overline{AB}$.
+</ProofStep>
+
+<ProofStep number={5} title="LLL kongruentzia-irizpidearen aplikazioa">
+Orain jatorrizko $\triangle ABC$ triangelua eta $\triangle DEF$ triangelu laguntzailea konparatzen ditugu. Dagozkien hiru <ConceptLink targetId="lado">alde-pareak</ConceptLink> elkarren artean kongruenteak dira:
+1. Lehenengo alde-parea: $\overline{BC} \cong \overline{DE}$ (eraikuntzaz, $|BC| = |DE| = a$).
+2. Bigarren alde-parea: $\overline{AC} \cong \overline{DF}$ (eraikuntzaz, $|AC| = |DF| = b$).
+3. Hirugarren alde-parea: $\overline{AB} \cong \overline{EF}$ (aurreko pausuan frogatua).
+
+<ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL kongruentzia-teoremaren</ConceptLink> arabera, hiru alde-pareen neurriak bat datozenez, bi triangeluak kongruenteak dira $C \mapsto D$, $B \mapsto E$, $A \mapsto F$ korrespondentziaren pean:
+
+$$
+\triangle ABC \cong \triangle DEF
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Ortogonaltasuna eta amaierako ondorioa">
+$\triangle ABC \cong \triangle DEF$ <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentziatik</ConceptLink> ondorioztatzen da dagozkien <ConceptLink targetId="angulo">angelu</ConceptLink> guztiak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla. Bereziki, $C$ eta $D$ <ConceptLink targetId="vertice">erpinetako</ConceptLink> angeluak konparatuz:
+
+$$
+\angle ACB \cong \angle EDF
+$$
+
+$\angle EDF$ angelua <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> denez hasierako eraikuntza laguntzaileagatik, $\angle ACB$ ere angelu zuzena dela ondorioztatzen da.
+
+Ondorioz, $\triangle ABC$ triangeluak angelu zuzena du $C$ erpinean eta <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink> da $\overline{AB}$ hipotenusarekin, frogapena osatuz.
+</ProofStep>
+
+</DemonstrationSection>

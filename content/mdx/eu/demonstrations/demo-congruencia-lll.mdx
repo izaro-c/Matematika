@@ -1,0 +1,107 @@
+export const metadata = {
+  id: "demo-congruencia-lll",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: LLL kongruentzia-teorema",
+  description: "LLL irizpidearen frogapen deduktibo zuzena: LAL bidez islatutako triangelu laguntzailearen eraikuntza eta triangelu isoszelearen teoremaren aplikazioa aurkako angeluak berdintzeko.",
+  parentTheorem: "teorema-congruencia-lll",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 8",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaLLL } from '@content/diagrams/Demos/DemoCongruenciaLLL';
+
+<DemonstrationSection diagram={<DemoCongruenciaLLL />}>
+
+<Capitular letra="L" />LL <ConceptLink targetId="teorema-congruencia-lll">kongruentzia-teoremaren</ConceptLink> frogapenak <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* obrako §6 atalean azaldutako <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzenari</ConceptLink> jarraitzen dio: kontrako planoerdian <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> bidez jatorrizkoaren kongruentea den triangelu laguntzaile bat eraikiz, diagonalaren trazaketak <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triangelu isoszelearen teorema</ConceptLink> betetzen duten bi triangelu zehazten ditu, eta aurkako angeluen berdintasuna deduzitzen da <ConceptLink targetId="angulos-adyacentes" isDependency={true}>angelu auzokideen</ConceptLink> batuketaren bidez.
+
+<Separador />
+
+### Demostrazioa urratsez urrats
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Triangelu laguntzailearen eraikuntza LAL bidez">
+Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>, dagozkien hiru <ConceptLink targetId="lado">alde-pareak</ConceptLink> <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> izanik: $\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$ eta $\overline{CA} \cong \overline{C'A'}$.
+
+$C'$-rekiko kontrako $\overleftrightarrow{A'B'}$ <ConceptLink targetId="recta">zuzenarekiko</ConceptLink> <ConceptLink targetId="semiplano">planoerdian</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axiomak</ConceptLink> bermatzen du $A'$ jatorria duen <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> bakar bat existitzen dela, <VisualBind element="sideAB" color="granada">$\overline{A'B'}$</VisualBind> zuzenerdiarekin $\angle BAC$-ren kongruentea den <ConceptLink targetId="angulo">angelu</ConceptLink> bat osatzen duena. <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axiomaren</ConceptLink> bidez, zuzenerdi horren gainean $C^*$ <ConceptLink targetId="punto">puntu</ConceptLink> bat existitzen da, non <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind> <ConceptLink targetId="segmento">zuzenkia</ConceptLink> $\overline{AC}$-ren kongruentea den:
+
+$$
+\angle B'A'C^* \cong \angle BAC, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+Gainera $\overline{A'B'} \cong \overline{AB}$ denez, <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremak</ConceptLink> <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> triangelu laguntzailearen eta jatorrizko triangeluaren arteko kongruentzia bermatzen du:
+
+$$
+\triangle A'B'C^* \cong \triangle ABC
+$$
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Alde homologoen kongruentziak">
+LAL bidez lortutako <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> $\cong \triangle ABC$ kongruentziatik ondorioztatzen da alde homologo guztiak elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla <ConceptLink targetId="lado">aldeetan</ConceptLink>:
+
+$$
+\overline{A'C^*} \cong \overline{AC}, \qquad \overline{B'C^*} \cong \overline{BC}
+$$
+
+Hasierako hipotesien arabera, <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> $\cong \overline{AC}$ eta <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> $\cong \overline{BC}$ ditugu. <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> kongruentziaren <ConceptLink targetId="relacion-simetrica">simetriagatik</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">trantsitibotasunagatik</ConceptLink>, $C'$ erpinetik eta $C^*$ erpin laguntzailetik abiatzen diren dagozkien aldeen arteko kongruentziak lortzen dira:
+
+$$
+\overline{A'C'} \cong \overline{A'C^*}, \qquad \overline{B'C'} \cong \overline{B'C^*}
+$$
+
+Horrela, elkarren ondoko alboko alde-pareak, <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> eta <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind>, eta <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> eta <VisualBind element="sideBCStar" color="mora">$\overline{B'C^*}$</VisualBind>, elkarren artean kongruenteak dira.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Diagonalaren trazaketa eta triangelu isoszele laguntzaileak">
+$\overleftrightarrow{A'B'}$ <ConceptLink targetId="recta">zuzenarekiko</ConceptLink> kontrako <ConceptLink targetId="semiplano">planoerdietan</ConceptLink> kokatutako bi <ConceptLink targetId="vertice">erpinak</ConceptLink> lotzen dituen <VisualBind element="lineCC" color="canela">$\overline{C'C^*}$</VisualBind> <ConceptLink targetId="segmento">zuzenki</ConceptLink> laguntzailea marrazten dugu. Zuzenki honek irudia bi triangelu aldamenetan banatzen du, $\overline{C'C^*}$ oinarri komuna dutenak:
+
+1. <VisualBind element="isoLeft" color="granada">$\triangle A'C'C^*$</VisualBind> triangeluak $\overline{A'C'} \cong \overline{A'C^*}$ betetzen du; beraz, $A'$ erpina duen <ConceptLink targetId="triangulo-isosceles">triangelu isoszelea</ConceptLink> da.
+2. <VisualBind element="isoRight" color="mora">$\triangle B'C'C^*$</VisualBind> triangeluak $\overline{B'C'} \cong \overline{B'C^*}$ betetzen du; beraz, $B'$ erpina duen triangelu isoszelea da.
+
+Horietako bakoitzari <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triangelu isoszelearen teorema</ConceptLink> aplikatuz, $\overline{C'C^*}$ <ConceptLink targetId="angulo-base">oinarriko angeluak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira:
+
+$$
+\angle A'C'C^* \cong \angle A'C^*C', \qquad \angle B'C'C^* \cong \angle B'C^*C'
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Angelu-batuketa eta ondorioa LAL bidez">
+$C'$ eta $C^*$ $\overleftrightarrow{A'B'}$-rekiko kontrako planoerdietan daudenez, $\overline{C'C^*}$ zuzenkiak erreferentziako zuzena ebakitzen du; beraz, $\overrightarrow{C'C^*}$ zuzenerdia <VisualBind element="angleC" color="granada">$\angle A'C'B'$</VisualBind> angeluaren barnekoa da, $\angle A'C'C^*$ eta $\angle B'C'C^*$ <ConceptLink targetId="angulos-adyacentes" isDependency={true}>angelu auzokideetan</ConceptLink> banatuz. Era berean, $\overrightarrow{C^*C'}$ zuzenerdiak $\angle A'C^*B'$ angelua banatzen du $\angle A'C^*C'$ eta $\angle B'C^*C'$ angeluetan.
+
+Aurreko urratsean lortutako angelu-kongruentziak batuz:
+
+$$
+\angle A'C'B' \cong \angle A'C^*B'
+$$
+
+Orain <VisualBind element="triangleCPrime" color="granada">$\triangle A'B'C'$</VisualBind> eta <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> triangeluak konparatuz, <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL teoremaren</ConceptLink> hiru hipotesiak betetzen dira: $\overline{A'C'} \cong \overline{A'C^*}$, $\overline{B'C'} \cong \overline{B'C^*}$ eta bien arteko angelua $\angle A'C'B' \cong \angle A'C^*B'$. Ondorioz:
+
+$$
+\triangle A'B'C' \cong \triangle A'B'C^*
+$$
+
+1. urratsean $\triangle A'B'C^* \cong \triangle ABC$ ezarri genuenez, <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentziaren</ConceptLink> <ConceptLink targetId="relacion-transitiva">trantsitibotasunak</ConceptLink> ondorioa ematen du:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

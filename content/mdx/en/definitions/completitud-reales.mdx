@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "completitud-reales",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Completeness of the Real Numbers",
+  description: "Fundamental property of the ordered field of real numbers according to which every non-empty subset bounded above has a least upper bound.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="C" />ompleteness **of** the real numbers (or the least upper bound property) is the defining property that distinguishes the <ConceptLink targetId="orden-total" isDependency={true}>ordered</ConceptLink> <ConceptLink targetId="cuerpo" isDependency={true}>field</ConceptLink> of real numbers $\mathbb{R}$ from the field of rational numbers $\mathbb{Q}$, formally guaranteeing the absence of gaps, fissures, or discontinuities in the numerical line.
+
+This property ensures that the real continuum contains no arithmetic voids, rigorously establishing infinitesimal calculus, limits of sequences, and analytic geometric constructions. There exist multiple formally equivalent formulations: the least upper bound property (Dedekind), the convergence of all Cauchy sequences, and Cantor's nested interval principle.
+
+<Definicion title="Least upper bound property in ℝ">
+  Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers. If $S$ is bounded above —that is, if there exists an <ConceptLink targetId="cota-superior" isDependency={true}>upper bound</ConceptLink> $M \in \mathbb{R}$ such that for all $x \in S, \, x \le M$—, then there exists a real number $s = \sup(S) \in \mathbb{R}$ called the **supremum** (or least upper bound) of $S$, uniquely characterized by:
+  $$
+  \forall x \in S \ (x \le s) \quad \land \quad \forall \varepsilon > 0 \ \exists x \in S \ (x > s - \varepsilon)
+  $$
+</Definicion>
+
+<Separador />
+
+### Analytical foundation of Hilbertian continuity
+
+The completeness of $\mathbb{R}$ plays a paramount demonstrative role in the analytical models of the encyclopedia:
+
+In the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink>, the trace of each line is identified analytically via a monotonic <ConceptLink targetId="biyeccion">bijection</ConceptLink> with $\mathbb{R}$. In virtue of the completeness of the real field, any connected partition of the points of a line immediately transfers the Dedekind cut to the geometric line, deducing as a demonstrated result David Hilbert's <ConceptLink targetId="axioma-completitud">Axiom V.2 (Linear completeness)</ConceptLink>.
+
+In this way, the consistency and satisfaction of the <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms in Cartesian space $\mathbb{R}^3$ is entirely reduced to the analytical completeness of the field of real numbers.

@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "interseccion",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Intersection",
+  description: "Set operation assigning to two sets the set composed exclusively of elements common to both.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: true,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 4", role: "primary" },
+    { title: "Théorie des ensembles", author: "Nicolas Bourbaki", locator: "Chapter II, §1", role: "secondary" }
+  ]
+};
+
+import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
+export const Simulation = Interseccion;
+
+<Capitular letra="I" />ntersection **is** a fundamental operation between <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that gathers all elements belonging simultaneously to each of the considered sets. In underlying propositional logic, it corresponds directly to the logical conjunction connective ($\land$).
+
+It provides the formal foundation for defining composite geometric regions, domain constraints, and incidences between configurations of figures.
+
+<Definicion title="Formal definition of intersection">
+  Let $A$ and $B$ be two sets. The **intersection** of $A$ and $B$ (denoted $A \cap B$) is the set consisting of all elements belonging to both $A$ and $B$:
+  $$
+  A \cap B = \{x \mid x \in A \land x \in B\}
+  $$
+  In general, for any non-empty family of sets $\{A_i\}_{i \in I}$, its generalized intersection is defined as:
+  $$
+  \bigcap_{i \in I} A_i = \{x \mid \forall i \in I, \ x \in A_i\}
+  $$
+</Definicion>
+
+<Separador />
+
+### Algebraic properties and geometric delimitation
+
+The intersection operation satisfies the fundamental Boolean laws of commutativity ($A \cap B = B \cap A$), associativity ($A \cap (B \cap C) = (A \cap B) \cap C$), and idempotence ($A \cap A = A$). When two sets share no elements in common ($A \cap B = \emptyset$), they are called <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink>.
+
+The intersection of <ConceptLink targetId="conjunto-convexo">convex sets</ConceptLink> always preserves convexity:
+- The interior of an <ConceptLink targetId="angulo">angle</ConceptLink> is formally defined as the intersection of two open <ConceptLink targetId="semiplano">half-planes</ConceptLink> determined by its carrier lines.
+- The interior region of a <ConceptLink targetId="triangulo">triangle</ConceptLink> or convex polygon arises from the finite intersection of the half-planes associated with its sides.
+- Likewise, the relative position of two coplanar lines is distinguished by their point intersection: <ConceptLink targetId="secante">secant lines</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> and <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> with common point <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind>, versus disjoint <ConceptLink targetId="paralelas">parallel lines</ConceptLink> with $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

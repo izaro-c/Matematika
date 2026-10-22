@@ -1,0 +1,58 @@
+export const metadata = {
+  id: "operacion-binaria",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Eragiketa bitarra",
+  description: "Multzo baten elementuen bikote ordenatu bakoitzari multzo bereko elementu bakarra esleitzen dion aplikazioa.",
+  branch: "08A",
+  branches: ["08A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen bikote ordenatu bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuaren</ConceptLink> oinarrizko eraikuntza-blokea da, <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink> bezalako egiturak eratzea ahalbidetuz.
+
+<Definicion title="Eragiketa bitarraren definizio formala">
+  Izan bedi $S$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts bat. $S$-ren gaineko **barne-eragiketa bitar** bat
+  $$
+  \begin{aligned}
+  *\colon S \times S &\longrightarrow S \\
+  (a, b) &\longmapsto a * b
+  \end{aligned}
+  $$
+  motako <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, $(a, b) \in S \times S$ bikote ordenatu bakoitzari $a * b \in S$ elementu bakarra lotzen diona.
+</Definicion>
+
+Emaitza $S$ multzoari berari egoteak itxitura-propietatea edo itxidura aljebraikoa formalizatzen du:
+$$
+\forall a, b \in S, \quad a * b \in S
+$$
+Formulazio funtzional honen bidez, itxitura berez bermatuta geratzen da $S$ aplikazioaren kodomeinutzat finkatzean.
+
+<Separador />
+
+### Oinarrizko egitura-propietateak
+
+$S$-ren gaineko $*$ eragiketa bitar batek $(S, *)$ bikotearen egitura orokorra zehazten duten propietate aljebraikoak izan ditzake:
+
+- **<ConceptLink targetId="asociatividad">Elkartze-propietatea</ConceptLink>:** Elkartzeak ez du emaitza aldatzen: $\forall a, b, c \in S, \ (a * b) * c = a * (b * c)$.
+- **<ConceptLink targetId="conmutatividad">Trukakortasuna</ConceptLink>:** Eragigaien ordenak ez du emaitza aldatzen: $\forall a, b \in S, \ a * b = b * a$.
+- **<ConceptLink targetId="elemento-neutro">Elementu neutroaren</ConceptLink> existentzia:** Existitzen da $e \in S$ elementu bat non $\forall a \in S, \ a * e = e * a = a$.
+- **<ConceptLink targetId="elemento-inverso">Alderantzizko elementuaren</ConceptLink> existentzia:** $e$ neutro bat finkatuta, $a \in S$ bakoitzak $a^{-1} \in S$ elementu bat onartzen du non $a * a^{-1} = a^{-1} * a = e$.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Portaera aljebraikoa">
+    <PropiedadItem id="unicidad-resultado-operacion" title="Emaitzaren bakartasuna">
+      Ondo definitutako funtzio bat denez, eragiketa bitarra edozein eragigai bikoteri aplikatzearen emaitza bakarra da: baldin eta $a = a'$ eta $b = b'$, orduan $a * b = a' * b'$.
+    </PropiedadItem>
+    <PropiedadItem id="clausura-inducida" title="Azpimultzoen egonkortasuna">
+      $T \subseteq S$ azpimultzo ez-huts bat egonkorra edo itxia da $*$ eragiketarekiko baldin eta soilik baldin eragiketa $T \times T$ multzora murrizteak balioak $T$ multzoan hartzen baditu, $*|_T\colon T \times T \longrightarrow T$ eragiketa bitar induzitua definituz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

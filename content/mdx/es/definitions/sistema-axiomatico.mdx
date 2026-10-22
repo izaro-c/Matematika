@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "sistema-axiomatico",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Sistema axiomático",
+  description: "Marco formal deductivo constituido por una signatura, un lenguaje, un conjunto de axiomas y reglas de inferencia para desarrollar una teoría matemática.",
+  branch: "03B",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "primary" },
+    { title: "Logic, Semantics, Metamathematics", author: "Alfred Tarski", locator: "Capítulo II", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />n **sistema axiomático** es una estructura deductiva formal en la que todas las proposiciones de una teoría matemática se derivan rigurosamente de un conjunto explícito y delimitado de postulados o <ConceptLink targetId="axioma">axiomas</ConceptLink>.
+
+Frente a la tradición clásica de los *Elementos* de <ConceptLink targetId="euclides">Euclides</ConceptLink> —donde se recurría a definiciones basadas en la intuición espacial sensible—, la axiomática moderna consolidada por Moritz <ConceptLink targetId="pasch">Pasch</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peano</ConceptLink> y <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> despoja a los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> de cualquier contenido ontológico previo: su significado formal queda determinado de forma exclusiva por las relaciones mutuas que los axiomas establecen entre ellos.
+
+<Definicion title="Estructura formal de un sistema axiomático">
+  Un sistema axiomático formalizado es una terna:
+  $$
+  \mathcal{S} = (\sigma, \Phi, \vdash)
+  $$
+  donde:
+  - $\sigma$ es la <ConceptLink targetId="signatura">signatura</ConceptLink> que especifica los tipos o <ConceptLink targetId="dominio">dominios primitivos</ConceptLink>, las relaciones y las operaciones.
+  - $\Phi \subseteq \mathcal{L}_\sigma$ es el conjunto de <ConceptLink targetId="axioma" isDependency={true}>axiomas</ConceptLink> propios de la teoría formulados en el lenguaje formal de primer orden $\mathcal{L}_\sigma$.
+  - $\vdash$ es el cálculo deductivo provisto por las reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> de la <ConceptLink targetId="logica">lógica</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Propiedades metateóricas globales
+
+Un sistema axiomático se evalúa desde el punto de vista metamatemático mediante criterios de suficiencia y coherencia:
+
+1. **<ConceptLink targetId="consistencia-logica">Consistencia</ConceptLink>:** El sistema no debe generar contradicciones ($\Phi \nvdash \bot$). Por el teorema de completitud, la consistencia queda garantizada si y solo si la teoría admite al menos un <ConceptLink targetId="teoria-modelos">modelo</ConceptLink>.
+2. **<ConceptLink targetId="independencia-logica">Independencia</ConceptLink>:** Ningún axioma puede deducirse del resto ($\Phi \setminus \{\alpha_i\} \nvdash \alpha_i$), evitando postulados superfluos.
+3. **<ConceptLink targetId="categoricidad">Categoricidad</ConceptLink>:** Todos los modelos de una cardinalidad dada resultan <ConceptLink targetId="isomorfismo">isomorfos</ConceptLink> entre sí, lo que asegura que el sistema fija de manera unívoca la estructura descrita.
+
+En la arquitectura del conocimiento matemático, los sistemas axiomáticos se amplían modularmente mediante relaciones de extensión: el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> se amplía al <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>, del cual bifurcan el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> y el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>.

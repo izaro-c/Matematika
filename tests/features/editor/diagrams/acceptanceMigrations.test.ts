@@ -228,6 +228,7 @@ describe('Diagram acceptance migrations', () => {
           "steps": [],
           "targets": [
             "vertice-movil",
+            "M",
             "clasificacion",
             "poligono",
             "lados-opuestos",

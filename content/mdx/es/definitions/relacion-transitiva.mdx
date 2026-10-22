@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "relacion-transitiva",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Relación transitiva",
+  description: "Propiedad de una relación binaria según la cual si un elemento está relacionado con un segundo y este con un tercero, el primero está relacionado con el tercero.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Capítulo 3", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na relación binaria homogénea es **transitiva** si el vínculo relacional se propaga necesariamente a través de elementos intermedios encadenados.
+
+Constituye la propiedad formal que permite transferir igualdades, equivalencias y ordenaciones, asegurando que las comparaciones indirectas conserven la misma validez lógica que las directas.
+
+<Definicion title="Definición formal de relación transitiva">
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre $A$. La relación $R$ es **transitiva** si y solo si:
+  $$
+  \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
+  $$
+  En términos de composición relacional, denotando por $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ a la composición de $R$ consigo misma, la transitividad equivale a la inclusión:
+  $$
+  R \circ R \subseteq R
+  $$
+</Definicion>
+
+<Separador />
+
+### Rol fundamental en la congruencia y el paralelismo
+
+La transitividad actúa como piedra angular en las deducciones geométricas fundamentales:
+
+- **Postulación en congruencia:** En la fundamentación sintética, la transitividad de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) no es autoevidente ni deducible de la reflexividad: debe ser postulada expresamente en el <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>.
+- **Transitividad del paralelismo:** En un mismo plano, dos rectas paralelas a una tercera son paralelas entre sí ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Este resultado es un <ConceptLink targetId="teorema">teorema</ConceptLink> capital derivado del postulado de las paralelas de Playfair (<ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>), confiriendo al <ConceptLink targetId="paralelas">paralelismo</ConceptLink> euclídeo el estatus completo de <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
+- **Estructuras de orden:** En los conjuntos ordenados, la transitividad garantiza la coherencia de las cadenas de desigualdades ($x < y \land y < z \implies x < z$).

@@ -1,0 +1,63 @@
+export const metadata = {
+  id: "region-poligonal",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Eskualde poligonala",
+  description: "Bikoteka ebakidura hutseko barrualdeak dituzten eskualde triangeluarren bildura finituak osatutako planoko multzoa, azaleraren teoriaren oinarrizko domeinua.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "poligono", "triangulacion", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "IV. kapitulua",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />skualde poligonala <ConceptLink targetId="plano">plano</ConceptLink> bateko puntuen <ConceptLink targetId="conjunto">multzoa</ConceptLink> da, bikoteka ebakidura hutseko barrualdeak dituzten <ConceptLink targetId="region-triangular" isDependency={true}>eskualde triangeluarren</ConceptLink> bildura finitu gisa adierazten dena.
+
+Eskualde poligonal orok zatiketa triangeluar desberdin anitz onartzen ditu, baina haren hedadura espaziala bakarra da. Plano bateko eskualde poligonal guztien klaseak domeinu kanonikoa osatzen du, eta haren gainean formulatzen da <ConceptLink targetId="teoria-medida-area">azaleraren neurriaren teoria</ConceptLink> zein ezartzen diren <ConceptLink targetId="equidescomponibilidad">baliokide deskonposagarritasunaren</ConceptLink> nozioak.
+
+<Definicion title="Eskualde poligonalaren definizio formala">
+Izan bedi $sigma$ espazio geometrioko <ConceptLink targetId="plano">plano</ConceptLink> bat. $R subseteq operatorname{tr}(sigma)$ azpimultzo ez-hutsa **eskualde poligonala** da baldin eta $sigma$ planoan {T_1, T_2, dots, T_n} <ConceptLink targetId="region-triangular" isDependency={true}>eskualde triangeluarren</ConceptLink> familia finitu bat existitzen bada, $n ge 1$ izanik, non:
+
+$$
+R = igcup_{i=1}^n T_i
+$$
+
+eta haien barrualdeek bikoteka disjuntuak izateko baldintza hau betetzen duten:
+
+$$
+operatorname{Int}(T_i) cap operatorname{Int}(T_j) = emptyset quad (orall i 
+eq j)
+$$
+
+$sigma$ planoko eskualde poligonal guztien <ConceptLink targetId="conjunto">multzoa</ConceptLink> $mathcal{R}_sigma$ ikurraren bidez adierazten da.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Zatiketa- eta egitura-propietateak">
+    <PropiedadItem 
+      id="clausura-union-disjunta" 
+      title="Itxitura barrualde disjuntuko bildurarekiko"
+      formula="R_1, R_2 in mathcal{R}_sigma land operatorname{Int}(R_1) cap operatorname{Int}(R_2) = emptyset implies R_1 cup R_2 in mathcal{R}_sigma"
+    >
+      Barrualde disjuntuak dituzten bi eskualde poligonalen bildura eskualde poligonal bat da berriro ere $mathcal{R}_sigma$ multzoan. Bilduraren zatiketa $R_1$ eta $R_2$ eskualdeen pieza triangeluarrak elkartuz lortzen da, neurriaren aditibotasunerako funtsezko propietatea dena.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="independencia-triangulacion" 
+      title="Zatiketa komunen existentzia"
+      formula="orall R in mathcal{R}_sigma"
+    >
+      Eskualde poligonal bera modu amaigabeetan zatitu daiteke eskualde triangeluarretan. Edozein bi zatiketak finketa komun bat onartzen dute, eta horrek bermatzen du <ConceptLink targetId="teoria-medida-area">azaleraren neurriaren teoria</ConceptLink> ondo definituta egotea aukeratutako zatiketa triangeluarrarekiko modu independentean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

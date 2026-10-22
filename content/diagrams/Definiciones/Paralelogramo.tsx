@@ -1245,7 +1245,7 @@ export const ParalelogramoSpec = createDiagramSpec(
         "ariaLabel": "Punto medio común M",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "objectType": "point",
       "definition": {
         "type": "intersection",

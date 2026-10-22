@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "logica",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Lógica matemática",
+  description: "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis y las reglas de inferencia válidas.",
+  branch: "03B",
+  branches: ["03", "03A"],
+  hasSimulation: false,
+  sources: [
+    { title: "A Mathematical Introduction to Logic", author: "Herbert B. Enderton", locator: "Capítulo 1", role: "primary" },
+    { title: "Introduction to Mathematical Logic", author: "Elliott Mendelson", locator: "Capítulo 2", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **lógica matemática** es la disciplina formal que estudia la validez del razonamiento deductivo, la estructura de los lenguajes formales y los fundamentos de las teorías matemáticas. Proporciona el marco riguroso mediante el cual se formulan los enunciados matemáticos y se establecen demostraciones incontrovertibles a partir de premisas explícitas.
+
+En el análisis metamatemático se distinguen dos dimensiones esenciales: la dimensión sintáctica, que analiza la manipulación formal de cadenas de símbolos según reglas gramaticales y reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> ($\Gamma \vdash \varphi$), y la dimensión semántica, abordada por la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, que estudia la interpretación de los símbolos en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> y la noción de verdad bajo una asignación ($\mathcal{M} \models \varphi$).
+
+<Definicion title="Sistema deductivo formal de primer orden">
+  Un **sistema lógico de primer orden** sobre una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$ consta de los siguientes elementos constitutivos:
+  1. **Lenguaje formal** $\mathcal{L}_\sigma$: conjunto de fórmulas bien formadas generadas a partir de variables, conectivas lógicas ($\neg, \land, \lor, \implies, \iff$), cuantificadores ($\forall, \exists$) e igualdad ($=$), combinados con los símbolos no lógicos de $\sigma$.
+  2. **<ConceptLink targetId="axioma">Axiomas</ConceptLink> lógicos**: fórmulas válidas universales que rigen la deducción general con independencia de la teoría específica considerada.
+  3. **Reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink>**: mecanismos algorítmicos que permiten derivar nuevas fórmulas a partir de premisas establecidas, como la regla clásica de *modus ponens*:
+     $$
+     \frac{\varphi, \quad \varphi \implies \psi}{\psi}
+     $$
+  4. **Demostración y <ConceptLink targetId="teorema">teorema</ConceptLink>**: una sucesión finita de fórmulas $\varphi_1, \dots, \varphi_n$ donde cada término es un axioma o se obtiene de términos anteriores mediante una regla de inferencia; el último término $\varphi_n$ se denomina teorema formal del sistema.
+</Definicion>
+
+<Separador />
+
+### Lógica multitipo en los fundamentos de la geometría
+
+En la formalización contemporánea de la geometría sintética de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el sistema se modela con precisión mediante una **lógica multitipo** (*many-sorted logic*). En este marco coexisten tres <ConceptLink targetId="dominio">dominios primitivos</ConceptLink> disjuntos dos a dos: el dominio de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, el de <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y el de <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$, de modo que $\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$ y $\mathcal{L} \cap \Pi = \emptyset$.
+
+El tipado multisort asegura que las <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> punto-recta ($\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$) o punto-plano ($\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$), reciban argumentos exclusivamente del tipo correspondiente. Esta disciplina tipológica impide formulaciones sintácticamente espurias y permite verificar formalmente la <ConceptLink targetId="consistencia-logica">consistencia lógica</ConceptLink> del sistema sin ambigüedades ontológicas.

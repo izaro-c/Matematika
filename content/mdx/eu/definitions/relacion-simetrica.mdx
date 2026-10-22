@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "relacion-simetrica",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Erlazio simetrikoa",
+  description: "Erlazio bitar baten propietatea, zeinaren arabera elementu batek beste batekin erlazioa badu, bigarrenak lehenengoarekin ere erlazioa duen.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "3. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />rlazio bitar homogeneo bat **simetrikoa** da baldin eta edozein bi elementu lotzen dituen lotura elkarrekikoa bada eta haren terminoak enuntziatzen diren ordenaren mendekoa ez bada.
+
+Ez da nahastu behar propietate logiko abstraktu hau figura baten <ConceptLink targetId="simetria">simetria geometrikoaren</ConceptLink> nozioarekin (puntu-azpimultzo bat aldaezin uzten duen isometria edo eraldaketa adierazten baitu): hemen erlazio formal baten alderanzgarritasunaz ari gara hertsiki.
+
+<Definicion title="Erlazio simetrikoaren definizio formala">
+  Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat. $R$ erlazioa **simetrikoa** da baldin eta soilik baldin:
+  $$
+  \forall x, y \in A, \quad x \, R \, y \implies y \, R \, x
+  $$
+  Termino aljebraikoetan, $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ $R$-ren alderantzizko edo transposatutako erlazioa adieraziz, simetria berdintza honen baliokidea da:
+  $$
+  R = R^{-1}
+  $$
+</Definicion>
+
+<Separador />
+
+### Presentzia geometriaren axiometan eta teoretan
+
+Erlazio-simetriak modu erabakigarrian parte hartzen du hainbat geruza deduktibotan:
+
+- **Bitartekotasunaren simetria:** Ordena linealaren <ConceptLink targetId="axioma-orden-1">II.1 axioman</ConceptLink>, puntuen artean egotearen erlazioa muturrekiko simetrikoa dela postulatzen da: $A * B * C$ bada, orduan ezinbestean $C * B * A$ da.
+- **Dedukzioa kongruentzian:** Zuzenkien <ConceptLink targetId="congruencia">kongruentzian</ConceptLink>, propietate simetrikoa ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) ez da modu isolatuan postulatzen, baizik eta <ConceptLink targetId="teorema">teorema</ConceptLink> zorrotz gisa frogatzen da <ConceptLink targetId="axioma-congruencia-1">III.1 axiomaren</ConceptLink> erreflexibotasuna eta <ConceptLink targetId="axioma-congruencia-2">III.2 axiomaren</ConceptLink> iragankortasuna konbinatuz.
+- **Paralelotasuna:** Zuzen koplanarren arteko <ConceptLink targetId="paralelas">paralelotasun-erlazioa</ConceptLink> simetrikoa da ($\ell \parallel m \implies m \parallel \ell$) disjuntzioaren eta multzo-ebakiduraren berezko konmutatibotasunagatik, edozein <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioren</ConceptLink> ezaugarri bereizgarria izanik.

@@ -1,0 +1,64 @@
+export const metadata = {
+  id: "triangulo-isosceles",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangelu isoszelea",
+  description: "Gutxienez bi alde elkarren artean kongruenteak dituen triangelua; hirugarren aldeari oinarria deritzo eta haien arteko angeluari erpineko angelua.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "triangelua", "aldea", "kongruentzia", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 20. definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />riangelu **isoszelea** gutxienez bi <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dituen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da.
+
+Bi alde kongruente jakin bereizten direnean, horiei alboko aldeak deritze, eta hirugarren aldeari <ConceptLink targetId="base">oinarria</ConceptLink> deritzo. Bi alde kongruenteek eratutako <ConceptLink targetId="angulo">angelua</ConceptLink> <ConceptLink targetId="vertice">erpineko</ConceptLink> angelua da, eta oinarriaren muturretako bi angeluak <ConceptLink targetId="angulo-base">oinarriko angeluak</ConceptLink> dira. Triangelu isoszelen familiak bere barnean hartzen ditu <ConceptLink targetId="triangulo-equilatero">triangelu aldeberdinak</ConceptLink>, hiru aldeak kongruenteak diren kasu berezi gisa.
+
+<Definicion title="Triangelu isoszelearen definizio formala">
+Izan bedi $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean, $A$, $B$ eta $C$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealek</ConceptLink> finkatua.
+
+$\triangle ABC$ **triangelu isoszelea** dela esaten da baldin eta gutxienez bere bi <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira:
+
+$$
+\overline{AB} \cong \overline{AC} \quad\lor\quad \overline{AB} \cong \overline{BC} \quad\lor\quad \overline{BC} \cong \overline{CA}
+$$
+
+$\overline{AB} \cong \overline{AC}$ den kokapenean, $\overline{AB}$ eta $\overline{AC}$ aldeei alboko aldeak deritze, eta gainerako $\overline{BC}$ aldeari triangelu isoszelearen **<ConceptLink targetId="base">oinarria</ConceptLink>**. $A$ erpin komuna erpin nagusia da, $\angle BAC$ angelua **erpineko <ConceptLink targetId="vertice">angelua</ConceptLink>** da, eta $\angle ABC$ zein $\angle ACB$ angeluak **<ConceptLink targetId="angulo-base">oinarriko angeluak</ConceptLink>** dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ezaugarri geometrikoak eta simetria">
+    <PropiedadItem 
+      id="congruencia-angulos-base" 
+      title="Oinarriko angeluen kongruentzia"
+      formula="\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB"
+    >
+      Edozein triangelu isoszeletan, alde kongruenteei aurkako angeluak elkarren artean kongruenteak dira (<ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink>). <ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, emaitza hau <ConceptLink targetId="axioma-congruencia-5">III.5 Axiomatik</ConceptLink> ondorioztatzen da paraleloen axioma erabili gabe. Alderantziz, triangelu baten bi <ConceptLink targetId="angulo">angelu</ConceptLink> kongruenteak badira, aurkako aldeak ere kongruenteak dira.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="coincidencia-cevianas-notables" 
+      title="Simetria-ardatza eta zuzen nabarmenak"
+      formula="\overleftrightarrow{AM} \perp \overleftrightarrow{BC} \quad (M \text{ punto medio de } \overline{BC})"
+    >
+      $\overline{AB} \cong \overline{AC}$ betetzen duen triangelu isoszele batean, erpineko angeluaren <ConceptLink targetId="bisectriz">erdikaria</ConceptLink>, oinarriari dagokion <ConceptLink targetId="mediana">mediana</ConceptLink>, oinarriaren gaineko <ConceptLink targetId="altura">altuera</ConceptLink> eta oinarriaren <ConceptLink targetId="mediatriz">erdibitzailea</ConceptLink> bat datoz $\overleftrightarrow{AM}$ <ConceptLink targetId="recta">zuzen</ConceptLink> bakar batean, triangeluaren <ConceptLink targetId="simetria">simetria</ConceptLink> axialeko ardatza osatuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

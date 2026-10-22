@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "logica",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Logika matematikoa",
+  description: "Sistema deduktiboak, hizkuntza formalak, sintaxia eta inferentzia-arau baliagarriak aztertzen dituen diziplina formala.",
+  branch: "03B",
+  branches: ["03", "03A"],
+  hasSimulation: false,
+  sources: [
+    { title: "A Mathematical Introduction to Logic", author: "Herbert B. Enderton", locator: "1. Kapitulua", role: "primary" },
+    { title: "Introduction to Mathematical Logic", author: "Elliott Mendelson", locator: "2. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />ogika **matematikoa** arrazoibide deduktiboaren baliozkotasuna, hizkuntza formalen egitura eta teoria matematikoen oinarriak aztertzen dituen diziplina formala da. Esparru zorrotz bat eskaintzen du, zeinaren bidez enuntziatu matematikoak zehaztasunez formulatzen diren eta premisa esplizituetatik abiatuta froga eztabaidaezinak eratzen diren.
+
+Azterketa metamatematikoan bi dimentsio nagusi bereizten dira: dimentsio sintaktikoa, arau gramatikalen eta <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> arabera ikur-kateen manipulazio formala aztertzen duena ($\Gamma \vdash \varphi$), eta dimentsio semantikoa, <ConceptLink targetId="teoria-modelos">ereduen teoriak</ConceptLink> jorratzen duena, zeinak ikurren interpretazioa <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> batean eta egiazkotasunaren nozioa aztertzen dituen balioespen baten pean ($\mathcal{M} \models \varphi$).
+
+<Definicion title="Lehen mailako sistema deduktibo formala">
+  $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> baten gaineko **lehen mailako sistema logiko** batek honako elementu eratzaile hauek ditu:
+  1. $\mathcal{L}_\sigma$ **hizkuntza formala**: aldagaietatik, konektore logikoetatik ($\neg, \land, \lor, \implies, \iff$), kuantifikatzaileetatik ($\forall, \exists$) eta berdintzatik ($=$) abiatuta eratutako formula ondo eratuen multzoa, $\sigma$-ren ikur ez-logikoekin konbinatuta.
+  2. **<ConceptLink targetId="axioma">Axioma</ConceptLink> logikoak**: dedukzio orokorra gobernatzen duten formula unibertsalki baliozkoak, kontuan hartutako teoria zehatzetik at.
+  3. **<ConceptLink targetId="inferencia">Inferentzia-arauak</ConceptLink>**: finkatutako premisetatik abiatuta formula berriak eratzea ahalbidetzen duten mekanismo algoritmikoak, hala nola *modus ponens* arau klasikoa:
+     $$
+     \frac{\varphi, \quad \varphi \implies \psi}{\psi}
+     $$
+  4. **Frogapena eta <ConceptLink targetId="teorema">teorema</ConceptLink>**: $\varphi_1, \dots, \varphi_n$ formula-segida finitu bat, non termino bakoitza axioma bat den edo aurreko terminoetatik inferentzia-arau baten bidez lortzen den; $\varphi_n$ azken terminoari sistemaren teorema formala deritzo.
+</Definicion>
+
+<Separador />
+
+### Mota anitzeko logika geometriaren oinarrietan
+
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> geometria sintetikoaren gaur egungo formalizazioan, sistema doitasunez modelatzen da **mota anitzeko logika** (*many-sorted logic*) baten bidez. Esparru honetan bikoteka disjuntuak diren hiru <ConceptLink targetId="dominio">oinarrizko domeinu</ConceptLink> batera existitzen dira: $\mathcal{P}$ <ConceptLink targetId="punto">puntuen</ConceptLink> domeinua, $\mathcal{L}$ <ConceptLink targetId="recta">zuzenen</ConceptLink> domeinua eta $\Pi$ <ConceptLink targetId="plano">planoen</ConceptLink> domeinua, non $\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$ eta $\mathcal{L} \cap \Pi = \emptyset$.
+
+Mota anitzeko tipifikazioak bermatzen du oinarrizko <ConceptLink targetId="relacion-binaria">erlazio bitarrek</ConceptLink> —hala nola puntu eta zuzenaren arteko <ConceptLink targetId="incidencia">intzidentziak</ConceptLink> ($\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$) edo puntu eta planoaren artekoak ($\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$)— dagozkien motetako argumentuak soilik jasotzea. Diziplina tipologiko honek formulazio sintaktiko sasikoak saihesten ditu eta sistemaren <ConceptLink targetId="consistencia-logica">koherentzia logikoa</ConceptLink> ziurtatzen du inolako anbiguotasun ontologikorik gabe.

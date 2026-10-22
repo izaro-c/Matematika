@@ -1,0 +1,76 @@
+export const metadata = {
+  id: "teorema-lados-opuestos-paralelogramo",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema de los lados opuestos del paralelogramo",
+  description: "En todo paralelogramo, los lados opuestos son mutuamente congruentes y los ángulos opuestos son mutuamente congruentes.",
+  statement: "En todo paralelogramo ABCD, los lados opuestos son mutuamente congruentes (AB ≅ CD y BC ≅ DA), y los ángulos opuestos son mutuamente congruentes (∠ABC ≅ ∠CDA y ∠BCD ≅ ∠DAB).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "teorema"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-lados-opuestos-paralelogramo"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />n todo <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramo</ConceptLink>, los <ConceptLink targetId="lado">lados</ConceptLink> opuestos son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> y los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos son mutuamente congruentes.
+
+Este resultado constituye la Proposición I.34 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> y es retomado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §7 de los *Grundlagen der Geometrie*. Su deducción requiere de forma sustancial el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink> a través del <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink>, y se completa aplicando el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>criterio de congruencia ALA</ConceptLink> a los dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> determinados por una <ConceptLink targetId="diagonal">diagonal</ConceptLink>. En el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>, al no cumplirse el postulado euclidiano, la relación entre equidistancia, paralelismo y congruencia de cuadriláteros adopta propiedades esencialmente distintas.
+
+<Definicion title="Enunciado formal del teorema de los lados opuestos del paralelogramo">
+Sean $A, B, C, D \in \mathcal{P}$ cuatro <ConceptLink targetId="punto">puntos</ConceptLink> coplanares en un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma \in \Pi$ que determinan un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> convexo $ABCD$.
+
+Si $ABCD$ es un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>, es decir, las <ConceptLink targetId="recta">rectas</ConceptLink> soporte de sus pares de lados opuestos son <ConceptLink targetId="paralelas">paralelas</ConceptLink>:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+entonces los lados opuestos correspondientes son mutuamente congruentes:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+y los ángulos opuestos interiores son mutuamente congruentes:
+
+$$
+\angle ABC \cong \angle CDA \quad \land \quad \angle BCD \cong \angle DAB
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias deductivas y recíprocos">
+    <PropiedadItem 
+      id="teorema-reciproco-lados-opuestos-paralelogramo" 
+      title="Caracterización recíproca por lados opuestos"
+      formula="\overline{AB} \cong \overline{CD} \land \overline{BC} \cong \overline{DA} \implies \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \land \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      Si en un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> convexo los lados opuestos son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, las rectas soporte de los lados opuestos son <ConceptLink targetId="paralelas">paralelas</ConceptLink> y la figura es un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>; se demuestra trazando una <ConceptLink targetId="diagonal">diagonal</ConceptLink> y aplicando el <ConceptLink targetId="teorema-congruencia-lll">criterio LLL</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="biseccion-diagonales-paralelogramo" 
+      title="Bisección mutua de las diagonales"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) = \{M\} \implies \overline{AM} \cong \overline{MC} \land \overline{BM} \cong \overline{MD}"
+    >
+      Las dos <ConceptLink targetId="diagonal">diagonales</ConceptLink> de un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> se cortan en un punto interior común $M$ que es el <ConceptLink targetId="punto-medio">punto medio</ConceptLink> de ambas; se demuestra aplicando el <ConceptLink targetId="teorema-congruencia-ala">criterio ALA</ConceptLink> a los triángulos opuestos con vértice en $M$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

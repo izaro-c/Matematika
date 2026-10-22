@@ -1,0 +1,60 @@
+export const metadata = {
+  id: "interior-triangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Interior del triángulo",
+  description: "Región plana abierta y convexa definida como la intersección de los tres semiplanos determinados por las rectas soporte de los lados que contienen al vértice opuesto.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "semiplano", "convexidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />l **interior de un triángulo** es la región del <ConceptLink targetId="plano">plano</ConceptLink> constituida por los <ConceptLink targetId="punto">puntos</ConceptLink> que pertenecen simultáneamente a los tres <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> abiertos determinados por las <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> de los <ConceptLink targetId="lado">lados</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> que contienen al <ConceptLink targetId="vertice">vértice</ConceptLink> opuesto respectivo.
+
+La noción formaliza la región situada dentro del triángulo, distinguiéndola de su <ConceptLink targetId="traza">traza puntual</ConceptLink> y de los puntos exteriores. Hilbert fundamenta esta construcción a partir de los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink>, demostrando que dicha <ConceptLink targetId="interseccion">intersección</ConceptLink> es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink> no vacío. Junto con los lados del triángulo, el interior permite definir la <ConceptLink targetId="region-triangular">región triangular</ConceptLink>, concepto fundamental en la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink>.
+
+<Definicion title="Definición formal del interior de un triángulo">
+Sean $A$, $B$ y $C$ tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, que determinan el <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
+
+Sean $\overleftrightarrow{AB}$, $\overleftrightarrow{BC}$ y $\overleftrightarrow{CA}$ las <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> de sus <ConceptLink targetId="lado">lados</ConceptLink>. Se denota por $\mathcal{H}_{\overleftrightarrow{AB}}(C)$ al <ConceptLink targetId="semiplano" isDependency={true}>semiplano</ConceptLink> abierto de borde $\overleftrightarrow{AB}$ que contiene al vértice $C$, por $\mathcal{H}_{\overleftrightarrow{BC}}(A)$ al semiplano abierto de borde $\overleftrightarrow{BC}$ que contiene a $A$, y por $\mathcal{H}_{\overleftrightarrow{CA}}(B)$ al semiplano abierto de borde $\overleftrightarrow{CA}$ que contiene a $B$.
+
+El **interior del triángulo** $\triangle ABC$, denotado $\operatorname{Int}(\triangle ABC)$, es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> intersección de los tres semiplanos abiertos determinados por las rectas soporte y los vértices opuestos:
+
+$$
+\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)
+$$
+
+Un punto $P$ del plano $\pi$ pertenece a $\operatorname{Int}(\triangle ABC)$ si y solo si se halla del mismo lado de la recta $\overleftrightarrow{AB}$ que $C$, del mismo lado de $\overleftrightarrow{BC}$ que $A$, y del mismo lado de $\overleftrightarrow{CA}$ que $B$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de orden y convexidad">
+    <PropiedadItem 
+      id="convexidad-interior" 
+      title="Convexidad de la región interior"
+      formula="P, Q \in \operatorname{Int}(\triangle ABC) \implies \operatorname{seg}(PQ) \subseteq \operatorname{Int}(\triangle ABC)"
+    >
+      El interior de un triángulo es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si dos puntos $P$ y $Q$ pertenecen a $\operatorname{Int}(\triangle ABC)$, el <ConceptLink targetId="segmento">segmento</ConceptLink> abierto $\operatorname{seg}(PQ)$ está contenido íntegramente en $\operatorname{Int}(\triangle ABC)$. La propiedad se deduce de que cada semiplano abierto es convexo y la <ConceptLink targetId="interseccion">intersección</ConceptLink> de conjuntos convexos es convexa.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-vacuidad-interior" 
+      title="No vacuidad de la región interior"
+      formula="\operatorname{Int}(\triangle ABC) \neq \emptyset"
+    >
+      El interior de todo triángulo no degenerado es no vacío. Si $D$ es un punto tal que $B * D * C$ en el segmento abierto $\operatorname{seg}(BC)$, y $P$ es un punto tal que $A * P * D$ en $\operatorname{seg}(AD)$, los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink> garantizan que $P \in \operatorname{Int}(\triangle ABC)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -1,0 +1,66 @@
+export const metadata = {
+  id: "teorema-separacion-plano",
+  lang: "eu",
+  type: "teorema",
+  title: "Planoaren banaketa-teorema",
+  description: "Plano batean barne hartutako edozein zuzenek zuzen horrekin intziditzen ez duten planoaren puntuak bi baliokidetasun-klase konbexu eta disjuntutan banatzen ditu.",
+  statement: "π plano batean barne hartutako ℓ zuzen bat emanik, ℓ zuzenarekin intziditzen ez duten planoaren puntuen multzoa bi baliokidetasun-klase konbexu eta disjuntutan partitzen da, zuzenkiek ℓ zuzenarekin ebakidurarik ez izateko erlazioaren pean.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "separacion", "pasch", "convexidad"],
+  demos: ["demo-separacion-plano"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="P" />lano batean barnean hartutako edozein <ConceptLink targetId="recta" isDependency={true}>zuzenek</ConceptLink> harekin intziditzen ez duten <ConceptLink targetId="plano" isDependency={true}>planoko</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink> bi eskualde disjuntu eta konbexutan banatzen ditu.
+
+Emaitza honek, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>ek *Grundlagen der Geometrie* laneko 4. §-an finkatua, <ConceptLink targetId="semiplano">planoerdiaren</ConceptLink> nozio geometrikoa deduktiboki formalizatzen du. Bere frogapenak ez du kontzeptu metrikoetara ezta jarraitutasunera jotzen, baizik eta <ConceptLink targetId="incidencia" isDependency={true}>intzidentzia-axiometan</ConceptLink> eta <ConceptLink targetId="estar-entre" isDependency={true}>ordena-axiometan</ConceptLink> oinarritzen da, bereziki <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen axioman</ConceptLink> funtsatuz.
+
+<Definicion title="Planoaren banaketa-teoremaren enuntziatu formala">
+Izan bedi $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta izan bedi $\ell \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat non $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ planoko <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> multzoan, $\ell$ zuzenarekin intziditzen ez dutenak, $\sim_\ell$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitarra</ConceptLink> honela definitzen da:
+$$
+A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+non $\operatorname{seg}(AB)$ ikurrak $A$ eta $B$ muturretako <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> irekia adierazten duen.
+
+Baldintza horien pean:
+1. $\sim_\ell$ erlazioa <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazioa</ConceptLink> da $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ multzoan.
+2. Zatidura-multzoak bi <ConceptLink targetId="clase-equivalencia" isDependency={true}>baliokidetasun-klase</ConceptLink> ditu zehazki:
+$$
+(\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}
+$$
+3. Bi puntu $A$ eta $B$ klase desberdinetakoak dira baldin eta soilik baldin haiek lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> irekiak $\ell$ zuzena ebakitzen badu:
+$$
+A \in \mathcal{H}_1 \land B \in \mathcal{H}_2 \iff \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) \neq \emptyset
+$$
+4. $\mathcal{H}_i$ klase bakoitza <ConceptLink targetId="conjunto-convexo" isDependency={true}>multzo konbexua</ConceptLink> da: bi puntu $\mathcal{H}_i$ klasekoak badira, haien arteko zuzenki ireki osoa $\mathcal{H}_i$ klasean barnean dago.
+</Definicion>`
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Banaketa-klaseen propietateak">
+    <PropiedadItem 
+      id="convexidad-de-las-regiones" 
+      title="Planoko eskualdeen konbexutasuna"
+      formula="A, B \in \mathcal{H}_i \implies \operatorname{seg}(AB) \subseteq \mathcal{H}_i"
+    >
+      Lortutako bi eskualdeetako bakoitza <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: bi puntu klase berean badaude, haiek lotzen dituen <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> ez du banaketa-zuzena ebakitzen eta zuzenkiaren punturik ezin da kontrako eskualdera igaro.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="caracterizacion-de-interseccion-de-segmentos" 
+      title="Aurkako eskualdeen arteko ezinbesteko ebakidura"
+      formula="A \in \mathcal{H}_1 \land B \in \mathcal{H}_2 \implies \exists! X \in \operatorname{tr}(\ell) \; (A * X * B)"
+    >
+      Banaketa-zuzenarekiko aurkako eskualdeetan kokatutako edozein puntu-bikoterentzat, haiek zehaztutako <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> zuzena puntu bakar batean ebakitzen du, <ConceptLink targetId="estar-entre">bitartekotasun-erlazioa</ConceptLink> betez.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

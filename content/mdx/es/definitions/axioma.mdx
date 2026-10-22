@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "axioma",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Axioma",
+  description: "Proposición asumida como verdadera sin demostración previa que sirve de premisa o punto de partida formal en una teoría deductiva.",
+  branch: "03B",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" },
+    { title: "Introduction to Logic and to the Methodology of Deductive Sciences", author: "Alfred Tarski", locator: "Capítulo VI", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />n **axioma** (o postulado) es un enunciado matemático que se asume como verdadero sin demostración previa dentro del marco de una teoría deductiva formal. Constituye la premisa elemental e irreductible a partir de la cual se derivan lógicamente todas las demás proposiciones de la disciplina.
+
+En la concepción axiomática formal, los axiomas no pretenden reflejar evidencias empíricas autoevidentes ni verdades absolutas del mundo físico; su función metateórica consiste en fijar explícitamente las condiciones, restricciones y relaciones mutuas que deben verificar los <ConceptLink targetId="concepto-primitivo" isDependency={true}>conceptos primitivos</ConceptLink> de la teoría. De este modo, cualquier resultado subsiguiente deducido como <ConceptLink targetId="teorema">teorema</ConceptLink> mediante reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> queda indisolublemente condicionado a la validez de los postulados iniciales.
+
+<Definicion title="Axioma en un sistema formal">
+  Sea $\mathcal{S} = (\sigma, \Phi)$ un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formalizado sobre una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$ con lenguaje formal $\mathcal{L}_\sigma$. Un **axioma propio** o no lógico de la teoría es una fórmula cerrada $\alpha \in \Phi$ perteneciente al conjunto distinguido de postulados:
+  $$
+  \Phi \vdash \alpha
+  $$
+  Una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> $\mathcal{M}$ constituye un <ConceptLink targetId="teoria-modelos">modelo</ConceptLink> del sistema si satisface universalmente cada uno de los axiomas de $\Phi$:
+  $$
+  \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
+  $$
+</Definicion>
+
+<Separador />
+
+### Criterios metateóricos de un cuerpo de axiomas
+
+Al formular o evaluar un repertorio axiomático $\Phi$, la metodología matemática exige examinar tres propiedades metateóricas cruciales:
+
+1. **<ConceptLink targetId="consistencia-logica">Consistencia lógica</ConceptLink>:** El conjunto de axiomas no debe encerrar contradicciones internas, lo que significa que no debe ser posible deducir a partir de $\Phi$ una proposición y su negación simultáneamente ($\Phi \nvdash \varphi \land \neg \varphi$).
+2. **<ConceptLink targetId="independencia-logica">Independencia</ConceptLink>:** Ningún axioma debe ser redundante ni deducible a partir de los restantes ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). Para probar la independencia de un axioma se construyen modelos disidentes que satisfacen todos los axiomas salvo el axioma analizado.
+3. **Estructuración en grupos axiomáticos:** En los *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organizó los axiomas de la geometría en cinco grupos orgánicos con cometidos funcionales diferenciados: incidencia (I), orden (II), congruencia (III), paralelas (IV) y continuidad (V).

@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "elemento-neutro",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Elementu neutroa",
+  description: "Egitura aljebraiko bateko elementu berezia, eragiketa bitar baten bidez beste edozein elementurekin eragitean hura aldatu gabe uzten duena.",
+  branch: "08A",
+  branches: ["08A", "20A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />lementu neutroa (edo identitate-elementua) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bati dagokionez <ConceptLink targetId="conjunto">multzo</ConceptLink> bateko elementu nabarmen bat da, beste edozein elementurekin eragitean hura aldatu gabe uzten duena. Oinarrizko abiaburua da egitura aljebraiko nagusiak karakterizatzeko, hala nola <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="anillo">eraztunak</ConceptLink>.
+
+<Definicion title="Elementu neutroaren definizio formala">
+  Izan bitez $S$ <ConceptLink targetId="conjunto">multzo</ConceptLink> bat eta $*\colon S \times S \longrightarrow S$ haren gaineko <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bat. $e \in S$ elementua $*$ eragiketarako **alde biko elementu neutroa** (edo, besterik gabe, neutroa) da baldin eta soilik baldin baldintza bikoitz hau betetzen badu:
+  $$
+  \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
+  $$
+  Baldin eta $e_L * a = a$ soilik betetzen badu $a \in S$ guztietarako, ezker-neutroa deritzo; aldiz, $a * e_R = a$ betetzen badu $a \in S$ guztietarako, eskuin-neutroa deritzo. Egitura aljebraiko batek alde biko elementu neutroa duenean, identitatedun egitura dela esaten da.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Bakartasuna eta propietate aljebraikoak">
+    <PropiedadItem id="unicidad-elemento-neutro" title="Elementu neutroaren bakartasuna" formula="e_1 = e_1 * e_2 = e_2">
+      <ConceptLink targetId="operacion-binaria">Eragiketa bitar</ConceptLink> batez hornitutako edozein $(S, *)$ egituratan, alde biko elementu neutroa bakarra da. Baldin eta $e_1, e_2 \in S$ biak elementu neutroak badira, $e_2$ eskuin-neutroa denez $e_1 * e_2 = e_1$ betetzen da, eta $e_1$ ezker-neutroa denez $e_1 * e_2 = e_2$ betetzen da. Ondorioz:
+      $$
+      e_1 = e_1 * e_2 = e_2
+      $$
+      Dedukzio honek gainera frogatzen du eragiketa batek $e_L$ ezker-neutro bat eta $e_R$ eskuin-neutro bat baditu, biek nahitaez bat egiten dutela ($e_L = e_L * e_R = e_R$), eta horrek eragozten du aurkako aldeetako aldebakarreko neutro desberdinak batera existitzea alde biko neutrorik ez badago behintzat.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

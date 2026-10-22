@@ -7,9 +7,9 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 **Resumen de Estado:**
 - **Aprobados con Visto Bueno:** 50 documentos
-- **Reescritos en Espera de Revisión:** 70 documentos
+- **Reescritos en Espera de Revisión:** 132 documentos
 - **Pendientes de Reescritura:** 0 documentos
-- **Total de Nodos en el Grafo:** 120 documentos
+- **Total de Nodos en el Grafo:** 182 documentos
 
 ---
 
@@ -20,7 +20,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`punto`](../content/mdx/es/definitions/punto.mdx) | Punto | Puntua | Point | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`recta`](../content/mdx/es/definitions/recta.mdx) | Recta | Zuzena | Line | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`plano`](../content/mdx/es/definitions/plano.mdx) | Plano | Planoa | Plane | Definición (`primitivo`) | ✅ 2026-08-29 |
-| [`concepto-primitivo`](../content/mdx/es/definitions/concepto-primitivo.mdx) | Concepto primitivo | Oinarrizko kontzeptua | Primitive concept | Definición (`primitivo`) | ✅ 2026-08-29 |
+| [`concepto-primitivo`](../content/mdx/es/definitions/concepto-primitivo.mdx) | Concepto primitivo | Oinarrizko kontzeptua | Primitive concept | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`incidencia`](../content/mdx/es/definitions/incidencia.mdx) | Incidencia | Intzidentzia | Incidence | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`dimension`](../content/mdx/es/definitions/dimension.mdx) | Dimensión | Dimentsioa | Dimension | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`estructura-geometrica`](../content/mdx/es/definitions/estructura-geometrica.mdx) | Estructura geométrica | Egitura geometrikoa | Geometric structure | Definición (`nominal`) | ✅ 2026-08-29 |
@@ -70,7 +70,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 ---
 
-## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 70)
+## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 132)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Reescritura |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -144,14 +144,76 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`angulo-recto`](../content/mdx/es/definitions/angulo-recto.mdx) | Ángulo recto | Angelu zuzena | Right Angle | `definicion` | ⏳ 2026-10-14 |
 | [`longitud`](../content/mdx/es/definitions/longitud.mdx) | Longitud | Luzera | Length | `definicion` | ⏳ 2026-10-14 |
 | [`cateto`](../content/mdx/es/definitions/cateto.mdx) | Cateto | Katetoa | Leg | `definicion` | ⏳ 2026-10-14 |
+| [`secante`](../content/mdx/es/definitions/secante.mdx) | Secante | Zuzen ebakitzailea | Secant Line | `definicion` | ⏳ 2026-10-22 |
+| [`congruencia-triangulos`](../content/mdx/es/definitions/congruencia-triangulos.mdx) | Congruencia de triángulos | Triangeluen kongruentzia | Triangle Congruence | `definicion` | ⏳ 2026-10-22 |
+| [`hipotenusa`](../content/mdx/es/definitions/hipotenusa.mdx) | Hipotenusa | Hipotenusa | Hypotenuse | `definicion` | ⏳ 2026-10-22 |
+| [`logica`](../content/mdx/es/definitions/logica.mdx) | Lógica matemática | Logika matematikoa | Mathematical Logic | `definicion` | ⏳ 2026-10-22 |
+| [`teoria-modelos`](../content/mdx/es/definitions/teoria-modelos.mdx) | Teoría de modelos | Ereduen teoria | Model Theory | `definicion` | ⏳ 2026-10-22 |
+| [`isomorfismo`](../content/mdx/es/definitions/isomorfismo.mdx) | Isomorfismo | Isomorfismoa | Isomorphism | `definicion` | ⏳ 2026-10-22 |
+| [`axioma`](../content/mdx/es/definitions/axioma.mdx) | Axioma | Axioma | Axiom | `definicion` | ⏳ 2026-10-22 |
+| [`teorema`](../content/mdx/es/definitions/teorema.mdx) | Teorema | Teorema | Theorem | `definicion` | ⏳ 2026-10-22 |
+| [`sistema-axiomatico`](../content/mdx/es/definitions/sistema-axiomatico.mdx) | Sistema axiomático | Sistema axiomatikoa | Axiomatic System | `definicion` | ⏳ 2026-10-22 |
+| [`consistencia-logica`](../content/mdx/es/definitions/consistencia-logica.mdx) | Consistencia lógica | Koherentzia logikoa (Kontsistentzia) | Logical Consistency | `definicion` | ⏳ 2026-10-22 |
+| [`conjunto`](../content/mdx/es/definitions/conjunto.mdx) | Conjunto | Multzoa | Set | `definicion` | ⏳ 2026-10-22 |
+| [`interseccion`](../content/mdx/es/definitions/interseccion.mdx) | Intersección | Ebakidura | Intersection | `definicion` | ⏳ 2026-10-22 |
+| [`biyeccion`](../content/mdx/es/definitions/biyeccion.mdx) | Biyección | Bijekzioa | Bijection | `definicion` | ⏳ 2026-10-22 |
+| [`cardinalidad`](../content/mdx/es/definitions/cardinalidad.mdx) | Cardinalidad | Kardinaltasuna | Cardinality | `definicion` | ⏳ 2026-10-22 |
+| [`relacion-reflexiva`](../content/mdx/es/definitions/relacion-reflexiva.mdx) | Relación reflexiva | Erlazio erreflexiboa | Reflexive Relation | `definicion` | ⏳ 2026-10-22 |
+| [`relacion-simetrica`](../content/mdx/es/definitions/relacion-simetrica.mdx) | Relación simétrica | Erlazio simetrikoa | Symmetric Relation | `definicion` | ⏳ 2026-10-22 |
+| [`relacion-transitiva`](../content/mdx/es/definitions/relacion-transitiva.mdx) | Relación transitiva | Erlazio iragankorra | Transitive Relation | `definicion` | ⏳ 2026-10-22 |
+| [`relacion-equivalencia`](../content/mdx/es/definitions/relacion-equivalencia.mdx) | Relación de equivalencia | Baliokidetasun-erlazioa | Equivalence Relation | `definicion` | ⏳ 2026-10-22 |
+| [`cuerpo`](../content/mdx/es/definitions/cuerpo.mdx) | Cuerpo | Gorputza | Field | `definicion` | ⏳ 2026-10-22 |
+| [`distancia`](../content/mdx/es/definitions/distancia.mdx) | Distancia métrica | Distantzia metrikoa | Metric Distance | `definicion` | ⏳ 2026-10-22 |
+| [`continuidad`](../content/mdx/es/definitions/continuidad.mdx) | Continuidad | Jarraitutasuna | Continuity | `definicion` | ⏳ 2026-10-22 |
+| [`completitud-reales`](../content/mdx/es/definitions/completitud-reales.mdx) | Completitud de los números reales | Zenbaki errealen osotasuna | Completeness of the Real Numbers | `definicion` | ⏳ 2026-10-22 |
+| [`coplanaridad`](../content/mdx/es/definitions/coplanaridad.mdx) | Coplanaridad | Koplanartasuna | Coplanarity | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`teorema-separacion-plano`](../content/mdx/es/theorems/teorema-separacion-plano.mdx) | Teorema de separación del plano | Planoaren banaketa-teorema | Plane Separation Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-separacion-plano`](../content/mdx/es/demonstrations/demo-separacion-plano.mdx) | Demostración: Teorema de separación del plano | Demostrazioa: Planoaren banaketa-teorema | Proof: Plane Separation Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`semirrectas-opuestas`](../content/mdx/es/definitions/semirrectas-opuestas.mdx) | Semirrectas opuestas | Aurkako zuzenerdiak | Opposite Rays | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`angulos-opuestos-vertice`](../content/mdx/es/definitions/angulos-opuestos-vertice.mdx) | Ángulos opuestos por el vértice | Erpinez aurkako angeluak | Vertical Angles | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`angulos-alternos-internos`](../content/mdx/es/definitions/angulos-alternos-internos.mdx) | Ángulos alternos internos | Barne-angelu alternoak | Alternate Interior Angles | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`interior-triangulo`](../content/mdx/es/definitions/interior-triangulo.mdx) | Interior del triángulo | Triangeluaren barrualdea | Interior of a triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`triangulo-isosceles`](../content/mdx/es/definitions/triangulo-isosceles.mdx) | Triángulo isósceles | Triangelu isoszelea | Isosceles triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`triangulo-equilatero`](../content/mdx/es/definitions/triangulo-equilatero.mdx) | Triángulo equilátero | Triangelu aldeberdina | Equilateral triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`teorema-congruencia-lal`](../content/mdx/es/theorems/teorema-congruencia-lal.mdx) | Teorema de congruencia Lado-Ángulo-Lado (LAL) | Alde-Angelu-Alde (AlAnAl) kongruentzia-teorema | Side-Angle-Side (SAS) Congruence Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-congruencia-lal`](../content/mdx/es/demonstrations/demo-congruencia-lal.mdx) | Demostración: Teorema de congruencia LAL | Demostrazioa: LAL kongruentzia-teorema | Proof: SAS Congruence Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`teorema-congruencia-angulos-equivalencia`](../content/mdx/es/theorems/teorema-congruencia-angulos-equivalencia.mdx) | Teorema de equivalencia de la congruencia angular | Angeluen kongruentziaren baliokidetasun-teorema | Equivalence Theorem of Angle Congruence | `teorema` | ⏳ 2026-10-22 |
+| [`demo-congruencia-angulos-equivalencia`](../content/mdx/es/demonstrations/demo-congruencia-angulos-equivalencia.mdx) | Demostración: Teorema de equivalencia de la congruencia angular | Demostrazioa: Angeluen kongruentziaren baliokidetasun-teorema | Proof: Angle Congruence Equivalence Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`orden-angulos`](../content/mdx/es/definitions/orden-angulos.mdx) | Orden de ángulos | Angeluen ordena | Angle Order | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`teorema-congruencia-suplementos`](../content/mdx/es/theorems/teorema-congruencia-suplementos.mdx) | Teorema de congruencia de ángulos suplementarios | Angelu betegarrien kongruentzia-teorema | Congruence of Supplementary Angles Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-congruencia-suplementos`](../content/mdx/es/demonstrations/demo-congruencia-suplementos.mdx) | Demostración: Teorema de congruencia de ángulos suplementarios | Demostrazioa: Angelu betegarrien kongruentzia-teorema | Proof: Congruence of Supplementary Angles Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`teorema-congruencia-lll`](../content/mdx/es/theorems/teorema-congruencia-lll.mdx) | Teorema de congruencia Lado-Lado-Lado (LLL) | Alde-Alde-Alde (AlAlAl) kongruentzia-teorema | Side-Side-Side (SSS) Congruence Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-congruencia-lll`](../content/mdx/es/demonstrations/demo-congruencia-lll.mdx) | Demostración: Teorema de congruencia LLL | Demostrazioa: AlAlAl kongruentzia-teorema | Proof: SSS Congruence Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`teorema-angulo-exterior`](../content/mdx/es/theorems/teorema-angulo-exterior.mdx) | Teorema del ángulo exterior | Kanpo-angeluaren teorema | Exterior Angle Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-angulo-exterior`](../content/mdx/es/demonstrations/demo-angulo-exterior.mdx) | Demostración: Teorema del ángulo exterior | Demostrazioa: Kanpo-angeluaren teorema | Proof: Exterior Angle Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`funcion`](../content/mdx/es/definitions/funcion.mdx) | Función | Funtzioa | Function | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`operacion-binaria`](../content/mdx/es/definitions/operacion-binaria.mdx) | Operación binaria | Eragiketa bitarra | Binary operation | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`asociatividad`](../content/mdx/es/definitions/asociatividad.mdx) | Asociatividad | Elkartze-propietatea | Associativity | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`teorema-existencia-perpendicular`](../content/mdx/es/theorems/teorema-existencia-perpendicular.mdx) | Teorema de existencia y unicidad de la perpendicular | Perpendikularraren existentziaren teorema | Existence and Uniqueness Theorem of the Perpendicular | `teorema` | ⏳ 2026-10-22 |
+| [`demo-existencia-perpendicular`](../content/mdx/es/demonstrations/demo-existencia-perpendicular.mdx) | Demostración: Teorema de existencia y unicidad de la perpendicular | Demostrazioa: Perpendikularraren existentziaren teorema | Proof: Existence and Uniqueness Theorem of the Perpendicular | `demostracion` | ⏳ 2026-10-22 |
+| [`altura-triangulo`](../content/mdx/es/definitions/altura-triangulo.mdx) | Altura de un triángulo | Triangeluaren altuera | Altitude of a Triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`triangulo-acutangulo`](../content/mdx/es/definitions/triangulo-acutangulo.mdx) | Triángulo acutángulo | Triangelu zorrotza | Acute triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`triangulo-obtusangulo`](../content/mdx/es/definitions/triangulo-obtusangulo.mdx) | Triángulo obtusángulo | Triangelu kamutsa | Obtuse triangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`rectangulo`](../content/mdx/es/definitions/rectangulo.mdx) | Rectángulo | Laukizuzena | Rectangle | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`teorema-lados-opuestos-paralelogramo`](../content/mdx/es/theorems/teorema-lados-opuestos-paralelogramo.mdx) | Teorema de los lados opuestos de un paralelogramo | Paralelogramo baten aurkako aldeen teorema | Opposite Sides of a Parallelogram Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-lados-opuestos-paralelogramo`](../content/mdx/es/demonstrations/demo-lados-opuestos-paralelogramo.mdx) | Demostración: Lados opuestos de un paralelogramo | Demostrazioa: Paralelogramo baten aurkako aldeak | Proof: Opposite Sides of a Parallelogram | `demostracion` | ⏳ 2026-10-22 |
+| [`teorema-pitagoras-reciproco`](../content/mdx/es/theorems/teorema-pitagoras-reciproco.mdx) | Recíproco del teorema de Pitágoras | Pitagorasen teoremaren alderantzizkoa | Converse of the Pythagorean Theorem | `teorema` | ⏳ 2026-10-22 |
+| [`demo-pitagoras-reciproco`](../content/mdx/es/demonstrations/demo-pitagoras-reciproco.mdx) | Demostración: Recíproco del teorema de Pitágoras | Demostrazioa: Pitagorasen teoremaren alderantzizkoa | Proof: Converse of the Pythagorean Theorem | `demostracion` | ⏳ 2026-10-22 |
+| [`segmento-unidad`](../content/mdx/es/definitions/segmento-unidad.mdx) | Segmento unidad | Unitate-zuzenkia | Unit Segment | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`region-triangular`](../content/mdx/es/definitions/region-triangular.mdx) | Región triangular | Eskualde triangeluarra | Triangular Region | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`region-poligonal`](../content/mdx/es/definitions/region-poligonal.mdx) | Región poligonal | Eskualde poligonala | Polygonal Region | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`elemento-neutro`](../content/mdx/es/definitions/elemento-neutro.mdx) | Elemento neutro | Elementu neutroa | Identity element | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`elemento-inverso`](../content/mdx/es/definitions/elemento-inverso.mdx) | Elemento inverso | Alderantzizko elementua | Inverse element | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`limite`](../content/mdx/es/definitions/limite.mdx) | Límite | Muga | Limit | Definición (`derivado`) | ⏳ 2026-10-22 |
+| [`cociente-incremental`](../content/mdx/es/definitions/cociente-incremental.mdx) | Cociente incremental | Gehikuntza-zatidura | Difference quotient | Definición (`derivado`) | ⏳ 2026-10-22 |
 
 ---
 
 ## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (0 pendientes restantes — Reescritura Completa)
 
-Todos los nodos del grafo de conocimiento (120 documentos en total en sus tres lenguas: Castellano, Euskara Batua e Inglés) han sido reescritos y auditados rigurosamente bajo la skill actualizada `matematika-content-generator` y las convenciones del proyecto:
+Todos los nodos del grafo de conocimiento (182 documentos en total en sus tres lenguas: Castellano, Euskara Batua e Inglés) han sido redactados, reescritos y auditados rigurosamente bajo la skill actualizada `matematika-content-generator` y las convenciones del proyecto:
 - **50 documentos** cuentan con el visto bueno oficial (Sección 1).
-- **70 documentos** han sido completados y están a la espera de revisión y visto bueno oficial (Sección 2).
+- **132 documentos** han sido completados y están a la espera de revisión y visto bueno oficial (Sección 2).
 - **0 documentos** pendientes de reescritura.
 
-Todas las fases (Fase 1 a Fase 11) han culminado con paridad trilingual 1:1 verificada (`check-parity.mjs` 120/120), resolución completa de referencias (`validate-references`) e integridad total del grafo deductivo libre de ciclos (`validate-graph`).
+Todas las fases han culminado con paridad trilingual 1:1 verificada (`check-parity.mjs`), resolución completa de referencias (`validate-references`) e integridad total del grafo deductivo libre de ciclos (`validate-graph`).

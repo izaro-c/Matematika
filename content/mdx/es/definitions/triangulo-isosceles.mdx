@@ -1,0 +1,64 @@
+export const metadata = {
+  id: "triangulo-isosceles",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triángulo isósceles",
+  description: "Triángulo que tiene al menos dos lados mutuamente congruentes; el tercer lado se denomina base y el ángulo comprendido, ángulo en el vértice.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "lado", "congruencia", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 20",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **triángulo isósceles** es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> que tiene al menos dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí.
+
+Cuando se distinguen dos lados congruentes particulares, estos se denominan lados laterales o catetos del triángulo, mientras que el tercer lado recibe el nombre de <ConceptLink targetId="base">base</ConceptLink>. El <ConceptLink targetId="angulo">ángulo</ConceptLink> delimitado por los dos lados congruentes es el ángulo en el <ConceptLink targetId="vertice">vértice</ConceptLink>, y los dos ángulos adyacentes a la base son los <ConceptLink targetId="angulo-base">ángulos de la base</ConceptLink>. La familia de los triángulos isósceles incluye a los <ConceptLink targetId="triangulo-equilatero">triángulos equiláteros</ConceptLink> como caso particular en que los tres lados son congruentes.
+
+<Definicion title="Definición formal de triángulo isósceles">
+Sea $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A$, $B$ y $C$.
+
+Se dice que $\triangle ABC$ es un **triángulo isósceles** si al menos dos de sus <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí:
+
+$$
+\overline{AB} \cong \overline{AC} \quad\lor\quad \overline{AB} \cong \overline{BC} \quad\lor\quad \overline{BC} \cong \overline{CA}
+$$
+
+En la disposición en que $\overline{AB} \cong \overline{AC}$, los lados $\overline{AB}$ y $\overline{AC}$ se denominan lados laterales, y el lado restante $\overline{BC}$ se denomina **<ConceptLink targetId="base">base</ConceptLink>** del triángulo isósceles. El vértice común $A$ es el vértice principal, el ángulo $\angle BAC$ es el **ángulo en el <ConceptLink targetId="vertice">vértice</ConceptLink>**, y los ángulos $\angle ABC$ y $\angle ACB$ son los **<ConceptLink targetId="angulo-base">ángulos de la base</ConceptLink>**.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades geométricas y simetría">
+    <PropiedadItem 
+      id="congruencia-angulos-base" 
+      title="Congruencia de los ángulos de la base"
+      formula="\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB"
+    >
+      En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes (<ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink>). En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, el resultado se deduce del <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink> sin apelar al axioma de las paralelas. Recíprocamente, si dos <ConceptLink targetId="angulo">ángulos</ConceptLink> de un triángulo son congruentes, los lados opuestos son congruentes.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="coincidencia-cevianas-notables" 
+      title="Eje de simetría y rectas notables"
+      formula="\overleftrightarrow{AM} \perp \overleftrightarrow{BC} \quad (M \text{ punto medio de } \overline{BC})"
+    >
+      En un triángulo isósceles con $\overline{AB} \cong \overline{AC}$, la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del ángulo en el vértice, la <ConceptLink targetId="mediana">mediana</ConceptLink> relativa a la base, la <ConceptLink targetId="altura">altura</ConceptLink> sobre la base y la <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> de la base coinciden en una única <ConceptLink targetId="recta">recta</ConceptLink> $\overleftrightarrow{AM}$, que es el eje de <ConceptLink targetId="simetria">simetría</ConceptLink> axial del triángulo.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

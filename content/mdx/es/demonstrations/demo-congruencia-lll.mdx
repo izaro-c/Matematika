@@ -1,0 +1,107 @@
+export const metadata = {
+  id: "demo-congruencia-lll",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de congruencia LLL",
+  description: "Demostración deductiva directa del criterio LLL: construcción auxiliar del triángulo reflejado por LAL y aplicación del teorema del triángulo isósceles para igualar los ángulos opuestos.",
+  parentTheorem: "teorema-congruencia-lll",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 8",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaLLL } from '@content/diagrams/Demos/DemoCongruenciaLLL';
+
+<DemonstrationSection diagram={<DemoCongruenciaLLL />}>
+
+<Capitular letra="L" />a prueba del <ConceptLink targetId="teorema-congruencia-lll">teorema de congruencia LLL</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> expuesto por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*: construyendo en el semiplano opuesto un triángulo auxiliar congruente al original mediante el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, el trazo de la diagonal determina dos triángulos que satisfacen el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>teorema del triángulo isósceles</ConceptLink>, deduciendo la igualdad de los ángulos opuestos por adición de <ConceptLink targetId="angulos-adyacentes" isDependency={true}>ángulos adyacentes</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Construcción del triángulo auxiliar por LAL">
+Sean dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$ con sus tres pares de <ConceptLink targetId="lado">lados</ConceptLink> correspondientes <ConceptLink targetId="congruencia">congruentes</ConceptLink>: $\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$ y $\overline{CA} \cong \overline{C'A'}$.
+
+En el <ConceptLink targetId="semiplano">semiplano</ConceptLink> respecto a la <ConceptLink targetId="recta">recta</ConceptLink> $\overleftrightarrow{A'B'}$ opuesto a $C'$, el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> asegura la existencia de una única <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> con origen en $A'$ que forma con la semirrecta <VisualBind element="sideAB" color="granada">$\overline{A'B'}$</VisualBind> un <ConceptLink targetId="angulo">ángulo</ConceptLink> congruente con $\angle BAC$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, existe sobre dicha semirrecta un <ConceptLink targetId="punto">punto</ConceptLink> $C^*$ tal que el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind> es congruente con $\overline{AC}$:
+
+$$
+\angle B'A'C^* \cong \angle BAC, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+Puesto que además $\overline{A'B'} \cong \overline{AB}$, el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> garantiza la congruencia entre el triángulo auxiliar <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> y el triángulo original:
+
+$$
+\triangle A'B'C^* \cong \triangle ABC
+$$
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Congruencias de los lados homólogos">
+De la congruencia <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> $\cong \triangle ABC$ obtenida por LAL se deduce que todos los <ConceptLink targetId="lado">lados</ConceptLink> homólogos son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>:
+
+$$
+\overline{A'C^*} \cong \overline{AC}, \qquad \overline{B'C^*} \cong \overline{BC}
+$$
+
+Por las hipótesis de partida, tenemos <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> $\cong \overline{AC}$ y <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> $\cong \overline{BC}$. Por la <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink> y la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink> de la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink>, se obtienen las congruencias entre los lados correspondientes a partir del vértice $C'$ y del vértice auxiliar $C^*$:
+
+$$
+\overline{A'C'} \cong \overline{A'C^*}, \qquad \overline{B'C'} \cong \overline{B'C^*}
+$$
+
+Así, los pares de lados laterales contiguos <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> con <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind>, y <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> con <VisualBind element="sideBCStar" color="mora">$\overline{B'C^*}$</VisualBind>, son mutuamente congruentes.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Trazado de la diagonal e isósceles auxiliares">
+Trazamos el <ConceptLink targetId="segmento">segmento</ConceptLink> auxiliar <VisualBind element="lineCC" color="canela">$\overline{C'C^*}$</VisualBind>, que une los dos <ConceptLink targetId="vertice">vértices</ConceptLink> situados en <ConceptLink targetId="semiplano">semiplanos</ConceptLink> opuestos respecto a la <ConceptLink targetId="recta">recta</ConceptLink> $\overleftrightarrow{A'B'}$. Este segmento divide la figura en dos triángulos contiguos con base común $\overline{C'C^*}$:
+
+1. El triángulo <VisualBind element="isoLeft" color="granada">$\triangle A'C'C^*$</VisualBind> satisface $\overline{A'C'} \cong \overline{A'C^*}$, por lo que es un <ConceptLink targetId="triangulo-isosceles">triángulo isósceles</ConceptLink> con vértice $A'$.
+2. El triángulo <VisualBind element="isoRight" color="mora">$\triangle B'C'C^*$</VisualBind> satisface $\overline{B'C'} \cong \overline{B'C^*}$, por lo que es un triángulo isósceles con vértice $B'$.
+
+Aplicando el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>teorema del triángulo isósceles</ConceptLink> a cada uno de ellos, los <ConceptLink targetId="angulo-base">ángulos de la base</ConceptLink> $\overline{C'C^*}$ son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>:
+
+$$
+\angle A'C'C^* \cong \angle A'C^*C', \qquad \angle B'C'C^* \cong \angle B'C^*C'
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Suma angular y conclusión por LAL">
+Puesto que $C'$ y $C^*$ se encuentran en semiplanos opuestos respecto a $\overleftrightarrow{A'B'}$, el segmento $\overline{C'C^*}$ interseca a la recta de referencia, de modo que la semirrecta $\overrightarrow{C'C^*}$ es interior al ángulo <VisualBind element="angleC" color="granada">$\angle A'C'B'$</VisualBind>, dividiéndolo en los <ConceptLink targetId="angulos-adyacentes" isDependency={true}>ángulos adyacentes</ConceptLink> $\angle A'C'C^*$ y $\angle B'C'C^*$. De manera análoga, $\overrightarrow{C^*C'}$ divide al ángulo $\angle A'C^*B'$ en $\angle A'C^*C'$ y $\angle B'C^*C'$.
+
+Sumando las congruencias angulares obtenidas en el paso anterior:
+
+$$
+\angle A'C'B' \cong \angle A'C^*B'
+$$
+
+Comparando ahora los triángulos <VisualBind element="triangleCPrime" color="granada">$\triangle A'B'C'$</VisualBind> y <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind>, se verifican las tres hipótesis del <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema LAL</ConceptLink>: $\overline{A'C'} \cong \overline{A'C^*}$, $\overline{B'C'} \cong \overline{B'C^*}$ y el ángulo comprendido $\angle A'C'B' \cong \angle A'C^*B'$. En consecuencia:
+
+$$
+\triangle A'B'C' \cong \triangle A'B'C^*
+$$
+
+Puesto que en el paso 1 establecimos $\triangle A'B'C^* \cong \triangle ABC$, la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink> de la <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink> concluye:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

@@ -1,0 +1,159 @@
+export const metadata = {
+  id: "demo-angulo-exterior",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema del ángulo exterior",
+  description: "Demostración sintética del teorema del ángulo exterior mediante la prolongación de la mediana y el criterio de congruencia LAL.",
+  parentTheorem: "teorema-angulo-exterior",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoAnguloExterno } from '@content/diagrams/Demos/DemoAnguloExterno';
+
+<DemonstrationSection diagram={<DemoAnguloExterno />}>
+
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración deductiva directa</ConceptLink> del <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, debida originalmente a <ConceptLink targetId="euclides">Euclides</ConceptLink> (Proposición I.16 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>) y formalizada en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*, establece que todo ángulo exterior de un triángulo es estrictamente mayor que cualquiera de los dos ángulos interiores no adyacentes.
+
+El razonamiento no emplea el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> ni axiomas de continuidad: se basa en la bisección de segmentos, el transporte de congruencias mediante el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, la congruencia de los <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>ángulos opuestos por el vértice</ConceptLink> y la caracterización sintética del <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} diagramStep="step1" target="step1" title="Construcción inicial del punto medio">
+Sea el <ConceptLink targetId="triangulo">triángulo</ConceptLink> <VisualBind element="polygonABC" color="granada">$\triangle ABC$</VisualBind> y sea <VisualBind element="pD" color="pavo">$D$</VisualBind> un <ConceptLink targetId="punto">punto</ConceptLink> en la prolongación del <ConceptLink targetId="lado">lado</ConceptLink> $\overline{BC}$ más allá de $C$, con $B * C * D$.
+
+Existe el <ConceptLink targetId="punto-medio">punto medio</ConceptLink> <VisualBind element="midAC" color="canela">$E$</VisualBind> del <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segAC" color="granada">$\overline{AC}$</VisualBind>, tal que $A * E * C$ y los segmentos <VisualBind element="segAmidAC" color="terracota">$\overline{AE}$</VisualBind> y <VisualBind element="segmidACC" color="terracota">$\overline{EC}$</VisualBind> son congruentes:
+
+$$
+\overline{AE} \cong \overline{EC}
+$$
+
+Se traza a continuación el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind> que une el vértice $B$ con el punto medio $E$.
+</ProofStep>
+
+<ProofStep number={2} diagramStep="step2" target="step2" title="Prolongación del segmento BE">
+A partir del segmento <VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind>, se traza la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> prolongando el segmento más allá del <ConceptLink targetId="punto-medio">punto medio</ConceptLink> <VisualBind element="midAC" color="canela">$E$</VisualBind>.
+
+Todo punto $X$ de dicha prolongación satisface la relación de intermediación:
+
+$$
+B * E * X
+$$
+</ProofStep>
+
+<ProofStep number={3} diagramStep="step3" target="step3" title="Duplicación de la mediana">
+Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> de transporte de segmentos, sobre la prolongación de la semirrecta <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> existe un único punto <VisualBind element="pF" color="canela">$F$</VisualBind> tal que $B * E * F$ y el segmento <VisualBind element="segmidACF" color="canela">$\overline{EF}$</VisualBind> es congruente con <VisualBind element="segBmidAC" color="canela">$\overline{EB}$</VisualBind>:
+
+$$
+\overline{EF} \cong \overline{EB}
+$$
+
+Queda trazado asimismo el segmento <VisualBind element="segCF" color="canela">$\overline{CF}$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={4} diagramStep="step4" target="step4" title="Congruencia de triángulos por LAL">
+Consideramos los triángulos <VisualBind element="polygonABmidAC" color="canela">$\triangle ABE$</VisualBind> y <VisualBind element="polygonCFmidAC" color="canela">$\triangle CFE$</VisualBind>. En ellos se satisfacen tres condiciones de congruencia:
+1. $\overline{AE} \cong \overline{EC}$ por ser $E$ el punto medio de $\overline{AC}$.
+2. Los ángulos <VisualBind element="nonReflexAngleAmidACB" color="terracota">$\angle AEB$</VisualBind> y <VisualBind element="nonReflexAngleCmidACF" color="terracota">$\angle CEF$</VisualBind> son congruentes por ser <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>ángulos opuestos por el vértice</ConceptLink>.
+3. $\overline{EB} \cong \overline{EF}$ por construcción.
+
+Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, ambos triángulos son congruentes:
+
+$$
+\triangle ABE \cong \triangle CFE
+$$
+</ProofStep>
+
+<ProofStep number={5} diagramStep="step5" target="step5" title="Congruencia de ángulos homólogos">
+De la congruencia de triángulos $\triangle ABE \cong \triangle CFE$ se deduce la congruencia de los ángulos homólogos opuestos a los lados congruentes $\overline{EB}$ y $\overline{EF}$:
+
+$$
+\angle BAC \cong \angle ECF
+$$
+
+donde el ángulo interior <VisualBind element="nonReflexAngleBAC" color="pavo">$\angle BAC$</VisualBind> resulta congruente con el ángulo <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={6} diagramStep="step6" target="step6" title="Interioridad de la semirrecta CF">
+Dado que $B * C * D$, los puntos $B$ y <VisualBind element="pD" color="pavo">$D$</VisualBind> están en <ConceptLink targetId="semiplano">semiplanos</ConceptLink> opuestos respecto a la recta $\overleftrightarrow{AC}$; y puesto que $B * E * F$ con $E \in \overleftrightarrow{AC}$, los puntos $B$ y <VisualBind element="pF" color="canela">$F$</VisualBind> también están en semiplanos opuestos respecto a $\overleftrightarrow{AC}$. Por consiguiente, $F$ y $D$ pertenecen al mismo semiplano respecto a $\overleftrightarrow{AC}$.
+
+Análogamente, $A$ y $F$ pertenecen al mismo semiplano respecto a $\overleftrightarrow{BC}$. Por tanto, la semirrecta <VisualBind element="rayCF" color="pavo">$\overrightarrow{CF}$</VisualBind> está en el interior del <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind>:
+
+$$
+\overrightarrow{CF} \subset \operatorname{Int}(\angle ACD)
+$$
+</ProofStep>
+
+<ProofStep number={7} diagramStep="step7" target="step7" title="Desigualdad para el primer ángulo interior">
+Al estar la semirrecta $\overrightarrow{CF}$ en el interior del ángulo $\angle ACD$, la definición de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink> establece que <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind> es estrictamente menor que <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind>.
+
+Puesto que $\angle BAC \cong \angle ECF$, por sustitución se obtiene:
+
+$$
+\angle BAC < \angle ACD
+$$
+
+es decir, el ángulo interior en el vértice $A$ es estrictamente menor que el ángulo exterior en $C$: $\angle ACD > \angle BAC$.
+</ProofStep>
+
+<ProofStep number={8} diagramStep="step8" target="step8" title="Construcción simétrica sobre el punto medio G">
+Para comparar el ángulo exterior con el segundo ángulo interior $\angle ABC$, se repite una construcción análoga: sea <VisualBind element="midG" color="terracota">$G$</VisualBind> el punto medio del segmento <VisualBind element="segBC" color="granada">$\overline{BC}$</VisualBind>, con $B * G * C$ y $\overline{BG} \cong \overline{GC}$.
+
+Se traza la recta que une $A$ con $G$ y se prolonga hasta un punto <VisualBind element="pH" color="terracota">$H$</VisualBind> tal que $A * G * H$ y $\overline{GH} \cong \overline{AG}$, trazando el segmento <VisualBind element="segAH" color="ocre">$\overline{AH}$</VisualBind>. Asimismo se prolonga $\overline{AC}$ más allá de $C$ hasta un punto <VisualBind element="pK" color="pavo">$K$</VisualBind> tal que $A * C * K$:
+
+$$
+\overline{BG} \cong \overline{GC} \quad \land \quad \overline{GH} \cong \overline{AG}
+$$
+</ProofStep>
+
+<ProofStep number={9} diagramStep="step9" target="step9" title="Segunda aplicación del criterio LAL">
+Aplicando el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> a los triángulos <VisualBind element="polygonABmidG" color="terracota">$\triangle ABG$</VisualBind> y <VisualBind element="polygonHmidGC" color="canela">$\triangle HCG$</VisualBind>, que comparten el vértice $G$ con ángulos opuestos por el vértice congruentes, se concluye que $\triangle ABG \cong \triangle HCG$.
+
+Por congruencia de ángulos homólogos, <VisualBind element="nonReflexAngleABC" color="musgo">$\angle ABC$</VisualBind> $\cong$ <VisualBind element="nonReflexAngleHCmidG" color="musgo">$\angle GCH$</VisualBind>. Como la semirrecta $\overrightarrow{CH}$ es interior al ángulo <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind>, se cumple:
+
+$$
+\angle ABC \cong \angle GCH < \angle BCK
+$$
+</ProofStep>
+
+<ProofStep number={10} diagramStep="step10" target="step10" title="Ángulos opuestos por el vértice en C">
+Las rectas $\overleftrightarrow{AK}$ y $\overleftrightarrow{BD}$ se cortan en el vértice $C$, de modo que el ángulo <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind> y el ángulo exterior <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind> son <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>ángulos opuestos por el vértice</ConceptLink>.
+
+Por la congruencia de ángulos opuestos por el vértice, se verifica $\angle BCK \cong \angle ACD$. Combinando esta congruencia con la desigualdad del paso anterior, se obtiene:
+
+$$
+\angle ABC < \angle ACD
+$$
+
+es decir, $\angle ACD > \angle ABC$.
+</ProofStep>
+
+<ProofStep number={11} diagramStep="step11" target="step11" title="Conclusión general">
+Habiendo establecido en el paso 7 que $\angle ACD > \angle BAC$ y en el paso 10 que $\angle ACD > \angle ABC$, queda demostrado que en todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> el <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> es estrictamente mayor que cualquiera de los dos <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores no adyacentes:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+</ProofStep>
+
+</DemonstrationSection>

@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "segmento-unidad",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Segmento unidad",
+  description: "Segmento fijado convencionalmente como patrón de longitud al que se asigna medida unitaria, base de la graduación métrica y del cuadrado unidad.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-metrica", "longitud", "unidad-de-medida", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **segmento unidad** es un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> fijado por convención como patrón de referencia métrica en un espacio geométrico, al cual se le asigna <ConceptLink targetId="longitud">longitud</ConceptLink> igual a $1$.
+
+La fijación de un segmento unidad permite graduar la recta mediante transporte por <ConceptLink targetId="congruencia">congruencia</ConceptLink> y adición de segmentos, estableciendo una escala para medir cualquier otro segmento. En la geometría del plano euclídeo, el segmento unidad sirve asimismo de base para construir el <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> unidad, cuya región delimita el patrón de normalización en la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink>.
+
+<Definicion title="Definición formal de segmento unidad">
+Sea $mathcal{S}$ el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los <ConceptLink targetId="segmento">segmentos</ConceptLink> no degenerados del espacio geométrico. Un **segmento unidad** es un elemento $u in mathcal{S}$ elegido de forma fija tal que, en la correspondiente <ConceptLink targetId="longitud">función longitud</ConceptLink> $|cdot| colon mathcal{S} 	o mathbb{R}_{>0}$, satisface la condición de normalización:
+
+$$
+|u| = 1
+$$
+
+Todo segmento $overline{AB} in mathcal{S}$ <ConceptLink targetId="congruencia">congruente</ConceptLink> con $u$ tiene asimismo longitud unitaria, $|overline{AB}| = 1$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades métricas y geométricas">
+    <PropiedadItem 
+      id="escalado-metrico" 
+      title="Invariancia de razones bajo cambio de unidad"
+      formula="u, u' in mathcal{S} implies exists k > 0 : |cdot|_{u'} = k , |cdot|_u"
+    >
+      La elección del segmento unidad no altera las razones entre magnitudes geométricas. Si se sustituye $u$ por otro segmento unidad $u'$, las longitudes de todos los segmentos quedan multiplicadas por un factor de escala constante determinado por la razón $|u'|_u$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="base-cuadrado-unidad" 
+      title="Construcción del cuadrado unidad"
+      formula="operatorname{A}(Q_u) = 1"
+    >
+      Sobre el segmento unidad $u$ se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> cuyos cuatro lados son congruentes con $u$. En la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink>, la región determinada por dicho cuadrado unidad $Q_u$ se normaliza asignándole área exactamente igual a $1$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

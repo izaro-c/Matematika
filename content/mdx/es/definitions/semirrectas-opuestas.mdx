@@ -1,0 +1,62 @@
+export const metadata = {
+  id: "semirrectas-opuestas",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Semirrectas opuestas",
+  description: "Dos semirrectas colineales abiertas de una misma recta con origen común que se extienden en sentidos opuestos según la relación de intermediación.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="D" />os <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> abiertas de una misma <ConceptLink targetId="recta">recta</ConceptLink> son **semirrectas opuestas** si comparten su <ConceptLink targetId="punto">origen</ConceptLink> y para cualquier punto de una y cualquier punto de la otra se cumple la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> respecto al origen común.
+
+La noción se fundamenta en los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink> (Grupo II de Hilbert, §4). Por el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>, dado cualquier punto de una recta existen puntos a ambos lados de él. Todo punto de una recta determina una partición de los restantes puntos de la recta en exactamente dos semirrectas opuestas, noción indispensable para definir los <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink> y los <ConceptLink targetId="angulos-opuestos-vertice">ángulos opuestos por el vértice</ConceptLink>.
+
+<Definicion title="Definición formal de semirrectas opuestas">
+Sea $\ell \in \mathcal{L}$ una <ConceptLink targetId="recta">recta</ConceptLink> y sea $O \in \operatorname{tr}(\ell)$ un <ConceptLink targetId="punto">punto</ConceptLink>. Dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> abiertas $h, h' \subset \operatorname{tr}(\ell)$ con origen $O$ son **semirrectas opuestas** si para todo punto $A \in h$ y todo punto $B \in h'$, el punto $O$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $B$ ($A * O * B$):
+
+$$
+\operatorname{op}(h, h') \iff \forall A \in h \, \forall B \in h' \, (A * O * B)
+$$
+
+Equivalentemente, si $h = \operatorname{sem}(OA)$ es la semirrecta abierta determinada por un punto $A \in \operatorname{tr}(\ell) \setminus \{O\}$, su semirrecta opuesta $h' = \operatorname{sem}(OB)$ se describe mediante el conjunto de puntos $P$ tales que $O$ está entre $A$ y $P$:
+
+$$
+h' = \{ P \in \operatorname{tr}(\ell) \setminus \{O\} \mid A * O * P \}
+$$
+
+Las semirrectas cerradas correspondientes, $\overrightarrow{OA} = h \cup \{O\}$ y $\overrightarrow{OB} = h' \cup \{O\}$, se denominan semirrectas opuestas cerradas y su <ConceptLink targetId="interseccion">intersección</ConceptLink> coincide con el origen común: $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de orden y estructura">
+    <PropiedadItem 
+      id="descomposicion-recta-opuestas" 
+      title="Partición disjunta de la recta"
+      formula="\operatorname{tr}(\ell) \setminus \{O\} = h \sqcup h'"
+    >
+      Todo punto $O$ de una recta $\ell$ induce una <ConceptLink targetId="particion">partición</ConceptLink> de su <ConceptLink targetId="traza">traza puntual</ConceptLink> privada del origen en exactamente dos semirrectas opuestas abiertas y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>, $h$ y $h'$, de modo que $h \cap h' = \emptyset$ y $h \cup \{O\} \cup h' = \operatorname{tr}(\ell)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-semirrecta-opuesta" 
+      title="Existencia y unicidad de la semirrecta opuesta"
+      formula="\forall h \subset \operatorname{tr}(\ell) \, \exists! h' \subset \operatorname{tr}(\ell) : \operatorname{op}(h, h')"
+    >
+      Por el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink> y las propiedades del <ConceptLink targetId="orden">orden lineal</ConceptLink> sobre la recta (Hilbert, §4), para toda semirrecta abierta $h$ sobre una recta $\ell$ existe una única semirrecta abierta $h'$ sobre $\ell$ opuesta a $h$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

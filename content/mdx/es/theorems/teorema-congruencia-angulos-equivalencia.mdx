@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "teorema-congruencia-angulos-equivalencia",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema de equivalencia de la congruencia angular",
+  description: "Demostración de que la relación de congruencia entre ángulos en la geometría sintética de Hilbert es reflexiva, simétrica y transitiva, constituyendo una relación de equivalencia completa.",
+  statement: "La relación de congruencia angular es una relación de equivalencia: para cualesquiera ángulos ∠α, ∠β, ∠γ se cumple que ∠α ≅ ∠α, si ∠α ≅ ∠β entonces ∠β ≅ ∠α, y si ∠α ≅ ∠β y ∠β ≅ ∠γ entonces ∠α ≅ ∠γ.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "relacion-equivalencia", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  demos: ["demo-congruencia-angulos-equivalencia"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="L" />a relación de <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> entre <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> constituye una <ConceptLink targetId="relacion-equivalencia" isDependency={true}>relación de equivalencia</ConceptLink> completa: es reflexiva, simétrica y transitiva.
+
+A diferencia de la congruencia de segmentos, donde la transitividad se formula expresamente como postulado primitivo en el <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> únicamente postula la existencia, unicidad del transporte angular y la <ConceptLink targetId="relacion-reflexiva">reflexividad</ConceptLink>. La <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink> y la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink> son demostradas por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie* utilizando el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, fundamentando la clasificación de las aperturas angulares en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema de equivalencia de la congruencia angular">
+Sea $\mathcal{A}$ el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los <ConceptLink targetId="angulo">ángulos</ConceptLink> determinados por pares no ordenados de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no colineales de origen común. La relación binaria de <ConceptLink targetId="congruencia">congruencia</ConceptLink> $\cong$ sobre $\mathcal{A}$ satisface las tres propiedades que definen una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>:
+
+1. **<ConceptLink targetId="relacion-reflexiva">Reflexividad</ConceptLink>:** Todo ángulo es congruente consigo mismo:
+$$
+\forall \angle\alpha \in \mathcal{A}, \quad \angle\alpha \cong \angle\alpha
+$$
+
+2. **<ConceptLink targetId="relacion-simetrica">Simetría</ConceptLink>:** Si un ángulo es congruente con un segundo, el segundo es congruente con el primero:
+$$
+\forall \angle\alpha, \angle\beta \in \mathcal{A}, \quad \angle\alpha \cong \angle\beta \implies \angle\beta \cong \angle\alpha
+$$
+
+3. **<ConceptLink targetId="relacion-transitiva">Transitividad</ConceptLink>:** Si un ángulo es congruente con un segundo y este con un tercero, el primero es congruente con el tercero:
+$$
+\forall \angle\alpha, \angle\beta, \angle\gamma \in \mathcal{A}, \quad (\angle\alpha \cong \angle\beta \land \angle\beta \cong \angle\gamma) \implies \angle\alpha \cong \angle\gamma
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias estructurales y deductivas">
+    <PropiedadItem 
+      id="clases-equivalencia-angulares" 
+      title="Partición del espacio angular en clases de equivalencia"
+      formula="\mathcal{A} / {\cong} = \{ [\angle\alpha] \mid \angle\alpha \in \mathcal{A} \}"
+    >
+      Al constituir una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, la congruencia angular induce una <ConceptLink targetId="particion">partición</ConceptLink> de $\mathcal{A}$ en <ConceptLink targetId="clase-equivalencia">clases de equivalencia</ConceptLink> disjuntas dos a dos. Cada clase de equivalencia $[\angle\alpha]$ formaliza la noción intrínseca de amplitud o apertura angular sin requerir una <ConceptLink targetId="medida-angular">medida angular</ConceptLink> numérica.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="compatibilidad-orden-angulos" 
+      title="Compatibilidad con el orden de ángulos"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      La congruencia angular es compatible con el <ConceptLink targetId="orden-angulos">orden de ángulos</ConceptLink>: la relación $<$ no depende de los representantes elegidos dentro de cada clase, dotando al conjunto cociente $\mathcal{A} / {\cong}$ de una estructura de <ConceptLink targetId="orden">orden lineal</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

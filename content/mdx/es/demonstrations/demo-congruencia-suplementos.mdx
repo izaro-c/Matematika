@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "demo-congruencia-suplementos",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de congruencia de suplementos",
+  description: "Deducción sintética directa según Hilbert (§6) disponiendo semirrectas opuestas, transportando segmentos congruentes y encadenando criterios LAL.",
+  parentTheorem: "teorema-congruencia-suplementos",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  layout: "split",
+  tags: ["geometria-sintetica", "angulos", "congruencia", "geometria-absoluta", "demostracion"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposiciones 13 y 14",
+      role: "secondary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a demostración del <ConceptLink targetId="teorema-congruencia-suplementos">teorema de congruencia de suplementos</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*. A partir de la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink>, la prueba construye una configuración auxiliar sobre las <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> mediante el transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>), aplica el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axioma III.3</ConceptLink> de adición segmental y encadena sucesivamente tres aplicaciones del <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> hasta deducir la <ConceptLink targetId="congruencia">congruencia</ConceptLink> deseada.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Disposición inicial y transporte de segmentos congruentes">
+Consideramos dos <ConceptLink targetId="angulo">ángulos</ConceptLink> congruentes $\angle AOB \cong \angle A'O'B'$ con <ConceptLink targetId="vertice">vértices</ConceptLink> en los <ConceptLink targetId="punto">puntos</ConceptLink> $O$ y $O'$. Sean las <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> opuestas $\overrightarrow{OA}$ y $\overrightarrow{OC}$ sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, cumpliendo la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> $A * O * C$, y análogamente $\overrightarrow{O'A'}$ y $\overrightarrow{O'C'}$ sobre otra recta con $A' * O' * C'$. Por la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink>, $\angle BOC$ y $\angle B'O'C'$ son los suplementarios adyacentes de $\angle AOB$ y $\angle A'O'B'$. Por el axioma de transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>), elegimos los puntos $A, B, C$ y $A', B', C'$ sobre sus respectivas semirrectas de modo que:
+
+$$
+\overline{OA} \cong \overline{O'A'}, \quad \overline{OB} \cong \overline{O'B'}, \quad \overline{OC} \cong \overline{O'C'}
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Primera congruencia de triángulos por LAL">
+Consideramos los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle AOB$ y $\triangle A'O'B'$. Por la construcción del paso anterior, tenemos $\overline{OA} \cong \overline{O'A'}$ y $\overline{OB} \cong \overline{O'B'}$, y por hipótesis el ángulo comprendido satisface $\angle AOB \cong \angle A'O'B'$. Aplicando el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, obtenemos la congruencia de los triángulos:
+
+$$
+\triangle AOB \cong \triangle A'O'B'
+$$
+
+De esta congruencia se deduce que los lados y ángulos homólogos restantes son congruentes:
+
+$$
+\overline{AB} \cong \overline{A'B'} \quad \text{y} \quad \angle OAB \cong \angle O'A'B'
+$$
+
+Puesto que $O$ está entre $A$ y $C$, la semirrecta $\overrightarrow{AO}$ coincide con la semirrecta $\overrightarrow{AC}$, y análogamente $\overrightarrow{A'O'}$ coincide con $\overrightarrow{A'C'}$, de modo que $\angle CAB = \angle OAB$ y $\angle C'A'B' = \angle O'A'B'$, lo que da $\angle CAB \cong \angle C'A'B'$.
+</ProofStep>
+
+<ProofStep number={3} title="Adición de segmentos mediante el Axioma III.3">
+Los puntos satisfacen las relaciones de intermediación $A * O * C$ y $A' * O' * C'$. Por la construcción inicial, los segmentos componentes son respectivamente congruentes:
+
+$$
+\overline{AO} \cong \overline{A'O'} \quad \text{y} \quad \overline{OC} \cong \overline{O'C'}
+$$
+
+El <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axioma III.3</ConceptLink> establece que la congruencia de segmentos es compatible con la adición de segmentos adyacentes. Aplicando dicho postulado a las ternas ordenadas de puntos colineales, se concluye que los segmentos totales son congruentes:
+
+$$
+\overline{AC} \cong \overline{A'C'}
+$$
+
+Este paso traslada la congruencia elemental a la base extendida de la configuración.
+</ProofStep>
+
+<ProofStep number={4} title="Segunda congruencia de triángulos por LAL">
+Consideramos ahora los <ConceptLink targetId="triangulo">triángulos</ConceptLink> extendidos $\triangle ABC$ y $\triangle A'B'C'$. En estos triángulos se verifican las tres condiciones de congruencia:
+1. Lados congruentes en la base: $\overline{AC} \cong \overline{A'C'}$ (demostrado en el paso 3).
+2. Lados congruentes superiores: $\overline{AB} \cong \overline{A'B'}$ (demostrado en el paso 2).
+3. Ángulos comprendidos congruentes: $\angle CAB \cong \angle C'A'B'$ (obtenido en el paso 2).
+
+Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, ambos triángulos son congruentes:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+De esta congruencia deducimos que los terceros lados y los ángulos con vértice en $C$ y $C'$ son congruentes:
+
+$$
+\overline{BC} \cong \overline{B'C'} \quad \text{y} \quad \angle BCA \cong \angle B'C'A'
+$$
+
+Puesto que $O$ está entre $A$ y $C$, la semirrecta $\overrightarrow{CA}$ coincide con la semirrecta $\overrightarrow{CO}$, de modo que $\angle BCO = \angle BCA$ y $\angle B'C'O' = \angle B'C'A'$, lo que implica $\angle BCO \cong \angle B'C'O'$.
+</ProofStep>
+
+<ProofStep number={5} title="Tercera congruencia de triángulos por LAL y conclusión">
+Consideramos finalmente los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle OBC$ y $\triangle O'B'C'$. Verificamos las hipótesis del criterio de congruencia:
+1. Por la construcción inicial: $\overline{OC} \cong \overline{O'C'}$.
+2. Por la congruencia del paso 4: $\overline{BC} \cong \overline{B'C'}$.
+3. Por el paso 4, el ángulo comprendido satisface: $\angle BCO \cong \angle B'C'O'$.
+
+Una tercera aplicación del <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> concluye que:
+
+$$
+\triangle OBC \cong \triangle O'B'C'
+$$
+
+Al ser los triángulos congruentes, los ángulos homólogos en los vértices $O$ y $O'$ son congruentes entre sí:
+
+$$
+\angle BOC \cong \angle B'O'C'
+$$
+
+Como $\angle BOC$ y $\angle B'O'C'$ son precisamente los ángulos adyacentes suplementarios de los ángulos congruentes iniciales $\angle AOB$ y $\angle A'O'B'$, queda demostrada la congruencia de los suplementos.
+</ProofStep>
+
+</DemonstrationSection>

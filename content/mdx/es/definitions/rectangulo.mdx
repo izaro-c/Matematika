@@ -1,0 +1,78 @@
+export const metadata = {
+  id: "rectangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Rectángulo",
+  description: "Cuadrilátero convexo cuyos cuatro ángulos interiores son ángulos rectos.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "cuadrilatero", "angulo-recto", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 22",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **rectángulo** es un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo cuyos cuatro <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> son <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>.
+
+La noción se enuncia de forma absoluta como una configuración angular propia de la teoría de polígonos. Sin embargo, su existencia efectiva caracteriza a la geometría euclidiana: en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la existencia de un solo rectángulo equivale al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, de modo que en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> ningún cuadrilátero puede poseer cuatro ángulos rectos, como prueban las propiedades de los <ConceptLink targetId="cuadrilatero-saccheri">cuadriláteros de Saccheri</ConceptLink> y de los <ConceptLink targetId="cuadrilatero-lambert">cuadriláteros de Lambert</ConceptLink>.
+
+<Definicion title="Definición formal de rectángulo">
+Sea $ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}$ un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, determinado por cuatro <ConceptLink targetId="punto">puntos</ConceptLink> coplanares $A$, $B$, $C$ y $D$ sin tres de ellos <ConceptLink targetId="colinealidad">colineales</ConceptLink>.
+
+Se dice que $ABCD$ es un **rectángulo** si sus cuatro <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> con un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> $R$:
+
+$$
+\angle DAB \cong R \quad \land \quad \angle ABC \cong R \quad \land \quad \angle BCD \cong R \quad \land \quad \angle CDA \cong R
+$$
+
+Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> del rectángulo, y los segmentos $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ son sus <ConceptLink targetId="lado">lados</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades euclidianas del rectángulo">
+    <PropiedadItem 
+      id="paralelismo-lados-opuestos-rectangulo" 
+      title="Paralelismo de los lados opuestos"
+      formula="\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, las rectas soporte de los lados opuestos de un rectángulo son <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Puesto que dos rectas perpendiculares a una misma secante común no se cortan según el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>, todo rectángulo es en particular un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-lados-opuestos-rectangulo" 
+      title="Congruencia de los lados opuestos"
+      formula="\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}"
+    >
+      Los lados opuestos de un rectángulo son mutuamente congruentes. Al ser un paralelogramo, la diagonal $\overline{AC}$ determina dos triángulos rectángulos congruentes $\triangle ABC \cong \triangle CDA$ por el <ConceptLink targetId="teorema-congruencia-ala">criterio ALA</ConceptLink>, lo que garantiza la congruencia de los lados opuestos respectivos.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-diagonales-rectangulo" 
+      title="Congruencia de las diagonales"
+      formula="\overline{AC} \cong \overline{BD}"
+    >
+      Las <ConceptLink targetId="diagonal">diagonales</ConceptLink> $\overline{AC}$ y $\overline{BD}$ de un rectángulo son mutuamente congruentes. Los triángulos rectángulos $\triangle DAB$ y $\triangle CBA$ comparten el cateto $\overline{AB}$ y tienen catetos congruentes $\overline{AD} \cong \overline{BC}$; por el <ConceptLink targetId="teorema-congruencia-lal">criterio LAL</ConceptLink>, ambos triángulos son congruentes y sus hipotenusas resultan congruentes.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+El postulado euclidiano de las paralelas interviene de manera decisiva en la existencia de rectángulos: mientras que la definición exige únicamente la ortogonalidad de cuatro ángulos, la posibilidad de cerrar tal figura sin incurrir en contradicción requiere que la suma de los ángulos interiores de un cuadrilátero sea exactamente cuatro ángulos rectos.
+</Nota>

@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "teorema-angulo-exterior",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema del ángulo exterior",
+  description: "En todo triángulo, la medida de cualquier ángulo exterior adyacente a un vértice es estrictamente mayor que la de cualquiera de los dos ángulos interiores no adyacentes.",
+  statement: "En todo triángulo △ABC, la medida de cualquier ángulo exterior adyacente a un vértice es estrictamente mayor que la de cualquiera de los dos ángulos interiores no adyacentes (∠ACD > ∠BAC y ∠ACD > ∠ABC).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulos", "geometria-absoluta"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-angulo-exterior"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink>, cualquier <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> adyacente a un <ConceptLink targetId="vertice">vértice</ConceptLink> es estrictamente mayor, según la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>, que cualquiera de los dos <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores no adyacentes.
+
+Este resultado, formulado por <ConceptLink targetId="euclides">Euclides</ConceptLink> como la Proposición I.16 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> y formalizado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*, pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Su demostración es independiente del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> y de los axiomas de continuidad: se deduce en el plano a partir de los axiomas de orden y congruencia mediante el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> y la congruencia de los <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>ángulos opuestos por el vértice</ConceptLink>. Constituye una herramienta deductiva esencial para demostrar la desigualdad triangular y la existencia de rectas paralelas.
+
+<Definicion title="Enunciado formal del teorema del ángulo exterior">
+Sean $A, B, C \in \mathcal{P}$ tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$, que determinan el <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
+
+Sea $D \in \mathcal{P}$ un punto de la recta soporte de $\overline{BC}$ tal que $B * C * D$, de modo que la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{CD}$ es opuesta a $\overrightarrow{CB}$ y el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle ACD$ es un <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$.
+
+Entonces, respecto a la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>, se satisfacen las desigualdades estrictas:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+
+equivalentemente, $\angle BAC < \angle ACD$ y $\angle ABC < \angle ACD$. Análogamente, el ángulo exterior determinado por la prolongación de $\overline{AC}$ más allá de $C$ satisface las mismas desigualdades, al ser congruente con $\angle ACD$ por ser <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>ángulos opuestos por el vértice</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias en geometría absoluta">
+    <PropiedadItem 
+      id="angulos-agudos-triangulo" 
+      title="Existencia de al menos dos ángulos interiores agudos"
+      formula="\angle\text{recto} \le \angle ACB \implies \angle BAC < \angle\text{recto} \land \angle ABC < \angle\text{recto}"
+    >
+      En todo <ConceptLink targetId="triangulo">triángulo</ConceptLink>, a lo sumo un <ConceptLink targetId="angulo">ángulo</ConceptLink> interior puede ser recto u obtuso; por tanto, al menos dos de sus ángulos interiores son siempre agudos. Si un triángulo tuviese dos ángulos no agudos, el <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> adyacente a uno de ellos no podría ser estrictamente mayor que el otro ángulo interior no adyacente, contradiciendo este <ConceptLink targetId="teorema">teorema</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="teorema-angulos-alternos-internos" 
+      title="Criterio de paralelismo por ángulos alternos internos"
+      formula="\angle P_1AB \cong \angle P_2BA \implies \ell_1 \parallel \ell_2"
+    >
+      Si dos <ConceptLink targetId="recta">rectas</ConceptLink> cortadas por una <ConceptLink targetId="secante">secante</ConceptLink> forman <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> congruentes, entonces son <ConceptLink targetId="paralelas">paralelas</ConceptLink> (Proposición I.27 de <ConceptLink targetId="euclides">Euclides</ConceptLink>). La prueba por contradicción aplica directamente el teorema del ángulo exterior al triángulo formado en caso de concurrencia.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

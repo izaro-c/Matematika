@@ -1,0 +1,117 @@
+export const metadata = {
+  id: "demo-pitagoras-reciproco",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Converse of the Pythagorean Theorem",
+  description: "Direct synthetic proof following Euclid (I.48): construction of an auxiliary right triangle with congruent legs and application of the SSS congruence criterion.",
+  parentTheorem: "teorema-pitagoras-reciproco",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  layout: "split",
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Proposition 48",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-pitagoras-reciproco">converse of the Pythagorean theorem</ConceptLink> follows the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink> formulated by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Proposition I.48 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. The proof constructs an auxiliary <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> whose <ConceptLink targetId="cateto">legs</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink> to the sides containing the angle under study. Applying the direct <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> to this auxiliary triangle —which depends on <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel axiom</ConceptLink>— and combining it with the initial hypothesis yields the congruence of the third side, completing the proof via the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS congruence theorem</ConceptLink>.
+
+<Separador />
+
+### Step-by-step demonstration
+
+<ProofStep number={1} title="Hypothesis on the initial triangle">
+Consider an arbitrary <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ whose <ConceptLink targetId="lado">sides</ConceptLink> have <ConceptLink targetId="longitud">lengths</ConceptLink> $a = |BC|$, $b = |AC|$, and $c = |AB|$.
+
+By initial hypothesis, these three lengths satisfy the algebraic Pythagorean relation:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+which is equivalently expressed in terms of the vertices as $|BC|^2 + |AC|^2 = |AB|^2$.
+
+The deductive goal is to prove that the <ConceptLink targetId="angulo">angle</ConceptLink> $\angle ACB$ opposite side $\overline{AB}$ is a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={2} title="Construction of the auxiliary right triangle">
+In the same <ConceptLink targetId="plano">plane</ConceptLink>, we construct an auxiliary <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle DEF$ having a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> at its <ConceptLink targetId="vertice">vertex</ConceptLink> $D$, such that $\angle EDF$ is right.
+
+Along the rays containing the <ConceptLink targetId="cateto">legs</ConceptLink> $\overline{DE}$ and $\overline{DF}$, we determine their <ConceptLink targetId="longitud">lengths</ConceptLink> so that they coincide exactly with those of $\overline{BC}$ and $\overline{AC}$:
+
+$$
+|DE| = a = |BC| \quad \text{and} \quad |DF| = b = |AC|
+$$
+
+By the definition of congruence of <ConceptLink targetId="segmento">segments</ConceptLink>, this establishes that $\overline{DE} \cong \overline{BC}$ and $\overline{DF} \cong \overline{AC}$.
+</ProofStep>
+
+<ProofStep number={3} title="Application of the direct Pythagorean theorem to the auxiliary triangle">
+Since $\triangle DEF$ is by construction a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with a right angle at vertex $D$, it satisfies the conditions of the direct <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> in the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, which rests on <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel axiom</ConceptLink>.
+
+Applying the theorem to the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> $\overline{EF}$:
+
+$$
+|EF|^2 = |DE|^2 + |DF|^2
+$$
+
+Substituting the leg values fixed in the construction ($|DE| = a$ and $|DF| = b$):
+
+$$
+|EF|^2 = a^2 + b^2
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Substitution of the metric hypothesis and hypotenuse congruence">
+By the hypothesis established on $\overline{AB}$, we know that $a^2 + b^2 = c^2 = |AB|^2$.
+
+Substituting this equality into the quadratic relation obtained for the auxiliary hypotenuse:
+
+$$
+|EF|^2 = |AB|^2
+$$
+
+Since lengths are positive real quantities, extracting the positive square root preserves equality:
+
+$$
+|EF| = |AB|
+$$
+
+which proves that the segments are congruent: $\overline{EF} \cong \overline{AB}$.
+</ProofStep>
+
+<ProofStep number={5} title="Application of the SSS congruence criterion">
+We now compare the original triangle $\triangle ABC$ with the auxiliary triangle $\triangle DEF$. Their three pairs of corresponding <ConceptLink targetId="lado">sides</ConceptLink> are mutually congruent:
+1. First pair of sides: $\overline{BC} \cong \overline{DE}$ (by construction, $|BC| = |DE| = a$).
+2. Second pair of sides: $\overline{AC} \cong \overline{DF}$ (by construction, $|AC| = |DF| = b$).
+3. Third pair of sides: $\overline{AB} \cong \overline{EF}$ (proven in the preceding step).
+
+By the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS congruence theorem</ConceptLink>, since the measures of all three pairs of sides match, both triangles are congruent under the correspondence $C \mapsto D$, $B \mapsto E$, $A \mapsto F$:
+
+$$
+\triangle ABC \cong \triangle DEF
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Conclusion of orthogonality and final deduction">
+From the <ConceptLink targetId="congruencia-triangulos">congruence of triangles</ConceptLink> $\triangle ABC \cong \triangle DEF$, it follows that all corresponding <ConceptLink targetId="angulo">angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink>. In particular, comparing the angles at <ConceptLink targetId="vertice">vertices</ConceptLink> $C$ and $D$:
+
+$$
+\angle ACB \cong \angle EDF
+$$
+
+Since angle $\angle EDF$ is a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> by the initial auxiliary construction, it follows that $\angle ACB$ is also a right angle.
+
+Consequently, triangle $\triangle ABC$ has a right angle at $C$ and is a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with hypotenuse $\overline{AB}$, completing the proof.
+</ProofStep>
+
+</DemonstrationSection>

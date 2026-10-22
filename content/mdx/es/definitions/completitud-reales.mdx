@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "completitud-reales",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Completitud de los números reales",
+  description: "Propiedad fundamental del cuerpo ordenado de los números reales según la cual todo subconjunto no vacío acotado superiormente posee supremo.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **completitud de los números reales** (o axioma del supremo) es la propiedad definitoria que distingue al <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> <ConceptLink targetId="orden-total" isDependency={true}>ordenado</ConceptLink> de los números reales $\mathbb{R}$ del cuerpo de los números racionales $\mathbb{Q}$, garantizando formalmente la ausencia de huecos, fisuras o discontinuidades en la recta numérica.
+
+Esta propiedad asegura que el continuo real no contiene lagunas aritméticas, permitiendo fundamentar rigurosamente el cálculo infinitesimal, los límites de sucesiones y las construcciones geométricas analíticas. Existen diversas formulaciones formalmente equivalentes: la propiedad del supremo (Dedekind), la convergencia de toda sucesión de Cauchy y el principio de intervalos encajados de Cantor.
+
+<Definicion title="Axioma del supremo en ℝ">
+  Sea $S \subseteq \mathbb{R}$ un subconjunto no vacío de números reales. Si $S$ está acotado superiormente —es decir, si existe una <ConceptLink targetId="cota-superior" isDependency={true}>cota superior</ConceptLink> $M \in \mathbb{R}$ tal que para todo $x \in S, \, x \le M$—, entonces existe un número real $s = \sup(S) \in \mathbb{R}$ denominado **supremo** (o mínima cota superior) de $S$, caracterizado unívocamente por:
+  $$
+  \forall x \in S \ (x \le s) \quad \land \quad \forall \varepsilon > 0 \ \exists x \in S \ (x > s - \varepsilon)
+  $$
+</Definicion>
+
+<Separador />
+
+### Fundamentación analítica de la continuidad hilbertiana
+
+La completitud de $\mathbb{R}$ ejerce un papel demostrativo primordial en los modelos analíticos de la enciclopedia:
+
+En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>, la traza de cada recta se identifica analíticamente mediante una <ConceptLink targetId="biyeccion">biyección</ConceptLink> monótona con $\mathbb{R}$. En virtud de la completitud del cuerpo real, cualquier bipartición conexa de los puntos de una recta traslada de forma inmediata el corte de Dedekind a la recta geométrica, deduciendo como resultado demostrado el <ConceptLink targetId="axioma-completitud">Axioma V.2 (Completitud lineal)</ConceptLink> de David Hilbert.
+
+De este modo, la consistencia y satisfacción de los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> en el espacio cartesiano $\mathbb{R}^3$ queda enteramente reducida a la completitud analítica del cuerpo de los números reales.

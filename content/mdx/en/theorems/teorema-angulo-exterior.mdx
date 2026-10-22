@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "teorema-angulo-exterior",
+  lang: "en",
+  type: "teorema",
+  title: "Exterior Angle Theorem",
+  description: "In any triangle, the measure of every exterior angle adjacent to a vertex is strictly greater than that of either of the two non-adjacent interior angles.",
+  statement: "In any triangle △ABC, the measure of every exterior angle adjacent to a vertex is strictly greater than that of either of the two non-adjacent interior angles (∠ACD > ∠BAC and ∠ACD > ∠ABC).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulos", "geometria-absoluta"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-angulo-exterior"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="I" />n any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink>, every <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> adjacent to a <ConceptLink targetId="vertice">vertex</ConceptLink> is strictly greater, according to the relation of <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>, than either of the two non-adjacent interior <ConceptLink targetId="angulo">angles</ConceptLink>.
+
+This result, formulated by <ConceptLink targetId="euclides">Euclid</ConceptLink> as Proposition I.16 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, belongs to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its proof is independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink> and continuity axioms: it is deduced in the plane from the axioms of order and congruence via the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> and the congruence of <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink>. It constitutes an essential deductive tool to prove the triangle inequality and the existence of parallel lines.
+
+<Definicion title="Formal statement of the exterior angle theorem">
+Let $A, B, C \in \mathcal{P}$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$, determining the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
+
+Let $D \in \mathcal{P}$ be a point on the line containing $\overline{BC}$ such that $B * C * D$, so that the <ConceptLink targetId="semirrecta">ray</ConceptLink> $\overrightarrow{CD}$ is opposite to $\overrightarrow{CB}$ and the <ConceptLink targetId="angulo">angle</ConceptLink> $\angle ACD$ is an <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> at <ConceptLink targetId="vertice">vertex</ConceptLink> $C$.
+
+Then, with respect to the relation of <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>, the strict inequalities hold:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+
+equivalently, $\angle BAC < \angle ACD$ and $\angle ABC < \angle ACD$. Similarly, the exterior angle determined by extending $\overline{AC}$ beyond $C$ satisfies the same inequalities, being congruent to $\angle ACD$ as <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences in absolute geometry">
+    <PropiedadItem 
+      id="angulos-agudos-triangulo" 
+      title="Existence of at least two acute interior angles"
+      formula="\angle\text{recto} \le \angle ACB \implies \angle BAC < \angle\text{recto} \land \angle ABC < \angle\text{recto}"
+    >
+      In any <ConceptLink targetId="triangulo">triangle</ConceptLink>, at most one interior <ConceptLink targetId="angulo">angle</ConceptLink> can be right or obtuse; therefore, at least two of its interior angles are always acute. If a triangle had two non-acute angles, the <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> adjacent to one of them could not be strictly greater than the other non-adjacent interior angle, contradicting this <ConceptLink targetId="teorema">theorem</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="teorema-angulos-alternos-internos" 
+      title="Parallelism criterion via alternate interior angles"
+      formula="\angle P_1AB \cong \angle P_2BA \implies \ell_1 \parallel \ell_2"
+    >
+      If two <ConceptLink targetId="recta">lines</ConceptLink> intersected by a <ConceptLink targetId="secante">transversal</ConceptLink> form congruent <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink>, then they are <ConceptLink targetId="paralelas">parallel</ConceptLink> (Proposition I.27 of <ConceptLink targetId="euclides">Euclid</ConceptLink>). The proof by contradiction applies the exterior angle theorem directly to the triangle that would be formed in case of intersection.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

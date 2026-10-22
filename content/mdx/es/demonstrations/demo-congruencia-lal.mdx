@@ -1,0 +1,121 @@
+export const metadata = {
+  id: "demo-congruencia-lal",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de congruencia LAL",
+  description: "Demostración por contradicción según Hilbert (§6): se supone la no congruencia del tercer lado, se transporta un segmento auxiliar y la unicidad del transporte de ángulos fuerza una contradicción.",
+  parentTheorem: "teorema-congruencia-lal",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-contradiccion",
+  authors: ["hilbert"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta", "demostracion"]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a demostración del <ConceptLink targetId="teorema-congruencia-lal">teorema de congruencia LAL</ConceptLink> se fundamenta en el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*.
+
+A partir de las condiciones postuladas por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>, el razonamiento deduce que el tercer <ConceptLink targetId="lado">lado</ConceptLink> debe ser forzosamente <ConceptLink targetId="congruencia">congruente</ConceptLink>, pues suponer lo contrario permitiría transportar un <ConceptLink targetId="segmento">segmento</ConceptLink> auxiliar mediante el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> que violaría la unicidad del transporte de <ConceptLink targetId="angulo">ángulos</ConceptLink> garantizada por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Hipótesis y aplicación del Axioma III.5">
+Sean dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$ que satisfacen por hipótesis las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+
+$$
+\overline{AB} \cong \overline{A'B'}, \quad \overline{AC} \cong \overline{A'C'}, \quad \angle BAC \cong \angle B'A'C'
+$$
+
+Aplicando el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink> a los triángulos $\triangle ABC$ y $\triangle A'B'C'$, se deduce la congruencia de los ángulos restantes en los <ConceptLink targetId="vertice">vértices</ConceptLink> correspondientes:
+
+$$
+\angle ABC \cong \angle A'B'C', \quad \angle ACB \cong \angle A'C'B'
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Hipótesis de reducción al absurdo">
+Para demostrar que el tercer <ConceptLink targetId="lado">lado</ConceptLink> es también <ConceptLink targetId="congruencia">congruente</ConceptLink>, procedemos mediante el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink>. Supongamos que los <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{BC}$ y $\overline{B'C'}$ no son congruentes entre sí:
+
+$$
+\overline{BC} \not\cong \overline{B'C'}
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Transporte del segmento auxiliar sobre la semirrecta">
+Por el axioma de transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), existe sobre la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{B'C'}$ un único <ConceptLink targetId="punto">punto</ConceptLink> $D$ tal que el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{B'D}$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\overline{BC}$:
+
+$$
+D \in \overrightarrow{B'C'}, \quad \overline{BC} \cong \overline{B'D}
+$$
+
+Puesto que por la hipótesis de contradicción $\overline{BC} \not\cong \overline{B'C'}$, el punto $D$ no coincide con el extremo $C'$:
+
+$$
+D \neq C'
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Construcción del triángulo auxiliar y segunda aplicación de III.5">
+Consideramos el <ConceptLink targetId="triangulo">triángulo</ConceptLink> auxiliar $\triangle A'B'D$. Comparando $\triangle ABC$ y $\triangle A'B'D$, disponemos de:
+1. $\overline{AB} \cong \overline{A'B'}$ (por hipótesis de partida).
+2. $\overline{BC} \cong \overline{B'D}$ (por construcción del punto $D$).
+3. Dado que $D \in \overrightarrow{B'C'}$, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{B'D}$ coincide con $\overrightarrow{B'C'}$, de donde $\angle A'B'D = \angle A'B'C'$; por tanto, $\angle ABC \cong \angle A'B'D$.
+
+Al cumplirse las premisas del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink> para el par de triángulos $\triangle ABC$ y $\triangle A'B'D$, este axioma establece la congruencia de los ángulos restantes en el <ConceptLink targetId="vertice">vértice</ConceptLink> superior:
+
+$$
+\angle BAC \cong \angle B'A'D
+$$
+</ProofStep>
+
+<ProofStep number={5} title="Unicidad del transporte de ángulos y contradicción">
+Por la hipótesis original se tiene $\angle BAC \cong \angle B'A'C'$, lo que junto con el resultado anterior implica:
+
+$$
+\angle B'A'D \cong \angle B'A'C'
+$$
+
+Como el punto $D$ pertenece a la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{B'C'}$, los puntos $D$ y $C'$ pertenecen al mismo <ConceptLink targetId="semiplano">semiplano</ConceptLink> respecto a la recta soporte $\overleftrightarrow{A'B'}$. Por tanto, las semirrectas $\overrightarrow{A'D}$ y $\overrightarrow{A'C'}$ se encuentran en el mismo semiplano respecto a $\overleftrightarrow{A'B'}$.
+
+Por el axioma de transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), en un semiplano dado existe una única semirrecta con origen en $A'$ que forma con $\overrightarrow{A'B'}$ un <ConceptLink targetId="angulo">ángulo</ConceptLink> determinado. En consecuencia, ambas semirrectas coinciden:
+
+$$
+\overrightarrow{A'D} = \overrightarrow{A'C'}
+$$
+
+La recta $\overleftrightarrow{A'C'}$ corta a la recta $\overleftrightarrow{B'C'}$ en el único punto $C'$. Como $D$ pertenece a la vez a $\overrightarrow{A'D} \subset \operatorname{tr}(\overleftrightarrow{A'C'})$ y a $\overrightarrow{B'C'} \subset \operatorname{tr}(\overleftrightarrow{B'C'})$, se deduce necesariamente:
+
+$$
+D = C'
+$$
+
+lo cual contradice la condición $D \neq C'$ obtenida en el paso 3.
+</ProofStep>
+
+<ProofStep number={6} title="Conclusión y congruencia global">
+La contradicción demuestra la falsedad de la hipótesis $\overline{BC} \not\cong \overline{B'C'}$. Por consiguiente, el tercer <ConceptLink targetId="lado">lado</ConceptLink> es necesariamente <ConceptLink targetId="congruencia">congruente</ConceptLink>:
+
+$$
+\overline{BC} \cong \overline{B'C'}
+$$
+
+Habiéndose establecido la congruencia mutua de los tres pares de lados homólogos ($\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$, $\overline{AC} \cong \overline{A'C'}$) y de los tres pares de ángulos homólogos ($\angle BAC \cong \angle B'A'C'$, $\angle ABC \cong \angle A'B'C'$, $\angle ACB \cong \angle A'C'B'$), se concluye la <ConceptLink targetId="congruencia-triangulos">congruencia de los triángulos</ConceptLink>:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

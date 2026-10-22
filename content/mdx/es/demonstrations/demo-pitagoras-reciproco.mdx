@@ -1,0 +1,117 @@
+export const metadata = {
+  id: "demo-pitagoras-reciproco",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Recíproco del teorema de Pitágoras",
+  description: "Demostración sintética directa según Euclides (I.48): construcción de un triángulo rectángulo auxiliar con catetos congruentes y aplicación del criterio de congruencia LLL.",
+  parentTheorem: "teorema-pitagoras-reciproco",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  layout: "split",
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 48",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a demostración del <ConceptLink targetId="teorema-pitagoras-reciproco">recíproco del teorema de Pitágoras</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> formulado por <ConceptLink targetId="euclides">Euclides</ConceptLink> en la Proposición I.48 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>. La prueba construye un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> auxiliar cuyos <ConceptLink targetId="cateto">catetos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> con los lados que forman el ángulo bajo estudio. Aplicando a este triángulo auxiliar el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink> directo —dependiente del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>— y combinándolo con la hipótesis de partida, se deduce la congruencia del tercer lado, completando la demostración mediante el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema de congruencia LLL</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Hipótesis sobre el triángulo inicial">
+Consideramos un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ arbitrario cuyos <ConceptLink targetId="lado">lados</ConceptLink> poseen <ConceptLink targetId="longitud">longitudes</ConceptLink> $a = |BC|$, $b = |AC|$ y $c = |AB|$.
+
+Por hipótesis de partida, estas tres longitudes satisfacen la relación algebraica pitagórica:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+lo que se expresa equivalentemente en términos de los vértices como $|BC|^2 + |AC|^2 = |AB|^2$.
+
+El propósito es demostrar deductivamente que el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle ACB$ opuesto al lado $\overline{AB}$ es un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={2} title="Construcción del triángulo rectángulo auxiliar">
+En el mismo <ConceptLink targetId="plano">plano</ConceptLink>, trazamos un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> auxiliar $\triangle DEF$ que contiene un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en su <ConceptLink targetId="vertice">vértice</ConceptLink> $D$, de modo que $\angle EDF$ sea recto.
+
+Sobre las semirrectas que contienen a los <ConceptLink targetId="cateto">catetos</ConceptLink> $\overline{DE}$ y $\overline{DF}$, determinamos sus <ConceptLink targetId="longitud">longitudes</ConceptLink> de manera que coincidan exactamente con las de $\overline{BC}$ y $\overline{AC}$:
+
+$$
+|DE| = a = |BC| \quad \text{y} \quad |DF| = b = |AC|
+$$
+
+Por la definición de congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink>, esto establece que $\overline{DE} \cong \overline{BC}$ y $\overline{DF} \cong \overline{AC}$.
+</ProofStep>
+
+<ProofStep number={3} title="Aplicación del teorema de Pitágoras directo al triángulo auxiliar">
+Puesto que $\triangle DEF$ es por construcción un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con ángulo recto en el vértice $D$, satisface las condiciones del <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink> directo en el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, el cual se apoya en el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
+
+Aplicando el teorema a la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> $\overline{EF}$:
+
+$$
+|EF|^2 = |DE|^2 + |DF|^2
+$$
+
+Sustituyendo los valores de los catetos fijados en la construcción ($|DE| = a$ y $|DF| = b$):
+
+$$
+|EF|^2 = a^2 + b^2
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Sustitución de la hipótesis métrica y congruencia de hipotenusas">
+Por la hipótesis establecida sobre $\overline{AB}$, sabemos que $a^2 + b^2 = c^2 = |AB|^2$.
+
+Sustituyendo esta igualdad en la relación cuadrática obtenida para la hipotenusa auxiliar:
+
+$$
+|EF|^2 = |AB|^2
+$$
+
+Al ser las longitudes magnitudes reales positivas, la extracción de la raíz cuadrada preserva la igualdad:
+
+$$
+|EF| = |AB|
+$$
+
+lo que demuestra que los segmentos son congruentes: $\overline{EF} \cong \overline{AB}$.
+</ProofStep>
+
+<ProofStep number={5} title="Aplicación del criterio de congruencia LLL">
+Comparamos el triángulo original $\triangle ABC$ con el triángulo auxiliar $\triangle DEF$. Sus tres pares de <ConceptLink targetId="lado">lados</ConceptLink> homólogos son mutuamente congruentes:
+1. Primer par de lados: $\overline{BC} \cong \overline{DE}$ (por construcción, $|BC| = |DE| = a$).
+2. Segundo par de lados: $\overline{AC} \cong \overline{DF}$ (por construcción, $|AC| = |DF| = b$).
+3. Tercer par de lados: $\overline{AB} \cong \overline{EF}$ (deducido en el paso anterior).
+
+Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema de congruencia LLL</ConceptLink>, al coincidir las medidas de los tres pares de lados, ambos triángulos son congruentes bajo la correspondencia $C \mapsto D$, $B \mapsto E$, $A \mapsto F$:
+
+$$
+\triangle ABC \cong \triangle DEF
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Conclusión de la ortogonalidad y conclusión">
+De la <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink> $\triangle ABC \cong \triangle DEF$ se sigue que todos los <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>. En particular, comparando los ángulos en los <ConceptLink targetId="vertice">vértices</ConceptLink> $C$ y $D$:
+
+$$
+\angle ACB \cong \angle EDF
+$$
+
+Puesto que el ángulo $\angle EDF$ es un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> por la construcción del triángulo auxiliar, se concluye que $\angle ACB$ es también un ángulo recto.
+
+En consecuencia, el triángulo $\triangle ABC$ tiene un ángulo recto en $C$ y es un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con hipotenusa $\overline{AB}$, completando la demostración.
+</ProofStep>
+
+</DemonstrationSection>

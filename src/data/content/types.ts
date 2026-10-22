@@ -148,6 +148,7 @@ export interface AxiomaticSystem extends BaseContent {
   description: string;
   axiomas: string[];
   models?: string[];
+  extends?: string[];
   authors?: string[];
   hasSimulation?: boolean;
   Component: MDXComponent;
@@ -160,6 +161,7 @@ export interface Model extends BaseContent {
   description?: string;
   satisfies: string | string[];
   axioms_verified?: string[];
+  builtIn?: string;
   hasDiagram?: boolean;
   Component: MDXComponent;
   Diagram?: MDXComponent;

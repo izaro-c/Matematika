@@ -394,7 +394,7 @@ export const CongruenciaLLLSpec = createDiagramSpec(
         "ariaLabel": "Polígono",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "targetId": "polygonA1B1C1",
       "objectType": "path",
       "geometry": {
@@ -423,7 +423,7 @@ export const CongruenciaLLLSpec = createDiagramSpec(
         "ariaLabel": "Polígono",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "targetId": "polygonA2B2C2",
       "objectType": "path",
       "geometry": {

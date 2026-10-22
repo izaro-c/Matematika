@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "hipotenusa",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Hipotenusa",
+  description: "Lado opuesto al vértice del ángulo recto en un triángulo rectángulo, de mayor longitud que cualquiera de los catetos.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "pitagoras"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink>, la **hipotenusa** es el <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> opuesto al <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> del <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>.
+
+La hipotenusa es el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> que une los extremos de los dos <ConceptLink targetId="cateto">catetos</ConceptLink>, cerrando la figura en el <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>. Por ser opuesta al mayor de los tres ángulos del triángulo, posee estrictamente mayor <ConceptLink targetId="longitud">longitud</ConceptLink> que cualquiera de los catetos y protagoniza la relación métrica fundamental formulada en el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>, donde el área del cuadrado construido sobre ella equivale a la suma de las áreas de los cuadrados sobre los catetos.
+
+<Definicion title="Definición formal de hipotenusa">
+Sea <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, cuyos vértices son los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$, con <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>, de modo que <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind> es recto.
+
+El <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind>, opuesto al vértice $C$ y que no incide en él, es la **hipotenusa** del triángulo $\triangle ABC$:
+
+$$
+\text{Hipotenusa}(\triangle ABC) = \overline{AB}
+$$
+
+Los otros dos lados, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> y <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, concurrentes en el vértice del ángulo recto, son los <ConceptLink targetId="cateto">catetos</ConceptLink> del triángulo.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Relaciones métricas euclidianas">
+    <PropiedadItem 
+      id="relacion-pitagorica-hipotenusa" 
+      title="Relación de Pitágoras"
+      formula="|AB|^2 = |CA|^2 + |CB|^2"
+    >
+      En el plano euclidiano, el cuadrado de la <ConceptLink targetId="longitud">longitud</ConceptLink> de la hipotenusa es igual a la suma de los cuadrados de las longitudes de los dos catetos (<ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="maximalidad-longitud-hipotenusa" 
+      title="Maximalidad frente a los catetos"
+      formula="|AB| > |CA| \land |AB| > |CB|"
+    >
+      En todo triángulo rectángulo, la hipotenusa tiene mayor longitud que cualquiera de sus catetos, consecuencia de que el ángulo recto es el ángulo de mayor amplitud del triángulo.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

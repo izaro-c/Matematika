@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-existencia-perpendicular",
+  lang: "en",
+  type: "teorema",
+  title: "Existence and Uniqueness Theorem of the Perpendicular",
+  description: "Given a point and a line in a plane, there exists a line passing through the point and perpendicular to the given line, which is unique if the point is exterior to it.",
+  statement: "Given a point P and a line ℓ in a plane π, there exists a line m in π passing through P and perpendicular to ℓ. If P is not incident with ℓ, this perpendicular line m is unique in π.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert", "euclides"],
+  demos: ["demo-existencia-perpendicular"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposiciones 11 y 12",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="G" />iven a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> and a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink>, there exists a line passing through that point and <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> to the given line. If the point is not incident with the line, this perpendicular is unique in the plane.
+
+This result, formulated by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Propositions I.11 and I.12 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and axiomatized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, belongs to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its proof is independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink> and relies exclusively on angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, and the synthetic characterization of the <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>.
+
+<Definicion title="Formal statement of the perpendicular theorem">
+Let $\pi \in \Pi$ be a <ConceptLink targetId="plano">plane</ConceptLink>, let $\ell \in \mathcal{L}$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> with $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$, and let $P \in \operatorname{tr}(\pi)$ be a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> in the plane.
+
+There exists a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $m \in \mathcal{L}$ with $\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi)$ such that $P \,\mathbf{I}\, m$ and $m$ is <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> to $\ell$ ($m \perp \ell$):
+
+$$
+\exists m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+
+Furthermore, if the <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $P$ is not incident with the line $\ell$ ($\neg(P \,\mathbf{I}\, \ell)$), this perpendicular line $m$ is unique in the plane:
+
+$$
+\neg(P \,\mathbf{I}\, \ell) \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric properties and implications">
+    <PropiedadItem 
+      id="pie-perpendicular" 
+      title="Foot of the perpendicular"
+      formula="\operatorname{tr}(m) \cap \operatorname{tr}(\ell) = \{M\}"
+    >
+      The intersection of the perpendicular <ConceptLink targetId="recta">line</ConceptLink> $m$ with the base line $\ell$ determines a unique <ConceptLink targetId="punto">point</ConceptLink> $M \in \mathcal{P}$, called the foot of the perpendicular drawn from $P$ to $\ell$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="perpendicular-punto-incidente" 
+      title="Perpendicular through an incident point"
+      formula="P \,\mathbf{I}\, \ell \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)"
+    >
+      When the <ConceptLink targetId="punto">point</ConceptLink> $P$ is incident with the <ConceptLink targetId="recta">line</ConceptLink> $\ell$, the perpendicular in the plane is also unique by virtue of <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>, as each half-plane admits a single ray forming a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> with the given line.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

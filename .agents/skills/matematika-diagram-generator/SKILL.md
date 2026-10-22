@@ -7,6 +7,22 @@ description: Use whenever creating, modifying, refactoring, fixing or reviewing 
 
 Motor interactivo y declarativo de representaciones geométricas y analíticas 2D para la enciclopedia deductiva Matematika, compatible con el **Editor Visual** del proyecto y renderizado en JSXGraph / React.
 
+## Antes de empezar (cualquier agente: Claude, Gemini/Antigravity, Codex)
+
+1. Lee esta página y [spec-v3-schema.md](./references/spec-v3-schema.md). Para estilos, [paleta-y-estilos.md](./references/paleta-y-estilos.md).
+2. Parte de un **diagrama de referencia** parecido y cópialo; no escribas el spec desde cero:
+
+   | Necesidad | Referencia |
+   | :--- | :--- |
+   | Axioma simple, puntos libres y una recta | `content/diagrams/Axiomas/Incidence1.tsx` |
+   | Grupos resaltables (`groups` con `target`) | `content/diagrams/Axiomas/SAS.tsx` |
+   | Demostración por pasos (`steps`, `objectStates`) | `content/diagrams/Demos/DemoTrianguloIsosceles.tsx` |
+   | Animación con deslizador | `content/diagrams/Demos/DemoPitagorasAreas.tsx` |
+
+3. El bloque entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` es **JSON estricto**: comillas dobles, sin comentarios, sin comas finales. El editor visual lo reescribe; cualquier cosa que no sea JSON hace que el diagrama deje de ser editable.
+4. Escribe el archivo completo, sin marcadores tipo `...` ni `// resto igual`.
+5. Cuando el diagrama tenga texto en un MDX, el trabajo no termina hasta que `validate-nodes.mjs <id>` del nodo (skill de contenido) dé `══ TODO OK`. Pega esa línea en tu informe.
+
 ---
 
 ## 1. Principios Fundamentales
@@ -35,7 +51,7 @@ export const NombreDiagramaSpec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v3",
   "title": "Título en castellano",
   "componentId": "nombre-diagrama",
-  "category": "Teoremas", // "Axiomas" | "Definiciones" | "Teoremas" | "Demos" | "Ejercicios" | "CasosUso"
+  "category": "Teoremas",
   "mode": "simulation",
   "axis": false,
   "grid": false,
@@ -90,6 +106,8 @@ export const NombreDiagramaSpec = createDiagramSpec(
 export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} />;
 ```
 
+`category` es una de `"Axiomas"`, `"Definiciones"`, `"Teoremas"`, `"Demos"`, `"Ejercicios"`, `"CasosUso"`, y coincide con la carpeta de `content/diagrams/`.
+
 ---
 
 ## 3. Vinculación con los Artículos MDX (`content/mdx/...`)
@@ -108,6 +126,12 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
    ```tsx
    el vértice <VisualBind element="pA" color="carbon">$A$</VisualBind> y el lado <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>
    ```
+
+### Cómo se resuelve un `<VisualBind element="X">`
+- `X` es la **clave de destino** de un objeto o de un grupo con `"target": true`: su `targetId` si lo tiene, si no su `id`. Un objeto con `"target": false` no se puede resaltar desde el texto.
+- Cada clave es única en el diagrama. Dos objetos que publican el mismo `targetId` dejan el resaltado ambiguo (pasó en `Bisectriz.tsx`, con el vértice O publicado como `pC`).
+- Para resaltar varias piezas a la vez (los dos lados de un criterio, un triángulo entero), crea un `group` con `memberIds`, `"target": true` y su `targetId`, como en `SAS.tsx`.
+- En demostraciones, `<ProofStep diagramStep="stepN">` activa el paso `stepN` de `spec.steps` al hacer scroll. Cada `diagramStep` del MDX debe existir en `steps`, con el mismo `id`, en los tres idiomas.
 
 ---
 
@@ -134,14 +158,17 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
      ```bash
      npx tsx .agents/skills/matematika-diagram-generator/scripts/verify-diagram.ts <ruta-al-diagrama.tsx>
      ```
+     Comprueba que el spec sea `visual-exact`, que las claves de destino sean únicas, que `visibleTargets` y `objectStates` de cada paso nombren objetos existentes y que `translations.eu` y `translations.en` tengan `title` y todos los pasos.
+   - Sincronía con el texto (`VisualBind`, `diagramStep`, colores) en los tres idiomas del nodo que lo usa:
+     ```bash
+     node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <id-del-nodo>
+     ```
    - Verificación global de la suite de diagramas y tipado:
      ```bash
      npx tsx scripts/editor/check-diagrams-support.ts
      npm run typecheck
      ```
    Asegurar que el recurso esté en **Edición visual exacta (`visual-exact`)** y que no haya recursos inválidos.
-
----
 
 ---
 
@@ -232,4 +259,3 @@ Al pasar de un paso a otro en la demostración:
 ## 6. Referencias Técnicas Adicionales
 - [spec-v3-schema.md](./references/spec-v3-schema.md): Especificación detallada del esquema Zod de objetos, geometrías, controles y relaciones.
 - [paleta-y-estilos.md](./references/paleta-y-estilos.md): Sistema de diseño, tokens de color y **estilo del chrome** (botones, paneles, anotaciones). **Leer antes de cambiar cualquier estilo visual de diagramas.**
-- [pedagogia-geometria.md](./references/pedagogia-geometria.md): Buenas prácticas en didáctica matemática interactiva.

@@ -33,14 +33,18 @@ export const BranchLibrary = () => {
   const { readConcepts, completedExercises } = useProgressStore();
   const { t, getLocalizedPath, lang } = useI18n();
 
-  const totalEntries = db.getAllDefinitions(lang).length + db.theorems.size;
-
-  const chapters = SECTIONS.map((section, index) => {
+  const sectionItems = SECTIONS.map(section => {
     const seen = new Map<string, { type: string; item: { id: string; slug?: string; title?: string } }>();
     for (const entry of section.codes.flatMap(code => db.getItemsByBranch(code, lang))) {
       if (!seen.has(entry.item.id)) seen.set(entry.item.id, entry);
     }
-    const items = Array.from(seen.values());
+    return Array.from(seen.values());
+  });
+  // El total cuenta cada entrada una vez, aunque esté en varias ramas
+  const totalEntries = new Set(sectionItems.flatMap(items => items.map(entry => entry.item.id))).size;
+
+  const chapters = SECTIONS.map((section, index) => {
+    const items = sectionItems[index];
     const href = getLocalizedPath(`/rama/${section.slug}`);
 
     return (

@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-acutangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Acute triangle",
+  description: "Triangle whose three interior angles are acute, each being strictly smaller than a right angle.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-agudo", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" />n **acute triangle** is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> whose three <ConceptLink targetId="angulo-interior">interior angles</ConceptLink> are <ConceptLink targetId="angulo-agudo">acute</ConceptLink>, that is, each of them is strictly smaller than a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> under the <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>.
+
+The notion is formulated within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without appealing to any metric measure. By the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, every triangle has at least two acute angles; the defining feature of an acute triangle is that its third angle also satisfies this upper bound.
+
+<Definicion title="Formal definition of acute triangle">
+Let $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determined by three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> $A$, $B$, and $C$.
+
+It is said that $\triangle ABC$ is an **acute triangle** if each of its three <ConceptLink targetId="angulo-interior">interior angles</ConceptLink> is strictly smaller than a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> $R$ under the <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>:
+
+$$
+\angle CAB < R \quad \land \quad \angle ABC < R \quad \land \quad \angle BCA < R
+$$
+
+Each angle satisfying this condition is called an <ConceptLink targetId="angulo-agudo">acute angle</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Position of notable points">
+    <PropiedadItem 
+      id="circuncentro-interior-acutangulo" 
+      title="Interiority of the circumcenter"
+      formula="O \in \operatorname{Int}(\triangle ABC)"
+    >
+      The <ConceptLink targetId="circuncentro">circumcenter</ConceptLink> $O$ of an acute triangle always belongs to the <ConceptLink targetId="interior-triangulo">interior of the triangle</ConceptLink>. Since the three <ConceptLink targetId="mediatriz">perpendicular bisectors</ConceptLink> of the sides intersect at a point equidistant from the vertices and each interior angle is acute, this concurrence point lies within the open triangular region.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-interior-acutangulo" 
+      title="Interiority of the orthocenter"
+      formula="H \in \operatorname{Int}(\triangle ABC)"
+    >
+      The <ConceptLink targetId="ortocentro">orthocenter</ConceptLink> $H$ of an acute triangle is located in the <ConceptLink targetId="interior-triangulo">interior of the triangle</ConceptLink>. The three <ConceptLink targetId="altura">altitudes</ConceptLink> have their feet in the interior of the segments determined by the opposite sides, so that their common point of concurrency lies inside the figure.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Every equilateral triangle is acute in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, as its three congruent angles cannot be right or obtuse without contradicting the properties of adjacent supplementary angles and the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>.
+</Nota>

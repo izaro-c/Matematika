@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "distancia",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Metric Distance",
+  description: "Non-negative real-valued function on pairs of points satisfying identity of indiscernibles, symmetry, and triangle inequality.",
+  branch: "54E",
+  branches: ["54E", "51M"],
+  hasSimulation: true,
+  sources: [
+    { title: "Sur some points du calcul fonctionnel", author: "Maurice Fréchet", locator: "Rendiconti del Circolo Matematico di Palermo 22 (1906)", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Chapter 2", role: "secondary" }
+  ]
+};
+
+import { Distancia } from '@content/diagrams/Definiciones/Distancia';
+export const Simulation = Distancia;
+
+<Capitular letra="M" />etric **distance** is a function that numerically quantifies the spatial separation between pairs of elements of a set, assigning them a non-negative real value in accordance with a formal system of metric axioms.
+
+Scalar distance is not a primitive concept in synthetic axiomatics nor part of its axiomatic signature: space is organized qualitatively through the primitive relation of segment <ConceptLink targetId="congruencia">congruence</ConceptLink> ($\cong$). The distance function $d(A, B) \in \mathbb{R}$ intervenes only when space is equipped with analytic coordinates or when a concrete metric model is constructed.
+
+<Definicion title="Formal definition of metric">
+  Let $X$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A function $d\colon X \times X \longrightarrow \mathbb{R}$ is a **distance** (or metric) on $X$ if and only if it satisfies the following conditions for all <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="canela">$C \in X$</VisualBind>:
+  1. **Non-negativity and separation:** $d(A, B) \ge 0$, and $d(A, B) = 0 \iff A = B$.
+  2. **Symmetry:** $d(A, B) = d(B, A)$.
+  3. **Triangle inequality:**
+     $$
+     d(A, C) \le d(A, B) + d(B, C)
+     $$
+  
+  The pair $(X, d)$ constitutes a metric space, illustrated by segments <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind>, and <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>.
+</Definicion>
+
+<Separador />
+
+### Euclidean distance and geometric models
+
+In the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^2$, the standard Euclidean distance between two points $A = (x_A, y_A)$ and $B = (x_B, y_B)$ is defined analytically by:
+$$
+d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}
+$$
+
+This distance is invariant under translations, rotations, and reflections, interpreting with analytical rigor the geometric congruence postulates of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>.

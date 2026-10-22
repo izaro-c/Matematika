@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-congruencia-suplementos",
+  lang: "eu",
+  type: "teorema",
+  title: "Angelu betegarrien kongruentzia-teorema",
+  description: "Bi angelu elkarren artean kongruenteak badira, orduan haietako bakoitzaren angelu betegarri auzokideak ere elkarren artean kongruenteak dira.",
+  statement: "Bi angelu elkarren artean kongruenteak badira, orduan haietako bakoitzaren angelu betegarri auzokideak ere elkarren artean kongruenteak dira.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "angeluak", "kongruentzia", "geometria-absolutua", "hilbert"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-congruencia-suplementos"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 13. eta 14. proposizioak",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="B" />i <ConceptLink targetId="angulo">angelu</ConceptLink> elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, orduan haietako bakoitzaren <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarri auzokideak</ConceptLink> ere elkarren artean kongruenteak dira.
+
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuko</ConceptLink> emaitza honek, <ConceptLink targetId="euclides">Euklidesek</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.13 eta I.14 proposizioetan azaldutakoak eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* lanaren §6an formalizatutakoak, ezartzen du angelu-kongruentzia betegarriak hartzean mantentzen dela, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> edo <ConceptLink targetId="medida-angular">angelu-neurria</ConceptLink> erabili beharrik gabe. Haren frogapen sintetikoa modu erabakigarrian oinarritzen da <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>III.3 axiomako</ConceptLink> <ConceptLink targetId="segmento">zuzenkien</ConceptLink> batuketan eta <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoreman</ConceptLink>.
+
+<Definicion title="Angelu betegarrien kongruentzia-teoremaren enuntziatu formala">
+Izan bitez $\angle(h, k)$ eta $\angle(h', k')$ bi <ConceptLink targetId="angulo">angelu</ConceptLink>, non:
+
+$$
+\angle(h, k) \cong \angle(h', k')
+$$
+
+den, non $h$ eta $k$ $O \in \mathcal{P}$ puntuan jatorria duten <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> diren, eta $h'$ eta $k'$ $O' \in \mathcal{P}$ puntuan jatorria duten zuzenerdiak diren.
+
+Baldin eta $h_1$ $h$ zuzenerdiaren aurkako zuzenerdia bada, eta $h'_1$ $h'$ zuzenerdiaren aurkako zuzenerdia bada (<ConceptLink targetId="semirrectas-opuestas">aurkako zuzenerdiak</ConceptLink>), $\angle(h_1, k)$ eta $\angle(h'_1, k')$ <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarri auzokideak</ConceptLink> zehaztuz, orduan:
+
+$$
+\angle(h_1, k) \cong \angle(h'_1, k')
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio deduktiboak">
+    <PropiedadItem 
+      id="teorema-angulos-opuestos-verticales" 
+      title="Erpinez aurkako angeluen teorema"
+      formula="\angle(h, k) \cong \angle(h_1, k_1)"
+    >
+      Bi <ConceptLink targetId="vertice">erpinez</ConceptLink> aurkako <ConceptLink targetId="angulo">angelu</ConceptLink> elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira; emaitza berehala ondorioztatzen da biak bi <ConceptLink targetId="recta">zuzen</ConceptLink> ebakitzaileren artean partekatutako angelu beraren betegarri auzokideak direla ikusita.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplemento-angulo-recto" 
+      title="Angelu zuzenen kongruentzia"
+      formula="\angle(h, k) \cong \angle(h_1, k) \land \angle(h', k') \cong \angle(h'_1, k') \implies \angle(h, k) \cong \angle(h', k')"
+    >
+      <ConceptLink targetId="angulo-recto">Angelu zuzen</ConceptLink> guztiak elkarren artean kongruenteak dira; angelu zuzena bere betegarri auzokidearekin kongruentea den angelu gisa definitzen denez, teorema honek <ConceptLink targetId="perpendicular">perpendikulartasunaren</ConceptLink> koherentzia bermatzen du.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

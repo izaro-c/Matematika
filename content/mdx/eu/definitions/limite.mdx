@@ -1,0 +1,43 @@
+export const metadata = {
+  id: "limite",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Muga",
+  description: "Funtzio erreal baten irudien hurbilketa metrikorako formalizazioa balio numeriko baterantz metatze-puntu batean.",
+  branch: "26A",
+  branches: ["26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 4", role: "primary" },
+    { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 5", role: "secondary" }
+  ]
+};
+
+<Capitular letra="F" />untzio erreal baten **muga** kontzeptuak irudien hurbilketa arrunta balio numeriko finko baterantz formalizatzen du, aldagai independentea emandako puntu batera hurbiltzen den heinean. Hasiera batean <ConceptLink targetId="newton">Newton</ConceptLink>-ek eta <ConceptLink targetId="leibniz">Leibniz</ConceptLink>-ek modu intuitiboan adierazia, definizio zorrotza <ConceptLink targetId="cauchy">Cauchy</ConceptLink>-k ezarri zuen eta epsilon-delta hizkuntza metrikoan <ConceptLink targetId="weierstrass">Weierstrass</ConceptLink>-ek sendotu zuen betiko, <ConceptLink targetId="analisis-matematico">analisi matematikoaren</ConceptLink>, <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> eta <ConceptLink targetId="derivada">deribatuaren</ConceptLink> oinarrizko zutabe bihurtuz.
+
+<Definicion title="Mugaren definizio formala (Weierstrass)">
+  Izan bitez $D \subseteq \mathbb{R}$ aldagai errealeko $f\colon D \longrightarrow \mathbb{R}$ <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> baten eremua eta $c \in \mathbb{R}$ zenbaki bat $D$ multzoaren <ConceptLink targetId="punto-acumulacion">metatze-puntu</ConceptLink> bat. $f(x)$ funtzioaren **muga** $x$ aldagaia $c$ puntura hurbiltzean $L \in \mathbb{R}$ zenbaki erreala dela esaten da, eta honela idazten da:
+  $$
+  \lim_{x \to c} f(x) = L
+  $$
+  baldin eta soilik baldin edozein $\varepsilon > 0$ zenbaki errealetarako existitzen bada $\delta > 0$ zenbaki erreal bat non $x \in D$ guztietarako:
+  $$
+  0 < |x - c| < \delta \implies |f(x) - L| < \varepsilon
+  $$
+  $0 < |x - c|$ baldintzak hurbilketa puntuaren ingurune zulatuan betetzea eskatzen du; beraz, mugaren balioa guztiz independentea da funtzioa $c$ puntuan bertan definituta dagoen ala ez, edota $f(c)$ balioa $L$ mugarekin bat datorren ala ez.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Mugaren oinarrizko propietateak">
+    <PropiedadItem id="unicidad-del-limite" title="Mugaren bakartasuna" formula="\lim_{x \to c} f(x) = L_1 \land \lim_{x \to c} f(x) = L_2 \implies L_1 = L_2">
+      <ConceptLink targetId="funcion">Funtzio</ConceptLink> batek $c$ metatze-puntu batean muga badu, muga hori bakarra da. Izan ere, $L_1 \neq L_2$ diren bi balio existituko balira, nahikoa litzateke $\varepsilon = \frac{|L_1 - L_2|}{2} > 0$ hautatzea. Mugaren definizioaren arabera, $\delta_1 > 0$ eta $\delta_2 > 0$ erradioak existituko lirateke non $x \in D$ guztietarako $0 < |x - c| < \min(\delta_1, \delta_2)$ denean desberdintza triangeluarrak hau emango lukeen:
+      $$
+      |L_1 - L_2| \le |L_1 - f(x)| + |f(x) - L_2| < \varepsilon + \varepsilon = |L_1 - L_2|
+      $$
+      eta hori kontraesan hertsia da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

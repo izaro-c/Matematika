@@ -1,0 +1,54 @@
+export const metadata = {
+  id: "funcion",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Función",
+  description: "Relación binaria entre dos conjuntos que asocia a cada elemento del dominio un único elemento en el codominio.",
+  branch: "03E",
+  branches: ["03E", "26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Es uno de los conceptos estructurales más decisivos de la matemática moderna, fundamentando el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink>, el <ConceptLink targetId="algebra">álgebra</ConceptLink> y la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink> como vehículo formal de dependencia y transformación entre objetos.
+
+<Definicion title="Definición formal de función">
+  Sean $A$ y $B$ dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una **función** $f$ de $A$ en $B$ (notada $f\colon A \longrightarrow B$) es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $f \subseteq A \times B$ que satisface dos condiciones de existencia y unicidad:
+  1. **Totalidad (existencia de imagen):** Todo elemento del <ConceptLink targetId="dominio">dominio</ConceptLink> tiene al menos un elemento asociado:
+     $$
+     \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)
+     $$
+  2. **Unicidad (funcionalidad):** Ningún elemento del dominio se asocia con más de un elemento del <ConceptLink targetId="codominio">codominio</ConceptLink>:
+     $$
+     \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
+     $$
+  
+  Cuando $(x, y) \in f$, se escribe $y = f(x)$, donde $y$ es la <ConceptLink targetId="imagen">imagen</ConceptLink> de $x$ mediante $f$, y $x$ es una preimagen de $y$. El conjunto $A$ recibe el nombre de dominio de $f$, $B$ es su codominio, y el conjunto $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ es la imagen o recorrido de la función.
+</Definicion>
+
+<Separador />
+
+### Clases fundamentales de funciones
+
+Una función $f\colon A \longrightarrow B$ se clasifica según el comportamiento de sus asignaciones:
+
+- **<ConceptLink targetId="inyectividad">Inyectiva</ConceptLink>:** Elementos distintos tienen imágenes distintas: $\forall x_1, x_2 \in A, \ f(x_1) = f(x_2) \implies x_1 = x_2$.
+- **<ConceptLink targetId="sobreyectividad">Sobreyectiva</ConceptLink>:** La imagen agota todo el codominio: $\forall y \in B, \ \exists x \in A \ (f(x) = y)$, es decir, $\operatorname{Im}(f) = B$.
+- **<ConceptLink targetId="biyeccion">Biyectiva</ConceptLink>:** Es simultáneamente inyectiva y sobreyectiva, lo que garantiza la existencia de una función inversa $f^{-1}\colon B \longrightarrow A$.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Álgebra de funciones">
+    <PropiedadItem id="igualdad-funciones" title="Criterio de igualdad de funciones">
+      Dos funciones $f\colon A \longrightarrow B$ y $g\colon C \longrightarrow D$ son iguales ($f = g$) si y solo si comparten el mismo dominio ($A = C$), el mismo codominio ($B = D$) y coinciden puntualmente en cada elemento: $\forall x \in A, \ f(x) = g(x)$.
+    </PropiedadItem>
+    <PropiedadItem id="asociatividad-composicion-funciones" title="Asociatividad de la composición">
+      Dadas tres funciones $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$ y $h\colon C \longrightarrow D$, la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> satisface la propiedad asociativa: $h \circ (g \circ f) = (h \circ g) \circ f$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

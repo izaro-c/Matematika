@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "relacion-equivalencia",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Relación de equivalencia",
+  description: "Relación binaria reflexiva, simétrica y transitiva que particiona un conjunto en clases de equivalencia disjuntas.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na **relación de equivalencia** es una relación binaria homogénea que formaliza el concepto abstracto de indistinguibilidad o igualdad bajo un determinado criterio, reuniendo de manera simultánea la reflexividad, la simetría y la transitividad.
+
+Permite abstraer características particulares de los objetos para agruparlos en clases homogéneas, convirtiendo la igualdad estricta en una noción modular de clasificación matemática.
+
+<Definicion title="Definición formal de relación de equivalencia">
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>. Una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> $\sim \ \subseteq A \times A$ es una **relación de equivalencia** sobre $A$ si y solo si satisface las tres propiedades axiomáticas:
+  1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Reflexividad</ConceptLink>:** Todo elemento está relacionado consigo mismo:
+     $$
+     \forall x \in A, \quad x \sim x
+     $$
+  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetría</ConceptLink>:** El vínculo es bidireccional y recíproco:
+     $$
+     \forall x, y \in A, \quad x \sim y \implies y \sim x
+     $$
+  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Transitividad</ConceptLink>:** El vínculo se transmite a través de elementos intermedios:
+     $$
+     \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
+     $$
+  
+  Dado un elemento $x \in A$, su **clase de equivalencia** es el subconjunto $[x]_\sim = \{y \in A \mid x \sim y\}$. El conjunto de todas las clases de equivalencia constituye el **conjunto cociente** $A / \sim \ = \{[x]_\sim \mid x \in A\}$, el cual produce una <ConceptLink targetId="particion">partición</ConceptLink> perfecta de $A$ en subconjuntos no vacíos y mutuamente <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> dos a dos que recubren $A$.
+</Definicion>
+
+<Separador />
+
+### Aplicaciones nucleares en geometría
+
+En la construcción de las teorías geométricas, las relaciones de equivalencia organizan la estructura del espacio:
+
+- **Estructura de la congruencia:** La <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica $\cong$ sobre segmentos (fundamentada en los axiomas <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) y sobre ángulos es una relación de equivalencia; cada clase de equivalencia representa la longitud intrínseca del segmento o la apertura del ángulo.
+- **Haces de paralelas:** En el plano euclídeo, el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> $\parallel$ es una relación de equivalencia sobre el conjunto de rectas; cada clase de equivalencia $[\ell]_\parallel$ define una dirección en el plano (un haz de rectas paralelas).

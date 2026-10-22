@@ -133,7 +133,7 @@ export const DemoExistenciaBisectrizSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": true,
-      "targetId": "pC",
+      "targetId": "pO",
       "objectType": "point",
       "definition": {
         "type": "coordinates",

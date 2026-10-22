@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "teorema",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Teorema",
+  description: "Proposizio matematiko formala, zeinaren egiazkotasuna axiometatik abiatuta froga deduktibo baten bidez modu eztabaidaezinean ezartzen den.",
+  branch: "03B",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Mathematical Logic", author: "Stephen Cole Kleene", locator: "II. Kapitulua", role: "primary" },
+    { title: "A Mathematical Introduction to Logic", author: "Herbert B. Enderton", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="T" />**eorema** bat proposizio matematiko formal bat da, zeinaren egiazkotasuna modu eztabaidaezinean finkatzen den froga deduktibo baten bidez, <ConceptLink targetId="axioma" isDependency={true}>axiomen</ConceptLink> multzo esplizitu batean oinarrituta eta inferentzia-arau formalen bidez bideratuta.
+
+Ontologikoki axiomatik bereizten da, ez baita libreki postulatzen, baizik eta justifikazio deduktibo osoa eskatzen baitu. Praktika matematikoan, teoremek maiz $H \implies T$ egitura inplikatzaile baldintzatua hartzen dute, non $H$ hipotesiak abiapuntuko baldintzak enuntziatzen dituen eta $T$ tesiak ondorioztatutako ondorioa. Frogatutako emaitza batek prestakuntzako zeregin laguntzailea betetzen duenean <ConceptLink targetId="lema">lema</ConceptLink> deritzo, eta teorema nagusi batetik eratorritako ondorio zuzen eta berehalakoak <ConceptLink targetId="corolario">korolario</ConceptLink> izena hartzen du.
+
+<Definicion title="Teorema sistema deduktibo batean">
+  $\Phi$ axioma-multzoa duen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> batean, $\psi$ formula bat **teorema formala** da ($\Phi \vdash \psi$ idatzita), baldin eta deribazio formal bat existitzen bada, hau da, $\varphi_1, \dots, \varphi_n$ formula-segida finitu bat non $\varphi_n = \psi$ den eta $\varphi_i$ termino bakoitza $\Phi$ multzoko axioma bat den edo aurreko terminoetatik <ConceptLink targetId="inferencia">inferentzia-arau</ConceptLink> baten bidez lortzen den:
+  $$
+  \Phi \vdash \psi \iff \exists (\varphi_1, \dots, \varphi_n) \quad (\varphi_n = \psi \land \forall i \le n \ (\varphi_i \in \Phi \lor \exists j < i \ \text{Inf}(\varphi_j, \varphi_i)))
+  $$
+</Definicion>
+
+<Separador />
+
+### Zuzentasun semantikoa eta metodo deduktiboak
+
+Lehen mailako <ConceptLink targetId="logica">logikaren</ConceptLink> metamatematikan, frogatutako teoremek funtsezko bi propietate dituzte:
+
+1. **Zuzentasun semantikoa:** Zuzentasun-teoremaren (*soundness*) arabera, sintaktikoki ondoriozta daitekeen teorema formal orok egiazkoa izan behar du abiapuntuko axiomak betetzen dituen <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> orotan:
+   $$
+   \Phi \vdash \psi \implies \Phi \models \psi
+   $$
+2. **Froga-metodoak:** Teorema baten frogapena hainbat estrategia inferentzialen bidez egitura daiteke; bereziki azpimarratzekoak dira <ConceptLink targetId="metodo-directo">metodo zuzena</ConceptLink> —non hipotesitik tesira inplikazio progresiboak kateatzen diren— eta <ConceptLink targetId="metodo-contradiccion">kontraesanezko frogapena</ConceptLink> (*reductio ad absurdum*), non tesiaren faltsutasuna onartzen den axiomekin kontraesana erdiesteko.

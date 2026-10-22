@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "segmento-unidad",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Unit Segment",
+  description: "Segment conventionally chosen as a standard unit of length with assigned unit measure, serving as the basis for metric scale and the unit square.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-metrica", "longitud", "unidad-de-medida", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" /> **unit segment** is a <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> conventionally fixed as a standard of metric reference in a geometric space, to which a <ConceptLink targetId="longitud">length</ConceptLink> equal to $1$ is assigned.
+
+Fixing a unit segment allows graduation of the line through transport by <ConceptLink targetId="congruencia">congruence</ConceptLink> and addition of segments, establishing a scale to measure any other segment. In the geometry of the Euclidean plane, the unit segment likewise serves as the basis for constructing the unit <ConceptLink targetId="cuadrado">square</ConceptLink>, whose region provides the normalization standard in the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink>.
+
+<Definicion title="Formal Definition of Unit Segment">
+Let $mathcal{S}$ be the <ConceptLink targetId="conjunto">set</ConceptLink> of all non-degenerate <ConceptLink targetId="segmento">segments</ConceptLink> of the geometric space. A **unit segment** is a fixed element $u in mathcal{S}$ such that, in the corresponding <ConceptLink targetId="longitud">length function</ConceptLink> $|cdot| colon mathcal{S} 	o mathbb{R}_{>0}$, it satisfies the normalization condition:
+
+$$
+|u| = 1
+$$
+
+Every segment $overline{AB} in mathcal{S}$ <ConceptLink targetId="congruencia">congruent</ConceptLink> to $u$ likewise has unit length, $|overline{AB}| = 1$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metric and Geometric Properties">
+    <PropiedadItem 
+      id="escalado-metrico" 
+      title="Invariance of Ratios under Change of Unit"
+      formula="u, u' in mathcal{S} implies exists k > 0 : |cdot|_{u'} = k , |cdot|_u"
+    >
+      The choice of unit segment does not alter the ratios between geometric magnitudes. If $u$ is replaced by another unit segment $u'$, the lengths of all segments are multiplied by a constant scale factor determined by the ratio $|u'|_u$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="base-cuadrado-unidad" 
+      title="Construction of the Unit Square"
+      formula="operatorname{A}(Q_u) = 1"
+    >
+      On the unit segment $u$, a <ConceptLink targetId="cuadrado">square</ConceptLink> whose four sides are congruent to $u$ is constructed. In the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink>, the region determined by this unit square $Q_u$ is normalized by assigning it an area exactly equal to $1$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

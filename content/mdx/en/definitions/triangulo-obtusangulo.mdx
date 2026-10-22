@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-obtusangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Obtuse triangle",
+  description: "Triangle possessing an obtuse interior angle, strictly greater than a right angle.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-obtuso", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" />n **obtuse triangle** is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> possessing an <ConceptLink targetId="angulo-obtuso">obtuse</ConceptLink> <ConceptLink targetId="angulo-interior">interior angle</ConceptLink>, that is, strictly greater than a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> under the <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>.
+
+The notion belongs to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. By the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, a triangle cannot contain more than one obtuse angle nor combine it with a right angle, so that the other two angles are necessarily <ConceptLink targetId="angulo-agudo">acute</ConceptLink>.
+
+<Definicion title="Formal definition of obtuse triangle">
+Let $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determined by three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> $A$, $B$, and $C$.
+
+It is said that $\triangle ABC$ is an **obtuse triangle** if one of its three <ConceptLink targetId="angulo-interior">interior angles</ConceptLink> is strictly greater than a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> $R$ under the <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>:
+
+$$
+\angle CAB > R \quad \lor \quad \angle ABC > R \quad \lor \quad \angle BCA > R
+$$
+
+The angle satisfying this condition is an <ConceptLink targetId="angulo-obtuso">obtuse angle</ConceptLink>, and the remaining two are acute angles.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Position of notable points">
+    <PropiedadItem 
+      id="circuncentro-exterior-obtusangulo" 
+      title="Exteriority of the circumcenter"
+      formula="O \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      The <ConceptLink targetId="circuncentro">circumcenter</ConceptLink> $O$ of an obtuse triangle is always located in the exterior of the triangle, outside the union of its <ConceptLink targetId="interior-triangulo">interior</ConceptLink> and its sides. The intersection of the three <ConceptLink targetId="mediatriz">perpendicular bisectors</ConceptLink> falls on the opposite side of the obtuse angle vertex relative to the longest side.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-exterior-obtusangulo" 
+      title="Exteriority of the orthocenter"
+      formula="H \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      The <ConceptLink targetId="ortocentro">orthocenter</ConceptLink> $H$ of an obtuse triangle is located in the exterior of the triangle, outside the <ConceptLink targetId="interior-triangulo">interior</ConceptLink> and the sides. Two of the three <ConceptLink targetId="altura">altitudes</ConceptLink> have their feet on the extensions of the corresponding sides, so that their common point of concurrency lies outside the triangular region.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the presence of an obtuse angle determines that the side opposite to that vertex is strictly greater than either of the other two, by virtue of the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink> and the monotonic relation with the <ConceptLink targetId="orden-angulos">order of angles</ConceptLink>.
+</Nota>

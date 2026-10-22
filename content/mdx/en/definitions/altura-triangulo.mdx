@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "altura-triangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Altitude of a Triangle",
+  description: "Segment drawn from a vertex of a triangle perpendicular to the carrier line of the opposite side, joining the vertex with the foot of said perpendicular.",
+  statement: "Given a vertex of a triangle, the corresponding altitude is the perpendicular segment drawn from that vertex to the carrier line of the opposite side, ending at its foot.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "altura", "perpendicular", "ortocentro"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "secondary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { Altura } from '@content/diagrams/Definiciones/Altura';
+export const Simulation = Altura;
+
+<Capitular letra="T" />he **altitude** of a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> corresponding to a given <ConceptLink targetId="vertice">vertex</ConceptLink> is the <ConceptLink targetId="segmento">segment</ConceptLink> drawn from that vertex <ConceptLink targetId="perpendicular" isDependency={true}>perpendicularly</ConceptLink> to the <ConceptLink targetId="recta" isDependency={true}>carrier line</ConceptLink> of the opposite <ConceptLink targetId="lado">side</ConceptLink>, with endpoint at the foot of that perpendicular.
+
+By the <ConceptLink targetId="teorema-existencia-perpendicular">existence and uniqueness theorem of the perpendicular</ConceptLink>, from each vertex there is a unique perpendicular line to the opposite carrier line, determining exactly three <VisualBind element="alturas" color="ocre">altitudes</VisualBind> in every triangle. In metric Euclidean geometry, the term also designates the <ConceptLink targetId="longitud">length</ConceptLink> of this segment, a fundamental parameter for calculating the <ConceptLink targetId="teoria-medida-area">area</ConceptLink> of the <ConceptLink targetId="region-triangular">triangular region</ConceptLink>.
+
+<Definicion title="Formal definition of the altitude of a triangle">
+Let $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <VisualBind element="polygonABC" color="musgo"><ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink></VisualBind> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$, determined by three non-collinear <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$.
+
+For vertex <VisualBind element="pC" color="terracota">$C$</VisualBind> and the opposite <ConceptLink targetId="recta" isDependency={true}>carrier line</ConceptLink> $\overleftrightarrow{AB}$, the unique perpendicular line to $\overleftrightarrow{AB}$ passing through $C$ intersects $\operatorname{tr}(\overleftrightarrow{AB})$ at a unique point <VisualBind element="footCAB" color="ocre">$H_c \in \mathcal{P}$</VisualBind>, called the foot of the perpendicular:
+
+$$
+\overleftrightarrow{CH_c} \perp \overleftrightarrow{AB}, \quad H_c \in \operatorname{tr}(\overleftrightarrow{AB})
+$$
+
+The **altitude** corresponding to vertex $C$ is the closed <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAlturaCAB" color="ocre">$\overline{CH_c}$</VisualBind>:
+
+$$
+h_c = \overline{CH_c}
+$$
+
+Analogously, vertices <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> determine the feet <VisualBind element="footABC" color="ocre">$H_a$</VisualBind> and <VisualBind element="footBAC" color="ocre">$H_b$</VisualBind> on the carrier lines $\overleftrightarrow{BC}$ and $\overleftrightarrow{CA}$, defining altitudes <VisualBind element="segAlturaABC" color="ocre">$\overline{AH_a}$</VisualBind> and <VisualBind element="segAlturaBAC" color="ocre">$\overline{BH_b}$</VisualBind>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric properties and concurrence">
+    <PropiedadItem 
+      id="existencia-unicidad-pie" 
+      title="Existence and uniqueness of the foot of the altitude"
+      formula="\forall V \in \{A, B, C\} \; \exists! H \in \operatorname{tr}(\ell_{\mathrm{op}}) : \overleftrightarrow{VH} \perp \ell_{\mathrm{op}}"
+    >
+      For each <ConceptLink targetId="vertice">vertex</ConceptLink> of the <ConceptLink targetId="triangulo">triangle</ConceptLink>, the foot of the altitude exists and is unique by the <ConceptLink targetId="teorema-existencia-perpendicular">existence and uniqueness theorem of the perpendicular</ConceptLink> in the plane, since no vertex is incident with the opposite <ConceptLink targetId="recta">carrier line</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="concurrencia-ortocentro" 
+      title="Concurrence of the altitudes at the orthocenter"
+      formula="\overleftrightarrow{AH_a} \cap \overleftrightarrow{BH_b} \cap \overleftrightarrow{CH_c} = \{O\}"
+    >
+      In every <ConceptLink targetId="triangulo">triangle</ConceptLink>, the three <ConceptLink targetId="recta">carrier lines</ConceptLink> of the <VisualBind element="alturas" color="ocre">altitudes</VisualBind> intersect at a single <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="intsegAlturaABCsegAlturaCAB" color="terracota">$O \in \mathcal{P}$</VisualBind>, called the <ConceptLink targetId="ortocentro">orthocenter</ConceptLink> of the triangle.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-pie-altura" 
+      title="Position of the foot according to the angles"
+      formula="H_c \in \overline{AB} \iff \angle CAB \le \text{recto} \land \angle ABC \le \text{recto}"
+    >
+      The foot of the altitude $H_c$ belongs to the <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ if and only if both base <ConceptLink targetId="angulo">angles</ConceptLink> are not obtuse; in an <ConceptLink targetId="triangulo-obtusangulo">obtuse triangle</ConceptLink>, two of the feet necessarily lie on the exterior <VisualBind element="prolongaciones" color="ocre">extensions</VisualBind> of the sides.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

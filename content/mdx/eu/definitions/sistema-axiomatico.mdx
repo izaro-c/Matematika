@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "sistema-axiomatico",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Sistema axiomatikoa",
+  description: "Esparru deduktibo formala, sinadura batek, hizkuntza batek, axioma-multzo batek eta inferentzia-arauek osatua teoria matematiko bat garatzeko.",
+  branch: "03B",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "1. Kapitulua", role: "primary" },
+    { title: "Logic, Semantics, Metamathematics", author: "Alfred Tarski", locator: "II. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="S" />**istema axiomatiko** bat egitura deduktibo formal bat da, non teoria matematiko baten proposizio guztiak postulatutako enuntziatu edo <ConceptLink targetId="axioma">axiomen</ConceptLink> multzo esplizitu eta mugatu batetik zorrotz eratortzen diren.
+
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> *Elementuak* lanaren tradizio klasikoaren aldean —non espazio-intuizio sentikorrean oinarritutako definizioak erabiltzen baitziren—, Moritz <ConceptLink targetId="pasch">Paschek</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peanok</ConceptLink> eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> finkatutako axiomatika modernoak aldez aurreko eduki ontologiko orotatik askatzen ditu <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuak</ConceptLink>: haien esanahi formala axiomek haien artean ezartzen dituzten elkarrekiko erlazioen bidez soilik zehazten da.
+
+<Definicion title="Sistema axiomatiko baten egitura formala">
+  Sistema axiomatiko formalizatu bat honako hirukote hau da:
+  $$
+  \mathcal{S} = (\sigma, \Phi, \vdash)
+  $$
+  non:
+  - $\sigma$ motak edo <ConceptLink targetId="dominio">oinarrizko domeinuak</ConceptLink>, erlazioak eta eragiketak zehazten dituen <ConceptLink targetId="signatura">signatura</ConceptLink> den.
+  - $\Phi \subseteq \mathcal{L}_\sigma$ lehen mailako $\mathcal{L}_\sigma$ hizkuntza formalean formulatutako teoriaren berezko <ConceptLink targetId="axioma" isDependency={true}>axiomen</ConceptLink> multzoa den.
+  - $\vdash$ <ConceptLink targetId="logica">logikaren</ConceptLink> <ConceptLink targetId="inferencia">inferentzia-arauek</ConceptLink> emandako kalkulu deduktiboa den.
+</Definicion>
+
+<Separador />
+
+### Egiturazko propietate metateorikoak
+
+Sistema axiomatiko bat ikuspuntu metamatematikotik ebaluatzen da nahikotasun- eta koherentzia-irizpideen bidez:
+
+1. **<ConceptLink targetId="consistencia-logica">Koherentzia</ConceptLink>:** Sistemak ez du kontraesanik sortu behar ($\Phi \nvdash \bot$). Osotasun-teoremaren arabera, koherentzia bermatuta dago baldin eta teoriak gutxienez <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat onartzen badu.
+2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>:** Axiometako bat ere ezin da gainerakoetatik ondorioztatu ($\Phi \setminus \{\alpha_i\} \nvdash \alpha_i$), alferrikako postulatuak saihestuz.
+3. **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** Kardinaltasun jakin bateko eredu guztiak elkarren artean <ConceptLink targetId="isomorfismo">isomorfoak</ConceptLink> gertatzen dira, eta horrek bermatzen du sistemak modu unibokoan finkatzen duela deskribatutako egitura.
+
+Ezagutza matematikoaren arkitekturan, sistema axiomatikoak hedapen-erlazioen bidez handitzen dira modu modularrean: <ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink> <ConceptLink targetId="sistema-absoluto">sistema absolutura</ConceptLink> hedatzen da, eta horretatik adarkatzen dira <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink> eta <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoa</ConceptLink>.

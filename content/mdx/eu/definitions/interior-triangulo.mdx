@@ -1,0 +1,60 @@
+export const metadata = {
+  id: "interior-triangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangeluaren barrualdea",
+  description: "Triangelu baten aldeen zuzen euskarriek mugatutako eta aurkako erpina duten hiru planoerdi irekien ebakidura gisa definitutako eskualde lau ireki eta konbexua.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "triangelua", "planoerdia", "konbexutasuna", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />riangelu baten **barrualdea** (edo barnea) <ConceptLink targetId="plano">planoko</ConceptLink> <ConceptLink targetId="punto">puntuen</ConceptLink> eskualdea da, <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> baten <ConceptLink targetId="lado">aldeen</ConceptLink> <ConceptLink targetId="recta-soporte">zuzen euskarriek</ConceptLink> mugatutako eta bakoitzari dagokion aurkako <ConceptLink targetId="vertice">erpina</ConceptLink> barnean duten hiru <ConceptLink targetId="semiplano" isDependency={true}>planoerdi</ConceptLink> irekietan aldi berean dauden puntuek osatua.
+
+Nozio honek triangeluaren barruan dauden puntuen eskualdea formalizatzen du, haren <ConceptLink targetId="traza">puntu-trazaduratik</ConceptLink> eta kanpoko puntuetatik bereiziz. Hilbertek <ConceptLink targetId="estar-entre">bitartekotasunaren</ConceptLink> axiometatik abiatuta eraikitzen du kontzeptu hau, <ConceptLink targetId="interseccion">ebakidura</ConceptLink> hori <ConceptLink targetId="conjunto-convexo">multzo konbexu</ConceptLink> ez-hutsa dela frogatuz. Triangeluaren aldeekin batera, barrualdeak <ConceptLink targetId="region-triangular">triangelu-eskualdea</ConceptLink> definitzeko balio du, funtsezko nozioa dena <ConceptLink targetId="teoria-medida-area">azaleraren neurriaren teorian</ConceptLink>.
+
+<Definicion title="Triangelu baten barrualdearen definizio formala">
+Izan bitez $A$, $B$ eta $C$ $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko hiru <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink>, $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> finkatzen dutenak.
+
+Izan bitez $\overleftrightarrow{AB}$, $\overleftrightarrow{BC}$ eta $\overleftrightarrow{CA}$ haren <ConceptLink targetId="lado">aldeen</ConceptLink> <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink>. $\mathcal{H}_{\overleftrightarrow{AB}}(C)$ bidez $\overleftrightarrow{AB}$ mugako eta $C$ erpina barnean duen <ConceptLink targetId="semiplano" isDependency={true}>planoerdi</ConceptLink> irekia adierazten da, $\mathcal{H}_{\overleftrightarrow{BC}}(A)$ bidez $\overleftrightarrow{BC}$ mugako eta $A$ barnean duen planoerdi irekia, eta $\mathcal{H}_{\overleftrightarrow{CA}}(B)$ bidez $\overleftrightarrow{CA}$ mugako eta $B$ barnean duen planoerdi irekia.
+
+$\triangle ABC$ triangeluaren **barrualdea**, $\operatorname{Int}(\triangle ABC)$ gisa adierazia, zuzen euskarriek eta aurkako erpinek zehaztutako hiru planoerdi irekien <ConceptLink targetId="conjunto">multzo</ConceptLink>-ebakidura da:
+
+$$
+\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)
+$$
+
+$\pi$ planoko $P$ puntu bat $\operatorname{Int}(\triangle ABC)$ multzokoa da baldin eta soilik baldin $\overleftrightarrow{AB}$ zuzenaren alde berean badago $C$ erpinarekin, $\overleftrightarrow{BC}$ zuzenaren alde berean $A$ erpinarekin, eta $\overleftrightarrow{CA}$ zuzenaren alde berean $B$ erpinarekin.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Hurrenkera- eta konbexutasun-propietateak">
+    <PropiedadItem 
+      id="convexidad-interior" 
+      title="Barrualdearen konbexutasuna"
+      formula="P, Q \in \operatorname{Int}(\triangle ABC) \implies \operatorname{seg}(PQ) \subseteq \operatorname{Int}(\triangle ABC)"
+    >
+      Triangelu baten barrualdea <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: bi $P$ eta $Q$ puntu $\operatorname{Int}(\triangle ABC)$ barruan badaude, $\operatorname{seg}(PQ)$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> irekia osorik dago $\operatorname{Int}(\triangle ABC)$ multzoan. Propietate hau planoerdi ireki bakoitza konbexua izatetik eta multzo konbexuen edozein <ConceptLink targetId="interseccion">ebakidura</ConceptLink> konbexua izatetik ondorioztatzen da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-vacuidad-interior" 
+      title="Barrualdearen ez-hutsa izatea"
+      formula="\operatorname{Int}(\triangle ABC) \neq \emptyset"
+    >
+      Edozein triangelu ez-endekaturen barrualdea ez da hutsa. Baldin eta $D$ puntua $B * D * C$ betetzen duen $\operatorname{seg}(BC)$ zuzenki irekiko puntua bada, eta $P$ puntua $A * P * D$ betetzen duen $\operatorname{seg}(AD)$ zuzenkiko puntua bada, <ConceptLink targetId="estar-entre">bitartekotasunaren</ConceptLink> axiomek bermatzen dute $P \in \operatorname{Int}(\triangle ABC)$ dela.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

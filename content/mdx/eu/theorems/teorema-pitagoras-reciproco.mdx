@@ -1,0 +1,65 @@
+export const metadata = {
+  id: "teorema-pitagoras-reciproco",
+  lang: "eu",
+  type: "teorema",
+  title: "Pitagorasen teoremaren alderantzizkoa",
+  description: "Triangelu batean alde baten karratua beste bien karratuen baturaren berdina bada, bi alde horiek osatutako angelua angelu zuzena da eta triangelua angeluzuzena da.",
+  statement: "Baldin eta △ABC triangelu batean aldeen luzerek |BC|² + |AC|² = |AB|² betetzen badute, orduan ∠ACB angelua angelu zuzena da eta △ABC triangelu angeluzuzena da AB hipotenusarekin.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  hasSimulation: false,
+  difficulty: "intermedio",
+  authors: ["euclides"],
+  demos: ["demo-pitagoras-reciproco"],
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 48. proposizioa",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="B" />aldin eta <ConceptLink targetId="triangulo">triangelu</ConceptLink> batean bi alderen <ConceptLink targetId="longitud">luzeren</ConceptLink> karratuen batura hirugarren aldearen luzeraren karratuaren berdina bada, hirugarren alde horren aurrez aurreko <ConceptLink targetId="angulo">angelua</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> da, eta figura <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzena</ConceptLink> da.
+
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I. liburuaren gailurra den emaitza honek (I.48 Proposizioa) <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teoremaren</ConceptLink> alderantzizko logiko zehatza ezartzen du, eta ortogonaltasuna egiaztatzeko baldintza beharrezko eta nahikoa ematen du angelu-neurri zuzenetara jo gabe. Dedukzio sintetiko klasikoa triangelu angeluzuzen laguntzaile bat eraikiz garatzen da, eta erabateko kongruentzia <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL kongruentzia-teoremaren</ConceptLink> bidez lortzen du. Figura laguntzailearen gaineko zuzeneko teoremaren baliozkotasunaren menpe dagoenez, <ConceptLink targetId="sistema-euclidiano">sistema euklidearrari</ConceptLink> dagokio eta <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axioma</ConceptLink> aurresuposatzen du.
+
+<Definicion title="Pitagorasen teoremaren alderantzizkoaren enuntziatu formala">
+Izan bedi $\triangle ABC$ <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat, $A$, $B$ eta $C$ <ConceptLink targetId="vertice">erpinei</ConceptLink> dagozkien <ConceptLink targetId="lado">aldeen</ConceptLink> <ConceptLink targetId="longitud">luzerak</ConceptLink> $a = |BC|$, $b = |AC|$ eta $c = |AB|$ izanik hurrenez hurren.
+
+Baldin eta erlazio metriko hau betetzen bada:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+edo, baliokideki, $|BC|^2 + |AC|^2 = |AB|^2$, orduan $\angle ACB$ <ConceptLink targetId="angulo">angelua</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> da, eta $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink> da $\overline{AB}$ <ConceptLink targetId="hipotenusa">hipotenusarekin</ConceptLink> eta $\overline{BC}$ zein $\overline{AC}$ <ConceptLink targetId="cateto">katetoekin</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak eta aplikazioak">
+    <PropiedadItem 
+      id="caracterizacion-triangulo-rectangulo" 
+      title="Triangelu angeluzuzenen karakterizazio metrikoa"
+      formula="\triangle ABC \text{ angeluzuzena da } C \text{ erpinean} \iff a^2 + b^2 = c^2"
+    >
+      Zuzeneko <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremarekin</ConceptLink> batera, emaitza honek baliokidetasun logiko osoa ezartzen du: <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink> da baldin eta soilik baldin <ConceptLink targetId="cateto">katetoen</ConceptLink> <ConceptLink targetId="longitud">luzeren</ConceptLink> karratuen batura <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> luzeraren karratuaren berdina bada.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="reconocimiento-ternas-pitagoricas" 
+      title="Ortogonaltasuna identifikatzea hiruko pitagorikoen bidez"
+      formula="3^2 + 4^2 = 5^2 \implies \angle C \text{ zuzena da}"
+    >
+      Lurrean zein eraikuntza geometrikoetan angelu zuzenak zehaztasunez finkatzea ahalbidetzen du zenbaki osoko hirukoteen bidez, <ConceptLink targetId="terna-pitagorica">hiruko pitagoriko</ConceptLink> gisa ezagunak direnak; esaterako, $3$, $4$ eta $5$ edo $5$, $12$ eta $13$ luzerako aldeez osatutakoak.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Nota>
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink> ez bezala —non ezinezkoa den ortogonaltasuna distantzien arteko erlazio koadratikoen bidez soilik karakterizatzea paralelismo euklidearra sartu gabe—, alderantzizko pitagorikoa bereziki euklidearra da: <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoan</ConceptLink>, $a^2 + b^2 = c^2$ betetzen duen hirukote batek ez du angelu zuzenik sortzen, erlazio metrikoak trigonometria hiperbolikoaren legeen mende baitaude.
+</Nota>

@@ -206,6 +206,7 @@ export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode
     if (branchNode) links.push({ source: sys.id, target: branchNode });
     addLinks(sys.id, sys.axiomas);
     addLinks(sys.id, sys.models);
+    addLinks(sys.id, sys.extends);
     addLinks(sys.id, sys.links);
     addLinks(sys.id, sys.seeAlso);
     addLinks(sys.id, sys.conceptLinks);
@@ -226,6 +227,7 @@ export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode
     }
     addLinks(model.id, model.links);
     addLinks(model.id, model.axioms_verified);
+    if (model.builtIn) links.push({ source: model.id, target: model.builtIn });
     addLinks(model.id, model.seeAlso);
     addLinks(model.id, model.conceptLinks);
   });

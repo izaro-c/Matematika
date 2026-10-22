@@ -5,8 +5,9 @@ export const metadata = {
   title: "Euclidean axiomatic system",
   description: "Axiomatic system of Euclidean geometry: absolute geometry plus Axiom IV on parallels, in Playfair's form.",
   branch: "51M",
-  branches: ["51M", "51A", "03B"],
+  branches: ["51M", "51A"],
   tags: ["geometria-euclidiana", "paralelas", "hilbert", "fundamentos"],
+  extends: ["sistema-absoluto"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -60,7 +61,7 @@ The fifth postulate of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <
 Axiom IV is the source of the results that distinguish Euclidean from hyperbolic geometry:
 
 - **Alternate interior angles**: if two distinct parallel lines are cut by a transversal, the <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink>; this is the direction of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink> that requires Axiom IV.
-- **<ConceptLink targetId="transitividad">Transitivity</ConceptLink> of parallelism**: in a plane, two lines parallel to a third are parallel to each other; parallelism is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
+- **<ConceptLink targetId="relacion-transitiva">Transitivity</ConceptLink> of parallelism**: in a plane, two lines parallel to a third are parallel to each other; parallelism is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
 - **Angle sum**: the <ConceptLink targetId="angulo">angles</ConceptLink> of every <ConceptLink targetId="triangulo">triangle</ConceptLink> add up to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>; with <ConceptLink targetId="medida-angular">angle measure</ConceptLink>, $|\alpha| + |\beta| + |\gamma| = 180^\circ$ (<ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>).
 - **Rectangles**: there exist <ConceptLink targetId="cuadrilatero">quadrilaterals</ConceptLink> with four right angles (<ConceptLink targetId="rectangulo">rectangles</ConceptLink>), on which the <ConceptLink targetId="teoria-medida-area">theory of area</ConceptLink> is built.
 - **Proportion and <ConceptLink targetId="semejanza">similarity</ConceptLink>**: <ConceptLink targetId="teorema-tales">Thales' theorem</ConceptLink> and the existence of similar non-congruent triangles.

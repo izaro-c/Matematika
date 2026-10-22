@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-existencia-perpendicular",
+  lang: "eu",
+  type: "teorema",
+  title: "Perpendikularraren existentziaren teorema",
+  description: "Plano batean puntu bat eta zuzen bat emanda, puntutik igarotzen den eta emandako zuzenarekiko perpendikularra den zuzen bat existitzen da; puntua zuzenarekin intziditzen ez badu, perpendikular hori bakarra da planoan.",
+  statement: "Plano bateko P puntu eta ℓ zuzen baterako, P-tik igarotzen den eta ℓ-rekiko perpendikularra den m zuzen bat existitzen da planoan. P puntu hori ℓ zuzenarekin intziditzen ez badu, m perpendikular hori bakarra da planoan.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert", "euclides"],
+  demos: ["demo-existencia-perpendicular"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposiciones 11 y 12",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="P" />lano batean <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat eta <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat emanda, puntu horretatik igarotzen den eta emandako zuzenarekiko <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularra</ConceptLink> den zuzen bat existitzen da planoan. Puntua zuzenarekin intziditzen ez badu, perpendikular hori bakarra da planoan.
+
+Emaitza hau <ConceptLink targetId="euclides">Euklidesek</ConceptLink> formulatu zuen <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.11 eta I.12 proposizioetan, eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> finkatu zuen *Grundlagen der Geometrie* laneko §6 atalean, <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barruan. Haren froga <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomatik</ConceptLink> independentea da, eta angelu-garraioan (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>), <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoreman</ConceptLink> eta <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenaren</ConceptLink> karakterizazio sintetikoan oinarritzen da soilik.
+
+<Definicion title="Perpendikularraren teoremaren enuntziatu formala">
+Izan bitez $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bat, $\ell \in \mathcal{L}$ $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ betetzen duen <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat eta $P \in \operatorname{tr}(\pi)$ planoko <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat.
+
+$\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi)$ betetzen duen $m \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat existitzen da, non $P \,\mathbf{I}\, m$ eta $m$ zuzena $\ell$ zuzenarekiko <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularra</ConceptLink> den ($m \perp \ell$):
+
+$$
+\exists m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+
+Gainera, $P$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> $\ell$ zuzenarekin intziditzen ez badu ($\neg(P \,\mathbf{I}\, \ell)$), $m$ zuzen perpendikular hori bakarra da planoan:
+
+$$
+\neg(P \,\mathbf{I}\, \ell) \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate eta inplikazio geometrikoak">
+    <PropiedadItem 
+      id="pie-perpendicular" 
+      title="Perpendikularraren oina"
+      formula="\operatorname{tr}(m) \cap \operatorname{tr}(\ell) = \{M\}"
+    >
+      $m$ <ConceptLink targetId="recta">zuzen</ConceptLink> perpendikularraren eta $\ell$ oinarrizko zuzenaren ebakidurak $M \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat zehazten du, $P$-tik $\ell$-ra marraztutako perpendikularraren oina deritzona.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="perpendicular-punto-incidente" 
+      title="Puntu intziditutik igarotzen den perpendikularra"
+      formula="P \,\mathbf{I}\, \ell \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)"
+    >
+      $P$ <ConceptLink targetId="punto">puntua</ConceptLink> $\ell$ <ConceptLink targetId="recta">zuzenarekin</ConceptLink> intziditzen duenean, planoko perpendikularra ere bakarra da <ConceptLink targetId="axioma-congruencia-4">III.4 axiomari</ConceptLink> esker, planoerdi bakoitzak emandako zuzenarekin <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> bat osatzen duen zuzenerdi bakar bat onartzen baitu.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

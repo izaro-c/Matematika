@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-obtusangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangelu kamutsa",
+  description: "Barne-angeluetako bat kamutsa duen triangelua, angelu zuzen bat baino hertsiki handiagoa dena.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-obtuso", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 21. Definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />riangelu **kamutsa** bere <ConceptLink targetId="angulo-interior">barne-angeluetako</ConceptLink> bat <ConceptLink targetId="angulo-obtuso">kamutsa</ConceptLink> duen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da, hau da, <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzen</ConceptLink> bat baino hertsiki handiagoa dena <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> arabera.
+
+Nozioa <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> kokatzen da. <ConceptLink targetId="teorema-angulo-exterior">Kanpo-angeluaren teoremaren</ConceptLink> ondorioz, triangelu batek ezin du angelu kamuts bat baino gehiago izan ezta hura angelu zuzen batekin konbinatu ere; beraz, beste bi angeluak <ConceptLink targetId="angulo-agudo">zorrotzak</ConceptLink> dira nahitaez.
+
+<Definicion title="Triangelu kamutsaren definizio formala">
+Izan bedi $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="plano">plano</ConceptLink> bateko $\pi$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru $A$, $B$ eta $C$ <ConceptLink targetId="punto">puntuk</ConceptLink> zehaztua.
+
+$\triangle ABC$ **triangelu kamutsa** dela esaten da baldin eta haren hiru <ConceptLink targetId="angulo-interior">barne-angeluetako</ConceptLink> bat $R$ <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzen</ConceptLink> bat baino hertsiki handiagoa bada <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> arabera:
+
+$$
+\angle CAB > R \quad \lor \quad \angle ABC > R \quad \lor \quad \angle BCA > R
+$$
+
+Baldintza hori betetzen duen angelua <ConceptLink targetId="angulo-obtuso">angelu kamutsa</ConceptLink> da, eta gainerako biak angelu zorrotzak dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Puntu nabarmenen kokapena">
+    <PropiedadItem 
+      id="circuncentro-exterior-obtusangulo" 
+      title="Zirkunzentroaren kanpokotasuna"
+      formula="O \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      Triangelu kamuts baten $O$ <ConceptLink targetId="circuncentro">zirkunzentroa</ConceptLink> beti triangeluaren kanpoaldean kokatzen da, haren <ConceptLink targetId="interior-triangulo">barrualdearen</ConceptLink> eta aldeen bilduratik kanpo. Aldeen hiru <ConceptLink targetId="mediatriz">erdibitzaileen</ConceptLink> ebakidura angelu kamutsaren erpinaren aurkako aldera erortzen da alde nagusiarekiko.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-exterior-obtusangulo" 
+      title="Ortozentroaren kanpokotasuna"
+      formula="H \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      Triangelu kamuts baten $H$ <ConceptLink targetId="ortocentro">ortozentroa</ConceptLink> triangeluaren kanpoaldean dago kokatuta, <ConceptLink targetId="interior-triangulo">barrualdetik</ConceptLink> eta aldeetatik at. Hiru <ConceptLink targetId="altura">altueretatik</ConceptLink> bik dagozkien aldeen luzapenetan dituzte oinak, eta, beraz, haien elkarretaratze-puntu komuna eskualde triangeluarretik kanpo geratzen da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, angelu kamuts bat egoteak erpin horren aurkako aldea beste biak baino hertsiki handiagoa izatea dakar, <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremari</ConceptLink> eta <ConceptLink targetId="orden-angulos">angeluen ordenarekiko</ConceptLink> korrespondentzia monotonoari esker.
+</Nota>

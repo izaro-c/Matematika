@@ -1,11 +1,48 @@
 ---
 name: matematika-content-generator
-description: Use whenever creating, writing, formalizing, translating, reviewing or refactoring MDX content nodes (definiciones, axiomas, teoremas, demostraciones, matemáticos…) in the Matematika encyclopedia under content/mdx (Castellano, Euskara Batua, English), and whenever the user wants to fill gaps in the knowledge graph — "rellenar huecos", "páginas en construcción", "enlaces rotos", "IDs que faltan", "qué nodo escribo ahora", "hutsuneak bete". Ensures strict deductive rigor, correct DAG causality and trilingual parity. Use it even if the user only names a concept ("escribe colinealidad", "traduce lado al euskera") without saying "nodo" or "MDX".
+description: Use whenever creating, writing, formalizing, translating, reviewing or refactoring MDX content nodes (definiciones, axiomas, teoremas, demostraciones, matemáticos…) in the Matematika encyclopedia under content/mdx (Castellano, Euskara Batua, English), and whenever the user wants to fill gaps in the knowledge graph — "rellenar huecos", "páginas en construcción", "enlaces rotos", "IDs que faltan", "qué nodo escribo ahora", "hutsuneak bete", and when opening a new theoretical framework or axiomatic system ("nuevo marco teórico", "sistema de los reales", "axiomas de Peano"). Ensures strict deductive rigor, correct DAG causality and trilingual parity. Use it even if the user only names a concept ("escribe colinealidad", "traduce lado al euskera") without saying "nodo" or "MDX".
 ---
 
 # Generador y Estándar de Contenido — Matematika
 
 Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad trilingüe estricta (**Castellano · Euskara Batua · Inglés**).
+
+## Antes de empezar (cualquier agente: Claude, Gemini/Antigravity, Codex)
+
+1. Lee esta página entera y [convenciones-proyecto.md](./references/convenciones-proyecto.md). Las demás referencias, cuando el paso las nombre.
+2. Abre **un nodo de referencia del mismo tipo** (tabla de abajo) y copia su estructura, no la inventes.
+3. Escribe cada archivo **completo**. Nunca dejes marcadores como `...`, `// resto igual` o `[continúa]`: el archivo se publica tal cual.
+4. No inventes fuentes, ediciones ni locators. Si no conoces la página o el § exacto, cita la obra sin locator y avísalo en tu informe.
+5. Toca solo los archivos del lote. Si ves un fallo en otro nodo, anótalo en el informe; no lo arregles de paso.
+6. Termina siempre con `validate-nodes.mjs` (paso 4) y **pega su línea final** (`══ TODO OK …` o `══ FALLO …`) en el informe. Sin esa línea el trabajo no está terminado.
+
+### Nodos de referencia (aprobados por el usuario)
+
+| Tipo | Imitar | Qué mirar |
+| :--- | :--- | :--- |
+| `definicion` primitiva | `punto` | sin `isDependency`, prosa corta |
+| `definicion` nominal / meta | `signatura`, `dominio` | enlaces sin dependencia |
+| `definicion` derivada | `semiplano`, `segmento` | dependencias constitutivas, `<SeccionPropiedades>` |
+| `axioma` | `axioma-incidencia-1`, `axioma-congruencia-5` | `<Definicion title="Enunciado formal">`, diagrama, sin propiedades |
+| `teorema` + `demostracion` | `teorema-triangulo-isosceles` + `demo-triangulo-isosceles` | `demos` / `parentTheorem`, `<ProofStep diagramStep>` |
+| `modelo` | `modelo-fano` | dos `<PropiedadesGrupo>` (satisfacción / estructura) |
+| `sistema-axiomatico` | `sistema-incidencia`, `sistema-absoluto` | `axiomas`, `models`, `extends` |
+| `matematico` | `pasch` | solo prosa con enlaces |
+
+Las rutas son `content/mdx/es/<carpeta>/<id>.mdx`; la carpeta depende del tipo (paso 3 de «Rellenar huecos»).
+
+### Errores que cometen los agentes (y que `lint-node.mjs` detecta)
+
+| Error | Correcto |
+| :--- | :--- |
+| `$\in <VisualBind …>\mathcal{H}</VisualBind>$` | `$\in$ <VisualBind …>$\mathcal{H}$</VisualBind>` |
+| `<VisualBind element="ladoAB">` sin ese destino en el diagrama | usar la clave real (`targetId ?? id` de un objeto o grupo con `"target": true`) o añadirla al diagrama con la skill de diagramas |
+| `targetId="reflection"` en `en/` | `targetId` siempre igual que en `es/` |
+| `criterio-lll`, `reflexividad` | IDs canónicos de convenciones-proyecto.md §5 |
+| «(Satz 12 de Hilbert)» | nombrar el resultado |
+| «En la geometría sintética de Hilbert, …» al abrir párrafo | empezar por el contenido |
+| `isDependency` del teorema a su `demo-…` | la demo cuelga del teorema, nunca al revés |
+| Un componente inventado (`<Teorema>`, `<Proof>`) | solo los de `MDXComponents` o importados en el archivo |
 
 ---
 
@@ -19,6 +56,7 @@ Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad tr
 
 → Detalles y casos borde: [editorial-epistemology.md](./references/editorial-epistemology.md)
 → **Decisiones vinculantes del proyecto** (marco axiomático, notación, citas, IDs canónicos, cadena de áreas): [convenciones-proyecto.md](./references/convenciones-proyecto.md)
+→ **Varios marcos teóricos, nivel meta y relaciones entre sistemas**: [dag-and-hyperlinks.md §3](./references/dag-and-hyperlinks.md)
 
 ---
 
@@ -44,12 +82,16 @@ Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad tr
 
 **4. Validación** (tras cada lote de 3 nodos / 9 archivos MDX), desde la raíz del repo:
 ```bash
-node .agents/skills/matematika-content-generator/scripts/check-parity.mjs <id> [<id>...]
-npm run validate-references && npm run validate-graph && npm run typecheck
+node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <id> [<id>...]
 ```
-`check-parity.mjs` compara los tres idiomas: metadatos no traducibles (`id`, `lang`, `type`, `branch`, `demos`, `parentTheorem`), conjunto de `targetId`, `isDependency`, `PropiedadItem`, secuencia de componentes y número de fórmulas. Diferencias en metadatos, enlaces o dependencias son errores a corregir; una diferencia de ±1 fórmula inline puede ser legítima (una traducción que fusiona dos símbolos), revísala y decide.
+Un solo comando que encadena, para esos IDs:
+- `lint-node.mjs`: reglas duras por archivo (metadatos, JSX en KaTeX, componentes, DAG, IDs canónicos, `VisualBind` ↔ diagrama).
+- `check-parity.mjs`: compara los tres idiomas (metadatos no traducibles, `targetId`, `isDependency`, `PropiedadItem`, secuencia de componentes y número de fórmulas). Una diferencia de ±1 fórmula inline puede ser legítima (una traducción que fusiona dos símbolos): revísala y decide.
+- `verify-diagram.ts` para cada diagrama importado.
+- `validate-references`, filtrado a estos nodos. Los enlaces a páginas aún no escritas solo se cuentan: son obligatorios (Pilar 2), no un fallo.
+- `validate-graph`: ciclos, conflictos axiomáticos e inclusión de `extends`. Una línea `Ciclo roto forzosamente` es un fallo, casi siempre un `isDependency` de teorema → su demostración.
 
-En `validate-graph`, la línea `[INFO] Ciclo roto forzosamente` significa que has creado un ciclo: no es informativa, corrígela (casi siempre es un `isDependency` de teorema → su demostración).
+Si además tocaste `.ts`/`.tsx`, añade `--typecheck`. Corrige cada `ERROR`; cada `WARN` es una decisión tuya, justifícala en el informe si lo dejas.
 
 ---
 
@@ -74,11 +116,23 @@ Cuando el usuario pida rellenar huecos, reducir páginas «En construcción» o 
 
 ---
 
+## Modo «Nuevo marco teórico»
+
+Cuando el usuario quiera abrir otro sistema (números reales, aritmética de Peano, grupos, conjuntos…):
+
+1. **Sistema primero.** Crea `content/mdx/<lang>/axiomatic-systems/sistema-<nombre>.mdx` (tipo `sistema-axiomatico`), con `axiomas` (todos, también los heredados), `extends` si amplía otro sistema y `branch` MSC de su rama (p. ej. `"26A"` para ℝ, `"03E"` para conjuntos; comprueba que esté en `src/data/content/msc2020.ts`). Si ya hay modelos que lo citan en `builtIn` (como `sistema-cuerpo-real`), usa exactamente ese ID.
+2. **Axiomas.** Un archivo por axioma en `axioms/`, con `axiomSystem` (el sistema donde se postula), `axiomFamily` (grupo, para agruparlo en la interfaz) y `alternativeGroup` cuando dos axiomas son incompatibles entre sí (como IV e IV<sub>hip</sub>).
+3. **Signatura y primitivos.** Las nociones primitivas del sistema son `definicion` con `subtype: "primitivo"`; la signatura se enuncia en el `<Definicion title="Estructura formal">` del sistema, como en `sistema-absoluto`.
+4. **Puentes, no dependencias.** Otro sistema entra solo por los metadatos `extends` (inclusión de teorías) y `builtIn` (un modelo construido dentro de otra teoría). Nunca pongas `isDependency={true}` de un axioma de geometría a un nodo de ℝ ni al revés (ver [dag-and-hyperlinks.md §3](./references/dag-and-hyperlinks.md)).
+5. Valida con `validate-nodes.mjs` el sistema y sus axiomas juntos: la comprobación de `extends` necesita ambos.
+
+---
+
 ## Reglas de Redacción
 
 ### Contexto presuposicional — sin muletillas
 
-El marco hilbertiano es global. **Prohibido** comenzar párrafos con:
+El marco de cada nodo lo fijan sus metadatos (`branch`, `axiomSystem`, sus dependencias) y no se anuncia en la prosa. Hoy casi todo el corpus es geometría de Hilbert, pero un nodo de otro sistema (números reales, conjuntos) sigue la misma regla. **Prohibido** comenzar párrafos con:
 *«En la geometría sintética...»* / *«En la fundamentación de Hilbert...»* / *«Dentro del sistema axiomático...»*
 
 El segundo párrafo expone la esencia conceptual, la motivación deductiva o la conexión con otros nodos — nunca anuncia el marco.

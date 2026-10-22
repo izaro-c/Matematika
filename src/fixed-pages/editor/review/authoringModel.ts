@@ -42,6 +42,7 @@ function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
     'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
     'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'axioms_verified',
     'concept', 'requiredNodes', 'dependencias', 'proofMethod', 'axiomSystem', 'links',
+    'extends', 'builtIn',
   ];
   return keys.flatMap(key => {
     const value = metadata[key];

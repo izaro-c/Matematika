@@ -12,6 +12,7 @@ type Entry = {
   type: string;
   item: { id: string; slug?: string; title?: string; description?: string };
   subBranchSlug?: string;
+  subBranchSlugs: string[];
 };
 
 const ITEM_ROUTES: Record<string, string> = {
@@ -88,7 +89,7 @@ export const BranchPage = () => {
 
   const tomeCounts = new Map<string, number>();
   for (const entry of entries) {
-    if (entry.subBranchSlug) tomeCounts.set(entry.subBranchSlug, (tomeCounts.get(entry.subBranchSlug) ?? 0) + 1);
+    for (const slug of entry.subBranchSlugs) tomeCounts.set(slug, (tomeCounts.get(slug) ?? 0) + 1);
   }
   const tomes = [...taxonomy.subBranches].sort((a, b) => a.slug.localeCompare(b.slug, undefined, { numeric: true }));
 

@@ -1,0 +1,65 @@
+export const metadata = {
+  id: "teorema-pitagoras-reciproco",
+  lang: "en",
+  type: "teorema",
+  title: "Converse of the Pythagorean Theorem",
+  description: "If in a triangle the square of the length of the longest side equals the sum of the squares of the lengths of the other two sides, the opposite angle is right and the triangle is a right triangle.",
+  statement: "If in a triangle △ABC the side lengths satisfy |BC|² + |AC|² = |AB|², then angle ∠ACB is right and △ABC is a right triangle with hypotenuse AB.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  hasSimulation: false,
+  difficulty: "intermedio",
+  authors: ["euclides"],
+  demos: ["demo-pitagoras-reciproco"],
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Proposition 48",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="I" />f in a <ConceptLink targetId="triangulo">triangle</ConceptLink> the sum of the squares of the <ConceptLink targetId="longitud">lengths</ConceptLink> of two sides is equal to the square of the length of the third side, then the <ConceptLink targetId="angulo">angle</ConceptLink> opposite that third side is a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>, and the figure is a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink>.
+
+The culminating proposition of Book I of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> of <ConceptLink targetId="euclides">Euclid</ConceptLink> (Proposition I.48), this result establishes the exact logical converse of the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> and provides a necessary and sufficient condition to verify orthogonality without relying on direct angle measurements. The classical synthetic deduction proceeds by constructing an auxiliary right triangle and deducing full congruence via the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS congruence theorem</ConceptLink>. Depending on the validity of the direct theorem on the auxiliary figure, it belongs to the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> and presupposes <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel axiom</ConceptLink>.
+
+<Definicion title="Formal statement of the converse of the Pythagorean theorem">
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo">triangle</ConceptLink> situated in a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$ of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, with <ConceptLink targetId="lado">sides</ConceptLink> of <ConceptLink targetId="longitud">lengths</ConceptLink> $a = |BC|$, $b = |AC|$, and $c = |AB|$ opposite respectively to <ConceptLink targetId="vertice">vertices</ConceptLink> $A$, $B$, and $C$.
+
+If the metric relation is satisfied:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+or equivalently $|BC|^2 + |AC|^2 = |AB|^2$, then the <ConceptLink targetId="angulo">angle</ConceptLink> $\angle ACB$ is a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>, and $\triangle ABC$ is a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> $\overline{AB}$ and <ConceptLink targetId="cateto">legs</ConceptLink> $\overline{BC}$ and $\overline{AC}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences and applications">
+    <PropiedadItem 
+      id="caracterizacion-triangulo-rectangulo" 
+      title="Metric characterization of right triangles"
+      formula="\triangle ABC \text{ is right at } C \iff a^2 + b^2 = c^2"
+    >
+      Together with the direct <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>, this result establishes a complete logical equivalence: a <ConceptLink targetId="triangulo">triangle</ConceptLink> is a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> if and only if the sum of the squares of the <ConceptLink targetId="longitud">lengths</ConceptLink> of the <ConceptLink targetId="cateto">legs</ConceptLink> equals the square of the length of the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="reconocimiento-ternas-pitagoricas" 
+      title="Identification of orthogonality via Pythagorean triples"
+      formula="3^2 + 4^2 = 5^2 \implies \angle C \text{ is right}"
+    >
+      It allows determining right angles accurately on the ground or in geometric constructions from triples of integers known as <ConceptLink targetId="terna-pitagorica">Pythagorean triples</ConceptLink>, such as those formed by sides of lengths $3$, $4$, and $5$ or $5$, $12$, and $13$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Nota>
+Unlike in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, where it is impossible to characterize orthogonality solely through quadratic distance relations without introducing Euclidean parallelism, the Pythagorean converse is intrinsically Euclidean: in the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink>, a triple with $a^2 + b^2 = c^2$ does not produce a right angle, as metric relations are governed by hyperbolic trigonometry.
+</Nota>

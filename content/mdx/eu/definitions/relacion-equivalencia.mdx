@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "relacion-equivalencia",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Baliokidetasun-erlazioa",
+  description: "Erlazio bitar erreflexibo, simetriko eta iragankorra, multzo bat baliokidetasun-klase disjuntutan banatzen duena.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="B" />**aliokidetasun-erlazio** bat irizpide jakin baten peko bereizezintasunaren edo berdintzaren kontzeptu abstraktua formalizatzen duen erlazio bitar homogeneo bat da, erreflexibotasuna, simetria eta iragankortasuna aldi berean bilduz.
+
+Objektuen ezaugarri partikularrak abstrakzioz baztertzea ahalbidetzen du, haiek klase homogeneotan multzokatzeko, berdintza hertsia sailkapen matematikorako nozio modular bihurtuz.
+
+<Definicion title="Baliokidetasun-erlazioaren definizio formala">
+  Izan bedi $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $A$-ren gaineko $\sim \ \subseteq A \times A$ <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat **baliokidetasun-erlazio** bat da baldin eta soilik baldin hiru propietate axiomatikoak betetzen baditu:
+  1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Erreflexibotasuna</ConceptLink>:** Elementu orok bere buruarekin erlazioa du:
+     $$
+     \forall x \in A, \quad x \sim x
+     $$
+  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetria</ConceptLink>:** Lotura norabide bikoa eta elkarrekikoa da:
+     $$
+     \forall x, y \in A, \quad x \sim y \implies y \sim x
+     $$
+  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Iragankortasuna</ConceptLink>:** Lotura tarteko elementuen bidez transmititzen da:
+     $$
+     \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
+     $$
+  
+  $x \in A$ elementu bat emanda, haren **baliokidetasun-klasea** $[x]_\sim = \{y \in A \mid x \sim y\}$ azpimultzoa da. Baliokidetasun-klase guztien multzoak $A / \sim \ = \{[x]_\sim \mid x \in A\}$ **zatidura-multzoa** osatzen du, zeinak $A$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> perfektu bat sortzen baitu, $A$ estaltzen duten eta bikoteka <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> diren azpimultzo ez-hutsetan.
+</Definicion>
+
+<Separador />
+
+### Aplikazio nagusiak geometrian
+
+Teoria geometrikoen eraikuntzan, baliokidetasun-erlazioek espazioaren egitura antolatzen dute:
+
+- **Kongruentziaren egitura:** Zuzenkietan (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink> axiometan oinarritua) eta angeluetan definitutako $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa baliokidetasun-erlazio bat da; baliokidetasun-klase bakoitzak zuzenkiaren berezko luzera edo angeluaren irekidura adierazten du.
+- **Paraleloen sortak:** Plano euklidearrean, $\parallel$ <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> baliokidetasun-erlazio bat da zuzenen multzoaren gainean; $[\ell]_\parallel$ baliokidetasun-klase bakoitzak norabide bat zehazten du planoan (zuzen paraleloen sorta bat).

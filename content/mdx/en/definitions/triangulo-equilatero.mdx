@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-equilatero",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Equilateral triangle",
+  description: "Triangle whose three sides are mutually congruent; relational definition and properties in synthetic geometry.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "triangle", "side", "congruence", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 20",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" />n **equilateral triangle** is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> whose three <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+
+Having all three sides congruent, every equilateral triangle is in particular an <ConceptLink targetId="triangulo-isosceles">isosceles triangle</ConceptLink> with respect to any chosen pair of sides, so that any of its sides can be regarded as a <ConceptLink targetId="base">base</ConceptLink>. The definition is purely relational: it classifies a configuration whenever it exists, without asserting a priori that an equilateral triangle can be constructed upon every given <ConceptLink targetId="segmento">segment</ConceptLink>, as the synthetic construction via the intersection of two <ConceptLink targetId="circunferencia">circles</ConceptLink> requires axioms of <ConceptLink targetId="continuidad">continuity</ConceptLink>.
+
+<Definicion title="Formal definition of an equilateral triangle">
+Let $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determined by three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> $A$, $B$, and $C$.
+
+The triangle $\triangle ABC$ is said to be an **equilateral triangle** if its three <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
+
+$$
+\overline{AB} \cong \overline{BC} \land \overline{BC} \cong \overline{CA}
+$$
+
+By the <ConceptLink targetId="relacion-transitiva">transitive</ConceptLink> property of segment congruence (<ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink>), this condition is equivalent to mutual congruence among all three sides: $\overline{AB} \cong \overline{BC} \cong \overline{CA}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Angular properties and symmetry">
+    <PropiedadItem 
+      id="equiangularidad" 
+      title="Equiangularity of the equilateral triangle"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      A triangle is equilateral if and only if its three <ConceptLink targetId="angulo">angles</ConceptLink> are mutually congruent. This property is deduced by applying the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> and its converse to each pair of sides within the framework of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-ternaria" 
+      title="Concurrency of notable centers"
+      formula="\triangle ABC \cong \triangle BCA \cong \triangle CAB"
+    >
+      In an equilateral triangle, the three altitudes, the three medians, the three angle bisectors, and the three perpendicular bisectors coincide three by three along three lines that concur at a single point in the <ConceptLink targetId="interior-triangulo">interior of the triangle</ConceptLink>, forming the center of order three symmetry of the figure.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Proposition I.1 of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> attempts to construct an equilateral triangle on a given segment using the intersection of two circles. In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s formalization, the existence of such an intersection point does not follow from the axioms of incidence, order, and congruence: it requires the axioms of <ConceptLink targetId="continuidad">continuity</ConceptLink> (Group V) or the circle-circle intersection axiom. Without these axioms, there exist models where the relational definition is valid for given triangles, but not every segment admits an equilateral triangle upon it.
+</Nota>

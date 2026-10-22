@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-existencia-perpendicular",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema de existencia y unicidad de la perpendicular",
+  description: "Dado un punto y una recta en un plano, existe una recta que pasa por el punto y es perpendicular a la recta dada, siendo única si el punto es exterior a ella.",
+  statement: "Dado un punto P y una recta ℓ en un plano π, existe una recta m en π que pasa por P y es perpendicular a ℓ. Si P no incide con ℓ, dicha perpendicular es única en π.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert", "euclides"],
+  demos: ["demo-existencia-perpendicular"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposiciones 11 y 12",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="D" />ado un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> y una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink>, existe una recta que pasa por dicho punto y es <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> a la recta dada. Si el punto no incide con la recta, dicha perpendicular es única en el plano.
+
+Este resultado, formulado por <ConceptLink targetId="euclides">Euclides</ConceptLink> en las Proposiciones I.11 e I.12 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> y fundamentado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*, pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Su demostración es independiente del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> y se apoya exclusivamente en el transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> y la caracterización sintética del <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema de la perpendicular">
+Sea $\pi \in \Pi$ un <ConceptLink targetId="plano">plano</ConceptLink>, sea $\ell \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> con $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ y sea $P \in \operatorname{tr}(\pi)$ un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> en el plano.
+
+Existe una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $m \in \mathcal{L}$ con $\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi)$ tal que $P \,\mathbf{I}\, m$ y $m$ es <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> a $\ell$ ($m \perp \ell$):
+
+$$
+\exists m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+
+Si además el <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $P$ no incide con la recta $\ell$ ($\neg(P \,\mathbf{I}\, \ell)$), dicha recta perpendicular $m$ es única en el plano:
+
+$$
+\neg(P \,\mathbf{I}\, \ell) \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades e implicaciones geométricas">
+    <PropiedadItem 
+      id="pie-perpendicular" 
+      title="Pie de la perpendicular"
+      formula="\operatorname{tr}(m) \cap \operatorname{tr}(\ell) = \{M\}"
+    >
+      La intersección de la <ConceptLink targetId="recta">recta</ConceptLink> perpendicular $m$ con la recta base $\ell$ determina un único <ConceptLink targetId="punto">punto</ConceptLink> $M \in \mathcal{P}$, denominado pie de la perpendicular trazada desde $P$ a $\ell$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="perpendicular-punto-incidente" 
+      title="Perpendicular por un punto incidente"
+      formula="P \,\mathbf{I}\, \ell \implies \exists! m \in \mathcal{L} \;\bigl(\operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \perp \ell\bigr)"
+    >
+      Cuando el <ConceptLink targetId="punto">punto</ConceptLink> $P$ incide en la <ConceptLink targetId="recta">recta</ConceptLink> $\ell$, la perpendicular en el plano también es única en virtud del <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>, al determinar cada semiplano una única semirrecta que forma un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> con la recta dada.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

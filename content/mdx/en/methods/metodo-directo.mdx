@@ -13,7 +13,7 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="T" />he **direct method** is the form of <ConceptLink targetId="demostracion">proof</ConceptLink> that establishes an <ConceptLink targetId="implicacion" isDependency={true}>implication</ConceptLink> $P \implies Q$ by assuming the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> and deducing from it the <ConceptLink targetId="tesis">conclusion</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> through a finite sequence of steps, each of them justified.
+<Capitular letra="T" />he **direct method** is the form of <ConceptLink targetId="demostracion">proof</ConceptLink> that establishes an <ConceptLink targetId="implicacion">implication</ConceptLink> $P \implies Q$ by assuming the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> and deducing from it the <ConceptLink targetId="tesis">conclusion</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> through a finite sequence of steps, each of them justified.
 
 It is the basic pattern of every deduction: indirect methods, such as <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> or proof of the <ConceptLink targetId="contraposicion">contrapositive</ConceptLink> $\neg Q \implies \neg P$, first transform the statement and then reason directly.
 
@@ -21,7 +21,7 @@ It is the basic pattern of every deduction: indirect methods, such as <ConceptLi
 
 ### Logical Structure and Chaining
 
-Direct proof structures step-by-step inference by applying the rule of <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink> ($A \land (A \implies B) \vdash B$):
+Direct proof structures step-by-step inference by applying the rule of <ConceptLink targetId="modus-ponens">modus ponens</ConceptLink> ($A \land (A \implies B) \vdash B$):
 
 <ProofStep number={1} target="pP" diagramStep="paso-hipotesis" title="Stating Hypothesis P">
   The initial hypothesis <VisualBind element="pP" color="terracota">$P$</VisualBind> is established as the indisputable premise and starting point of the deduction:

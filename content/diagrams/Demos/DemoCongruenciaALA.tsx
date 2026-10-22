@@ -462,7 +462,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
         "ariaLabel": "Triángulo A'B'C*",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "objectType": "path",
       "geometry": {
         "type": "polygon",
@@ -559,7 +559,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
         "ariaLabel": "AC",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "objectType": "path",
       "geometry": {
         "type": "segment",
@@ -588,7 +588,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
         "ariaLabel": "A'C*",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
       "objectType": "path",
       "geometry": {
         "type": "segment",

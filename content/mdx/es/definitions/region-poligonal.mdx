@@ -1,0 +1,63 @@
+export const metadata = {
+  id: "region-poligonal",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Región poligonal",
+  description: "Conjunto del plano formado por la unión finita de regiones triangulares con interiores disjuntos dos a dos, dominio fundamental de la teoría del área.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "poligono", "triangulacion", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />na **región poligonal** es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos de un <ConceptLink targetId="plano">plano</ConceptLink> que se expresa como la unión finita de <ConceptLink targetId="region-triangular" isDependency={true}>regiones triangulares</ConceptLink> cuyos interiores son disjuntos dos a dos.
+
+Toda región poligonal admite múltiples descomposiciones triangulares distintas, pero su extensión espacial es unívoca. La clase de todas las regiones poligonales de un plano constituye el dominio canónico sobre el cual se formula la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink> y se establecen las nociones de <ConceptLink targetId="equidescomponibilidad">equidescomponibilidad</ConceptLink>.
+
+<Definicion title="Definición formal de región poligonal">
+Sea $sigma$ un <ConceptLink targetId="plano">plano</ConceptLink> del espacio geométrico. Un subconjunto no vacío $R subseteq operatorname{tr}(sigma)$ es una **región poligonal** si existe una familia finita de <ConceptLink targetId="region-triangular" isDependency={true}>regiones triangulares</ConceptLink> {T_1, T_2, dots, T_n} en $sigma$, con $n ge 1$, tales que:
+
+$$
+R = igcup_{i=1}^n T_i
+$$
+
+y cuyos interiores satisfacen la condición de ser disjuntos dos a dos:
+
+$$
+operatorname{Int}(T_i) cap operatorname{Int}(T_j) = emptyset quad (orall i 
+eq j)
+$$
+
+El <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todas las regiones poligonales del plano $sigma$ se denota por $mathcal{R}_sigma$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de descomposición y estructura">
+    <PropiedadItem 
+      id="clausura-union-disjunta" 
+      title="Clausura bajo unión cuasi-disjunta"
+      formula="R_1, R_2 in mathcal{R}_sigma land operatorname{Int}(R_1) cap operatorname{Int}(R_2) = emptyset implies R_1 cup R_2 in mathcal{R}_sigma"
+    >
+      La unión de dos regiones poligonales cuyos interiores son disjuntos es a su vez una región poligonal en $mathcal{R}_sigma$. La descomposición de la unión se obtiene reuniendo las piezas triangulares de $R_1$ y $R_2$, propiedad fundamental para la aditividad de la medida.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="independencia-triangulacion" 
+      title="Existencia de triangulaciones comunes"
+      formula="orall R in mathcal{R}_sigma"
+    >
+      Una misma región poligonal puede descomponerse de infinitas formas en regiones triangulares. Cualesquiera dos triangulaciones admiten un refinamiento común, garantizando que la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink> esté bien definida con independencia de la triangulación elegida.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

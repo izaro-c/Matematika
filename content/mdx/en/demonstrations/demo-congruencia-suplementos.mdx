@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "demo-congruencia-suplementos",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Supplement Congruence Theorem",
+  description: "Direct synthetic deduction following Hilbert (§6) by arranging opposite rays, laying off congruent segments, and chaining SAS criteria.",
+  parentTheorem: "teorema-congruencia-suplementos",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  layout: "split",
+  tags: ["synthetic-geometry", "angles", "congruence", "absolute-geometry", "proof"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Propositions 13 and 14",
+      role: "secondary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-congruencia-suplementos">supplement congruence theorem</ConceptLink> follows the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*. Starting from the definition of <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink>, the proof constructs an auxiliary configuration on the <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink> by laying off <ConceptLink targetId="segmento">segments</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>), applies <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axiom III.3</ConceptLink> of segment addition, and sequentially chains three applications of the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> to deduce the desired <ConceptLink targetId="congruencia">congruence</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} title="Initial setup and laying off of congruent segments">
+Consider two congruent <ConceptLink targetId="angulo">angles</ConceptLink> $\angle AOB \cong \angle A'O'B'$ with <ConceptLink targetId="vertice">vertices</ConceptLink> at the <ConceptLink targetId="punto">points</ConceptLink> $O$ and $O'$. Let $\overrightarrow{OA}$ and $\overrightarrow{OC}$ be opposite <ConceptLink targetId="semirrecta">rays</ConceptLink> on the same <ConceptLink targetId="recta">line</ConceptLink>, satisfying the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation $A * O * C$, and similarly $\overrightarrow{O'A'}$ and $\overrightarrow{O'C'}$ on another line with $A' * O' * C'$. By the definition of <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink>, $\angle BOC$ and $\angle B'O'C'$ are the adjacent supplements of $\angle AOB$ and $\angle A'O'B'$. By the segment transport axiom (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>), we choose points $A, B, C$ and $A', B', C'$ on their respective rays such that:
+
+$$
+\overline{OA} \cong \overline{O'A'}, \quad \overline{OB} \cong \overline{O'B'}, \quad \overline{OC} \cong \overline{O'C'}
+$$
+</ProofStep>
+
+<ProofStep number={2} title="First triangle congruence by SAS">
+Consider the <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle AOB$ and $\triangle A'O'B'$. From the construction in the previous step, we have $\overline{OA} \cong \overline{O'A'}$ and $\overline{OB} \cong \overline{O'B'}$, and by hypothesis the included angle satisfies $\angle AOB \cong \angle A'O'B'$. Applying the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, we obtain the congruence of the triangles:
+
+$$
+\triangle AOB \cong \triangle A'O'B'
+$$
+
+From this congruence it follows that the remaining corresponding sides and angles are congruent:
+
+$$
+\overline{AB} \cong \overline{A'B'} \quad \text{and} \quad \angle OAB \cong \angle O'A'B'
+$$
+
+Since $O$ lies between $A$ and $C$, the ray $\overrightarrow{AO}$ coincides with the ray $\overrightarrow{AC}$, and similarly $\overrightarrow{A'O'}$ coincides with $\overrightarrow{A'C'}$, so that $\angle CAB = \angle OAB$ and $\angle C'A'B' = \angle O'A'B'$, which gives $\angle CAB \cong \angle C'A'B'$.
+</ProofStep>
+
+<ProofStep number={3} title="Segment addition via Axiom III.3">
+The points satisfy the betweenness relations $A * O * C$ and $A' * O' * C'$. By the initial construction, the component segments are respectively congruent:
+
+$$
+\overline{AO} \cong \overline{A'O'} \quad \text{and} \quad \overline{OC} \cong \overline{O'C'}
+$$
+
+<ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axiom III.3</ConceptLink> establishes that segment congruence is compatible with the addition of adjacent segments. Applying this postulate to the ordered triples of collinear points, we conclude that the total segments are congruent:
+
+$$
+\overline{AC} \cong \overline{A'C'}
+$$
+
+This step transfers elemental congruence to the extended base of the configuration.
+</ProofStep>
+
+<ProofStep number={4} title="Second triangle congruence by SAS">
+Now consider the extended <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle ABC$ and $\triangle A'B'C'$. In these triangles, the three congruence conditions hold:
+1. Congruent base sides: $\overline{AC} \cong \overline{A'C'}$ (proved in step 3).
+2. Congruent upper sides: $\overline{AB} \cong \overline{A'B'}$ (proved in step 2).
+3. Congruent included angles: $\angle CAB \cong \angle C'A'B'$ (obtained in step 2).
+
+By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, both triangles are congruent:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+From this congruence we deduce that the third sides and the angles at vertices $C$ and $C'$ are congruent:
+
+$$
+\overline{BC} \cong \overline{B'C'} \quad \text{and} \quad \angle BCA \cong \angle B'C'A'
+$$
+
+Since $O$ lies between $A$ and $C$, the ray $\overrightarrow{CA}$ coincides with the ray $\overrightarrow{CO}$, so that $\angle BCO = \angle BCA$ and $\angle B'C'O' = \angle B'C'A'$, which implies $\angle BCO \cong \angle B'C'O'$.
+</ProofStep>
+
+<ProofStep number={5} title="Third triangle congruence by SAS and conclusion">
+Finally, consider the <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle OBC$ and $\triangle O'B'C'$. We verify the hypotheses of the congruence criterion:
+1. From the initial construction: $\overline{OC} \cong \overline{O'C'}$.
+2. From the congruence in step 4: $\overline{BC} \cong \overline{B'C'}$.
+3. From step 4, the included angle satisfies: $\angle BCO \cong \angle B'C'O'$.
+
+A third application of the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> concludes that:
+
+$$
+\triangle OBC \cong \triangle O'B'C'
+$$
+
+Since the triangles are congruent, the corresponding angles at vertices $O$ and $O'$ are congruent to each other:
+
+$$
+\angle BOC \cong \angle B'O'C'
+$$
+
+Because $\angle BOC$ and $\angle B'O'C'$ are precisely the adjacent supplementary angles of the initially congruent angles $\angle AOB$ and $\angle A'O'B'$, the congruence of the supplements is established.
+</ProofStep>
+
+</DemonstrationSection>

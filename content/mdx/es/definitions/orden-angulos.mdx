@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "orden-angulos",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Orden de ángulos",
+  description: "Relación de orden estricto sintético entre ángulos definida mediante el transporte axiomático y la contención en el interior angular.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "orden", "angulo", "congruencia", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />l orden de <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> es la relación que compara la apertura de dos ángulos de forma sintética, sin recurrir a medidas numéricas ni a funciones trigonométricas.
+
+Esta relación se construye combinando el transporte de ángulos postulado en el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> con la noción de <ConceptLink targetId="interior-angulo">interior del ángulo</ConceptLink>. Al situar un ángulo sobre un <ConceptLink targetId="lado">lado</ConceptLink> del otro en el mismo <ConceptLink targetId="semiplano">semiplano</ConceptLink>, la contención de su lado restante en el interior define un <ConceptLink targetId="orden">orden estricto</ConceptLink> sintético compatible con la <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+
+<Definicion title="Definición formal del orden de ángulos">
+Sean $\angle AOB$ y $\angle A'O'B'$ dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> determinados por pares de <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> no colineales de orígenes $O$ y $O'$ respectivamente.
+
+Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, existe una única semirrecta $\overrightarrow{O'B''}$ con origen en $O'$, situada en el <ConceptLink targetId="semiplano">semiplano</ConceptLink> de la recta soporte $\overleftrightarrow{O'A'}$ que contiene a $B'$, tal que:
+$$
+\angle AOB \cong \angle A'O'B''
+$$
+
+Decimos que el ángulo $\angle AOB$ es **estrictamente menor** que el ángulo $\angle A'O'B'$, denotado $\angle AOB < \angle A'O'B'$ (o $\angle\alpha < \angle\beta$), si la semirrecta $\overrightarrow{O'B''}$, exceptuando su origen, está contenida en el <ConceptLink targetId="interior-angulo">interior</ConceptLink> de $\angle A'O'B'$:
+$$
+\angle AOB < \angle A'O'B' \iff (\overrightarrow{O'B''} \setminus \{O'\}) \subseteq \operatorname{Int}(\angle A'O'B')
+$$
+
+Recíprocamente, se dice que $\angle A'O'B'$ es **estrictamente mayor** que $\angle AOB$, denotado $\angle A'O'B' > \angle AOB$, si y solo si $\angle AOB < \angle A'O'B'$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades del orden estricto angular">
+    <PropiedadItem 
+      id="orden-estricto-angulos" 
+      title="Estructura de orden estricto"
+      formula="\neg(\angle\alpha < \angle\alpha) \land (\angle\alpha < \angle\beta \implies \neg(\angle\beta < \angle\alpha)) \land (\angle\alpha < \angle\beta \land \angle\beta < \angle\gamma \implies \angle\alpha < \angle\gamma)"
+    >
+      La relación $<$ es un <ConceptLink targetId="orden">orden estricto</ConceptLink>: es irreflexiva, asimétrica y transitiva. Si $\angle\alpha < \angle\beta$ y $\angle\beta < \angle\gamma$, la semirrecta correspondiente al primer <ConceptLink targetId="angulo">ángulo</ConceptLink> queda contenida en el interior del segundo y este en el del tercero, deduciéndose $\angle\alpha < \angle\gamma$ a partir de la convexidad del <ConceptLink targetId="interior-angulo">interior</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="tricotomia-angulos" 
+      title="Ley de tricotomía angular"
+      formula="\forall \angle\alpha, \angle\beta : (\angle\alpha < \angle\beta) \lor (\angle\alpha \cong \angle\beta) \lor (\angle\beta < \angle\alpha)"
+    >
+      Dados dos <ConceptLink targetId="angulo">ángulos</ConceptLink> cualesquiera $\angle\alpha$ y $\angle\beta$, se cumple exactamente una de las tres relaciones disjuntas: $\angle\alpha < \angle\beta$, $\angle\alpha \cong \angle\beta$, o $\angle\beta < \angle\alpha$, en virtud de la partición del plano determinado por los lados del ángulo en su interior, sus lados y su exterior.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="invarianza-congruencia-orden" 
+      title="Invarianza bajo congruencia"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      La relación de orden entre dos <ConceptLink targetId="angulo">ángulos</ConceptLink> es independiente de los representantes concretos elegidos dentro de sus respectivas clases de <ConceptLink targetId="congruencia">congruencia</ConceptLink>. En consecuencia, el orden está bien definido sobre las clases de equivalencia de la congruencia angular.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

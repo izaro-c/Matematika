@@ -1,0 +1,54 @@
+export const metadata = {
+  id: "funcion",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Funtzioa",
+  description: "Bi multzoren arteko erlazio bitarra, domeinuko elementu bakoitzari kodomeinuko elementu bakarra esleitzen diona.",
+  branch: "03E",
+  branches: ["03E", "26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="F" />untzio (edo aplikazio) bat $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> artean hasierako multzoko elementu bakoitzari helmugako multzoko elementu bakarra esleitzen dion <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da. Matematika modernoaren egiturazko kontzeptu erabakigarrienetako bat da, <ConceptLink targetId="analisis-matematico">analisiaren</ConceptLink>, <ConceptLink targetId="algebra">aljebraren</ConceptLink> eta <ConceptLink targetId="teoria-conjuntos">multzo-teoriaren</ConceptLink> oinarria osatuz objektuen arteko dependentzia eta eraldaketa formalaren bide gisa.
+
+<Definicion title="Funtzioaren definizio formala">
+  Izan bitez $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. $A$-tik $B$-rako $f$ **funtzio** bat ($f\colon A \longrightarrow B$ idatzia) existentzia eta bakartasuneko bi baldintza betetzen dituen $f \subseteq A \times B$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da:
+  1. **Osotasuna (irudiaren existentzia):** <ConceptLink targetId="dominio">Domeinuko</ConceptLink> elementu bakoitzak gutxienez lotutako elementu bat du:
+     $$
+     \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)
+     $$
+  2. **Bakartasuna (funtzionaltasuna):** Domeinuko elementu bati ezin zaio esleitu <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bat baino gehiago:
+     $$
+     \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
+     $$
+  
+  $(x, y) \in f$ denean, $y = f(x)$ idazten da, non $y$ elementua $x$-ren <ConceptLink targetId="imagen">irudia</ConceptLink> baita $f$ funtzioaren bidez, eta $x$ elementua $y$-ren aurreirudi bat den. $A$ multzoari $f$-ren domeinua deritzo, $B$ haren kodomeinua da, eta $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ multzoa funtzioaren irudia da.
+</Definicion>
+
+<Separador />
+
+### Funtzioen oinarrizko motak
+
+$f\colon A \longrightarrow B$ funtzio bat bere esleipenen portaeraren arabera sailkatzen da:
+
+- **<ConceptLink targetId="inyectividad">Injektiboa</ConceptLink>:** Elementu desberdinek irudi desberdinak dituzte: $\forall x_1, x_2 \in A, \ f(x_1) = f(x_2) \implies x_1 = x_2$.
+- **<ConceptLink targetId="sobreyectividad">Gainjektiboa</ConceptLink>:** Irudiak kodomeino osoa agortzen du: $\forall y \in B, \ \exists x \in A \ (f(x) = y)$, hau da, $\operatorname{Im}(f) = B$.
+- **<ConceptLink targetId="biyeccion">Biektiboa</ConceptLink>:** Aldi berean injektiboa eta gainjektiboa da, eta horrek $f^{-1}\colon B \longrightarrow A$ alderantzizko funtzioaren existentzia bermatzen du.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Funtzioen aljebra">
+    <PropiedadItem id="igualdad-funciones" title="Funtzioen berdintasun-irizpidea">
+      Bi $f\colon A \longrightarrow B$ eta $g\colon C \longrightarrow D$ funtzio berdinak dira ($f = g$) baldin eta soilik baldin domeinu bera ($A = C$), kodomeinu bera ($B = D$) partekatzen badute eta elementu bakoitzean bat badatoz: $\forall x \in A, \ f(x) = g(x)$.
+    </PropiedadItem>
+    <PropiedadItem id="asociatividad-composicion-funciones" title="Konposizioaren elkartze-propietatea">
+      Izan bitez hiru funtzio $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$ eta $h\colon C \longrightarrow D$; orduan <ConceptLink targetId="composicion-funciones">funtzioen konposizioak</ConceptLink> elkartze-propietatea betetzen du: $h \circ (g \circ f) = (h \circ g) \circ f$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

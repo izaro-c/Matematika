@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "teorema-angulo-exterior",
+  lang: "eu",
+  type: "teorema",
+  title: "Kanpo-angeluaren teorema",
+  description: "Edozein triangelutan, erpin bati auzokidea zaion edozein kanpo-angeluren neurria hertsiki handiagoa da auzokideak ez diren bi barne-angeluetako edozeinena baino.",
+  statement: "Edozein △ABC triangelutan, erpin bati auzokidea zaion edozein kanpo-angeluren neurria hertsiki handiagoa da auzokideak ez diren bi barne-angeluetako edozeinena baino (∠ACD > ∠BAC eta ∠ACD > ∠ABC).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulos", "geometria-absoluta"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-angulo-exterior"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo" isDependency={true}>triangelutan</ConceptLink>, <ConceptLink targetId="vertice">erpin</ConceptLink> bati auzokidea zaion edozein <ConceptLink targetId="angulo-exterior">kanpo-angelu</ConceptLink> hertsiki handiagoa da, <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> erlazioaren arabera, auzokideak ez diren bi barne-<ConceptLink targetId="angulo">angeluetako</ConceptLink> edozein baino.
+
+Emaitza hau, <ConceptLink targetId="euclides">Euklidesek</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.16 Proposizio gisa formulatua eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko §6 atalean formalizatua, <ConceptLink targetId="sistema-absoluto">geometria absolutuari</ConceptLink> dagokio. Haren frogapena <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomatik</ConceptLink> eta jarraitutasun-axiometatik independentea da: planoan ordenaren eta kongruentziaren axiometatik eratortzen da, <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> eta <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>erpinez aurkako angeluen</ConceptLink> kongruentzia baliatuz. Ezinbesteko tresna deduktiboa da triangelu-desberdintza eta zuzen paraleloen existentzia frogatzeko.
+
+<Definicion title="Kanpo-angeluaren teoremaren enuntziatu formala">
+Izan bitez $A, B, C \in \mathcal{P}$ <ConceptLink targetId="plano">plano</ConceptLink> bateko $\pi \in \Pi$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink>, $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> zehazten dutenak.
+
+Izan bedi $D \in \mathcal{P}$ puntu bat $\overline{BC}$ zuzenkiaren zuzen euskarrian $B * C * D$ betetzen duena, moduan non $\overrightarrow{CD}$ <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> $\overrightarrow{CB}$ zuzenerdiaren aurkakoa den eta $\angle ACD$ <ConceptLink targetId="angulo">angelua</ConceptLink> $C$ <ConceptLink targetId="vertice">erpineko</ConceptLink> <ConceptLink targetId="angulo-exterior">kanpo-angelua</ConceptLink> den.
+
+Orduan, <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> erlazioari dagokionez, desberdintza hertsiek betetzen dute:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+
+baliokideki, $\angle BAC < \angle ACD$ eta $\angle ABC < \angle ACD$. Era berean, $\overline{AC}$ aldea $C$ puntutik harago luzatzean zehaztutako kanpo-angeluak desberdintza berak betetzen ditu, $\angle ACD$ angeluarekin kongruentea baita <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>erpinez aurkako angeluak</ConceptLink> izateagatik.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak geometria absolutuan">
+    <PropiedadItem 
+      id="angulos-agudos-triangulo" 
+      title="Gutxienez bi barne-angelu zorrotz existitzea"
+      formula="\angle\text{recto} \le \angle ACB \implies \angle BAC < \angle\text{recto} \land \angle ABC < \angle\text{recto}"
+    >
+      Edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, gehienez barne-<ConceptLink targetId="angulo">angelu</ConceptLink> bat izan daiteke zuzena edo kamutsa; beraz, bere barne-angeluetatik gutxienez bi beti zorrotzak dira. Triangelu batek bi angelu ez-zorrotz balitu, horietako bati auzokidea zaion <ConceptLink targetId="angulo-exterior">kanpo-angelua</ConceptLink> ezingo litzateke hertsiki handiagoa izan auzokidea ez den beste barne-angelua baino, <ConceptLink targetId="teorema">teorema</ConceptLink> honen kontraesanean.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="teorema-angulos-alternos-internos" 
+      title="Paralelotasun-irizpidea barne-angelu alternoen bidez"
+      formula="\angle P_1AB \cong \angle P_2BA \implies \ell_1 \parallel \ell_2"
+    >
+      Zuzen <ConceptLink targetId="secante">ebakitzaile</ConceptLink> batek ebakitako bi <ConceptLink targetId="recta">zuzenek</ConceptLink> <ConceptLink targetId="angulos-alternos-internos">barne-angelu alterno</ConceptLink> kongruenteak eratzen badituzte, orduan <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira (<ConceptLink targetId="euclides">Euklidesen</ConceptLink> I.27 Proposizioa). Kontraesanezko frogapenak kanpo-angeluaren teorema aplikatzen dio zuzenek elkar ebakiz gero eratuko litzatekeen triangeluari.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

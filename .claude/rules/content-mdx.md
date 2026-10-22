@@ -13,6 +13,6 @@ All knowledge graph nodes under `content/mdx/` must obey these constraints:
 4. **KaTeX & Typography**: KaTeX follows ISO 80000-2. Never embed JSX inside `$`. First sentence must be direct definition or statement without meta-preamble.
 5. **Fast Verification**:
    ```bash
-   node .agents/skills/matematika-content-generator/scripts/check-parity.mjs <id>
-   npm run validate-references && npm run validate-graph
+   node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <id> [<id>...]
    ```
+   (lint + parity + diagrams + references + graph in one run; must end in `══ TODO OK`.)

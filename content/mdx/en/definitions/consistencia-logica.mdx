@@ -1,0 +1,43 @@
+export const metadata = {
+  id: "consistencia-logica",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Logical Consistency",
+  description: "Property of a formal theory guaranteeing the impossibility of deducing simultaneously a proposition and its negation (absence of contradictions).",
+  branch: "03B",
+  branches: ["03", "03C"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter II", role: "primary" },
+    { title: "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I", author: "Kurt Gödel", locator: "Monatshefte für Mathematik und Physik 38 (1931)", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />ogical **consistency** (or syntactic consistency) is the primary metatheoretical property of any formal theory or deductive system: the guarantee that it harbors no internal contradictions.
+
+In classical deductive systems, if a theory were contradictory, the principle of explosion (*ex falso quodlibet*) would permit the formal derivation of any arbitrary proposition formulated in its language. Consequently, inconsistency collapses the entire deductive edifice, stripping its <ConceptLink targetId="teorema">theorems</ConceptLink> of all discriminative or epistemic value.
+
+<Definicion title="Syntactic and semantic consistency">
+  Let $\mathcal{T}$ be a theory with axioms $\Phi$ formulated in a formal language $\mathcal{L}$.
+  
+  $\mathcal{T}$ is said to be **syntactically consistent** if for no formula $\varphi$ is it possible to formally derive both $\varphi$ and its negation $\neg \varphi$:
+  $$
+  \mathcal{T} \text{ is consistent} \iff \forall \varphi \in \mathcal{L}, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
+  $$
+  On the other hand, $\mathcal{T}$ is **semantically consistent** (or satisfiable) if there exists at least one <ConceptLink targetId="teoria-modelos">model</ConceptLink> $\mathcal{M}$ such that $\mathcal{M} \models \mathcal{T}$.
+  
+  By Gödel's completeness theorem in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide completely:
+  $$
+  \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
+  $$
+</Definicion>
+
+<Separador />
+
+### Relative consistency in the foundations of geometry
+
+By Gödel's second incompleteness theorem, no sufficiently expressive formal theory can prove its own consistency through its own internal deductive methods. For this reason, metamathematics relies on **relative consistency**:
+
+- **Euclidean geometry:** In Chapter II of the *Grundlagen*, David Hilbert established the relative consistency of Euclidean geometry by interpreting its primitive terms in the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$: if the arithmetic theory of real numbers $\mathbb{R}$ is consistent, then Euclidean geometry is necessarily consistent.
+- **Non-Euclidean geometries:** Historically, neither Bolyai nor Lobachevsky succeeded in proving the consistency of hyperbolic geometry; it was Eugenio Beltrami (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink>, and Henri Poincaré who proved it conclusively using differential and analytic models in the Euclidean plane, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>, proving that if Euclidean geometry is consistent, hyperbolic geometry is as well.

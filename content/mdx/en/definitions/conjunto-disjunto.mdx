@@ -12,7 +12,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="T" />wo <ConceptLink targetId="conjunto">sets</ConceptLink> $A$ and $B$ are **disjoint** (or mutually exclusive) if they share no elements in common, that is, if their <ConceptLink targetId="interseccion">intersection</ConceptLink> is the <ConceptLink targetId="conjunto-vacio">empty set</ConceptLink>:
+<Capitular letra="T" />wo <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **disjoint** (or mutually exclusive) if they share no elements in common, that is, if their <ConceptLink targetId="interseccion" isDependency={true}>intersection</ConceptLink> is the <ConceptLink targetId="conjunto-vacio">empty set</ConceptLink>:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$

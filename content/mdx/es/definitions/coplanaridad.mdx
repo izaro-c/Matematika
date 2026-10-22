@@ -1,0 +1,63 @@
+export const metadata = {
+  id: "coplanaridad",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Coplanaridad",
+  description: "Relación de incidencia geométrica que satisface una colección de puntos o rectas cuando existe un plano que los contiene simultáneamente.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "incidencia", "espacio", "hilbert"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="L" />a **coplanaridad** es la relación de <ConceptLink targetId="incidencia" isDependency={true}>incidencia</ConceptLink> que satisface una colección de <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> o <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> cuando existe al menos un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> en el que todos ellos inciden simultáneamente o cuyas <ConceptLink targetId="traza" isDependency={true}>trazas puntuales</ConceptLink> están contenidas en él.
+
+Tres puntos cualesquiera determinan siempre al menos un plano por el <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, por lo que toda terna de puntos en el <ConceptLink targetId="espacio">espacio</ConceptLink> es coplanar. La coplanaridad adquiere fuerza restrictiva al considerar cuatro o más puntos: el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink> postula la existencia de cuatro puntos no coplanares, fijando que el espacio no colapsa en un plano. Para dos rectas, la coplanaridad es el requisito indispensable para definir el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> y distingue a las rectas <ConceptLink targetId="secante">secantes</ConceptLink> de las <ConceptLink targetId="rectas-cruzadas">rectas cruzadas</ConceptLink>.
+
+<Definicion title="Definición formal de coplanaridad">
+Sea $(\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I})$ una estructura de <ConceptLink targetId="incidencia">incidencia</ConceptLink> espacial con dominios primitivos disjuntos dos a dos.
+
+1. Un conjunto no vacío de puntos $S \subseteq \mathcal{P}$ es **coplanar** si existe un plano $\pi \in \Pi$ tal que todo punto de $S$ incide con $\pi$:
+$$
+\operatorname{coplanar}(S) \iff \exists \pi \in \Pi \; \forall P \in S \; (P \,\mathbf{I}\, \pi)
+$$
+En particular, cuatro puntos $A, B, C, D \in \mathcal{P}$ son coplanares si y solo si:
+$$
+\operatorname{coplanar}(A, B, C, D) \iff \exists \pi \in \Pi \; (A \,\mathbf{I}\, \pi \land B \,\mathbf{I}\, \pi \land C \,\mathbf{I}\, \pi \land D \,\mathbf{I}\, \pi)
+$$
+
+2. Dos rectas $\ell_1, \ell_2 \in \mathcal{L}$ son **coplanares** si existe un plano $\pi \in \Pi$ tal que las trazas puntuales de ambas están contenidas en la traza de $\pi$:
+$$
+\operatorname{coplanar}(\ell_1, \ell_2) \iff \exists \pi \in \Pi \; (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi))
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de incidencia espacial">
+    <PropiedadItem 
+      id="coplanaridad-puntos-minimos" 
+      title="Coplanaridad de ternas de puntos"
+      formula="\forall A, B, C \in \mathcal{P} \; \exists \pi \in \Pi \; (A \,\mathbf{I}\, \pi \land B \,\mathbf{I}\, \pi \land C \,\mathbf{I}\, \pi)"
+    >
+      Por los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, tres puntos cualesquiera son siempre coplanares; si no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, el plano que determinan es único. Por contra, la existencia de cuatro puntos no coplanares la postula el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="coplanaridad-rectas-secantes" 
+      title="Coplanaridad de rectas secantes"
+      formula="\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\} \implies \exists! \pi \in \Pi \; (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi))"
+    >
+      Dos rectas distintas que comparten un punto son siempre coplanares y determinan un plano común. Si dos rectas no comparten ningún punto y no son coplanares, constituyen <ConceptLink targetId="rectas-cruzadas">rectas cruzadas</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

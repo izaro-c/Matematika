@@ -1,0 +1,107 @@
+export const metadata = {
+  id: "demo-congruencia-lll",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: SSS Congruence Theorem",
+  description: "Direct deductive proof of the SSS criterion: auxiliary construction of the reflected triangle via SAS and application of the isosceles triangle theorem to equate opposite angles.",
+  parentTheorem: "teorema-congruencia-lll",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 8",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaLLL } from '@content/diagrams/Demos/DemoCongruenciaLLL';
+
+<DemonstrationSection diagram={<DemoCongruenciaLLL />}>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-congruencia-lll">SSS congruence theorem</ConceptLink> follows the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink> set forth by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*: by constructing in the opposite half-plane an auxiliary triangle congruent to the original via the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, the segment connecting the opposite vertices determines two triangles satisfying the <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>isosceles triangle theorem</ConceptLink>, allowing one to deduce the equality of the opposite angles by addition of <ConceptLink targetId="angulos-adyacentes" isDependency={true}>adjacent angles</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Construction of the auxiliary triangle by SAS">
+Let two <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle ABC$ and $\triangle A'B'C'$ have all three pairs of corresponding <ConceptLink targetId="lado">sides</ConceptLink> <ConceptLink targetId="congruencia">congruent</ConceptLink>: $\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$, and $\overline{CA} \cong \overline{C'A'}$.
+
+In the <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to the <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{A'B'}$ opposite to $C'$, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink> guarantees the existence of a unique <ConceptLink targetId="semirrecta">ray</ConceptLink> emanating from $A'$ that forms with the ray <VisualBind element="sideAB" color="granada">$\overline{A'B'}$</VisualBind> an <ConceptLink targetId="angulo">angle</ConceptLink> congruent to $\angle BAC$. By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>, there exists on that ray a <ConceptLink targetId="punto">point</ConceptLink> $C^*$ such that the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind> is congruent to $\overline{AC}$:
+
+$$
+\angle B'A'C^* \cong \angle BAC, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+Since in addition $\overline{A'B'} \cong \overline{AB}$, the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> ensures the congruence between the auxiliary triangle <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> and the original triangle:
+
+$$
+\triangle A'B'C^* \cong \triangle ABC
+$$
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Congruences of homologous sides">
+From the congruence <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind> $\cong \triangle ABC$ obtained via SAS, it follows that all homologous <ConceptLink targetId="lado">sides</ConceptLink> are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>:
+
+$$
+\overline{A'C^*} \cong \overline{AC}, \qquad \overline{B'C^*} \cong \overline{BC}
+$$
+
+By the initial hypotheses, we have <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> $\cong \overline{AC}$ and <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> $\cong \overline{BC}$. By the <ConceptLink targetId="relacion-simetrica">symmetry</ConceptLink> and <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> of <ConceptLink targetId="segmento">segment</ConceptLink> congruence, one obtains the congruences between the corresponding sides from vertex $C'$ and the auxiliary vertex $C^*$:
+
+$$
+\overline{A'C'} \cong \overline{A'C^*}, \qquad \overline{B'C'} \cong \overline{B'C^*}
+$$
+
+Thus, the pairs of contiguous lateral sides <VisualBind element="sideAC" color="granada">$\overline{A'C'}$</VisualBind> with <VisualBind element="sideACStar" color="mora">$\overline{A'C^*}$</VisualBind>, and <VisualBind element="sideBC" color="granada">$\overline{B'C'}$</VisualBind> with <VisualBind element="sideBCStar" color="mora">$\overline{B'C^*}$</VisualBind>, are mutually congruent.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Drawing the diagonal and auxiliary isosceles triangles">
+We draw the auxiliary <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="lineCC" color="canela">$\overline{C'C^*}$</VisualBind>, which connects the two <ConceptLink targetId="vertice">vertices</ConceptLink> lying in opposite <ConceptLink targetId="semiplano">half-planes</ConceptLink> with respect to the <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{A'B'}$. This segment divides the figure into two contiguous triangles with common base $\overline{C'C^*}$:
+
+1. Triangle <VisualBind element="isoLeft" color="granada">$\triangle A'C'C^*$</VisualBind> satisfies $\overline{A'C'} \cong \overline{A'C^*}$, so it is an <ConceptLink targetId="triangulo-isosceles">isosceles triangle</ConceptLink> with vertex $A'$.
+2. Triangle <VisualBind element="isoRight" color="mora">$\triangle B'C'C^*$</VisualBind> satisfies $\overline{B'C'} \cong \overline{B'C^*}$, so it is an isosceles triangle with vertex $B'$.
+
+Applying the <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>isosceles triangle theorem</ConceptLink> to each of them, the <ConceptLink targetId="angulo-base">base angles</ConceptLink> on $\overline{C'C^*}$ are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>:
+
+$$
+\angle A'C'C^* \cong \angle A'C^*C', \qquad \angle B'C'C^* \cong \angle B'C^*C'
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Angle addition and conclusion by SAS">
+Since $C'$ and $C^*$ lie in opposite half-planes with respect to $\overleftrightarrow{A'B'}$, the segment $\overline{C'C^*}$ intersects the reference line, so that ray $\overrightarrow{C'C^*}$ is interior to angle <VisualBind element="angleC" color="granada">$\angle A'C'B'$</VisualBind>, dividing it into the <ConceptLink targetId="angulos-adyacentes" isDependency={true}>adjacent angles</ConceptLink> $\angle A'C'C^*$ and $\angle B'C'C^*$. Similarly, $\overrightarrow{C^*C'}$ divides angle $\angle A'C^*B'$ into $\angle A'C^*C'$ and $\angle B'C^*C'$.
+
+Adding the angle congruences obtained in the preceding step:
+
+$$
+\angle A'C'B' \cong \angle A'C^*B'
+$$
+
+Comparing now triangles <VisualBind element="triangleCPrime" color="granada">$\triangle A'B'C'$</VisualBind> and <VisualBind element="triangleCStar" color="mora">$\triangle A'B'C^*$</VisualBind>, the three hypotheses of the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS theorem</ConceptLink> are satisfied: $\overline{A'C'} \cong \overline{A'C^*}$, $\overline{B'C'} \cong \overline{B'C^*}$, and the included angle $\angle A'C'B' \cong \angle A'C^*B'$. Consequently:
+
+$$
+\triangle A'B'C' \cong \triangle A'B'C^*
+$$
+
+Since in step 1 we established $\triangle A'B'C^* \cong \triangle ABC$, the <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> of <ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink> concludes:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

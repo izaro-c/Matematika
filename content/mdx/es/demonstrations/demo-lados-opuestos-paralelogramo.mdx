@@ -1,0 +1,127 @@
+export const metadata = {
+  id: "demo-lados-opuestos-paralelogramo",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de los lados opuestos del paralelogramo",
+  description: "Demostración deductiva directa mediante el trazado de una diagonal, el teorema de los ángulos alternos internos euclidiano y el criterio de congruencia ALA.",
+  parentTheorem: "teorema-lados-opuestos-paralelogramo",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración deductiva directa</ConceptLink> del <ConceptLink targetId="teorema-lados-opuestos-paralelogramo">teorema de los lados opuestos del paralelogramo</ConceptLink> sigue la fundamentación geométrica clásica de <ConceptLink targetId="euclides">Euclides</ConceptLink> (Proposición I.34) y de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> (§7).
+
+El razonamiento introduce una <ConceptLink targetId="diagonal">diagonal</ConceptLink> auxiliar que actúa como recta <ConceptLink targetId="secante">secante</ConceptLink> transversal a las rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink>, deduce la congruencia angular mediante el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> —fundado en el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>— y establece la congruencia de los <ConceptLink targetId="triangulo">triángulos</ConceptLink> resultantes mediante el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>criterio de congruencia ALA</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Trazado de la diagonal y rectas secantes">
+Sea $ABCD$ un <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramo</ConceptLink> en un plano $\sigma \in \Pi$. Por definición, las <ConceptLink targetId="recta">rectas</ConceptLink> soporte de sus pares de lados opuestos son paralelas:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+Trazamos el <ConceptLink targetId="segmento">segmento</ConceptLink> de la diagonal $\overline{AC}$ entre los <ConceptLink targetId="vertice">vértices</ConceptLink> opuestos $A$ y $C$. La recta $\overleftrightarrow{AC}$ actúa como secante transversal a ambos pares de rectas paralelas.
+</ProofStep>
+
+<ProofStep number={2} title="Congruencia del primer par de ángulos alternos internos">
+Consideramos las rectas paralelas $\overleftrightarrow{AB} \parallel \overleftrightarrow{CD}$ cortadas por la secante $\overleftrightarrow{AC}$. Como los vértices $B$ y $D$ están en <ConceptLink targetId="semiplano">semiplanos</ConceptLink> opuestos respecto a $\overleftrightarrow{AC}$, los ángulos $\angle BAC$ y $\angle DCA$ son <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink>.
+
+Por la dirección euclidiana del <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink>, que requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>, dichos ángulos son congruentes:
+
+$$
+\angle BAC \cong \angle DCA
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Congruencia del segundo par de ángulos alternos internos">
+Consideramos análogamente el segundo par de rectas paralelas $\overleftrightarrow{BC} \parallel \overleftrightarrow{DA}$ cortadas por la misma secante transversal $\overleftrightarrow{AC}$.
+
+Los vértices $B$ y $D$ yacen en semiplanos opuestos respecto a $\overleftrightarrow{AC}$, de modo que $\angle BCA$ y $\angle DAC$ son ángulos alternos internos. Aplicando nuevamente el teorema de los ángulos alternos internos:
+
+$$
+\angle BCA \cong \angle DAC
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Lado común a ambos triángulos y reflexividad">
+La diagonal divide al paralelogramo en dos triángulos, $\triangle ABC$ y $\triangle CDA$. El segmento $\overline{AC}$ es el lado común compartido por ambos triángulos.
+
+Por la propiedad reflexiva de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (<ConceptLink targetId="relacion-reflexiva">relación reflexiva</ConceptLink>), todo segmento es congruente consigo mismo:
+
+$$
+\overline{AC} \cong \overline{CA}
+$$
+</ProofStep>
+
+<ProofStep number={5} title="Aplicación del criterio de congruencia ALA">
+Examinamos los triángulos $\triangle ABC$ y $\triangle CDA$ bajo la correspondencia de vértices $A \mapsto C$, $B \mapsto D$, $C \mapsto A$:
+1. Primer ángulo adyacente: $\angle BAC \cong \angle DCA$ (paso 2).
+2. Lado comprendido: $\overline{AC} \cong \overline{CA}$ (paso 4).
+3. Segundo ángulo adyacente: $\angle BCA \cong \angle DAC$ (paso 3).
+
+Al coincidir un lado y los dos ángulos adyacentes a él, el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>criterio de congruencia ALA</ConceptLink> establece que ambos triángulos son congruentes:
+
+$$
+\triangle ABC \cong \triangle CDA
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Congruencia de los lados homólogos y del primer par de ángulos opuestos">
+De la congruencia de triángulos $\triangle ABC \cong \triangle CDA$ se deduce la congruencia de todos sus elementos homólogos correspondientes.
+
+Para los lados homólogos, se concluye la congruencia de los lados opuestos del paralelogramo:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+Asimismo, para los ángulos homólogos en los vértices $B$ y $D$:
+
+$$
+\angle ABC \cong \angle CDA
+$$
+</ProofStep>
+
+<ProofStep number={7} title="Suma angular y congruencia del segundo par de ángulos opuestos">
+Para el segundo par de ángulos opuestos, analizamos los ángulos totales en los vértices $A$ y $C$.
+
+Como la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{AC}$ es interior a $\angle BAD$ y $\overrightarrow{CA}$ es interior a $\angle DCB$, los ángulos se descomponen como suma de ángulos adyacentes:
+
+$$
+\angle BAD = \angle BAC + \angle CAD, \quad \angle DCB = \angle DCA + \angle ACB
+$$
+
+Puesto que $\angle BAC \cong \angle DCA$ y $\angle CAD \cong \angle ACB$, la suma de ángulos congruentes da:
+
+$$
+\angle BAD \cong \angle BCD
+$$
+
+Queda demostrado que en todo paralelogramo los lados opuestos son congruentes y los ángulos opuestos son congruentes.
+</ProofStep>
+
+</DemonstrationSection>

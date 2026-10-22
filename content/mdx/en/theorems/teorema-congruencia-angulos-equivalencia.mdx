@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "teorema-congruencia-angulos-equivalencia",
+  lang: "en",
+  type: "teorema",
+  title: "Equivalence Theorem of Angle Congruence",
+  description: "Proof that the congruence relation between angles in Hilbert's synthetic geometry is reflexive, symmetric, and transitive, constituting a complete equivalence relation.",
+  statement: "The angle congruence relation is an equivalence relation: for any angles ∠α, ∠β, ∠γ it holds that ∠α ≅ ∠α, if ∠α ≅ ∠β then ∠β ≅ ∠α, and if ∠α ≅ ∠β and ∠β ≅ ∠γ then ∠α ≅ ∠γ.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "relacion-equivalencia", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  demos: ["demo-congruencia-angulos-equivalencia"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />he <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink> relation between <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> constitutes a complete <ConceptLink targetId="relacion-equivalencia" isDependency={true}>equivalence relation</ConceptLink>: it is reflexive, symmetric, and transitive.
+
+Unlike segment congruence, where transitivity is formulated expressly as a primitive postulate in <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink> only postulates the existence, uniqueness of angle transport, and <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink>. <ConceptLink targetId="relacion-simetrica">Symmetry</ConceptLink> and <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> are proved by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie* using the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, establishing the classification of angular openings in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+
+<Definicion title="Formal statement of the equivalence theorem of angle congruence">
+Let $\mathcal{A}$ be the <ConceptLink targetId="conjunto">set</ConceptLink> of all <ConceptLink targetId="angulo">angles</ConceptLink> determined by unordered pairs of non-collinear <ConceptLink targetId="semirrecta">rays</ConceptLink> with a common origin. The binary <ConceptLink targetId="congruencia">congruence</ConceptLink> relation $\cong$ on $\mathcal{A}$ satisfies the three defining properties of an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>:
+
+1. **<ConceptLink targetId="relacion-reflexiva">Reflexivity</ConceptLink>:** Every angle is congruent to itself:
+$$
+\forall \angle\alpha \in \mathcal{A}, \quad \angle\alpha \cong \angle\alpha
+$$
+
+2. **<ConceptLink targetId="relacion-simetrica">Symmetry</ConceptLink>:** If an angle is congruent to a second, the second is congruent to the first:
+$$
+\forall \angle\alpha, \angle\beta \in \mathcal{A}, \quad \angle\alpha \cong \angle\beta \implies \angle\beta \cong \angle\alpha
+$$
+
+3. **<ConceptLink targetId="relacion-transitiva">Transitivity</ConceptLink>:** If an angle is congruent to a second and that second to a third, the first is congruent to the third:
+$$
+\forall \angle\alpha, \angle\beta, \angle\gamma \in \mathcal{A}, \quad (\angle\alpha \cong \angle\beta \land \angle\beta \cong \angle\gamma) \implies \angle\alpha \cong \angle\gamma
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias estructurales y deductivas">
+    <PropiedadItem 
+      id="clases-equivalencia-angulares" 
+      title="Partición del espacio angular en clases de equivalencia"
+      formula="\mathcal{A} / {\cong} = \{ [\angle\alpha] \mid \angle\alpha \in \mathcal{A} \}"
+    >
+      By constituting an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, angle congruence induces a <ConceptLink targetId="particion">partition</ConceptLink> of $\mathcal{A}$ into pairwise disjoint <ConceptLink targetId="clase-equivalencia">equivalence classes</ConceptLink>. Each equivalence class $[\angle\alpha]$ formalizes the intrinsic notion of angular opening or amplitude without requiring a numerical <ConceptLink targetId="medida-angular">angle measure</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="compatibilidad-orden-angulos" 
+      title="Compatibilidad con el orden de ángulos"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      Angle congruence is compatible with the <ConceptLink targetId="orden-angulos">order of angles</ConceptLink>: the relation $<$ does not depend on the chosen representatives within each class, endowing the quotient set $\mathcal{A} / {\cong}$ with a <ConceptLink targetId="orden">linear order</ConceptLink> structure.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

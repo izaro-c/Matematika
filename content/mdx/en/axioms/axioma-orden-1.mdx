@@ -5,7 +5,7 @@ export const metadata = {
   title: "Axiom II.1 (Symmetry and Collinearity of Betweenness)",
   description: "If a point B lies between A and C, then A, B, and C are distinct points on the same line and B also lies between C and A.",
   branch: "51A",
-  branches: ["51A", "03B"],
+  branches: ["51A"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
@@ -25,7 +25,7 @@ export const Simulation = Order1;
 
 <Capitular letra="I" />f a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> two others, then the three points are mutually distinct, are <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, and the intermediate point also lies between them when reversing the <ConceptLink targetId="orden">order</ConceptLink> of the endpoints.
 
-This axiom establishes the <ConceptLink targetId="simetria">symmetry</ConceptLink> of the betweenness relation and connects it with <ConceptLink targetId="colinealidad">collinearity</ConceptLink> and <ConceptLink targetId="incidencia">incidence</ConceptLink>.
+This axiom establishes the <ConceptLink targetId="relacion-simetrica">symmetry</ConceptLink> of the betweenness relation and connects it with <ConceptLink targetId="colinealidad">collinearity</ConceptLink> and <ConceptLink targetId="incidencia">incidence</ConceptLink>.
 
 <Definicion title="Formal statement">
 For any <ConceptLink targetId="terna">triple</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, if <VisualBind element="pB" color="terracota">$B$</VisualBind> lies between <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pC" color="ocre">$C$</VisualBind>, then $A, B$, and $C$ are mutually distinct, are <ConceptLink targetId="incidencia">incident</ConceptLink> with the same <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind>, and satisfy the symmetric relation $C * B * A$:

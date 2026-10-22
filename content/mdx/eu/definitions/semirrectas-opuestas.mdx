@@ -1,0 +1,62 @@
+export const metadata = {
+  id: "semirrectas-opuestas",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Aurkako zuzenerdiak",
+  description: "Zuzen bereko bi zuzenerdi kolineal ireki, jatorri bera partekatzen dutenak eta bitartekotasun-erlazioaren arabera aurkako noranzkoetan hedatzen direnak.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="Z" />uzen bereko bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> ireki **aurkako zuzenerdiak** dira, baldin eta <ConceptLink targetId="punto">jatorri</ConceptLink> bera partekatzen badute eta bateko edozein punturentzat eta besteko edozein punturentzat jatorri komunarekiko <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasun</ConceptLink>-erlazioa betetzen bada.
+
+Kontzeptu hau Hilberten <ConceptLink targetId="estar-entre">ordena</ConceptLink>-axiometan oinarritzen da (II. multzoa, §4). <ConceptLink targetId="axioma-orden-2">II.2 axiomaren</ConceptLink> arabera, zuzen bateko edozein puntutarako haren bi aldeetan puntuak daude. Zuzen bateko puntu orok zuzeneko gainerako puntuen partizio bat zehazten du zehazki bi aurkako zuzenerditan; kontzeptu hori ezinbestekoa da <ConceptLink targetId="angulos-suplementarios">angelu betegarriak</ConceptLink> eta <ConceptLink targetId="angulos-opuestos-vertice">erpinez aurkako angeluak</ConceptLink> definitzeko.
+
+<Definicion title="Aurkako zuzenerdien definizio formala">
+Izan bitez $\ell \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $O \in \operatorname{tr}(\ell)$ <ConceptLink targetId="punto">puntu</ConceptLink> bat. $O$ jatorria duten bi $h, h' \subset \operatorname{tr}(\ell)$ <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> ireki **aurkako zuzenerdiak** dira, baldin eta edozein $A \in h$ eta edozein $B \in h'$ puntutarako $O$ puntua $A$ eta $B$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean badago</ConceptLink> ($A * O * B$):
+
+$$
+\operatorname{op}(h, h') \iff \forall A \in h \, \forall B \in h' \, (A * O * B)
+$$
+
+Modu baliokidean, $h = \operatorname{sem}(OA)$ bada $A \in \operatorname{tr}(\ell) \setminus \{O\}$ puntu batek zehaztutako zuzenerdi irekia, haren aurkako $h' = \operatorname{sem}(OB)$ zuzenerdia $O$ puntua $A$ eta $P$ puntuen artean duten $P$ puntuen multzo gisa deskribatzen da:
+
+$$
+h' = \{ P \in \operatorname{tr}(\ell) \setminus \{O\} \mid A * O * P \}
+$$
+
+Dagozkion $\overrightarrow{OA} = h \cup \{O\}$ eta $\overrightarrow{OB} = h' \cup \{O\}$ zuzenerdi itxiei aurkako zuzenerdi itxiak deritze, eta haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> jatorri komuna besterik ez da: $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ordena eta egitura-propietateak">
+    <PropiedadItem 
+      id="descomposicion-recta-opuestas" 
+      title="Zuzenaren partizio disjuntua"
+      formula="\operatorname{tr}(\ell) \setminus \{O\} = h \sqcup h'"
+    >
+      $\ell$ zuzen bateko $O$ puntu orok jatorririk gabeko bere <ConceptLink targetId="traza">puntu-trazaduraren</ConceptLink> <ConceptLink targetId="particion">partizio</ConceptLink> bat eragiten du zehazki bi aurkako zuzenerdi ireki eta <ConceptLink targetId="conjunto-disjunto">disjuntutan</ConceptLink>, $h$ eta $h'$, non $h \cap h' = \emptyset$ eta $h \cup \{O\} \cup h' = \operatorname{tr}(\ell)$ betetzen diren.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-semirrecta-opuesta" 
+      title="Aurkako zuzenerdiaren existentzia eta bakartasuna"
+      formula="\forall h \subset \operatorname{tr}(\ell) \, \exists! h' \subset \operatorname{tr}(\ell) : \operatorname{op}(h, h')"
+    >
+      <ConceptLink targetId="axioma-orden-2">II.2 axiomaren</ConceptLink> eta zuzenaren gaineko <ConceptLink targetId="orden">ordena linealaren</ConceptLink> propietateen arabera (Hilbert, §4), $\ell$ zuzen bateko $h$ zuzenerdi ireki bakoitzerako $h$-ren aurkako $h'$ zuzenerdi ireki bakarra existitzen da $\ell$-ren gainean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

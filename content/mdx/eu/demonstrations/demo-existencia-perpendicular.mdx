@@ -1,0 +1,123 @@
+export const metadata = {
+  id: "demo-existencia-perpendicular",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Perpendikularraren existentziaren teorema",
+  description: "Perpendikularraren teoremaren frogapen sintetikoa, puntu islatuaren eraikuntzaren, Pasch-en axiomaren eta LAL kongruentzia-irizpidearen bidez.",
+  parentTheorem: "teorema-existencia-perpendicular",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoExistenciaPerpendicular } from '@content/diagrams/Demos/DemoExistenciaPerpendicular';
+
+<DemonstrationSection diagram={<DemoExistenciaPerpendicular />}>
+
+<Capitular letra="P" />lano bateko <ConceptLink targetId="recta">zuzen</ConceptLink> baten kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> baterako <ConceptLink targetId="teorema-existencia-perpendicular">perpendikularraren existentziaren teoremaren</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen deduktibo zuzenak</ConceptLink> kontrako planoerdian puntu simetrikoa eraikitzen du sintetikoki angelu- eta zuzenki-garraioaren bidez, plano-bereizketari esker ebakidura ortogonala bermatuz.
+
+Eraikuntza deduktibo honek, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko §6 atalean formalizatuak, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.12 proposizioa <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> esparrura ekartzen du, perpendikularraren existentzia eta bakartasuna frogatuz <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> beharrik gabe.
+
+<Separador />
+
+### Demostrazioa urratsez urrats
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Oinarrizko zuzena eta kanpo-puntua">
+$\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean, <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta harekin intziditzen ez duen kanpoko <VisualBind element="punto-p" color="terracota">$P \in \operatorname{tr}(\pi)$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> bat hartuko ditugu ($\neg(P \,\mathbf{I}\, \ell)$). $\ell$ zuzenean bi erreferentzia-puntu desberdin finkatuko ditugu, <VisualBind element="punto-a" color="carbon">$A$</VisualBind> eta <VisualBind element="punto-b" color="carbon">$B$</VisualBind>:
+
+$$
+A, B \in \operatorname{tr}(\ell), \quad A \neq B
+$$
+
+$\ell = \overleftrightarrow{AB}$ zuzenak bi <ConceptLink targetId="semiplano">planoerdi</ConceptLink> disjuntutan banatzen du planoa, eta $P$ eta $A$ puntuek, $B$ puntuarekin batera, zero ez den <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind> <ConceptLink targetId="angulo">angelua</ConceptLink> zehazten dute.
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Puntu islatuaren eraikuntza kontrako planoerdian">
+<VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> zuzenarekiko <VisualBind element="punto-p" color="terracota">$P$</VisualBind> daukanaren kontrako <ConceptLink targetId="semiplano">planoerdian</ConceptLink>, angeluak garraiatzeko <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink> aplikatuko dugu jatorria <VisualBind element="punto-a" color="carbon">$A$</VisualBind> puntuan duen eta $\overrightarrow{AB}$ zuzenerdiarekin <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind> angeluaren kongruentea den angelu bat osatzen duen zuzenerdi bat eraikitzeko:
+
+$$
+\angle BAC \cong \angle BAP
+$$
+
+Jarraian, zuzenkiak garraiatzeko <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink> erabiliz, zuzenerdi horretan <VisualBind element="punto-c" color="mora">$C$</VisualBind> puntu bakar bat zehaztuko dugu, non <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> zuzenkia <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind> zuzenkiarekin kongruentea den:
+
+$$
+\overline{AC} \cong \overline{AP}
+$$
+
+$C$ puntua $P$ puntuaren islatu sintetikoa da $\ell$ zuzenarekiko, eraikuntzaz kontrako planoerdietan kokatuta.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Oinarrizko zuzenarekiko ebakidura plano-bereizketagatik">
+<VisualBind element="punto-p" color="terracota">$P$</VisualBind> eta <VisualBind element="punto-c" color="mora">$C$</VisualBind> puntuak <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenarekiko</ConceptLink> kontrako <ConceptLink targetId="semiplano">planoerdietakoak</ConceptLink> direnez, <ConceptLink targetId="axioma-orden-4" isDependency={true}>II.4 axiomatik</ConceptLink> (Pasch-en axiomatik) eratorritako plano-bereizketaren propietateagatik, <VisualBind element="segmento-pc" color="terracota">$\overline{PC}$</VisualBind> <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> barne-puntu batean ebakitzen du $\ell$ zuzena:
+
+$$
+\operatorname{tr}(\ell) \cap \overline{PC} = \{M\}
+$$
+
+Ebaki-puntu horri <VisualBind element="punto-m" color="canela">$M$</VisualBind> deituko diogu. $M = A$ bada, $\overrightarrow{AP}$ eta $\overrightarrow{AC}$ zuzenerdiek zuzenean eratzen dituzte angelu zuzen auzokideak; $M \neq A$ bada, $M$ puntuak bi triangelu koplanar mugakide zehazten ditu.
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Triangeluen kongruentzia LAL irizpideagatik">
+<VisualBind element="triangulo-pam" color="canela">$\triangle PAM$</VisualBind> eta <VisualBind element="triangulo-cam" color="mora">$\triangle CAM$</VisualBind> triangeluak aztertuko ditugu $P \mapsto C$, $A \mapsto A$, $M \mapsto M$ korrespondentziaren arabera:
+1. Aldeen kongruentzia: <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind> $\cong$ <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> (2. urratseko eraikuntzaz).
+2. Angeluen kongruentzia: <VisualBind element="angMAP" color="ocre">$\angle PAM$</VisualBind> $\cong$ <VisualBind element="angMAC" color="ocre">$\angle CAM$</VisualBind> ($\angle BAP$ eta $\angle BAC$ angeluak baitira).
+3. Alde komuna: $\overline{AM} \cong \overline{AM}$ (kongruentziaren erlazio berdinagatik).
+
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorematik</ConceptLink>, bi triangeluak elkarren artean kongruenteak dira:
+
+$$
+\triangle PAM \cong \triangle CAM
+$$
+</ProofStep>
+
+<ProofStep number={5} target="step5" diagramStep="step5" title="Ondoan dauden angelu zuzenak eta perpendikulartasuna">
+$\triangle PAM \cong \triangle CAM$ triangeluen kongruentziatik ondorioztatzen da <VisualBind element="punto-m" color="canela">$M$</VisualBind> erpineko angelu homologo elkarrekikoak kongruenteak direla:
+
+$$
+\angle AMP \cong \angle AMC
+$$
+
+$M$ puntua $\overline{PC}$ zuzenkikoa denez, $P$, $M$ eta $C$ puntuak lerrokatuta daude $P * M * C$ ordenarekin; beraz, $\overrightarrow{MP}$ eta $\overrightarrow{MC}$ kontrako zuzenerdiak dira $\overleftrightarrow{PC}$ zuzenean. Horregatik, <VisualBind element="angPMA" color="terracota">$\angle AMP$</VisualBind> eta <VisualBind element="angCMA" color="mora">$\angle AMC$</VisualBind> angelu auzokide betegarriak dira.
+
+Ondoan dauden bi angelu betegarri eta kongruenteak izanik, biak dira definizioz <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink>. Ondorioz, <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> <ConceptLink targetId="recta">zuzena</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> zuzenarekiko <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularra</ConceptLink> da:
+
+$$
+\overleftrightarrow{PM} \perp \ell
+$$
+
+Honek $P$ puntutik igarotzen den perpendikularraren existentzia frogatzen du.
+</ProofStep>
+
+<ProofStep number={6} target="step6" diagramStep="step6" title="Perpendikularraren bakartasuna kanpo-angeluaren teoremagatik">
+Bakartasuna frogatzeko, demagun absurdura eramanez <VisualBind element="punto-p" color="terracota">$P$</VisualBind> puntutik igarotzen den eta <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> zuzenarekiko perpendikularra den bigarren zuzen bat existitzen dela, $\ell$ zuzena $M' \in \operatorname{tr}(\ell)$ oin desberdin batean ebakiz, $M' \neq M$ izanik.
+
+Kasu horretan, $P$, $M$ eta $M'$ puntuek bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> dituen $\triangle PMM'$ triangelu bat osatuko lukete: $\angle PMM'$ eta $\angle PM'M$.
+
+$\triangle PMM'$ triangeluan, $M$ erpineko kanpo-angelua zuzena litzateke ($\angle AMP$), eta kongruentzian bat etorriko litzateke $M'$ erpineko barne-angelu ez-auzokidearekin ($\angle PM'M$), <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> aurka eginez, zeinak hau eskatzen baitu:
+
+$$
+\angle AMP > \angle PM'M
+$$
+
+Beraz, ezin da bigarren $M'$ oinik existitu, eta <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> zuzen perpendikularra bakarra da planoan.
+</ProofStep>
+
+</DemonstrationSection>

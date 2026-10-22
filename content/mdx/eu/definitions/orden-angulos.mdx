@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "orden-angulos",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Angeluen ordena",
+  description: "Angeluen arteko ordena sintesi-hertsiko erlazioa, garraio axiomatikoaren eta barrualde angeluarreko edukitzearen bidez definitua.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "orden", "angulo", "congruencia", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" />ngeluen ordena bi <ConceptLink targetId="angulo" isDependency={true}>angeluren</ConceptLink> irekidura modu sintetikoan konparatzen duen erlazioa da, zenbakizko neurrietara edo funtzio trigonometrikoetara jo gabe.
+
+Erlazio hau <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioman</ConceptLink> postulatutako angeluen garraioa eta <ConceptLink targetId="interior-angulo">angeluaren barrualdearen</ConceptLink> nozioa konbinatuz eraikitzen da. Angelu bat bestearen <ConceptLink targetId="lado">alde</ConceptLink> baten gainean <ConceptLink targetId="semiplano">planoerdi</ConceptLink> berean kokatzean, gainerako aldea barrualdean edukitzeak <ConceptLink targetId="congruencia">kongruentziarekin</ConceptLink> bateragarria den <ConceptLink targetId="orden">ordena hertsi</ConceptLink> sintetiko bat definitzen du.
+
+<Definicion title="Angeluen ordenaren definizio formala">
+Izan bitez $\angle AOB$ eta $\angle A'O'B'$ hurrenez hurren $O$ eta $O'$ jatorriak dituzten <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> ez-kolinealen bikoteek zehaztutako bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink>.
+
+<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomagatik</ConceptLink>, $O'$ jatorria duen $\overrightarrow{O'B''}$ zuzenerdi bakar bat existitzen da, $\overleftrightarrow{O'A'}$ zuzen euskarriaren $B'$ duen <ConceptLink targetId="semiplano">planoerdian</ConceptLink> kokatua, honakoa betetzen duena:
+$$
+\angle AOB \cong \angle A'O'B''
+$$
+
+$\angle AOB$ angelua $\angle A'O'B'$ angelua baino **hertsiki txikiagoa** dela esaten dugu, $\angle AOB < \angle A'O'B'$ (edo $\angle\alpha < \angle\beta$) gisa idatzia, baldin eta $\overrightarrow{O'B''}$ zuzenerdia, bere jatorria kenduta, $\angle A'O'B'$ angeluaren <ConceptLink targetId="interior-angulo">barrualdean</ConceptLink> edukita badago:
+$$
+\angle AOB < \angle A'O'B' \iff (\overrightarrow{O'B''} \setminus \{O'\}) \subseteq \operatorname{Int}(\angle A'O'B')
+$$
+
+Alderantziz, $\angle A'O'B'$ angelua $\angle AOB$ baino **hertsiki handiagoa** dela esaten da, $\angle A'O'B' > \angle AOB$ gisa idatzia, baldin eta soilik baldin $\angle AOB < \angle A'O'B'$ bada.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Angeluen ordena hertsiaren propietateak">
+    <PropiedadItem 
+      id="orden-estricto-angulos" 
+      title="Ordena hertsiaren egitura"
+      formula="\neg(\angle\alpha < \angle\alpha) \land (\angle\alpha < \angle\beta \implies \neg(\angle\beta < \angle\alpha)) \land (\angle\alpha < \angle\beta \land \angle\beta < \angle\gamma \implies \angle\alpha < \angle\gamma)"
+    >
+      $<$ erlazioa <ConceptLink targetId="orden">ordena hertsi</ConceptLink> bat da: erreflexibotasunik gabea, asimetrikoa eta iragankorra da. Baldin eta $\angle\alpha < \angle\beta$ eta $\angle\beta < \angle\gamma$ badira, lehenengo <ConceptLink targetId="angulo">angeluari</ConceptLink> dagokion zuzenerdia bigarrenaren barrualdean dago eta hau hirugarrenean, <ConceptLink targetId="interior-angulo">barrualdearen</ConceptLink> konbexutasunetik $\angle\alpha < \angle\gamma$ ondorioztatuz.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="tricotomia-angulos" 
+      title="Trikotomia-lege angeluarra"
+      formula="\forall \angle\alpha, \angle\beta : (\angle\alpha < \angle\beta) \lor (\angle\alpha \cong \angle\beta) \lor (\angle\beta < \angle\alpha)"
+    >
+      Edozein bi <ConceptLink targetId="angulo">angelu</ConceptLink> $\angle\alpha$ eta $\angle\beta$ emanda, hiru erlazio disjuntetatik zehazki bat betetzen da: $\angle\alpha < \angle\beta$, $\angle\alpha \cong \angle\beta$, edo $\angle\beta < \angle\alpha$, angeluaren aldeek zehaztutako planoaren partizioaren ondorioz bere barrualdean, aldeetan eta kanpoaldean.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="invarianza-congruencia-orden" 
+      title="Kongruentziapeko aldaezintasuna"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      Bi <ConceptLink targetId="angulo">angeluren</ConceptLink> arteko ordena-erlazioa haien <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-klaseen barruan aukeratutako ordezkari zehatzen independentea da. Ondorioz, ordena ondo definituta dago angeluen kongruentziaren baliokidetasun-klaseen gainean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

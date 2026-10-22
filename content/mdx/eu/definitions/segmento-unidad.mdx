@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "segmento-unidad",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Unitate-zuzenkia",
+  description: "Luzera-unitatearen patroi gisa hitzartutako eta neurri unitarioa esleitutako zuzenkia, graduazio metrikoaren eta unitate-karratuaren oinarria.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-metrica", "longitud", "unidad-de-medida", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "IV. kapitulua",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />nitate-zuzenkia espazio geometriko batean erreferentzia metrikoaren patroi gisa hitzartutako <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> da, eta haren <ConceptLink targetId="longitud">luzera</ConceptLink> $1$ balioaren berdina da.
+
+Unitate-zuzenki bat finkatzeak zuzena graduatzea ahalbidetzen du, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> bidezko garraioaren eta zuzenkien baturaren bidez, beste edozein zuzenki neurtzeko eskala bat ezarriz. Plano euklidearraren geometrian, unitate-zuzenkia unitate-<ConceptLink targetId="cuadrado">karratua</ConceptLink> eraikitzeko oinarria ere bada, eta haren eskualdeak normalizazio-patroia zehazten du <ConceptLink targetId="teoria-medida-area">azaleraren neurriaren teorian</ConceptLink>.
+
+<Definicion title="Unitate-zuzenkiaren definizio formala">
+Izan bedi $mathcal{S}$ espazio geometrioko <ConceptLink targetId="segmento">zuzenki</ConceptLink> ez-degeneratu guztien <ConceptLink targetId="conjunto">multzoa</ConceptLink>. **Unitate-zuzenkia** modu finkoan hautatutako $u in mathcal{S}$ elementu bat da, non dagokion $|cdot| colon mathcal{S} 	o mathbb{R}_{>0}$ <ConceptLink targetId="longitud">luzera-funtzioan</ConceptLink> normalizazio-baldintza hau betetzen duen:
+
+$$
+|u| = 1
+$$
+
+$u$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den $overline{AB} in mathcal{S}$ zuzenki orok ere luzera unitarioa du, $|overline{AB}| = 1$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate metriko eta geometrikoak">
+    <PropiedadItem 
+      id="escalado-metrico" 
+      title="Unitate-aldaketarekiko arrazoien aldaezintasuna"
+      formula="u, u' in mathcal{S} implies exists k > 0 : |cdot|_{u'} = k , |cdot|_u"
+    >
+      Unitate-zuzenkia hautatzeak ez ditu magnitude geometrikoen arteko arrazoiak aldatzen. $u$ zuzenkia beste $u'$ unitate-zuzenki batez ordezkatuz gero, zuzenki guztien luzerak eskala-faktore konstante batez biderkatzen dira, $|u'|_u$ arrazoiak zehaztua.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="base-cuadrado-unidad" 
+      title="Unitate-karratuaren eraikuntza"
+      formula="operatorname{A}(Q_u) = 1"
+    >
+      $u$ unitate-zuzenkiak alde gisa balio du bere lau aldeak $u$ zuzenkiarekin kongruenteak dituen <ConceptLink targetId="cuadrado">karratu</ConceptLink> bat eraikitzeko. <ConceptLink targetId="teoria-medida-area">Azaleraren neurriaren teorian</ConceptLink>, $Q_u$ unitate-karratu horrek mugatutako eskualdea normalizatu egiten da haren azalera zehazki $1$ dela ezarriz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

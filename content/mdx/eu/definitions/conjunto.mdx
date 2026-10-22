@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "conjunto",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Multzoa",
+  description: "Objektu matematiko bereizgarrien (elementuen) bilduma ongi zehaztua, kidetasunaren oinarrizko erlazioaren pean.",
+  branch: "03E",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "1. Kapitulua", role: "primary" },
+    { title: "Set Theory", author: "Thomas Jech", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="M" />**ultzoa** oinarrizko nozio matematiko bat da, objektu zehatz, bereizgarri eta mugatuen —elementu deritzenak— batasun bateratu bat formalizatzen duena, multzoarekin kidetasunaren oinarrizko erlazioaren bidez lotuta.
+
+Matematika modernoaren hizkuntza ontologiko unibertsala osatzen du. Mugarik gabeko bildumei lotutako paradoxa logikoak saihesteko (hala nola bere buruaren kide ez diren multzo guztien bildumari buruzko Russellen paradoxa), multzo-teoria axiomatikoak (ZFC) multzoen eraketa murrizten du axioma zorrotzen bidez, eragiketen egonkortasun deduktiboa bermatuz.
+
+<Definicion title="Kidetasuna, berdintza eta azpimultzoak">
+  Izan bitez $x$ objektu bat eta $A$ multzo bat. $x \in A$ adierazpenak $x$ objektua $A$ multzoaren **kide** dela formalizatzen du ($A$ multzoko elementua da), eta $x \notin A$ adierazpenak $\neg(x \in A)$ ukatzen du.
+  
+  Bi $A$ eta $B$ multzo **berdinak** dira baldin eta soilik baldin zehazki elementu berak badituzte (Hedagarritasunaren axioma):
+  $$
+  A = B \iff \forall x \ (x \in A \iff x \in B)
+  $$
+  $A$ multzoa $B$ multzoaren **azpimultzo** bat da ($A \subseteq B$ idatzita) baldin eta $A$ multzoko elementu orok $B$ multzoari badagokio:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+</Definicion>
+
+<Separador />
+
+### Multzo-eragiketak eta espazioaren geometrizazioa
+
+Emandako multzoetatik abiatuta entitate berriak eraikitzen dira oinarrizko eragiketa boolearren bidez:
+- Batuketa $A \cup B = \{x \mid x \in A \lor x \in B\}$.
+- <ConceptLink targetId="interseccion">Ebakidura</ConceptLink> $A \cap B = \{x \mid x \in A \land x \in B\}$. Bi multzo <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> dira baldin eta $A \cap B = \emptyset$ bada.
+- Diferentzia $A \setminus B = \{x \mid x \in A \land x \notin B\}$.
+- $\wp(A)$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoa</ConceptLink>, $A$ multzoaren azpimultzo guztiek osatua.
+
+Hilberten geometria sintetikoaren formalizazioan, <ConceptLink targetId="espacio">espazioa</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> guztien $\mathcal{P}$ multzo gisa ulertzen da. Figura konposatuak, hala nola <ConceptLink targetId="segmento">zuzenkia</ConceptLink>, <ConceptLink targetId="semiplano">planoerdia</ConceptLink> eta <ConceptLink targetId="triangulo">triangelua</ConceptLink>, $\mathcal{P}$ multzoaren azpimultzo zehatzak dira, eta horrek multzoen aljebra zorrotz aplikatzea ahalbidetzen du eskualdeen eta mugen azterketan.

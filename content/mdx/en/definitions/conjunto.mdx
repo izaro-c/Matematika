@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "conjunto",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Set",
+  description: "Well-determined collection of distinguishable mathematical objects (elements) under the primitive membership relation.",
+  branch: "03E",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 1", role: "primary" },
+    { title: "Set Theory", author: "Thomas Jech", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" /> **set** is a fundamental mathematical notion formalizing the collection into a unified whole of definite, distinct objects —termed elements—, related to the set through the primitive relation of membership.
+
+It constitutes the universal ontological language of modern mathematics. To prevent logical paradoxes associated with unrestricted comprehension (such as Russell's paradox concerning the set of all sets that do not belong to themselves), axiomatic set theory (ZFC) restricts set formation through rigorous axioms that ensure the deductive stability of operations.
+
+<Definicion title="Membership, equality, and subsets">
+  Let $x$ be an object and $A$ a set. The expression $x \in A$ formalizes that $x$ **belongs to** $A$ (is an element of $A$), while $x \notin A$ formalizes $\neg(x \in A)$.
+  
+  Two sets $A$ and $B$ are **equal** if and only if they possess exactly the same elements (Axiom of extensionality):
+  $$
+  A = B \iff \forall x \ (x \in A \iff x \in B)
+  $$
+  A set $A$ is a **subset** of $B$ (denoted $A \subseteq B$) if every element of $A$ belongs to $B$:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+</Definicion>
+
+<Separador />
+
+### Set operations and the geometrization of space
+
+From given sets, new entities are constructed via elementary Boolean operations:
+- The union $A \cup B = \{x \mid x \in A \lor x \in B\}$.
+- The <ConceptLink targetId="interseccion">intersection</ConceptLink> $A \cap B = \{x \mid x \in A \land x \in B\}$. Two sets are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> if $A \cap B = \emptyset$.
+- The difference $A \setminus B = \{x \mid x \in A \land x \notin B\}$.
+- The power set <ConceptLink targetId="conjunto-potencia">$\wp(A)$</ConceptLink>, formed by the totality of subsets of $A$.
+
+In the formalization of Hilbertian synthetic geometry, <ConceptLink targetId="espacio">space</ConceptLink> is conceived as the set $\mathcal{P}$ of all <ConceptLink targetId="punto">points</ConceptLink>. Composite figures such as the <ConceptLink targetId="segmento">segment</ConceptLink>, the <ConceptLink targetId="semiplano">half-plane</ConceptLink>, and the <ConceptLink targetId="triangulo">triangle</ConceptLink> are specific subsets of $\mathcal{P}$, enabling the rigorous application of set algebra to the analysis of regions and boundaries.

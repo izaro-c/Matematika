@@ -1,0 +1,127 @@
+export const metadata = {
+  id: "demo-lados-opuestos-paralelogramo",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Paralelogramoaren aurkako aldeen teorema",
+  description: "Froga deduktibo zuzena diagonala marraztuz, barne-angelu alternoen teorema euklidearra eta ALA kongruentzia-irizpidea erabiliz.",
+  parentTheorem: "teorema-lados-opuestos-paralelogramo",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="P" />aralelogramoaren <ConceptLink targetId="teorema-lados-opuestos-paralelogramo">aurkako aldeen teoremaren</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>froga deduktibo zuzenak</ConceptLink> <ConceptLink targetId="euclides">Euklidesek</ConceptLink> (I.34 Proposizioa) aurkeztu eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> (§7) formalizatutako oinarri geometriko klasikoari jarraitzen dio.
+
+Arrazoibideak laguntza-zuzenkitzat <ConceptLink targetId="diagonal">diagonal</ConceptLink> bat sartzen du zuzen <ConceptLink targetId="paralelas">paraleloen</ConceptLink> zuzen <ConceptLink targetId="secante">ebakitzaile</ConceptLink> gisa, angeluen kongruentzia ondorioztatzen du <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teoremaren</ConceptLink> bidez —<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioman</ConceptLink> oinarrituta— eta sortutako <ConceptLink targetId="triangulo">triangeluen</ConceptLink> kongruentzia ezartzen du <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA kongruentzia-irizpidea</ConceptLink> erabiliz.
+
+<Separador />
+
+### Frogapena urratsez urrats
+
+<ProofStep number={1} title="Diagonala eta zuzen ebakitzaileak marraztea">
+Izan bedi $ABCD$ <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramo</ConceptLink> bat $\sigma \in \Pi$ plano batean. Definizioz, haren aurkako aldeen bikoteen <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriak paraleloak dira:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+$\overline{AC}$ diagonal-<ConceptLink targetId="segmento">zuzenkia</ConceptLink> marraztuko dugu aurkako $A$ eta $C$ <ConceptLink targetId="vertice">erpinen</ConceptLink> artean. $\overleftrightarrow{AC}$ zuzenak bi zuzen paraleloen bikoteen ebakitzaile gisa jokatzen du.
+</ProofStep>
+
+<ProofStep number={2} title="Barne-angelu alternoen lehen bikotearen kongruentzia">
+Har ditzagun $\overleftrightarrow{AB} \parallel \overleftrightarrow{CD}$ zuzen paraleloak, $\overleftrightarrow{AC}$ ebakitzaileak ebakita. $B$ eta $D$ erpinak $\overleftrightarrow{AC}$ zuzenarekiko aurkako <ConceptLink targetId="semiplano">planoerdietan</ConceptLink> daudenez, $\angle BAC$ eta $\angle DCA$ angeluak <ConceptLink targetId="angulos-alternos-internos">barne-angelu alternoak</ConceptLink> dira.
+
+<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Paraleloen axioma</ConceptLink> eskatzen duen <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teoremaren</ConceptLink> norabide euklidearrarengatik, angelu horiek elkarren kongruenteak dira:
+
+$$
+\angle BAC \cong \angle DCA
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Barne-angelu alternoen bigarren bikotearen kongruentzia">
+Era berean, har dezagun $\overleftrightarrow{BC} \parallel \overleftrightarrow{DA}$ zuzen paraleloen bigarren bikotea, $\overleftrightarrow{AC}$ ebakitzaile berak ebakita.
+
+$B$ eta $D$ erpinak $\overleftrightarrow{AC}$ zuzenarekiko aurkako planoerdietan daude, beraz $\angle BCA$ eta $\angle DAC$ barne-angelu alternoak dira. Barne-angelu alternoen teorema berriro aplikatuz:
+
+$$
+\angle BCA \cong \angle DAC
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Bi triangeluen alde komuna eta erreflexibotasuna">
+Diagonalak paralelogramoa bi triangelutan banatzen du, $\triangle ABC$ eta $\triangle CDA$. $\overline{AC}$ zuzenkia bi triangeluek partekatzen duten alde komuna da.
+
+<ConceptLink targetId="congruencia">Kongruentziaren</ConceptLink> propietate erreflexiboagatik (<ConceptLink targetId="relacion-reflexiva">erlazio erreflexiboa</ConceptLink>), edozein zuzenki bere buruarekin kongruentea da:
+
+$$
+\overline{AC} \cong \overline{CA}
+$$
+</ProofStep>
+
+<ProofStep number={5} title="ALA kongruentzia-irizpidea aplikatzea">
+Azter ditzagun $\triangle ABC$ eta $\triangle CDA$ triangeluak erpinen $A \mapsto C$, $B \mapsto D$, $C \mapsto A$ korrespondentziaren pean:
+1. Lehen angelu auzokidea: $\angle BAC \cong \angle DCA$ (2. urratsa).
+2. Tarteko aldea: $\overline{AC} \cong \overline{CA}$ (4. urratsa).
+3. Bigarren angelu auzokidea: $\angle BCA \cong \angle DAC$ (3. urratsa).
+
+Alde bat eta haren gainean bermatutako bi angelu auzokideak bat datozenez, <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA kongruentzia-irizpideak</ConceptLink> bi triangeluak elkarren kongruenteak direla ezartzen du:
+
+$$
+\triangle ABC \cong \triangle CDA
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Alde homologoen eta aurkako angeluen lehen bikotearen kongruentzia">
+$\triangle ABC \cong \triangle CDA$ triangeluen kongruentziatik haien elementu homologo guztien kongruentzia ondorioztatzen da.
+
+Alde homologoei dagokienez, paralelogramoaren aurkako aldeen kongruentzia ondorioztatzen da:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+Era berean, $B$ eta $D$ erpinetako angelu homologoei dagokienez:
+
+$$
+\angle ABC \cong \angle CDA
+$$
+</ProofStep>
+
+<ProofStep number={7} title="Angeluen batuketa eta aurkako angeluen bigarren bikotearen kongruentzia">
+Aurkako angeluen bigarren bikoteari dagokionez, $A$ eta $C$ erpinetako angelu osoak aztertuko ditugu.
+
+$\overrightarrow{AC}$ <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> $\angle BAD$ angeluaren barnekoa eta $\overrightarrow{CA}$ $\angle DCB$ angeluaren barnekoa denez, angeluak angelu auzokideen batuketa gisa deskonposatzen dira:
+
+$$
+\angle BAD = \angle BAC + \angle CAD, \quad \angle DCB = \angle DCA + \angle ACB
+$$
+
+$\angle BAC \cong \angle DCA$ eta $\angle CAD \cong \angle ACB$ direnez, angelu kongruenteen batuketak hau ematen du:
+
+$$
+\angle BAD \cong \angle BCD
+$$
+
+Frogatuta geratzen da edozein paralelogramotan aurkako aldeak elkarren kongruenteak direla eta aurkako angeluak elkarren kongruenteak direla.
+</ProofStep>
+
+</DemonstrationSection>

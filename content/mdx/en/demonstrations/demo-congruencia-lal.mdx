@@ -1,0 +1,121 @@
+export const metadata = {
+  id: "demo-congruencia-lal",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: SAS congruence theorem",
+  description: "Proof by contradiction according to Hilbert (§6): assuming the third side is not congruent, an auxiliary segment is transported and uniqueness of angle transport forces a contradiction.",
+  parentTheorem: "teorema-congruencia-lal",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-contradiccion",
+  authors: ["hilbert"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta", "demostracion"]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-congruencia-lal">SAS congruence theorem</ConceptLink> is based on the <ConceptLink targetId="metodo-contradiccion" isDependency={true}>method of contradiction</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*.
+
+From the conditions postulated by <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>, the reasoning deduces that the third <ConceptLink targetId="lado">side</ConceptLink> must necessarily be <ConceptLink targetId="congruencia">congruent</ConceptLink>, for assuming the contrary would allow transporting an auxiliary <ConceptLink targetId="segmento">segment</ConceptLink> via <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> that would violate the uniqueness of the transport of <ConceptLink targetId="angulo">angles</ConceptLink> guaranteed by <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} title="Hypotheses and application of Axiom III.5">
+Let two <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle ABC$ and $\triangle A'B'C'$ satisfy by hypothesis the <ConceptLink targetId="congruencia">congruence</ConceptLink> relations:
+
+$$
+\overline{AB} \cong \overline{A'B'}, \quad \overline{AC} \cong \overline{A'C'}, \quad \angle BAC \cong \angle B'A'C'
+$$
+
+Applying <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink> to triangles $\triangle ABC$ and $\triangle A'B'C'$, one deduces the congruence of the remaining angles at the corresponding <ConceptLink targetId="vertice">vertices</ConceptLink>:
+
+$$
+\angle ABC \cong \angle A'B'C', \quad \angle ACB \cong \angle A'C'B'
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Proof by contradiction hypothesis">
+To prove that the third <ConceptLink targetId="lado">side</ConceptLink> is also <ConceptLink targetId="congruencia">congruent</ConceptLink>, we proceed by the <ConceptLink targetId="metodo-contradiccion" isDependency={true}>method of contradiction</ConceptLink>. Suppose that the <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{BC}$ and $\overline{B'C'}$ are not congruent to each other:
+
+$$
+\overline{BC} \not\cong \overline{B'C'}
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Transport of the auxiliary segment onto the ray">
+By the axiom of segment transport (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>), there exists on the <ConceptLink targetId="semirrecta">ray</ConceptLink> $\overrightarrow{B'C'}$ a unique <ConceptLink targetId="punto">point</ConceptLink> $D$ such that the <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{B'D}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{BC}$:
+
+$$
+D \in \overrightarrow{B'C'}, \quad \overline{BC} \cong \overline{B'D}
+$$
+
+Since by the contradiction hypothesis $\overline{BC} \not\cong \overline{B'C'}$, point $D$ does not coincide with endpoint $C'$:
+
+$$
+D \neq C'
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Construction of the auxiliary triangle and second application of III.5">
+We consider the auxiliary <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle A'B'D$. Comparing $\triangle ABC$ and $\triangle A'B'D$, we have:
+1. $\overline{AB} \cong \overline{A'B'}$ (by initial hypothesis).
+2. $\overline{BC} \cong \overline{B'D}$ (by construction of point $D$).
+3. Since $D \in \overrightarrow{B'C'}$, the <ConceptLink targetId="semirrecta">ray</ConceptLink> $\overrightarrow{B'D}$ coincides with $\overrightarrow{B'C'}$, whence $\angle A'B'D = \angle A'B'C'$; therefore, $\angle ABC \cong \angle A'B'D$.
+
+As the premises of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink> are satisfied for the pair of triangles $\triangle ABC$ and $\triangle A'B'D$, this axiom establishes the congruence of the remaining angles at the top <ConceptLink targetId="vertice">vertex</ConceptLink>:
+
+$$
+\angle BAC \cong \angle B'A'D
+$$
+</ProofStep>
+
+<ProofStep number={5} title="Uniqueness of angle transport and contradiction">
+By the original hypothesis we have $\angle BAC \cong \angle B'A'C'$, which together with the preceding result implies:
+
+$$
+\angle B'A'D \cong \angle B'A'C'
+$$
+
+Since point $D$ belongs to the <ConceptLink targetId="semirrecta">ray</ConceptLink> $\overrightarrow{B'C'}$, points $D$ and $C'$ lie in the same <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to the supporting line $\overleftrightarrow{A'B'}$. Therefore, the rays $\overrightarrow{A'D}$ and $\overrightarrow{A'C'}$ lie in the same half-plane with respect to $\overleftrightarrow{A'B'}$.
+
+By the axiom of angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), in a given half-plane there exists a unique ray originating at $A'$ that forms with $\overrightarrow{A'B'}$ a given <ConceptLink targetId="angulo">angle</ConceptLink>. Consequently, both rays coincide:
+
+$$
+\overrightarrow{A'D} = \overrightarrow{A'C'}
+$$
+
+The line $\overleftrightarrow{A'C'}$ intersects the line $\overleftrightarrow{B'C'}$ at the unique point $C'$. Since $D$ belongs to both $\overrightarrow{A'D} \subset \operatorname{tr}(\overleftrightarrow{A'C'})$ and $\overrightarrow{B'C'} \subset \operatorname{tr}(\overleftrightarrow{B'C'})$, one necessarily deduces:
+
+$$
+D = C'
+$$
+
+which contradicts the condition $D \neq C'$ obtained in step 3.
+</ProofStep>
+
+<ProofStep number={6} title="Conclusion and global congruence">
+The contradiction establishes the falsity of the hypothesis $\overline{BC} \not\cong \overline{B'C'}$. Consequently, the third <ConceptLink targetId="lado">side</ConceptLink> is necessarily <ConceptLink targetId="congruencia">congruent</ConceptLink>:
+
+$$
+\overline{BC} \cong \overline{B'C'}
+$$
+
+Having established the mutual congruence of the three pairs of corresponding sides ($\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$, $\overline{AC} \cong \overline{A'C'}$) and of the three pairs of corresponding angles ($\angle BAC \cong \angle B'A'C'$, $\angle ABC \cong \angle A'B'C'$, $\angle ACB \cong \angle A'C'B'$), one concludes the <ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink>:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

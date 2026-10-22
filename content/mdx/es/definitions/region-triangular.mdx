@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "region-triangular",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Región triangular",
+  description: "Conjunto de puntos del plano formado por la unión de la traza de un triángulo y su interior, base elemental de la descomposición poligonal y del área.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "triangulo", "area", "convexidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />na **región triangular** es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos de un <ConceptLink targetId="plano">plano</ConceptLink> formado por la unión de la <ConceptLink targetId="traza">traza</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> y su <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink>.
+
+A diferencia del triángulo, constituido únicamente por los tres segmentos de su contorno, la región triangular comprende la totalidad de los puntos delimitados por él. Constituye la figura cerrada y convexa elemental a partir de la cual se construyen las <ConceptLink targetId="region-poligonal">regiones poligonales</ConceptLink> y sobre la que opera la <ConceptLink targetId="teoria-medida-area">teoría de la medida del área</ConceptLink>.
+
+<Definicion title="Definición formal de región triangular">
+Dado un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $	riangle ABC = {overline{AB}, overline{BC}, overline{CA}}$ contenido en un <ConceptLink targetId="plano">plano</ConceptLink> $pi$, con <ConceptLink targetId="traza">traza</ConceptLink> $operatorname{tr}(	riangle ABC) = overline{AB} cup overline{BC} cup overline{CA}$ e <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink> $operatorname{Int}(	riangle ABC)$, la **región triangular** determinada por $	riangle ABC$, denotada $operatorname{Reg}(	riangle ABC)$, es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos:
+
+$$
+operatorname{Reg}(	riangle ABC) = operatorname{tr}(	riangle ABC) cup operatorname{Int}(	riangle ABC)
+$$
+
+La traza $operatorname{tr}(	riangle ABC)$ constituye el contorno o frontera de la región, mientras que $operatorname{Int}(	riangle ABC)$ es su interior abierto y convexo.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades topológicas y de convexidad">
+    <PropiedadItem 
+      id="convexidad-region-triangular" 
+      title="Convexidad de la región triangular"
+      formula="P, Q in operatorname{Reg}(	riangle ABC) implies overline{PQ} subseteq operatorname{Reg}(	riangle ABC)"
+    >
+      Toda región triangular es un conjunto convexo en el plano. Si dos puntos $P$ y $Q$ pertenecen a $operatorname{Reg}(	riangle ABC)$, el <ConceptLink targetId="segmento">segmento</ConceptLink> cerrado $overline{PQ}$ está totalmente contenido en $operatorname{Reg}(	riangle ABC)$, consecuencia directa de la convexidad del interior y de los semiplanos que lo definen.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-frontera-interior" 
+      title="Partición en interior y frontera"
+      formula="operatorname{tr}(	riangle ABC) cap operatorname{Int}(	riangle ABC) = emptyset"
+    >
+      La traza y el interior del triángulo son conjuntos disjuntos. Ningún punto de los lados o vértices pertenece a $operatorname{Int}(	riangle ABC)$, de modo que la región triangular se descompone de forma disjunta en su frontera y su interior.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

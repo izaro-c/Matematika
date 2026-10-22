@@ -682,6 +682,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/axioma/axioma-paralelas-hiperbolico" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/altura-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/angulo-recto</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -722,6 +742,46 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulo" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/angulos-alternos-internos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/angulos-opuestos-vertice</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/angulos-suplementarios</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -740,6 +800,86 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-suplementarios" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-suplementarios" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-suplementarios" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/asociatividad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/asociatividad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/axioma</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/axioma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/axioma" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/axioma</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/axioma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/axioma" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/biyeccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/biyeccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/cardinalidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/cardinalidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/cateto</loc>
@@ -782,6 +922,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/circunferencia" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/cociente-incremental</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/colinealidad</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -802,6 +962,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/colinealidad" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/completitud-reales</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/completitud-reales</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/concepto-primitivo</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -820,6 +1000,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/concepto-primitivo" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/concepto-primitivo" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/concepto-primitivo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/congruencia-triangulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/congruencia</loc>
@@ -862,6 +1062,86 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto-disjunto" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/conjunto</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/conjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/conjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/conjunto</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/conjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/conjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/consistencia-logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/continuidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/continuidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/continuidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/continuidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/continuidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/continuidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/coplanaridad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/coplanaridad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/cuadrado</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -900,6 +1180,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cuadrilatero" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cuadrilatero" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cuadrilatero" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/cuerpo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/cuerpo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/derivada</loc>
@@ -942,6 +1242,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/dimension" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/distancia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/distancia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/distancia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/distancia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/distancia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/distancia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/dominio</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -960,6 +1280,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/dominio" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/dominio" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/dominio" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/elemento-inverso</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/elemento-neutro</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/espacio</loc>
@@ -1022,6 +1382,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/estructura-geometrica" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/funcion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/funcion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/funcion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/funcion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/funcion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/funcion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/geometria-hilbertiana</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1082,6 +1462,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/grupo" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/hipotenusa</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/hipotenusa</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/incidencia</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1100,6 +1500,66 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/incidencia" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/incidencia" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/incidencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/interior-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/interseccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interseccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interseccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/interseccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interseccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interseccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/isomorfismo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/isomorfismo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/lado</loc>
@@ -1122,6 +1582,46 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/lado" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/limite</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/limite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/limite" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/limite</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/limite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/limite" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/longitud</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -1140,6 +1640,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/longitud" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/longitud" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/longitud" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/operacion-binaria</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/orden-angulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/orden-angulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/paralelas</loc>
@@ -1262,6 +1802,186 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/recta" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/rectangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/rectangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/region-poligonal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/region-poligonal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/region-triangular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/region-triangular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/relacion-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/relacion-reflexiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/relacion-simetrica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/relacion-transitiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/secante</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/secante" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/secante" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/secante</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/secante" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/secante" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/segmento-unidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/segmento</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1342,6 +2062,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/semirrecta" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/semirrectas-opuestas</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/signatura</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1360,6 +2100,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/signatura" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/signatura" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/signatura" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/sistema-axiomatico</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/teorema</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teorema" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teorema" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/teorema</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teorema" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teorema" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/teoria-medida-area</loc>
@@ -1382,6 +2162,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-medida-area" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/teoria-modelos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/traza</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1400,6 +2200,86 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/traza" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/traza" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-acutangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-equilatero</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-isosceles</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-obtusangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-rectangulo</loc>
@@ -1460,6 +2340,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/vertice" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/vertice" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/vertice" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/proof/demo-angulos-alternos-internos</loc>
@@ -1582,6 +2482,86 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-ala" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lll</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/proof/demo-existencia-bisectriz</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1600,6 +2580,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-bisectriz" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-existencia-bisectriz" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-bisectriz" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-existencia-perpendicular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-areas</loc>
@@ -1640,6 +2660,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-euclides" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-euclides" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-euclides" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/proof/demo-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/proof/demo-suma-angulos-triangulo</loc>
@@ -2342,6 +3402,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/plan/plan-de-estudio-camino-teorema-pitagoras" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-angulos-alternos-internos</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2462,6 +3542,86 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-ala" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lll</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-existencia-bisectriz</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2482,6 +3642,66 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-bisectriz" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-existencia-perpendicular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2500,6 +3720,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/en/theorem/teorema-suma-angulos-triangulo</loc>
@@ -2832,6 +4072,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/axioma/axioma-paralelas-hiperbolico" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/altura-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/altura-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/altura-triangulo" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/angulo-recto</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -2852,6 +4102,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulo" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/angulos-alternos-internos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-alternos-internos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-alternos-internos" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/angulos-opuestos-vertice</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-opuestos-vertice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-opuestos-vertice" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/angulos-suplementarios</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2860,6 +4130,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/angulos-suplementarios" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/angulos-suplementarios" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/angulos-suplementarios" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/asociatividad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/asociatividad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/asociatividad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/axioma</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/axioma" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/axioma" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/axioma" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/biyeccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/biyeccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/biyeccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/cardinalidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cardinalidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cardinalidad" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/cateto</loc>
@@ -2882,6 +4192,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/circunferencia" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/cociente-incremental</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cociente-incremental" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cociente-incremental" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/colinealidad</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -2892,6 +4212,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/colinealidad" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/completitud-reales</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/completitud-reales" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/completitud-reales" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/concepto-primitivo</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2900,6 +4230,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/concepto-primitivo" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/concepto-primitivo" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/concepto-primitivo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/congruencia-triangulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/congruencia-triangulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/congruencia-triangulos" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/congruencia</loc>
@@ -2922,6 +4262,46 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto-disjunto" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/conjunto</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/conjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/conjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/conjunto" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/consistencia-logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/consistencia-logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/consistencia-logica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/continuidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/continuidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/continuidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/continuidad" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/coplanaridad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/coplanaridad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/coplanaridad" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/cuadrado</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2940,6 +4320,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cuadrilatero" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cuadrilatero" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cuadrilatero" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/cuerpo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/cuerpo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/cuerpo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/derivada</loc>
@@ -2962,6 +4352,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/dimension" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/distancia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/distancia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/distancia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/distancia" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/dominio</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -2970,6 +4370,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/dominio" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/dominio" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/dominio" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/elemento-inverso</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-inverso" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-inverso" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/elemento-neutro</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/elemento-neutro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/elemento-neutro" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/espacio</loc>
@@ -3002,6 +4422,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/estructura-geometrica" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/funcion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/funcion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/funcion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/funcion" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/geometria-hilbertiana</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3032,6 +4462,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/grupo" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/hipotenusa</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/hipotenusa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/hipotenusa" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/incidencia</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3040,6 +4480,36 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/incidencia" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/incidencia" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/incidencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/interior-triangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interior-triangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interior-triangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/interseccion</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/interseccion" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/interseccion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/interseccion" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/isomorfismo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/isomorfismo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/isomorfismo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/lado</loc>
@@ -3052,6 +4522,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/lado" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/limite</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/limite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/limite" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/limite" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/logica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/logica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/logica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/logica" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/longitud</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -3060,6 +4550,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/longitud" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/longitud" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/longitud" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/operacion-binaria</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/operacion-binaria" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/operacion-binaria" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/orden-angulos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/orden-angulos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/orden-angulos" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/paralelas</loc>
@@ -3122,6 +4632,96 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/recta" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/rectangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/rectangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/rectangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/region-poligonal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-poligonal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-poligonal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/region-triangular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/region-triangular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/region-triangular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/relacion-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/relacion-reflexiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-reflexiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-reflexiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/relacion-simetrica</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-simetrica" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-simetrica" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/relacion-transitiva</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/relacion-transitiva" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/relacion-transitiva" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/secante</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/secante" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/secante" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/secante" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/segmento-unidad</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/segmento-unidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/segmento-unidad" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/segmento</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3162,6 +4762,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/semirrecta" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/semirrectas-opuestas</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/semirrectas-opuestas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/semirrectas-opuestas" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/signatura</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3170,6 +4780,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/signatura" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/signatura" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/signatura" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/sistema-axiomatico</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/sistema-axiomatico" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/teorema</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teorema" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teorema" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teorema" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/teoria-medida-area</loc>
@@ -3182,6 +4812,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-medida-area" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/teoria-modelos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teoria-modelos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-modelos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/traza</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3190,6 +4830,46 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/traza" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/traza" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-acutangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-acutangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-acutangulo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-equilatero</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-equilatero" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-equilatero" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-isosceles</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-isosceles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-isosceles" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-obtusangulo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/triangulo-obtusangulo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/triangulo-obtusangulo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-rectangulo</loc>
@@ -3220,6 +4900,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/vertice" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/vertice" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/vertice" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-angulo-exterior" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-angulos-alternos-internos</loc>
@@ -3282,6 +4972,46 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-ala" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lll</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-congruencia-suplementos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-bisectriz</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3290,6 +5020,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-bisectriz" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-existencia-bisectriz" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-bisectriz" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-perpendicular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-lados-opuestos-paralelogramo" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-areas</loc>
@@ -3310,6 +5060,26 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-euclides" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-euclides" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-euclides" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-pitagoras-reciproco" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/frogapena/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/proof/demo-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/demo/demo-separacion-plano" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/frogapena/demo-suma-angulos-triangulo</loc>
@@ -3662,6 +5432,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/plan/plan-de-estudio-camino-teorema-pitagoras" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-angulo-exterior</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-angulo-exterior" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-angulo-exterior" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-angulos-alternos-internos</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3722,6 +5502,46 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-ala" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-angulos-equivalencia</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-angulos-equivalencia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-angulos-equivalencia" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lll</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-lll" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-lll" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-suplementos</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-congruencia-suplementos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-congruencia-suplementos" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-existencia-bisectriz</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3732,6 +5552,36 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-bisectriz" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-existencia-perpendicular</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-existencia-perpendicular" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-existencia-perpendicular" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-lados-opuestos-paralelogramo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-lados-opuestos-paralelogramo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-lados-opuestos-paralelogramo" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras-reciproco</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras-reciproco" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras-reciproco" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -3740,6 +5590,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-pitagoras" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-pitagoras" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-pitagoras" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-separacion-plano</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/teorema/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/theorem/teorema-separacion-plano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/teorema/teorema-separacion-plano" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/teorema/teorema-suma-angulos-triangulo</loc>

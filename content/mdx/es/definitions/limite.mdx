@@ -1,0 +1,43 @@
+export const metadata = {
+  id: "limite",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Límite",
+  description: "Formalización métrica de la aproximación sucesiva de los valores de una función real hacia un valor numérico en un punto de acumulación.",
+  branch: "26A",
+  branches: ["26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 4", role: "primary" },
+    { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 5", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />l **límite** de una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> real formaliza la noción de aproximación sucesiva de sus valores hacia un valor numérico fijo a medida que la variable independiente se aproxima a un punto dado. Formulada inicialmente de forma intuitiva por <ConceptLink targetId="newton">Newton</ConceptLink> y <ConceptLink targetId="leibniz">Leibniz</ConceptLink>, la definición rigurosa fue establecida por <ConceptLink targetId="cauchy">Cauchy</ConceptLink> y consolidada definitivamente en el lenguaje métrico de épsilon y delta por <ConceptLink targetId="weierstrass">Weierstrass</ConceptLink>, erigiéndose en el cimiento sobre el que descansa el <ConceptLink targetId="analisis-matematico">análisis matemático</ConceptLink>, la <ConceptLink targetId="continuidad">continuidad</ConceptLink> y la <ConceptLink targetId="derivada">derivada</ConceptLink>.
+
+<Definicion title="Definición formal de límite (Weierstrass)">
+  Sean $D \subseteq \mathbb{R}$ el dominio de una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> real $f\colon D \longrightarrow \mathbb{R}$ y sea $c \in \mathbb{R}$ un <ConceptLink targetId="punto-acumulacion">punto de acumulación</ConceptLink> de $D$. Se dice que el **límite** de $f(x)$ cuando $x$ tiende a $c$ es el número real $L \in \mathbb{R}$, y se denota:
+  $$
+  \lim_{x \to c} f(x) = L
+  $$
+  si y solo si para todo número real $\varepsilon > 0$ existe un número real $\delta > 0$ tal que para todo $x \in D$:
+  $$
+  0 < |x - c| < \delta \implies |f(x) - L| < \varepsilon
+  $$
+  La condición $0 < |x - c|$ exige que la aproximación sea válida en el entorno perforado del punto, de modo que el valor del límite es completamente independiente de que la función esté o no definida en el propio punto $c$, o de que $f(c)$ coincida con $L$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades fundamentales del límite">
+    <PropiedadItem id="unicidad-del-limite" title="Unicidad del límite" formula="\lim_{x \to c} f(x) = L_1 \land \lim_{x \to c} f(x) = L_2 \implies L_1 = L_2">
+      Si una <ConceptLink targetId="funcion">función</ConceptLink> posee límite en un punto de acumulación $c$, dicho límite es único. Si existieran dos valores $L_1 \neq L_2$, bastaría tomar $\varepsilon = \frac{|L_1 - L_2|}{2} > 0$. Por la definición de límite, existirían radios $\delta_1 > 0$ y $\delta_2 > 0$ tales que para todo $x \in D$ con $0 < |x - c| < \min(\delta_1, \delta_2)$ se verificaría por la desigualdad triangular:
+      $$
+      |L_1 - L_2| \le |L_1 - f(x)| + |f(x) - L_2| < \varepsilon + \varepsilon = |L_1 - L_2|
+      $$
+      lo cual constituye una contradicción estricta.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

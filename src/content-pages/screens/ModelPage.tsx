@@ -28,6 +28,7 @@ export function ModelPage() {
   const satisfiesIds = model ? (Array.isArray(model.satisfies) ? model.satisfies : [model.satisfies]).filter(Boolean) : [];
   const systems = satisfiesIds.map(sysId => db.getAxiomaticSystem(sysId, lang)).filter(Boolean);
   const primarySystem = systems[0];
+  const baseTheory = model?.builtIn ? db.getAxiomaticSystem(model.builtIn, lang) : undefined;
   const verifiedAxioms = (model?.axioms_verified || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
 
   const renderSecondaryContent = () => (
@@ -43,6 +44,17 @@ export function ModelPage() {
                 read={isRead(sys.id)}
               />
             ))}
+          </VocabSection>
+        )}
+
+        {baseTheory && (
+          <VocabSection heading={t('content', 'modelBaseTheory')} accentType="sistema-axiomatico" count={1} className="mt-16">
+            <VocabEntry
+              href={getLocalizedPath(`/sistema/${baseTheory.id}`)}
+              title={baseTheory.title}
+              description={baseTheory.description}
+              read={isRead(baseTheory.id)}
+            />
           </VocabSection>
         )}
 

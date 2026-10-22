@@ -1,8 +1,35 @@
 {
   "skill_name": "matematika-content-generator",
   "evals": [
-    {"id": 1, "prompt": "Hay demasiadas páginas 'En construcción' en la web. ¿Cuál es el hueco más importante del grafo ahora mismo? Escríbelo en los tres idiomas.", "expected_output": "Identifica el ID ausente de mayor impacto (ranking) y crea es/en/eu con paridad completa que pasa los validadores.", "files": []},
-    {"id": 2, "prompt": "Escribe el nodo colinealidad en castellano, euskera e inglés.", "expected_output": "definicion de colinealidad coherente con los 26 nodos que la enlazan, paridad trilingüe, sin JSX dentro de $, lang correcto.", "files": []},
-    {"id": 3, "prompt": "Falta la página de ángulo recto (angulo-recto). Créala en los tres idiomas.", "expected_output": "definicion sintética (ángulo congruente con su suplementario adyacente, sin 90° como definición), dependencias correctas, paridad trilingüe.", "files": []}
+    {
+      "id": 1,
+      "prompt": "Hay demasiadas páginas 'En construcción' en la web. ¿Cuál es el hueco más importante del grafo ahora mismo? Escríbelo en los tres idiomas.",
+      "expected_output": "Identifica el ID ausente de mayor impacto (ranking) y crea es/en/eu con paridad completa que pasa los validadores.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Escribe el nodo colinealidad en castellano, euskera e inglés.",
+      "expected_output": "definicion de colinealidad coherente con los 26 nodos que la enlazan, paridad trilingüe, sin JSX dentro de $, lang correcto.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Falta la página de ángulo recto (angulo-recto). Créala en los tres idiomas.",
+      "expected_output": "definicion sintética (ángulo congruente con su suplementario adyacente, sin 90° como definición), dependencias correctas, paridad trilingüe.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Empieza el marco de los números reales: crea sistema-cuerpo-real con sus axiomas de cuerpo, orden y completitud.",
+      "expected_output": "sistema-axiomatico con ese ID exacto (ya citado como builtIn por modelo-cartesiano y modelo-poincare), axiomas en axioms/ con axiomSystem y axiomFamily, branch MSC registrado, ningún isDependency entre axiomas de geometría y de ℝ, paridad trilingüe y validate-nodes con TODO OK.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Escribe relacion-equivalencia y sus tres propiedades (reflexiva, simétrica, transitiva).",
+      "expected_output": "Nodos relacion-equivalencia, relacion-reflexiva, relacion-simetrica, relacion-transitiva (no reflexividad/simetria/transitividad); simetria queda para la simetría geométrica; los contextos de rank-missing-ids --contexts se respetan; validate-nodes con TODO OK.",
+      "files": []
+    }
   ]
 }

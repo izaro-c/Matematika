@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "cuerpo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Gorputza",
+  description: "Egitura aljebraikoa, bi eragiketa bitar bateragarri (batuketa eta biderketa) dituena, banatze-propietateak lotutako bi talde abeldar osatuz.",
+  branch: "12",
+  branches: ["12", "08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "II. Kapitulua, §1", role: "primary" },
+    { title: "Algebra", author: "Michael Artin", locator: "3. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="G" />**orputza** oinarrizko egitura aljebraiko bat da, barneko bi eragiketa bitar bateragarriz hornitua —batuketa eta biderketa—, $\mathbb{Q}$ arrazionalak, $\mathbb{R}$ errealak eta $\mathbb{C}$ konplexuak bezalako zenbaki-sistema klasikoen propietate aritmetikoak orokortzen dituena.
+
+Gorputz batean batu, kendu, biderkatu eta zero ez den edozein elementuz zatitu daiteke, ohiko propietate elkartzaileak, trukakorrak eta banatzaileak betez.
+
+<Definicion title="Gorputzaren egitura formala">
+  **Gorputz** bat $(\mathbb{K}, +, \cdot)$ hirukote bat da, hutsik ez dagoen $\mathbb{K}$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek eta $+ \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ eta $\cdot \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ barneko bi <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitarrek</ConceptLink> osatua, non:
+  1. $(\mathbb{K}, +)$ <ConceptLink targetId="grupo" isDependency={true}>talde</ConceptLink> abeldar bat den, bere elementu neutroa $0$ bidez adierazita.
+  2. $(\mathbb{K} \setminus \{0\}, \cdot)$ talde abeldar bat den, bere elementu neutroa $1$ bidez adierazita, $1 \neq 0$ izanik.
+  3. Biderketa banakorra den batuketarekiko bi aldeetatik:
+     $$
+     \forall a, b, c \in \mathbb{K}, \quad a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \land \quad (a + b) \cdot c = (a \cdot c) + (b \cdot c)
+     $$
+</Definicion>
+
+<Separador />
+
+### Gorputz ordenatuak eta koherentzia analitikoa
+
+Gorputz batek batuketarekin eta elementu positiboen biderketarekin bateragarria den ordena osoko erlazio bat duenean, *gorputz ordenatu* deritzo.
+
+$\mathbb{R}$ zenbaki errealen gorputza da gorenenaren propietatea edo <ConceptLink targetId="completitud-reales">zenbaki errealen osotasuna</ConceptLink> betetzen duen gorputz ordenatu arkimedestar bakarra. Egitura-osotasun horri esker $\mathbb{R}^n$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiar</ConceptLink> analitikoa eraiki daiteke, Hilbertek sintetikoki <ConceptLink targetId="axioma-completitud">V.2 axioman</ConceptLink> postulatutako <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> zorroztasun aljebraiko osoz oinarrituz.

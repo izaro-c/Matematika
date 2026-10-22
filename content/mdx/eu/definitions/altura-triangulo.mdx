@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "altura-triangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangeluaren altuera",
+  description: "Triangelu baten erpin batetik aurkako aldearen zuzen euskarrira marraztutako segmentu perpendikularra, erpina perpendikular horren oinarekin lotzen duena.",
+  statement: "Triangelu baten erpin bat emanda, dagokion altuera erpin horretatik aurkako aldearen zuzen euskarrira marraztutako segmentu perpendikularra da, muturra oinean duena.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "altura", "perpendicular", "ortocentro"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "secondary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { Altura } from '@content/diagrams/Definiciones/Altura';
+export const Simulation = Altura;
+
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo" isDependency={true}>triangelutan</ConceptLink>, emandako <ConceptLink targetId="vertice">erpin</ConceptLink> bati dagokion **altuera** erpin horretatik aurkako <ConceptLink targetId="lado">aldearen</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>zuzen euskarrira</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularki</ConceptLink> marraztutako <ConceptLink targetId="segmento">zuzenkia</ConceptLink> da, muturra perpendikular horren oinean duena.
+
+<ConceptLink targetId="teorema-existencia-perpendicular">Perpendikularraren existentziaren teoremaren</ConceptLink> arabera, erpin bakoitzetik zuzen perpendikular bakarra dago aurkako zuzen euskarrira, eta horrek zehazki hiru <VisualBind element="alturas" color="ocre">altuera</VisualBind> finkatzen ditu edozein triangelutan. Geometria euklidear metrikoan, terminoak zuzenki horren <ConceptLink targetId="longitud">luzera</ConceptLink> ere izendatzen du, <ConceptLink targetId="region-triangular">eskualde triangeluarraren</ConceptLink> <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> kalkulatzeko oinarrizko parametroa dena.
+
+<Definicion title="Triangeluaren altueraren definizio formala">
+Izan bedi $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko <VisualBind element="polygonABC" color="musgo"><ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink></VisualBind> bat, lerrokatu gabeko hiru <ConceptLink targetId="punto">puntu</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ bidez zehaztua.
+
+<VisualBind element="pC" color="terracota">$C$</VisualBind> erpinerako eta aurkako aldearen $\overleftrightarrow{AB}$ <ConceptLink targetId="recta" isDependency={true}>zuzen euskarrirako</ConceptLink>, $C$-tik igarotzen den eta $\overleftrightarrow{AB}$ zuzenarekiko perpendikularra den zuzen bakarrak $\operatorname{tr}(\overleftrightarrow{AB})$ ebakitzen du <VisualBind element="footCAB" color="ocre">$H_c \in \mathcal{P}$</VisualBind> puntu bakar batean, perpendikularraren oina deritzona:
+
+$$
+\overleftrightarrow{CH_c} \perp \overleftrightarrow{AB}, \quad H_c \in \operatorname{tr}(\overleftrightarrow{AB})
+$$
+
+$C$ erpinari dagokion **altuera** <VisualBind element="segAlturaCAB" color="ocre">$\overline{CH_c}$</VisualBind> <ConceptLink targetId="segmento">zuzenki</ConceptLink> itxia da:
+
+$$
+h_c = \overline{CH_c}
+$$
+
+Modu berean, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> erpinek <VisualBind element="footABC" color="ocre">$H_a$</VisualBind> eta <VisualBind element="footBAC" color="ocre">$H_b$</VisualBind> oinak zehazten dituzte $\overleftrightarrow{BC}$ eta $\overleftrightarrow{CA}$ zuzen euskarrietan, <VisualBind element="segAlturaABC" color="ocre">$\overline{AH_a}$</VisualBind> eta <VisualBind element="segAlturaBAC" color="ocre">$\overline{BH_b}$</VisualBind> altuerak definituz.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate geometrikoak eta konkurrentzia">
+    <PropiedadItem 
+      id="existencia-unicidad-pie" 
+      title="Altueraren oinaren existentzia eta bakartasuna"
+      formula="\forall V \in \{A, B, C\} \; \exists! H \in \operatorname{tr}(\ell_{\mathrm{op}}) : \overleftrightarrow{VH} \perp \ell_{\mathrm{op}}"
+    >
+      Triangeluaren <ConceptLink targetId="vertice">erpin</ConceptLink> bakoitzerako, altueraren oina existitzen da eta bakarra da planoan <ConceptLink targetId="teorema-existencia-perpendicular">perpendikularraren existentziaren teoremari</ConceptLink> esker, ez baitago aurkako aldearen <ConceptLink targetId="recta">zuzen euskarriarekin</ConceptLink> intziditzen duen erpinik.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="concurrencia-ortocentro" 
+      title="Altueren konkurrentzia ortozentroan"
+      formula="\overleftrightarrow{AH_a} \cap \overleftrightarrow{BH_b} \cap \overleftrightarrow{CH_c} = \{O\}"
+    >
+      Edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, <VisualBind element="alturas" color="ocre">altueren</VisualBind> hiru <ConceptLink targetId="recta">zuzen euskarriek</ConceptLink> elkar ebakitzen dute <ConceptLink targetId="punto">puntu</ConceptLink> bakar batean, <VisualBind element="intsegAlturaABCsegAlturaCAB" color="terracota">$O \in \mathcal{P}$</VisualBind>, triangeluaren <ConceptLink targetId="ortocentro">ortozentroa</ConceptLink> deritzona.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-pie-altura" 
+      title="Oinaren posizioa angeluen arabera"
+      formula="H_c \in \overline{AB} \iff \angle CAB \le \text{recto} \land \angle ABC \le \text{recto}"
+    >
+      $H_c$ altueraren oina $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkikoa</ConceptLink> da baldin eta soilik baldin oinarriko bi <ConceptLink targetId="angulo">angeluak</ConceptLink> kamutsak ez badira; <ConceptLink targetId="triangulo-obtusangulo">triangelu kamuts</ConceptLink> batean, bi oin nahitaez aldeen kanpoko <VisualBind element="prolongaciones" color="ocre">luzapenetan</VisualBind> erortzen dira.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

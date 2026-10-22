@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "congruencia-triangulos",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangeluen kongruentzia",
+  description: "Triangeluen arteko baliokidetasun-erlazioa, haien erpinen arteko biekzio batek zehaztua, hiru alde homologoen eta hiru angelu homologoen kongruentzia mantentzen duena.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert", "geometria-absoluta"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 y §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Nociones Comunes",
+      role: "secondary"
+    }
+  ]
+};
+
+import { CongruenciaTriangulos } from '@content/diagrams/Definiciones/CongruenciaTriangulos';
+export const Simulation = CongruenciaTriangulos;
+
+<Capitular letra="B" />i <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> **kongruenteak** dira haien <ConceptLink targetId="vertice" isDependency={true}>erpinen</ConceptLink> artean bat-bateko korrespondentzia bat existitzen bada, non hiru <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> homologoen bikoteak eta hiru <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> homologoen bikoteak elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> diren.
+
+Triangeluen arteko kongruentzia-erlazioak <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> eta angeluen oinarrizko kongruentzia hedatu egiten du <ConceptLink targetId="plano">planoko</ConceptLink> irudi konposatuetara. Definizio osoak elementu homologoen sei kongruentziak aldi berean egiaztatzea eskatzen badu ere, <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> kongruentzia-irizpideek frogatzen dute nahikoa dela horien azpimultzo minimo bat betetzea: <ConceptLink targetId="teorema-congruencia-lal">LAL irizpidea</ConceptLink> (Aldea-Angelua-Aldea), <ConceptLink targetId="teorema-congruencia-ala">ALA irizpidea</ConceptLink> (Angelua-Aldea-Angelua) eta <ConceptLink targetId="teorema-congruencia-lll">LLL irizpidea</ConceptLink> (Aldea-Aldea-Aldea).
+
+<Definicion title="Triangeluen kongruentziaren definizio formala">
+Izan bitez <VisualBind element="triangleABC" color="musgo">$\triangle ABC$</VisualBind> eta <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind> bi <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink>, $\mathcal{P}$-ko <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealen</ConceptLink> hirukoteek zehaztuak, <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> eta <VisualBind element="pAA" color="carbon">$A'$</VisualBind>, <VisualBind element="pBB" color="carbon">$B'$</VisualBind>, <VisualBind element="pCC" color="carbon">$C'$</VisualBind> <ConceptLink targetId="vertice" isDependency={true}>erpinekin</ConceptLink>.
+
+$\triangle ABC$ triangelua $\triangle A'B'C'$ triangeluarekin **kongruentea** da $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$ erpinen korrespondentziari dagokionez, <VisualBind element="congruencia-total" color="musgo">$\triangle ABC \cong \triangle A'B'C'$</VisualBind> ikurrez idatzia, baldin eta soilik baldin haren hiru <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> homologoen eta hiru <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> homologoen kongruentziak aldi berean betetzen badira:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \begin{cases}
+\overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \\
+\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+\end{cases}
+$$
+
+Grafikoki, <VisualBind element="sidesAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>, <VisualBind element="sidesBC" color="pavo">$\overline{BC} \cong \overline{B'C'}$</VisualBind> eta <VisualBind element="sidesCA" color="canela">$\overline{CA} \cong \overline{C'A'}$</VisualBind> alde homologoen bikoteak, baita <VisualBind element="anglesA" color="terracota">$\angle A \cong \angle A'$</VisualBind>, <VisualBind element="anglesB" color="pavo">$\angle B \cong \angle B'$</VisualBind> eta <VisualBind element="anglesC" color="canela">$\angle C \cong \angle C'$</VisualBind> angelu homologoen bikoteak ere, elkarren artean kongruenteak dira korrespondentzia horren pean.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Baliokidetasun-propietateak">
+    <PropiedadItem 
+      id="equivalencia-congruencia-triangulos" 
+      title="Baliokidetasun-erlazioa"
+      formula="\triangle ABC \cong \triangle ABC \land (\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC)"
+    >
+      Triangeluen kongruentzia baliokidetasun-erlazio bat da: <ConceptLink targetId="relacion-reflexiva">erreflexiboa</ConceptLink> da ($\triangle ABC \cong \triangle ABC$), <ConceptLink targetId="relacion-simetrica">simetrikoa</ConceptLink> da ($\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC$) eta <ConceptLink targetId="relacion-transitiva">iragankorra</ConceptLink> da, zuzenkien eta angeluen kongruentziaren propietateen ondorio zuzena izanik.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="orden-correspondencia-vertices" 
+      title="Erpinen korrespondentzia-ordenaren mendekotasuna"
+      formula="\triangle ABC \cong \triangle A'B'C' \not\implies \triangle ABC \cong \triangle B'A'C'"
+    >
+      $\triangle ABC \cong \triangle A'B'C'$ notazioak erpinen arteko korrespondentzia ordenatua zehazten du hertsiki; triangeluetako batean ordena aldatzeak eskatutako bikote homologoak aldatzen ditu, eta triangeluak barne-simetriak dituenean soilik da onargarria, <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen</ConceptLink> kasuan bezala.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

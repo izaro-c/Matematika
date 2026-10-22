@@ -12,7 +12,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="D" />os <ConceptLink targetId="conjunto">conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su <ConceptLink targetId="interseccion">intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink>:
+<Capitular letra="D" />os <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su <ConceptLink targetId="interseccion" isDependency={true}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink>:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$

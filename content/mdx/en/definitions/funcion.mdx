@@ -1,0 +1,54 @@
+export const metadata = {
+  id: "funcion",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Function",
+  description: "Binary relation between two sets that associates each element of the domain with a unique element in the codomain.",
+  branch: "03E",
+  branches: ["03E", "26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. It is one of the most foundational structural concepts in modern mathematics, underpinning <ConceptLink targetId="analisis-matematico">analysis</ConceptLink>, <ConceptLink targetId="algebra">algebra</ConceptLink>, and <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink> as a formal vehicle for dependency and transformation across mathematical objects.
+
+<Definicion title="Formal definition of function">
+  Let $A$ and $B$ be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A **function** $f$ from $A$ to $B$ (denoted $f\colon A \longrightarrow B$) is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $f \subseteq A \times B$ that satisfies two conditions of existence and uniqueness:
+  1. **Totality (existence of image):** Every element of the <ConceptLink targetId="dominio">domain</ConceptLink> has at least one associated element:
+     $$
+     \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)
+     $$
+  2. **Uniqueness (functionality):** No element of the domain is associated with more than one element of the <ConceptLink targetId="codominio">codomain</ConceptLink>:
+     $$
+     \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
+     $$
+  
+  When $(x, y) \in f$, one writes $y = f(x)$, where $y$ is the <ConceptLink targetId="imagen">image</ConceptLink> of $x$ under $f$, and $x$ is a preimage of $y$. The set $A$ is called the domain of $f$, $B$ is its codomain, and the set $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ is the image or range of the function.
+</Definicion>
+
+<Separador />
+
+### Fundamental classes of functions
+
+A function $f\colon A \longrightarrow B$ is classified according to the behavior of its assignments:
+
+- **<ConceptLink targetId="inyectividad">Injective</ConceptLink>:** Distinct elements have distinct images: $\forall x_1, x_2 \in A, \ f(x_1) = f(x_2) \implies x_1 = x_2$.
+- **<ConceptLink targetId="sobreyectividad">Surjective</ConceptLink>:** The image exhausts the entire codomain: $\forall y \in B, \ \exists x \in A \ (f(x) = y)$, that is, $\operatorname{Im}(f) = B$.
+- **<ConceptLink targetId="biyeccion">Bijective</ConceptLink>:** It is simultaneously injective and surjective, which guarantees the existence of an inverse function $f^{-1}\colon B \longrightarrow A$.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Algebra of functions">
+    <PropiedadItem id="igualdad-funciones" title="Equality criterion for functions">
+      Two functions $f\colon A \longrightarrow B$ and $g\colon C \longrightarrow D$ are equal ($f = g$) if and only if they share the same domain ($A = C$), the same codomain ($B = D$), and agree pointwise on every element: $\forall x \in A, \ f(x) = g(x)$.
+    </PropiedadItem>
+    <PropiedadItem id="asociatividad-composicion-funciones" title="Associativity of composition">
+      Given three functions $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$, and $h\colon C \longrightarrow D$, <ConceptLink targetId="composicion-funciones">function composition</ConceptLink> satisfies the associative property: $h \circ (g \circ f) = (h \circ g) \circ f$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

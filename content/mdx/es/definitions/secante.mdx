@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "secante",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Secante",
+  description: "Relación de incidencia entre rectas coplanares que se cortan exactamente en un único punto, o recta transversal que interseca a una familia de rectas.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "incidencia", "recta", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1 y §2",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 23",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Secante } from '@content/diagrams/Definiciones/Secante';
+export const Simulation = Secante;
+
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> son **secantes** si su intersección consta exactamente de un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink>. De manera análoga, una recta es una **secante transversal** respecto a una familia de rectas coplanares si corta a cada una de ellas en puntos distintos.
+
+Por el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, dos rectas distintas no pueden compartir más de un punto sin coincidir plenamente. En un mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, dos rectas o bien son <ConceptLink targetId="paralelas">paralelas</ConceptLink> —caso en el que coinciden o carecen de puntos comunes— o bien son secantes. Las rectas secantes transversales constituyen la herramienta geométrica esencial para establecer relaciones angulares fundamentales, como en el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink> y en el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink>.
+
+<Definicion title="Definición formal de rectas secantes y secante transversal">
+Sean <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> $\in \mathcal{L}$ dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> distintas coplanares en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, esto es, $\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$. Las rectas $\ell_1$ y $\ell_2$ son **secantes** si <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> simultáneamente en un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="pP" color="ocre">$P$</VisualBind> $\in \mathcal{P}$:
+
+$$
+\operatorname{sec}(\ell_1, \ell_2) \iff (\ell_1 \neq \ell_2) \land \exists! P \in \mathcal{P} \, (P \,\mathbf{I}\, \ell_1 \land P \,\mathbf{I}\, \ell_2)
+$$
+
+Equivalentemente, en términos de su <ConceptLink targetId="traza">traza puntual</ConceptLink>, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$. El punto $P$ recibe el nombre de **punto de intersección** de ambas rectas.
+
+Asimismo, una recta <VisualBind element="lineT" color="musgo">$t$</VisualBind> $\in \mathcal{L}$ contenida en el mismo plano $\pi$ ($\operatorname{tr}(t) \subseteq \operatorname{tr}(\pi)$) es una **secante transversal** a $\ell_1$ y $\ell_2$ si es secante a cada una de ellas en puntos distintos <VisualBind element="pP1" color="pavo">$P_1$</VisualBind> $\neq$ <VisualBind element="pP2" color="pavo">$P_2$</VisualBind>:
+
+$$
+\operatorname{transv}(t; \ell_1, \ell_2) \iff \exists P_1, P_2 \in \mathcal{P} \, (P_1 \neq P_2 \land P_1 \,\mathbf{I}\, t \land P_1 \,\mathbf{I}\, \ell_1 \land P_2 \,\mathbf{I}\, t \land P_2 \,\mathbf{I}\, \ell_2)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de incidencia y paralelismo">
+    <PropiedadItem 
+      id="unicidad-punto-corte-secantes" 
+      title="Unicidad del punto de intersección"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \implies |\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)| = 1"
+    >
+      Si dos <ConceptLink targetId="recta">rectas</ConceptLink> tienen dos o más <ConceptLink targetId="punto">puntos</ConceptLink> comunes distintos, el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> exige que ambas rectas sean idénticas; por tanto, dos rectas secantes distintas no pueden cortarse en más de un punto.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-relacion-secante" 
+      title="Simetría de la relación secante"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \iff \operatorname{sec}(\ell_2, \ell_1)"
+    >
+      La condición de corte entre rectas de un <ConceptLink targetId="plano">plano</ConceptLink> es simétrica: si una recta es secante a una segunda, la segunda es secante a la primera compartiendo el mismo punto de intersección.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

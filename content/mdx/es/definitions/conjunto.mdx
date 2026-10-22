@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "conjunto",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Conjunto",
+  description: "Colección bien determinada de objetos matemáticos distinguibles (elementos) bajo la relación primitiva de pertenencia.",
+  branch: "03E",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 1", role: "primary" },
+    { title: "Set Theory", author: "Thomas Jech", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />n **conjunto** es una noción matemática fundamental que formaliza la agrupación en un todo unificado de objetos definidos, discernibles y delimitados —denominados elementos—, relacionados con el conjunto mediante la relación primitiva de pertenencia.
+
+Constituye el lenguaje ontológico universal de la matemática moderna. Para evitar paradojas lógicas asociadas a colecciones irrestrictas (como la paradoja de Russell sobre la colección de todos los conjuntos que no se pertenecen a sí mismos), la teoría axiomática de conjuntos (ZFC) restringe la formación de conjuntos mediante axiomas rigurosos que garantizan la estabilidad deductiva de las operaciones.
+
+<Definicion title="Pertenencia, igualdad y subconjuntos">
+  Sean $x$ un objeto y $A$ un conjunto. La expresión $x \in A$ formaliza que $x$ **pertenece** a $A$ (es elemento de $A$), mientras que $x \notin A$ formaliza $\neg(x \in A)$.
+  
+  Dos conjuntos $A$ y $B$ son **iguales** si y solo si poseen con exactitud los mismos elementos (Axioma de extensionalidad):
+  $$
+  A = B \iff \forall x \ (x \in A \iff x \in B)
+  $$
+  Un conjunto $A$ es un **subconjunto** de $B$ (notado $A \subseteq B$) si todo elemento de $A$ pertenece a $B$:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+</Definicion>
+
+<Separador />
+
+### Operaciones conjuntistas y geometrización del espacio
+
+A partir de conjuntos dados se construyen nuevas entidades mediante operaciones booleanas elementales:
+- La unión $A \cup B = \{x \mid x \in A \lor x \in B\}$.
+- La <ConceptLink targetId="interseccion">intersección</ConceptLink> $A \cap B = \{x \mid x \in A \land x \in B\}$. Dos conjuntos son <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> si $A \cap B = \emptyset$.
+- La diferencia $A \setminus B = \{x \mid x \in A \land x \notin B\}$.
+- El <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$, formado por la totalidad de subconjuntos de $A$.
+
+En la formalización de la geometría sintética de Hilbert, el <ConceptLink targetId="espacio">espacio</ConceptLink> se concibe como el conjunto $\mathcal{P}$ de todos los <ConceptLink targetId="punto">puntos</ConceptLink>. Las figuras compuestas como el <ConceptLink targetId="segmento">segmento</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y el <ConceptLink targetId="triangulo">triángulo</ConceptLink> son subconjuntos específicos de $\mathcal{P}$, permitiendo aplicar con rigor el álgebra de conjuntos en el análisis de regiones y fronteras.

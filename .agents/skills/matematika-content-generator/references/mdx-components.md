@@ -12,6 +12,12 @@ Los siguientes componentes están disponibles globalmente en cualquier archivo `
   - Pensar bien cuándo añadirla y cuándo no. La nota debe ser la excepción y no la norma: se reserva para observaciones verdaderamente relevantes e importantes, evitando notas innecesarias para sobrecorrecciones o justificaciones defensivas.
 - **`<Cita author="Autor">`**: Bloque de cita destacada con autor.
 
+La lista completa de componentes registrados es el objeto `MDXComponents` de `src/components/mdx/MDXBlocks.tsx`; un componente que no esté ahí ni importado en el propio archivo rompe la página (`lint-node.mjs` lo detecta).
+
+### Demostraciones por pasos
+- `<DemonstrationSection diagram={<DemoX />}>` envuelve los pasos; `DemoX` se importa de `@content/diagrams/Demos/...`.
+- `<ProofStep number={n} diagramStep="stepN" title="…">`: `diagramStep` es el `id` de un paso de `spec.steps` y es lo que sincroniza texto y diagrama al hacer scroll. `target` es opcional y no se valida contra el diagrama.
+
 ---
 
 ## 2. Matemáticas y Definiciones
@@ -24,8 +30,8 @@ Los siguientes componentes están disponibles globalmente en cualquier archivo `
 
 ## 3. Hiperenlaces y Vinculación Visual
 
-- **`<ConceptLink targetId="..." isDependency={true|false}>Texto</ConceptLink>`**: Enlace semántico a otra página del grafo. Todo concepto formal (`biyeccion`, `simetria`, `reflexividad`, `teorema`, etc.) debe tener su enlace.
-- **`<VisualBind element="..." color="...">Fórmula/Término</VisualBind>`**: Vincula texto o símbolos con elementos interactivos del diagrama (`color`: `"musgo"` | `"pavo"` | `"terracota"` | `"ocre"` | `"carbon"`).
+- **`<ConceptLink targetId="..." isDependency={true|false}>Texto</ConceptLink>`**: Enlace semántico a otra página del grafo. Todo concepto formal (`biyeccion`, `relacion-simetrica`, `relacion-reflexiva`, `teorema`, etc.) debe tener su enlace.
+- **`<VisualBind element="..." color="...">Fórmula/Término</VisualBind>`**: Vincula texto o símbolos con elementos interactivos del diagrama (`color`: uno de los ocho tokens `carbon`, `terracota`, `canela`, `mora`, `ocre`, `pavo`, `granada`, `musgo`). `element` debe ser la clave de destino de un objeto **o grupo** del diagrama con `"target": true` (su `targetId`, o su `id` si no tiene `targetId`); `lint-node.mjs` lo comprueba.
   - `"terracota"`: Puntos fundamentales, vértices, orígenes.
   - `"carbon"`: Rectas, ejes, vectores, aristas, lados.
   - `"pavo"`: Planos, subespacios, regiones primarias.

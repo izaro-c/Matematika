@@ -1,0 +1,66 @@
+export const metadata = {
+  id: "teorema-separacion-plano",
+  lang: "en",
+  type: "teorema",
+  title: "Plane Separation Theorem",
+  description: "Every line contained in a plane partitions the points of the plane not lying on it into exactly two disjoint convex equivalence classes.",
+  statement: "Given a line ℓ in a plane π, the set of points of the plane not incident with ℓ is partitioned into exactly two disjoint convex equivalence classes under the relation of non-intersection of segments with ℓ.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "separacion", "pasch", "convexidad"],
+  demos: ["demo-separacion-plano"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />very <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> contained in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> decomposes the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of the plane not incident with it into exactly two disjoint and convex regions.
+
+This result, established by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §4 of the *Grundlagen der Geometrie*, deductively formalizes the geometric notion of a <ConceptLink targetId="semiplano">half-plane</ConceptLink>. Its proof does not appeal to metric concepts nor to continuity, but rather rests on the axioms of <ConceptLink targetId="incidencia" isDependency={true}>incidence</ConceptLink> and of <ConceptLink targetId="estar-entre" isDependency={true}>order</ConceptLink>, relying essentially on the <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axiom of Pasch</ConceptLink>.
+
+<Definicion title="Formal statement of the plane separation theorem">
+Let $\pi \in \Pi$ be a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> and let $\ell \in \mathcal{L}$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> such that $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. On the set $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of the plane not incident with $\ell$, the <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $\sim_\ell$ is defined by:
+$$
+A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+where $\operatorname{seg}(AB)$ denotes the open <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> with endpoints $A$ and $B$.
+
+Under these conditions:
+1. The relation $\sim_\ell$ is an <ConceptLink targetId="relacion-equivalencia" isDependency={true}>equivalence relation</ConceptLink> on $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$.
+2. The quotient set consists of exactly two <ConceptLink targetId="clase-equivalencia" isDependency={true}>equivalence classes</ConceptLink>:
+$$
+(\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}
+$$
+3. Two points $A$ and $B$ belong to distinct classes if and only if the open <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> joining them intersects the line $\ell$:
+$$
+A \in \mathcal{H}_1 \land B \in \mathcal{H}_2 \iff \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) \neq \emptyset
+$$
+4. Each class $\mathcal{H}_i$ is a <ConceptLink targetId="conjunto-convexo" isDependency={true}>convex set</ConceptLink>: if two points belong to $\mathcal{H}_i$, the entire open segment between them is contained in $\mathcal{H}_i$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Properties of the separation classes">
+    <PropiedadItem 
+      id="convexidad-de-las-regiones" 
+      title="Convexity of the planar regions"
+      formula="A, B \in \mathcal{H}_i \implies \operatorname{seg}(AB) \subseteq \mathcal{H}_i"
+    >
+      Each of the two resulting regions is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if two points are in the same class, the <ConceptLink targetId="segmento">segment</ConceptLink> joining them does not intersect the dividing line and no point of the segment can cross into the opposite region.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="caracterizacion-de-interseccion-de-segmentos" 
+      title="Mandatory intersection between opposite regions"
+      formula="A \in \mathcal{H}_1 \land B \in \mathcal{H}_2 \implies \exists! X \in \operatorname{tr}(\ell) \; (A * X * B)"
+    >
+      For any pair of points situated in opposite regions with respect to the dividing line, the <ConceptLink targetId="segmento">segment</ConceptLink> they determine intersects the line at a unique point, satisfying the relation of <ConceptLink targetId="estar-entre">betweenness</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

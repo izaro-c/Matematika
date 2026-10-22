@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "congruencia-triangulos",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangle Congruence",
+  description: "Equivalence relation between triangles determined by a bijection between their vertices that preserves the congruence of all three corresponding sides and all three corresponding angles.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert", "geometria-absoluta"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 y §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Nociones Comunes",
+      role: "secondary"
+    }
+  ]
+};
+
+import { CongruenciaTriangulos } from '@content/diagrams/Definiciones/CongruenciaTriangulos';
+export const Simulation = CongruenciaTriangulos;
+
+<Capitular letra="T" />wo <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> are **congruent** if there exists a one-to-one correspondence between their <ConceptLink targetId="vertice" isDependency={true}>vertices</ConceptLink> such that all three pairs of corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> and all three pairs of corresponding <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+
+The triangle congruence relation extends the primitive congruence of <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> and angles to composite figures in the <ConceptLink targetId="plano">plane</ConceptLink>. Although the full definition requires simultaneously verifying all six congruences of their corresponding elements, the congruence criteria of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> show that the congruence of a minimal subset suffices: the <ConceptLink targetId="teorema-congruencia-lal">SAS criterion</ConceptLink> (Side-Angle-Side), the <ConceptLink targetId="teorema-congruencia-ala">ASA criterion</ConceptLink> (Angle-Side-Angle), and the <ConceptLink targetId="teorema-congruencia-lll">SSS criterion</ConceptLink> (Side-Side-Side).
+
+<Definicion title="Formal definition of triangle congruence">
+Let <VisualBind element="triangleABC" color="musgo">$\triangle ABC$</VisualBind> and <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind> be two <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> determined by non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> triples of <ConceptLink targetId="punto">points</ConceptLink> in $\mathcal{P}$, with <ConceptLink targetId="vertice" isDependency={true}>vertices</ConceptLink> <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> and <VisualBind element="pAA" color="carbon">$A'$</VisualBind>, <VisualBind element="pBB" color="carbon">$B'$</VisualBind>, <VisualBind element="pCC" color="carbon">$C'$</VisualBind>.
+
+The triangle $\triangle ABC$ is **congruent** to $\triangle A'B'C'$ with respect to the vertex correspondence $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$, denoted <VisualBind element="congruencia-total" color="musgo">$\triangle ABC \cong \triangle A'B'C'$</VisualBind>, if and only if the congruences of all three corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> and all three corresponding <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> hold simultaneously:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \begin{cases}
+\overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \\
+\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+\end{cases}
+$$
+
+Graphically, the pairs of corresponding sides <VisualBind element="sidesAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>, <VisualBind element="sidesBC" color="pavo">$\overline{BC} \cong \overline{B'C'}$</VisualBind>, and <VisualBind element="sidesCA" color="canela">$\overline{CA} \cong \overline{C'A'}$</VisualBind>, as well as the pairs of corresponding angles <VisualBind element="anglesA" color="terracota">$\angle A \cong \angle A'$</VisualBind>, <VisualBind element="anglesB" color="pavo">$\angle B \cong \angle B'$</VisualBind>, and <VisualBind element="anglesC" color="canela">$\angle C \cong \angle C'$</VisualBind>, are mutually congruent under this correspondence.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Equivalence properties">
+    <PropiedadItem 
+      id="equivalencia-congruencia-triangulos" 
+      title="Equivalence relation"
+      formula="\triangle ABC \cong \triangle ABC \land (\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC)"
+    >
+      Triangle congruence is an equivalence relation: it is <ConceptLink targetId="relacion-reflexiva">reflexive</ConceptLink> ($\triangle ABC \cong \triangle ABC$), <ConceptLink targetId="relacion-simetrica">symmetric</ConceptLink> ($\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC$), and <ConceptLink targetId="relacion-transitiva">transitive</ConceptLink>, as a direct consequence of the properties of segment and angle congruence.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="orden-correspondencia-vertices" 
+      title="Dependence on the vertex correspondence order"
+      formula="\triangle ABC \cong \triangle A'B'C' \not\implies \triangle ABC \cong \triangle B'A'C'"
+    >
+      The notation $\triangle ABC \cong \triangle A'B'C'$ strictly specifies the ordered correspondence between vertices; permuting the order in one of the triangles alters the required corresponding pairs and is only valid if the triangle possesses internal symmetries, as in an <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

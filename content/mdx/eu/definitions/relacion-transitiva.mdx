@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "relacion-transitiva",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Erlazio iragankorra",
+  description: "Erlazio bitar baten propietatea, zeinaren arabera elementu batek bigarren batekin eta honek hirugarren batekin erlazioa badu, lehenengoak hirugarrenarekin ere erlazioa duen.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "3. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />rlazio bitar homogeneo bat **iragankorra** da baldin eta erlazio-lotura nahitaez hedatzen bada kateatutako tarteko elementuen bidez.
+
+Berdintzak, baliokidetasunak eta ordenazioak transferitzea ahalbidetzen duen propietate formala osatzen du, zeharkako konparaketek zuzenekoen baliozkotasun logiko bera mantentzen dutela bermatuz.
+
+<Definicion title="Erlazio iragankorraren definizio formala">
+  Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat. $R$ erlazioa **iragankorra** da baldin eta soilik baldin:
+  $$
+  \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
+  $$
+  Erlazio-konposizioaren bidez, $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ $R$-k bere buruarekin duen konposizioa adieraziz, iragankortasuna inklusio honen baliokidea da:
+  $$
+  R \circ R \subseteq R
+  $$
+</Definicion>
+
+<Separador />
+
+### Funtsezko eginkizuna kongruentzian eta paralelotasunean
+
+Iragankortasuna oinarrizko harria da funtsezko dedukzio geometrikoetan:
+
+- **Postulatzea kongruentzian:** Oinarri sintetikoan, zuzenkien <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> iragankortasuna ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) ez da berez ebidentea, ezta erreflexibotasunetik ondorioztagarria ere: berariaz postulatu behar da <ConceptLink targetId="axioma-congruencia-2">III.2 axioman</ConceptLink>.
+- **Paralelotasunaren iragankortasuna:** Plano berean, hirugarren batekiko paraleloak diren bi zuzen paraleloak dira elkarren artean ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Emaitza hau Playfairren paraleloen postulutik (<ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink>) eratorritako <ConceptLink targetId="teorema">teorema</ConceptLink> nagusi bat da, plano euklidearreko <ConceptLink targetId="paralelas">paralelotasunari</ConceptLink> <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> estatus osoa emanez.
+- **Ordena-egiturak:** Multzo ordenatuetan, iragankortasunak desberdintza-kateen koherentzia bermatzen du ($x < y \land y < z \implies x < z$).

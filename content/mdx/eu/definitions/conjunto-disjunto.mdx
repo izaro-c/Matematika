@@ -12,7 +12,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="B" />i $A$ eta $B$ <ConceptLink targetId="conjunto">multzo</ConceptLink> **disjuntuak** dira haien artean elementu komunik ez badute, hau da, haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio">multzo hutsa</ConceptLink> bada:
+<Capitular letra="B" />i $A$ eta $B$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> **disjuntuak** dira haien artean elementu komunik ez badute, hau da, haien <ConceptLink targetId="interseccion" isDependency={true}>ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio">multzo hutsa</ConceptLink> bada:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$

@@ -1,0 +1,63 @@
+export const metadata = {
+  id: "region-poligonal",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Polygonal Region",
+  description: "Set of points in the plane formed by a finite union of triangular regions with pairwise disjoint interiors, the foundational domain of area theory.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "poligono", "triangulacion", "area", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" /> **polygonal region** is the <ConceptLink targetId="conjunto">set</ConceptLink> of points of a <ConceptLink targetId="plano">plane</ConceptLink> that can be expressed as a finite union of <ConceptLink targetId="region-triangular" isDependency={true}>triangular regions</ConceptLink> whose interiors are pairwise disjoint.
+
+Every polygonal region admits multiple distinct triangular decompositions, but its spatial extent is unique. The class of all polygonal regions of a plane constitutes the canonical domain upon which the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink> is formulated and the notions of <ConceptLink targetId="equidescomponibilidad">equidecomposability</ConceptLink> are established.
+
+<Definicion title="Formal Definition of Polygonal Region">
+Let $sigma$ be a <ConceptLink targetId="plano">plane</ConceptLink> of the geometric space. A non-empty subset $R subseteq operatorname{tr}(sigma)$ is a **polygonal region** if there exists a finite family of <ConceptLink targetId="region-triangular" isDependency={true}>triangular regions</ConceptLink> {T_1, T_2, dots, T_n} in $sigma$, with $n ge 1$, such that:
+
+$$
+R = igcup_{i=1}^n T_i
+$$
+
+and whose interiors satisfy the condition of being pairwise disjoint:
+
+$$
+operatorname{Int}(T_i) cap operatorname{Int}(T_j) = emptyset quad (orall i 
+eq j)
+$$
+
+The <ConceptLink targetId="conjunto">set</ConceptLink> of all polygonal regions of the plane $sigma$ is denoted by $mathcal{R}_sigma$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Decomposition and Structural Properties">
+    <PropiedadItem 
+      id="clausura-union-disjunta" 
+      title="Closure under Quasi-Disjoint Union"
+      formula="R_1, R_2 in mathcal{R}_sigma land operatorname{Int}(R_1) cap operatorname{Int}(R_2) = emptyset implies R_1 cup R_2 in mathcal{R}_sigma"
+    >
+      The union of two polygonal regions whose interiors are disjoint is itself a polygonal region in $mathcal{R}_sigma$. The decomposition of the union is obtained by assembling the triangular pieces of $R_1$ and $R_2$, a fundamental property for the additivity of measure.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="independencia-triangulacion" 
+      title="Existence of Common Triangulations"
+      formula="orall R in mathcal{R}_sigma"
+    >
+      A given polygonal region can be decomposed into triangular regions in infinitely many ways. Any two triangulations admit a common refinement, ensuring that the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink> is well-defined independently of the chosen triangulation.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

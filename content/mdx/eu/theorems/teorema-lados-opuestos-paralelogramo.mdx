@@ -1,0 +1,76 @@
+export const metadata = {
+  id: "teorema-lados-opuestos-paralelogramo",
+  lang: "eu",
+  type: "teorema",
+  title: "Paralelogramoaren aurkako aldeen teorema",
+  description: "Edozein paralelogramotan, aurkako aldeak elkarren kongruenteak dira eta aurkako angeluak elkarren kongruenteak dira.",
+  statement: "Edozein ABCD paralelogramotan, aurkako aldeak elkarren kongruenteak dira (AB ≅ CD eta BC ≅ DA), eta aurkako angeluak elkarren kongruenteak dira (∠ABC ≅ ∠CDA eta ∠BCD ≅ ∠DAB).",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "teorema"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-lados-opuestos-paralelogramo"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />dozein <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramotan</ConceptLink>, aurkako <ConceptLink targetId="lado">aldeak</ConceptLink> elkarren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira eta aurkako <ConceptLink targetId="angulo">angeluak</ConceptLink> elkarren kongruenteak dira.
+
+Emaitza hau <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> tratatuko I.34 Proposizioa da, eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> berreskuratu zuen *Grundlagen der Geometrie* laneko §7an. Haren dedukzioak funtsean <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink> behar du <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teoremaren</ConceptLink> bidez, eta <ConceptLink targetId="diagonal">diagonal</ConceptLink> batek zehaztutako bi <ConceptLink targetId="triangulo">triangeluei</ConceptLink> <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA kongruentzia-irizpidea</ConceptLink> aplikatuz osatzen da. <ConceptLink targetId="sistema-hiperbolico">Sistema hiperbolikoan</ConceptLink>, postulatu euklidearra betetzen ez denez, laukien distantziakidetasunaren, paralelismoaren eta kongruentziaren arteko erlazioak funtsean propietate desberdinak ditu.
+
+<Definicion title="Paralelogramoaren aurkako aldeen teoremaren enuntziatu formala">
+Izan bitez $A, B, C, D \in \mathcal{P}$ lau <ConceptLink targetId="punto">puntu</ConceptLink> koplanar $\sigma \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean, $ABCD$ <ConceptLink targetId="cuadrilatero">lauki</ConceptLink> ganbila zehazten dutenak.
+
+Baldin eta $ABCD$ <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> bat bada, hau da, haren aurkako aldeen <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> badira:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+orduan dagozkion aurkako aldeak elkarren kongruenteak dira:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+eta barneko aurkako angeluak elkarren kongruenteak dira:
+
+$$
+\angle ABC \cong \angle CDA \quad \land \quad \angle BCD \cong \angle DAB
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio deduktiboak eta alderantzizkoak">
+    <PropiedadItem 
+      id="teorema-reciproco-lados-opuestos-paralelogramo" 
+      title="Aurkako aldeen bidezko alderantzizko karakterizazioa"
+      formula="\overline{AB} \cong \overline{CD} \land \overline{BC} \cong \overline{DA} \implies \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \land \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      <ConceptLink targetId="cuadrilatero">Lauki</ConceptLink> ganbil batean aurkako aldeak elkarren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, aurkako aldeen zuzen euskarriak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira eta figura <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink> da; <ConceptLink targetId="diagonal">diagonala</ConceptLink> marraztuz eta <ConceptLink targetId="teorema-congruencia-lll">LLL irizpidea</ConceptLink> aplikatuz frogatzen da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="biseccion-diagonales-paralelogramo" 
+      title="Diagonalen elkarrekiko erdibitzea"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) = \{M\} \implies \overline{AM} \cong \overline{MC} \land \overline{BM} \cong \overline{MD}"
+    >
+      <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> baten bi <ConceptLink targetId="diagonal">diagonalek</ConceptLink> elkar ebakitzen dute biak <ConceptLink targetId="punto-medio">erdiko puntua</ConceptLink> duen barneko $M$ puntu komun batean; $M$ puntuan erpina duten aurkako triangeluei <ConceptLink targetId="teorema-congruencia-ala">ALA irizpidea</ConceptLink> aplikatuz frogatzen da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

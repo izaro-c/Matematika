@@ -1,0 +1,60 @@
+export const metadata = {
+  id: "interior-triangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Interior of a triangle",
+  description: "Open and convex planar region defined as the intersection of the three open half-planes determined by the supporting lines of its sides containing the opposite vertex.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "triangle", "half-plane", "convexity", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />he **interior of a triangle** is the region of the <ConceptLink targetId="plano">plane</ConceptLink> formed by the <ConceptLink targetId="punto">points</ConceptLink> that belong simultaneously to the three open <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> determined by the <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> of the <ConceptLink targetId="lado">sides</ConceptLink> of a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> containing the respective opposite <ConceptLink targetId="vertice">vertex</ConceptLink>.
+
+The notion formalizes the region situated inside the triangle, distinguishing it from its <ConceptLink targetId="traza">point trace</ConceptLink> and from the exterior points. Hilbert establishes this construction from the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink>, proving that this <ConceptLink targetId="interseccion">intersection</ConceptLink> is a non-empty <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>. Together with the sides of the triangle, the interior allows one to define the <ConceptLink targetId="region-triangular">triangular region</ConceptLink>, a foundational concept in the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink>.
+
+<Definicion title="Formal definition of the interior of a triangle">
+Let $A$, $B$, and $C$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determining the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
+
+Let $\overleftrightarrow{AB}$, $\overleftrightarrow{BC}$, and $\overleftrightarrow{CA}$ be the <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> of its <ConceptLink targetId="lado">sides</ConceptLink>. Let $\mathcal{H}_{\overleftrightarrow{AB}}(C)$ denote the open <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> bounded by $\overleftrightarrow{AB}$ containing the vertex $C$, let $\mathcal{H}_{\overleftrightarrow{BC}}(A)$ denote the open half-plane bounded by $\overleftrightarrow{BC}$ containing $A$, and let $\mathcal{H}_{\overleftrightarrow{CA}}(B)$ denote the open half-plane bounded by $\overleftrightarrow{CA}$ containing $B$.
+
+The **interior of the triangle** $\triangle ABC$, denoted $\operatorname{Int}(\triangle ABC)$, is the <ConceptLink targetId="conjunto">set</ConceptLink> intersection of the three open half-planes determined by the supporting lines and opposite vertices:
+
+$$
+\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)
+$$
+
+A point $P$ of the plane $\pi$ belongs to $\operatorname{Int}(\triangle ABC)$ if and only if it lies on the same side of the line $\overleftrightarrow{AB}$ as $C$, on the same side of $\overleftrightarrow{BC}$ as $A$, and on the same side of $\overleftrightarrow{CA}$ as $B$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Order and convexity properties">
+    <PropiedadItem 
+      id="convexidad-interior" 
+      title="Convexity of the interior region"
+      formula="P, Q \in \operatorname{Int}(\triangle ABC) \implies \operatorname{seg}(PQ) \subseteq \operatorname{Int}(\triangle ABC)"
+    >
+      The interior of a triangle is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if two points $P$ and $Q$ belong to $\operatorname{Int}(\triangle ABC)$, the open <ConceptLink targetId="segmento">segment</ConceptLink> $\operatorname{seg}(PQ)$ is entirely contained in $\operatorname{Int}(\triangle ABC)$. This property follows from the fact that each open half-plane is convex and the <ConceptLink targetId="interseccion">intersection</ConceptLink> of convex sets is convex.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-vacuidad-interior" 
+      title="Non-emptiness of the interior region"
+      formula="\operatorname{Int}(\triangle ABC) \neq \emptyset"
+    >
+      The interior of any non-degenerate triangle is non-empty. If $D$ is a point such that $B * D * C$ on the open segment $\operatorname{seg}(BC)$, and $P$ is a point such that $A * P * D$ on $\operatorname{seg}(AD)$, the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink> guarantee that $P \in \operatorname{Int}(\triangle ABC)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

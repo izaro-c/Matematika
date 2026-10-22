@@ -1,0 +1,159 @@
+export const metadata = {
+  id: "demo-angulo-exterior",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Exterior Angle Theorem",
+  description: "Synthetic proof of the exterior angle theorem via median extension and the SAS congruence criterion.",
+  parentTheorem: "teorema-angulo-exterior",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoAnguloExterno } from '@content/diagrams/Demos/DemoAnguloExterno';
+
+<DemonstrationSection diagram={<DemoAnguloExterno />}>
+
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, originally due to <ConceptLink targetId="euclides">Euclid</ConceptLink> (Proposition I.16 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>) and formalized in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, establishes that every exterior angle of a triangle is strictly greater than either of the two non-adjacent interior angles.
+
+The reasoning does not use the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink> nor continuity axioms: it relies on segment bisection, the transport of congruences via the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, the congruence of <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink>, and the synthetic characterization of the <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} diagramStep="step1" target="step1" title="Initial midpoint construction">
+Let <VisualBind element="polygonABC" color="granada">$\triangle ABC$</VisualBind> be the <ConceptLink targetId="triangulo">triangle</ConceptLink> and let <VisualBind element="pD" color="pavo">$D$</VisualBind> be a <ConceptLink targetId="punto">point</ConceptLink> on the extension of <ConceptLink targetId="lado">side</ConceptLink> $\overline{BC}$ beyond $C$, with $B * C * D$.
+
+There exists the <ConceptLink targetId="punto-medio">midpoint</ConceptLink> <VisualBind element="midAC" color="canela">$E$</VisualBind> of the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAC" color="granada">$\overline{AC}$</VisualBind>, such that $A * E * C$ and the segments <VisualBind element="segAmidAC" color="terracota">$\overline{AE}$</VisualBind> and <VisualBind element="segmidACC" color="terracota">$\overline{EC}$</VisualBind> are congruent:
+
+$$
+\overline{AE} \cong \overline{EC}
+$$
+
+Next, we draw the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind> joining vertex $B$ to midpoint $E$.
+</ProofStep>
+
+<ProofStep number={2} diagramStep="step2" target="step2" title="Extension of segment BE">
+Starting from the segment <VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind>, we draw the <ConceptLink targetId="semirrecta">ray</ConceptLink> <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> extending the segment beyond the <ConceptLink targetId="punto-medio">midpoint</ConceptLink> <VisualBind element="midAC" color="canela">$E$</VisualBind>.
+
+Every point $X$ on this extension satisfies the betweenness relation:
+
+$$
+B * E * X
+$$
+</ProofStep>
+
+<ProofStep number={3} diagramStep="step3" target="step3" title="Doubling the median">
+By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> of segment transport, on the extension of the ray <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> there exists a unique point <VisualBind element="pF" color="canela">$F$</VisualBind> such that $B * E * F$ and the segment <VisualBind element="segmidACF" color="canela">$\overline{EF}$</VisualBind> is congruent to <VisualBind element="segBmidAC" color="canela">$\overline{EB}$</VisualBind>:
+
+$$
+\overline{EF} \cong \overline{EB}
+$$
+
+The segment <VisualBind element="segCF" color="canela">$\overline{CF}$</VisualBind> is also drawn.
+</ProofStep>
+
+<ProofStep number={4} diagramStep="step4" target="step4" title="Triangle congruence by SAS">
+We consider the triangles <VisualBind element="polygonABmidAC" color="canela">$\triangle ABE$</VisualBind> and <VisualBind element="polygonCFmidAC" color="canela">$\triangle CFE$</VisualBind>. In them, three congruence conditions are satisfied:
+1. $\overline{AE} \cong \overline{EC}$ because $E$ is the midpoint of $\overline{AC}$.
+2. The angles <VisualBind element="nonReflexAngleAmidACB" color="terracota">$\angle AEB$</VisualBind> and <VisualBind element="nonReflexAngleCmidACF" color="terracota">$\angle CEF$</VisualBind> are congruent as <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink>.
+3. $\overline{EB} \cong \overline{EF}$ by construction.
+
+By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, both triangles are congruent:
+
+$$
+\triangle ABE \cong \triangle CFE
+$$
+</ProofStep>
+
+<ProofStep number={5} diagramStep="step5" target="step5" title="Congruence of corresponding angles">
+From the triangle congruence $\triangle ABE \cong \triangle CFE$ we deduce the congruence of corresponding angles opposite to the congruent sides $\overline{EB}$ and $\overline{EF}$:
+
+$$
+\angle BAC \cong \angle ECF
+$$
+
+where the interior angle <VisualBind element="nonReflexAngleBAC" color="pavo">$\angle BAC$</VisualBind> is congruent to the angle <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={6} diagramStep="step6" target="step6" title="Interiority of ray CF">
+Since $B * C * D$, points $B$ and <VisualBind element="pD" color="pavo">$D$</VisualBind> lie on opposite <ConceptLink targetId="semiplano">half-planes</ConceptLink> with respect to line $\overleftrightarrow{AC}$; and since $B * E * F$ with $E \in \overleftrightarrow{AC}$, points $B$ and <VisualBind element="pF" color="canela">$F$</VisualBind> also lie on opposite half-planes with respect to $\overleftrightarrow{AC}$. Consequently, $F$ and $D$ belong to the same half-plane with respect to $\overleftrightarrow{AC}$.
+
+Similarly, $A$ and $F$ belong to the same half-plane with respect to $\overleftrightarrow{BC}$. Therefore, the ray <VisualBind element="rayCF" color="pavo">$\overrightarrow{CF}$</VisualBind> lies in the interior of the <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind>:
+
+$$
+\overrightarrow{CF} \subset \operatorname{Int}(\angle ACD)
+$$
+</ProofStep>
+
+<ProofStep number={7} diagramStep="step7" target="step7" title="Inequality for the first interior angle">
+Since ray $\overrightarrow{CF}$ lies in the interior of angle $\angle ACD$, the definition of <ConceptLink targetId="orden-angulos" isDependency={true}>order of angles</ConceptLink> establishes that <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind> is strictly less than <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind>.
+
+Since $\angle BAC \cong \angle ECF$, by substitution we obtain:
+
+$$
+\angle BAC < \angle ACD
+$$
+
+that is, the interior angle at vertex $A$ is strictly less than the exterior angle at $C$: $\angle ACD > \angle BAC$.
+</ProofStep>
+
+<ProofStep number={8} diagramStep="step8" target="step8" title="Symmetric construction on midpoint G">
+To compare the exterior angle with the second interior angle $\angle ABC$, an analogous construction is repeated: let <VisualBind element="midG" color="terracota">$G$</VisualBind> be the midpoint of segment <VisualBind element="segBC" color="granada">$\overline{BC}$</VisualBind>, with $B * G * C$ and $\overline{BG} \cong \overline{GC}$.
+
+We draw the line joining $A$ to $G$ and extend it to a point <VisualBind element="pH" color="terracota">$H$</VisualBind> such that $A * G * H$ and $\overline{GH} \cong \overline{AG}$, drawing segment <VisualBind element="segAH" color="ocre">$\overline{AH}$</VisualBind>. Likewise, we extend $\overline{AC}$ beyond $C$ to a point <VisualBind element="pK" color="pavo">$K$</VisualBind> such that $A * C * K$:
+
+$$
+\overline{BG} \cong \overline{GC} \quad \land \quad \overline{GH} \cong \overline{AG}
+$$
+</ProofStep>
+
+<ProofStep number={9} diagramStep="step9" target="step9" title="Second application of the SAS criterion">
+Applying the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> to triangles <VisualBind element="polygonABmidG" color="terracota">$\triangle ABG$</VisualBind> and <VisualBind element="polygonHmidGC" color="canela">$\triangle HCG$</VisualBind>, which share vertex $G$ with congruent vertical angles, we conclude that $\triangle ABG \cong \triangle HCG$.
+
+By congruence of corresponding angles, <VisualBind element="nonReflexAngleABC" color="musgo">$\angle ABC$</VisualBind> $\cong$ <VisualBind element="nonReflexAngleHCmidG" color="musgo">$\angle GCH$</VisualBind>. Since ray $\overrightarrow{CH}$ is interior to angle <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind>, we have:
+
+$$
+\angle ABC \cong \angle GCH < \angle BCK
+$$
+</ProofStep>
+
+<ProofStep number={10} diagramStep="step10" target="step10" title="Vertical angles at C">
+Lines $\overleftrightarrow{AK}$ and $\overleftrightarrow{BD}$ intersect at vertex $C$, so that angle <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind> and exterior angle <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind> are <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink>.
+
+By the congruence of vertical angles, we have $\angle BCK \cong \angle ACD$. Combining this congruence with the inequality of the previous step, we obtain:
+
+$$
+\angle ABC < \angle ACD
+$$
+
+that is, $\angle ACD > \angle ABC$.
+</ProofStep>
+
+<ProofStep number={11} diagramStep="step11" target="step11" title="General conclusion">
+Having established in step 7 that $\angle ACD > \angle BAC$ and in step 10 that $\angle ACD > \angle ABC$, it is proved that in every <ConceptLink targetId="triangulo">triangle</ConceptLink> the <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> is strictly greater than either of the two non-adjacent interior <ConceptLink targetId="angulo">angles</ConceptLink>:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+</ProofStep>
+
+</DemonstrationSection>

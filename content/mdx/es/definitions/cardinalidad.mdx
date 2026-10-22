@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "cardinalidad",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Cardinalidad",
+  description: "Medida del tamaño o cantidad de elementos de un conjunto formalizada mediante clases de equipotencia bajo biyecciones.",
+  branch: "03E",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen", author: "Georg Cantor", locator: "Journal für die reine und angewandte Mathematik 77 (1874)", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulos 21–24", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **cardinalidad** (o número cardinal) es la generalización matemática rigurosa del concepto de «cantidad de elementos» de una colección, aplicable con plena validez tanto a conjuntos finitos como a conjuntos infinitos.
+
+Introducida por Georg Cantor, la teoría de cardinales supera las paradojas del infinito prescindiendo del recuento secuencial y fundándose en el principio de equipotencia: dos conjuntos poseen el mismo tamaño intrínseco si y solo si es posible emparejar sus elementos término a término mediante una <ConceptLink targetId="biyeccion">biyección</ConceptLink>.
+
+<Definicion title="Equipotencia y comparación cardinal">
+  Dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **equipotentes** (notado $A \sim B$) si y solo si existe una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink> $f\colon A \longrightarrow B$:
+  $$
+  |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ biyectiva})
+  $$
+  El orden entre cardinales se define mediante inyecciones: se escribe $|A| \le |B|$ si existe una aplicación inyectiva de $A$ en $B$. Por el teorema de Cantor-Bernstein-Schröder, si $|A| \le |B|$ y $|B| \le |A|$, entonces necesariamente $|A| = |B|$.
+  
+  Por el teorema de Cantor, para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ posee una cardinalidad estrictamente mayor: $|A| < |\wp(A)|$.
+</Definicion>
+
+<Separador />
+
+### Escala de infinitos y dimensiones en geometría
+
+La cardinalidad permite clasificar los dominios geométricos según su tamaño ontológico:
+- **Estructuras finitas:** Conjuntos con cardinal natural $n \in \mathbb{N}$, como los 7 puntos del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
+- **Infinito numerable:** El cardinal $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$, característico de las sucesiones discretas y los números racionales.
+- **La potencia del continuo:** El cardinal $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$. En la geometría euclidiana continua, toda recta contiene $\mathfrak{c}$ <ConceptLink targetId="punto">puntos</ConceptLink>, una densidad que garantiza formalmente la <ConceptLink targetId="continuidad">continuidad</ConceptLink> geométrica y la ausencia de huecos en el espacio.

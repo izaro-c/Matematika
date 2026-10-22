@@ -3,6 +3,7 @@ import {
   resolveBranchCode,
   getItemBranchCodes,
   getMscName,
+  mscNames,
 } from '@/data/content/msc2020';
 import { db } from '@/data/content';
 import { getMetadataFields, BRANCH_OPTIONS } from '@/fixed-pages/editor/metadata/metadataFields';
@@ -37,8 +38,7 @@ describe('MSC2020 Branch Taxonomy & Multilingual Resolution', () => {
         tags: ['algebra', '15'],
       };
       const codes = getItemBranchCodes(item);
-      expect(codes).toContain('51M');
-      expect(codes).toContain('15');
+      expect(codes).toEqual(['51M']);
     });
 
     it('handles multiple branches array', () => {
@@ -99,6 +99,16 @@ describe('MSC2020 Branch Taxonomy & Multilingual Resolution', () => {
       expect(ids).toContain('teorema-pitagoras');
       expect(ids).toContain('triangulo');
       expect(ids).toContain('ejercicio-pitagoras-cateto');
+    });
+
+    it('counts each sub-branch tome with the same entries the sub-branch page lists', () => {
+      for (const code of Object.keys(mscNames)) {
+        const taxonomy = db.getBranchTaxonomy(code, 'es');
+        for (const sub of taxonomy.subBranches) {
+          const tomeCount = taxonomy.directItems.filter(entry => entry.subBranchSlugs.includes(sub.slug)).length;
+          expect(tomeCount, `${code} > ${sub.slug}`).toBe(db.getBranchTaxonomy(sub.slug, 'es').directItems.length);
+        }
+      }
     });
   });
 

@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-congruencia-suplementos",
+  lang: "en",
+  type: "teorema",
+  title: "Supplement Congruence Theorem",
+  description: "If two angles are congruent to each other, then the adjacent supplementary angles to each of them are also mutually congruent.",
+  statement: "If two angles are congruent to each other, then the adjacent supplementary angles to each of them are also congruent to each other.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "angles", "congruence", "absolute-geometry", "hilbert"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-congruencia-suplementos"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Propositions 13 and 14",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="I" />f two <ConceptLink targetId="angulo">angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink> to each other, then the <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adjacent supplementary angles</ConceptLink> to each of them are also mutually congruent.
+
+This result of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, presented by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Propositions I.13 and I.14 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, establishes that angle congruence is preserved under taking supplements without invoking the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink> or <ConceptLink targetId="medida-angular">angle measure</ConceptLink>. Its synthetic proof relies decisively on the addition of <ConceptLink targetId="segmento">segments</ConceptLink> from <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axiom III.3</ConceptLink> and on the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>.
+
+<Definicion title="Formal statement of the supplement congruence theorem">
+Let $\angle(h, k)$ and $\angle(h', k')$ be two <ConceptLink targetId="angulo">angles</ConceptLink> such that:
+
+$$
+\angle(h, k) \cong \angle(h', k')
+$$
+
+where $h$ and $k$ are <ConceptLink targetId="semirrecta">rays</ConceptLink> originating at $O \in \mathcal{P}$, and $h'$ and $k'$ are rays originating at $O' \in \mathcal{P}$.
+
+If $h_1$ is the ray opposite to $h$, and $h'_1$ is the ray opposite to $h'$ (<ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>), determining the <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adjacent supplementary angles</ConceptLink> $\angle(h_1, k)$ and $\angle(h'_1, k')$, then:
+
+$$
+\angle(h_1, k) \cong \angle(h'_1, k')
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Deductive consequences">
+    <PropiedadItem 
+      id="teorema-angulos-opuestos-verticales" 
+      title="Vertical angles theorem"
+      formula="\angle(h, k) \cong \angle(h_1, k_1)"
+    >
+      Two vertical <ConceptLink targetId="angulo">angles</ConceptLink> at a <ConceptLink targetId="vertice">vertex</ConceptLink> are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>; the result follows immediately by observing that both are adjacent supplements of the same shared angle between two intersecting <ConceptLink targetId="recta">lines</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplemento-angulo-recto" 
+      title="Congruence of right angles"
+      formula="\angle(h, k) \cong \angle(h_1, k) \land \angle(h', k') \cong \angle(h'_1, k') \implies \angle(h, k) \cong \angle(h', k')"
+    >
+      All <ConceptLink targetId="angulo-recto">right angles</ConceptLink> are mutually congruent; since a right angle is defined as an angle congruent to its adjacent supplement, this theorem ensures the consistency of <ConceptLink targetId="perpendicular">perpendicularity</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

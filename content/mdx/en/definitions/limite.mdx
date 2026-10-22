@@ -1,0 +1,43 @@
+export const metadata = {
+  id: "limite",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Limit",
+  description: "Metric formalization of the successive approximation of the outputs of a real function toward a numerical value at an accumulation point.",
+  branch: "26A",
+  branches: ["26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 4", role: "primary" },
+    { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 5", role: "secondary" }
+  ]
+};
+
+<Capitular letra="T" />he **limit** of a real <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> formalizes the notion of successive approximation of its outputs toward a fixed numerical value as the independent variable arbitrarily approaches a given point. Initially formulated intuitively by <ConceptLink targetId="newton">Newton</ConceptLink> and <ConceptLink targetId="leibniz">Leibniz</ConceptLink>, the rigorous definition was established by <ConceptLink targetId="cauchy">Cauchy</ConceptLink> and definitively solidified in the epsilon-delta metric language by <ConceptLink targetId="weierstrass">Weierstrass</ConceptLink>, standing as the foundational pillar supporting <ConceptLink targetId="analisis-matematico">mathematical analysis</ConceptLink>, <ConceptLink targetId="continuidad">continuity</ConceptLink>, and the <ConceptLink targetId="derivada">derivative</ConceptLink>.
+
+<Definicion title="Formal definition of limit (Weierstrass)">
+  Let $D \subseteq \mathbb{R}$ be the domain of a real <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> $f\colon D \longrightarrow \mathbb{R}$ and let $c \in \mathbb{R}$ be an <ConceptLink targetId="punto-acumulacion">accumulation point</ConceptLink> of $D$. The **limit** of $f(x)$ as $x$ tends to $c$ is said to be the real number $L \in \mathbb{R}$, denoted:
+  $$
+  \lim_{x \to c} f(x) = L
+  $$
+  if and only if for every real number $\varepsilon > 0$ there exists a real number $\delta > 0$ such that for all $x \in D$:
+  $$
+  0 < |x - c| < \delta \implies |f(x) - L| < \varepsilon
+  $$
+  The condition $0 < |x - c|$ requires the approximation to hold in the punctured neighborhood of the point, so the limit value is entirely independent of whether the function is defined at the point $c$ itself, or whether $f(c)$ coincides with $L$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Fundamental properties of the limit">
+    <PropiedadItem id="unicidad-del-limite" title="Uniqueness of the limit" formula="\lim_{x \to c} f(x) = L_1 \land \lim_{x \to c} f(x) = L_2 \implies L_1 = L_2">
+      If a <ConceptLink targetId="funcion">function</ConceptLink> possesses a limit at an accumulation point $c$, that limit is unique. If two distinct values $L_1 \neq L_2$ existed, choosing $\varepsilon = \frac{|L_1 - L_2|}{2} > 0$ would suffice. By the definition of limit, there would exist radii $\delta_1 > 0$ and $\delta_2 > 0$ such that for every $x \in D$ with $0 < |x - c| < \min(\delta_1, \delta_2)$ the triangle inequality would yield:
+      $$
+      |L_1 - L_2| \le |L_1 - f(x)| + |f(x) - L_2| < \varepsilon + \varepsilon = |L_1 - L_2|
+      $$
+      which constitutes a strict contradiction.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

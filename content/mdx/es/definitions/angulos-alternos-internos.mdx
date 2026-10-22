@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "angulos-alternos-internos",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Ángulos alternos internos",
+  description: "Par de ángulos interiores no adyacentes determinados por una recta secante transversal a dos rectas coplanares, situados en semiplanos opuestos respecto a la transversal.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "semiplano", "paralelas", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 27",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> son **ángulos alternos internos** si son ángulos interiores no <ConceptLink targetId="angulos-adyacentes">adyacentes</ConceptLink> determinados por una <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="secante" isDependency={true}>secante</ConceptLink> transversal a dos rectas <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>, situados en <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> opuestos respecto a dicha secante transversal.
+
+La alternancia se fundamenta en la división del plano en dos semiplanos por la recta transversal (Hilbert, §4). Los ángulos alternos internos constituyen la configuración esencial para el estudio del <ConceptLink targetId="paralelas">paralelismo</ConceptLink>: su <ConceptLink targetId="congruencia">congruencia</ConceptLink> implica que las rectas no se cortan en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (Euclides I.27), mientras que la recíproca rige en el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> (Euclides I.29) mediante el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>.
+
+<Definicion title="Definición formal de ángulos alternos internos">
+Sean $\ell_1, \ell_2 \in \mathcal{L}$ dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$ y sea $t \in \mathcal{L}$ una recta de $\pi$ <ConceptLink targetId="secante" isDependency={true}>secante</ConceptLink> transversal a ambas en dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A$ y $B$, con $A \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(t)$ y $B \in \operatorname{tr}(\ell_2) \cap \operatorname{tr}(t)$ ($A \neq B$).
+
+La secante $t$ determina en $\pi$ dos <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> abiertos disjuntos $\mathcal{H}_1$ y $\mathcal{H}_2$. La región interior entre $\ell_1$ y $\ell_2$ está formada por los puntos situados en el semiplano de $\ell_1$ que contiene a $B$ y en el semiplano de $\ell_2$ que contiene a $A$:
+
+$$
+\operatorname{Banda}(\ell_1, \ell_2) = \mathcal{H}_{\ell_1}(B) \cap \mathcal{H}_{\ell_2}(A)
+$$
+
+Sean $P_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_1$ y $P_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_2$ dos puntos situados en semiplanos opuestos respecto a $t$. Los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink>
+
+$$
+\alpha = \angle P_1AB \quad \text{y} \quad \beta = \angle P_2BA
+$$
+
+forman un **par de ángulos alternos internos**. Análogamente, para puntos $Q_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_2$ y $Q_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_1$, los ángulos $\angle Q_1AB$ y $\angle Q_2BA$ forman el segundo par de ángulos alternos internos determinado por la recta transversal.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades geométricas y paralelismo">
+    <PropiedadItem 
+      id="criterio-paralelismo-alternos-internos" 
+      title="Criterio angular de paralelismo"
+      formula="\ell_1 \parallel \ell_2 \iff \alpha \cong \beta"
+    >
+      En el plano euclidiano, dos rectas cortadas por una secante transversal son <ConceptLink targetId="paralelas">paralelas</ConceptLink> si y solo si los ángulos alternos internos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>. En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la congruencia $\alpha \cong \beta$ es suficiente para asegurar $\ell_1 \parallel \ell_2$, mientras que la necesidad requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, tal como formula el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-adyacencia-alternos" 
+      title="No adyacencia y corte de la transversal"
+      formula="\operatorname{seg}(P_1P_2) \cap \operatorname{tr}(t) \neq \emptyset"
+    >
+      Los ángulos alternos internos tienen vértices distintos $A \neq B$, por lo que no son <ConceptLink targetId="angulos-adyacentes">adyacentes</ConceptLink>. Al estar los puntos $P_1$ y $P_2$ situados en semiplanos opuestos respecto a la recta transversal $t$, el <ConceptLink targetId="segmento">segmento</ConceptLink> abierto $\operatorname{seg}(P_1P_2)$ corta a la <ConceptLink targetId="traza">traza puntual</ConceptLink> de $t$ en un punto que satisface la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "relacion-reflexiva",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Relación reflexiva",
+  description: "Propiedad de una relación binaria según la cual todo elemento de un conjunto está relacionado consigo mismo.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Capítulo 3", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na relación binaria homogénea es **reflexiva** si todo elemento del conjunto sobre el que actúa está emparentado o relacionado consigo mismo.
+
+Constituye una de las condiciones elementales más recurrentes en la formalización de estructuras matemáticas, actuando como requisito previo indispensable para la noción de equivalencia y para las relaciones de orden parcial o total.
+
+<Definicion title="Definición formal de relación reflexiva">
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre $A$. La relación $R$ es **reflexiva** si y solo si:
+  $$
+  \forall x \in A, \quad x \, R \, x \quad (\text{es decir, } (x, x) \in R)
+  $$
+  En términos conjuntistas, denotando por $\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$ a la diagonal o relación identidad sobre $A$, la reflexividad equivale a la inclusión:
+  $$
+  \Delta_A \subseteq R
+  $$
+</Definicion>
+
+<Separador />
+
+### Manifestaciones en la geometría formal
+
+En los fundamentos deductivos de la geometría hilbertiana, la reflexividad se postula o deduce como propiedad indispensable de las relaciones de comparación:
+
+- **Congruencia de segmentos y ángulos:** El <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> estipula que todo segmento es congruente consigo mismo ($\overline{AB} \cong \overline{AB}$), dotando a la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos de carácter reflexivo. Análogamente, en el <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>, todo ángulo propio es congruente consigo mismo ($\angle AOB \cong \angle AOB$).
+- **Paralelismo de rectas:** En la geometría moderna, toda recta se considera <ConceptLink targetId="paralelas">paralela</ConceptLink> a sí misma por identidad ($\ell \parallel \ell$), lo que permite que el paralelismo en el plano euclídeo satisfaga la reflexividad exigida a toda <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.

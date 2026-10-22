@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "asociatividad",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Asociatividad",
+  description: "Propiedad de una operación binaria por la cual el agrupamiento de los operandos no altera el resultado final.",
+  branch: "08A",
+  branches: ["08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **asociatividad** (o propiedad asociativa) es una propiedad algebraica fundamental que puede poseer una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink>, en virtud de la cual la evaluación sucesiva de tres o más operandos resulta invariante frente a la disposición de los paréntesis de agrupamiento. Constituye la condición indispensable para prescindir de paréntesis al componer múltiples operaciones en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>.
+
+<Definicion title="Definición formal de asociatividad">
+  Sea $S$ un <ConceptLink targetId="conjunto">conjunto</ConceptLink> y sea $*\colon S \times S \longrightarrow S$ una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> sobre $S$. Se dice que la operación $*$ es **asociativa** si y solo si satisface la identidad:
+  $$
+  \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
+  $$
+  Un par $(S, *)$ formado por un conjunto y una operación binaria asociativa constituye un <ConceptLink targetId="semigrupo">semigrupo</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Estructuras algebraicas y contraejemplos
+
+La presencia o ausencia de asociatividad determina las clases esenciales de <ConceptLink targetId="estructura-algebraica">estructuras algebraicas</ConceptLink>:
+
+- **Operaciones asociativas estándar:** La suma y el producto en los <ConceptLink targetId="numero-entero">enteros</ConceptLink> $\mathbb{Z}$ y en los <ConceptLink targetId="numero-real">reales</ConceptLink> $\mathbb{R}$; la multiplicación de matrices; y la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> sobre cualquier conjunto.
+- **Operaciones no asociativas:** La resta en $\mathbb{R}$ no es asociativa, pues $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; análogamente, la división en $\mathbb{R} \setminus \{0\}$ o el producto vectorial en $\mathbb{R}^3$ carecen de asociatividad.
+- **Jerarquía algebraica:** Un semigrupo con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> constituye un <ConceptLink targetId="monoide">monoide</ConceptLink>; si además cada elemento admite <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>, conforma un <ConceptLink targetId="grupo">grupo</ConceptLink>.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias deductivas">
+    <PropiedadItem id="asociatividad-generalizada" title="Teorema de asociatividad generalizada">
+      Si $*$ es una operación binaria asociativa sobre $S$, cualquier producto de $n$ elementos $a_1 * a_2 * \cdots * a_n$ (con $n \ge 3$) produce un resultado unívoco e independiente del orden en que se apliquen los paréntesis de evaluación, permitiendo prescindir por completo de ellos.
+    </PropiedadItem>
+    <PropiedadItem id="unicidad-inversos-asociatividad" title="Unicidad de elementos inversos">
+      En cualquier estructura asociativa con elemento neutro $e$, si un elemento $a$ admite un inverso a la izquierda $b$ ($b * a = e$) y un inverso a la derecha $c$ ($a * c = e$), ambos coinciden necesariamente: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

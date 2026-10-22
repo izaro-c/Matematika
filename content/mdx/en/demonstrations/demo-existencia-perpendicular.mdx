@@ -1,0 +1,123 @@
+export const metadata = {
+  id: "demo-existencia-perpendicular",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Existence and Uniqueness Theorem of the Perpendicular",
+  description: "Synthetic proof of the perpendicular theorem via construction of the reflected point, Pasch's axiom, and the SAS congruence criterion.",
+  parentTheorem: "teorema-existencia-perpendicular",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoExistenciaPerpendicular } from '@content/diagrams/Demos/DemoExistenciaPerpendicular';
+
+<DemonstrationSection diagram={<DemoExistenciaPerpendicular />}>
+
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-existencia-perpendicular">existence and uniqueness theorem of the perpendicular</ConceptLink> for a <ConceptLink targetId="punto">point</ConceptLink> exterior to a <ConceptLink targetId="recta">line</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink> synthetically constructs the symmetric point in the opposite half-plane through angle and segment transport, guaranteeing orthogonal intersection by plane separation.
+
+This deductive construction, formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*, transfers Proposition I.12 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> to the framework of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing the existence and uniqueness of the perpendicular without requiring the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Base line and exterior point">
+In a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$, we consider a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> and an exterior <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="punto-p" color="terracota">$P \in \operatorname{tr}(\pi)$</VisualBind> such that it is not incident with it ($\neg(P \,\mathbf{I}\, \ell)$). We fix on the line $\ell$ two distinct reference points <VisualBind element="punto-a" color="carbon">$A$</VisualBind> and <VisualBind element="punto-b" color="carbon">$B$</VisualBind>:
+
+$$
+A, B \in \operatorname{tr}(\ell), \quad A \neq B
+$$
+
+The line $\ell = \overleftrightarrow{AB}$ divides the plane into two disjoint <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and points $P$ and $A$ determine together with $B$ the non-zero <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Construction of the reflected point in the opposite half-plane">
+In the <ConceptLink targetId="semiplano">half-plane</ConceptLink> opposite to the one containing <VisualBind element="punto-p" color="terracota">$P$</VisualBind> with respect to the line <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>, we apply angle transport <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink> to construct a ray originating at <VisualBind element="punto-a" color="carbon">$A$</VisualBind> that forms with $\overrightarrow{AB}$ an angle congruent to <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind>:
+
+$$
+\angle BAC \cong \angle BAP
+$$
+
+Next, by segment transport <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>, we determine on that ray a unique point <VisualBind element="punto-c" color="mora">$C$</VisualBind> such that segment <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> is congruent to segment <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind>:
+
+$$
+\overline{AC} \cong \overline{AP}
+$$
+
+Point $C$ is the synthetic reflection of $P$ with respect to line $\ell$, lying by construction in opposite half-planes.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Intersection with the base line by plane separation">
+Since points <VisualBind element="punto-p" color="terracota">$P$</VisualBind> and <VisualBind element="punto-c" color="mora">$C$</VisualBind> belong to opposite <ConceptLink targetId="semiplano">half-planes</ConceptLink> with respect to the <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>, by the plane separation property derived from <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axiom II.4</ConceptLink> (Pasch's axiom), the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segmento-pc" color="terracota">$\overline{PC}$</VisualBind> intersects line $\ell$ at an interior point:
+
+$$
+\operatorname{tr}(\ell) \cap \overline{PC} = \{M\}
+$$
+
+We denote by <VisualBind element="punto-m" color="canela">$M$</VisualBind> this point of intersection. If $M = A$, rays $\overrightarrow{AP}$ and $\overrightarrow{AC}$ directly form adjacent right angles; if $M \neq A$, point $M$ defines two adjacent coplanar triangles.
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Triangle congruence by SAS criterion">
+We analyze triangles <VisualBind element="triangulo-pam" color="canela">$\triangle PAM$</VisualBind> and <VisualBind element="triangulo-cam" color="mora">$\triangle CAM$</VisualBind> with respect to the correspondence $P \mapsto C$, $A \mapsto A$, $M \mapsto M$:
+1. Congruence of sides: <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind> $\cong$ <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> (by construction in step 2).
+2. Congruence of angles: <VisualBind element="angMAP" color="ocre">$\angle PAM$</VisualBind> $\cong$ <VisualBind element="angMAC" color="ocre">$\angle CAM$</VisualBind> (since they are angles $\angle BAP$ and $\angle BAC$).
+3. Shared side: $\overline{AM} \cong \overline{AM}$ (by the identity relation of congruence).
+
+By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, both triangles are congruent to each other:
+
+$$
+\triangle PAM \cong \triangle CAM
+$$
+</ProofStep>
+
+<ProofStep number={5} target="step5" diagramStep="step5" title="Adjacent right angles and perpendicularity">
+From the congruence of triangles $\triangle PAM \cong \triangle CAM$, it follows that the corresponding homologous angles at vertex <VisualBind element="punto-m" color="canela">$M$</VisualBind> are congruent:
+
+$$
+\angle AMP \cong \angle AMC
+$$
+
+Since point $M$ lies on segment $\overline{PC}$, points $P$, $M$, and $C$ are collinear with $P * M * C$, so rays $\overrightarrow{MP}$ and $\overrightarrow{MC}$ are opposite rays on line $\overleftrightarrow{PC}$. Therefore, angles <VisualBind element="angPMA" color="terracota">$\angle AMP$</VisualBind> and <VisualBind element="angCMA" color="mora">$\angle AMC$</VisualBind> are adjacent supplementary angles.
+
+Being two adjacent supplementary and congruent angles, both are by definition <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>. Consequently, the <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> is <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> to line <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>:
+
+$$
+\overleftrightarrow{PM} \perp \ell
+$$
+
+This establishes the existence of the perpendicular through point $P$.
+</ProofStep>
+
+<ProofStep number={6} target="step6" diagramStep="step6" title="Uniqueness of the perpendicular via exterior angle theorem">
+To establish uniqueness, suppose by contradiction that there existed a second line perpendicular to <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> passing through <VisualBind element="punto-p" color="terracota">$P$</VisualBind>, meeting $\ell$ at a distinct foot $M' \in \operatorname{tr}(\ell)$ with $M' \neq M$.
+
+In that case, points $P$, $M$, and $M'$ would form a triangle $\triangle PMM'$ having two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>: $\angle PMM'$ and $\angle PM'M$.
+
+In triangle $\triangle PMM'$, the exterior angle at vertex $M$ would be a right angle ($\angle AMP$), and would coincide in congruence with the non-adjacent interior angle at vertex $M'$ ($\angle PM'M$), contradicting the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, which requires:
+
+$$
+\angle AMP > \angle PM'M
+$$
+
+Thus, no second foot $M'$ can exist, and the perpendicular line <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> is unique in the plane.
+</ProofStep>
+
+</DemonstrationSection>

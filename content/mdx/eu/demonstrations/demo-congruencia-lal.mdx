@@ -1,0 +1,121 @@
+export const metadata = {
+  id: "demo-congruencia-lal",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: LAL kongruentzia-teorema",
+  description: "Hilberten (§6) araberako kontraesanezko frogapena: hirugarren aldea kongruentea ez dela suposatzen da, laguntza-zuzenki bat garraiatzen da eta angeluen garraioaren bakartasunak kontraesana sortzen du.",
+  parentTheorem: "teorema-congruencia-lal",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-contradiccion",
+  authors: ["hilbert"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta", "demostracion"]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />AL <ConceptLink targetId="teorema-congruencia-lal">kongruentzia-teoremaren</ConceptLink> frogapena <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* lanaren §6an garatutako <ConceptLink targetId="metodo-contradiccion" isDependency={true}>kontraesanezko frogapenean</ConceptLink> oinarritzen da.
+
+<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axiomak</ConceptLink> postulatutako baldintzetatik abiatuta, arrazoibideak ondorioztatzen du hirugarren <ConceptLink targetId="lado">aldeak</ConceptLink> nahitaez <ConceptLink targetId="congruencia">kongruentea</ConceptLink> izan behar duela; izan ere, kontrakoa suposatzeak laguntza-<ConceptLink targetId="segmento">zuzenki</ConceptLink> bat <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomaren</ConceptLink> bidez garraiatzea ahalbidetuko luke, eta horrek <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomak</ConceptLink> bermatutako <ConceptLink targetId="angulo">angeluen</ConceptLink> garraioaren bakartasuna urratuko luke.
+
+<Separador />
+
+### Demostrazioa pausoz pauso
+
+<ProofStep number={1} title="Hipotesiak eta III.5 axiomaren aplikazioa">
+Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>, hipotesiz <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazio hauek betetzen dituztenak:
+
+$$
+\overline{AB} \cong \overline{A'B'}, \quad \overline{AC} \cong \overline{A'C'}, \quad \angle BAC \cong \angle B'A'C'
+$$
+
+$\triangle ABC$ eta $\triangle A'B'C'$ triangeluei <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axioma</ConceptLink> aplikatuz, dagozkien <ConceptLink targetId="vertice">erpineetako</ConceptLink> gainerako angeluen kongruentzia ondorioztatzen da:
+
+$$
+\angle ABC \cong \angle A'B'C', \quad \angle ACB \cong \angle A'C'B'
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Absurdura eramateko hipotesia">
+Hirugarren <ConceptLink targetId="lado">aldea</ConceptLink> ere <ConceptLink targetId="congruencia">kongruentea</ConceptLink> dela frogatzeko, <ConceptLink targetId="metodo-contradiccion" isDependency={true}>kontraesanezko frogapenaren</ConceptLink> bidez jokatuko dugu. Demagun $\overline{BC}$ eta $\overline{B'C'}$ <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> ez direla elkarren artean kongruenteak:
+
+$$
+\overline{BC} \not\cong \overline{B'C'}
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Laguntza-zuzenkiaren garraioa zuzenerdiaren gainean">
+Zuzenkien garraioaren axiomaren arabera (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink>), $\overrightarrow{B'C'}$ <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> gainean $D$ <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat existitzen da, non $\overline{B'D}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> $\overline{BC}$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den:
+
+$$
+D \in \overrightarrow{B'C'}, \quad \overline{BC} \cong \overline{B'D}
+$$
+
+Kontraesan-hipotesiaren arabera $\overline{BC} \not\cong \overline{B'C'}$ denez, $D$ puntua ez dator bat $C'$ muturrarekin:
+
+$$
+D \neq C'
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Laguntza-triangeluaren eraikuntza eta III.5-ren bigarren aplikazioa">
+$\triangle A'B'D$ laguntza-<ConceptLink targetId="triangulo">triangelua</ConceptLink> kontuan hartuko dugu. $\triangle ABC$ eta $\triangle A'B'D$ alderatuz, honako hau daukagu:
+1. $\overline{AB} \cong \overline{A'B'}$ (hasierako hipotesiz).
+2. $\overline{BC} \cong \overline{B'D}$ ($D$ puntuaren eraikuntzaz).
+3. $D \in \overrightarrow{B'C'}$ denez, $\overrightarrow{B'D}$ <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> $\overrightarrow{B'C'}$ zuzenerdiarekin bat dator, eta hortik $\angle A'B'D = \angle A'B'C'$; beraz, $\angle ABC \cong \angle A'B'D$.
+
+$\triangle ABC$ eta $\triangle A'B'D$ triangelu-bikoterako <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axiomaren</ConceptLink> premisak betetzen direnez, axioma honek goiko <ConceptLink targetId="vertice">erpinerako</ConceptLink> gainerako angeluen kongruentzia ezartzen du:
+
+$$
+\angle BAC \cong \angle B'A'D
+$$
+</ProofStep>
+
+<ProofStep number={5} title="Angeluen garraioaren bakartasuna eta kontraesana">
+Hasierako hipotesiaren arabera $\angle BAC \cong \angle B'A'C'$ dugu, eta horrek aurreko emaitzarekin batera honako hau dakar:
+
+$$
+\angle B'A'D \cong \angle B'A'C'
+$$
+
+$D$ puntua $\overrightarrow{B'C'}$ <ConceptLink targetId="semirrecta">zuzenerdikoa</ConceptLink> denez, $D$ eta $C'$ puntuak $\overleftrightarrow{A'B'}$ zuzen euskarriarekiko <ConceptLink targetId="semiplano">planoerdi</ConceptLink> berekoak dira. Beraz, $\overrightarrow{A'D}$ eta $\overrightarrow{A'C'}$ zuzenerdiak planoerdi berean daude $\overleftrightarrow{A'B'}$ zuzenarekiko.
+
+Angeluen garraioaren axiomaren arabera (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>), planoerdi jakin batean $A'$ jatorria duen zuzenerdi bakarra existitzen da $\overrightarrow{A'B'}$ zuzenerdiarekin <ConceptLink targetId="angulo">angelu</ConceptLink> jakin bat osatzen duena. Ondorioz, bi zuzenerdiek bat etorri behar dute:
+
+$$
+\overrightarrow{A'D} = \overrightarrow{A'C'}
+$$
+
+$\overleftrightarrow{A'C'}$ zuzenak $C'$ puntu bakarrean ebakitzen du $\overleftrightarrow{B'C'}$ zuzena. $D$ puntua aldi berean $\overrightarrow{A'D} \subset \operatorname{tr}(\overleftrightarrow{A'C'})$ eta $\overrightarrow{B'C'} \subset \operatorname{tr}(\overleftrightarrow{B'C'})$ zuzenerdietakoa denez, nahitaez ondorioztatzen da:
+
+$$
+D = C'
+$$
+
+horrek 3. pausuan lortutako $D \neq C'$ baldintza ukatzen duelarik.
+</ProofStep>
+
+<ProofStep number={6} title="Ondorioa eta kongruentzia globala">
+Kontraesanak erakusten du $\overline{BC} \not\cong \overline{B'C'}$ hipotesia faltsua dela. Horrenbestez, hirugarren <ConceptLink targetId="lado">aldea</ConceptLink> ezinbestean <ConceptLink targetId="congruencia">kongruentea</ConceptLink> da:
+
+$$
+\overline{BC} \cong \overline{B'C'}
+$$
+
+Hiru alde homologoen bikoteen arteko elkarrekiko kongruentzia ($\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$, $\overline{AC} \cong \overline{A'C'}$) eta hiru angelu homologoen bikoteena ($\angle BAC \cong \angle B'A'C'$, $\angle ABC \cong \angle A'B'C'$, $\angle ACB \cong \angle A'C'B'$) ezarri denez, <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink> ondorioztatzen da:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

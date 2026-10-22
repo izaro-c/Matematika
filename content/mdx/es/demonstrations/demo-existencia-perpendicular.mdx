@@ -1,0 +1,123 @@
+export const metadata = {
+  id: "demo-existencia-perpendicular",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de existencia y unicidad de la perpendicular",
+  description: "Demostración sintética del teorema de la perpendicular mediante la construcción del punto reflejado, el axioma de Pasch y el criterio de congruencia LAL.",
+  parentTheorem: "teorema-existencia-perpendicular",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  tags: ["geometria-sintetica", "perpendicular", "angulo-recto", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoExistenciaPerpendicular } from '@content/diagrams/Demos/DemoExistenciaPerpendicular';
+
+<DemonstrationSection diagram={<DemoExistenciaPerpendicular />}>
+
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración deductiva directa</ConceptLink> del <ConceptLink targetId="teorema-existencia-perpendicular">teorema de existencia y unicidad de la perpendicular</ConceptLink> para un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink> construye sintéticamente el punto simétrico en el semiplano opuesto mediante transporte de ángulos y segmentos, garantizando la intersección ortogonal por separación del plano.
+
+Esta construcción deductiva, formalizada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*, traslada la Proposición I.12 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> al marco de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, demostrando la existencia y unicidad de la perpendicular sin necesidad del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step1" diagramStep="step1" title="Recta base y punto exterior">
+En un <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$, consideramos una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> y un <ConceptLink targetId="punto">punto</ConceptLink> exterior <VisualBind element="punto-p" color="terracota">$P \in \operatorname{tr}(\pi)$</VisualBind> tal que no incide en ella ($\neg(P \,\mathbf{I}\, \ell)$). Fijamos sobre la recta $\ell$ dos puntos de referencia distintos <VisualBind element="punto-a" color="carbon">$A$</VisualBind> y <VisualBind element="punto-b" color="carbon">$B$</VisualBind>:
+
+$$
+A, B \in \operatorname{tr}(\ell), \quad A \neq B
+$$
+
+La recta $\ell = \overleftrightarrow{AB}$ divide al plano en dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> disjuntos, y los puntos $P$ y $A$ determinan junto con $B$ el <ConceptLink targetId="angulo">ángulo</ConceptLink> no nulo <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="step2" diagramStep="step2" title="Construcción del punto reflejado en el semiplano opuesto">
+En el <ConceptLink targetId="semiplano">semiplano</ConceptLink> opuesto al que contiene a <VisualBind element="punto-p" color="terracota">$P$</VisualBind> respecto a la recta <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>, aplicamos el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> de transporte de ángulos para construir una semirrecta con origen en <VisualBind element="punto-a" color="carbon">$A$</VisualBind> que forma con $\overrightarrow{AB}$ un ángulo congruente con <VisualBind element="angMAP" color="ocre">$\angle BAP$</VisualBind>:
+
+$$
+\angle BAC \cong \angle BAP
+$$
+
+A continuación, por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> de transporte de segmentos, determinamos sobre dicha semirrecta un único punto <VisualBind element="punto-c" color="mora">$C$</VisualBind> tal que el segmento <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> es congruente con el segmento <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind>:
+
+$$
+\overline{AC} \cong \overline{AP}
+$$
+
+El punto $C$ es el reflejado sintético de $P$ respecto a la recta $\ell$, situándose por construcción en semiplanos opuestos.
+</ProofStep>
+
+<ProofStep number={3} target="step3" diagramStep="step3" title="Intersección con la recta base por separación del plano">
+Puesto que los puntos <VisualBind element="punto-p" color="terracota">$P$</VisualBind> y <VisualBind element="punto-c" color="mora">$C$</VisualBind> pertenecen a <ConceptLink targetId="semiplano">semiplanos</ConceptLink> opuestos respecto a la <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>, por la propiedad de separación del plano derivada del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma II.4</ConceptLink> (axioma de Pasch), el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segmento-pc" color="terracota">$\overline{PC}$</VisualBind> interseca a la recta $\ell$ en un punto interior:
+
+$$
+\operatorname{tr}(\ell) \cap \overline{PC} = \{M\}
+$$
+
+Llamamos <VisualBind element="punto-m" color="canela">$M$</VisualBind> a dicho punto de intersección. Si $M = A$, las semirrectas $\overrightarrow{AP}$ y $\overrightarrow{AC}$ forman directamente ángulos rectos adyacentes; si $M \neq A$, el punto $M$ define dos triángulos coplanares contiguos.
+</ProofStep>
+
+<ProofStep number={4} target="step4" diagramStep="step4" title="Congruencia de triángulos por el criterio LAL">
+Analizamos los triángulos <VisualBind element="triangulo-pam" color="canela">$\triangle PAM$</VisualBind> y <VisualBind element="triangulo-cam" color="mora">$\triangle CAM$</VisualBind> respecto a la correspondencia $P \mapsto C$, $A \mapsto A$, $M \mapsto M$:
+1. Congruencia de lados: <VisualBind element="segAP" color="canela">$\overline{AP}$</VisualBind> $\cong$ <VisualBind element="segAC" color="canela">$\overline{AC}$</VisualBind> (por construcción en el paso 2).
+2. Congruencia de ángulos: <VisualBind element="angMAP" color="ocre">$\angle PAM$</VisualBind> $\cong$ <VisualBind element="angMAC" color="ocre">$\angle CAM$</VisualBind> (por ser los ángulos $\angle BAP$ y $\angle BAC$).
+3. Lado común: $\overline{AM} \cong \overline{AM}$ (por la relación idéntica de congruencia).
+
+Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, ambos triángulos son congruentes entre sí:
+
+$$
+\triangle PAM \cong \triangle CAM
+$$
+</ProofStep>
+
+<ProofStep number={5} target="step5" diagramStep="step5" title="Ángulos rectos adyacentes y perpendicularidad">
+De la congruencia de triángulos $\triangle PAM \cong \triangle CAM$ se deduce que los ángulos homólogos correspondientes en el vértice <VisualBind element="punto-m" color="canela">$M$</VisualBind> son congruentes:
+
+$$
+\angle AMP \cong \angle AMC
+$$
+
+Como el punto $M$ pertenece al segmento $\overline{PC}$, los puntos $P$, $M$ y $C$ están alineados con $P * M * C$, por lo que las semirrectas $\overrightarrow{MP}$ y $\overrightarrow{MC}$ son semirrectas opuestas sobre la recta $\overleftrightarrow{PC}$. Por tanto, los ángulos <VisualBind element="angPMA" color="terracota">$\angle AMP$</VisualBind> y <VisualBind element="angCMA" color="mora">$\angle AMC$</VisualBind> son adyacentes suplementarios.
+
+Al ser dos ángulos adyacentes suplementarios y congruentes, ambos son por definición <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>. En consecuencia, la <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> es <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> a la recta <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>:
+
+$$
+\overleftrightarrow{PM} \perp \ell
+$$
+
+Esto demuestra la existencia de la perpendicular por el punto $P$.
+</ProofStep>
+
+<ProofStep number={6} target="step6" diagramStep="step6" title="Unicidad de la perpendicular por el teorema del ángulo exterior">
+Para demostrar la unicidad, supongamos por reducción al absurdo que existiese una segunda recta perpendicular a <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> que pasase por <VisualBind element="punto-p" color="terracota">$P$</VisualBind>, cortando a $\ell$ en un pie distinto $M' \in \operatorname{tr}(\ell)$ tal que $M' \neq M$.
+
+En tal caso, los puntos $P$, $M$ y $M'$ formarían un triángulo $\triangle PMM'$ con dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>: $\angle PMM'$ y $\angle PM'M$.
+
+En el triángulo $\triangle PMM'$, el ángulo exterior en el vértice $M$ sería recto ($\angle AMP$), y coincidiría en congruencia con el ángulo interior no adyacente en el vértice $M'$ ($\angle PM'M$), contradiciendo el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, que exige:
+
+$$
+\angle AMP > \angle PM'M
+$$
+
+Por tanto, no puede existir un segundo pie $M'$, y la recta perpendicular <VisualBind element="recta-pm" color="terracota">$\overleftrightarrow{PM}$</VisualBind> es única en el plano.
+</ProofStep>
+
+</DemonstrationSection>

@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "cuerpo",
+  lang: "en",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Field",
+  description: "Algebraic structure with two compatible binary operations (addition and multiplication) forming respective distributive abelian groups.",
+  branch: "12",
+  branches: ["12", "08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter II, §1", role: "primary" },
+    { title: "Algebra", author: "Michael Artin", locator: "Chapter 3", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" /> **field** is a fundamental algebraic structure endowed with two compatible internal binary operations —addition and multiplication— that generalizes the arithmetic properties of classical number systems such as the rationals $\mathbb{Q}$, the reals $\mathbb{R}$, and the complexes $\mathbb{C}$.
+
+In a field, it is possible to add, subtract, multiply, and divide by any non-zero element, satisfying the standard associative, commutative, and distributive laws.
+
+<Definicion title="Formal structure of a field">
+  A **field** is a triple $(\mathbb{K}, +, \cdot)$ formed by a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> $\mathbb{K}$ and two internal <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operations</ConceptLink> $+ \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ and $\cdot \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ such that:
+  1. $(\mathbb{K}, +)$ is an abelian <ConceptLink targetId="grupo" isDependency={true}>group</ConceptLink> whose identity element is denoted $0$.
+  2. $(\mathbb{K} \setminus \{0\}, \cdot)$ is an abelian group whose identity element is denoted $1$, with $1 \neq 0$.
+  3. Multiplication is distributive with respect to addition from both sides:
+     $$
+     \forall a, b, c \in \mathbb{K}, \quad a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \land \quad (a + b) \cdot c = (a \cdot c) + (b \cdot c)
+     $$
+</Definicion>
+
+<Separador />
+
+### Ordered fields and analytic consistency
+
+When a field is equipped with a total order relation compatible with addition and multiplication of positive elements, it is called an *ordered field*.
+
+The field of real numbers $\mathbb{R}$ is the unique Archimedean ordered field satisfying the least upper bound property or <ConceptLink targetId="completitud-reales">completeness of the real numbers</ConceptLink>. This structural completeness enables the construction of the analytic Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^n$, rigorously grounding the axioms of <ConceptLink targetId="continuidad">continuity</ConceptLink> postulated synthetically by Hilbert in <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>.

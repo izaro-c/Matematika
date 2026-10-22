@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "biyeccion",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Biyección",
+  description: "Función entre dos conjuntos que es simultáneamente inyectiva y sobreyectiva, estableciendo un emparejamiento uno a uno invertible.",
+  branch: "03E",
+  branches: ["03", "08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una correspondencia funcional entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que asocia cada elemento del dominio con un único elemento del codominio, de modo que cada elemento del codominio resulta ser imagen de exactamente un elemento del dominio.
+
+Al combinar la preservación de distinciones con la cobertura exhaustiva del espacio de llegada, una biyección establece un emparejamiento perfecto y simétrico uno a uno entre ambos conjuntos, garantizando la existencia de una función inversa bien definida.
+
+<Definicion title="Definición formal de biyección">
+  Sean $A$ y $B$ dos conjuntos. Una función $f\colon A \longrightarrow B$ es una **biyección** si y solo si satisface simultáneamente dos condiciones:
+  1. **<ConceptLink targetId="inyectividad">Inyectividad</ConceptLink>:** Elementos distintos del dominio poseen imágenes distintas:
+     $$
+     \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
+     $$
+  2. **Sobreyectividad:** Todo elemento del codominio es imagen de al menos un elemento del dominio:
+     $$
+     \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
+     $$
+  
+  Equivalentemente, $f$ es biyectiva si y solo si existe una función inversa $f^{-1}\colon B \longrightarrow A$ tal que $f^{-1} \circ f = \operatorname{id}_A$ y $f \circ f^{-1} = \operatorname{id}_B$.
+</Definicion>
+
+<Separador />
+
+### Trascendencia estructural y aplicaciones geométricas
+
+Las biyecciones desempeñan un papel vertebrador en múltiples ramas de la matemática:
+- **Medida del tamaño:** Dos conjuntos tienen la misma <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> si y solo si existe una biyección entre ellos ($|A| = |B|$).
+- **Preservación estructural:** Un <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink> formal no es sino una biyección entre estructuras que además preserva todas las relaciones y operaciones de su <ConceptLink targetId="signatura">signatura</ConceptLink>.
+- **Transformaciones y congruencia:** En geometría, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de figuras compuestas (como triángulos o polígonos) se define a través de una correspondencia biyectiva entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> homólogos que preserva la congruencia de los <ConceptLink targetId="lado">lados</ConceptLink> y de los <ConceptLink targetId="angulo">ángulos</ConceptLink> respectivos.

@@ -1,0 +1,43 @@
+export const metadata = {
+  id: "consistencia-logica",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Koherentzia logikoa (Kontsistentzia)",
+  description: "Teoria formal baten propietatea, proposizio bat eta haren ezezkoa aldi berean ondorioztatzea ezinezkoa dela bermatzen duena (kontraesanik eza).",
+  branch: "03B",
+  branches: ["03", "03C"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. Kapitulua", role: "primary" },
+    { title: "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I", author: "Kurt Gödel", locator: "Monatshefte für Mathematik und Physik 38 (1931)", role: "secondary" }
+  ]
+};
+
+<Capitular letra="K" />**oherentzia logikoa** (edo kontsistentzia sintaktikoa) edozein teoria formal edo sistema deduktiboren funtsezko propietate metateorikoa da: barne-kontraesanik ezaren bermea.
+
+Sistema deduktibo klasikoetan, teoria bat kontraesankorra balitz, eztandaren printzipioak (*ex falso quodlibet*) bere hizkuntzan formulatu daitekeen edozein proposizio frogatzea ahalbidetuko luke. Ondorioz, inkoherentziak eraikin deduktibo osoa eraisten du, bere <ConceptLink targetId="teorema">teoremei</ConceptLink> balio bereizle edo epistemikoa kenduz.
+
+<Definicion title="Koherentzia sintaktikoa eta semantikoa">
+  Izan bedi $\mathcal{T}$ $\mathcal{L}$ hizkuntza formalean formulatutako $\Phi$ axiomadun teoria bat.
+  
+  $\mathcal{T}$ **sintaktikoki koherentea** dela esaten da baldin eta $\varphi$ formula bakar batean ere ezin bada formalki eratorri $\varphi$ eta haren $\neg \varphi$ ezezkoa aldi berean:
+  $$
+  \mathcal{T} \text{ koherentea da} \iff \forall \varphi \in \mathcal{L}, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
+  $$
+  Bestalde, $\mathcal{T}$ **semantikoki koherentea** da (edo betegarria) baldin eta gutxienez $\mathcal{M}$ <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat existitzen bada non $\mathcal{M} \models \mathcal{T}$ den.
+  
+  Lehen mailako <ConceptLink targetId="logica">logikan</ConceptLink> Gödelen osotasun-teorema dela eta, bi nozio horiek bat datoz guztiz:
+  $$
+  \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
+  $$
+</Definicion>
+
+<Separador />
+
+### Koherentzia erlatiboa geometriaren oinarrietan
+
+Gödelen ez-osotasunaren bigarren teoremaren arabera, behar bezain adierazkorra den teoria formal batek ezin du bere barne-koherentzia frogatu bere dedukzio-metodo propioen bidez. Hori dela eta, metamatematikak **koherentzia erlatibora** jotzen du:
+
+- **Geometria euklidearra:** *Grundlagen* lanaren II. kapituluan, David Hilbertek geometria euklidearraren koherentzia erlatiboa ezarri zuen bere oinarrizko terminoak $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink> interpretatuz: $\mathbb{R}$ zenbaki errealen teoria aritmetikoa koherentea bada, orduan geometria euklidearra nahitaez koherentea da.
+- **Geometria ez-euklidearrak:** Historikoki, ez Bolyaik ez Lobatxevskik ez zuten lortu geometria hiperbolikoaren koherentzia frogatzea; Eugenio Beltramik (1868), Felix <ConceptLink targetId="klein">Kleinek</ConceptLink> eta Henri Poincaré-k frogatu zuten behin betiko plano euklidearreko eredu diferentzial eta analitikoen bidez, hala nola <ConceptLink targetId="modelo-poincare">Poincareren diskoaren</ConceptLink> bidez, frogatuz geometria euklidearra koherentea bada geometria hiperbolikoa ere koherentea dela.

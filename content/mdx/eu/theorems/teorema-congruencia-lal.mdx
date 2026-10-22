@@ -1,0 +1,65 @@
+export const metadata = {
+  id: "teorema-congruencia-lal",
+  lang: "eu",
+  type: "teorema",
+  title: "Alde-Angelu-Alde (AlAnAl) kongruentzia-teorema",
+  description: "Bi triangeluk bi alde eta horien arteko angelua hurrenez hurren kongruenteak badituzte, orduan elkarren artean kongruenteak dira gainerako alde eta angelu guztietan.",
+  statement: "Bi △ABC eta △A'B'C' triangelutan, baldin eta AB ≅ A'B', AC ≅ A'C' eta ∠BAC ≅ ∠B'A'C' badira, orduan △ABC ≅ △A'B'C'.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-congruencia-lal"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 4",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="B" />i <ConceptLink targetId="triangulo" isDependency={true}>triangeluk</ConceptLink> bi <ConceptLink targetId="lado">alde</ConceptLink> eta horien arteko <ConceptLink targetId="angulo">angelua</ConceptLink> hurrenez hurren <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badituzte, orduan kongruenteak dira gainerako elementu guztietan: hirugarren aldea kongruentea da eta gainerako angeluak hurrenez hurren kongruenteak dira, bi triangeluak elkarren artean kongruenteak direlarik.
+
+Tradizio klasikoan, emaitza hau <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.4 proposizioari dagokio, <ConceptLink targetId="movimiento-rigido">mugimendu zurrunean</ConceptLink> oinarritutako gainezarpen bidez frogatua. <ConceptLink targetId="sistema-absoluto">Geometria absolutua</ConceptLink> formalizatzean, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> aitortu zuen gainezarpen horrek postulatu gehigarririk gabe froga ezinezkoa den printzipio bat ezkutatzen duela, eta oinarrizko postulatu gisa <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axioma</ConceptLink> formulatu zuen, oinarriko gainerako angeluen kongruentzia soilik bermatzen duena. Hartatik abiatuta, zuzenkien garraioarekin (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink>) eta angeluen garraioaren bakartasunarekin (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>) batera, <ConceptLink targetId="teorema">teorema</ConceptLink> honek <ConceptLink targetId="criterio-congruencia">kongruentzia-irizpidea</ConceptLink> osatzen du, hirugarren <ConceptLink targetId="segmento">zuzenkiaren</ConceptLink> kongruentzia eta <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangeluen kongruentzia globala</ConceptLink> ondorioztatuz, eta oinarrizko lehen irizpide bihurtzen da, bertatik eratortzen direlarik <ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink> eta <ConceptLink targetId="teorema-congruencia-lll">LLL</ConceptLink> irizpideak.
+
+<Definicion title="LAL kongruentzia-teoremaren enuntziatu formala">
+Izan bitez $A, B, C \in \mathcal{P}$ eta $A', B', C' \in \mathcal{P}$ $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren <ConceptLink targetId="punto">puntuen</ConceptLink> bi terna, $\triangle ABC$ eta $\triangle A'B'C'$ <ConceptLink targetId="triangulo" isDependency={true}>triangeluak</ConceptLink> beren <ConceptLink targetId="vertice">erpinekin</ConceptLink> zehazten dituztenak.
+
+Baldin eta kongruentzia-hipotesiak betetzen badira:
+1. Alde homologoen lehen bikotea: $\overline{AB} \cong \overline{A'B'}$
+2. <ConceptLink targetId="lado">Alde</ConceptLink> homologoen bigarren bikotea: $\overline{AC} \cong \overline{A'C'}$
+3. Horien arteko <ConceptLink targetId="angulo">angelua</ConceptLink>: $\angle BAC \cong \angle B'A'C'$
+
+orduan hirugarren aldea kongruentea da:
+$$
+\overline{BC} \cong \overline{B'C'}
+$$
+eta triangeluak kongruenteak dira (<ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink>) $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$ korrespondentzia ordenatuarekiko:
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+$\angle ABC \cong \angle A'B'C'$ eta $\angle ACB \cong \angle A'C'B'$ ere betetzen direlarik.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio deduktiboak">
+    <PropiedadItem 
+      id="teorema-congruencia-ala" 
+      title="Angelu-Alde-Angelu (ALA) irizpidea"
+      formula="\angle CAB \cong \angle C'A'B' \land \overline{AB} \cong \overline{A'B'} \land \angle ABC \cong \angle A'B'C' \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      Bi <ConceptLink targetId="triangulo">triangeluk</ConceptLink> <ConceptLink targetId="lado">alde</ConceptLink> <ConceptLink targetId="congruencia">kongruente</ConceptLink> bat eta alde horren alboko bi <ConceptLink targetId="angulo">angeluak</ConceptLink> partekatzen badituzte, <ConceptLink targetId="teorema-congruencia-ala">ALA irizpidea</ConceptLink> frogatzen da laguntza-<ConceptLink targetId="segmento">zuzenki</ConceptLink> bat garraiatuz eta teorema hau aplikatuz erpinen kointzidentzia behartzeko angeluen garraioaren bakartasunaren bidez.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

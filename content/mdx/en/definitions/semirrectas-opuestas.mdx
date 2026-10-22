@@ -1,0 +1,62 @@
+export const metadata = {
+  id: "semirrectas-opuestas",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Opposite Rays",
+  description: "Two collinear open rays on the same line sharing a common origin extending in opposite directions according to the betweenness relation.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />wo open <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> on the same <ConceptLink targetId="recta">line</ConceptLink> are **opposite rays** if they share their <ConceptLink targetId="punto">origin</ConceptLink> and, for every point on one and every point on the other, the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation holds with respect to the common origin.
+
+The notion is based on the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink> (Hilbert's Group II, §4). By <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink>, given any point on a line there exist points on both sides of it. Every point on a line determines a partition of the remaining points of the line into exactly two opposite rays, an indispensable concept for defining <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink> and <ConceptLink targetId="angulos-opuestos-vertice">vertical angles</ConceptLink>.
+
+<Definicion title="Formal Definition of Opposite Rays">
+Let $\ell \in \mathcal{L}$ be a <ConceptLink targetId="recta">line</ConceptLink> and let $O \in \operatorname{tr}(\ell)$ be a <ConceptLink targetId="punto">point</ConceptLink>. Two open <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> $h, h' \subset \operatorname{tr}(\ell)$ with origin $O$ are **opposite rays** if for every point $A \in h$ and every point $B \in h'$, the point $O$ is <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $B$ ($A * O * B$):
+
+$$
+\operatorname{op}(h, h') \iff \forall A \in h \, \forall B \in h' \, (A * O * B)
+$$
+
+Equivalently, if $h = \operatorname{sem}(OA)$ is the open ray determined by a point $A \in \operatorname{tr}(\ell) \setminus \{O\}$, its opposite ray $h' = \operatorname{sem}(OB)$ is described as the set of points $P$ such that $O$ is between $A$ and $P$:
+
+$$
+h' = \{ P \in \operatorname{tr}(\ell) \setminus \{O\} \mid A * O * P \}
+$$
+
+The corresponding closed rays, $\overrightarrow{OA} = h \cup \{O\}$ and $\overrightarrow{OB} = h' \cup \{O\}$, are called closed opposite rays and their <ConceptLink targetId="interseccion">intersection</ConceptLink> coincides with the common origin: $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Order and Structural Properties">
+    <PropiedadItem 
+      id="descomposicion-recta-opuestas" 
+      title="Disjoint Partition of the Line"
+      formula="\operatorname{tr}(\ell) \setminus \{O\} = h \sqcup h'"
+    >
+      Every point $O$ of a line $\ell$ induces a <ConceptLink targetId="particion">partition</ConceptLink> of its <ConceptLink targetId="traza">point trace</ConceptLink> deprived of the origin into exactly two open and <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> opposite rays, $h$ and $h'$, such that $h \cap h' = \emptyset$ and $h \cup \{O\} \cup h' = \operatorname{tr}(\ell)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-semirrecta-opuesta" 
+      title="Existence and Uniqueness of the Opposite Ray"
+      formula="\forall h \subset \operatorname{tr}(\ell) \, \exists! h' \subset \operatorname{tr}(\ell) : \operatorname{op}(h, h')"
+    >
+      By <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink> and the properties of <ConceptLink targetId="orden">linear order</ConceptLink> on the line (Hilbert, §4), for every open ray $h$ on a line $\ell$ there exists a unique open ray $h'$ on $\ell$ opposite to $h$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

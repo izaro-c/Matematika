@@ -1,0 +1,159 @@
+export const metadata = {
+  id: "demo-angulo-exterior",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Kanpo-angeluaren teorema",
+  description: "Kanpo-angeluaren teoremaren frogapen sintetikoa, erdibidekoaren luzapenaren eta LAL kongruentzia-irizpidearen bidez.",
+  parentTheorem: "teorema-angulo-exterior",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 16",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoAnguloExterno } from '@content/diagrams/Demos/DemoAnguloExterno';
+
+<DemonstrationSection diagram={<DemoAnguloExterno />}>
+
+<Capitular letra="K" />anpo-angeluaren <ConceptLink targetId="teorema-angulo-exterior">teoremarako</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen deduktibo zuzenak</ConceptLink>, jatorriz <ConceptLink targetId="euclides">Euklidesena</ConceptLink> denak (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.16 Proposizioa) eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko §6 atalean <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> formalizatu zuenak, ezartzen du triangelu baten edozein kanpo-angelu hertsiki handiagoa dela auzokideak ez diren bi barne-angeluetako edozein baino.
+
+Arrazoibideak ez du erabiltzen <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> ezta jarraitutasun-axioma ere: zuzenkiak erdibanatzean, kongruentziak <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> bidez garraiatzean, <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>erpinez aurkako angeluen</ConceptLink> kongruentzian eta <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> karakterizazio sintetikoan oinarritzen da.
+
+<Separador />
+
+### Frogapena urratsez urrats
+
+<ProofStep number={1} diagramStep="step1" target="step1" title="Erdiko puntuaren hasierako eraikuntza">
+Izan bedi <VisualBind element="polygonABC" color="granada">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo">triangelua</ConceptLink> eta izan bedi <VisualBind element="pD" color="pavo">$D$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> bat $\overline{BC}$ <ConceptLink targetId="lado">aldearen</ConceptLink> luzapenean $C$ puntutik harago, $B * C * D$ izanik.
+
+Bada <VisualBind element="segAC" color="granada">$\overline{AC}$</VisualBind> <ConceptLink targetId="segmento">zuzenkiaren</ConceptLink> <VisualBind element="midAC" color="canela">$E$</VisualBind> <ConceptLink targetId="punto-medio">erdiko puntua</ConceptLink>, non $A * E * C$ den eta <VisualBind element="segAmidAC" color="terracota">$\overline{AE}$</VisualBind> eta <VisualBind element="segmidACC" color="terracota">$\overline{EC}$</VisualBind> zuzenkiak kongruenteak diren:
+
+$$
+\overline{AE} \cong \overline{EC}
+$$
+
+Jarraian, $B$ erpina eta $E$ erdiko puntua lotzen dituen <VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind> <ConceptLink targetId="segmento">zuzenkia</ConceptLink> marrazten da.
+</ProofStep>
+
+<ProofStep number={2} diagramStep="step2" target="step2" title="BE zuzenkiaren luzapena">
+<VisualBind element="segBmidAC" color="canela">$\overline{BE}$</VisualBind> zuzenkitik abiatuta, <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> marrazten da, zuzenkia <VisualBind element="midAC" color="canela">$E$</VisualBind> <ConceptLink targetId="punto-medio">erdiko puntutik</ConceptLink> harago luzatuz.
+
+Luzapen horretako edozein $X$ puntuk bitartekotasun-erlazioa betetzen du:
+
+$$
+B * E * X
+$$
+</ProofStep>
+
+<ProofStep number={3} diagramStep="step3" target="step3" title="Erdibidekoaren bikoizketa">
+Zuzenkiak garraiatzeko <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axiomaren</ConceptLink> arabera, <VisualBind element="rayBmidAC" color="pavo">$\overrightarrow{BE}$</VisualBind> zuzenerdiaren luzapenean bada <VisualBind element="pF" color="canela">$F$</VisualBind> puntu bakarra, non $B * E * F$ den eta <VisualBind element="segmidACF" color="canela">$\overline{EF}$</VisualBind> zuzenkia <VisualBind element="segBmidAC" color="canela">$\overline{EB}$</VisualBind> zuzenkiarekin kongruentea den:
+
+$$
+\overline{EF} \cong \overline{EB}
+$$
+
+Era berean, <VisualBind element="segCF" color="canela">$\overline{CF}$</VisualBind> zuzenkia marrazten da.
+</ProofStep>
+
+<ProofStep number={4} diagramStep="step4" target="step4" title="Triangeluen kongruentzia LAL bidez">
+<VisualBind element="polygonABmidAC" color="canela">$\triangle ABE$</VisualBind> eta <VisualBind element="polygonCFmidAC" color="canela">$\triangle CFE$</VisualBind> triangeluak aztertuko ditugu. Horietan hiru kongruentzia-baldintza betetzen dira:
+1. $\overline{AE} \cong \overline{EC}$, $E$ puntua $\overline{AC}$ zuzenkiaren erdiko puntua delako.
+2. <VisualBind element="nonReflexAngleAmidACB" color="terracota">$\angle AEB$</VisualBind> eta <VisualBind element="nonReflexAngleCmidACF" color="terracota">$\angle CEF$</VisualBind> angeluak kongruenteak dira, <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>erpinez aurkako angeluak</ConceptLink> direlako.
+3. $\overline{EB} \cong \overline{EF}$ eraikuntzaz.
+
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> arabera, bi triangeluak kongruenteak dira:
+
+$$
+\triangle ABE \cong \triangle CFE
+$$
+</ProofStep>
+
+<ProofStep number={5} diagramStep="step5" target="step5" title="Angelu homologoen kongruentzia">
+$\triangle ABE \cong \triangle CFE$ triangeluen kongruentziatik $\overline{EB}$ eta $\overline{EF}$ alde kongruenteei aurrez aurre dauden angelu homologoen kongruentzia eratortzen da:
+
+$$
+\angle BAC \cong \angle ECF
+$$
+
+non <VisualBind element="nonReflexAngleBAC" color="pavo">$\angle BAC$</VisualBind> barne-angelua <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind> angeluarekin kongruentea den.
+</ProofStep>
+
+<ProofStep number={6} diagramStep="step6" target="step6" title="CF zuzenerdiaren barnekotasuna">
+$B * C * D$ denez, $B$ eta <VisualBind element="pD" color="pavo">$D$</VisualBind> puntuak aurkako <ConceptLink targetId="semiplano">planoerdietan</ConceptLink> daude $\overleftrightarrow{AC}$ zuzenarekiko; eta $B * E * F$ denez $E \in \overleftrightarrow{AC}$ izanik, $B$ eta <VisualBind element="pF" color="canela">$F$</VisualBind> puntuak ere aurkako planoerdietan daude $\overleftrightarrow{AC}$ zuzenarekiko. Ondorioz, $F$ eta $D$ planoerdi berekoak dira $\overleftrightarrow{AC}$ zuzenarekiko.
+
+Era berean, $A$ eta $F$ planoerdi berekoak dira $\overleftrightarrow{BC}$ zuzenarekiko. Beraz, <VisualBind element="rayCF" color="pavo">$\overrightarrow{CF}$</VisualBind> zuzenerdia <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind> <ConceptLink targetId="angulo-exterior">kanpo-angeluaren</ConceptLink> barnean dago:
+
+$$
+\overrightarrow{CF} \subset \operatorname{Int}(\angle ACD)
+$$
+</ProofStep>
+
+<ProofStep number={7} diagramStep="step7" target="step7" title="Lehen barne-angeluaren desberdintza">
+$\overrightarrow{CF}$ zuzenerdia $\angle ACD$ angeluaren barnean dagoenez, <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> definizioak ezartzen du <VisualBind element="nonReflexAnglemidACCF" color="pavo">$\angle ECF$</VisualBind> hertsiki txikiagoa dela <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind> baino.
+
+$\angle BAC \cong \angle ECF$ denez, ordezkapen bidez lortzen da:
+
+$$
+\angle BAC < \angle ACD
+$$
+
+hau da, $A$ erpineko barne-angelua hertsiki txikiagoa da $C$ erpineko kanpo-angelua baino: $\angle ACD > \angle BAC$.
+</ProofStep>
+
+<ProofStep number={8} diagramStep="step8" target="step8" title="Eraikuntza simetrikoa G erdiko puntuaren gainean">
+Kanpo-angelua $\angle ABC$ bigarren barne-angeluarekin alderatzeko, antzeko eraikuntza bat errepikatzen da: izan bedi <VisualBind element="midG" color="terracota">$G$</VisualBind> puntua <VisualBind element="segBC" color="granada">$\overline{BC}$</VisualBind> zuzenkiaren erdiko puntua, $B * G * C$ eta $\overline{BG} \cong \overline{GC}$ izanik.
+
+$A$ eta $G$ lotzen dituen zuzena marrazten da eta <VisualBind element="pH" color="terracota">$H$</VisualBind> puntu bateraino luzatzen da, non $A * G * H$ eta $\overline{GH} \cong \overline{AG}$ diren, <VisualBind element="segAH" color="ocre">$\overline{AH}$</VisualBind> zuzenkia marraztuz. Era berean, $\overline{AC}$ luzatzen da $C$ puntutik harago <VisualBind element="pK" color="pavo">$K$</VisualBind> puntu bateraino, $A * C * K$ izanik:
+
+$$
+\overline{BG} \cong \overline{GC} \quad \land \quad \overline{GH} \cong \overline{AG}
+$$
+</ProofStep>
+
+<ProofStep number={9} diagramStep="step9" target="step9" title="LAL irizpidearen bigarren aplikazioa">
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> <VisualBind element="polygonABmidG" color="terracota">$\triangle ABG$</VisualBind> eta <VisualBind element="polygonHmidGC" color="canela">$\triangle HCG$</VisualBind> triangeluei aplikatuz, $G$ erpinean erpinez aurkako angelu kongruenteak partekatzen baitituzte, $\triangle ABG \cong \triangle HCG$ ondorioztatzen da.
+
+Angelu homologoen kongruentziagatik, <VisualBind element="nonReflexAngleABC" color="musgo">$\angle ABC$</VisualBind> $\cong$ <VisualBind element="nonReflexAngleHCmidG" color="musgo">$\angle GCH$</VisualBind>. $\overrightarrow{CH}$ zuzenerdia <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind> angeluaren barnekoa denez, betetzen da:
+
+$$
+\angle ABC \cong \angle GCH < \angle BCK
+$$
+</ProofStep>
+
+<ProofStep number={10} diagramStep="step10" target="step10" title="Erpinez aurkako angeluak C erpinean">
+$\overleftrightarrow{AK}$ eta $\overleftrightarrow{BD}$ zuzenek elkar ebakitzen dute $C$ erpinean; beraz, <VisualBind element="nonReflexAngleKCB" color="ocre">$\angle BCK$</VisualBind> angelua eta <VisualBind element="nonReflexAngleACD" color="ocre">$\angle ACD$</VisualBind> kanpo-angelua <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>erpinez aurkako angeluak</ConceptLink> dira.
+
+Erpinez aurkako angeluen kongruentziagatik, $\angle BCK \cong \angle ACD$ betetzen da. Kongruentzia hori aurreko urratseko desberdintzarekin konbinatuz, lortzen da:
+
+$$
+\angle ABC < \angle ACD
+$$
+
+hau da, $\angle ACD > \angle ABC$.
+</ProofStep>
+
+<ProofStep number={11} diagramStep="step11" target="step11" title="Ondorio orokorra">
+7. urratsean $\angle ACD > \angle BAC$ eta 10. urratsean $\angle ACD > \angle ABC$ ezarri ondoren, frogatuta geratzen da edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink> <ConceptLink targetId="angulo-exterior">kanpo-angelua</ConceptLink> hertsiki handiagoa dela auzokideak ez diren bi barne-<ConceptLink targetId="angulo">angeluetako</ConceptLink> edozein baino:
+
+$$
+\angle ACD > \angle BAC \quad \land \quad \angle ACD > \angle ABC
+$$
+</ProofStep>
+
+</DemonstrationSection>

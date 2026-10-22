@@ -304,6 +304,9 @@ export interface TranslationDictionary {
     verifiedAxioms: string;
     systemAxioms: string;
     modelsSatisfyingSystem: string;
+    extendedSystems: string;
+    systemExtensions: string;
+    modelBaseTheory: string;
     resolvedExample: string;
     practiceWithExercises: string;
     moreApplications: string;

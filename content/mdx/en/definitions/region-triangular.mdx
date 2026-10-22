@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "region-triangular",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangular Region",
+  description: "Set of points in the plane formed by the union of the trace of a triangle and its interior, the elementary building block of polygonal decomposition and area.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "triangulo", "area", "convexidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter IV",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" /> **triangular region** is the <ConceptLink targetId="conjunto">set</ConceptLink> of points of a <ConceptLink targetId="plano">plane</ConceptLink> formed by the union of the <ConceptLink targetId="traza">trace</ConceptLink> of a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> and its <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink>.
+
+Unlike the triangle, which consists solely of the three boundary segments, the triangular region includes all points enclosed by it. It constitutes the elementary closed and convex figure from which <ConceptLink targetId="region-poligonal">polygonal regions</ConceptLink> are built and upon which the <ConceptLink targetId="teoria-medida-area">theory of area measure</ConceptLink> operates.
+
+<Definicion title="Formal Definition of Triangular Region">
+Given a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $	riangle ABC = {overline{AB}, overline{BC}, overline{CA}}$ lying in a <ConceptLink targetId="plano">plane</ConceptLink> $pi$, with <ConceptLink targetId="traza">trace</ConceptLink> $operatorname{tr}(	riangle ABC) = overline{AB} cup overline{BC} cup overline{CA}$ and <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink> $operatorname{Int}(	riangle ABC)$, the **triangular region** determined by $	riangle ABC$, denoted $operatorname{Reg}(	riangle ABC)$, is the <ConceptLink targetId="conjunto">set</ConceptLink> of points:
+
+$$
+operatorname{Reg}(	riangle ABC) = operatorname{tr}(	riangle ABC) cup operatorname{Int}(	riangle ABC)
+$$
+
+The trace $operatorname{tr}(	riangle ABC)$ constitutes the boundary of the region, while $operatorname{Int}(	riangle ABC)$ is its open, convex interior.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Topological and Convexity Properties">
+    <PropiedadItem 
+      id="convexidad-region-triangular" 
+      title="Convexity of the Triangular Region"
+      formula="P, Q in operatorname{Reg}(	riangle ABC) implies overline{PQ} subseteq operatorname{Reg}(	riangle ABC)"
+    >
+      Every triangular region is a convex set in the plane. If two points $P$ and $Q$ belong to $operatorname{Reg}(	riangle ABC)$, the closed <ConceptLink targetId="segmento">segment</ConceptLink> $overline{PQ}$ is entirely contained in $operatorname{Reg}(	riangle ABC)$, a direct consequence of the convexity of the interior and of the half-planes defining it.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-frontera-interior" 
+      title="Partition into Interior and Boundary"
+      formula="operatorname{tr}(	riangle ABC) cap operatorname{Int}(	riangle ABC) = emptyset"
+    >
+      The trace and interior of the triangle are disjoint sets. No point of the sides or vertices belongs to $operatorname{Int}(	riangle ABC)$, so that the triangular region is disjointly decomposed into its boundary and its interior.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

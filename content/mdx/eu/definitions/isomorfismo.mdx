@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "isomorfismo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Isomorfismoa",
+  description: "Bi egitura matematikoren arteko bijekzioa, haien sinadura formaleko eragiketa, erlazio eta konstante guztiak kontserbatzen dituena.",
+  branch: "03C",
+  branches: ["08A", "20"],
+  hasSimulation: false,
+  sources: [
+    { title: "A Shorter Model Theory", author: "Wilfrid Hodges", locator: "1. Kapitulua", role: "primary" },
+    { title: "Lattice Theory", author: "Garrett Birkhoff", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura">signatura</ConceptLink> bera partekatzen duten bi sistema edo <ConceptLink targetId="estructura-geometrica">egitura matematikoren</ConceptLink> arteko bat-bateko korrespondentzia da, oinarrizko erlazioak, eragiketak eta konstante bereiziak osotasunean kontserbatzen dituena.
+
+Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</ConceptLink> hizkuntza formalean adieraz daitezkeen propietateei dagokienez: haietako batean egiazkoa den edozein enuntziatu nahitaez egiazkoa da bestean ere, oinarrizko elementuen izaera enpirikoa edo nomenklatura soilik aldatuz.
+
+<Definicion title="Isomorfismoaren definizio formala">
+  Izan bitez $\mathcal{M}$ eta $\mathcal{N}$ bi egitura $\sigma$ signatura baten gainean, hurrenez hurren $M$ eta $N$ domeinuekin.
+  $$
+  f\colon M \longrightarrow N
+  $$
+  <ConceptLink targetId="biyeccion" isDependency={true}>bijekzio</ConceptLink> bat $\mathcal{M}$-tik $\mathcal{N}$-rako **isomorfismo** bat da ($\mathcal{M} \cong \mathcal{N}$ idatzita), baldin eta honako hauek betetzen baditu:
+  1. Edozein $n$-ar $R \in \sigma$ erlazio-ikurretarako eta edozein $a_1, \dots, a_n \in M$ elementutarako:
+     $$
+     (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
+     $$
+  2. Edozein $k$-ar $g \in \sigma$ funtzio-ikurretarako eta edozein $a_1, \dots, a_k \in M$ elementutarako:
+     $$
+     f(g^{\mathcal{M}}(a_1, \dots, a_k)) = g^{\mathcal{N}}(f(a_1), \dots, f(a_k))
+     $$
+  3. Edozein $c \in \sigma$ konstante-ikurretarako:
+     $$
+     f(c^{\mathcal{M}}) = c^{\mathcal{N}}
+     $$
+</Definicion>
+
+<Separador />
+
+### Kategorikotasuna eta automorfismoak
+
+<ConceptLink targetId="teoria-modelos">Ereduen teorian</ConceptLink>, isomorfismoen existentziak egiturazko nozio garrantzitsuak finkatzen ditu:
+
+- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, jarraitutasun-axiomekin osatutako hiru dimentsioko <ConceptLink targetId="sistema-euclidiano">sistema euklidear</ConceptLink> osoa kategorikoa da: bere axiomak betetzen dituen eredu orok $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrera</ConceptLink> eramaten duen isomorfismo bat onartzen du.
+- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** Egitura batek bere buruarekin duen isomorfismoari ($\mathcal{M} \cong \mathcal{M}$) *automorfismo* deritzo. Automorfismo guztien multzoak talde bat osatzen du, egituraren barne-simetriak aljebraikoki atzematen dituena, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink> agertzen diren intzidentzia-eraldaketa autodualetan.

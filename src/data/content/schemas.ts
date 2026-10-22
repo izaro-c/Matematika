@@ -201,6 +201,8 @@ export const AxiomaticSystemSchema = z.object({
   axiomas: z.array(z.string()),
   /** IDs de los modelos que satisfacen este sistema */
   models: z.array(z.string()).optional(),
+  /** IDs de los sistemas que este amplía: sus axiomas deben figurar todos en `axiomas` */
+  extends: z.array(z.string()).optional(),
   /** IDs de matemáticos asociados a este sistema */
   authors: z.array(z.string()).optional(),
   hasSimulation: z.boolean().optional(),
@@ -222,6 +224,8 @@ export const ModelSchema = z.object({
   satisfies: z.union([z.string(), z.array(z.string())]),
   /** IDs de los axiomas verificados en este modelo */
   axioms_verified: z.array(z.string()).optional(),
+  /** ID del sistema axiomático dentro del cual se construye el modelo (consistencia relativa) */
+  builtIn: z.string().optional(),
   /** Indica si este modelo tiene un diagrama interactivo asociado */
   hasDiagram: z.boolean().optional(),
   hasSimulation: z.boolean().optional(),

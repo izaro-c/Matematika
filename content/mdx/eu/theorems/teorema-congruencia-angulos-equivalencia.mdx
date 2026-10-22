@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "teorema-congruencia-angulos-equivalencia",
+  lang: "eu",
+  type: "teorema",
+  title: "Angeluen kongruentziaren baliokidetasun-teorema",
+  description: "Hilberten geometria sintetikoan angeluen arteko kongruentzia-erlazioa erreflexiboa, simetrikoa eta iragankorra dela egiaztatzen duen frogapena, baliokidetasun-erlazio osoa osatuz.",
+  statement: "Angeluen arteko kongruentzia-erlazioa baliokidetasun-erlazioa da: edozein ∠α, ∠β, ∠γ angelutarako betetzen da ∠α ≅ ∠α dela, baldin eta ∠α ≅ ∠β bada orduan ∠β ≅ ∠α dela, eta baldin eta ∠α ≅ ∠β eta ∠β ≅ ∠γ badira orduan ∠α ≅ ∠γ dela.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "relacion-equivalencia", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  demos: ["demo-congruencia-angulos-equivalencia"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />dozein <ConceptLink targetId="angulo" isDependency={true}>angeluren</ConceptLink> arteko <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink>-erlazioak <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink> oso bat osatzen du: erreflexiboa, simetrikoa eta iragankorra da.
+
+Zuzenkien kongruentzian ez bezala, non iragankortasuna zuzenean postulatzen den oinarrizko axioma gisa <ConceptLink targetId="axioma-congruencia-2">III.2 axioman</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomak</ConceptLink> angeluen garraioaren existentzia, bakartasuna eta <ConceptLink targetId="relacion-reflexiva">erreflexibotasuna</ConceptLink> soilik postulatzen ditu. <ConceptLink targetId="relacion-simetrica">Simetria</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">iragankortasuna</ConceptLink> <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> frogatu zituen *Grundlagen der Geometrie* laneko §6 atalean, <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> erabiliz eta <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> zabaltze angeluarren sailkapena finkatuz.
+
+<Definicion title="Angeluen kongruentziaren baliokidetasun-teoremaren enuntziatu formala">
+Izan bedi $\mathcal{A}$ jatorri bera duten <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> ez-kolinealen bikote ez-ordenatuek zehaztutako <ConceptLink targetId="angulo">angelu</ConceptLink> guztien <ConceptLink targetId="conjunto">multzoa</ConceptLink>. $\mathcal{A}$-ren gaineko $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazio bitarrak <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazio</ConceptLink> bat definitzen duten hiru propietateak betetzen ditu:
+
+1. **<ConceptLink targetId="relacion-reflexiva">Erreflexibotasuna</ConceptLink>:** Angelu oro bere buruarekin kongruentea da:
+$$
+\forall \angle\alpha \in \mathcal{A}, \quad \angle\alpha \cong \angle\alpha
+$$
+
+2. **<ConceptLink targetId="relacion-simetrica">Simetria</ConceptLink>:** Angelu bat bigarren batekin kongruentea bada, bigarrena lehenengoarekin kongruentea da:
+$$
+\forall \angle\alpha, \angle\beta \in \mathcal{A}, \quad \angle\alpha \cong \angle\beta \implies \angle\beta \cong \angle\alpha
+$$
+
+3. **<ConceptLink targetId="relacion-transitiva">Iragankortasuna</ConceptLink>:** Angelu bat bigarren batekin kongruentea bada eta bigarren hori hirugarren batekin kongruentea bada, lehenengoa hirugarrenarekin kongruentea da:
+$$
+\forall \angle\alpha, \angle\beta, \angle\gamma \in \mathcal{A}, \quad (\angle\alpha \cong \angle\beta \land \angle\beta \cong \angle\gamma) \implies \angle\alpha \cong \angle\gamma
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio estrukturalak eta deduktiboak">
+    <PropiedadItem 
+      id="clases-equivalencia-angulares" 
+      title="Espazio angeluarraren partizioa baliokidetasun-klasetan"
+      formula="\mathcal{A} / {\cong} = \{ [\angle\alpha] \mid \angle\alpha \in \mathcal{A} \}"
+    >
+      <ConceptLink targetId="relacion-equivalencia">Baliokidetasun-erlazio</ConceptLink> bat denez, angeluen kongruentziak $\mathcal{A}$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> bat eragiten du bikoteka disjuntuak diren <ConceptLink targetId="clase-equivalencia">baliokidetasun-klasetan</ConceptLink>. $[\angle\alpha]$ baliokidetasun-klase bakoitzak irekidura edo zabaltze angeluarraren berezko nozioa formalizatzen du zenbakizko <ConceptLink targetId="medida-angular">angelu-neurririk</ConceptLink> behar izan gabe.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="compatibilidad-orden-angulos" 
+      title="Angeluen ordenarekiko bateragarritasuna"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      Angeluen kongruentzia bateragarria da <ConceptLink targetId="orden-angulos">angeluen ordenarekin</ConceptLink>: $<$ erlazioa ez dago klase bakoitzaren barruan aukeratutako ordezkarien mende, eta $\mathcal{A} / {\cong}$ zatidura-multzoa <ConceptLink targetId="orden">ordena linealaren</ConceptLink> egituraz hornitzen du.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

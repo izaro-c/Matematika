@@ -42,7 +42,25 @@ El atributo `isDependency={true}` en `<ConceptLink>` se reserva **estrictamente*
 
 ---
 
-## 3. Paridad Trilingüe Estricta (`es`, `en`, `eu`)
+## 3. Nivel meta y relaciones entre sistemas
+
+El DAG deductivo vive **dentro** de cada teoría. Hay tres clases de relación y solo la primera es `isDependency`:
+
+| Relación | Cómo se expresa | Ejemplo |
+| :--- | :--- | :--- |
+| **Deducción** dentro de una teoría | `<ConceptLink isDependency={true}>` | `teorema-triangulo-isosceles` → `axioma-congruencia-5` |
+| **Nivel meta**: conceptos con los que se habla *de* una teoría (`axioma`, `teorema`, `modelo`, `sistema-axiomatico`, `consistencia-logica`, `signatura`, `teoria-modelos`) | `<ConceptLink>` **sin** `isDependency` en axiomas, teoremas y definiciones de la teoría | «se deduce como <ConceptLink targetId="teorema">teorema</ConceptLink>» en un axioma |
+| **Entre teorías**: inclusión y construcción de modelos | metadatos `extends` (sistema → sistema que amplía) y `builtIn` (modelo → sistema donde se construye) | `sistema-euclidiano` `extends: ["sistema-absoluto"]`; `modelo-cartesiano` `builtIn: "sistema-cuerpo-real"` |
+
+Reglas:
+- Si un axioma de geometría dependiera de `axioma`, `conjunto` o `logica`, todo el grafo colgaría de la lógica y el orden deductivo dejaría de verse. Por eso los meta-conceptos se enlazan sin dependencia.
+- Las nociones de conjuntos y relaciones (`conjunto`, `relacion-equivalencia`, `biyeccion`, `relacion-reflexiva`…) llevan `isDependency={true}` solo cuando el enunciado **no puede formularse** sin ellas (p. ej. una definición como clase de equivalencia). Mencionarlas en la prosa o en una propiedad no es dependencia.
+- Un teorema de `sistema-absoluto` no puede depender de `axioma-paralelas-euclides` ni de `axioma-paralelas-hiperbolico`. Si lo necesita, es un teorema del sistema euclidiano o del hiperbólico y lo dice en su primer párrafo.
+- Los números reales entran en la geometría a través de los modelos (`builtIn`), no de los axiomas: «la geometría es consistente si lo es ℝ» queda visible en el grafo sin crear ciclos.
+
+---
+
+## 4. Paridad Trilingüe Estricta (`es`, `en`, `eu`)
 
 - **Coincidencia 1:1 absoluta:** Todo `<ConceptLink targetId="...">` introducido en el texto en castellano (`es/`) **debe estar presente de forma idéntica en las versiones en inglés (`en/`) y euskera (`eu/`)**.
 - **Coherencia de `isDependency`:** Si un enlace lleva `isDependency={true}` en un idioma, debe llevarlo exactamente igual en los otros dos.
@@ -50,7 +68,7 @@ El atributo `isDependency={true}` en `<ConceptLink>` se reserva **estrictamente*
 
 ---
 
-## 4. Catálogo Canónico de `targetId`
+## 5. Catálogo Canónico de `targetId`
 
 Para asegurar la uniformidad absoluta en todo el corpus documental, se deben emplear los siguientes identificadores kebab-case canónicos:
 
@@ -69,8 +87,8 @@ Para asegurar la uniformidad absoluta en todo el corpus documental, se deben emp
 | | Triángulo rectángulo / Hipotenusa / Cateto | `triangulo-rectangulo`, `hipotenusa`, `cateto` |
 | | Triángulo isósceles / Triángulo equilátero / Triángulo escaleno | `triangulo-isosceles`, `triangulo-equilatero`, `triangulo-escaleno` |
 | | Bisectriz de un ángulo / Mediatriz de un segmento | `bisectriz`, `mediatriz` |
-| | Vértice / Lado / Base / Ángulo en la base | `vertice`, `lado`, `base`, `angulo-base` |
-| | Criterios de congruencia (LAL, ALA, LLL, LAA) | `criterio-congruencia`, `criterio-lal`, `criterio-ala`, `criterio-lll`, `criterio-laa` |
+| | Vértice / Lado / Base (de triángulo o polígono) / Ángulo en la base | `vertice`, `lado`, `base`, `angulo-base` |
+| | Criterio de congruencia (concepto) / Teoremas LAL, ALA, LLL, LAA | `criterio-congruencia`, `teorema-congruencia-lal`, `teorema-congruencia-ala`, `teorema-congruencia-lll`, `teorema-congruencia-laa` |
 | **Axiomas de Congruencia** | Axioma III.1 (Transporte de segmentos) | `axioma-congruencia-1` |
 | | Axioma III.2 (Transitividad de segmentos) | `axioma-congruencia-2` |
 | | Axioma III.3 (Aditividad de segmentos) | `axioma-congruencia-3` |
@@ -86,6 +104,7 @@ Para asegurar la uniformidad absoluta en todo el corpus documental, se deben emp
 | | Distancia métrica / Métrica euclidiana / Espacio métrico | `distancia`, `metrica-euclidiana`, `espacio-metrico` |
 | **Sistemas Axiomáticos** | Sistema de incidencia / Sistema absoluto | `sistema-incidencia`, `sistema-absoluto` |
 | | Sistema euclidiano / Sistema hiperbólico / Geometría elíptica | `sistema-euclidiano`, `sistema-hiperbolico`, `geometria-eliptica` |
+| | Números reales (cuerpo ordenado completo) | `sistema-cuerpo-real` |
 | | Geometría sintética / hilbertiana / analítica | `geometria-sintetica`, `geometria-hilbertiana`, `geometria-analitica` |
 | **Teoremas Clásicos** | Teorema del triángulo isósceles (Pons Asinorum) | `teorema-triangulo-isosceles` |
 | | Teorema de los ángulos opuestos por el vértice | `teorema-angulos-opuestos-verticales` |
@@ -111,12 +130,13 @@ Para asegurar la uniformidad absoluta en todo el corpus documental, se deben emp
 | | Signatura formal / Estructura matemática / Dominio primitivo | `signatura`, `estructura-geometrica`, `dominio` |
 | | Relación binaria / Relación de equivalencia / Clase de equivalencia | `relacion-binaria`, `relacion-equivalencia`, `clase-equivalencia` |
 | | Función / Operador / Aplicación / Inyectividad / Biyección | `funcion`, `operador`, `aplicacion`, `inyectividad`, `biyeccion` |
-| | Propiedades relacionales: Simetría / Reflexividad / Transitividad | `simetria`, `reflexividad`, `transitividad` |
+| | Propiedades de una relación: reflexiva / simétrica / transitiva | `relacion-reflexiva`, `relacion-simetrica`, `relacion-transitiva` |
+| | Simetría geométrica (de una figura) / Isometría | `simetria`, `isometria` |
 | | Estructuras lógicas: Teorema / Demostración / Hipótesis / Tesis | `teorema`, `demostracion`, `hipotesis`, `tesis` |
 | | Conjunto potencia / Conjunto disjunto / Conjunto convexo / Partición | `conjunto-potencia`, `conjunto-disjunto`, `conjunto-convexo`, `particion` |
 | **Álgebra y Cuadriláteros** | Cuadrilátero / Paralelogramo / Rectángulo / Cuadrado | `cuadrilatero`, `paralelogramo`, `rectangulo`, `cuadrado` |
 | | Circunferencia / Radio / Diámetro | `circunferencia`, `radio`, `diametro` |
-| | Grupo / Cuerpo / Espacio vectorial / Isomorfismo | `grupo`, `cuerpo`, `espacio-vectorial`, `isomorfismo` |
+| | Grupo / Cuerpo / Espacio vectorial / Base de un espacio vectorial / Isomorfismo | `grupo`, `cuerpo`, `espacio-vectorial`, `base-espacio-vectorial`, `isomorfismo` |
 | **Matemáticos Históricos** | Euclides / Hilbert / Pasch / Fano / Pitágoras / Tales / Pappus | `euclides`, `hilbert`, `pasch`, `fano`, `pitagoras`, `tales`, `pappus` |
 | | Arquímedes / Dedekind / Descartes / Peano / Bolyai / Lobachevski | `arquimedes`, `dedekind`, `descartes`, `peano`, `bolyai`, `lobachevski` |
 | | Fermat / Poncelet / Staudt / Steiner / Menger / Lebesgue / Hurewicz / Urysón / Wallman | `fermat`, `poncelet`, `staudt`, `steiner`, `menger`, `lebesgue`, `hurewicz`, `urysohn`, `wallman` |

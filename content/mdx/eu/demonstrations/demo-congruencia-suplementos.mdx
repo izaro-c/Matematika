@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "demo-congruencia-suplementos",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Angelu betegarrien kongruentzia-teorema",
+  description: "Hilberten (§6) araberako dedukzio sintetiko zuzena, kontrako zuzenerdiak kokatuz, zuzenki kongruenteak garraiatuz eta LAL irizpideak kateatuz.",
+  parentTheorem: "teorema-congruencia-suplementos",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "euclides"],
+  layout: "split",
+  tags: ["geometria-sintetikoa", "angeluak", "kongruentzia", "geometria-absolutua", "frogapena"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 13. eta 14. proposizioak",
+      role: "secondary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="A" />ngelu <ConceptLink targetId="teorema-congruencia-suplementos">betegarrien kongruentzia-teoremaren</ConceptLink> frogapenak <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* lanaren §6an garatutako <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzenari</ConceptLink> jarraitzen dio. <ConceptLink targetId="angulos-suplementarios" isDependency={true}>Angelu betegarrien</ConceptLink> definiziotik abiatuta, frogapenak konfigurazio lagungarri bat eraikitzen du <ConceptLink targetId="semirrectas-opuestas">aurkako zuzenerdien</ConceptLink> gainean <ConceptLink targetId="segmento">zuzenkien</ConceptLink> garraioaren bidez (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>), zuzenki-batuketaren <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>III.3 axioma</ConceptLink> aplikatzen du eta <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> hiru aplikazio kateatzen ditu jarraian, nahi den <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> ondorioztatu arte.
+
+<Separador />
+
+### Frogapena urratsez urrats
+
+<ProofStep number={1} title="Hasierako kokapena eta zuzenki kongruenteen garraioa">
+Izan bitez bi <ConceptLink targetId="angulo">angelu</ConceptLink> kongruente $\angle AOB \cong \angle A'O'B'$, $O$ eta $O'$ <ConceptLink targetId="punto">puntuetan</ConceptLink> <ConceptLink targetId="vertice">erpinak</ConceptLink> dituztenak. Izan bitez $\overrightarrow{OA}$ eta $\overrightarrow{OC}$ aurkako <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> berean, $A * O * C$ <ConceptLink targetId="estar-entre">bitartekotasun</ConceptLink>-erlazioa betez, eta modu berean $\overrightarrow{O'A'}$ eta $\overrightarrow{O'C'}$ beste zuzen batean $A' * O' * C'$ betez. <ConceptLink targetId="angulos-suplementarios" isDependency={true}>Angelu betegarrien</ConceptLink> definizioz, $\angle BOC$ eta $\angle B'O'C'$ dira $\angle AOB$ eta $\angle A'O'B'$ angeluen betegarri auzokideak. Zuzenkien garraioaren axiomaren arabera (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>), $A, B, C$ eta $A', B', C'$ puntuak hautatzen ditugu dagozkien zuzenerdien gainean, honako hau bete dadin:
+
+$$
+\overline{OA} \cong \overline{O'A'}, \quad \overline{OB} \cong \overline{O'B'}, \quad \overline{OC} \cong \overline{O'C'}
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Lehen triangelu-kongruentzia LAL bidez">
+Izan bitez $\triangle AOB$ eta $\triangle A'O'B'$ <ConceptLink targetId="triangulo">triangeluak</ConceptLink>. Aurreko urratseko eraikuntzatik, $\overline{OA} \cong \overline{O'A'}$ eta $\overline{OB} \cong \overline{O'B'}$ ditugu, eta hipotesiaren arabera haien arteko angeluak $\angle AOB \cong \angle A'O'B'$ betetzen du. <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> aplikatuz, triangeluen kongruentzia lortzen dugu:
+
+$$
+\triangle AOB \cong \triangle A'O'B'
+$$
+
+Kongruentzia honetatik ondorioztatzen da gainerako alde eta angelu homologoak kongruenteak direla:
+
+$$
+\overline{AB} \cong \overline{A'B'} \quad \text{eta} \quad \angle OAB \cong \angle O'A'B'
+$$
+
+$O$ puntua $A$ eta $C$ puntuen artean dagoenez, $\overrightarrow{AO}$ zuzenerdia bat dator $\overrightarrow{AC}$ zuzenerdiarekin, eta modu berean $\overrightarrow{A'O'}$ bat dator $\overrightarrow{A'C'}$ zuzenerdiarekin; beraz, $\angle CAB = \angle OAB$ eta $\angle C'A'B' = \angle O'A'B'$, eta hortik $\angle CAB \cong \angle C'A'B'$ lortzen da.
+</ProofStep>
+
+<ProofStep number={3} title="Zuzenki-batuketa III.3 axiomaren bidez">
+Puntuek $A * O * C$ eta $A' * O' * C'$ bitartekotasun-erlazioak betetzen dituzte. Hasierako eraikuntzaren arabera, osagai diren zuzenkiak hurrenez hurren kongruenteak dira:
+
+$$
+\overline{AO} \cong \overline{A'O'} \quad \text{eta} \quad \overline{OC} \cong \overline{O'C'}
+$$
+
+<ConceptLink targetId="axioma-congruencia-3" isDependency={true}>III.3 axiomak</ConceptLink> ezartzen du zuzenkien kongruentzia bateragarria dela zuzenki auzokideen batuketarekin. Postulatu hori puntu kolinealen hirukote ordenatuei aplikatuz, zuzenki osoak kongruenteak direla ondorioztatzen da:
+
+$$
+\overline{AC} \cong \overline{A'C'}
+$$
+
+Urrats honek oinarrizko kongruentzia sistemaren oinarri hedatura eramaten du.
+</ProofStep>
+
+<ProofStep number={4} title="Bigarren triangelu-kongruentzia LAL bidez">
+Izan bitez orain $\triangle ABC$ eta $\triangle A'B'C'$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> hedatuak. Triangelu hauetan hiru kongruentzia-baldintzak betetzen dira:
+1. Oinarriko alde kongruenteak: $\overline{AC} \cong \overline{A'C'}$ (3. urratsean frogatua).
+2. Goiko alde kongruenteak: $\overline{AB} \cong \overline{A'B'}$ (2. urratsean frogatua).
+3. Haien arteko angelu kongruenteak: $\angle CAB \cong \angle C'A'B'$ (2. urratsean lortua).
+
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> arabera, bi triangeluak kongruenteak dira:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+Kongruentzia honetatik ondorioztatzen dugu hirugarren aldeak eta $C$ zein $C'$ erpinetako angeluak kongruenteak direla:
+
+$$
+\overline{BC} \cong \overline{B'C'} \quad \text{eta} \quad \angle BCA \cong \angle B'C'A'
+$$
+
+$O$ puntua $A$ eta $C$ puntuen artean dagoenez, $\overrightarrow{CA}$ zuzenerdia bat dator $\overrightarrow{CO}$ zuzenerdiarekin; beraz, $\angle BCO = \angle BCA$ eta $\angle B'C'O' = \angle B'C'A'$, eta horrek $\angle BCO \cong \angle B'C'O'$ dakar.
+</ProofStep>
+
+<ProofStep number={5} title="Hirugarren triangelu-kongruentzia LAL bidez eta amaiera">
+Azkenik, izan bitez $\triangle OBC$ eta $\triangle O'B'C'$ <ConceptLink targetId="triangulo">triangeluak</ConceptLink>. Kongruentzia-irizpidearen hipotesiak egiaztatzen ditugu:
+1. Hasierako eraikuntzaren arabera: $\overline{OC} \cong \overline{O'C'}$.
+2. 4. urratseko kongruentziaren arabera: $\overline{BC} \cong \overline{B'C'}$.
+3. 4. urratsaren arabera, haien arteko angeluak honako hau betetzen du: $\angle BCO \cong \angle B'C'O'$.
+
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremaren</ConceptLink> hirugarren aplikazio batek honako hau ondorioztatzen du:
+
+$$
+\triangle OBC \cong \triangle O'B'C'
+$$
+
+Triangeluak kongruenteak direnez, $O$ eta $O'$ erpinetako angelu homologoak elkarren artean kongruenteak dira:
+
+$$
+\angle BOC \cong \angle B'O'C'
+$$
+
+$\angle BOC$ eta $\angle B'O'C'$ hasierako $\angle AOB$ eta $\angle A'O'B'$ angelu kongruenteen angelu betegarri auzokideak direnez, betegarrien kongruentzia frogatuta geratzen da.
+</ProofStep>
+
+</DemonstrationSection>

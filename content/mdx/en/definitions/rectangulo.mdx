@@ -1,0 +1,78 @@
+export const metadata = {
+  id: "rectangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Rectangle",
+  description: "Convex quadrilateral whose four interior angles are right angles.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "cuadrilatero", "angulo-recto", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 22",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" /> **rectangle** is a convex <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> whose four <ConceptLink targetId="angulo-interior">interior angles</ConceptLink> are <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>.
+
+The notion is stated in an absolute manner as an angular configuration within the theory of polygons. However, its effective existence characterizes Euclidean geometry: in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the existence of a single rectangle is equivalent to the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, so that in <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink> no quadrilateral can possess four right angles, as evidenced by the properties of <ConceptLink targetId="cuadrilatero-saccheri">Saccheri quadrilaterals</ConceptLink> and <ConceptLink targetId="cuadrilatero-lambert">Lambert quadrilaterals</ConceptLink>.
+
+<Definicion title="Formal definition of rectangle">
+Let $ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}$ be a convex <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determined by four coplanar <ConceptLink targetId="punto">points</ConceptLink> $A$, $B$, $C$, and $D$ with no three of them <ConceptLink targetId="colinealidad">collinear</ConceptLink>.
+
+It is said that $ABCD$ is a **rectangle** if its four <ConceptLink targetId="angulo-interior">interior angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink> to a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> $R$:
+
+$$
+\angle DAB \cong R \quad \land \quad \angle ABC \cong R \quad \land \quad \angle BCD \cong R \quad \land \quad \angle CDA \cong R
+$$
+
+The points $A, B, C, D$ are the <ConceptLink targetId="vertice">vertices</ConceptLink> of the rectangle, and the segments $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ are its <ConceptLink targetId="lado">sides</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Euclidean properties of the rectangle">
+    <PropiedadItem 
+      id="paralelismo-lados-opuestos-rectangulo" 
+      title="Parallelism of opposite sides"
+      formula="\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}"
+    >
+      In <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, the lines supporting the opposite sides of a rectangle are <ConceptLink targetId="paralelas">parallel</ConceptLink>. Since two lines perpendicular to a common transversal do not intersect by the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>, every rectangle is in particular a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-lados-opuestos-rectangulo" 
+      title="Congruence of opposite sides"
+      formula="\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}"
+    >
+      The opposite sides of a rectangle are mutually congruent. Being a parallelogram, the diagonal $\overline{AC}$ determines two congruent right triangles $\triangle ABC \cong \triangle CDA$ by the <ConceptLink targetId="teorema-congruencia-ala">ASA criterion</ConceptLink>, which guarantees the congruence of the respective opposite sides.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="congruencia-diagonales-rectangulo" 
+      title="Congruence of diagonals"
+      formula="\overline{AC} \cong \overline{BD}"
+    >
+      The <ConceptLink targetId="diagonal">diagonals</ConceptLink> $\overline{AC}$ and $\overline{BD}$ of a rectangle are mutually congruent. The right triangles $\triangle DAB$ and $\triangle CBA$ share the leg $\overline{AB}$ and have congruent legs $\overline{AD} \cong \overline{BC}$; by the <ConceptLink targetId="teorema-congruencia-lal">SAS criterion</ConceptLink>, both triangles are congruent and their hypotenuses are congruent.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+The Euclidean parallel postulate plays a decisive role in the existence of rectangles: while the definition requires solely the orthogonality of four angles, the possibility of closing such a figure without contradiction requires that the sum of the interior angles of a quadrilateral be exactly four right angles.
+</Nota>

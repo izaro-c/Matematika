@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "angulos-alternos-internos",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Alternate Interior Angles",
+  description: "Pair of non-adjacent interior angles determined by a transversal secant line to two coplanar lines, lying on opposite half-planes with respect to the transversal.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "semiplano", "paralelas", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Book I, Proposition 27",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="T" />wo <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are **alternate interior angles** if they are non-<ConceptLink targetId="angulos-adyacentes">adjacent</ConceptLink> interior angles determined by a transversal <ConceptLink targetId="secante" isDependency={true}>secant</ConceptLink> <ConceptLink targetId="recta">line</ConceptLink> to two <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> lines, lying on opposite <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> with respect to that transversal secant.
+
+Alternation is based on the division of the plane into two half-planes by the transversal line (Hilbert, §4). Alternate interior angles constitute the essential configuration for studying <ConceptLink targetId="paralelas">parallelism</ConceptLink>: their <ConceptLink targetId="congruencia">congruence</ConceptLink> implies that the lines do not intersect in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> (Euclid I.27), while the converse holds in the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> (Euclid I.29) through the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>.
+
+<Definicion title="Formal Definition of Alternate Interior Angles">
+Let $\ell_1, \ell_2 \in \mathcal{L}$ be two coplanar <ConceptLink targetId="recta">lines</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$ and let $t \in \mathcal{L}$ be a transversal <ConceptLink targetId="secante" isDependency={true}>secant</ConceptLink> line in $\pi$ meeting them at two distinct <ConceptLink targetId="punto">points</ConceptLink> $A$ and $B$, with $A \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(t)$ and $B \in \operatorname{tr}(\ell_2) \cap \operatorname{tr}(t)$ ($A \neq B$).
+
+The secant $t$ determines in $\pi$ two disjoint open <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> $\mathcal{H}_1$ and $\mathcal{H}_2$. The interior strip between $\ell_1$ and $\ell_2$ is formed by the points lying in the half-plane of $\ell_1$ containing $B$ and in the half-plane of $\ell_2$ containing $A$:
+
+$$
+\operatorname{Banda}(\ell_1, \ell_2) = \mathcal{H}_{\ell_1}(B) \cap \mathcal{H}_{\ell_2}(A)
+$$
+
+Let $P_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_1$ and $P_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_2$ be two points lying in opposite half-planes with respect to $t$. The <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink>
+
+$$
+\alpha = \angle P_1AB \quad \text{and} \quad \beta = \angle P_2BA
+$$
+
+form a **pair of alternate interior angles**. Similarly, for points $Q_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_2$ and $Q_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_1$, the angles $\angle Q_1AB$ and $\angle Q_2BA$ form the second pair of alternate interior angles determined by the transversal line.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric Properties and Parallelism">
+    <PropiedadItem 
+      id="criterio-paralelismo-alternos-internos" 
+      title="Angular Criterion for Parallelism"
+      formula="\ell_1 \parallel \ell_2 \iff \alpha \cong \beta"
+    >
+      In the Euclidean plane, two lines intersected by a transversal secant are <ConceptLink targetId="paralelas">parallel</ConceptLink> if and only if the alternate interior angles are <ConceptLink targetId="congruencia">congruent</ConceptLink>. In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the congruence $\alpha \cong \beta$ suffices to ensure $\ell_1 \parallel \ell_2$, whereas necessity requires the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, as formulated by the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-adyacencia-alternos" 
+      title="Non-Adjacency and Transversal Crossing"
+      formula="\operatorname{seg}(P_1P_2) \cap \operatorname{tr}(t) \neq \emptyset"
+    >
+      Alternate interior angles have distinct vertices $A \neq B$, so they are not <ConceptLink targetId="angulos-adyacentes">adjacent</ConceptLink>. Since the points $P_1$ and $P_2$ lie in opposite half-planes with respect to the transversal line $t$, the open <ConceptLink targetId="segmento">segment</ConceptLink> $\operatorname{seg}(P_1P_2)$ intersects the <ConceptLink targetId="traza">point trace</ConceptLink> of $t$ at a point satisfying the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

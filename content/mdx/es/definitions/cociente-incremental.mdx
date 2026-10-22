@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "cociente-incremental",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Cociente incremental",
+  description: "Razón de cambio promedio de una función real en un intervalo, definida por el cociente entre la variación de la variable dependiente y la de la variable independiente.",
+  branch: "26A",
+  branches: ["26A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 9", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 5", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />l **cociente incremental** (o razón de cambio media) cuantifica la tasa de variación promedio que experimenta una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> real por unidad de cambio en su variable independiente a lo largo de un intervalo. Constituye el núcleo analítico y geométrico previo al cálculo de variaciones instantáneas, sirviendo de puente deductivo hacia la <ConceptLink targetId="derivada">derivada</ConceptLink> a través de la operación de <ConceptLink targetId="limite">límite</ConceptLink>.
+
+<Definicion title="Definición formal de cociente incremental">
+  Sea $I \subseteq \mathbb{R}$ un <ConceptLink targetId="intervalo">intervalo</ConceptLink> de la recta real y sea $f\colon I \longrightarrow \mathbb{R}$ una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink>. Fijado un punto base $x \in I$ y dado un incremento no nulo $h \in \mathbb{R} \setminus \{0\}$ tal que $x + h \in I$, el **cociente incremental** de $f$ entre $x$ y $x + h$ se define como:
+  $$
+  \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
+  $$
+  De forma equivalente, haciendo $x_1 = x + h$ con $x_1 \neq x$, el cociente se expresa como:
+  $$
+  \frac{f(x_1) - f(x)}{x_1 - x}
+  $$
+  donde $\Delta y = f(x + h) - f(x)$ representa la variación absoluta experimentada por la variable dependiente y $\Delta x = h$ representa el incremento de la variable independiente.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Interpretación y propiedades analíticas">
+    <PropiedadItem id="interpretacion-geometrica-secante" title="Interpretación geométrica como pendiente secante" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
+      Geométricamente, el cociente incremental coincide con la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la recta secante a la <ConceptLink targetId="grafica-funcion">gráfica</ConceptLink> de la <ConceptLink targetId="funcion">función</ConceptLink> que une los puntos $(x, f(x))$ y $(x + h, f(x + h))$. A medida que el incremento $h$ se aproxima a cero, dicha recta secante tiende, bajo condiciones de regularidad, a la recta tangente a la curva.
+    </PropiedadItem>
+    <PropiedadItem id="fundamento-de-la-derivada" title="Fundamento de la derivada instantánea" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
+      El comportamiento asintótico del cociente incremental cuando el incremento tiende a cero define la noción de <ConceptLink targetId="derivada">derivada</ConceptLink>. Si el <ConceptLink targetId="limite">límite</ConceptLink> existe en $\mathbb{R}$, el valor resultante $f'(x)$ representa la tasa de variación instantánea de la función en el punto $x$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

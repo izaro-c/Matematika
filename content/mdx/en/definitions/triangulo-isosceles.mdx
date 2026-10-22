@@ -1,0 +1,64 @@
+export const metadata = {
+  id: "triangulo-isosceles",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Isosceles triangle",
+  description: "Triangle having at least two mutually congruent sides; the third side is called the base and the included angle is called the vertex angle.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "triangle", "side", "congruence", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 20",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="A" />n **isosceles triangle** is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> that has at least two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> that are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+
+When two particular congruent sides are distinguished, they are called the lateral sides or legs, while the third side is called the <ConceptLink targetId="base">base</ConceptLink>. The <ConceptLink targetId="angulo">angle</ConceptLink> formed by the two congruent sides is the angle at the <ConceptLink targetId="vertice">vertex</ConceptLink>, and the two angles adjacent to the base are the <ConceptLink targetId="angulo-base">base angles</ConceptLink>. The family of isosceles triangles includes <ConceptLink targetId="triangulo-equilatero">equilateral triangles</ConceptLink> as the special case in which all three sides are congruent.
+
+<Definicion title="Formal definition of an isosceles triangle">
+Let $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$, determined by three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> $A$, $B$, and $C$.
+
+The triangle $\triangle ABC$ is said to be an **isosceles triangle** if at least two of its <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
+
+$$
+\overline{AB} \cong \overline{AC} \quad\lor\quad \overline{AB} \cong \overline{BC} \quad\lor\quad \overline{BC} \cong \overline{CA}
+$$
+
+In the setting where $\overline{AB} \cong \overline{AC}$, the sides $\overline{AB}$ and $\overline{AC}$ are called the lateral sides, and the remaining side $\overline{BC}$ is called the **<ConceptLink targetId="base">base</ConceptLink>** of the isosceles triangle. The common vertex $A$ is the main vertex, the angle $\angle BAC$ is the **angle at the <ConceptLink targetId="vertice">vertex</ConceptLink>**, and the angles $\angle ABC$ and $\angle ACB$ are the **<ConceptLink targetId="angulo-base">base angles</ConceptLink>**.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric properties and symmetry">
+    <PropiedadItem 
+      id="congruencia-angulos-base" 
+      title="Congruence of base angles"
+      formula="\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB"
+    >
+      In every isosceles triangle, the angles opposite the congruent sides are congruent (<ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink>). In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, this result is deduced from <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink> without using the parallel axiom. Conversely, if two <ConceptLink targetId="angulo">angles</ConceptLink> of a triangle are congruent, the opposite sides are congruent.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="coincidencia-cevianas-notables" 
+      title="Axis of symmetry and notable lines"
+      formula="\overleftrightarrow{AM} \perp \overleftrightarrow{BC} \quad (M \text{ punto medio de } \overline{BC})"
+    >
+      In an isosceles triangle with $\overline{AB} \cong \overline{AC}$, the <ConceptLink targetId="bisectriz">angle bisector</ConceptLink> at the vertex, the <ConceptLink targetId="mediana">median</ConceptLink> relative to the base, the <ConceptLink targetId="altura">altitude</ConceptLink> on the base, and the <ConceptLink targetId="mediatriz">perpendicular bisector</ConceptLink> of the base coincide along a single <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AM}$, which is the axis of axial <ConceptLink targetId="simetria">symmetry</ConceptLink> of the triangle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

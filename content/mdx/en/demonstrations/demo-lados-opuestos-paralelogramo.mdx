@@ -1,0 +1,127 @@
+export const metadata = {
+  id: "demo-lados-opuestos-paralelogramo",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Opposite sides of a parallelogram theorem",
+  description: "Direct deductive proof by drawing a diagonal, the Euclidean alternate interior angles theorem, and the ASA congruence criterion.",
+  parentTheorem: "teorema-lados-opuestos-paralelogramo",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "paralelogramo", "congruencia", "geometria-euclidiana", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 34",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §7",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-lados-opuestos-paralelogramo">opposite sides of a parallelogram theorem</ConceptLink> follows the classical geometric foundation of <ConceptLink targetId="euclides">Euclid</ConceptLink> (Proposition I.34) and <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> (§7).
+
+The argument introduces an auxiliary <ConceptLink targetId="diagonal">diagonal</ConceptLink> that acts as a transversal <ConceptLink targetId="secante">secant</ConceptLink> line to the <ConceptLink targetId="paralelas">parallel</ConceptLink> lines, deduces angular congruence using the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink> —grounded in the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink>— and establishes the congruence of the resulting <ConceptLink targetId="triangulo">triangles</ConceptLink> via the <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ASA congruence criterion</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} title="Construction of the diagonal and transversal secants">
+Let $ABCD$ be a <ConceptLink targetId="paralelogramo" isDependency={true}>parallelogram</ConceptLink> in a plane $\sigma \in \Pi$. By definition, the supporting <ConceptLink targetId="recta">lines</ConceptLink> of its pairs of opposite sides are parallel:
+
+$$
+\overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}
+$$
+
+We draw the diagonal <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AC}$ between opposite <ConceptLink targetId="vertice">vertices</ConceptLink> $A$ and $C$. The line $\overleftrightarrow{AC}$ acts as a transversal secant to both pairs of parallel lines.
+</ProofStep>
+
+<ProofStep number={2} title="Congruence of the first pair of alternate interior angles">
+Consider the parallel lines $\overleftrightarrow{AB} \parallel \overleftrightarrow{CD}$ cut by the secant $\overleftrightarrow{AC}$. Since vertices $B$ and $D$ lie in opposite <ConceptLink targetId="semiplano">half-planes</ConceptLink> with respect to $\overleftrightarrow{AC}$, the angles $\angle BAC$ and $\angle DCA$ are <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink>.
+
+By the Euclidean direction of the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink>, which requires the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink>, these angles are congruent:
+
+$$
+\angle BAC \cong \angle DCA
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Congruence of the second pair of alternate interior angles">
+Similarly, consider the second pair of parallel lines $\overleftrightarrow{BC} \parallel \overleftrightarrow{DA}$ cut by the same transversal secant $\overleftrightarrow{AC}$.
+
+Vertices $B$ and $D$ lie in opposite half-planes with respect to $\overleftrightarrow{AC}$, so $\angle BCA$ and $\angle DAC$ are alternate interior angles. Applying the alternate interior angles theorem once again:
+
+$$
+\angle BCA \cong \angle DAC
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Common side to both triangles and reflexivity">
+The diagonal divides the parallelogram into two triangles, $\triangle ABC$ and $\triangle CDA$. The segment $\overline{AC}$ is the common side shared by both triangles.
+
+By the reflexive property of <ConceptLink targetId="congruencia">congruence</ConceptLink> (<ConceptLink targetId="relacion-reflexiva">reflexive relation</ConceptLink>), every segment is congruent to itself:
+
+$$
+\overline{AC} \cong \overline{CA}
+$$
+</ProofStep>
+
+<ProofStep number={5} title="Application of the ASA congruence criterion">
+We examine the triangles $\triangle ABC$ and $\triangle CDA$ under the correspondence of vertices $A \mapsto C$, $B \mapsto D$, $C \mapsto A$:
+1. First adjacent angle: $\angle BAC \cong \angle DCA$ (step 2).
+2. Included side: $\overline{AC} \cong \overline{CA}$ (step 4).
+3. Second adjacent angle: $\angle BCA \cong \angle DAC$ (step 3).
+
+Since one side and both angles adjacent to it coincide, the <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ASA congruence criterion</ConceptLink> establishes that both triangles are congruent:
+
+$$
+\triangle ABC \cong \triangle CDA
+$$
+</ProofStep>
+
+<ProofStep number={6} title="Congruence of corresponding sides and the first pair of opposite angles">
+From the triangle congruence $\triangle ABC \cong \triangle CDA$, the congruence of all corresponding homologous elements follows.
+
+For homologous sides, we conclude the congruence of the opposite sides of the parallelogram:
+
+$$
+\overline{AB} \cong \overline{CD} \quad \land \quad \overline{BC} \cong \overline{DA}
+$$
+
+Likewise, for the homologous angles at vertices $B$ and $D$:
+
+$$
+\angle ABC \cong \angle CDA
+$$
+</ProofStep>
+
+<ProofStep number={7} title="Angle addition and congruence of the second pair of opposite angles">
+For the second pair of opposite angles, we analyze the total angles at vertices $A$ and $C$.
+
+Since the <ConceptLink targetId="semirrecta">ray</ConceptLink> $\overrightarrow{AC}$ is interior to $\angle BAD$ and $\overrightarrow{CA}$ is interior to $\angle DCB$, the angles decompose as sums of adjacent angles:
+
+$$
+\angle BAD = \angle BAC + \angle CAD, \quad \angle DCB = \angle DCA + \angle ACB
+$$
+
+Since $\angle BAC \cong \angle DCA$ and $\angle CAD \cong \angle ACB$, the addition of congruent angles yields:
+
+$$
+\angle BAD \cong \angle BCD
+$$
+
+It is proved that in every parallelogram opposite sides are congruent and opposite angles are congruent.
+</ProofStep>
+
+</DemonstrationSection>

@@ -1,0 +1,83 @@
+export const metadata = {
+  id: "altura-triangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Altura de un triángulo",
+  description: "Segmento trazado desde un vértice de un triángulo perpendicular a la recta soporte del lado opuesto, que une el vértice con el pie de dicha perpendicular.",
+  statement: "Dado un vértice de un triángulo, la altura correspondiente es el segmento perpendicular trazado desde dicho vértice a la recta soporte del lado opuesto, con extremo en su pie.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "altura", "perpendicular", "ortocentro"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 12",
+      role: "secondary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { Altura } from '@content/diagrams/Definiciones/Altura';
+export const Simulation = Altura;
+
+<Capitular letra="L" />a **altura** de un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> correspondiente a un <ConceptLink targetId="vertice">vértice</ConceptLink> es el <ConceptLink targetId="segmento">segmento</ConceptLink> trazado desde dicho vértice <ConceptLink targetId="perpendicular" isDependency={true}>perpendicularmente</ConceptLink> a la <ConceptLink targetId="recta" isDependency={true}>recta soporte</ConceptLink> del <ConceptLink targetId="lado">lado</ConceptLink> opuesto, con extremo en el pie de dicha perpendicular.
+
+Por el <ConceptLink targetId="teorema-existencia-perpendicular">teorema de existencia y unicidad de la perpendicular</ConceptLink>, desde cada vértice existe una única recta perpendicular a la recta soporte opuesta, lo que determina exactamente tres <VisualBind element="alturas" color="ocre">alturas</VisualBind> en todo triángulo. En la geometría euclidiana métrica, el término designa asimismo la <ConceptLink targetId="longitud">longitud</ConceptLink> de dicho segmento, parámetro fundamental para el cálculo del <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de la <ConceptLink targetId="region-triangular">región triangular</ConceptLink>.
+
+<Definicion title="Definición formal de la altura de un triángulo">
+Sea $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <VisualBind element="polygonABC" color="musgo"><ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink></VisualBind> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$, determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$.
+
+Para el vértice <VisualBind element="pC" color="terracota">$C$</VisualBind> y la <ConceptLink targetId="recta" isDependency={true}>recta soporte</ConceptLink> $\overleftrightarrow{AB}$ del lado opuesto, la única recta perpendicular a $\overleftrightarrow{AB}$ que pasa por $C$ interseca a $\operatorname{tr}(\overleftrightarrow{AB})$ en un único punto <VisualBind element="footCAB" color="ocre">$H_c \in \mathcal{P}$</VisualBind>, denominado pie de la perpendicular:
+
+$$
+\overleftrightarrow{CH_c} \perp \overleftrightarrow{AB}, \quad H_c \in \operatorname{tr}(\overleftrightarrow{AB})
+$$
+
+La **altura** correspondiente al vértice $C$ es el <ConceptLink targetId="segmento">segmento</ConceptLink> cerrado <VisualBind element="segAlturaCAB" color="ocre">$\overline{CH_c}$</VisualBind>:
+
+$$
+h_c = \overline{CH_c}
+$$
+
+De modo análogo, los vértices <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> determinan los pies <VisualBind element="footABC" color="ocre">$H_a$</VisualBind> y <VisualBind element="footBAC" color="ocre">$H_b$</VisualBind> sobre las rectas soporte $\overleftrightarrow{BC}$ y $\overleftrightarrow{CA}$, definiendo las alturas <VisualBind element="segAlturaABC" color="ocre">$\overline{AH_a}$</VisualBind> y <VisualBind element="segAlturaBAC" color="ocre">$\overline{BH_b}$</VisualBind>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades geométricas y concurrencia">
+    <PropiedadItem 
+      id="existencia-unicidad-pie" 
+      title="Existencia y unicidad del pie de la altura"
+      formula="\forall V \in \{A, B, C\} \; \exists! H \in \operatorname{tr}(\ell_{\mathrm{op}}) : \overleftrightarrow{VH} \perp \ell_{\mathrm{op}}"
+    >
+      Para cada <ConceptLink targetId="vertice">vértice</ConceptLink> del <ConceptLink targetId="triangulo">triángulo</ConceptLink>, el pie de la altura existe y es único por el <ConceptLink targetId="teorema-existencia-perpendicular">teorema de existencia y unicidad de la perpendicular</ConceptLink> en el plano, ya que ningún vértice incide en la <ConceptLink targetId="recta">recta soporte</ConceptLink> del lado opuesto.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="concurrencia-ortocentro" 
+      title="Concurrencia de las alturas en el ortocentro"
+      formula="\overleftrightarrow{AH_a} \cap \overleftrightarrow{BH_b} \cap \overleftrightarrow{CH_c} = \{O\}"
+    >
+      En todo <ConceptLink targetId="triangulo">triángulo</ConceptLink>, las tres <ConceptLink targetId="recta">rectas soporte</ConceptLink> de las <VisualBind element="alturas" color="ocre">alturas</VisualBind> se intersecan en un único <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="intsegAlturaABCsegAlturaCAB" color="terracota">$O \in \mathcal{P}$</VisualBind>, denominado <ConceptLink targetId="ortocentro">ortocentro</ConceptLink> del triángulo.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-pie-altura" 
+      title="Posición del pie según los ángulos"
+      formula="H_c \in \overline{AB} \iff \angle CAB \le \text{recto} \land \angle ABC \le \text{recto}"
+    >
+      El pie de la altura $H_c$ pertenece al <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ si y solo si los dos <ConceptLink targetId="angulo">ángulos</ConceptLink> de la base no son obtusos; en un <ConceptLink targetId="triangulo-obtusangulo">triángulo obtusángulo</ConceptLink>, dos de los pies caen necesariamente en las <VisualBind element="prolongaciones" color="ocre">prolongaciones</VisualBind> de los lados.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

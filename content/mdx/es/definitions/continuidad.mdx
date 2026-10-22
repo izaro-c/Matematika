@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "continuidad",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Continuidad",
+  description: "Propiedad topológica y geométrica que caracteriza la ausencia de fisuras, saltos o lagunas en una recta, espacio o función matemática.",
+  branch: "26A",
+  branches: ["26A", "51M", "54"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §8", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **continuidad** es un principio matemático fundamental que expresa la plenitud, cohesión y ausencia de fisuras o saltos tanto en la línea geométrica como en las funciones y espacios topológicos.
+
+En la arquitectura conceptual de la matemática, la continuidad se manifiesta bajo dos perspectivas complementarias: la fundamentación geométrica sintética y el análisis algebraico-topológico del continuo real.
+
+Desde el punto de vista sintético, la continuidad no presupone un sistema numérico previo, sino que se articula mediante el grupo V de axiomas: el principio arquimediano (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink>) y el axioma de completitud lineal (<ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>). Juntos aseguran que la recta no admita ampliaciones conservando los axiomas previos, resolviendo vacíos clásicos de Euclides como la intersección obligada entre rectas y curvas como la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
+
+Por su parte, en el análisis sobre el <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> de los números reales $\mathbb{R}$, la continuidad se formaliza mediante la <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>, ya sea a través de las cortaduras de Dedekind, el principio del supremo o la convergencia de sucesiones de Cauchy.
+
+<Definicion title="Principio de corte de Dedekind">
+  Sea $L$ un continuo lineal dotado de un orden denso. Si $L$ se divide en dos clases no vacías y disjuntas $\Sigma_1$ y $\Sigma_2$ tales que todo elemento de la primera precede a todo elemento de la segunda:
+  $$
+  L = \Sigma_1 \cup \Sigma_2 \quad \land \quad \Sigma_1 \cap \Sigma_2 = \emptyset \quad \land \quad \forall x \in \Sigma_1, \, \forall y \in \Sigma_2 \ (x < y)
+  $$
+  entonces el principio de continuidad estipula que existe un único elemento $p \in L$ que produce dicha división, actuando como el elemento máximo de $\Sigma_1$ o como el mínimo de $\Sigma_2$.
+</Definicion>
+
+<Separador />
+
+### Necesidad deductiva en el sistema absoluto
+
+En el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>, los axiomas de continuidad resultan indispensables para definir la longitud de curvas, la medida angular continua y el cálculo riguroso de áreas poligonales.
+
+En geometrías sin axiomas de continuidad (como el plano racional $\mathbb{Q}^2$), una recta secante puede atravesar el interior de un círculo sin compartir ningún <ConceptLink targetId="punto">punto</ConceptLink> con su borde; la continuidad postula la existencia formal de dichos puntos de contacto, cerrando definitivamente la brecha entre la intuición espacial y la deducción lógica.

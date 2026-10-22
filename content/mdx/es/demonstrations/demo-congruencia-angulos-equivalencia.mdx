@@ -1,0 +1,85 @@
+export const metadata = {
+  id: "demo-congruencia-angulos-equivalencia",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de equivalencia de la congruencia angular",
+  description: "Deducción rigurosa de Hilbert (§6): transporte de segmentos congruentes sobre los lados de los ángulos y aplicación del teorema LAL para demostrar la simetría y la transitividad de la congruencia angular.",
+  parentTheorem: "teorema-congruencia-angulos-equivalencia",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "relacion-equivalencia", "geometria-absoluta", "demostracion"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a demostración del <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">teorema de equivalencia de la congruencia angular</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*.
+
+A partir de la reflexividad postulada en el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, el razonamiento transporta <ConceptLink targetId="segmento">segmentos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink> sobre los <ConceptLink targetId="lado">lados</ConceptLink> de los <ConceptLink targetId="angulo">ángulos</ConceptLink> mediante el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> y aplica el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> para establecer la congruencia de <ConceptLink targetId="triangulo">triángulos</ConceptLink>, deduciendo la <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink> y la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink>.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Reflexividad de la congruencia angular">
+Sea $\angle\alpha = \angle AOB$ un <ConceptLink targetId="angulo">ángulo</ConceptLink> cualquiera con <ConceptLink targetId="vertice">vértice</ConceptLink> $O$ y lados las <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> $\overrightarrow{OA}$ y $\overrightarrow{OB}$. Por el enunciado del <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, todo ángulo es congruente consigo mismo, satisfaciéndose directamente la <ConceptLink targetId="relacion-reflexiva">reflexividad</ConceptLink>:
+$$
+\angle AOB \cong \angle AOB
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Construcción de triángulos auxiliares y simetría">
+Para demostrar la <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink>, supongamos dos <ConceptLink targetId="angulo">ángulos</ConceptLink> $\angle AOB$ y $\angle A'O'B'$ tales que:
+$$
+\angle AOB \cong \angle A'O'B'
+$$
+Por el axioma de transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), podemos elegir puntos $A \in \overrightarrow{OA} \setminus \{O\}$ y $B \in \overrightarrow{OB} \setminus \{O\}$, y determinar puntos $A' \in \overrightarrow{O'A'} \setminus \{O'\}$ y $B' \in \overrightarrow{O'B'} \setminus \{O'\}$ de modo que:
+$$
+\overline{OA} \cong \overline{O'A'}, \quad \overline{OB} \cong \overline{O'B'}
+$$
+Puesto que los puntos no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, determinan los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle OAB$ y $\triangle O'A'B'$. Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, se deduce $\triangle OAB \cong \triangle O'A'B'$, lo que implica $\overline{AB} \cong \overline{A'B'}$ y $\angle OAB \cong \angle O'A'B'$.
+
+Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, existe una única semirrecta $\overrightarrow{OB''}$ en el <ConceptLink targetId="semiplano">semiplano</ConceptLink> de $\overleftrightarrow{OA}$ que contiene a $B$ tal que $\angle A'O'B' \cong \angle AOB''$. Sobre dicha semirrecta elegimos, por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, el punto $B''$ con $\overline{OB''} \cong \overline{O'B'}$. Aplicando nuevamente el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema LAL</ConceptLink> a $\triangle O'A'B'$ y $\triangle OAB''$, obtenemos $\triangle O'A'B' \cong \triangle OAB''$, de donde $\overline{A'B'} \cong \overline{AB''}$ y $\angle O'A'B' \cong \angle OAB''$.
+
+Por la simetría y la transitividad de la congruencia de segmentos (<ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>), $\overline{AB} \cong \overline{AB''}$, y por la unicidad del transporte angular en el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, la semirrecta $\overrightarrow{OB''}$ debe coincidir necesariamente con $\overrightarrow{OB}$, lo que implica $B'' = B$ y concluye:
+$$
+\angle A'O'B' \cong \angle AOB
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Deducción de la transitividad mediante congruencia de triángulos">
+Para demostrar la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink>, sean tres <ConceptLink targetId="angulo">ángulos</ConceptLink> tales que:
+$$
+\angle AOB \cong \angle A'O'B' \quad \land \quad \angle A'O'B' \cong \angle A''O''B''
+$$
+Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, fijamos puntos en sus lados cumpliendo:
+$$
+\overline{OA} \cong \overline{O'A'} \cong \overline{O''A''}, \quad \overline{OB} \cong \overline{O'B'} \cong \overline{O''B''}
+$$
+Aplicando el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> al primer par de triángulos, obtenemos $\triangle OAB \cong \triangle O'A'B'$, lo que asegura $\overline{AB} \cong \overline{A'B'}$. Análogamente, para el segundo par, el criterio LAL da $\triangle O'A'B' \cong \triangle O''A''B''$, implicando $\overline{A'B'} \cong \overline{A''B''}$. Por la transitividad de la congruencia de segmentos (<ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>), se sigue:
+$$
+\overline{AB} \cong \overline{A''B''}
+$$
+Los triángulos $\triangle OAB$ y $\triangle O''A''B''$ tienen sus tres pares de <ConceptLink targetId="lado">lados</ConceptLink> homólogos congruentes. Por el <ConceptLink targetId="teorema-congruencia-lll">teorema de congruencia LLL</ConceptLink> (o transportando el ángulo $\angle AOB$ sobre $\overrightarrow{O''A''}$ y aplicando LAL), se deduce $\triangle OAB \cong \triangle O''A''B''$, estableciendo la congruencia de los ángulos homólogos en los vértices $O$ y $O''$:
+$$
+\angle AOB \cong \angle A''O''B''
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Conclusión de la relación de equivalencia">
+Habiéndose verificado que la <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre <ConceptLink targetId="angulo">ángulos</ConceptLink> es reflexiva (paso 1), simétrica (paso 2) y transitiva (paso 3), queda formalmente demostrado que constituye una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> sobre el conjunto de todos los ángulos:
+$$
+\angle\alpha \cong \angle\beta \implies (\angle\alpha \sim \angle\beta)
+$$
+</ProofStep>
+
+</DemonstrationSection>

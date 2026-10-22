@@ -145,6 +145,7 @@ export const mscNames: Record<string, string> = {
   "18B": "Categorías especiales (topos)",
   "18G": "Álgebra homológica",
   "20": "Teoría de grupos y generalizaciones",
+  "20A": "Fundamentos y propiedades elementales de grupos",
   "20D": "Grupos finitos abstractos",
   "20F": "Grupos infinitos especiales (presentaciones)",
   "20M": "Semigrupos",
@@ -320,6 +321,7 @@ export const mscNamesEu: Record<string, string> = {
   "18B": "Kategoria bereziak (toposak)",
   "18G": "Aljebra homologikoa",
   "20": "Talde-teoria eta orokortzeak",
+  "20A": "Oinarriak eta taldeen oinarrizko propietateak",
   "20D": "Talde finitu abstraktuak",
   "20F": "Talde bereziak eta egitura-propietateak",
   "20G": "Talde linealak eta aljebraikoak",
@@ -503,6 +505,7 @@ export const mscNamesEn: Record<string, string> = {
   "18B": "Special categories (topoi)",
   "18G": "Homological algebra",
   "20": "Group theory and generalizations",
+  "20A": "Foundations and elementary properties of groups",
   "20D": "Abstract finite groups",
   "20F": "Special infinite groups (presentations)",
   "20G": "Linear and algebraic groups",
@@ -664,7 +667,7 @@ export const mscHierarchy: Record<string, string[]> = {
   "14": ["14H", "14J", "14K"],
   "15": ["15A", "15B"],
   "18": ["18A", "18B", "18G"],
-  "20": ["20D", "20F", "20M"],
+  "20": ["20A", "20D", "20F", "20M"],
   "analisis-real-y-funciones": ["26"],
   "analisis-complejo": ["30"],
   "ecuaciones-diferenciales": ["34"],
@@ -770,8 +773,8 @@ export function getItemBranchCodes(item: BaseContent & Record<string, unknown>):
     }
   }
 
-  // 3. Fallback to tags
-  if (Array.isArray(item.tags)) {
+  // 3. Fallback to tags, only when the item declares no branch
+  if (codes.size === 0 && Array.isArray(item.tags)) {
     for (const t of item.tags) {
       if (typeof t === 'string' && t.trim()) {
         const resolved = resolveBranchCode(t);
@@ -790,7 +793,7 @@ export interface BranchTaxonomy {
   slug: string;
   name: string;
   subBranches: { name: string; slug: string }[];
-  directItems: { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string }[];
+  directItems: { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string; subBranchSlugs: string[] }[];
   breadcrumbs: { name: string; slug: string }[];
 }
 
@@ -815,7 +818,7 @@ function classifyItem(
   branchCode: string,
   childCodes: string[],
   allDescendantCodes: string[],
-): { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string } | null {
+): { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string; subBranchSlugs: string[] } | null {
   const itemCodes = getItemBranchCodes(item);
   if (itemCodes.length === 0) return null;
 
@@ -831,7 +834,10 @@ function classifyItem(
     subBranchSlug = childCodes.find(c => c === matchedDescendant || getAllDescendantCodes(c).includes(matchedDescendant));
   }
 
-  return { type: 'classified', item, subBranchSlug };
+  // Una entrada con varias ramas cuenta en cada subrama que la contiene, como dentro de esa subrama
+  const subBranchSlugs = childCodes.filter(c => itemCodes.includes(c) || getAllDescendantCodes(c).some(d => itemCodes.includes(d)));
+
+  return { type: 'classified', item, subBranchSlug, subBranchSlugs };
 }
 
 export function buildBranchTaxonomy(
@@ -847,7 +853,7 @@ export function buildBranchTaxonomy(
   const directItems: BranchTaxonomy['directItems'] = [];
   for (const { type, item } of items) {
     const classified = classifyItem(item as BaseContent & Record<string, unknown>, branchCode, childCodes, allDescendantCodes);
-    if (classified) directItems.push({ type, item: classified.item, subBranchSlug: classified.subBranchSlug });
+    if (classified) directItems.push({ type, item: classified.item, subBranchSlug: classified.subBranchSlug, subBranchSlugs: classified.subBranchSlugs });
   }
 
   const breadcrumbs = buildBreadcrumbs(branchCode, lang);

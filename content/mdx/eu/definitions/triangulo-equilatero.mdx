@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-equilatero",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangelu aldeberdina",
+  description: "Hiru aldeak elkarren artean kongruenteak dituen triangelua; definizio erlazionala eta ezaugarriak geometria sintetikoan.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "triangelua", "aldea", "kongruentzia", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 20. definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />riangelu **aldeberdina** (edo **triangelu ekilateroa**) hiru <ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dituen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da.
+
+Hiru aldeak kongruenteak izatean, edozein triangelu aldeberdin <ConceptLink targetId="triangulo-isosceles">triangelu isoszelea</ConceptLink> da hautatutako edozein alde-bikoterentzat, eta ondorioz bere aldeetako edozein har daiteke <ConceptLink targetId="base">oinarritzat</ConceptLink>. Definizio honek izaera erlazional hutsa du: konfigurazio bat sailkatzen du existitzen denean, baina ez du aldez aurretik baieztatzen edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> jakinen gainean triangelu aldeberdin bat eraiki daitekeenik, bi <ConceptLink targetId="circunferencia">zirkunferentziaren</ConceptLink> ebakiduraren bidezko eraikuntzak <ConceptLink targetId="continuidad">jarraitutasun-axiometara</ConceptLink> jotzea eskatzen baitu.
+
+<Definicion title="Triangelu aldeberdinaren definizio formala">
+Izan bedi $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean, $A$, $B$ eta $C$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealek</ConceptLink> finkatua.
+
+$\triangle ABC$ **triangelu aldeberdina** dela esaten da baldin eta bere hiru <ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira:
+
+$$
+\overline{AB} \cong \overline{BC} \land \overline{BC} \cong \overline{CA}
+$$
+
+Zuzenkien kongruentziaren propietate <ConceptLink targetId="relacion-transitiva">trantsitiboagatik</ConceptLink> (<ConceptLink targetId="axioma-congruencia-2">III.2 Axioma</ConceptLink>), baldintza hori hiru aldeen arteko elkarrekiko kongruentziaren baliokidea da: $\overline{AB} \cong \overline{BC} \cong \overline{CA}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ezaugarri angeluarrak eta simetria">
+    <PropiedadItem 
+      id="equiangularidad" 
+      title="Triangelu aldeberdinaren angeluberdintasuna"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      Triangelu bat aldeberdina da baldin eta soilik baldin bere hiru <ConceptLink targetId="angulo">angeluak</ConceptLink> elkarren artean kongruenteak badira. Propietate hau <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> eta haren alderantzizkoa alde-bikote bakoitzari aplikatuz lortzen da <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barruan.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-ternaria" 
+      title="Zentro nabarmenen elkargunea"
+      formula="\triangle ABC \cong \triangle BCA \cong \triangle CAB"
+    >
+      Triangelu aldeberdin batean, hiru altuerak, hiru medianak, hiru erdikariak eta hiru erdibitzaileak hirunaka bat datoz <ConceptLink targetId="interior-triangulo">triangeluaren barrualdeko</ConceptLink> puntu bakar batean elkartzen diren hiru zuzenetan, figuraren hiru ordenako simetria-zentroa osatuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.1 Proposizioak emandako zuzenki baten gainean triangelu aldeberdin bat eraikitzen saiatzen da bi zirkunferentziaren ebakidura erabiliz. <ConceptLink targetId="hilbert">Hilberten</ConceptLink> formalizazioan, ebakidura-puntu horren existentzia ez da ondorioztatzen intzidentzia-, hurrenkera- eta kongruentzia-axiometatik: <ConceptLink targetId="continuidad">jarraitutasun-axiometara</ConceptLink> (V. Taldea) edo zirkunferentzien arteko ebakidura-axiomara jo behar da. Axioma horiek gabe badaude ereduak non definizio erlazionala baliozkoa den emandako triangeluentzat, baina ezin den zuzenki ororen gainean triangelu aldeberdinik eraiki.
+</Nota>

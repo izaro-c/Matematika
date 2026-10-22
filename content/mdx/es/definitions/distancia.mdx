@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "distancia",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Distancia métrica",
+  description: "Función real no negativa sobre pares de puntos que satisface identidad de indiscernibles, simetría y desigualdad triangular.",
+  branch: "54E",
+  branches: ["54E", "51M"],
+  hasSimulation: true,
+  sources: [
+    { title: "Sur quelques points du calcul fonctionnel", author: "Maurice Fréchet", locator: "Rendiconti del Circolo Matematico di Palermo 22 (1906)", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 2", role: "secondary" }
+  ]
+};
+
+import { Distancia } from '@content/diagrams/Definiciones/Distancia';
+export const Simulation = Distancia;
+
+<Capitular letra="L" />a **distancia métrica** es una función que cuantifica numéricamente la separación espacial entre pares de elementos de un conjunto, asignándoles un valor real no negativo conforme a un sistema formal de axiomas métricos.
+
+La distancia escalar no es un concepto primitivo en la axiomática sintética ni forma parte de su signatura: el espacio se organiza cualitativamente a través de la relación primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos ($\cong$). La función distancia $d(A, B) \in \mathbb{R}$ interviene cuando el espacio se dota de coordenadas analíticas o cuando se construye un modelo métrico concreto.
+
+<Definicion title="Definición formal de métrica">
+  Sea $X$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío. Una función $d\colon X \times X \longrightarrow \mathbb{R}$ es una **distancia** (o métrica) sobre $X$ si y solo si satisface las siguientes condiciones para cualesquiera <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="canela">$C \in X$</VisualBind>:
+  1. **No negatividad y separación:** $d(A, B) \ge 0$, y $d(A, B) = 0 \iff A = B$.
+  2. **Simetría:** $d(A, B) = d(B, A)$.
+  3. **Desigualdad triangular:**
+     $$
+     d(A, C) \le d(A, B) + d(B, C)
+     $$
+  
+  El par $(X, d)$ constituye un espacio métrico, representado por los segmentos <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind> y <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>.
+</Definicion>
+
+<Separador />
+
+### Distancia euclídea y modelos geométricos
+
+En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> $\mathbb{R}^2$, la distancia euclídea usual entre dos puntos $A = (x_A, y_A)$ y $B = (x_B, y_B)$ viene definida analíticamente por:
+$$
+d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}
+$$
+
+Esta distancia es invariante bajo el grupo de traslaciones, rotaciones y reflexiones, interpretando con rigor analítico los postulados de congruencia geométrica del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.

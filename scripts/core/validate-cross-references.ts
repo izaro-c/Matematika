@@ -188,6 +188,22 @@ for (const file of allFiles) {
     }
   }
 
+  // 13b. extends (sistemas) y builtIn (modelos) → sistemas axiomáticos
+  const systemRefs: [string, string[] | undefined][] = [
+    ['extends', meta.extends],
+    ['builtIn', meta.builtIn ? [meta.builtIn] : undefined],
+  ];
+  for (const [field, refs] of systemRefs) {
+    for (const refId of refs ?? []) {
+      const target = allContent.get(refId);
+      if (!target) {
+        console.warn(`  [WARN] ${relPath}: '${field}' apunta a '${refId}' que no existe (enlace no resuelto)`);
+      } else if (target.type !== 'sistema-axiomatico') {
+        error(`${relPath}: '${field}' debe apuntar a un 'sistema-axiomatico', no a '${target.type}'`);
+      }
+    }
+  }
+
   // 14. requiredNodes (study plans) → existing content
   checkIds('requiredNodes', meta.requiredNodes);
 

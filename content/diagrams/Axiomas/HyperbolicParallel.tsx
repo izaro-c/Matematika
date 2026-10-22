@@ -275,7 +275,7 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "ariaLabel": "Recta hiperbólica l",
         "role": "primary"
       },
-      "target": false,
+      "target": true,
       "objectType": "path",
       "geometry": {
         "type": "poincare-geodesic",

@@ -32,6 +32,8 @@ export function AxiomaticSystemPage() {
 
   const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
   const models = db.getModelsForSystem(system.id, lang);
+  const baseSystems = (system.extends || []).map(sysId => db.getAxiomaticSystem(sysId, lang)).filter(Boolean);
+  const extensions = db.getAllAxiomaticSystems(lang).filter(s => s.extends?.includes(system.id));
 
   const breadcrumbs = db.getBreadcrumbs(
     system.branch || system.tags || (axioms[0] && (axioms[0].branch || axioms[0].tags)),
@@ -69,6 +71,20 @@ export function AxiomaticSystemPage() {
   const renderSecondaryContent = () => (
     <div className="w-full px-6 md:px-12 pb-32">
       <FadeIn>
+        {baseSystems.length > 0 && (
+          <VocabSection heading={t('content', 'extendedSystems')} accentType="sistema-axiomatico" count={baseSystems.length} className="mt-16">
+            {baseSystems.map(sys => sys && (
+              <VocabEntry
+                key={sys.id}
+                href={getLocalizedPath(`/sistema/${sys.id}`)}
+                title={sys.title}
+                description={sys.description}
+                read={isRead(sys.id)}
+              />
+            ))}
+          </VocabSection>
+        )}
+
         {axioms.length > 0 && (
           <VocabSection heading={t('content', 'systemAxioms')} accentType="axioma" count={axioms.length} className="mt-16">
             {axioms.map(ax => ax && (
@@ -97,7 +113,19 @@ export function AxiomaticSystemPage() {
           </VocabSection>
         )}
 
-
+        {extensions.length > 0 && (
+          <VocabSection heading={t('content', 'systemExtensions')} accentType="sistema-axiomatico" count={extensions.length} className="mt-16">
+            {extensions.map(sys => (
+              <VocabEntry
+                key={sys.id}
+                href={getLocalizedPath(`/sistema/${sys.id}`)}
+                title={sys.title}
+                description={sys.description}
+                read={isRead(sys.id)}
+              />
+            ))}
+          </VocabSection>
+        )}
       </FadeIn>
     </div>
   );

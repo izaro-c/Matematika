@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-acutangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triangelu zorrotza",
+  description: "Hiru barne-angeluak zorrotzak dituen triangelua, bakoitza angelu zuzen bat baino hertsiki txikiagoa izanik.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-agudo", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 21. Definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />riangelu **zorrotza** bere hiru <ConceptLink targetId="angulo-interior">barne-angeluak</ConceptLink> <ConceptLink targetId="angulo-agudo">zorrotzak</ConceptLink> dituen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da, hau da, horietako bakoitza <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzen</ConceptLink> bat baino hertsiki txikiagoa da <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> arabera.
+
+Nozioa <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barruan formulatzen da, inolako neurri metrikorik gabe. <ConceptLink targetId="teorema-angulo-exterior">Kanpo-angeluaren teoremaren</ConceptLink> arabera, triangelu orok gutxienez bi angelu zorrotz ditu; triangelu zorrotzaren berezitasuna haren hirugarren angeluak ere goiko muga hori betetzean datza.
+
+<Definicion title="Triangelu zorrotzaren definizio formala">
+Izan bedi $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="plano">plano</ConceptLink> bateko $\pi$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru $A$, $B$ eta $C$ <ConceptLink targetId="punto">puntuk</ConceptLink> zehaztua.
+
+$\triangle ABC$ **triangelu zorrotza** dela esaten da baldin eta haren hiru <ConceptLink targetId="angulo-interior">barne-angeluetako</ConceptLink> bakoitza $R$ <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzen</ConceptLink> bat baino hertsiki txikiagoa bada <ConceptLink targetId="orden-angulos" isDependency={true}>angeluen ordenaren</ConceptLink> arabera:
+
+$$
+\angle CAB < R \quad \land \quad \angle ABC < R \quad \land \quad \angle BCA < R
+$$
+
+Baldintza hori betetzen duen angelu bakoitzari <ConceptLink targetId="angulo-agudo">angelu zorrotza</ConceptLink> deritzo.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Puntu nabarmenen kokapena">
+    <PropiedadItem 
+      id="circuncentro-interior-acutangulo" 
+      title="Zirkunzentroaren barrukotasuna"
+      formula="O \in \operatorname{Int}(\triangle ABC)"
+    >
+      Triangelu zorrotz baten $O$ <ConceptLink targetId="circuncentro">zirkunzentroa</ConceptLink> beti <ConceptLink targetId="interior-triangulo">triangeluaren barrualdean</ConceptLink> dago. Aldeen hiru <ConceptLink targetId="mediatriz">erdibitzaileek</ConceptLink> erpinetatik distantziakide den puntu batean elkar ebakitzen dutenez eta barne-angelu bakoitza zorrotza denez, ebakidura-puntu hori eskualde triangeluar irekiaren barruan kokatzen da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-interior-acutangulo" 
+      title="Ortozentroaren barrukotasuna"
+      formula="H \in \operatorname{Int}(\triangle ABC)"
+    >
+      Triangelu zorrotz baten $H$ <ConceptLink targetId="ortocentro">ortozentroa</ConceptLink> <ConceptLink targetId="interior-triangulo">triangeluaren barrualdean</ConceptLink> kokatuta dago. Hiru <ConceptLink targetId="altura">altueren</ConceptLink> oinak aurkako aldeek zehaztutako zuzenkien barruan daude, eta, beraz, haien elkarretaratze-puntu komuna irudiaren barruan geratzen da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Triangelu aldeberdin oro zorrotza da <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>, haren hiru angelu kongruenteak ezin baitira ez zuzenak ez kamutsak izan angelu betegarri auzokideen propietateak eta <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teorema</ConceptLink> urratu gabe.
+</Nota>

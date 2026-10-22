@@ -5,8 +5,9 @@ export const metadata = {
   title: "Sistema axiomático euclidiano",
   description: "Sistema axiomático de la geometría euclidiana: la geometría absoluta más el Axioma IV de las paralelas, en la forma de Playfair.",
   branch: "51M",
-  branches: ["51M", "51A", "03B"],
+  branches: ["51M", "51A"],
   tags: ["geometria-euclidiana", "paralelas", "hilbert", "fundamentos"],
+  extends: ["sistema-absoluto"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -60,7 +61,7 @@ El quinto postulado de los <ConceptLink targetId="elementos-euclides">Elementos<
 El Axioma IV es la fuente de los resultados que distinguen la geometría euclidiana de la hiperbólica:
 
 - **Ángulos alternos internos**: si dos rectas paralelas distintas son cortadas por una secante, los <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink>; es la implicación del <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink> que requiere el Axioma IV.
-- **<ConceptLink targetId="transitividad">Transitividad</ConceptLink> del paralelismo**: en un mismo plano, dos rectas paralelas a una tercera son paralelas entre sí; el paralelismo es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
+- **<ConceptLink targetId="relacion-transitiva">Transitividad</ConceptLink> del paralelismo**: en un mismo plano, dos rectas paralelas a una tercera son paralelas entre sí; el paralelismo es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
 - **Suma angular**: los <ConceptLink targetId="angulo">ángulos</ConceptLink> de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> suman dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>; con <ConceptLink targetId="medida-angular">medida angular</ConceptLink>, $|\alpha| + |\beta| + |\gamma| = 180^\circ$ (<ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>).
 - **Rectángulos**: existen <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink> con cuatro ángulos rectos (<ConceptLink targetId="rectangulo">rectángulos</ConceptLink>), sobre los que se construye la <ConceptLink targetId="teoria-medida-area">teoría del área</ConceptLink>.
 - **Proporción y <ConceptLink targetId="semejanza">semejanza</ConceptLink>**: el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> y la existencia de triángulos semejantes no congruentes.

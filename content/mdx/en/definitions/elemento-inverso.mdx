@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "elemento-inverso",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Inverse element",
+  description: "Element of an algebraic structure that, when combined with a given element under an operation with an identity, yields that identity element.",
+  branch: "08A",
+  branches: ["08A", "20A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" />n **inverse element** (or symmetric element) of a given element in an algebraic structure is one that, when operated with it through a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> equipped with an <ConceptLink targetId="elemento-neutro" isDependency={true}>identity element</ConceptLink>, produces that identity as a result. The widespread existence of inverses is the distinguishing axiom separating <ConceptLink targetId="grupo">groups</ConceptLink> from <ConceptLink targetId="monoide">monoids</ConceptLink> and establishes the reversibility of transformations in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
+
+<Definicion title="Formal definition of inverse element">
+  Let $(S, *)$ be a <ConceptLink targetId="conjunto">set</ConceptLink> equipped with a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> and provided with a two-sided <ConceptLink targetId="elemento-neutro" isDependency={true}>identity element</ConceptLink> $e \in S$. Given an element $a \in S$, an element $a' \in S$ is said to be a **two-sided inverse** of $a$ if and only if it satisfies:
+  $$
+  a * a' = e \quad \land \quad a' * a = e
+  $$
+  If only $a * a_R = e$ holds, then $a_R \in S$ is a right inverse of $a$; if $a_L * a = e$ holds, then $a_L \in S$ is a left inverse of $a$. When an element admits a two-sided inverse, it is said to be an invertible element.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Uniqueness and involution">
+    <PropiedadItem id="unicidad-elemento-inverso" title="Uniqueness of the inverse element under associativity" formula="a * b = e \land c * a = e \implies b = c">
+      If the <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> $*$ satisfies the property of <ConceptLink targetId="asociatividad">associativity</ConceptLink>, the inverse element of any invertible element $a \in S$ is unique. Indeed, if $b \in S$ is a right inverse of $a$ ($a * b = e$) and $c \in S$ is a left inverse of $a$ ($c * a = e$), then:
+      $$
+      c = c * e = c * (a * b) = (c * a) * b = e * b = b
+      $$
+      By virtue of this uniqueness, the two-sided inverse of $a$ is canonically denoted by $a^{-1}$ in multiplicative notation, or by $-a$ (opposite element) in additive notation.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

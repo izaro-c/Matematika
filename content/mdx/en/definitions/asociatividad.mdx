@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "asociatividad",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Associativity",
+  description: "Property of a binary operation whereby the grouping of operands does not alter the final result.",
+  branch: "08A",
+  branches: ["08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" />ssociativity (or the associative property) is a fundamental algebraic property that a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> may possess, whereby the sequential evaluation of three or more operands remains invariant under the grouping of parentheses. It constitutes the indispensable condition for omitting parentheses when composing multiple operations in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
+
+<Definicion title="Formal definition of associativity">
+  Let $S$ be a <ConceptLink targetId="conjunto">set</ConceptLink> and let $*\colon S \times S \longrightarrow S$ be a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> on $S$. The operation $*$ is said to be **associative** if and only if it satisfies the identity:
+  $$
+  \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
+  $$
+  A pair $(S, *)$ consisting of a set and an associative binary operation constitutes a <ConceptLink targetId="semigrupo">semigroup</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Algebraic structures and counterexamples
+
+The presence or absence of associativity demarcates the primary classes of <ConceptLink targetId="estructura-algebraica">algebraic structures</ConceptLink>:
+
+- **Standard associative operations:** Addition and multiplication in the <ConceptLink targetId="numero-entero">integers</ConceptLink> $\mathbb{Z}$ and the <ConceptLink targetId="numero-real">reals</ConceptLink> $\mathbb{R}$; matrix multiplication; and <ConceptLink targetId="composicion-funciones">function composition</ConceptLink> on any set.
+- **Non-associative operations:** Subtraction in $\mathbb{R}$ is not associative, since $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; analogously, division in $\mathbb{R} \setminus \{0\}$ or the cross product in $\mathbb{R}^3$ lack associativity.
+- **Algebraic hierarchy:** A semigroup with an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> constitutes a <ConceptLink targetId="monoide">monoid</ConceptLink>; if every element additionally admits an <ConceptLink targetId="elemento-inverso">inverse</ConceptLink>, it forms a <ConceptLink targetId="grupo">group</ConceptLink>.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Deductive consequences">
+    <PropiedadItem id="asociatividad-generalizada" title="Generalized associativity theorem">
+      If $*$ is an associative binary operation on $S$, any product of $n$ elements $a_1 * a_2 * \cdots * a_n$ (with $n \ge 3$) yields a unique result independent of the order in which evaluation parentheses are applied, allowing parentheses to be entirely omitted.
+    </PropiedadItem>
+    <PropiedadItem id="unicidad-inversos-asociatividad" title="Uniqueness of inverse elements">
+      In any associative structure with identity element $e$, if an element $a$ admits a left inverse $b$ ($b * a = e$) and a right inverse $c$ ($a * c = e$), both necessarily coincide: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

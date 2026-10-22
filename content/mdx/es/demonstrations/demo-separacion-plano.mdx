@@ -1,0 +1,81 @@
+export const metadata = {
+  id: "demo-separacion-plano",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de separación del plano",
+  description: "Demostración sintética directa basada en el Axioma de Pasch y los axiomas de orden para probar que la no intersección de segmentos es una relación de equivalencia con exactamente dos clases conexas.",
+  parentTheorem: "teorema-separacion-plano",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "pasch"],
+  tags: ["geometria-sintetica", "orden", "pasch", "separacion", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a demostración del <ConceptLink targetId="teorema-separacion-plano">teorema de separación del plano</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> mediante los axiomas de <ConceptLink targetId="estar-entre" isDependency={true}>orden</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, apoyándose de modo decisivo en el <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink>.
+
+El razonamiento prueba que la relación de no corte con la recta divisoria es reflexiva, simétrica y transitiva, y que no pueden existir tres clases mutuamente disjuntas en el plano.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Definición de la relación, reflexividad y simetría">
+Sea $\pi$ un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> y sea $\ell$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> con $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. Para <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A, B \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, la relación se define por:
+$$
+A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+Por definición, $A = A$ implica $A \sim_\ell A$, cumpliendo la <ConceptLink targetId="relacion-reflexiva" isDependency={true}>reflexividad</ConceptLink>. Como los extremos de un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> son un par no ordenado ($\operatorname{seg}(AB) = \operatorname{seg}(BA)$), se tiene $\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \iff \operatorname{seg}(BA) \cap \operatorname{tr}(\ell) = \emptyset$, lo que garantiza la <ConceptLink targetId="relacion-simetrica" isDependency={true}>simetría</ConceptLink>:
+$$
+A \sim_\ell B \implies B \sim_\ell A
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Transitividad mediante el Axioma de Pasch">
+Supongamos $A \sim_\ell B$ y $B \sim_\ell C$. Si $A = B$ o $B = C$ o $A = C$, la conclusión es inmediata. Si $A, B, C$ son distintos y no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, determinan un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle ABC$ cuyos vértices no inciden con $\ell$. Por hipótesis, $\ell$ no corta a $\operatorname{seg}(AB)$ ni a $\operatorname{seg}(BC)$:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \quad \land \quad \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+Si $\ell$ cortase al tercer lado $\operatorname{seg}(AC)$, el <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (<ConceptLink targetId="pasch">Pasch</ConceptLink>, Axioma II.4) exigiría que $\ell$ cortase a $\operatorname{seg}(AB)$ o a $\operatorname{seg}(BC)$, contradiciendo la hipótesis. Por tanto, $\operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \emptyset$, lo que demuestra $A \sim_\ell C$. En consecuencia, $\sim_\ell$ satisface la <ConceptLink targetId="relacion-transitiva" isDependency={true}>transitividad</ConceptLink> y es una <ConceptLink targetId="relacion-equivalencia" isDependency={true}>relación de equivalencia</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={3} title="Existencia de al menos dos clases de equivalencia">
+Fijemos un punto $O$ incidente con $\ell$ ($O \in \operatorname{tr}(\ell)$) y un punto $A$ en el plano no incidente con $\ell$. Por el <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axioma II.2</ConceptLink>, existe un punto $A'$ tal que $O$ está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $A'$:
+$$
+A * O * A'
+$$
+Como $O \in \operatorname{tr}(\ell)$ y $O \in \operatorname{seg}(AA')$, el segmento $\operatorname{seg}(AA')$ corta a la recta $\ell$ en $O$. Por consiguiente, $A \not\sim_\ell A'$, lo que prueba la existencia de al menos dos <ConceptLink targetId="clase-equivalencia" isDependency={true}>clases de equivalencia</ConceptLink> distintas.
+</ProofStep>
+
+<ProofStep number={4} title="Existencia de a lo sumo dos clases de equivalencia">
+Sean $A, B, C$ puntos no incidentes con $\ell$ tales que $A \not\sim_\ell B$ y $A \not\sim_\ell C$. Esto significa que el segmento $\operatorname{seg}(AB)$ corta a $\ell$ en un punto $X$, y el segmento $\operatorname{seg}(AC)$ corta a $\ell$ en un punto $Y$:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \{X\} \quad \land \quad \operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \{Y\}
+$$
+En el triángulo $\triangle ABC$, la recta $\ell$ corta a los dos lados $\operatorname{seg}(AB)$ y $\operatorname{seg}(AC)$ en los puntos $X$ e $Y$. Por los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink> (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink> y <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axioma II.3</ConceptLink>), una recta no puede cortar a los tres lados de un triángulo en puntos interiores. En consecuencia, $\ell$ no puede cortar al segmento $\operatorname{seg}(BC)$:
+$$
+\operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset \implies B \sim_\ell C
+$$
+Por tanto, todo punto no equivalente a $A$ pertenece a la misma clase de equivalencia que $B$, concluyendo que existen exactamente dos clases de equivalencia.
+</ProofStep>
+
+<ProofStep number={5} title="Convexidad de cada clase de equivalencia">
+Sea $\mathcal{H}$ una de las dos clases de equivalencia y sean $A, B \in \mathcal{H}$. Para cualquier punto $P \in \operatorname{seg}(AB)$, si $P$ no perteneciese a $\mathcal{H}$, pertenecería a la clase opuesta y el segmento $\operatorname{seg}(AP)$ cortaría a $\ell$. Pero al estar $P$ entre $A$ y $B$, se tiene $\operatorname{seg}(AP) \subset \operatorname{seg}(AB)$, lo que implicaría que $\operatorname{seg}(AB)$ corta a $\ell$, en contradicción con $A \sim_\ell B$. Por tanto:
+$$
+P \in \operatorname{seg}(AB) \implies P \in \mathcal{H}
+$$
+Queda demostrado que cada clase es un <ConceptLink targetId="conjunto-convexo" isDependency={true}>conjunto convexo</ConceptLink>, completando la demostración.
+</ProofStep>
+
+</DemonstrationSection>

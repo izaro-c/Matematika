@@ -6,12 +6,17 @@ Decisiones fijadas tras la auditoría de octubre de 2026. Prevalecen sobre cualq
 
 ## 1. Marco axiomático
 
+Cada sistema es un nodo `sistema-axiomatico` que lista **todos** sus axiomas en `axiomas` y declara en `extends` los sistemas que amplía (`validate-graph` exige que los axiomas del sistema base estén incluidos). Cada modelo declara en `satisfies` los sistemas que cumple y, si se construye dentro de otra teoría (ℝ, ℂ, conjuntos), en `builtIn` el sistema de esa teoría: así el grafo muestra la consistencia relativa sin crear ciclos.
+
 | Sistema | Axiomas | Nodo |
 | :--- | :--- | :--- |
 | Incidencia | I.1–I.8 | `sistema-incidencia` |
 | **Geometría absoluta** | I, II, III **y** V (V.1 Arquímedes, V.2 completitud). **Nunca** IV. | `sistema-absoluto` |
 | Euclidiana | absoluta + IV (`axioma-paralelas-euclides`) | `sistema-euclidiano` |
 | Hiperbólica | absoluta + IV<sub>hip</sub> (`axioma-paralelas-hiperbolico`) | `sistema-hiperbolico` |
+| Números reales *(pendiente)* | cuerpo ordenado completo | `sistema-cuerpo-real` (ya referenciado como `builtIn` de `modelo-cartesiano` y `modelo-poincare`) |
+
+`extends` actual: `sistema-absoluto` → `sistema-incidencia`; `sistema-euclidiano` y `sistema-hiperbolico` → `sistema-absoluto`.
 
 - Si una prueba de geometría absoluta usa V.1 o V.2, se dice explícitamente (p. ej. Saccheri–Legendre usa Arquímedes). Lo que solo usa I–III se presenta como válido «sin axiomas de continuidad».
 - Los grupos I.4–I.8 son espaciales. Un modelo plano (tres puntos, Fano, $\mathbb{R}^2$, disco de Poincaré) **solo** modela los axiomas planos (I.1–I.3 y los demás grupos restringidos al plano). Nunca se afirma que un modelo plano satisface un sistema que contiene I.4–I.8.
@@ -85,6 +90,12 @@ Edición canónica: ***Grundlagen der Geometrie*, 7.ª edición (1930) y posteri
 | Geometría hiperbólica / euclidiana | `sistema-hiperbolico` / `sistema-euclidiano` | `geometria-hiperbolica`, `geometria-euclidiana` |
 | Ángulo exterior | `teorema-angulo-exterior` | — |
 | Equivalencia del área | `teoria-medida-area` | — |
+| Propiedad reflexiva de una relación | `relacion-reflexiva` | `reflexividad` |
+| Propiedad simétrica de una relación | `relacion-simetrica` | — (`simetria` es la simetría **geométrica** de una figura: isometría que la deja invariante) |
+| Propiedad transitiva de una relación | `relacion-transitiva` | `transitividad` |
+| Base de un espacio vectorial | `base-espacio-vectorial` | — (`base` es el lado de un triángulo o polígono) |
+
+Antes de inventar un ID, comprueba con `rank-missing-ids.mjs --contexts <id>` si ya se usa y con qué sentido. Un mismo ID nunca nombra dos conceptos: si una palabra tiene dos sentidos (simetría de una relación / de una figura; base de un triángulo / de un espacio vectorial), cada sentido lleva su propio ID. `lint-node.mjs` lee esta tabla y rechaza los IDs de la tercera columna.
 
 `PropiedadItem id` no puede coincidir con el ID de **otro** nodo distinto de lo que la propiedad enuncia; si la propiedad es un resultado con nodo propio, el id es ese nodo; si no, un id nuevo descriptivo.
 

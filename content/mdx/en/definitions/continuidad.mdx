@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "continuidad",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Continuity",
+  description: "Topological and geometric property characterizing the absence of gaps, jumps, or fissures in a line, space, or mathematical function.",
+  branch: "26A",
+  branches: ["26A", "51M", "54"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §8", role: "secondary" }
+  ]
+};
+
+<Capitular letra="C" />ontinuity **is** a fundamental mathematical principle expressing the fullness, cohesion, and absence of gaps or jumps in geometric lines as well as in functions and topological spaces.
+
+In the conceptual architecture of mathematics, continuity manifests under two complementary perspectives: synthetic geometric foundations and the algebraic-topological analysis of the real continuum.
+
+From a synthetic standpoint, continuity does not presuppose an antecedent numerical system, but is articulated through axiom Group V: the Archimedean principle (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink>) and the axiom of linear completeness (<ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>). Together they ensure that the line admits no extensions preserving previous axioms, resolving classical gaps in Euclid such as the necessary intersection between lines and curves like the <ConceptLink targetId="circunferencia">circle</ConceptLink>.
+
+Meanwhile, in analysis over the <ConceptLink targetId="cuerpo">field</ConceptLink> of real numbers $\mathbb{R}$, continuity is formalized through the <ConceptLink targetId="completitud-reales">completeness of the real numbers</ConceptLink>, whether via Dedekind cuts, the least upper bound principle, or the convergence of Cauchy sequences.
+
+<Definicion title="Dedekind cut principle">
+  Let $L$ be a linear continuum endowed with a dense order. If $L$ is divided into two non-empty, disjoint classes $\Sigma_1$ and $\Sigma_2$ such that every element of the first precedes every element of the second:
+  $$
+  L = \Sigma_1 \cup \Sigma_2 \quad \land \quad \Sigma_1 \cap \Sigma_2 = \emptyset \quad \land \quad \forall x \in \Sigma_1, \, \forall y \in \Sigma_2 \ (x < y)
+  $$
+  then the continuity principle stipulates that there exists a unique element $p \in L$ producing that partition, acting either as the maximum of $\Sigma_1$ or as the minimum of $\Sigma_2$.
+</Definicion>
+
+<Separador />
+
+### Deductive necessity in the absolute system
+
+In the <ConceptLink targetId="sistema-absoluto">absolute system</ConceptLink>, continuity axioms are indispensable for defining the length of curves, continuous angular measurement, and the rigorous computation of polygonal areas.
+
+In geometries lacking continuity axioms (such as the rational plane $\mathbb{Q}^2$), a secant line may cross the interior of a circle without sharing any <ConceptLink targetId="punto">point</ConceptLink> with its boundary; continuity postulates the formal existence of those contact points, definitively bridging the gap between spatial intuition and logical deduction.

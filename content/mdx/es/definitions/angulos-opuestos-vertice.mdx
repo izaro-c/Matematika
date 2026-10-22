@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "angulos-opuestos-vertice",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Ángulos opuestos por el vértice",
+  description: "Par de ángulos propios que comparten un mismo vértice y cuyos lados forman dos pares de semirrectas opuestas de dos rectas secantes.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "orden", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> propios son **ángulos opuestos por el vértice** si comparten el mismo <ConceptLink targetId="vertice">vértice</ConceptLink> y sus <ConceptLink targetId="lado">lados</ConceptLink> forman dos pares de <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>semirrectas opuestas</ConceptLink> de dos <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink>.
+
+La intersección de dos rectas secantes en un punto común determina cuatro semirrectas que se agrupan en dos pares de semirrectas opuestas. Estos cuatro ángulos se organizan de dos en dos como pares de ángulos opuestos por el vértice. Cada ángulo de un par es adyacente suplementario de los dos ángulos del otro par, lo que fundamenta la <ConceptLink targetId="congruencia">congruencia</ConceptLink> mutua demostrada en el <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink> a partir de la congruencia de <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink>.
+
+<Definicion title="Definición formal de ángulos opuestos por el vértice">
+Sean $\ell_1, \ell_2 \in \mathcal{L}$ dos <ConceptLink targetId="recta">rectas</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$ que se cortan en un único <ConceptLink targetId="punto">punto</ConceptLink> $O \in \mathcal{P}$, esto es, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{O\}$.
+
+El punto $O$ determina sobre $\ell_1$ un par de <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>semirrectas opuestas</ConceptLink> $h, h'$ y sobre $\ell_2$ un par de semirrectas opuestas $k, k'$. Con ellas se constituyen cuatro <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> propios: $\angle(h, k)$, $\angle(h', k)$, $\angle(h', k')$ y $\angle(h, k')$.
+
+Los pares formados por ángulos cuyos lados son semirrectas mutuamente opuestas:
+
+$$
+\{ \angle(h, k), \, \angle(h', k') \} \quad \text{y} \quad \{ \angle(h, k'), \, \angle(h', k) \}
+$$
+
+se denominan **pares de ángulos opuestos por el vértice**.
+
+En términos de puntos, si $A \in h$, $A' \in h'$, $B \in k$ y $B' \in k'$, con $A * O * A'$ y $B * O * B'$ según la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink>, los ángulos opuestos por el vértice se expresan como:
+
+$$
+\angle AOB \quad \text{y} \quad \angle A'OB'
+$$
+
+así como el par $\angle AOB'$ y $\angle A'OB$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades estructurales y angulares">
+    <PropiedadItem 
+      id="congruencia-angulos-opuestos-vertice" 
+      title="Congruencia por adyacencia suplementaria común"
+      formula="\angle(h, k) \cong \angle(h', k')"
+    >
+      Cada ángulo $\angle(h, k)$ comparte un lado con $\angle(h', k)$ y sus otros dos lados son semirrectas opuestas $h, h'$, por lo que ambos son <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink>. Asimismo, $\angle(h', k')$ y $\angle(h', k)$ son suplementarios por compartir el lado $h'$. Al ser suplementarios del mismo ángulo $\angle(h', k)$, el <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink> concluye que los ángulos opuestos por el vértice son <ConceptLink targetId="congruencia">congruentes</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-interiores-opuestos" 
+      title="Disyunción de las regiones interiores"
+      formula="\operatorname{Int}(\angle AOB) \cap \operatorname{Int}(\angle A'OB') = \emptyset"
+    >
+      Las regiones del <ConceptLink targetId="interior-angulo">interior</ConceptLink> de dos ángulos opuestos por el vértice son conjuntos <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink>. Dado que los lados respectivos se encuentran en <ConceptLink targetId="semiplano">semiplanos</ConceptLink> opuestos respecto a las rectas secantes soporte $\ell_1$ y $\ell_2$, ningún punto interior de un ángulo puede pertenecer al interior del ángulo opuesto.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

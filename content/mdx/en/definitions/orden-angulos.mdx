@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "orden-angulos",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Angle Order",
+  description: "Strict synthetic order relation between angles defined via axiomatic transport and containment in the angular interior.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "orden", "angulo", "congruencia", "hilbert"],
+  hasSimulation: false,
+  authors: ["hilbert"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />he order of <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> is the relation that compares the opening of two angles synthetically, without resorting to numerical measures or trigonometric functions.
+
+This relation is constructed by combining the angle transport postulated in <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink> with the notion of the <ConceptLink targetId="interior-angulo">angle interior</ConceptLink>. By placing one angle on an <ConceptLink targetId="lado">arm</ConceptLink> of the other within the same <ConceptLink targetId="semiplano">half-plane</ConceptLink>, the containment of its remaining arm in the interior defines a synthetic <ConceptLink targetId="orden">strict order</ConceptLink> compatible with <ConceptLink targetId="congruencia">congruence</ConceptLink>.
+
+<Definicion title="Formal definition of the order of angles">
+Let $\angle AOB$ and $\angle A'O'B'$ be two <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> determined by pairs of non-collinear <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> with origins $O$ and $O'$ respectively.
+
+By <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>, there exists a unique ray $\overrightarrow{O'B''}$ with origin $O'$, lying in the <ConceptLink targetId="semiplano">half-plane</ConceptLink> of the line $\overleftrightarrow{O'A'}$ containing $B'$, such that:
+$$
+\angle AOB \cong \angle A'O'B''
+$$
+
+We say that the angle $\angle AOB$ is **strictly less than** the angle $\angle A'O'B'$, denoted $\angle AOB < \angle A'O'B'$ (or $\angle\alpha < \angle\beta$), if the ray $\overrightarrow{O'B''}$, excluding its origin, is contained in the <ConceptLink targetId="interior-angulo">interior</ConceptLink> of $\angle A'O'B'$:
+$$
+\angle AOB < \angle A'O'B' \iff (\overrightarrow{O'B''} \setminus \{O'\}) \subseteq \operatorname{Int}(\angle A'O'B')
+$$
+
+Conversely, we say that $\angle A'O'B'$ is **strictly greater than** $\angle AOB$, denoted $\angle A'O'B' > \angle AOB$, if and only if $\angle AOB < \angle A'O'B'$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades del orden estricto angular">
+    <PropiedadItem 
+      id="orden-estricto-angulos" 
+      title="Estructura de orden estricto"
+      formula="\neg(\angle\alpha < \angle\alpha) \land (\angle\alpha < \angle\beta \implies \neg(\angle\beta < \angle\alpha)) \land (\angle\alpha < \angle\beta \land \angle\beta < \angle\gamma \implies \angle\alpha < \angle\gamma)"
+    >
+      The relation $<$ is a <ConceptLink targetId="orden">strict order</ConceptLink>: it is irreflexive, asymmetric, and transitive. If $\angle\alpha < \angle\beta$ and $\angle\beta < \angle\gamma$, the ray corresponding to the first <ConceptLink targetId="angulo">angle</ConceptLink> is contained in the interior of the second and this in that of the third, deducing $\angle\alpha < \angle\gamma$ from the convexity of the <ConceptLink targetId="interior-angulo">interior</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="tricotomia-angulos" 
+      title="Ley de tricotomía angular"
+      formula="\forall \angle\alpha, \angle\beta : (\angle\alpha < \angle\beta) \lor (\angle\alpha \cong \angle\beta) \lor (\angle\beta < \angle\alpha)"
+    >
+      Given any two <ConceptLink targetId="angulo">angles</ConceptLink> $\angle\alpha$ and $\angle\beta$, exactly one of the three disjoint relations holds: $\angle\alpha < \angle\beta$, $\angle\alpha \cong \angle\beta$, or $\angle\beta < \angle\alpha$, by virtue of the partition of the plane determined by the arms of the angle into its interior, its arms, and its exterior.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="invarianza-congruencia-orden" 
+      title="Invarianza bajo congruencia"
+      formula="\angle\alpha \cong \angle\alpha' \land \angle\beta \cong \angle\beta' \implies (\angle\alpha < \angle\beta \iff \angle\alpha' < \angle\beta')"
+    >
+      The order relation between two <ConceptLink targetId="angulo">angles</ConceptLink> is independent of the particular representatives chosen within their respective <ConceptLink targetId="congruencia">congruence</ConceptLink> classes. Consequently, the order is well defined on the equivalence classes of angle congruence.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "angulos-opuestos-vertice",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Vertical Angles",
+  description: "Pair of proper angles sharing a common vertex whose sides form two pairs of opposite rays of two intersecting lines.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "orden", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="T" />wo proper <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are **vertical angles** if they share the same <ConceptLink targetId="vertice">vertex</ConceptLink> and their <ConceptLink targetId="lado">sides</ConceptLink> form two pairs of <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>opposite rays</ConceptLink> of two <ConceptLink targetId="secante">intersecting</ConceptLink> <ConceptLink targetId="recta">lines</ConceptLink>.
+
+The intersection of two secant lines at a common point determines four rays that group into two pairs of opposite rays. These four angles organize pairwise as pairs of vertical angles. Each angle of a pair is adjacent supplementary to both angles of the other pair, which underpins the mutual <ConceptLink targetId="congruencia">congruence</ConceptLink> proved in the <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink> from the congruence of <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink>.
+
+<Definicion title="Formal Definition of Vertical Angles">
+Let $\ell_1, \ell_2 \in \mathcal{L}$ be two <ConceptLink targetId="recta">lines</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\pi$ meeting at a unique <ConceptLink targetId="punto">point</ConceptLink> $O \in \mathcal{P}$, that is, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{O\}$.
+
+The point $O$ determines on $\ell_1$ a pair of <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>opposite rays</ConceptLink> $h, h'$ and on $\ell_2$ a pair of opposite rays $k, k'$. From these, four proper <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are formed: $\angle(h, k)$, $\angle(h', k)$, $\angle(h', k')$, and $\angle(h, k')$.
+
+The pairs formed by angles whose sides are mutually opposite rays:
+
+$$
+\{ \angle(h, k), \, \angle(h', k') \} \quad \text{and} \quad \{ \angle(h, k'), \, \angle(h', k) \}
+$$
+
+are called **pairs of vertical angles**.
+
+In terms of points, if $A \in h$, $A' \in h'$, $B \in k$, and $B' \in k'$, with $A * O * A'$ and $B * O * B'$ under the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation, the vertical angles are expressed as:
+
+$$
+\angle AOB \quad \text{and} \quad \angle A'OB'
+$$
+
+as well as the pair $\angle AOB'$ and $\angle A'OB$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Structural and Angular Properties">
+    <PropiedadItem 
+      id="congruencia-angulos-opuestos-vertice" 
+      title="Congruence via Common Supplementary Adjacency"
+      formula="\angle(h, k) \cong \angle(h', k')"
+    >
+      Each angle $\angle(h, k)$ shares a side with $\angle(h', k)$ and their other two sides are opposite rays $h, h'$, so both are <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink>. Likewise, $\angle(h', k')$ and $\angle(h', k)$ are supplementary by sharing the side $h'$. Being supplementary to the same angle $\angle(h', k)$, the <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink> establishes that vertical angles are <ConceptLink targetId="congruencia">congruent</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-interiores-opuestos" 
+      title="Disjointness of Interior Regions"
+      formula="\operatorname{Int}(\angle AOB) \cap \operatorname{Int}(\angle A'OB') = \emptyset"
+    >
+      The regions of the <ConceptLink targetId="interior-angulo">interior</ConceptLink> of two vertical angles are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> sets. Because the respective sides lie in opposite <ConceptLink targetId="semiplano">half-planes</ConceptLink> with respect to the supporting secant lines $\ell_1$ and $\ell_2$, no interior point of one angle can belong to the interior of the opposite angle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

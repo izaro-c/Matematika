@@ -21,7 +21,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. Kapitulua, §5 (Satz 12)",
+      locator: "I. Kapitulua, §5",
       role: "secondary"
     }
   ]
@@ -31,7 +31,7 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="A" />ngelu baten <ConceptLink targetId="bisectriz">erdikariaren</ConceptLink> existentzia eta bakartasunaren <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen deduktibo zuzenak</ConceptLink> (<ConceptLink targetId="teorema-existencia-bisectriz">erdikariaren existentzia eta bakartasunaren teoreman</ConceptLink>) <ConceptLink targetId="euclides">Euklidesen</ConceptLink> eraikuntza klasikoa jarraitzen du (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa), zeina zuzenki kongruenteen garraioan, triangelu ekilatero laguntzaile baten eraikuntzan eta triangeluen <ConceptLink targetId="criterio-lll" isDependency={true}>AlAlAl kongruentzia-irizpidean</ConceptLink> oinarritzen baita.
+<Capitular letra="A" />ngelu baten <ConceptLink targetId="bisectriz">erdikariaren</ConceptLink> existentzia eta bakartasunaren <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen deduktibo zuzenak</ConceptLink> (<ConceptLink targetId="teorema-existencia-bisectriz">erdikariaren existentzia eta bakartasunaren teoreman</ConceptLink>) <ConceptLink targetId="euclides">Euklidesen</ConceptLink> eraikuntza klasikoa jarraitzen du (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa), zeina zuzenki kongruenteen garraioan, triangelu ekilatero laguntzaile baten eraikuntzan eta triangeluen <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>AlAlAl kongruentzia-irizpidean</ConceptLink> oinarritzen baita.
 
 <Separador />
 
@@ -63,9 +63,9 @@ Marrazten dugu <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</
 Konparatzen ditugu $\triangle OAC$ eta $\triangle OBC$ <ConceptLink targetId="triangulo" isDependency={true}>triangeluak</ConceptLink>. Haietan <ConceptLink targetId="lado" isDependency={true}>aldeen</ConceptLink> hiru kongruentziak betetzen dira:
 1. $\overline{OA} \cong \overline{OB}$, hasierako zuzenki-garraioaren eraikuntzatik (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>).
 2. $\overline{AC} \cong \overline{BC}$, $\triangle ABC$ triangelu ekilateroaren aldeak direlako.
-3. $\overline{OC} \cong \overline{OC}$, zuzenkien <ConceptLink targetId="congruencia" isDependency={true}>kongruentziaren</ConceptLink> <ConceptLink targetId="reflexividad">erreflexibotasunagatik</ConceptLink>.
+3. $\overline{OC} \cong \overline{OC}$, zuzenkien <ConceptLink targetId="congruencia" isDependency={true}>kongruentziaren</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibotasunagatik</ConceptLink>.
  
-<ConceptLink targetId="criterio-lll" isDependency={true}>AlAlAl</ConceptLink> <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangelu-kongruentziako irizpidearen</ConceptLink> arabera (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> *Satz 12*, Euklides I.8), bi triangeluak kongruenteak dira:
+<ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>AlAlAl</ConceptLink> <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangelu-kongruentziako irizpidearen</ConceptLink> arabera (Euklides I.8), bi triangeluak kongruenteak dira:
 
 $$
 \triangle OAC \cong \triangle OBC
@@ -85,7 +85,7 @@ $C$ puntua $\angle AOB$ angeluaren barnean dagoenez, <VisualBind element="bisAOB
 <ProofStep number={5} target="bisAOB" title="Zuzenerdi erdikariaren bakartasuna III.4 Axiomaren bidez">
 Bakartasuna frogatzeko, demagun existitzen dela $O$-n jatorria duen eta $\angle AOB$-ren barnean dagoen beste $\overrightarrow{OC'}$ <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bat, $\angle AOC' \cong \angle BOC'$ betetzen duena.
 
-Kongruentzia angeluarraren <ConceptLink targetId="transitividad">trantsitibotasunagatik</ConceptLink>, $\angle AOC \cong \angle AOC'$ betetzen da. Hala ere, angeluak garraiatzearen eta bakartasunaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), $\overleftrightarrow{OA}$ zuzenarekiko $B$ barne hartzen duen <ConceptLink targetId="semiplano" isDependency={true}>planoerdian</ConceptLink>, $O$-n jatorria duen eta $\overrightarrow{OA}$-rekin $\angle AOC$-ren kongruentea den angelu bat osatzen duen zuzenerdi **bakar** bat existitzen da. Ondorioz:
+Kongruentzia angeluarraren <ConceptLink targetId="relacion-transitiva">trantsitibotasunagatik</ConceptLink>, $\angle AOC \cong \angle AOC'$ betetzen da. Hala ere, angeluak garraiatzearen eta bakartasunaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), $\overleftrightarrow{OA}$ zuzenarekiko $B$ barne hartzen duen <ConceptLink targetId="semiplano" isDependency={true}>planoerdian</ConceptLink>, $O$-n jatorria duen eta $\overrightarrow{OA}$-rekin $\angle AOC$-ren kongruentea den angelu bat osatzen duen zuzenerdi **bakar** bat existitzen da. Ondorioz:
 
 $$
 \overrightarrow{OC'} = \overrightarrow{OC}

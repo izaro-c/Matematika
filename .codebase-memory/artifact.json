@@ -1,12 +1,11 @@
 {
     "schema_version": 2,
-    "commit": "62985596702b458727d390509ce688c0882dedd6",
-    "indexed_at": "2026-10-14T13:48:35Z",
+    "commit": "d73a241e1c2bafea71a4dead51e37cd850c7fb0f",
+    "indexed_at": "2026-10-22T14:07:56Z",
     "project": "home-izaro-Proiektuak-Matematika",
-    "nodes": 7145,
-    "edges": 19881,
-    "original_size": 22151168,
-    "compressed_size": 3475297,
-    "compression_level": 9,
-    "reconcile_basis": "git-clean-head"
+    "nodes": 10043,
+    "edges": 32229,
+    "original_size": 45154304,
+    "compressed_size": 7062704,
+    "compression_level": 3
 }

@@ -21,7 +21,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §5 (Satz 12)",
+      locator: "Chapter I, §5",
       role: "secondary"
     }
   ]
@@ -31,7 +31,7 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the existence and uniqueness of the <ConceptLink targetId="bisectriz">bisector</ConceptLink> for the <ConceptLink targetId="teorema-existencia-bisectriz">theorem of existence and uniqueness of the angle bisector</ConceptLink> follows <ConceptLink targetId="euclides">Euclid's</ConceptLink> classical construction (<ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, Proposition I.9), founded upon congruent segment transport, an auxiliary equilateral triangle construction, and the <ConceptLink targetId="criterio-lll" isDependency={true}>SSS congruence criterion</ConceptLink> for triangles.
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the existence and uniqueness of the <ConceptLink targetId="bisectriz">bisector</ConceptLink> for the <ConceptLink targetId="teorema-existencia-bisectriz">theorem of existence and uniqueness of the angle bisector</ConceptLink> follows <ConceptLink targetId="euclides">Euclid's</ConceptLink> classical construction (<ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, Proposition I.9), founded upon congruent segment transport, an auxiliary equilateral triangle construction, and the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS congruence criterion</ConceptLink> for triangles.
 
 <Separador />
 
@@ -63,9 +63,9 @@ Draw the <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink
 Compare <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> $\triangle OAC$ and $\triangle OBC$. Three congruences of their corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> hold:
 1. $\overline{OA} \cong \overline{OB}$, by the initial construction via segment transport (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>).
 2. $\overline{AC} \cong \overline{BC}$, as sides of the equilateral triangle $\triangle ABC$.
-3. $\overline{OC} \cong \overline{OC}$, by the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of segment <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>.
+3. $\overline{OC} \cong \overline{OC}$, by the <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> of segment <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>.
 
-By the <ConceptLink targetId="criterio-lll" isDependency={true}>SSS criterion</ConceptLink> for <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangle congruence</ConceptLink> (*Satz 12* of <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, Euclid I.8), both triangles are congruent:
+By the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS criterion</ConceptLink> for <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangle congruence</ConceptLink> (Euclid I.8), both triangles are congruent:
 
 $$
 \triangle OAC \cong \triangle OBC
@@ -85,7 +85,7 @@ Because point $C$ lies in the interior of angle $\angle AOB$, ray <VisualBind el
 <ProofStep number={5} target="bisAOB" title="Uniqueness of the bisecting ray by Axiom III.4">
 To prove uniqueness, suppose there exists another <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> $\overrightarrow{OC'}$ originating at $O$ and contained in the interior of $\angle AOB$ satisfying $\angle AOC' \cong \angle BOC'$.
 
-By the <ConceptLink targetId="transitividad">transitivity</ConceptLink> of angular congruence, $\angle AOC \cong \angle AOC'$ holds. However, by the axiom of angle transport and uniqueness (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), in the <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> bounded by line $\overleftrightarrow{OA}$ containing $B$, there exists a **unique** ray originating at $O$ that forms an angle congruent to $\angle AOC$ with $\overrightarrow{OA}$. Consequently:
+By the <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> of angular congruence, $\angle AOC \cong \angle AOC'$ holds. However, by the axiom of angle transport and uniqueness (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), in the <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> bounded by line $\overleftrightarrow{OA}$ containing $B$, there exists a **unique** ray originating at $O$ that forms an angle congruent to $\angle AOC$ with $\overrightarrow{OA}$. Consequently:
 
 $$
 \overrightarrow{OC'} = \overrightarrow{OC}

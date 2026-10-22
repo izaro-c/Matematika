@@ -1,0 +1,68 @@
+export const metadata = {
+  id: "angulos-opuestos-vertice",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Erpinez aurkako angeluak",
+  description: "Erpin komuna partekatzen duten eta haien aldeek bi zuzen ebakitzaileren bi aurkako zuzenerdi bikote osatzen dituzten bi angelu propioen bikotea.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "orden", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> propio **erpinez aurkako angeluak** dira, baldin eta <ConceptLink targetId="vertice">erpin</ConceptLink> bera partekatzen badute eta haien <ConceptLink targetId="lado">aldeek</ConceptLink> bi <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="secante">ebakitzaileren</ConceptLink> bi <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>aurkako zuzenerdi</ConceptLink> bikote osatzen badituzte.
+
+Bi zuzen ebakitzaileren puntu komuneko ebakidurak lau zuzenerdi zehazten ditu, bi aurkako zuzenerdi bikotetan multzokatzen direnak. Lau angelu horiek binaka antolatzen dira erpinez aurkako angeluen bi bikote gisa. Bikote bateko angelu bakoitza beste bikoteko bi angeluen auzokide betegarria da, eta horrek oinarritzen du <ConceptLink targetId="teorema-angulos-opuestos-verticales">erpinez aurkako angeluen teoreman</ConceptLink> frogatutako elkarrekiko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>, <ConceptLink targetId="angulos-suplementarios">angelu betegarrien</ConceptLink> kongruentzian oinarrituta.
+
+<Definicion title="Erpinez aurkako angeluen definizio formala">
+Izan bitez $\ell_1, \ell_2 \in \mathcal{L}$ $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko bi <ConceptLink targetId="recta">zuzen</ConceptLink>, $O \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> bakar batean elkar ebakitzen dutenak, hau da, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{O\}$ izanik.
+
+$O$ puntuak $\ell_1$-en gainean $h, h'$ bi <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>aurkako zuzenerdi</ConceptLink> zehazten ditu, eta $\ell_2$-ren gainean $k, k'$ bi aurkako zuzenerdi. Horiekin lau <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> propio eratzen dira: $\angle(h, k)$, $\angle(h', k)$, $\angle(h', k')$ eta $\angle(h, k')$.
+
+Haien aldeak elkarren aurkako zuzenerdiak dituzten angeluek osatutako bikoteei:
+
+$$
+\{ \angle(h, k), \, \angle(h', k') \} \quad \text{eta} \quad \{ \angle(h, k'), \, \angle(h', k) \}
+$$
+
+**erpinez aurkako angeluen bikote** deritze.
+
+Puntuen bidez, $A \in h$, $A' \in h'$, $B \in k$ eta $B' \in k'$ badira, <ConceptLink targetId="estar-entre">bitartekotasun</ConceptLink>-erlazioaren arabera $A * O * A'$ eta $B * O * B'$ izanik, erpinez aurkako angeluak honela adierazten dira:
+
+$$
+\angle AOB \quad \text{eta} \quad \angle A'OB'
+$$
+
+baita $\angle AOB'$ eta $\angle A'OB$ bikotea ere.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Egitura- eta angelu-propietateak">
+    <PropiedadItem 
+      id="congruencia-angulos-opuestos-vertice" 
+      title="Kongruentzia alboko betegarri komunaren bidez"
+      formula="\angle(h, k) \cong \angle(h', k')"
+    >
+      $\angle(h, k)$ angelu bakoitzak alde bat partekatzen du $\angle(h', k)$ angeluarekin eta beste bi aldeak $h, h'$ aurkako zuzenerdiak dira; beraz, biak <ConceptLink targetId="angulos-suplementarios">angelu betegarriak</ConceptLink> dira. Era berean, $\angle(h', k')$ eta $\angle(h', k)$ betegarriak dira $h'$ aldea partekatzeagatik. $\angle(h', k)$ angelu beraren betegarriak izatean, <ConceptLink targetId="teorema-angulos-opuestos-verticales">erpinez aurkako angeluen teoremak</ConceptLink> ezartzen du erpinez aurkako angeluak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-interiores-opuestos" 
+      title="Barne-eskualdeen disjuntutasuna"
+      formula="\operatorname{Int}(\angle AOB) \cap \operatorname{Int}(\angle A'OB') = \emptyset"
+    >
+      Erpinez aurkako bi angeluren <ConceptLink targetId="interior-angulo">barnealdeko</ConceptLink> eskualdeak multzo <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> dira. Dagozkien aldeak $\ell_1$ eta $\ell_2$ zuzen euskarri ebakitzaileekiko kontrako <ConceptLink targetId="semiplano">planoerdietan</ConceptLink> daudenez, angelu baten barruko puntu bakar bat ere ezin da kontrako angeluaren barnealdekoa izan.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

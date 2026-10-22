@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "secante",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Secant Line",
+  description: "Incidence relation between coplanar lines intersecting at exactly one point, or transversal line intersecting a family of lines.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "incidencia", "recta", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1 y §2",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 23",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Secante } from '@content/diagrams/Definiciones/Secante';
+export const Simulation = Secante;
+
+<Capitular letra="T" />wo <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> are **secant** (or intersecting) if their intersection consists of exactly a single <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>. Similarly, a line is a **transversal secant** with respect to a family of coplanar lines if it intersects each of them at distinct points.
+
+By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, two distinct lines cannot share more than one point without coinciding entirely. In the same <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, two lines are either <ConceptLink targetId="paralelas">parallel</ConceptLink>—in which case they coincide or share no points—or secant. Transversal secant lines serve as the essential geometric tool to establish fundamental angular relationships, such as in the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink> and <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink>.
+
+<Definicion title="Formal definition of secant lines and transversal line">
+Let <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> $\in \mathcal{L}$ be two distinct coplanar <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, that is, $\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$. The lines $\ell_1$ and $\ell_2$ are **secant** if they simultaneously <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with a unique <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="pP" color="ocre">$P$</VisualBind> $\in \mathcal{P}$:
+
+$$
+\operatorname{sec}(\ell_1, \ell_2) \iff (\ell_1 \neq \ell_2) \land \exists! P \in \mathcal{P} \, (P \,\mathbf{I}\, \ell_1 \land P \,\mathbf{I}\, \ell_2)
+$$
+
+Equivalently, in terms of their <ConceptLink targetId="traza">point trace</ConceptLink>, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$. The point $P$ is called the **point of intersection** of both lines.
+
+Likewise, a line <VisualBind element="lineT" color="musgo">$t$</VisualBind> $\in \mathcal{L}$ contained in the same plane $\pi$ ($\operatorname{tr}(t) \subseteq \operatorname{tr}(\pi)$) is a **transversal secant** to $\ell_1$ and $\ell_2$ if it is secant to each of them at distinct points <VisualBind element="pP1" color="pavo">$P_1$</VisualBind> $\neq$ <VisualBind element="pP2" color="pavo">$P_2$</VisualBind>:
+
+$$
+\operatorname{transv}(t; \ell_1, \ell_2) \iff \exists P_1, P_2 \in \mathcal{P} \, (P_1 \neq P_2 \land P_1 \,\mathbf{I}\, t \land P_1 \,\mathbf{I}\, \ell_1 \land P_2 \,\mathbf{I}\, t \land P_2 \,\mathbf{I}\, \ell_2)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Properties of incidence and parallelism">
+    <PropiedadItem 
+      id="unicidad-punto-corte-secantes" 
+      title="Uniqueness of the intersection point"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \implies |\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)| = 1"
+    >
+      If two <ConceptLink targetId="recta">lines</ConceptLink> share two or more distinct <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> requires both lines to be identical; therefore, two distinct secant lines cannot intersect at more than one point.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-relacion-secante" 
+      title="Symmetry of the secant relation"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \iff \operatorname{sec}(\ell_2, \ell_1)"
+    >
+      The intersection condition between lines in a <ConceptLink targetId="plano">plane</ConceptLink> is symmetric: if a line is secant to a second line, the second line is secant to the first, sharing the same intersection point.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

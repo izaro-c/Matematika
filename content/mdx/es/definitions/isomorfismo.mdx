@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "isomorfismo",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Isomorfismo",
+  description: "Biyección entre dos estructuras matemáticas que preserva todas las operaciones, relaciones y constantes de su signatura formal.",
+  branch: "03C",
+  branches: ["08A", "20"],
+  hasSimulation: false,
+  sources: [
+    { title: "A Shorter Model Theory", author: "Wilfrid Hodges", locator: "Capítulo 1", role: "primary" },
+    { title: "Lattice Theory", author: "Garrett Birkhoff", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />n **isomorfismo** es una correspondencia biunívoca entre dos sistemas o <ConceptLink targetId="estructura-geometrica">estructuras matemáticas</ConceptLink> que comparten la misma <ConceptLink targetId="signatura">signatura</ConceptLink>, de tal modo que se preservan íntegramente las relaciones primitivas, las operaciones y las constantes distinguidas.
+
+Dos estructuras isomorfas son indistinguibles desde la perspectiva de las propiedades expresables en el lenguaje formal de la <ConceptLink targetId="logica">lógica</ConceptLink>: cualquier enunciado verdadero en una de ellas es necesariamente verdadero en la otra, variando únicamente la naturaleza empírica o la nomenclatura de sus elementos base.
+
+<Definicion title="Definición formal de isomorfismo">
+  Sean $\mathcal{M}$ y $\mathcal{N}$ dos estructuras sobre una signatura $\sigma$ con dominios $M$ y $N$ respectivamente. Una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink>
+  $$
+  f\colon M \longrightarrow N
+  $$
+  es un **isomorfismo** de $\mathcal{M}$ en $\mathcal{N}$ (notado $\mathcal{M} \cong \mathcal{N}$) si satisface:
+  1. Para cada símbolo de relación $n$-aria $R \in \sigma$ y para cualesquiera $a_1, \dots, a_n \in M$:
+     $$
+     (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
+     $$
+  2. Para cada símbolo de función $k$-aria $g \in \sigma$ y para cualesquiera $a_1, \dots, a_k \in M$:
+     $$
+     f(g^{\mathcal{M}}(a_1, \dots, a_k)) = g^{\mathcal{N}}(f(a_1), \dots, f(a_k))
+     $$
+  3. Para cada símbolo de constante $c \in \sigma$:
+     $$
+     f(c^{\mathcal{M}}) = c^{\mathcal{N}}
+     $$
+</Definicion>
+
+<Separador />
+
+### Categoricidad y automorfismos
+
+En la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, la existencia de isomorfismos fundamenta nociones estructurales clave:
+
+- **<ConceptLink targetId="categoricidad">Categoricidad</ConceptLink>:** Un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> es categórico si todos sus modelos son mutuamente isomorfos. Por ejemplo, el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> tridimensional completo con axiomas de continuidad es categórico: todo modelo que satisface sus axiomas es isomorfo al <ConceptLink targetId="modelo-cartesiano">espacio cartesiano</ConceptLink> $\mathbb{R}^3$.
+- **Automorfismos y <ConceptLink targetId="simetria">simetría</ConceptLink>:** Un isomorfismo de una estructura en sí misma ($\mathcal{M} \cong \mathcal{M}$) se denomina *automorfismo*. El conjunto de todos los automorfismos forma un grupo que captura algebraicamente las simetrías internas de la estructura, como ocurre con las transformaciones de incidencia autoduales en el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>.

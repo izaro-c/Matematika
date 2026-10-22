@@ -1,0 +1,71 @@
+export const metadata = {
+  id: "secante",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Zuzen ebakitzailea",
+  description: "Zehazki puntu bakar batean elkar ebakitzen duten zuzen koplanarren arteko intzidentzia-erlazioa, edo zuzen-familia bat ebakitzen duen zeharreko zuzena.",
+  branch: "51A",
+  branches: ["51A"],
+  tags: ["geometria-sintetica", "incidencia", "recta", "hilbert"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1 y §2",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 23",
+      role: "secondary"
+    }
+  ]
+};
+
+import { Secante } from '@content/diagrams/Definiciones/Secante';
+export const Simulation = Secante;
+
+<Capitular letra="B" />i <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanar</ConceptLink> **ebakitzaileak** dira haien ebakidura zehazki <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bakar batez osatuta badago. Era berean, zuzen bat **zeharreko zuzen ebakitzailea** da zuzen koplanarren familia batekiko, horietako bakoitza puntu desberdinetan ebakitzen badu.
+
+I.1 <ConceptLink targetId="axioma-incidencia-1">Axiomaren</ConceptLink> arabera, bi zuzen desberdinek ezin dute puntu bat baino gehiago partekatu erabat bat etorri gabe. <ConceptLink targetId="plano" isDependency={true}>Plano</ConceptLink> berean, bi zuzen edo <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira —bat datozenean edo puntu komunik ez dutenean— edo ebakitzaileak dira. Zeharreko zuzen ebakitzaileak funtsezko tresna geometrikoa dira angelu-erlazio nagusiak ezartzeko, hala nola <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teoreman</ConceptLink> eta <ConceptLink targetId="teorema-tales">Talesen teoreman</ConceptLink>.
+
+<Definicion title="Zuzen ebakitzaileen eta zeharreko zuzenaren definizio formala">
+Izan bitez <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> $\in \mathcal{L}$ bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> koplanar desberdin $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean, hau da, $\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$. $\ell_1$ eta $\ell_2$ zuzenak **ebakitzaileak** dira aldi berean <VisualBind element="pP" color="ocre">$P$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bakar batekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> badute:
+
+$$
+\operatorname{sec}(\ell_1, \ell_2) \iff (\ell_1 \neq \ell_2) \land \exists! P \in \mathcal{P} \, (P \,\mathbf{I}\, \ell_1 \land P \,\mathbf{I}\, \ell_2)
+$$
+
+Modu baliokidean, haien <ConceptLink targetId="traza">puntu-trazadurari</ConceptLink> dagokionez, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$. $P$ puntuari bi zuzenen **ebakidura-puntua** deritzo.
+
+Halaber, $\pi$ plano berean dagoen <VisualBind element="lineT" color="musgo">$t$</VisualBind> $\in \mathcal{L}$ zuzen bat ($\operatorname{tr}(t) \subseteq \operatorname{tr}(\pi)$) $\ell_1$ eta $\ell_2$ zuzenekiko **zeharreko ebakitzailea** da, horietako bakoitzarekin <VisualBind element="pP1" color="pavo">$P_1$</VisualBind> $\neq$ <VisualBind element="pP2" color="pavo">$P_2$</VisualBind> puntu desberdinetan ebakitzailea bada:
+
+$$
+\operatorname{transv}(t; \ell_1, \ell_2) \iff \exists P_1, P_2 \in \mathcal{P} \, (P_1 \neq P_2 \land P_1 \,\mathbf{I}\, t \land P_1 \,\mathbf{I}\, \ell_1 \land P_2 \,\mathbf{I}\, t \land P_2 \,\mathbf{I}\, \ell_2)
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Intzidentziaren eta paralelotasunaren propietateak">
+    <PropiedadItem 
+      id="unicidad-punto-corte-secantes" 
+      title="Ebakidura-puntuaren bakartasuna"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \implies |\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)| = 1"
+    >
+      Bi <ConceptLink targetId="recta">zuzenek</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> komun desberdin edo gehiago badituzte, I.1 <ConceptLink targetId="axioma-incidencia-1">Axiomak</ConceptLink> bi zuzenak berdin-berdinak izatea eskatzen du; beraz, bi zuzen ebakitzaile desberdinek ezin dute puntu batean baino gehiagotan elkar ebaki.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-relacion-secante" 
+      title="Ebakitzaile-erlazioaren simetria"
+      formula="\operatorname{sec}(\ell_1, \ell_2) \iff \operatorname{sec}(\ell_2, \ell_1)"
+    >
+      <ConceptLink targetId="plano">Plano</ConceptLink> bateko zuzenen arteko ebakidura-baldintza simetrikoa da: zuzen bat bigarren batekiko ebakitzailea bada, bigarrena lehenengoarekiko ebakitzailea da ezinbestean, ebakidura-puntu bera partekatuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

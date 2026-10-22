@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-acutangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triángulo acutángulo",
+  description: "Triángulo cuyos tres ángulos interiores son agudos, siendo cada uno de ellos estrictamente menor que un ángulo recto.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-agudo", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **triángulo acutángulo** es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> cuyos tres <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> son <ConceptLink targetId="angulo-agudo">agudos</ConceptLink>, es decir, cada uno de ellos es estrictamente menor que un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> bajo la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>.
+
+La noción se formula en el marco de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin apelar a ninguna medida métrica. Por el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, todo triángulo posee al menos dos ángulos agudos; la especificidad del triángulo acutángulo radica en que su tercer ángulo también satisface dicha cota superior.
+
+<Definicion title="Definición formal de triángulo acutángulo">
+Sea $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A$, $B$ y $C$.
+
+Se dice que $\triangle ABC$ es un **triángulo acutángulo** si cada uno de sus tres <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> es estrictamente menor que un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> $R$ bajo la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>:
+
+$$
+\angle CAB < R \quad \land \quad \angle ABC < R \quad \land \quad \angle BCA < R
+$$
+
+Cada ángulo que satisface esta condición se denomina <ConceptLink targetId="angulo-agudo">ángulo agudo</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Posición de los puntos notables">
+    <PropiedadItem 
+      id="circuncentro-interior-acutangulo" 
+      title="Interioridad del circuncentro"
+      formula="O \in \operatorname{Int}(\triangle ABC)"
+    >
+      El <ConceptLink targetId="circuncentro">circuncentro</ConceptLink> $O$ de un triángulo acutángulo pertenece siempre al <ConceptLink targetId="interior-triangulo">interior del triángulo</ConceptLink>. Como las tres <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> de los lados se intersecan en un punto equidistante de los vértices y cada ángulo interior es agudo, dicho punto de concurrencia se sitúa dentro de la región triangular abierta.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-interior-acutangulo" 
+      title="Interioridad del ortocentro"
+      formula="H \in \operatorname{Int}(\triangle ABC)"
+    >
+      El <ConceptLink targetId="ortocentro">ortocentro</ConceptLink> $H$ de un triángulo acutángulo está situado en el <ConceptLink targetId="interior-triangulo">interior del triángulo</ConceptLink>. Las tres <ConceptLink targetId="altura">alturas</ConceptLink> tienen sus pies en el interior de los segmentos determinados por los lados opuestos, de modo que su punto común de concurrencia queda comprendido dentro de la figura.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Todo triángulo equilátero es acutángulo en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, pues sus tres ángulos congruentes no pueden ser rectos ni obtusos sin contradecir las propiedades de los ángulos suplementarios adyacentes y el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>.
+</Nota>

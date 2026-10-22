@@ -1,0 +1,85 @@
+export const metadata = {
+  id: "demo-congruencia-angulos-equivalencia",
+  lang: "eu",
+  type: "demostracion",
+  title: "Demostrazioa: Angeluen kongruentziaren baliokidetasun-teorema",
+  description: "Hilberten dedukzio zehatza (§6): zuzenki kongruenteak angeluen aldeen gainean garraiatzea eta LAL teorema aplikatzea angeluen kongruentziaren simetria eta iragankortasuna frogatzeko.",
+  parentTheorem: "teorema-congruencia-angulos-equivalencia",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "relacion-equivalencia", "geometria-absoluta", "demostracion"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="A" />ngeluen kongruentziaren <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">baliokidetasun-teoremaren</ConceptLink> frogapenak <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko §6 atalean garatutako <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzenari</ConceptLink> jarraitzen dio.
+
+<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioman</ConceptLink> postulatutako erreflexibotasunetik abiatuta, arrazoibideak <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomaren</ConceptLink> bidez <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> garraiatzen ditu <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="lado">aldeen</ConceptLink> gainean eta <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> aplikatzen du <ConceptLink targetId="triangulo">triangeluen</ConceptLink> kongruentzia ezartzeko, <ConceptLink targetId="relacion-simetrica">simetria</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">iragankortasuna</ConceptLink> ondorioztatuz.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Angeluen kongruentziaren erreflexibotasuna">
+Izan bedi $\angle\alpha = \angle AOB$ edozein <ConceptLink targetId="angulo">angelu</ConceptLink>, $O$ <ConceptLink targetId="vertice">erpina</ConceptLink> eta $\overrightarrow{OA}$ eta $\overrightarrow{OB}$ <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> aldeak dituena. <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomaren</ConceptLink> enuntziatuagatik, angelu oro bere buruarekin kongruentea da, zuzenean <ConceptLink targetId="relacion-reflexiva">erreflexibotasuna</ConceptLink> betez:
+$$
+\angle AOB \cong \angle AOB
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Triangelu laguntzaileen eraikuntza eta simetria">
+<ConceptLink targetId="relacion-simetrica">Simetria</ConceptLink> frogatzeko, demagun bi <ConceptLink targetId="angulo">angelu</ConceptLink> $\angle AOB$ eta $\angle A'O'B'$ honakoa betetzen dutenak:
+$$
+\angle AOB \cong \angle A'O'B'
+$$
+Zuzenkien garraio-axiomagatik (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink>), $A \in \overrightarrow{OA} \setminus \{O\}$ eta $B \in \overrightarrow{OB} \setminus \{O\}$ puntuak hauta ditzakegu, eta $A' \in \overrightarrow{O'A'} \setminus \{O'\}$ eta $B' \in \overrightarrow{O'B'} \setminus \{O'\}$ puntuak zehaztu honako moduan:
+$$
+\overline{OA} \cong \overline{O'A'}, \quad \overline{OB} \cong \overline{O'B'}
+$$
+Puntuak ez direnez <ConceptLink targetId="colinealidad">kolinealak</ConceptLink>, $\triangle OAB$ eta $\triangle O'A'B'$ <ConceptLink targetId="triangulo">triangeluak</ConceptLink> zehazten dituzte. <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremagatik</ConceptLink>, $\triangle OAB \cong \triangle O'A'B'$ dela ondorioztatzen da, eta horrek $\overline{AB} \cong \overline{A'B'}$ eta $\angle OAB \cong \angle O'A'B'$ dakartza.
+
+<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomagatik</ConceptLink>, $\overleftrightarrow{OA}$ zuzenaren $B$ duen <ConceptLink targetId="semiplano">planoerdian</ConceptLink> $\overrightarrow{OB''}$ zuzenerdi bakar bat existitzen da $\angle A'O'B' \cong \angle AOB''$ betetzen duena. Zuzenerdi horren gainean, <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomaren</ConceptLink> bidez, $B''$ puntua hautatzen dugu $\overline{OB''} \cong \overline{O'B'}$ izanik. Berriro ere <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL teorema</ConceptLink> $\triangle O'A'B'$ eta $\triangle OAB''$ triangeluei aplikatuz, $\triangle O'A'B' \cong \triangle OAB''$ lortzen dugu, nondik $\overline{A'B'} \cong \overline{AB''}$ eta $\angle O'A'B' \cong \angle OAB''$ betetzen baitira.
+
+Zuzenkien kongruentziaren simetria eta iragankortasunagatik (<ConceptLink targetId="axioma-congruencia-2">III.2 axioma</ConceptLink>), $\overline{AB} \cong \overline{AB''}$ dugu, eta <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomaren</ConceptLink> garraio angeluarraren bakartasunagatik, $\overrightarrow{OB''}$ zuzenerdiak ezinbestean $\overrightarrow{OB}$ zuzenerdiarekin bat etorri behar du, $B'' = B$ dela inplikatuz eta honakoa ondorioztatuz:
+$$
+\angle A'O'B' \cong \angle AOB
+$$
+</ProofStep>
+
+<ProofStep number={3} title="Iragankortasunaren dedukzioa triangeluen kongruentziaren bidez">
+<ConceptLink targetId="relacion-transitiva">Iragankortasuna</ConceptLink> frogatzeko, izan bitez hiru <ConceptLink targetId="angulo">angelu</ConceptLink> honakoa betetzen dutenak:
+$$
+\angle AOB \cong \angle A'O'B' \quad \land \quad \angle A'O'B' \cong \angle A''O''B''
+$$
+<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomaren</ConceptLink> bidez, haien aldeen gainean puntuak finkatzen ditugu honakoa betez:
+$$
+\overline{OA} \cong \overline{O'A'} \cong \overline{O''A''}, \quad \overline{OB} \cong \overline{O'B'} \cong \overline{O''B''}
+$$
+Lehen triangelu-bikoteari <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> aplikatuz, $\triangle OAB \cong \triangle O'A'B'$ lortzen dugu, eta horrek $\overline{AB} \cong \overline{A'B'}$ bermatzen du. Era berean, bigarren bikoterako, LAL irizpideak $\triangle O'A'B' \cong \triangle O''A''B''$ ematen du, $\overline{A'B'} \cong \overline{A''B''}$ inplikatuz. Zuzenkien kongruentziaren iragankortasunagatik (<ConceptLink targetId="axioma-congruencia-2">III.2 axioma</ConceptLink>), honakoa lortzen da:
+$$
+\overline{AB} \cong \overline{A''B''}
+$$
+$\triangle OAB$ eta $\triangle O''A''B''$ triangeluek dagozkien hiru <ConceptLink targetId="lado">alde</ConceptLink>-bikoteak kongruenteak dituzte. <ConceptLink targetId="teorema-congruencia-lll">LLL kongruentzia-teoremagatik</ConceptLink> (edo $\angle AOB$ angelua $\overrightarrow{O''A''}$ gainean garraiatuz eta LAL aplikatuz), $\triangle OAB \cong \triangle O''A''B''$ ondorioztatzen da, $O$ eta $O''$ erpinetako angelu homologoen kongruentzia ezarriz:
+$$
+\angle AOB \cong \angle A''O''B''
+$$
+</ProofStep>
+
+<ProofStep number={4} title="Baliokidetasun-erlazioaren ondorioa">
+<ConceptLink targetId="angulo">Angeluen</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> erreflexiboa (1. urratsa), simetrikoa (2. urratsa) eta iragankorra (3. urratsa) dela egiaztatu ondoren, formalki frogatuta geratzen da angelu guztien multzoaren gaineko <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazio</ConceptLink> bat osatzen duela:
+$$
+\angle\alpha \cong \angle\beta \implies (\angle\alpha \sim \angle\beta)
+$$
+</ProofStep>
+
+</DemonstrationSection>

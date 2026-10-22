@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "interseccion",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Intersección",
+  description: "Operación conjuntista que asigna a dos conjuntos el conjunto formado exclusivamente por los elementos comunes a ambos.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: true,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 4", role: "primary" },
+    { title: "Théorie des ensembles", author: "Nicolas Bourbaki", locator: "Capítulo II, §1", role: "secondary" }
+  ]
+};
+
+import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
+export const Simulation = Interseccion;
+
+<Capitular letra="L" />a **intersección** es una operación fundamental entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne todos aquellos elementos que pertenecen simultáneamente a cada uno de los conjuntos considerados. En la lógica proposicional subyacente, se corresponde directamente con el conectivo de conjunción lógica ($\land$).
+
+Constituye la base formal para definir regiones geométricas compuestas, restricciones de dominio e incidencias entre configuraciones de figuras.
+
+<Definicion title="Definición formal de intersección">
+  Sean $A$ y $B$ dos conjuntos. La **intersección** de $A$ y $B$ (denotada $A \cap B$) es el conjunto compuesto por los elementos que están en $A$ y en $B$:
+  $$
+  A \cap B = \{x \mid x \in A \land x \in B\}
+  $$
+  De forma general, para una familia arbitraria no vacía de conjuntos $\{A_i\}_{i \in I}$, su intersección generalizada se define como:
+  $$
+  \bigcap_{i \in I} A_i = \{x \mid \forall i \in I, \ x \in A_i\}
+  $$
+</Definicion>
+
+<Separador />
+
+### Propiedades algebraicas y delimitación geométrica
+
+La operación de intersección satisface las leyes booleanas fundamentales de conmutatividad ($A \cap B = B \cap A$), asociatividad ($A \cap (B \cap C) = (A \cap B) \cap C$) e idempotencia ($A \cap A = A$). Cuando dos conjuntos carecen por completo de elementos comunes ($A \cap B = \emptyset$), se denominan <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink>.
+
+La intersección de <ConceptLink targetId="conjunto-convexo">conjuntos convexos</ConceptLink> preserva siempre la convexidad:
+- El interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink> se define formalmente como la intersección de dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos determinados por sus rectas soporte.
+- La región interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> o polígono convexo surge de la intersección finita de los semiplanos asociados a sus lados.
+- Asimismo, la posición relativa de dos rectas coplanares se caracteriza por su corte puntual: <ConceptLink targetId="secante">rectas secantes</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> y <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> con punto común <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind>, frente a <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> disjuntas con $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

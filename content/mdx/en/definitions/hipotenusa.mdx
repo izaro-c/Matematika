@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "hipotenusa",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Hypotenuse",
+  description: "Side opposite to the right angle vertex in a right triangle, possessing strictly greater length than either of the legs.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "pitagoras"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="I" />n any <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink>, the **hypotenuse** is the <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> opposite to the <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> of the <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>.
+
+The hypotenuse is the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> connecting the endpoints of the two <ConceptLink targetId="cateto">legs</ConceptLink>, completing the figure in the <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>. Being opposite to the largest of the three angles of the triangle, it has strictly greater <ConceptLink targetId="longitud">length</ConceptLink> than either of the legs and plays the central role in the fundamental metric relationship stated in the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>, where the area of the square constructed upon it equals the sum of the areas of the squares on the legs.
+
+<Definicion title="Formal definition of the hypotenuse">
+Let <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ be a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, whose vertices are the non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$, with a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> at <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>, so that <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind> is right.
+
+The <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind>, opposite to vertex $C$ and not incident with it, is the **hypotenuse** of triangle $\triangle ABC$:
+
+$$
+\text{Hipotenusa}(\triangle ABC) = \overline{AB}
+$$
+
+The other two sides, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> and <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, concurrent at the right angle vertex, are the <ConceptLink targetId="cateto">legs</ConceptLink> of the triangle.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Euclidean metric relations">
+    <PropiedadItem 
+      id="relacion-pitagorica-hipotenusa" 
+      title="Pythagorean relation"
+      formula="|AB|^2 = |CA|^2 + |CB|^2"
+    >
+      In the Euclidean plane, the square of the <ConceptLink targetId="longitud">length</ConceptLink> of the hypotenuse is equal to the sum of the squares of the lengths of both legs (<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="maximalidad-longitud-hipotenusa" 
+      title="Maximality with respect to the legs"
+      formula="|AB| > |CA| \land |AB| > |CB|"
+    >
+      In every right triangle, the hypotenuse is strictly longer than either of its legs, a consequence of the right angle being the angle of greatest measure in the triangle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

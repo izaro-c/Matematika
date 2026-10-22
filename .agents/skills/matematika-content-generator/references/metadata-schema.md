@@ -35,6 +35,8 @@ export const metadata = {
 > - Los códigos deben pertenecer a la tabla de ramas registradas (`mscNames`, `mscHierarchy` en `src/data/content/msc2020.ts`).
 > - Utilizar códigos de **2 dígitos** (`"51"`, `"03"`, `"15"`) o **2 dígitos + 1 letra** (`"51A"`, `"51M"`, `"03B"`, `"15A"`).
 > - **Prohibido** emplear subcódigos numéricos de 5 caracteres (como `"51A05"` o `"51M04"`).
+> - `branch` es la rama principal; `branches` añade ramas secundarias y el nodo aparece en todas. Añade una rama secundaria solo si el nodo es contenido propio de ella, no si solo usa sus herramientas: `angulo` en `51A` y `51M` sí; `axioma-orden-1` en `03B` no (está escrito en lógica de primer orden, pero es geometría).
+> - Los `tags` no asignan rama a un nodo que declara `branch` o `branches`.
 
 ---
 
@@ -48,8 +50,8 @@ export const metadata = {
 | **`lema`** | *(Igual que teorema)* | Proposición auxiliar intermedia. |
 | **`corolario`** | `parentTheorem?: string`, *(demás campos de teorema)* | Consecuencia directa de un teorema demostrado. |
 | **`demostracion`** | `parentTheorem: string`, `proofMethod?: string` (ej. `"metodo-contradiccion"`, `"metodo-directo"`), `lemmas?: string[]`, `layout?: 'split' \| 'text'`, `dependencias?: string[]`, `authors?: string[]` | Deducción formal paso a paso. Requiere `parentTheorem`. |
-| **`sistema-axiomatico`** | `axiomas: string[]`, `models?: string[]`, `authors?: string[]` | Formalización del marco teórico $(\mathcal{S}, \sigma, \mathcal{T})$. |
-| **`modelo`** | `satisfies: string \| string[]`, `axioms_verified?: string[]` | Estructura concreta de satisfacción. Requiere `<SeccionPropiedades>`. |
+| **`sistema-axiomatico`** | `axiomas: string[]`, `models?: string[]`, `extends?: string[]`, `authors?: string[]` | Formalización del marco teórico $(\mathcal{S}, \sigma, \mathcal{T})$. `axiomas` lista **todos** los axiomas, también los heredados; `extends` nombra los sistemas que amplía y `validate-graph` falla si falta alguno de sus axiomas. |
+| **`modelo`** | `satisfies: string \| string[]`, `axioms_verified?: string[]`, `builtIn?: string` | Estructura concreta de satisfacción. Requiere `<SeccionPropiedades>`. `builtIn` es el sistema dentro del cual se construye el modelo (p. ej. `sistema-cuerpo-real` para $\mathbb{R}^2$): arista de consistencia relativa. Los modelos finitos (tres puntos, Fano) lo omiten. |
 | **`metodo`** | `subtype: 'demostracion' \| 'construccion' \| 'calculo' \| 'algoritmo'`, `difficulty?: 'básico' \| 'intermedio' \| 'avanzado'` | Procedimiento o técnica demostrativa constructiva. |
 | **`ejercicio`** / **`ejemplo`** | `difficulty?: 'básico' \| 'intermedio' \| 'avanzado'`, `authors?: string[]` | Aplicación práctica o pedagógica de un concepto o teorema. |
 | **`caso-de-uso`** | `domain?: string`, `authors?: string[]` | Aplicación tecnológica o física del concepto (e.g. trilateración GPS). |

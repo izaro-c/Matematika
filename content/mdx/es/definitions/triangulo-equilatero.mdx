@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-equilatero",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triángulo equilátero",
+  description: "Triángulo cuyos tres lados son mutuamente congruentes; definición relacional y propiedades en geometría sintética.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "lado", "congruencia", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 20",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **triángulo equilátero** es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> cuyos tres <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>.
+
+Al tener sus tres lados congruentes, todo triángulo equilátero es en particular un <ConceptLink targetId="triangulo-isosceles">triángulo isósceles</ConceptLink> respecto a cualquier par de lados que se elija, por lo que cualquiera de sus lados puede considerarse como <ConceptLink targetId="base">base</ConceptLink>. La definición es de naturaleza puramente relacional: clasifica una configuración cuando esta existe, sin afirmar a priori que sobre todo <ConceptLink targetId="segmento">segmento</ConceptLink> sea posible construir un triángulo equilátero, ya que la construcción mediante la intersección de dos <ConceptLink targetId="circunferencia">circunferencias</ConceptLink> exige axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink>.
+
+<Definicion title="Definición formal de triángulo equilátero">
+Sea $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A$, $B$ y $C$.
+
+Se dice que $\triangle ABC$ es un **triángulo equilátero** si sus tres <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
+
+$$
+\overline{AB} \cong \overline{BC} \land \overline{BC} \cong \overline{CA}
+$$
+
+Por la propiedad <ConceptLink targetId="relacion-transitiva">transitiva</ConceptLink> de la congruencia de segmentos (<ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>), esta condición equivale a la congruencia mutua de los tres lados: $\overline{AB} \cong \overline{BC} \cong \overline{CA}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades angulares y simetría">
+    <PropiedadItem 
+      id="equiangularidad" 
+      title="Equiangularidad del triángulo equilátero"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      Un triángulo es equilátero si y solo si sus tres <ConceptLink targetId="angulo">ángulos</ConceptLink> son mutuamente congruentes. Esta propiedad se deduce aplicando el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> y su recíproco a cada par de lados en el marco de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="simetria-ternaria" 
+      title="Concurrencia de centros notables"
+      formula="\triangle ABC \cong \triangle BCA \cong \triangle CAB"
+    >
+      En un triángulo equilátero, las tres alturas, las tres medianas, las tres bisectrices y las tres mediatrices coinciden tres a tres en tres rectas que concurren en un único punto del <ConceptLink targetId="interior-triangulo">interior del triángulo</ConceptLink>, constituyendo el centro de simetría de orden tres de la figura.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+La Proposición I.1 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> intenta construir un triángulo equilátero sobre un segmento dado mediante la intersección de dos circunferencias. En la formalización de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, la existencia de tal punto de corte no se sigue de los axiomas de incidencia, orden y congruencia: requiere los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> (Grupo V) o el axioma de intersección círculo-círculo. Sin estos axiomas existen modelos donde la definición relacional es válida para triángulos dados, pero no todo segmento admite un triángulo equilátero sobre él.
+</Nota>

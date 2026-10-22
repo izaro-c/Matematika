@@ -1,0 +1,67 @@
+export const metadata = {
+  id: "hipotenusa",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Hipotenusa",
+  description: "Triangelu angeluzuzen batean angelu zuzenaren erpinaren aurkako aldea, edozein kateto baino luzera handiagoa duena.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "triangulo-rectangulo", "pitagoras"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
+
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzenetan</ConceptLink>, **hipotenusa** <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenaren</ConceptLink> <ConceptLink targetId="vertice" isDependency={true}>erpinaren</ConceptLink> aurkako <ConceptLink targetId="lado" isDependency={true}>aldea</ConceptLink> da.
+
+Hipotenusa bi <ConceptLink targetId="cateto">katetoen</ConceptLink> muturrak lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> da, irudia <ConceptLink targetId="plano" isDependency={true}>planoan</ConceptLink> itxiz. Triangeluaren hiru angeluetatik handienaren aurrean dagoenez, edozein katetok baino <ConceptLink targetId="longitud">luzera</ConceptLink> handiagoa du hertsiki, eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoreman</ConceptLink> formulatutako oinarrizko erlazio metrikoaren ardatza da, non haren gainean eraikitako karratuaren azalera katetoen gaineko karratuen azaleren baturaren berdina den.
+
+<Definicion title="Hipotenusaren definizio formala">
+Izan bedi <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean, haren erpinak <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-kolinealak izanik, <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> duena, hau da, <VisualBind element="rightAngle" color="ocre">$\angle BCA$</VisualBind> angelu zuzena izanik.
+
+$C$ erpinaren aurkako eta bertan intziditzen ez duen <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> <ConceptLink targetId="lado" isDependency={true}>aldea</ConceptLink> $\triangle ABC$ triangeluaren **hipotenusa** da:
+
+$$
+\text{Hipotenusa}(\triangle ABC) = \overline{AB}
+$$
+
+Beste bi aldeak, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> eta <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind>, angelu zuzenaren erpinean elkartzen direnak, triangeluaren <ConceptLink targetId="cateto">katetoak</ConceptLink> dira.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Erlazio metriko euklidearrak">
+    <PropiedadItem 
+      id="relacion-pitagorica-hipotenusa" 
+      title="Pitagorasen erlazioa"
+      formula="|AB|^2 = |CA|^2 + |CB|^2"
+    >
+      Plano euklidearrean, hipotenusaren <ConceptLink targetId="longitud">luzeraren</ConceptLink> karratua bi katetoen luzeren karratuen baturaren berdina da (<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="maximalidad-longitud-hipotenusa" 
+      title="Katetoekiko handitasuna"
+      formula="|AB| > |CA| \land |AB| > |CB|"
+    >
+      Triangelu angeluzuzen orotan, hipotenusak bere edozein katetok baino luzera handiagoa du, angelu zuzena triangeluko angelurik zabalena izatearen ondorioz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

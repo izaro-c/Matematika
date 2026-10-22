@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema-congruencia-suplementos",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema de congruencia de suplementos",
+  description: "Si dos ángulos son congruentes entre sí, entonces los ángulos suplementarios adyacentes a cada uno de ellos son también mutuamente congruentes.",
+  statement: "Si dos ángulos son congruentes entre sí, entonces los ángulos suplementarios adyacentes a cada uno de ellos son también congruentes entre sí.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "congruencia", "geometria-absoluta", "hilbert"],
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-congruencia-suplementos"],
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposiciones 13 y 14",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="S" />i dos <ConceptLink targetId="angulo">ángulos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí, entonces los ángulos <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementarios adyacentes</ConceptLink> a cada uno de ellos son también mutuamente congruentes.
+
+Este resultado de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, expuesto por <ConceptLink targetId="euclides">Euclides</ConceptLink> en las Proposiciones I.13 e I.14 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> y formalizado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en el §6 de los *Grundlagen der Geometrie*, establece que la congruencia angular se preserva al tomar suplementos sin apelar al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> ni a la <ConceptLink targetId="medida-angular">medida angular</ConceptLink>. Su demostración sintética se apoya de forma decisiva en la adición de <ConceptLink targetId="segmento">segmentos</ConceptLink> del <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>Axioma III.3</ConceptLink> y en el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema de congruencia de suplementos">
+Sean $\angle(h, k)$ y $\angle(h', k')$ dos <ConceptLink targetId="angulo">ángulos</ConceptLink> tales que:
+
+$$
+\angle(h, k) \cong \angle(h', k')
+$$
+
+donde $h$ y $k$ son <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> con origen en $O \in \mathcal{P}$, y $h'$ y $k'$ son semirrectas con origen en $O' \in \mathcal{P}$.
+
+Si $h_1$ es la semirrecta opuesta a $h$, y $h'_1$ es la semirrecta opuesta a $h'$ (<ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink>), determinando los <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios adyacentes</ConceptLink> $\angle(h_1, k)$ y $\angle(h'_1, k')$, entonces:
+
+$$
+\angle(h_1, k) \cong \angle(h'_1, k')
+$$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias deductivas">
+    <PropiedadItem 
+      id="teorema-angulos-opuestos-verticales" 
+      title="Teorema de los ángulos opuestos por el vértice"
+      formula="\angle(h, k) \cong \angle(h_1, k_1)"
+    >
+      Dos <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos por el <ConceptLink targetId="vertice">vértice</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí; el resultado se deduce inmediatamente observando que ambos son suplementarios adyacentes de un mismo ángulo compartido entre dos <ConceptLink targetId="recta">rectas</ConceptLink> secantes.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="suplemento-angulo-recto" 
+      title="Congruencia de ángulos rectos"
+      formula="\angle(h, k) \cong \angle(h_1, k) \land \angle(h', k') \cong \angle(h'_1, k') \implies \angle(h, k) \cong \angle(h', k')"
+    >
+      Todos los <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> son congruentes entre sí; al definirse el ángulo recto como aquel congruente con su suplementario adyacente, este teorema asegura la consistencia de la <ConceptLink targetId="perpendicular">perpendicularidad</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

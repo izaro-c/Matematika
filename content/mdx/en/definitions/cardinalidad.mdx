@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "cardinalidad",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Cardinality",
+  description: "Measure of the size or number of elements in a set formalized through equipotence classes under bijections.",
+  branch: "03E",
+  branches: ["03", "00A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen", author: "Georg Cantor", locator: "Journal für die reine und angewandte Mathematik 77 (1874)", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapters 21–24", role: "secondary" }
+  ]
+};
+
+<Capitular letra="C" />ardinality **(or** cardinal number) is the rigorous mathematical generalization of the concept of the "number of elements" of a collection, applicable with full validity to both finite and infinite sets.
+
+Introduced by Georg Cantor, the theory of cardinals overcomes the paradoxes of infinity by dispensing with sequential counting and relying instead on the principle of equipotence: two sets possess the same intrinsic size if and only if their elements can be paired one-to-one via a <ConceptLink targetId="biyeccion">bijection</ConceptLink>.
+
+<Definicion title="Equipotence and cardinal comparison">
+  Two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **equipotent** (denoted $A \sim B$) if and only if there exists a <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink> $f\colon A \longrightarrow B$:
+  $$
+  |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijective})
+  $$
+  The order between cardinals is defined via injections: one writes $|A| \le |B|$ if there exists an injective map from $A$ into $B$. By the Cantor-Bernstein-Schröder theorem, if $|A| \le |B|$ and $|B| \le |A|$, then necessarily $|A| = |B|$.
+  
+  By Cantor's theorem, for any set $A$, its power set <ConceptLink targetId="conjunto-potencia">$\wp(A)$</ConceptLink> has strictly greater cardinality: $|A| < |\wp(A)|$.
+</Definicion>
+
+<Separador />
+
+### Scale of infinities and dimensions in geometry
+
+Cardinality enables the classification of geometric domains according to their ontological size:
+- **Finite structures:** Sets with finite cardinal $n \in \mathbb{N}$, such as the 7 points of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
+- **Countably infinite:** The cardinal $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$, characteristic of discrete sequences and rational numbers.
+- **The power of the continuum:** The cardinal $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$. In continuous Euclidean geometry, every line contains $\mathfrak{c}$ <ConceptLink targetId="punto">points</ConceptLink>, a density that formally guarantees geometric <ConceptLink targetId="continuidad">continuity</ConceptLink> and the absence of gaps in space.

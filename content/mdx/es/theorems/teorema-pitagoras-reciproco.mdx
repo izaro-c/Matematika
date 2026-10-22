@@ -1,0 +1,65 @@
+export const metadata = {
+  id: "teorema-pitagoras-reciproco",
+  lang: "es",
+  type: "teorema",
+  title: "Recíproco del teorema de Pitágoras",
+  description: "Si en un triángulo el cuadrado de la longitud del lado mayor es igual a la suma de los cuadrados de las longitudes de los otros dos lados, el ángulo opuesto es recto y el triángulo es rectángulo.",
+  statement: "Si en un triángulo △ABC las longitudes de los lados satisfacen |BC|² + |AC|² = |AB|², entonces el ángulo ∠ACB es recto y △ABC es un triángulo rectángulo con hipotenusa AB.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["triangulo", "triangulo-rectangulo", "congruencia", "geometria-euclidiana"],
+  hasSimulation: false,
+  difficulty: "intermedio",
+  authors: ["euclides"],
+  demos: ["demo-pitagoras-reciproco"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 48",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="S" />i en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> la suma de los cuadrados de las <ConceptLink targetId="longitud">longitudes</ConceptLink> de dos lados es igual al cuadrado de la longitud del tercer lado, entonces el <ConceptLink targetId="angulo">ángulo</ConceptLink> opuesto a dicho tercer lado es un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>, y la figura es un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink>.
+
+Proposición culminante del Libro I de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> (Proposición I.48), este resultado establece la recíproca lógica exacta del <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink> y suministra una condición necesaria y suficiente para verificar la ortogonalidad sin recurrir a medidas angulares directas. La deducción sintética clásica procede mediante la construcción de un triángulo rectángulo auxiliar y deduce la congruencia total mediante el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema de congruencia LLL</ConceptLink>. Al depender de la validez del teorema directo sobre la figura auxiliar, pertenece al <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> y presupone el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
+
+<Definicion title="Enunciado formal del recíproco del teorema de Pitágoras">
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo">triángulo</ConceptLink> situado en un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$ del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, con <ConceptLink targetId="lado">lados</ConceptLink> de <ConceptLink targetId="longitud">longitudes</ConceptLink> $a = |BC|$, $b = |AC|$ y $c = |AB|$ opuestos respectivamente a los <ConceptLink targetId="vertice">vértices</ConceptLink> $A$, $B$ y $C$.
+
+Si se satisface la relación métrica:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+o equivalentemente $|BC|^2 + |AC|^2 = |AB|^2$, entonces el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle ACB$ es un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>, y $\triangle ABC$ es un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> $\overline{AB}$ y <ConceptLink targetId="cateto">catetos</ConceptLink> $\overline{BC}$ y $\overline{AC}$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias y aplicaciones">
+    <PropiedadItem 
+      id="caracterizacion-triangulo-rectangulo" 
+      title="Caracterización métrica de los triángulos rectángulos"
+      formula="\triangle ABC \text{ es rectángulo en } C \iff a^2 + b^2 = c^2"
+    >
+      Junto con el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> directo, este resultado establece una equivalencia lógica completa: un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> si y solo si la suma de los cuadrados de las <ConceptLink targetId="longitud">longitudes</ConceptLink> de los <ConceptLink targetId="cateto">catetos</ConceptLink> es igual al cuadrado de la longitud de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="reconocimiento-ternas-pitagoricas" 
+      title="Identificación de ortogonalidad mediante ternas pitagóricas"
+      formula="3^2 + 4^2 = 5^2 \implies \angle C \text{ es recto}"
+    >
+      Permite determinar con exactitud ángulos rectos sobre el terreno o en construcciones geométricas a partir de ternas de números enteros conocidas como <ConceptLink targetId="terna-pitagorica">ternas pitagóricas</ConceptLink>, tales como las formadas por lados de longitudes $3$, $4$ y $5$ o $5$, $12$ y $13$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Nota>
+A diferencia de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, donde no es posible caracterizar la ortogonalidad exclusivamente mediante relaciones métricas cuadráticas sin introducir el paralelismo euclídeo, el recíproco pitagórico es intrínsecamente euclidiano: en el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>, una terna con $a^2 + b^2 = c^2$ no engendra un ángulo recto, rigiéndose las relaciones métricas por las leyes de la trigonometría hiperbólica.
+</Nota>

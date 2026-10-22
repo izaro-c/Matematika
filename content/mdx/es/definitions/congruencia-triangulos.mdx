@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "congruencia-triangulos",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Congruencia de triángulos",
+  description: "Relación de equivalencia entre triángulos determinada por una biyección entre sus vértices que preserva la congruencia de los tres lados y los tres ángulos homólogos.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert", "geometria-absoluta"],
+  hasSimulation: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 y §6",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Nociones Comunes",
+      role: "secondary"
+    }
+  ]
+};
+
+import { CongruenciaTriangulos } from '@content/diagrams/Definiciones/CongruenciaTriangulos';
+export const Simulation = CongruenciaTriangulos;
+
+<Capitular letra="D" />os <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> son **congruentes** si existe una correspondencia biunívoca entre sus <ConceptLink targetId="vertice" isDependency={true}>vértices</ConceptLink> tal que los tres pares de <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> homólogos y los tres pares de <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> homólogos son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>.
+
+La relación de congruencia entre triángulos extiende la congruencia primitiva de <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> y ángulos a figuras compuestas en el <ConceptLink targetId="plano">plano</ConceptLink>. Aunque la definición completa exige verificar simultáneamente las seis congruencias de sus elementos homólogos, los criterios de congruencia de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> demuestran que basta la congruencia de un subconjunto mínimo de ellos: el <ConceptLink targetId="teorema-congruencia-lal">criterio LAL</ConceptLink> (Lado-Ángulo-Lado), el <ConceptLink targetId="teorema-congruencia-ala">criterio ALA</ConceptLink> (Ángulo-Lado-Ángulo) y el <ConceptLink targetId="teorema-congruencia-lll">criterio LLL</ConceptLink> (Lado-Lado-Lado).
+
+<Definicion title="Definición formal de congruencia de triángulos">
+Sean dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> <VisualBind element="triangleABC" color="musgo">$\triangle ABC$</VisualBind> y <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind> determinados por ternas de <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en $\mathcal{P}$, con <ConceptLink targetId="vertice" isDependency={true}>vértices</ConceptLink> <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> y <VisualBind element="pAA" color="carbon">$A'$</VisualBind>, <VisualBind element="pBB" color="carbon">$B'$</VisualBind>, <VisualBind element="pCC" color="carbon">$C'$</VisualBind>.
+
+El triángulo $\triangle ABC$ es **congruente** con $\triangle A'B'C'$ respecto a la correspondencia de vértices $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$, denotado <VisualBind element="congruencia-total" color="musgo">$\triangle ABC \cong \triangle A'B'C'$</VisualBind>, si y solo si se verifican simultáneamente las congruencias de sus tres <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> y sus tres <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> homólogos:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \begin{cases}
+\overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \\
+\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+\end{cases}
+$$
+
+Gráficamente, los pares de lados homólogos <VisualBind element="sidesAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>, <VisualBind element="sidesBC" color="pavo">$\overline{BC} \cong \overline{B'C'}$</VisualBind> y <VisualBind element="sidesCA" color="canela">$\overline{CA} \cong \overline{C'A'}$</VisualBind>, así como los pares de ángulos homólogos <VisualBind element="anglesA" color="terracota">$\angle A \cong \angle A'$</VisualBind>, <VisualBind element="anglesB" color="pavo">$\angle B \cong \angle B'$</VisualBind> y <VisualBind element="anglesC" color="canela">$\angle C \cong \angle C'$</VisualBind>, son mutuamente congruentes bajo dicha correspondencia.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de equivalencia">
+    <PropiedadItem 
+      id="equivalencia-congruencia-triangulos" 
+      title="Relación de equivalencia"
+      formula="\triangle ABC \cong \triangle ABC \land (\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC)"
+    >
+      La congruencia de triángulos es una relación de equivalencia: es <ConceptLink targetId="relacion-reflexiva">reflexiva</ConceptLink> ($\triangle ABC \cong \triangle ABC$), <ConceptLink targetId="relacion-simetrica">simétrica</ConceptLink> ($\triangle ABC \cong \triangle A'B'C' \implies \triangle A'B'C' \cong \triangle ABC$) y <ConceptLink targetId="relacion-transitiva">transitiva</ConceptLink>, consecuencia directa de las propiedades de la congruencia de segmentos y ángulos.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="orden-correspondencia-vertices" 
+      title="Dependencia del orden de correspondencia"
+      formula="\triangle ABC \cong \triangle A'B'C' \not\implies \triangle ABC \cong \triangle B'A'C'"
+    >
+      La notación $\triangle ABC \cong \triangle A'B'C'$ especifica estrictamente la correspondencia ordenada entre los vértices; alterar el orden en uno de los triángulos modifica los pares homólogos exigidos y solo es admisible si el triángulo posee simetrías internas, como en el caso del <ConceptLink targetId="teorema-triangulo-isosceles">triángulo isósceles</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

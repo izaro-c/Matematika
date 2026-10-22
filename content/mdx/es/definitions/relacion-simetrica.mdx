@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "relacion-simetrica",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Relación simétrica",
+  description: "Propiedad de una relación binaria según la cual si un elemento está relacionado con otro, el segundo está relacionado con el primero.",
+  branch: "03E",
+  branches: ["03", "51M"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
+    { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Capítulo 3", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na relación binaria homogénea es **simétrica** si el vínculo que une a dos elementos cualesquiera es recíproco y no depende del orden en que se enuncien sus términos.
+
+No debe confundirse esta propiedad lógica abstracta con la noción de <ConceptLink targetId="simetria">simetría geométrica</ConceptLink> de una figura (que denota una isometría o transformación que deja invariable un subconjunto de puntos): aquí se trata estrictamente de la reversibilidad de una relación formal.
+
+<Definicion title="Definición formal de relación simétrica">
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre $A$. La relación $R$ es **simétrica** si y solo si:
+  $$
+  \forall x, y \in A, \quad x \, R \, y \implies y \, R \, x
+  $$
+  En términos algebraicos, denotando por $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ a la relación inversa o transpuesta de $R$, la simetría equivale a la igualdad:
+  $$
+  R = R^{-1}
+  $$
+</Definicion>
+
+<Separador />
+
+### Presencia en los axiomas y teoremas de la geometría
+
+La simetría relacional interviene de forma determinante en los diversos estratos deductivos:
+
+- **Simetría de la intermediación:** En el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> del orden lineal, se postula que la relación de estar entre puntos es simétrica respecto a sus extremos: si $A * B * C$, entonces necesariamente $C * B * A$.
+- **Deducción en la congruencia:** En la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos, la propiedad simétrica ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) no se postula aisladamente, sino que se demuestra como un <ConceptLink targetId="teorema">teorema</ConceptLink> riguroso combinando la reflexividad del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> con la transitividad del <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>.
+- **Paralelismo:** La relación de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre rectas coplanares es simétrica ($\ell \parallel m \implies m \parallel \ell$) por la conmutatividad intrínseca de la disyunción y del corte conjuntista, rasgo definitorio de toda <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.

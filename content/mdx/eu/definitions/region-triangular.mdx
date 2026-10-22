@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "region-triangular",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Eskualde triangeluarra",
+  description: "Triangelu baten puntu-trazaduraren eta haren barrualdearen bildurak osatutako planoko puntu-multzoa, zatiketa poligonalaren eta azaleraren oinarrizko eraikuntza-blokea.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-plana", "triangulo", "area", "convexidad", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "IV. kapitulua",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="E" />skualde triangeluarra <ConceptLink targetId="plano">plano</ConceptLink> bateko puntuen <ConceptLink targetId="conjunto">multzoa</ConceptLink> da, <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> baten <ConceptLink targetId="traza">puntu-trazaduraren</ConceptLink> eta haren <ConceptLink targetId="interior-triangulo" isDependency={true}>barrualdearen</ConceptLink> bildurak osatua.
+
+Triangelua bera bere mugako hiru zuzenkiekin soilik osatuta dagoen bitartean, eskualde triangeluarrak hark mugatutako puntu guztiak hartzen ditu barnean. Irudi itxi eta ganbil oinarrizkoa da: haren gainean eraikitzen dira <ConceptLink targetId="region-poligonal">eskualde poligonalak</ConceptLink> eta haren gainean jarduten du <ConceptLink targetId="teoria-medida-area">azaleraren neurriaren teoriak</ConceptLink>.
+
+<Definicion title="Eskualde triangeluarraren definizio formala">
+$pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean dagoen $	riangle ABC = {overline{AB}, overline{BC}, overline{CA}}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelurako</ConceptLink>, $operatorname{tr}(	riangle ABC) = overline{AB} cup overline{BC} cup overline{CA}$ <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> eta $operatorname{Int}(	riangle ABC)$ <ConceptLink targetId="interior-triangulo" isDependency={true}>barrualdea</ConceptLink> izanik, $	riangle ABC$ triangeluak zehaztutako **eskualde triangeluarra**, $operatorname{Reg}(	riangle ABC)$ gisa idatzia, puntu-multzo hau da:
+
+$$
+operatorname{Reg}(	riangle ABC) = operatorname{tr}(	riangle ABC) cup operatorname{Int}(	riangle ABC)
+$$
+
+$operatorname{tr}(	riangle ABC)$ puntu-trazadurak eskualdearen muga osatzen du, eta $operatorname{Int}(	riangle ABC)$ multzoa, berriz, haren barrualde ireki eta ganbila da.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate topologiko eta ganbilak">
+    <PropiedadItem 
+      id="convexidad-region-triangular" 
+      title="Eskualde triangeluarraren ganbiltasuna"
+      formula="P, Q in operatorname{Reg}(	riangle ABC) implies overline{PQ} subseteq operatorname{Reg}(	riangle ABC)"
+    >
+      Eskualde triangeluar oro multzo ganbila da planoan. $P$ eta $Q$ puntuak $operatorname{Reg}(	riangle ABC)$ multzokoak badira, $overline{PQ}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> itxia erabat dago $operatorname{Reg}(	riangle ABC)$ multzoan sartuta, barrualdearen eta hura definitzen duten planoerdien ganbiltasunaren ondorio zuzenez.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="disjuncion-frontera-interior" 
+      title="Barrualdearen eta mugaren arteko partizioa"
+      formula="operatorname{tr}(	riangle ABC) cap operatorname{Int}(	riangle ABC) = emptyset"
+    >
+      Triangeluaren puntu-trazadura eta barrualdea multzo disjuntuak dira. Aldeen edo erpinen puntu bakar bat ere ez da $operatorname{Int}(	riangle ABC)$ multzokoa, eta, ondorioz, eskualde triangeluarra modu disjuntuan banatzen da bere mugan eta barrualdean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

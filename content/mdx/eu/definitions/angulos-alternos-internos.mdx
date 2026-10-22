@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "angulos-alternos-internos",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Barne-angelu alternoak",
+  description: "Bi zuzen koplanarrekiko zeharkako zuzen ebakitzaile batek zehaztutako albokoak ez diren bi barne-angeluen bikotea, zeharkakoarekiko kontrako planoerdietan kokatuta daudenak.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulos", "secante", "semiplano", "paralelas", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §4",
+      role: "primary"
+    },
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "I. liburua, 27. proposizioa",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> **barne-angelu alternoak** dira, baldin eta bi <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanarrekiko</ConceptLink> zeharkako <ConceptLink targetId="secante" isDependency={true}>zuzen ebakitzaile</ConceptLink> batek zehaztutako <ConceptLink targetId="angulos-adyacentes">auzokideak</ConceptLink> ez diren barne-angeluak badira, zeharkako ebakitzaile horrekiko kontrako <ConceptLink targetId="semiplano" isDependency={true}>planoerdietan</ConceptLink> kokatuak.
+
+Alternantzia zeharkako zuzenak planoa bi planoerditan banatzean oinarritzen da (Hilbert, §4). Barne-angelu alternoak konfigurazio nagusia dira <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> aztertzeko: haien <ConceptLink targetId="congruencia">kongruentziak</ConceptLink> zuzenek elkar ez ebakitzea dakar <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> (Euklides I.27), eta alderantzizkoa <ConceptLink targetId="sistema-euclidiano">sistema euklidearrean</ConceptLink> betetzen da (Euklides I.29) <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teoremaren</ConceptLink> bidez.
+
+<Definicion title="Barne-angelu alternoen definizio formala">
+Izan bitez $\ell_1, \ell_2 \in \mathcal{L}$ $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar eta izan bedi $t \in \mathcal{L}$ $\pi$ planoko biak $A$ eta $B$ bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetan ebakitzen dituen zeharkako <ConceptLink targetId="secante" isDependency={true}>zuzen ebakitzaile</ConceptLink> bat, $A \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(t)$ eta $B \in \operatorname{tr}(\ell_2) \cap \operatorname{tr}(t)$ izanik ($A \neq B$).
+
+$t$ ebakitzaileak bi $\mathcal{H}_1$ eta $\mathcal{H}_2$ <ConceptLink targetId="semiplano" isDependency={true}>planoerdi</ConceptLink> ireki disjuntu zehazten ditu $\pi$-n. $\ell_1$ eta $\ell_2$ zuzenen arteko barne-eskualdea $B$ daukan $\ell_1$-en planoerdiko eta $A$ daukan $\ell_2$-ren planoerdiko puntuek osatzen dute:
+
+$$
+\operatorname{Banda}(\ell_1, \ell_2) = \mathcal{H}_{\ell_1}(B) \cap \mathcal{H}_{\ell_2}(A)
+$$
+
+Izan bitez $P_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_1$ eta $P_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_2$ $t$-rekiko kontrako planoerdietan dauden bi puntu. Honako <ConceptLink targetId="angulo" isDependency={true}>angeluek</ConceptLink>:
+
+$$
+\alpha = \angle P_1AB \quad \text{eta} \quad \beta = \angle P_2BA
+$$
+
+**barne-angelu alternoen bikote** bat osatzen dute. Era berean, $Q_1 \in \operatorname{tr}(\ell_1) \cap \mathcal{H}_2$ eta $Q_2 \in \operatorname{tr}(\ell_2) \cap \mathcal{H}_1$ puntuetarako, $\angle Q_1AB$ eta $\angle Q_2BA$ angeluek zeharkako zuzenak zehaztutako barne-angelu alternoen bigarren bikotea osatzen dute.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate geometrikoak eta paralelotasuna">
+    <PropiedadItem 
+      id="criterio-paralelismo-alternos-internos" 
+      title="Paralelotasunaren angelu-irizpidea"
+      formula="\ell_1 \parallel \ell_2 \iff \alpha \cong \beta"
+    >
+      Plano euklidearrean, zeharkako zuzen ebakitzaile batek ebakitako bi zuzen <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira baldin eta soilik baldin barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira. <ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, $\alpha \cong \beta$ kongruentzia nahikoa da $\ell_1 \parallel \ell_2$ ziurtatzeko; beharrezkotasunak, ordea, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> eskatzen du, <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teoremak</ConceptLink> ezartzen duen moduan.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="no-adyacencia-alternos" 
+      title="Auzokidetasunik eza eta zeharkakoaren ebaketa"
+      formula="\operatorname{seg}(P_1P_2) \cap \operatorname{tr}(t) \neq \emptyset"
+    >
+      Barne-angelu alternoek $A \neq B$ erpin desberdinak dituzte, eta, beraz, ez dira <ConceptLink targetId="angulos-adyacentes">auzokideak</ConceptLink>. $P_1$ eta $P_2$ puntuak $t$ zeharkako zuzenarekiko kontrako planoerdietan daudenez, $\operatorname{seg}(P_1P_2)$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> irekiak $t$-ren <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> ebakitzen du <ConceptLink targetId="estar-entre">bitartekotasun</ConceptLink>-erlazioa betetzen duen puntu batean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

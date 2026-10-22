@@ -1,0 +1,81 @@
+export const metadata = {
+  id: "demo-separacion-plano",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Plane Separation Theorem",
+  description: "Direct synthetic proof based on the Axiom of Pasch and the order axioms showing that non-intersection of segments is an equivalence relation with exactly two connected classes.",
+  parentTheorem: "teorema-separacion-plano",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  proofMethod: "metodo-directo",
+  authors: ["hilbert", "pasch"],
+  tags: ["geometria-sintetica", "orden", "pasch", "separacion", "demostracion"],
+  layout: "split",
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-separacion-plano">plane separation theorem</ConceptLink> follows the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink> using the axioms of <ConceptLink targetId="estar-entre" isDependency={true}>order</ConceptLink> of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, relying decisively on the <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axiom of Pasch</ConceptLink>.
+
+The argument proves that the relation of non-intersection with the dividing line is reflexive, symmetric, and transitive, and that three mutually disjoint classes cannot exist in the plane.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} title="Definition of the relation, reflexivity and symmetry">
+Let $\pi$ be a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> and let $\ell$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> with $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. For <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, the relation is defined by:
+$$
+A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+By definition, $A = A$ implies $A \sim_\ell A$, fulfilling <ConceptLink targetId="relacion-reflexiva" isDependency={true}>reflexivity</ConceptLink>. Since the endpoints of a <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> form an unordered pair ($\operatorname{seg}(AB) = \operatorname{seg}(BA)$), we have $\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \iff \operatorname{seg}(BA) \cap \operatorname{tr}(\ell) = \emptyset$, which guarantees <ConceptLink targetId="relacion-simetrica" isDependency={true}>symmetry</ConceptLink>:
+$$
+A \sim_\ell B \implies B \sim_\ell A
+$$
+</ProofStep>
+
+<ProofStep number={2} title="Transitivity via the Axiom of Pasch">
+Suppose $A \sim_\ell B$ and $B \sim_\ell C$. If $A = B$ or $B = C$ or $A = C$, the conclusion is immediate. If $A, B, C$ are distinct and not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, they determine a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle ABC$ whose vertices are not incident with $\ell$. By hypothesis, $\ell$ does not intersect $\operatorname{seg}(AB)$ nor $\operatorname{seg}(BC)$:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset \quad \land \quad \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset
+$$
+If $\ell$ intersected the third side $\operatorname{seg}(AC)$, the <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axiom of Pasch</ConceptLink> (<ConceptLink targetId="pasch">Pasch</ConceptLink>, Axiom II.4) would require that $\ell$ intersect $\operatorname{seg}(AB)$ or $\operatorname{seg}(BC)$, contradicting the hypothesis. Therefore, $\operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \emptyset$, which proves $A \sim_\ell C$. Consequently, $\sim_\ell$ satisfies <ConceptLink targetId="relacion-transitiva" isDependency={true}>transitivity</ConceptLink> and is an <ConceptLink targetId="relacion-equivalencia" isDependency={true}>equivalence relation</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={3} title="Existence of at least two equivalence classes">
+Let us fix a point $O$ incident with $\ell$ ($O \in \operatorname{tr}(\ell)$) and a point $A$ in the plane not incident with $\ell$. By <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>, there exists a point $A'$ such that $O$ is <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $A'$:
+$$
+A * O * A'
+$$
+Since $O \in \operatorname{tr}(\ell)$ and $O \in \operatorname{seg}(AA')$, the segment $\operatorname{seg}(AA')$ intersects the line $\ell$ at $O$. Consequently, $A \not\sim_\ell A'$, which proves the existence of at least two distinct <ConceptLink targetId="clase-equivalencia" isDependency={true}>equivalence classes</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={4} title="Existence of at most two equivalence classes">
+Let $A, B, C$ be points not incident with $\ell$ such that $A \not\sim_\ell B$ and $A \not\sim_\ell C$. This means that the segment $\operatorname{seg}(AB)$ intersects $\ell$ at a point $X$, and the segment $\operatorname{seg}(AC)$ intersects $\ell$ at a point $Y$:
+$$
+\operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \{X\} \quad \land \quad \operatorname{seg}(AC) \cap \operatorname{tr}(\ell) = \{Y\}
+$$
+In the triangle $\triangle ABC$, the line $\ell$ intersects the two sides $\operatorname{seg}(AB)$ and $\operatorname{seg}(AC)$ at points $X$ and $Y$. By the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink> (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axiom II.3</ConceptLink>), a line cannot intersect all three sides of a triangle at interior points. Consequently, $\ell$ cannot intersect the segment $\operatorname{seg}(BC)$:
+$$
+\operatorname{seg}(BC) \cap \operatorname{tr}(\ell) = \emptyset \implies B \sim_\ell C
+$$
+Therefore, every point not equivalent to $A$ belongs to the same equivalence class as $B$, concluding that there exist exactly two equivalence classes.
+</ProofStep>
+
+<ProofStep number={5} title="Convexity of each equivalence class">
+Let $\mathcal{H}$ be one of the two equivalence classes and let $A, B \in \mathcal{H}$. For any point $P \in \operatorname{seg}(AB)$, if $P$ did not belong to $\mathcal{H}$, it would belong to the opposite class and the segment $\operatorname{seg}(AP)$ would intersect $\ell$. But since $P$ is between $A$ and $B$, we have $\operatorname{seg}(AP) \subset \operatorname{seg}(AB)$, which would imply that $\operatorname{seg}(AB)$ intersects $\ell$, in contradiction with $A \sim_\ell B$. Therefore:
+$$
+P \in \operatorname{seg}(AB) \implies P \in \mathcal{H}
+$$
+It is proved that each class is a <ConceptLink targetId="conjunto-convexo" isDependency={true}>convex set</ConceptLink>, completing the proof.
+</ProofStep>
+
+</DemonstrationSection>

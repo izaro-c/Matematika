@@ -35,7 +35,9 @@ function find(dir, id) {
 function profile(text) {
   const meta = text.match(/export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/);
   const body = meta ? text.slice(meta.index + meta[0].length) : text;
-  const field = (k) => meta?.[1].match(new RegExp(`["']?\\b${k}["']?:\\s*(["'][^"']*["']|\\[[^\\]]*\\])`))?.[1] ?? null;
+  const field = (k) => meta?.[1].match(new RegExp(`["']?\\b${k}["']?:\\s*(["'][^"']*["']|\\[[^\\]]*\\])`))?.[1]
+    // Comparación de valores, no de formato: comillas, saltos de línea y comas finales no cuentan.
+    ?.replace(/'/g, '"').replace(/\s+/g, '').replace(/,\]/g, ']') ?? null;
   const links = [...body.matchAll(/<ConceptLink\b[^>]*>/g)].map((m) => {
     const id = m[0].match(/targetId=["']([^"']+)["']/)?.[1];
     return `${id}${/isDependency=\{true\}/.test(m[0]) ? ' [dep]' : ''}`;
@@ -43,7 +45,8 @@ function profile(text) {
   const noDisplay = body.replace(/\$\$[\s\S]*?\$\$/g, '');
   return {
     lang: field('lang'),
-    meta: { id: field('id'), type: field('type'), subtype: field('subtype'), branch: field('branch'), demos: field('demos'), parentTheorem: field('parentTheorem') },
+    meta: { id: field('id'), type: field('type'), subtype: field('subtype'), branch: field('branch'), demos: field('demos'), parentTheorem: field('parentTheorem'),
+      axiomas: field('axiomas'), models: field('models'), extends: field('extends'), satisfies: field('satisfies'), builtIn: field('builtIn'), axiomSystem: field('axiomSystem') },
     links: links.sort(),
     deps: [...new Set(links.filter((l) => l.endsWith('[dep]')))].sort(),
     propItems: [...body.matchAll(/<PropiedadItem\b[^>]*?\bid=["']([^"']+)["']/g)].map((m) => m[1]),

@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "cuerpo",
+  lang: "es",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Cuerpo",
+  description: "Estructura algebraica con dos operaciones binarias compatibles (adición y multiplicación) que forman sendos grupos abelianos distributivos.",
+  branch: "12",
+  branches: ["12", "08A"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo II, §1", role: "primary" },
+    { title: "Algebra", author: "Michael Artin", locator: "Capítulo 3", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />n **cuerpo** es una estructura algebraica fundamental dotada de dos operaciones binarias internas compatibles —adición y multiplicación— que generaliza las propiedades aritméticas de los sistemas numéricos clásicos como los racionales $\mathbb{Q}$, los reales $\mathbb{R}$ y los complejos $\mathbb{C}$.
+
+En un cuerpo es posible sumar, restar, multiplicar y dividir por cualquier elemento no nulo, satisfaciéndose las propiedades asociativas, conmutativas y distributivas estándar.
+
+<Definicion title="Estructura formal de cuerpo">
+  Un **cuerpo** es una terna $(\mathbb{K}, +, \cdot)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $\mathbb{K}$ no vacío y dos <ConceptLink targetId="operacion-binaria" isDependency={true}>operaciones binarias</ConceptLink> internas $+ \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ y $\cdot \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ tales que:
+  1. $(\mathbb{K}, +)$ es un <ConceptLink targetId="grupo" isDependency={true}>grupo</ConceptLink> abeliano cuyo elemento neutro se denota $0$.
+  2. $(\mathbb{K} \setminus \{0\}, \cdot)$ es un grupo abeliano cuyo elemento neutro se denota $1$, con $1 \neq 0$.
+  3. La multiplicación es distributiva respecto de la adición por ambos lados:
+     $$
+     \forall a, b, c \in \mathbb{K}, \quad a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \land \quad (a + b) \cdot c = (a \cdot c) + (b \cdot c)
+     $$
+</Definicion>
+
+<Separador />
+
+### Cuerpos ordenados y consistencia analítica
+
+Cuando un cuerpo está provisto de una relación de orden total compatible con la adición y la multiplicación de elementos positivos, se denomina *cuerpo ordenado*.
+
+El cuerpo de los números reales $\mathbb{R}$ es el único cuerpo ordenado arquimediano que satisface la propiedad del supremo o <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>. Esta completitud estructural permite construir el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> analítico $\mathbb{R}^n$, fundamentando con absoluto rigor algebraico los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> postulados sintéticamente por Hilbert en el <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>.

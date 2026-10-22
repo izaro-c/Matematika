@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "triangulo-obtusangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Triángulo obtusángulo",
+  description: "Triángulo que posee un ángulo interior obtuso, siendo estrictamente mayor que un ángulo recto.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "angulo-obtuso", "orden-angulos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+<Capitular letra="U" />n **triángulo obtusángulo** es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> que posee un <ConceptLink targetId="angulo-interior">ángulo interior</ConceptLink> <ConceptLink targetId="angulo-obtuso">obtuso</ConceptLink>, es decir, estrictamente mayor que un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> bajo la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>.
+
+La noción pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Por el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, un triángulo no puede contener más de un ángulo obtuso ni combinarlo con un ángulo recto, de modo que los otros dos ángulos son necesariamente <ConceptLink targetId="angulo-agudo">agudos</ConceptLink>.
+
+<Definicion title="Definición formal de triángulo obtusángulo">
+Sea $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$ un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$, determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A$, $B$ y $C$.
+
+Se dice que $\triangle ABC$ es un **triángulo obtusángulo** si uno de sus tres <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> es estrictamente mayor que un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> $R$ bajo la relación de <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink>:
+
+$$
+\angle CAB > R \quad \lor \quad \angle ABC > R \quad \lor \quad \angle BCA > R
+$$
+
+El ángulo que satisface esta condición es un <ConceptLink targetId="angulo-obtuso">ángulo obtuso</ConceptLink>, y los dos restantes son ángulos agudos.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Posición de los puntos notables">
+    <PropiedadItem 
+      id="circuncentro-exterior-obtusangulo" 
+      title="Exterioridad del circuncentro"
+      formula="O \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      El <ConceptLink targetId="circuncentro">circuncentro</ConceptLink> $O$ de un triángulo obtusángulo se encuentra siempre en el exterior del triángulo, fuera de la unión de su <ConceptLink targetId="interior-triangulo">interior</ConceptLink> y de sus lados. La intersección de las tres <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> cae del lado opuesto al vértice del ángulo obtuso respecto al lado mayor.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortocentro-exterior-obtusangulo" 
+      title="Exterioridad del ortocentro"
+      formula="H \notin \operatorname{Int}(\triangle ABC) \cup \operatorname{tr}(\triangle ABC)"
+    >
+      El <ConceptLink targetId="ortocentro">ortocentro</ConceptLink> $H$ de un triángulo obtusángulo está situado en el exterior del triángulo, fuera del <ConceptLink targetId="interior-triangulo">interior</ConceptLink> y de los lados. Dos de las tres <ConceptLink targetId="altura">alturas</ConceptLink> tienen sus pies en las prolongaciones de los lados correspondientes, por lo que su punto común de concurrencia queda fuera de la región triangular.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la presencia de un ángulo obtuso determina que el lado opuesto a dicho vértice sea estrictamente mayor que cualquiera de los otros dos, en virtud del <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink> y de la correspondencia monótona con el <ConceptLink targetId="orden-angulos">orden de ángulos</ConceptLink>.
+</Nota>
