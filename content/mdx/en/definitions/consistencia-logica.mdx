@@ -19,15 +19,15 @@ export const metadata = {
 In classical deductive systems, if a theory were contradictory, the principle of explosion (*ex falso quodlibet*) would permit the formal derivation of any arbitrary proposition formulated in its language. Consequently, inconsistency collapses the entire deductive edifice, stripping its <ConceptLink targetId="teorema">theorems</ConceptLink> of all discriminative or epistemic value.
 
 <Definicion title="Syntactic and semantic consistency">
-  Let $\mathcal{T}$ be a theory with axioms $\Phi$ formulated in a formal language $\mathcal{L}$.
+  Let $\mathcal{T}$ be a theory with axioms $\Phi$ formulated in a <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$.
   
   $\mathcal{T}$ is said to be **syntactically consistent** if for no formula $\varphi$ is it possible to formally derive both $\varphi$ and its negation $\neg \varphi$:
   $$
-  \mathcal{T} \text{ is consistent} \iff \forall \varphi \in \mathcal{L}, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
+  \mathcal{T} \text{ is consistent} \iff \forall \varphi \in \mathcal{L}_\sigma, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
   $$
   On the other hand, $\mathcal{T}$ is **semantically consistent** (or satisfiable) if there exists at least one <ConceptLink targetId="teoria-modelos">model</ConceptLink> $\mathcal{M}$ such that $\mathcal{M} \models \mathcal{T}$.
   
-  By Gödel's completeness theorem in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide completely:
+  By <ConceptLink targetId="godel">Gödel</ConceptLink>'s completeness theorem in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide completely:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -37,7 +37,7 @@ In classical deductive systems, if a theory were contradictory, the principle of
 
 ### Relative consistency in the foundations of geometry
 
-By Gödel's second incompleteness theorem, no sufficiently expressive formal theory can prove its own consistency through its own internal deductive methods. For this reason, metamathematics relies on **relative consistency**:
+By Gödel's second incompleteness theorem, no consistent, recursively axiomatizable formal theory that contains elementary arithmetic can prove its own consistency. Consistency proofs are, in general, relative (**relative consistency**): a model of one theory is built inside another, and the first is consistent if the second is.
 
-- **<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>:** In Chapter II of the *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> established the relative consistency of Euclidean geometry by interpreting its <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> terms in the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$. If the theory of real numbers $\mathbb{R}$ is consistent, Euclidean geometry is consistent.
-- **Non-Euclidean geometries:** Historically, neither Bolyai nor Lobachevsky succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink>, and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> who proved it using analytic models in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>, showing that hyperbolic consistency reduces to Euclidean consistency.
+- **<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>:** In Chapter II of the *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> established the relative consistency of Euclidean geometry by interpreting its <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> terms in the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$. If the <ConceptLink targetId="sistema-cuerpo-real">theory of real numbers</ConceptLink> $\mathbb{R}$ is consistent, Euclidean geometry is consistent.
+- **Non-Euclidean geometries:** Historically, neither <ConceptLink targetId="bolyai">Bolyai</ConceptLink> nor <ConceptLink targetId="lobachevski">Lobachevsky</ConceptLink> succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink>, and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> who proved it using analytic models in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>, showing that hyperbolic consistency reduces to Euclidean consistency.
