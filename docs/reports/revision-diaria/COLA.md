@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 2 / 189
+Revisadas: 4 / 189
 
 ## Pendientes
 
-- [ ] `congruencia` · definitions
-- [ ] `conjunto` · definitions
 - [ ] `consistencia-logica` · definitions
 - [ ] `dimension` · definitions
 - [ ] `dominio` · definitions
@@ -198,3 +196,5 @@ Revisadas: 2 / 189
 
 - [x] `axioma` · 2026-10-23 · errores · corregido 0b25c35a · [informe](2026-10-23-axioma.md) · $1.05
 - [x] `concepto-primitivo` · 2026-10-23 · errores · corregido cde8661a · [informe](2026-10-23-concepto-primitivo.md) · $0.23
+- [x] `congruencia` · 2026-10-23 · mejoras · propuestas 77c46375 · [informe](2026-10-23-congruencia.md) · $0.73
+- [x] `conjunto` · 2026-10-23 · errores · rescatado de rescate/revision-conjunto · [informe](2026-10-23-conjunto.md) · $1.98

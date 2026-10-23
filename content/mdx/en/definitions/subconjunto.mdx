@@ -1,0 +1,28 @@
+export const metadata = {
+  id: "subconjunto",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Subset",
+  description: "Set all of whose elements belong to another set; the inclusion relation between sets.",
+  branch: "03E",
+  branches: ["03"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 1", role: "primary" }
+  ]
+};
+
+<Capitular letra="A" /> <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> $A$ is a **subset** of a set $B$ if every element of $A$ is also an element of $B$. One then says that $A$ is included in $B$.
+
+Inclusion is a <ConceptLink targetId="orden-parcial">partial order</ConceptLink> between sets: it is <ConceptLink targetId="relacion-reflexiva">reflexive</ConceptLink>, <ConceptLink targetId="relacion-transitiva">transitive</ConceptLink>, and <ConceptLink targetId="relacion-antisimetrica">antisymmetric</ConceptLink>. Antisymmetry, $A \subseteq B \land B \subseteq A \implies A = B$, follows from the <ConceptLink targetId="axioma-extensionalidad">axiom of extensionality</ConceptLink>, and gives the usual way of proving that two sets are equal: each inclusion is proved separately.
+
+<Definicion title="Inclusion of sets">
+  Let $A$ and $B$ be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. $A$ is a subset of $B$, written $A \subseteq B$, if every element of $A$ is an element of $B$:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+  If moreover $A \neq B$, $A$ is a **proper** subset of $B$, written $A \subsetneq B$.
+</Definicion>
+
+The composite figures of geometry, such as the <ConceptLink targetId="segmento">segment</ConceptLink> or the <ConceptLink targetId="semiplano">half-plane</ConceptLink>, are subsets of the set $\mathcal{P}$ of <ConceptLink targetId="punto">points</ConceptLink>. <ConceptLink targetId="recta">Lines</ConceptLink> and <ConceptLink targetId="plano">planes</ConceptLink> are not, because they are <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> objects of another sort: that a line $\ell$ lies in a plane $\pi$ is expressed through their <ConceptLink targetId="traza">traces</ConceptLink>, $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$.

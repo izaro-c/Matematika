@@ -1,0 +1,28 @@
+export const metadata = {
+  id: "subconjunto",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Azpimultzoa",
+  description: "Beste multzo baten kide diren elementuez soilik osatutako multzoa; multzoen arteko inklusio-erlazioa.",
+  branch: "03E",
+  branches: ["03"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "1. kapitulua", role: "primary" }
+  ]
+};
+
+<Capitular letra="B" />ere elementu guztiak beste <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> baten elementuak dituen multzoa da **azpimultzoa**: $A$ multzoa $B$ multzoaren azpimultzoa da, baldin eta $A$ multzoko elementu oro $B$ multzoko elementua ere bada. Orduan, $A$ multzoa $B$ multzoan barne dagoela esaten da.
+
+Inklusioa multzoen arteko <ConceptLink targetId="orden-parcial">ordena partziala</ConceptLink> da: <ConceptLink targetId="relacion-reflexiva">erreflexiboa</ConceptLink>, <ConceptLink targetId="relacion-transitiva">iragankorra</ConceptLink> eta <ConceptLink targetId="relacion-antisimetrica">antisimetrikoa</ConceptLink> da. Antisimetria, $A \subseteq B \land B \subseteq A \implies A = B$, <ConceptLink targetId="axioma-extensionalidad">hedagarritasunaren axiomaren</ConceptLink> ondorioa da, eta bi multzo berdinak direla frogatzeko ohiko bidea ematen du: inklusio bakoitza bere aldetik frogatzen da.
+
+<Definicion title="Multzoen inklusioa">
+  Izan bitez $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. $A$ multzoa $B$ multzoaren azpimultzoa da, eta $A \subseteq B$ idazten da, baldin eta $A$ multzoko elementu oro $B$ multzoko elementua bada:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+  Gainera $A \neq B$ bada, $A$ multzoa $B$ multzoaren azpimultzo **propioa** da, eta $A \subsetneq B$ idazten da.
+</Definicion>
+
+Geometriako irudi konposatuak, hala nola <ConceptLink targetId="segmento">zuzenkia</ConceptLink> edo <ConceptLink targetId="semiplano">planoerdia</ConceptLink>, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$ multzoaren azpimultzoak dira. <ConceptLink targetId="recta">Zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink> ez, beste mota bateko objektu <ConceptLink targetId="concepto-primitivo">primitiboak</ConceptLink> direlako: $\ell$ zuzena $\pi$ planoan dagoela haien <ConceptLink targetId="traza">puntu-trazaduren</ConceptLink> bidez adierazten da, $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$.

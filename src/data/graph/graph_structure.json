@@ -110,6 +110,7 @@
     "semejanza",
     "signatura",
     "sistema-axiomatico",
+    "subconjunto",
     "teorema",
     "teoria-medida-area",
     "teoria-modelos",
@@ -1530,6 +1531,17 @@
       "description": "Marco formal deductivo constituido por una signatura, un lenguaje, un conjunto de axiomas y reglas de inferencia para desarrollar una teoría matemática.",
       "proofs": [],
       "directDependencies": []
+    },
+    "subconjunto": {
+      "id": "subconjunto",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Subconjunto",
+      "description": "Conjunto cuyos elementos pertenecen todos a otro conjunto; relación de inclusión entre conjuntos.",
+      "proofs": [],
+      "directDependencies": [
+        "conjunto"
+      ]
     },
     "teorema": {
       "id": "teorema",

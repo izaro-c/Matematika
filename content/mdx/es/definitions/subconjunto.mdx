@@ -1,0 +1,28 @@
+export const metadata = {
+  id: "subconjunto",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Subconjunto",
+  description: "Conjunto cuyos elementos pertenecen todos a otro conjunto; relación de inclusión entre conjuntos.",
+  branch: "03E",
+  branches: ["03"],
+  hasSimulation: false,
+  sources: [
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 1", role: "primary" }
+  ]
+};
+
+<Capitular letra="U" />n <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $A$ es **subconjunto** de un conjunto $B$ si todo elemento de $A$ es también elemento de $B$. Se dice entonces que $A$ está incluido en $B$.
+
+La inclusión es un <ConceptLink targetId="orden-parcial">orden parcial</ConceptLink> entre conjuntos: es <ConceptLink targetId="relacion-reflexiva">reflexiva</ConceptLink>, <ConceptLink targetId="relacion-transitiva">transitiva</ConceptLink> y <ConceptLink targetId="relacion-antisimetrica">antisimétrica</ConceptLink>. La antisimetría, $A \subseteq B \land B \subseteq A \implies A = B$, es consecuencia del <ConceptLink targetId="axioma-extensionalidad">axioma de extensionalidad</ConceptLink>, y da el modo habitual de probar que dos conjuntos son iguales: se prueba cada inclusión por separado.
+
+<Definicion title="Inclusión de conjuntos">
+  Sean $A$ y $B$ dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. $A$ es subconjunto de $B$, y se escribe $A \subseteq B$, si todo elemento de $A$ es elemento de $B$:
+  $$
+  A \subseteq B \iff \forall x \ (x \in A \implies x \in B)
+  $$
+  Si además $A \neq B$, $A$ es un subconjunto **propio** de $B$ y se escribe $A \subsetneq B$.
+</Definicion>
+
+Las figuras compuestas de la geometría, como el <ConceptLink targetId="segmento">segmento</ConceptLink> o el <ConceptLink targetId="semiplano">semiplano</ConceptLink>, son subconjuntos del conjunto $\mathcal{P}$ de los <ConceptLink targetId="punto">puntos</ConceptLink>. Las <ConceptLink targetId="recta">rectas</ConceptLink> y los <ConceptLink targetId="plano">planos</ConceptLink> no lo son, porque son objetos <ConceptLink targetId="concepto-primitivo">primitivos</ConceptLink> de otro tipo: que una recta $\ell$ esté contenida en un plano $\pi$ se expresa con sus <ConceptLink targetId="traza">trazas</ConceptLink>, $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$.
