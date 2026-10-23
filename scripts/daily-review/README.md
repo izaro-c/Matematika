@@ -11,7 +11,7 @@ Para usarlo paso a paso, ve al [TUTORIAL.md](TUTORIAL.md).
   - `revisión diaria: <id> — correcciones`: errores objetivos y normas rotas.
   - `revisión diaria: <id> — propuestas (revisar)`: mejoras discutibles, ya aplicadas. Se apuntan además en `docs/reports/revision-diaria/PROPUESTAS.md` para revisarlas.
   Revisas la rama y fusionas lo que te convenza (ver [TUTORIAL.md](TUTORIAL.md), paso 4).
-- **Descarta la página entera** si, al terminar, `validate-nodes` falla o algún commit toca algo fuera de `content/mdx`, `content/diagrams` y los índices que regenera `prebuild`. El informe se guarda igualmente, con el motivo.
+- **Descarta la página entera** si, al terminar, `validate-nodes` falla o algún commit toca algo fuera de `content/mdx`, `content/diagrams` y los índices que regeneran `prebuild` y `validate-nodes` (incluido `graph_structure.json`). El informe se guarda igualmente, con el motivo.
 - **Límites del agente:** solo puede editar `content/mdx/**` y `content/diagrams/**`, y ejecutar `validate-nodes`, `verify-diagram` y `checkpoint.sh`. No puede hacer commits por su cuenta. Crea como mucho un nodo nuevo por revisión, y solo para extraer un concepto definido inline. Lo que exige un dato que no está en el repositorio (fuentes, fechas, atribuciones) no lo aplica: lo deja en «Pendiente para la autora».
 
 | Archivo | Qué hace |
