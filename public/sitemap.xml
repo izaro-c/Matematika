@@ -2222,6 +2222,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/subconjunto</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/subconjunto</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/teorema</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -4980,6 +5000,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/sistema-axiomatico" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/sistema-axiomatico" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/sistema-axiomatico" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/subconjunto</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/subconjunto" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/subconjunto" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/teorema</loc>

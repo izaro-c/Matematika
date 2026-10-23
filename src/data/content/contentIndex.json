@@ -6224,18 +6224,25 @@
       ],
       "conceptLinks": [
         "concepto-primitivo",
-        "logica",
+        "funcion",
+        "relacion-binaria",
+        "paradoja-russell",
+        "teoria-conjuntos",
         "axioma",
+        "axioma-separacion",
+        "subconjunto",
+        "axioma-extensionalidad",
+        "union",
         "interseccion",
-        "conjunto-disjunto",
+        "diferencia-conjuntos",
         "conjunto-potencia",
         "geometria-sintetica",
         "hilbert",
         "espacio",
         "punto",
         "segmento",
-        "semiplano",
-        "triangulo"
+        "semirrecta",
+        "semiplano"
       ],
       "availableLangs": [
         "en",
@@ -6284,18 +6291,25 @@
       ],
       "conceptLinks": [
         "concepto-primitivo",
-        "logica",
+        "funcion",
+        "relacion-binaria",
+        "paradoja-russell",
+        "teoria-conjuntos",
         "axioma",
+        "axioma-separacion",
+        "subconjunto",
+        "axioma-extensionalidad",
+        "union",
         "interseccion",
-        "conjunto-disjunto",
+        "diferencia-conjuntos",
         "conjunto-potencia",
         "geometria-sintetica",
         "hilbert",
         "espacio",
         "punto",
         "segmento",
-        "semiplano",
-        "triangulo"
+        "semirrecta",
+        "semiplano"
       ],
       "availableLangs": [
         "en",
@@ -14044,6 +14058,112 @@
         "sistema-absoluto",
         "sistema-euclidiano",
         "sistema-hiperbolico"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:subconjunto": {
+    "id": "subconjunto",
+    "slug": "subconjunto",
+    "lang": "en",
+    "filePath": "en/definitions/subconjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "subconjunto",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Subset",
+      "description": "Set all of whose elements belong to another set; the inclusion relation between sets.",
+      "branch": "03E",
+      "branches": [
+        "03"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul R. Halmos",
+          "locator": "Chapter 1",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "conjunto",
+        "orden-parcial",
+        "relacion-reflexiva",
+        "relacion-transitiva",
+        "relacion-antisimetrica",
+        "axioma-extensionalidad",
+        "segmento",
+        "semiplano",
+        "punto",
+        "recta",
+        "plano",
+        "concepto-primitivo",
+        "traza"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "subconjunto": {
+    "id": "subconjunto",
+    "slug": "subconjunto",
+    "lang": "es",
+    "filePath": "es/definitions/subconjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "subconjunto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Subconjunto",
+      "description": "Conjunto cuyos elementos pertenecen todos a otro conjunto; relación de inclusión entre conjuntos.",
+      "branch": "03E",
+      "branches": [
+        "03"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul R. Halmos",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "conjunto",
+        "orden-parcial",
+        "relacion-reflexiva",
+        "relacion-transitiva",
+        "relacion-antisimetrica",
+        "axioma-extensionalidad",
+        "segmento",
+        "semiplano",
+        "punto",
+        "recta",
+        "plano",
+        "concepto-primitivo",
+        "traza"
       ],
       "availableLangs": [
         "en",
@@ -29217,18 +29337,25 @@
       ],
       "conceptLinks": [
         "concepto-primitivo",
-        "logica",
+        "funcion",
+        "relacion-binaria",
+        "paradoja-russell",
+        "teoria-conjuntos",
         "axioma",
+        "axioma-separacion",
+        "subconjunto",
+        "axioma-extensionalidad",
+        "union",
         "interseccion",
-        "conjunto-disjunto",
+        "diferencia-conjuntos",
         "conjunto-potencia",
         "geometria-sintetica",
         "hilbert",
         "espacio",
         "punto",
         "segmento",
-        "semiplano",
-        "triangulo"
+        "semirrecta",
+        "semiplano"
       ],
       "availableLangs": [
         "en",
@@ -33103,6 +33230,59 @@
         "sistema-absoluto",
         "sistema-euclidiano",
         "sistema-hiperbolico"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:subconjunto": {
+    "id": "subconjunto",
+    "slug": "subconjunto",
+    "lang": "es",
+    "filePath": "es/definitions/subconjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "subconjunto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Subconjunto",
+      "description": "Conjunto cuyos elementos pertenecen todos a otro conjunto; relación de inclusión entre conjuntos.",
+      "branch": "03E",
+      "branches": [
+        "03"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul R. Halmos",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "conjunto",
+        "orden-parcial",
+        "relacion-reflexiva",
+        "relacion-transitiva",
+        "relacion-antisimetrica",
+        "axioma-extensionalidad",
+        "segmento",
+        "semiplano",
+        "punto",
+        "recta",
+        "plano",
+        "concepto-primitivo",
+        "traza"
       ],
       "availableLangs": [
         "en",
@@ -42261,18 +42441,25 @@
       ],
       "conceptLinks": [
         "concepto-primitivo",
-        "logica",
+        "funcion",
+        "relacion-binaria",
+        "paradoja-russell",
+        "teoria-conjuntos",
         "axioma",
+        "axioma-separacion",
+        "subconjunto",
+        "axioma-extensionalidad",
+        "union",
         "interseccion",
-        "conjunto-disjunto",
+        "diferencia-conjuntos",
         "conjunto-potencia",
         "hilbert",
         "geometria-sintetica",
         "espacio",
         "punto",
         "segmento",
-        "semiplano",
-        "triangulo"
+        "semirrecta",
+        "semiplano"
       ],
       "availableLangs": [
         "en",
@@ -46147,6 +46334,59 @@
         "sistema-absoluto",
         "sistema-euclidiano",
         "sistema-hiperbolico"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:subconjunto": {
+    "id": "subconjunto",
+    "slug": "subconjunto",
+    "lang": "eu",
+    "filePath": "eu/definitions/subconjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "subconjunto",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Azpimultzoa",
+      "description": "Beste multzo baten kide diren elementuez soilik osatutako multzoa; multzoen arteko inklusio-erlazioa.",
+      "branch": "03E",
+      "branches": [
+        "03"
+      ],
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul R. Halmos",
+          "locator": "1. kapitulua",
+          "role": "primary"
+        }
+      ],
+      "conceptLinks": [
+        "conjunto",
+        "orden-parcial",
+        "relacion-reflexiva",
+        "relacion-transitiva",
+        "relacion-antisimetrica",
+        "axioma-extensionalidad",
+        "segmento",
+        "semiplano",
+        "punto",
+        "recta",
+        "plano",
+        "concepto-primitivo",
+        "traza"
       ],
       "availableLangs": [
         "en",
