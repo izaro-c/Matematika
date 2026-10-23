@@ -14,27 +14,28 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />**xioma** bat (edo postulatu bat) aurretiazko frogarik gabe teoria deduktibo formal baten esparruan egiazkotzat onartzen den enuntziatu matematiko bat da. Diziplina baten gainerako proposizio guztiak logikoki eratortzeko premisa elementala eta murriztezina osatzen du.
+<Capitular letra="A" />**xioma** bat (edo postulatu bat) aurretiazko <ConceptLink targetId="demostracion">frogapenik</ConceptLink> gabe teoria deduktibo formal baten esparruan egiazkotzat onartzen den enuntziatu matematiko bat da. Teoria baten axiomak dira haren teorema guztiak ondorioztatzeko premisak.
 
-Kontzepzio axiomatiko formalean, axiomek ez dute ebidentzia enpiriko autoebidenterik edo mundu fisikoko egia absoluturik islatu nahi; haien eginkizun metateorikoa teoriaren <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuek</ConceptLink> bete behar dituzten baldintzak, murrizketak eta elkarrekiko erlazioak esplizituki finkatzea da. Modu horretan, <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> bidez <ConceptLink targetId="teorema">teorema</ConceptLink> gisa ondorioztatutako geroko edozein emaitza hasierako postulatuen baliozkotasunari lotuta geratzen da ezinbestean.
+Kontzepzio axiomatiko formalean, axiomek ez dute ebidentzia enpirikorik edo mundu fisikoko egia absoluturik islatu nahi; haien eginkizuna teoriaren <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuek</ConceptLink> bete behar dituzten baldintzak, murrizketak eta elkarrekiko erlazioak esplizituki finkatzea da. Modu horretan, <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> bidez <ConceptLink targetId="teorema">teorema</ConceptLink> gisa ondorioztatutako edozein emaitza axiomei lotuta geratzen da: axiomak betetzen dituen egitura orotan betetzen da.
 
 <Definicion title="Axioma sistema formal batean">
-  Izan bedi $\mathcal{S} = (\sigma, \Phi)$ $\mathcal{L}_\sigma$ hizkuntza formala eta $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> dituen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> formalizatu bat. Teoriaren **berezko axioma** edo axioma ez-logiko bat postulatuen multzo bereizian dagoen $\alpha \in \Phi$ formula itxi bat da:
+  Izan bedi $\mathcal{S} = (\sigma, \Phi)$ $\mathcal{L}_\sigma$ hizkuntza formala eta $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> dituen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> formalizatu bat. Teoriaren **berezko axioma** edo axioma ez-logiko bat $\mathcal{L}_\sigma$ hizkuntzako $\alpha$ formula itxi bat da, $\Phi$ postulatu-multzo bereizian dagoena:
   $$
-  \Phi \vdash \alpha
+  \alpha \in \Phi
   $$
-  $\mathcal{M}$ <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> bat sistemaren <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat da baldin eta $\Phi$ multzoko axioma bakoitza unibertsalki betetzen badu:
+  $\mathcal{M}$ <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> bat sistemaren <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat da baldin eta $\Phi$ multzoko axioma bakoitza betetzen badu:
   $$
   \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
   $$
 </Definicion>
 
+*Grundlagen der Geometrie* lanean, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bost taldetan antolatu zituen geometriaren axiomak: <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (I), <ConceptLink targetId="estar-entre">ordena</ConceptLink> (II), <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (III), <ConceptLink targetId="paralelas">paraleloak</ConceptLink> (IV) eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> (V).
+
 <Separador />
 
 ### Axioma-errepertorio baten irizpide metateorikoak
 
-$\Phi$ errepertorio axiomatiko bat formulatzean edo ebaluatzean, metodologia matematikoak hiru propietate metateoriko aztertzen ditu:
+$\Phi$ errepertorio axiomatiko bat formulatzean edo ebaluatzean, metodologia matematikoak bi propietate metateoriko aztertzen ditu:
 
-1. **<ConceptLink targetId="consistencia-logica">Koherentzia logikoa</ConceptLink>:** Axioma-multzoak ez du barne-kontraesanik eduki behar; horrek esan nahi du $\Phi$ multzotik ezin dela proposizio bat eta bere ukapena aldi berean ondorioztatu ($\Phi \nvdash \varphi \land \neg \varphi$).
-2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>:** Axiometako batek ere ez du erredundantea izan behar, ezta gainerakoetatik ondorioztagarria ere ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). Axioma baten independentzia frogatzeko, aztertutako axioma izan ezik beste axioma guztiak betetzen dituzten eredu disidenteak eraikitzen dira.
-3. **Egituraketa familia axiomatikoetan:** *Grundlagen der Geometrie* lanean, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bost familiatan antolatu zituen geometriaren axiomak, zeregin bereiziekin: <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (I), <ConceptLink targetId="orden-total">ordena</ConceptLink> (II), <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (III), <ConceptLink targetId="paralelas">paraleloak</ConceptLink> (IV) eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> (V).
+1. **<ConceptLink targetId="consistencia-logica">Koherentzia logikoa</ConceptLink>:** Axioma-multzoak ez du barne-kontraesanik eduki behar; horrek esan nahi du $\Phi$ multzotik ezin dela proposizio bat eta bere ukapena aldi berean ondorioztatu ($\forall \varphi, \ \Phi \nvdash \varphi \land \neg \varphi$).
+2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>:** Ezein axiomak ez du erredundantea izan behar, ezta gainerakoetatik ondorioztagarria ere ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). $\alpha_i$ independentea dela frogatzeko, $\alpha_i$ betetzen ez den $\Phi \setminus \{\alpha_i\}$ multzoaren eredu bat eraikitzen da.
