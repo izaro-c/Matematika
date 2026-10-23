@@ -7,13 +7,18 @@ Para usarlo paso a paso, ve al [TUTORIAL.md](TUTORIAL.md).
 ## Dónde trabaja
 
 - **En su propio worktree** (`../Matematika-revision`, rama `revision-diaria`). Se crea en la primera ejecución y se rebasa sobre `main` antes de cada una. Tu copia de trabajo no se toca, salvo la cola y los informes.
-- **Un commit por página** (`revisión diaria: <id>`), que pasa por los hooks de siempre. Revisas la rama y fusionas lo que te convenza: `git log main..revision-diaria`, `git cherry-pick <hash>` o `git merge revision-diaria`.
-- **Descarta los cambios** si `validate-nodes` falla, si los hooks rechazan el commit o si el agente toca algo fuera de `content/mdx` y `content/diagrams`. El informe se guarda igualmente, con el motivo.
-- **Límites del agente:** solo puede editar `content/mdx/**` y `content/diagrams/**` y ejecutar `validate-nodes` y `verify-diagram`. No crea nodos MDX nuevos ni commits. En páginas con visto bueno de la autora, solo corrige errores (`✗`) y deja las mejoras de estilo como propuestas.
+- **Dos commits por página**, hechos por el propio agente con `checkpoint.sh`, que valida antes de guardar:
+  - `revisión diaria: <id> — correcciones`: errores objetivos y normas rotas.
+  - `revisión diaria: <id> — propuestas (revisar)`: mejoras discutibles, ya aplicadas. Se apuntan además en `docs/reports/revision-diaria/PROPUESTAS.md` para revisarlas.
+  Revisas la rama y fusionas lo que te convenza (ver [TUTORIAL.md](TUTORIAL.md), paso 4).
+- **Descarta la página entera** si, al terminar, `validate-nodes` falla o algún commit toca algo fuera de `content/mdx`, `content/diagrams` y los índices que regenera `prebuild`. El informe se guarda igualmente, con el motivo.
+- **Límites del agente:** solo puede editar `content/mdx/**` y `content/diagrams/**`, y ejecutar `validate-nodes`, `verify-diagram` y `checkpoint.sh`. No puede hacer commits por su cuenta. Crea como mucho un nodo nuevo por revisión, y solo para extraer un concepto definido inline. Lo que exige un dato que no está en el repositorio (fuentes, fechas, atribuciones) no lo aplica: lo deja en «Pendiente para la autora».
 
 | Archivo | Qué hace |
 | --- | --- |
-| `run.sh [n]` | Prepara el worktree, revisa las `n` primeras páginas pendientes, valida, hace commit o descarta, y guarda el informe. |
+| `run.sh [n]` | Prepara el worktree, revisa las `n` primeras páginas pendientes, vuelve a validar el resultado, descarta si falla y guarda el informe. |
+| `checkpoint.sh` | Lo usa el agente para guardar cada nivel (`correcciones`, `propuestas`) como commit, o descartar lo no guardado. |
+| `common.sh` | Funciones compartidas por `run.sh` y `checkpoint.sh`. |
 | `queue.mjs` | Cola en `docs/reports/revision-diaria/COLA.md` (`sync`, `next`, `done`, `reopen <id>`, `status`). |
 | `packet.mjs <id>` | Paquete de contexto de una página: validate-nodes, los tres MDX, una línea por dependencia, resumen del diagrama. |
 | `prompt.md` | Instrucciones del agente: revisar, corregir, validar, formato del informe. |
@@ -38,7 +43,7 @@ REVIEW_DRY_RUN=1 scripts/daily-review/run.sh   # genera prompt y paquete sin lla
 node scripts/daily-review/queue.mjs reopen teorema-pitagoras   # volver a revisar una página
 ```
 
-Variables: `REVIEW_PAGES` (1), `REVIEW_MODEL` (opus), `REVIEW_EFFORT` (high), `REVIEW_MAX_TURNS` (40), `REVIEW_MAX_USD` (8 por página), `REVIEW_WORKTREE`, `REVIEW_BRANCH`, `REVIEW_CLAUDE` (binario, para pruebas). Si una sesión falla o se queda sin turnos, se descartan sus cambios y la página sigue pendiente.
+Variables: `REVIEW_PAGES` (1), `REVIEW_MODEL` (opus), `REVIEW_EFFORT` (high), `REVIEW_MAX_TURNS` (50), `REVIEW_MAX_USD` (8 por página), `REVIEW_WORKTREE`, `REVIEW_BRANCH`, `REVIEW_CLAUDE` (binario, para pruebas). Si una sesión falla o se queda sin turnos, se descartan sus cambios y la página sigue pendiente.
 
 Si la rama no se puede rebasar sobre `main` (por ejemplo, editaste en `main` la misma página que corrigió el agente), el script se detiene y lo dice. Resuélvelo en el worktree o descarta la rama: `git -C ../Matematika-revision reset --hard main`.
 

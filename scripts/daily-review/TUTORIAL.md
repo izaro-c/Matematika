@@ -32,16 +32,17 @@ scripts/daily-review/run.sh
 Tarda unos minutos. Al terminar imprime una línea como esta:
 
 ```text
-✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (mejoras · corregido 1a2b3c4, $0.85)
+✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (errores · corregido 1a2b3c4 · propuestas 5d6e7f8, $1.05)
 ```
 
 Esa línea dice tres cosas:
 
 - **Veredicto** sobre la página antes de los cambios: `ok`, `mejoras` o `errores`.
-- **Resultado**, que puede ser uno de estos:
-  - `corregido <hash>`: hay un commit nuevo en la rama `revision-diaria`.
-  - `sin cambios`: la página no necesitaba nada que el agente pudiera aplicar.
-  - `cambios descartados`: el agente cambió algo, pero no pasó la validación, los hooks o el control de archivos. Sus cambios se han borrado y el informe explica por qué.
+- **Resultado**, con hasta dos commits en la rama `revision-diaria`:
+  - `corregido <hash>`: las **correcciones**, errores objetivos o normas rotas. Se pueden fusionar con confianza.
+  - `propuestas <hash>`: las **propuestas**, mejoras ya aplicadas en las que cabría decidir otra cosa. Este es el commit que tienes que revisar. Además queda apuntado en `PROPUESTAS.md` (paso 4).
+  - `sin cambios`: la página no necesitaba nada.
+  - `cambios descartados`: algo no pasó la validación, los hooks o el control de archivos. Se ha borrado todo lo de esa página y el informe explica por qué.
 - **Coste** de esa página.
 
 Para revisar varias seguidas: `scripts/daily-review/run.sh 3`. Sale más barato por página que lanzarlas en días distintos, porque comparten la caché de las instrucciones.
@@ -55,14 +56,17 @@ Los informes están en `docs/reports/revision-diaria/<fecha>-<id>.md`:
 
 ## axioma — rigor ✓ · simpleza △ · modularidad ✓ · enlaces △ · paridad ✗ · diagrama no necesita
 
-### Cambios aplicados          ← lo que ya está en el commit, con la cita de antes y después
-### Pendiente para la autora   ← lo que el agente no se atreve a decidir: esto es tu tarea
-### Avisos de los scripts      ← cada WARN, corregido o descartado con su razón
-### Diagrama                   ← estado del diagrama, o por qué debería (o no) tenerlo
+### Correcciones                  ← commit 1: errores, con la cita de antes y después
+### Propuestas aplicadas — revisar ← commit 2: mejoras discutibles, con su razón y la alternativa descartada
+### Pendiente para la autora      ← solo lo que exige un dato que no está en el repositorio
+### Avisos de los scripts         ← cada WARN, corregido o descartado con su razón
+### Diagrama                      ← estado del diagrama, o por qué debería (o no) tenerlo
 ### Resumen
 ```
 
-La sección **Pendiente para la autora** es la importante. Recoge atribuciones históricas sin verificar, conceptos que necesitan nodo propio, decisiones de enfoque y, en páginas ya aprobadas, las mejoras de estilo que el agente propone pero no aplica.
+Lee **Propuestas aplicadas — revisar** junto al diff del commit 2: cada punto explica un cambio que ya está hecho. Entre las propuestas puede haber párrafos simplificados, secciones reducidas, afirmaciones matizadas, IDs canónicos nuevos, un diagrama creado o un concepto extraído a su propio nodo.
+
+**Pendiente para la autora** queda casi vacía. Solo recoge lo que el agente no puede resolver sin inventar, como una atribución, fecha o fuente que no se comprueba desde el repositorio.
 
 ## 4. Revisar y fusionar las correcciones
 
@@ -81,12 +85,25 @@ git show 1a2b3c4 -- content          # solo el contenido, sin los índices regen
 git diff main...revision-diaria -- content/mdx/es   # todo lo pendiente, solo en castellano
 ```
 
-**Fusionar.** Elige una de estas dos vías:
+**Ver solo las propuestas pendientes:**
+
+```bash
+git log --oneline --grep='propuestas (revisar)' main..revision-diaria
+```
+
+También están en `docs/reports/revision-diaria/PROPUESTAS.md`, una casilla por commit de propuestas con su informe. Márcala cuando lo hayas revisado.
+
+**Fusionar.** Elige una de estas vías:
 
 ```bash
 git cherry-pick 1a2b3c4      # solo los commits que te convencen
 git merge revision-diaria    # todo lo pendiente de una vez
 ```
+
+Una forma cómoda de trabajar:
+
+1. Fusiona todas las correcciones juntas: `git cherry-pick $(git log --reverse --format=%h --grep='— correcciones' main..revision-diaria)`.
+2. Revisa las propuestas una a una. Si de una propuesta te gusta solo una parte, aplícala sin hacer commit (`git cherry-pick -n <hash>`), deshaz lo que no quieras (`git restore -p`) y haz tú el commit.
 
 Si `contentIndex.json` da conflicto al fusionar, regenéralo en vez de resolverlo a mano: `npm run generate-index && git add src/data/content/contentIndex.json`.
 
@@ -125,9 +142,10 @@ Los timers de usuario solo funcionan mientras tienes la sesión abierta. Para qu
 
 ### Tu rutina diaria
 
-1. `git log --oneline main..revision-diaria`: qué ha corregido hoy.
-2. Lee el informe del día, sobre todo «Pendiente para la autora».
-3. Fusiona lo que te convenza y deja la rama limpia (paso 4).
+1. `git log --oneline main..revision-diaria`: qué ha hecho hoy.
+2. Fusiona las correcciones.
+3. Revisa las propuestas con su informe y marca su casilla en `PROPUESTAS.md`.
+4. Deja la rama limpia (paso 4).
 
 Si un día no puedes, no pasa nada. Los commits se acumulan en la rama, y la siguiente ejecución la pone al día sobre `main` antes de trabajar.
 
@@ -163,7 +181,7 @@ Los ajustes van como variables de entorno. Si una variable no se indica, se usa 
 | `REVIEW_MODEL` (`opus`) | El modelo. Para rigor matemático, mejor no bajarlo. |
 | `REVIEW_PAGES` (`1`) | Páginas por ejecución. Con 2 o 3 cada pocos días se aprovecha la caché. |
 | `REVIEW_MAX_USD` (`8`) | Tope de gasto por página. Si se alcanza, la página se descarta y queda pendiente. |
-| `REVIEW_MAX_TURNS` (`40`) | Tope de turnos por página. Funciona igual. |
+| `REVIEW_MAX_TURNS` (`50`) | Tope de turnos por página. Funciona igual. |
 
 **En una ejecución manual:**
 
@@ -192,7 +210,7 @@ Con 3 páginas, conviene que el timer pase a días alternos: `OnCalendar=Mon,Wed
 Las instrucciones del agente están en `scripts/daily-review/prompt.md`, y las normas se leen en cada ejecución de las skills de `.agents/skills/`. Por tanto:
 
 - **Mejorar una norma del proyecto:** edita la skill. El agente la aplica desde la siguiente revisión.
-- **Cambiar el comportamiento del revisor:** edita `prompt.md`. Por ejemplo, para que también mejore el estilo de las páginas ya aprobadas, cambia el punto «Página aprobada por la autora» del «Paso 2: corregir».
+- **Cambiar el comportamiento del revisor:** edita `prompt.md`. Por ejemplo, para mover un tipo de cambio de un commit a otro, cambia las listas de «Nivel 1» y «Nivel 2» del «Paso 2».
 - **Cambiar cuándo debe haber diagrama:** sección «Criterio de diagrama» de `prompt.md`.
 
 ## 9. Problemas frecuentes

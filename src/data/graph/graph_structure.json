@@ -793,7 +793,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Concepto primitivo",
-      "description": "Noción matemática fundamental no definida a partir de objetos previos, cuyo significado y comportamiento quedan fijados por los axiomas del sistema formal.",
+      "description": "Noción de partida de una teoría formal, no definida a partir de otras, cuyo comportamiento fijan los axiomas.",
       "proofs": [],
       "directDependencies": []
     },

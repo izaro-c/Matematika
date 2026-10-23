@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 1 / 189
+Revisadas: 2 / 189
 
 ## Pendientes
 
-- [ ] `concepto-primitivo` · definitions
 - [ ] `congruencia` · definitions
 - [ ] `conjunto` · definitions
 - [ ] `consistencia-logica` · definitions
@@ -198,3 +197,4 @@ Revisadas: 1 / 189
 ## Revisadas
 
 - [x] `axioma` · 2026-10-23 · errores · corregido 0b25c35a · [informe](2026-10-23-axioma.md) · $1.05
+- [x] `concepto-primitivo` · 2026-10-23 · errores · corregido cde8661a · [informe](2026-10-23-concepto-primitivo.md) · $0.23

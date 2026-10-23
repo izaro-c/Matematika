@@ -12,7 +12,8 @@ const read = (rel) => fs.readFileSync(path.join(skillDir, rel), 'utf8').trim();
 const skill = read('SKILL.md');
 
 const parts = [
-  fs.readFileSync(path.join(TOOL_DIR, 'prompt.md'), 'utf8').trim(),
+  fs.readFileSync(path.join(TOOL_DIR, 'prompt.md'), 'utf8').trim()
+    .replaceAll('{{CHECKPOINT}}', path.join(TOOL_DIR, 'checkpoint.sh')),
   read('references/review-rubric.md'),
   extractSection(skill, '## Los Tres Pilares Innegociables'),
   extractSection(skill, '## Reglas de Redacción'),

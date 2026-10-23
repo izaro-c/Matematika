@@ -6,10 +6,12 @@
 #
 # The agent works in its own worktree (REVIEW_WORKTREE, default ../Matematika-revision) on
 # branch REVIEW_BRANCH (revision-diaria), rebased on main before each run: your checkout is
-# never touched except for the queue and the reports. One commit per page; changes that fail
-# validate-nodes, the commit hooks or touch files outside content/ are discarded.
+# never touched except for the queue and the reports. Per page, up to two commits made by
+# the agent through checkpoint.sh: «correcciones» (certain fixes) and «propuestas (revisar)»
+# (judgment calls, also listed in PROPUESTAS.md). Afterwards this script re-checks the whole
+# page diff and discards it if it fails validate-nodes or touches files outside content/.
 #
-# Cost levers (env): REVIEW_MODEL (opus), REVIEW_EFFORT (high), REVIEW_MAX_TURNS (40),
+# Cost levers (env): REVIEW_MODEL (opus), REVIEW_EFFORT (high), REVIEW_MAX_TURNS (50),
 # REVIEW_MAX_USD (8, per page). Several pages in one run share the cached system prompt,
 # each in its own fresh session, so one page never pays for another page's context.
 set -euo pipefail
@@ -22,14 +24,15 @@ N="${1:-${REVIEW_PAGES:-1}}"
 CLAUDE_BIN="${REVIEW_CLAUDE:-claude}"
 MODEL="${REVIEW_MODEL:-opus}"
 EFFORT="${REVIEW_EFFORT:-high}"
-MAX_TURNS="${REVIEW_MAX_TURNS:-40}"
+MAX_TURNS="${REVIEW_MAX_TURNS:-50}"
 MAX_USD="${REVIEW_MAX_USD:-8}"
 WT="${REVIEW_WORKTREE:-$(dirname "$ROOT")/Matematika-revision}"
 BRANCH="${REVIEW_BRANCH:-revision-diaria}"
 OUT_DIR="$ROOT/docs/reports/revision-diaria"
-VALIDATE=.agents/skills/matematika-content-generator/scripts/validate-nodes.mjs
+PROPOSALS="$OUT_DIR/PROPUESTAS.md"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
+source "$TOOLS/common.sh"
 
 die() { echo "$*" >&2; exit 1; }
 
@@ -51,30 +54,11 @@ cd "$WT"
 [[ -z "$(git status --porcelain)" ]] || die "El worktree $WT tiene cambios sin commitear; revísalos antes de seguir."
 git rebase --quiet main || { git rebase --abort; die "La rama $BRANCH no se puede rebasar sobre main sin conflictos; resuélvelo a mano en $WT."; }
 
-revert() {
-  git reset --quiet --hard HEAD
-  git clean -fdq
-}
-
-# Every node the agent's changes can affect: edited MDX files plus nodes importing an edited diagram.
-affected_ids() {
-  local paths="$1" ids=() p
-  while read -r p; do
-    case "$p" in
-      content/mdx/*.mdx) ids+=("$(basename "$p" .mdx)") ;;
-      content/diagrams/*.tsx)
-        local mod="${p#content/diagrams/}"; mod="${mod%.tsx}"
-        while read -r f; do ids+=("$(basename "$f" .mdx)"); done \
-          < <(grep -rl "@content/diagrams/$mod'" content/mdx/es || true) ;;
-    esac
-  done <<<"$paths"
-  printf '%s\n' "${ids[@]}" | sort -u
-}
-
 node "$TOOLS/queue.mjs" sync
 node "$TOOLS/system-prompt.mjs" > "$WORK/system.md"
 mkdir -p "$OUT_DIR"
 [[ -f "$OUT_DIR/costes.tsv" ]] || printf "fecha\tid\tmodelo\tusd\tturnos\tinput\tcache_read\tcache_write\toutput\n" > "$OUT_DIR/costes.tsv"
+[[ -f "$PROPOSALS" ]] || printf '# Propuestas aplicadas por revisar\n\nCada línea es un commit «propuestas (revisar)» de la rama `%s`. Marca la casilla cuando lo hayas revisado y fusionado (o descartado).\n\n' "$BRANCH" > "$PROPOSALS"
 
 for id in $(node "$TOOLS/queue.mjs" next "$N"); do
   date="$(date +%F)"
@@ -88,21 +72,25 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
     continue
   fi
 
+  start="$(git rev-parse HEAD)"
   echo "Revisando $id…"
   if ! "$CLAUDE_BIN" -p \
       --model "$MODEL" --effort "$EFFORT" \
       --system-prompt-file "$WORK/system.md" \
       --tools Read,Grep,Glob,Edit,Write,Bash \
       --allowedTools Read Grep Glob \
-        "Edit(content/mdx/**)" "Edit(content/diagrams/**)" "Write(content/diagrams/**)" \
+        "Edit(content/mdx/**)" "Edit(content/diagrams/**)" \
+        "Write(content/mdx/**)" "Write(content/diagrams/**)" \
         "Bash(node $VALIDATE:*)" \
         "Bash(npx tsx .agents/skills/matematika-diagram-generator/scripts/verify-diagram.ts:*)" \
+        "Bash($TOOLS/checkpoint.sh:*)" \
       --permission-mode dontAsk \
       --strict-mcp-config --no-session-persistence \
       --max-turns "$MAX_TURNS" --max-budget-usd "$MAX_USD" \
       --output-format json < "$WORK/packet.md" > "$WORK/result.json" \
     || [[ "$(jq -r '.is_error' "$WORK/result.json" 2>/dev/null)" == "true" ]]; then
-    revert
+    git reset --quiet --hard "$start"
+    git clean -fdq
     echo "Revisión de $id incompleta ($(jq -r '.subtype // "fallo"' "$WORK/result.json" 2>/dev/null)); cambios descartados, queda pendiente." >&2
     exit 1
   fi
@@ -111,31 +99,42 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
   body="$(jq -r '.result' "$WORK/result.json")"
   verdict="$(grep -oP '^VEREDICTO:\s*\K\w+' <<<"$body" | tail -1 || true)"
   verdict="${verdict:-sin-veredicto}"
-  changed="$(git status --porcelain --untracked-files=all | cut -c4-)"
-  outcome="sin cambios"
-  gate=""
+  notes=()
 
-  if [[ -n "$changed" ]]; then
-    if grep -qvE '^content/(mdx|diagrams)/' <<<"$changed"; then
-      gate="El agente tocó archivos fuera de content/mdx y content/diagrams:"$'\n'"$changed"
-    else
-      mapfile -t ids < <(affected_ids "$changed")
-      if ! node "$VALIDATE" "${ids[@]}" > "$WORK/validate.txt" 2>&1; then
-        gate="validate-nodes falla tras los cambios:"$'\n'"$(tail -40 "$WORK/validate.txt")"
-      else
-        summary="$(awk '/^### Resumen/{f=1;next} /^(###|══|VEREDICTO)/{f=0} f' <<<"$body" | sed '/^\s*$/d')"
-        npm run --silent prebuild > "$WORK/prebuild.txt" 2>&1 || true
-        git add -A
-        if git commit --quiet -m "revisión diaria: $id" -m "$summary" -m "Informe: docs/reports/revision-diaria/$report" > "$WORK/commit.txt" 2>&1; then
-          outcome="corregido $(git rev-parse --short HEAD)"
-        else
-          gate="Los hooks de commit rechazaron los cambios:"$'\n'"$(tail -40 "$WORK/commit.txt")"
-        fi
-      fi
+  # Anything not saved through checkpoint.sh did not pass its checks: drop it.
+  if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
+    notes+=("El agente dejó cambios sin guardar con checkpoint.sh; se han descartado:"$'\n'"$(git status --porcelain --untracked-files=all)")
+    git reset --quiet --hard HEAD
+    git clean -fdq
+  fi
+
+  # Re-check the page's whole diff: the agent's own checks are not trusted.
+  outcome="sin cambios"
+  if [[ "$(git rev-parse HEAD)" != "$start" ]]; then
+    files="$(git diff --name-only "$start" HEAD)"
+    outside="$(grep -vE "$ALLOWED_DIFF" <<<"$files" || true)"
+    mapfile -t ids < <(affected_ids "$files")
+    discard=""
+    if [[ -n "$outside" ]]; then
+      discard="Los commits tocaban archivos fuera de content/:"$'\n'"$outside"
+    elif ! node "$VALIDATE" "${ids[@]}" > "$WORK/validate.txt" 2>&1; then
+      discard="validate-nodes falla sobre el resultado final:"$'\n'"$(tail -40 "$WORK/validate.txt")"
     fi
-    if [[ -n "$gate" ]]; then
-      revert
+    if [[ -n "$discard" ]]; then
+      notes+=("$discard")
+      git reset --quiet --hard "$start"
       outcome="cambios descartados"
+    else
+      parts=()
+      while read -r hash subject; do
+        case "$subject" in
+          *"— correcciones") parts+=("corregido $hash") ;;
+          *"— propuestas (revisar)") parts+=("propuestas $hash")
+            echo "- [ ] \`$id\` · $date · \`$hash\` · [informe]($report)" >> "$PROPOSALS" ;;
+          *) parts+=("commit $hash") ;;
+        esac
+      done < <(git log --reverse --format='%h %s' "$start..HEAD")
+      outcome="$(IFS=,; echo "${parts[*]}" | sed 's/,/ · /g')"
     fi
   fi
 
@@ -143,9 +142,9 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
     echo "<!-- $date · $MODEL/$EFFORT · \$$cost · $(jq -r '.num_turns' "$WORK/result.json") turnos · $outcome -->"
     echo
     echo "$body"
-    if [[ -n "$gate" ]]; then
-      printf '\n### Cambios descartados por el script\n\n```text\n%s\n```\n' "$gate"
-    fi
+    for note in "${notes[@]}"; do
+      printf '\n### Aviso del script\n\n```text\n%s\n```\n' "$note"
+    done
   } > "$OUT_DIR/$report"
 
   node "$TOOLS/queue.mjs" done "$id" "$report" "$verdict · $outcome" "$cost"

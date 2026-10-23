@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **axiom** (or postulate) is a mathematical statement accepted as true without prior <ConceptLink targetId="demostracion">proof</ConceptLink> within the framework of a formal deductive theory. The axioms of a theory are the premises from which all its theorems are deduced.
+<Capitular letra="A" />n **axiom** (or postulate) is a mathematical statement accepted as true without prior <ConceptLink targetId="demostracion">proof</ConceptLink> within the framework of a <ConceptLink targetId="teoria-formal">formal deductive theory</ConceptLink>. The axioms of a theory are the premises from which all its theorems are deduced.
 
 In formal axiomatic thought, axioms do not claim to reflect empirical evidence or absolute physical truths; their role is to specify explicitly the conditions, constraints, and mutual relations that must be satisfied by the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of the theory. Consequently, any result deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> via rules of <ConceptLink targetId="inferencia">inference</ConceptLink> is conditioned on the axioms: it holds in every structure that satisfies them.
 
 <Definicion title="Axiom in a formal system">
-  Let $\mathcal{S} = (\sigma, \Phi)$ be an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> formalized over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ with formal language $\mathcal{L}_\sigma$. A **proper** or non-logical axiom of the theory is a closed formula $\alpha$ of $\mathcal{L}_\sigma$ that belongs to the distinguished set $\Phi$ of postulates:
+  Let $\mathcal{S} = (\sigma, \Phi)$ be an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> formalized over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ with <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$. A **proper** or non-logical axiom of the theory is a <ConceptLink targetId="formula">closed formula</ConceptLink> $\alpha$ of $\mathcal{L}_\sigma$ that belongs to the distinguished set $\Phi$ of postulates:
   $$
   \alpha \in \Phi
   $$
-  A mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M}$ constitutes a <ConceptLink targetId="teoria-modelos">model</ConceptLink> of the system if it satisfies every axiom in $\Phi$:
+  A mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M}$ constitutes a <ConceptLink targetId="modelo">model</ConceptLink> of the system if it satisfies every axiom in $\Phi$:
   $$
   \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
   $$
@@ -31,11 +31,4 @@ In formal axiomatic thought, axioms do not claim to reflect empirical evidence o
 
 In the *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organized the axioms of geometry into five groups: <ConceptLink targetId="incidencia">incidence</ConceptLink> (I), <ConceptLink targetId="estar-entre">order</ConceptLink> (II), <ConceptLink targetId="congruencia">congruence</ConceptLink> (III), <ConceptLink targetId="paralelas">parallels</ConceptLink> (IV), and <ConceptLink targetId="continuidad">continuity</ConceptLink> (V).
 
-<Separador />
-
-### Metatheoretical criteria for an axiomatic repertoire
-
-When formulating or evaluating an axiomatic collection $\Phi$, mathematical methodology examines two metatheoretical properties:
-
-1. **<ConceptLink targetId="consistencia-logica">Logical consistency</ConceptLink>:** The set of axioms must not harbor internal contradictions, meaning it must be impossible to derive from $\Phi$ both a proposition and its negation simultaneously ($\forall \varphi, \ \Phi \nvdash \varphi \land \neg \varphi$).
-2. **Axiomatic <ConceptLink targetId="independencia-logica">independence</ConceptLink>:** No axiom should be redundant or deducible from the remaining ones ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). To prove that $\alpha_i$ is independent, one constructs a model of $\Phi \setminus \{\alpha_i\}$ in which $\alpha_i$ fails.
+Consistency and independence are properties of the set $\Phi$, not of a single axiom. <ConceptLink targetId="consistencia-logica">Consistency</ConceptLink> is always required: a formula and its <ConceptLink targetId="negacion">negation</ConceptLink> cannot both be deduced from $\Phi$. <ConceptLink targetId="independencia-logica">Independence</ConceptLink>, that is, no axiom being deducible from the remaining ones, is desirable.

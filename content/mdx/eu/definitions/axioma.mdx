@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />**xioma** bat (edo postulatu bat) aurretiazko <ConceptLink targetId="demostracion">frogapenik</ConceptLink> gabe teoria deduktibo formal baten esparruan egiazkotzat onartzen den enuntziatu matematiko bat da. Teoria baten axiomak dira haren teorema guztiak ondorioztatzeko premisak.
+<Capitular letra="A" />**xioma** bat (edo postulatu bat) aurretiazko <ConceptLink targetId="demostracion">frogapenik</ConceptLink> gabe <ConceptLink targetId="teoria-formal">teoria deduktibo formal</ConceptLink> baten esparruan egiazkotzat onartzen den enuntziatu matematiko bat da. Teoria baten axiomak dira haren teorema guztiak ondorioztatzeko premisak.
 
 Kontzepzio axiomatiko formalean, axiomek ez dute ebidentzia enpirikorik edo mundu fisikoko egia absoluturik islatu nahi; haien eginkizuna teoriaren <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuek</ConceptLink> bete behar dituzten baldintzak, murrizketak eta elkarrekiko erlazioak esplizituki finkatzea da. Modu horretan, <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> bidez <ConceptLink targetId="teorema">teorema</ConceptLink> gisa ondorioztatutako edozein emaitza axiomei lotuta geratzen da: axiomak betetzen dituen egitura orotan betetzen da.
 
 <Definicion title="Axioma sistema formal batean">
-  Izan bedi $\mathcal{S} = (\sigma, \Phi)$ $\mathcal{L}_\sigma$ hizkuntza formala eta $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> dituen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> formalizatu bat. Teoriaren **berezko axioma** edo axioma ez-logiko bat $\mathcal{L}_\sigma$ hizkuntzako $\alpha$ formula itxi bat da, $\Phi$ postulatu-multzo bereizian dagoena:
+  Izan bedi $\mathcal{S} = (\sigma, \Phi)$ $\mathcal{L}_\sigma$ <ConceptLink targetId="lenguaje-formal">hizkuntza formala</ConceptLink> eta $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> dituen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> formalizatu bat. Teoriaren **berezko axioma** edo axioma ez-logiko bat $\mathcal{L}_\sigma$ hizkuntzako $\alpha$ <ConceptLink targetId="formula">formula itxi</ConceptLink> bat da, $\Phi$ postulatu-multzo bereizian dagoena:
   $$
   \alpha \in \Phi
   $$
-  $\mathcal{M}$ <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> bat sistemaren <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat da baldin eta $\Phi$ multzoko axioma bakoitza betetzen badu:
+  $\mathcal{M}$ <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> bat sistemaren <ConceptLink targetId="modelo">eredu</ConceptLink> bat da baldin eta $\Phi$ multzoko axioma bakoitza betetzen badu:
   $$
   \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
   $$
@@ -31,11 +31,4 @@ Kontzepzio axiomatiko formalean, axiomek ez dute ebidentzia enpirikorik edo mund
 
 *Grundlagen der Geometrie* lanean, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bost taldetan antolatu zituen geometriaren axiomak: <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (I), <ConceptLink targetId="estar-entre">ordena</ConceptLink> (II), <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (III), <ConceptLink targetId="paralelas">paraleloak</ConceptLink> (IV) eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> (V).
 
-<Separador />
-
-### Axioma-errepertorio baten irizpide metateorikoak
-
-$\Phi$ errepertorio axiomatiko bat formulatzean edo ebaluatzean, metodologia matematikoak bi propietate metateoriko aztertzen ditu:
-
-1. **<ConceptLink targetId="consistencia-logica">Koherentzia logikoa</ConceptLink>:** Axioma-multzoak ez du barne-kontraesanik eduki behar; horrek esan nahi du $\Phi$ multzotik ezin dela proposizio bat eta bere ukapena aldi berean ondorioztatu ($\forall \varphi, \ \Phi \nvdash \varphi \land \neg \varphi$).
-2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>:** Ezein axiomak ez du erredundantea izan behar, ezta gainerakoetatik ondorioztagarria ere ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). $\alpha_i$ independentea dela frogatzeko, $\alpha_i$ betetzen ez den $\Phi \setminus \{\alpha_i\}$ multzoaren eredu bat eraikitzen da.
+Koherentea eta independentea izatea $\Phi$ multzoaren propietateak dira, ez axioma bakar batenak. <ConceptLink targetId="consistencia-logica">Koherentzia</ConceptLink> beti eskatzen da: $\Phi$ multzotik ezin dira aldi berean formula bat eta haren <ConceptLink targetId="negacion">ukapena</ConceptLink> ondorioztatu. <ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>, hau da, axiomarik gainerakoetatik ondorioztagarria ez izatea, komenigarria da.

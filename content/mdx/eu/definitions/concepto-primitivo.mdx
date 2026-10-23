@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Oinarrizko kontzeptua",
-  description: "Aurreko objektuetatik definitzen ez den oinarrizko nozio matematikoa; bere esanahia eta portaera sistema formalaren axiomek finkatzen dituzte.",
+  description: "Teoria formal baten abiapuntuko nozioa, beste batzuetatik definitzen ez dena; haren portaera axiomek finkatzen dute.",
   branch: "03",
   hasSimulation: false,
   sources: [
@@ -12,12 +12,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="O" />**inarrizko kontzeptua** (edo definitu gabeko terminoa) <ConceptLink targetId="teoria-formal">teoria formal</ConceptLink> baten abiapuntuko nozio bat da —objektu-mota bat edo erlazio bat—, aurreko kontzeptuen bidez definitzen ez dena.
+<Capitular letra="O" />**inarrizko kontzeptua** (edo definitu gabeko terminoa) <ConceptLink targetId="teoria-formal">teoria formal</ConceptLink> baten abiapuntuko nozio bat da —objektu-mota bat, erlazio bat edo eragiketa bat—, aurreko kontzeptuen bidez definitzen ez dena.
 
-Teoria matematiko orok hasierako terminoak behar ditu abiatzeko. Nozio bakoitza sinpleagoen bidez definitzen saiatuz gero, zirkulu batean edo atzerakada infinitu batean eroriko litzateke. Hori saihesteko, sistema axiomatikoek oinarrizko nozio-multzo bat aukeratzen dute eta haien portaera finkatzen dute <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomen</ConceptLink> bidez.
+Teoria matematiko orok hasierako terminoak behar ditu abiatzeko. Nozio bakoitza sinpleagoen bidez definitzen saiatuz gero, zirkulu batean edo atzerakada infinitu batean eroriko litzateke. Hori saihesteko, <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoek</ConceptLink> oinarrizko nozio-multzo bat aukeratzen dute eta haien portaera finkatzen dute sistema formaleko <ConceptLink targetId="axioma">axiomen</ConceptLink> bidez.
 
 <Definicion title="Definizio Epistemologikoa">
-  $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> batek zehaztutako hizkuntza formal batean, **oinarrizko kontzeptuak** teoriaren barruan aldez aurreko definiziorik ez duten abiapuntuko ikur ez-logikoak (objektu-motak eta erlazio- edo eragiketa-ikurrak) dira:
+  $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> batek zehaztutako <ConceptLink targetId="lenguaje-formal">hizkuntza formal</ConceptLink> batean, **oinarrizko kontzeptuak** teoriaren barruan aldez aurreko definiziorik ez duten abiapuntuko ikur ez-logikoak (objektu-motak eta erlazio- edo eragiketa-ikurrak) dira:
   $$
   \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
@@ -31,4 +31,4 @@ Teoria matematiko orok hasierako terminoak behar ditu abiatzeko. Nozio bakoitza 
 <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> sisteman, oinarrizko kontzeptuak bi kategoriatan banatzen dira:
 
 - **Objektu-motak (<ConceptLink targetId="dominio">oinarrizko domeinuak</ConceptLink>):** Entitateen hiru oinarrizko klaseak: <ConceptLink targetId="punto">puntuak</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">zuzenak</ConceptLink> ($\mathcal{L}$) eta <ConceptLink targetId="plano">planoak</ConceptLink> ($\Pi$). <ConceptLink targetId="espacio">Espazioa</ConceptLink> ez da oinarrizko mota bat: objektu horien guztien multzoa (<ConceptLink targetId="universo-discurso">diskurtso-unibertsoa</ConceptLink>) edo, irudi gisa, puntu guztien multzoa izendatzen du.
-- **Oinarrizko erlazioak:** Objektuen arteko oinarrizko loturak, hala nola <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (gainean egotea), <ConceptLink targetId="estar-entre">bitartekotasuna</ConceptLink> (ordena lineala) eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (<ConceptLink targetId="segmento">zuzenkiena</ConceptLink> eta <ConceptLink targetId="angulo">angeluena</ConceptLink>).
+- **Oinarrizko erlazioak:** Objektuen arteko oinarrizko loturak, hala nola <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (gainean egotea), <ConceptLink targetId="estar-entre">bitartekotasuna</ConceptLink> (puntuen ordena zuzen batean) eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (<ConceptLink targetId="segmento">zuzenkiena</ConceptLink> eta <ConceptLink targetId="angulo">angeluena</ConceptLink>).
