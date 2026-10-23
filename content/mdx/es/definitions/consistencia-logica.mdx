@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a **consistencia lógica** (o consistencia sintáctica) es la propiedad metateórica de una teoría formal o sistema deductivo que garantiza la ausencia de contradicciones internas.
+<Capitular letra="L" />a **consistencia lógica** (o consistencia sintáctica) es la propiedad de una <ConceptLink targetId="teoria-formal">teoría formal</ConceptLink> de la que no se pueden deducir a la vez una fórmula y su negación.
 
-En los sistemas deductivos clásicos, si una teoría fuera contradictoria, el principio de explosión (*ex falso quodlibet*) permitiría demostrar deductivamente cualquier proposición formulable en su lenguaje. En consecuencia, la inconsistencia colapsa todo el edificio deductivo, despojando a sus <ConceptLink targetId="teorema">teoremas</ConceptLink> de valor discriminatorio o epistémico.
+En la lógica clásica, una teoría inconsistente demuestra cualquier fórmula de su lenguaje por el <ConceptLink targetId="principio-explosion">principio de explosión</ConceptLink> (*ex falso quodlibet*). Sus <ConceptLink targetId="teorema">teoremas</ConceptLink> dejan entonces de distinguir unas fórmulas de otras.
 
 <Definicion title="Consistencia sintáctica y semántica">
   Sea $\mathcal{T}$ una teoría con axiomas $\Phi$ formulada en un <ConceptLink targetId="lenguaje-formal">lenguaje formal</ConceptLink> $\mathcal{L}_\sigma$.
@@ -27,7 +27,7 @@ En los sistemas deductivos clásicos, si una teoría fuera contradictoria, el pr
   $$
   Por otra parte, $\mathcal{T}$ es **semánticamente consistente** (o satisfacible) si existe al menos un <ConceptLink targetId="teoria-modelos">modelo</ConceptLink> $\mathcal{M}$ tal que $\mathcal{M} \models \mathcal{T}$.
   
-  Por el teorema de completitud de <ConceptLink targetId="godel">Gödel</ConceptLink> en la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, ambas nociones coinciden plenamente:
+  Por el <ConceptLink targetId="teorema-completitud-godel">teorema de completitud</ConceptLink> de <ConceptLink targetId="godel">Gödel</ConceptLink> en la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, ambas nociones coinciden:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -37,7 +37,7 @@ En los sistemas deductivos clásicos, si una teoría fuera contradictoria, el pr
 
 ### Consistencia relativa en los fundamentos de la geometría
 
-Por el segundo teorema de incompletitud de Gödel, ninguna teoría formal consistente, recursivamente axiomatizable y que contenga la aritmética elemental puede demostrar su propia consistencia. Las pruebas de consistencia son, en general, relativas (**consistencia relativa**): se construye un modelo de una teoría dentro de otra, y la primera es consistente si lo es la segunda.
+Por el <ConceptLink targetId="teorema-incompletitud-godel">segundo teorema de incompletitud</ConceptLink> de Gödel, ninguna teoría formal consistente, recursivamente axiomatizable y que contenga la aritmética elemental puede demostrar su propia consistencia. Las pruebas de consistencia son, en general, relativas (<ConceptLink targetId="consistencia-relativa">consistencia relativa</ConceptLink>): se construye un modelo de una teoría dentro de otra, y la primera es consistente si lo es la segunda.
 
 - **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink>:** En el capítulo II de los *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> estableció la consistencia relativa de la geometría euclidiana interpretando sus términos <ConceptLink targetId="concepto-primitivo">primitivos</ConceptLink> en el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> $\mathbb{R}^3$. Si la <ConceptLink targetId="sistema-cuerpo-real">teoría de los números reales</ConceptLink> $\mathbb{R}$ es consistente, la geometría euclidiana es consistente.
-- **Geometrías no euclidianas:** Históricamente, ni <ConceptLink targetId="bolyai">Bolyai</ConceptLink> ni <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink> lograron probar la consistencia de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>. Fueron <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink> y <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> quienes la demostraron mediante modelos analíticos en el <ConceptLink targetId="plano">plano</ConceptLink> euclídeo, como el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>, demostrando que la consistencia hiperbólica se reduce a la euclidiana.
+- **Geometrías no euclidianas:** Históricamente, ni <ConceptLink targetId="bolyai">Bolyai</ConceptLink> ni <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink> lograron probar la consistencia de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>. Fueron <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink> y <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> quienes la probaron mediante modelos analíticos en el <ConceptLink targetId="plano">plano</ConceptLink> euclídeo, como el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>; así, la consistencia hiperbólica se reduce a la euclidiana.

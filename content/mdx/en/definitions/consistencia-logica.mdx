@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />ogical **consistency** (or syntactic consistency) is the metatheoretical property of a formal theory or deductive system guaranteeing the absence of internal contradictions.
+<Capitular letra="L" />ogical **consistency** (or syntactic consistency) is the property of a <ConceptLink targetId="teoria-formal">formal theory</ConceptLink> from which a formula and its negation cannot both be deduced.
 
-In classical deductive systems, if a theory were contradictory, the principle of explosion (*ex falso quodlibet*) would permit the formal derivation of any arbitrary proposition formulated in its language. Consequently, inconsistency collapses the entire deductive edifice, stripping its <ConceptLink targetId="teorema">theorems</ConceptLink> of all discriminative or epistemic value.
+In classical logic, an inconsistent theory proves every formula of its language by the <ConceptLink targetId="principio-explosion">principle of explosion</ConceptLink> (*ex falso quodlibet*). Its <ConceptLink targetId="teorema">theorems</ConceptLink> then no longer distinguish one formula from another.
 
 <Definicion title="Syntactic and semantic consistency">
   Let $\mathcal{T}$ be a theory with axioms $\Phi$ formulated in a <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$.
@@ -27,7 +27,7 @@ In classical deductive systems, if a theory were contradictory, the principle of
   $$
   On the other hand, $\mathcal{T}$ is **semantically consistent** (or satisfiable) if there exists at least one <ConceptLink targetId="teoria-modelos">model</ConceptLink> $\mathcal{M}$ such that $\mathcal{M} \models \mathcal{T}$.
   
-  By <ConceptLink targetId="godel">Gödel</ConceptLink>'s completeness theorem in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide completely:
+  By <ConceptLink targetId="godel">Gödel</ConceptLink>'s <ConceptLink targetId="teorema-completitud-godel">completeness theorem</ConceptLink> in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -37,7 +37,7 @@ In classical deductive systems, if a theory were contradictory, the principle of
 
 ### Relative consistency in the foundations of geometry
 
-By Gödel's second incompleteness theorem, no consistent, recursively axiomatizable formal theory that contains elementary arithmetic can prove its own consistency. Consistency proofs are, in general, relative (**relative consistency**): a model of one theory is built inside another, and the first is consistent if the second is.
+By Gödel's <ConceptLink targetId="teorema-incompletitud-godel">second incompleteness theorem</ConceptLink>, no consistent, recursively axiomatizable formal theory that contains elementary arithmetic can prove its own consistency. Consistency proofs are, in general, relative (<ConceptLink targetId="consistencia-relativa">relative consistency</ConceptLink>): a model of one theory is built inside another, and the first is consistent if the second is.
 
 - **<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>:** In Chapter II of the *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> established the relative consistency of Euclidean geometry by interpreting its <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> terms in the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$. If the <ConceptLink targetId="sistema-cuerpo-real">theory of real numbers</ConceptLink> $\mathbb{R}$ is consistent, Euclidean geometry is consistent.
-- **Non-Euclidean geometries:** Historically, neither <ConceptLink targetId="bolyai">Bolyai</ConceptLink> nor <ConceptLink targetId="lobachevski">Lobachevsky</ConceptLink> succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink>, and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> who proved it using analytic models in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>, showing that hyperbolic consistency reduces to Euclidean consistency.
+- **Non-Euclidean geometries:** Historically, neither <ConceptLink targetId="bolyai">Bolyai</ConceptLink> nor <ConceptLink targetId="lobachevski">Lobachevsky</ConceptLink> succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Klein</ConceptLink>, and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> who proved it using analytic models in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>; hyperbolic consistency thus reduces to Euclidean consistency.

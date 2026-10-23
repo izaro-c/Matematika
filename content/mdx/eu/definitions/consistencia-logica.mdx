@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="K" />**oherentzia logikoa** (edo kontsistentzia sintaktikoa) teoria formal edo sistema deduktibo baten propietate metateorikoa da, barne-kontraesanik eza bermatzen duena.
+<Capitular letra="K" />**oherentzia logikoa** (edo kontsistentzia sintaktikoa) <ConceptLink targetId="teoria-formal">teoria formal</ConceptLink> baten propietatea da: teoria horretatik ezin dira ondorioztatu formula bat eta haren ezeztapena biak.
 
-Sistema deduktibo klasikoetan, teoria bat kontraesankorra balitz, eztandaren printzipioak (*ex falso quodlibet*) bere hizkuntzan formulatu daitekeen edozein proposizio frogatzea ahalbidetuko luke. Ondorioz, inkoherentziak eraikin deduktibo osoa eraisten du, haren <ConceptLink targetId="teorema">teoremei</ConceptLink> balio bereizle edo epistemikoa kenduz.
+Logika klasikoan, teoria inkoherente batek bere hizkuntzako edozein formula frogatzen du <ConceptLink targetId="principio-explosion">eztandaren printzipioaren</ConceptLink> bidez (*ex falso quodlibet*). Haren <ConceptLink targetId="teorema">teoremek</ConceptLink> ez dituzte, beraz, formulak bata bestetik bereizten.
 
 <Definicion title="Koherentzia sintaktikoa eta semantikoa">
   Izan bedi $\mathcal{T}$ $\mathcal{L}_\sigma$ <ConceptLink targetId="lenguaje-formal">hizkuntza formalean</ConceptLink> formulatutako $\Phi$ axiomadun teoria bat.
@@ -27,7 +27,7 @@ Sistema deduktibo klasikoetan, teoria bat kontraesankorra balitz, eztandaren pri
   $$
   Bestalde, $\mathcal{T}$ **semantikoki koherentea** da (edo betegarria) baldin eta gutxienez $\mathcal{M}$ <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat existitzen bada non $\mathcal{M} \models \mathcal{T}$ den.
   
-  Lehen mailako <ConceptLink targetId="logica">logikan</ConceptLink> <ConceptLink targetId="godel">Gödelen</ConceptLink> osotasun-teorema dela eta, bi nozio horiek bat datoz guztiz:
+  Lehen mailako <ConceptLink targetId="logica">logikan</ConceptLink> <ConceptLink targetId="godel">Gödelen</ConceptLink> <ConceptLink targetId="teorema-completitud-godel">osotasun-teorema</ConceptLink> dela eta, bi nozio horiek bat datoz:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -37,7 +37,7 @@ Sistema deduktibo klasikoetan, teoria bat kontraesankorra balitz, eztandaren pri
 
 ### Koherentzia erlatiboa geometriaren oinarrietan
 
-Gödelen ez-osotasunaren bigarren teoremaren arabera, oinarrizko aritmetika barne hartzen duen teoria formal koherente eta errekurtsiboki axiomatizagarri batek ezin du bere koherentzia frogatu. Koherentzia-frogak, oro har, erlatiboak dira (**koherentzia erlatiboa**): teoria baten eredua beste teoria baten barruan eraikitzen da, eta lehenengoa koherentea da bigarrena koherentea bada.
+Gödelen <ConceptLink targetId="teorema-incompletitud-godel">ez-osotasunaren bigarren teoremaren</ConceptLink> arabera, oinarrizko aritmetika barne hartzen duen teoria formal koherente eta errekurtsiboki axiomatizagarri batek ezin du bere koherentzia frogatu. Koherentzia-frogak, oro har, erlatiboak dira (<ConceptLink targetId="consistencia-relativa">koherentzia erlatiboa</ConceptLink>): teoria baten eredua beste teoria baten barruan eraikitzen da, eta lehenengoa koherentea da bigarrena koherentea bada.
 
 - **<ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink>:** *Grundlagen* lanaren II. kapituluan, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> geometria euklidearraren koherentzia erlatiboa ezarri zuen haren <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> terminoak $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink> interpretatuz. $\mathbb{R}$ <ConceptLink targetId="sistema-cuerpo-real">zenbaki errealen teoria</ConceptLink> koherentea bada, geometria euklidearra ere koherentea da.
-- **Geometria ez-euklidearrak:** Historikoki, ez <ConceptLink targetId="bolyai">Bolyaik</ConceptLink> ez <ConceptLink targetId="lobachevski">Lobatxevskik</ConceptLink> ez zuten lortu <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoaren</ConceptLink> koherentzia frogatzea. <ConceptLink targetId="beltrami">Eugenio Beltramik</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Kleinek</ConceptLink> eta <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> frogatu zuten <ConceptLink targetId="plano">plano</ConceptLink> euklidearreko eredu analitikoen bidez, hala nola <ConceptLink targetId="modelo-poincare">Poincaréren diskoaren</ConceptLink> bidez, geometria hiperbolikoaren koherentzia geometria euklidearrera murrizten dela egiaztatuz.
+- **Geometria ez-euklidearrak:** Historikoki, ez <ConceptLink targetId="bolyai">Bolyaik</ConceptLink> ez <ConceptLink targetId="lobachevski">Lobatxevskik</ConceptLink> ez zuten lortu <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoaren</ConceptLink> koherentzia frogatzea. <ConceptLink targetId="beltrami">Eugenio Beltramik</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Kleinek</ConceptLink> eta <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> frogatu zuten <ConceptLink targetId="plano">plano</ConceptLink> euklidearreko eredu analitikoen bidez, hala nola <ConceptLink targetId="modelo-poincare">Poincaréren diskoaren</ConceptLink> bidez; horrela, geometria hiperbolikoaren koherentzia geometria euklidearrera murrizten da.
