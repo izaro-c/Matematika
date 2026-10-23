@@ -1,0 +1,8 @@
+[Unit]
+Description=Matematika: revisión y corrección diaria de una página de contenido
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Proiektuak/Matematika
+ExecStart=%h/Proiektuak/Matematika/scripts/daily-review/run.sh
+Nice=10

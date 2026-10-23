@@ -1,0 +1,11 @@
+[Unit]
+Description=Matematika: revisión diaria de contenido
+
+[Timer]
+OnCalendar=*-*-* 09:00
+# Si el ordenador estaba apagado a esa hora, se ejecuta al encenderlo.
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target
