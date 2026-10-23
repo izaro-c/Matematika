@@ -46,7 +46,7 @@ function profile(text) {
   return {
     lang: field('lang'),
     meta: { id: field('id'), type: field('type'), subtype: field('subtype'), branch: field('branch'), demos: field('demos'), parentTheorem: field('parentTheorem'),
-      axiomas: field('axiomas'), models: field('models'), extends: field('extends'), satisfies: field('satisfies'), builtIn: field('builtIn'), axiomSystem: field('axiomSystem') },
+      axiomas: field('axiomas'), models: field('models'), extends: field('extends'), satisfies: field('satisfies'), axioms_verified: field('axioms_verified'), axioms_falsified: field('axioms_falsified'), builtIn: field('builtIn'), axiomSystem: field('axiomSystem') },
     links: links.sort(),
     deps: [...new Set(links.filter((l) => l.endsWith('[dep]')))].sort(),
     propItems: [...body.matchAll(/<PropiedadItem\b[^>]*?\bid=["']([^"']+)["']/g)].map((m) => m[1]),

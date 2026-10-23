@@ -1,12 +1,12 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 188,
+    "total": 189,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 22,
       "definicion": 87,
-      "demostracion": 21,
+      "demostracion": 22,
       "ejemplo": 1,
       "ejercicio": 2,
       "matematico": 21,
@@ -17,7 +17,7 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 121,
+      "none": 122,
       "exported": 67
     },
     "theoremLike": {
@@ -25,7 +25,7 @@
       "withDeclaredDiagram": 8
     },
     "demonstrations": {
-      "total": 21
+      "total": 22
     }
   },
   "items": [
@@ -1675,6 +1675,19 @@
       "demos": []
     },
     {
+      "id": "demo-completitud-reales",
+      "type": "demostracion",
+      "title": "Frogapena: Zenbaki errealen osotasunaren teorema",
+      "filePath": "eu/demonstrations/demo-completitud-reales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 4,
+      "parentTheorem": "completitud-reales",
+      "demos": []
+    },
+    {
       "id": "demo-congruencia-ala",
       "type": "demostracion",
       "title": "Frogapena: Angelu-Alde-Angelu (ALA) kongruentzia-irizpidea",
@@ -2314,7 +2327,9 @@
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": []
+      "demos": [
+        "demo-completitud-reales"
+      ]
     },
     {
       "id": "teorema-angulo-exterior",

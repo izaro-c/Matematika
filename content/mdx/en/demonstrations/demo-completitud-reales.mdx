@@ -1,0 +1,106 @@
+export const metadata = {
+  id: "demo-completitud-reales",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Theorem of Completeness of the Real Numbers",
+  description: "Analytical proof of the metric completeness of ℝ: deduction of the convergence of every Cauchy sequence from the axiom of the supremum.",
+  parentTheorem: "completitud-reales",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  proofMethod: "metodo-directo",
+  authors: ["dedekind"],
+  tags: ["analisis-real", "completitud", "sucesion-cauchy", "supremo", "continuo"],
+  layout: "split",
+  sources: [
+    {
+      title: "Stetigkeit und irrationale Zahlen",
+      author: "Richard Dedekind",
+      locator: "1872",
+      role: "primary"
+    },
+    {
+      title: "Principles of Mathematical Analysis",
+      author: "Walter Rudin",
+      locator: "Chapter 3",
+      role: "secondary"
+    }
+  ]
+};
+
+import { DemoCompletitudReales } from "@content/diagrams/Demos/DemoCompletitudReales";
+
+<DemonstrationSection diagram={<DemoCompletitudReales />}>
+
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the metric completeness of the <ConceptLink targetId="cuerpo-ordenado" isDependency={true}>ordered field</ConceptLink> of <ConceptLink targetId="numero-real">real numbers</ConceptLink> establishes that every <ConceptLink targetId="sucesion-cauchy" isDependency={true}>Cauchy sequence</ConceptLink> in $\mathbb{R}$ converges to a <ConceptLink targetId="limite">limit</ConceptLink> in $\mathbb{R}$, starting from the <ConceptLink targetId="axioma-supremo" isDependency={true}>axiom of the supremum</ConceptLink>. It thus proves the second condition of the <ConceptLink targetId="completitud-reales">completeness theorem for the real numbers</ConceptLink>.
+
+The argument proceeds in three stages: every Cauchy sequence is bounded on the real <ConceptLink targetId="recta">line</ConceptLink>; the set of its eventual lower bounds, non-empty and bounded above, has a supremum by the axiom of the supremum; and that supremum is the limit of the sequence.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="step-sucesion-cauchy" diagramStep="step-sucesion-cauchy" title="Hypothesis and metric Cauchy condition">
+Let <VisualBind element="sucesionCauchy" color="carbon">$(x_n)_{n \in \mathbb{N}}$</VisualBind> be a <ConceptLink targetId="sucesion-cauchy" isDependency={true}>Cauchy sequence</ConceptLink> on the real <VisualBind element="rectaReal" color="carbon"><ConceptLink targetId="recta">line</ConceptLink></VisualBind> $\mathbb{R}$. For each <ConceptLink targetId="distancia">distance</ConceptLink> $\varepsilon > 0$ there exists an index $N \in \mathbb{N}$ such that, for any $n, m \ge N$, the terms $x_n$ and $x_m$ satisfy:
+
+$$
+\forall \varepsilon > 0 \ \exists N \in \mathbb{N} \ \forall n, m \ge N \ (|x_n - x_m| < \varepsilon)
+$$
+
+From some index on, the terms concentrate at arbitrarily small distances from one another.
+</ProofStep>
+
+<ProofStep number={2} target="step-acotacion" diagramStep="step-acotacion" title="Global boundedness of the sequence">
+Applying the Cauchy condition with $\varepsilon = 1$ yields $N_0 \in \mathbb{N}$ such that $|x_n - x_m| < 1$ for $n, m \ge N_0$; in particular, with $m = N_0$, $|x_n - x_{N_0}| < 1$ for all $n \ge N_0$. The preceding terms $\{x_1, \dots, x_{N_0-1}\}$ form a finite <ConceptLink targetId="conjunto">set</ConceptLink>, empty if $N_0 = 1$. We define the <ConceptLink targetId="cota-inferior" isDependency={true}>lower bound</ConceptLink> <VisualBind element="cotaMMin" color="ocre">$m$</VisualBind> and the <ConceptLink targetId="cota-superior" isDependency={true}>upper bound</ConceptLink> <VisualBind element="cotaMMax" color="ocre">$M$</VisualBind>:
+
+$$
+m = \min(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} - 1\}), \quad M = \max(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} + 1\})
+$$
+
+For $n < N_0$ we have $m \le x_n \le M$ by definition. For $n \ge N_0$, from $|x_n - x_{N_0}| < 1$ it follows that $m \le x_{N_0} - 1 < x_n < x_{N_0} + 1 \le M$. The entire sequence is bounded in the <ConceptLink targetId="intervalo" isDependency={true}>closed interval</ConceptLink> <VisualBind element="intervaloAcotacion" color="ocre">$[m, M]$</VisualBind>:
+
+$$
+\forall n \in \mathbb{N} \ (m \le x_n \le M)
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step-conjunto-supremo" diagramStep="step-conjunto-supremo" title="Construction of set S and application of the axiom of the supremum">
+We define the auxiliary <ConceptLink targetId="conjunto">set</ConceptLink> <VisualBind element="conjuntoS" color="canela">$S \subseteq \mathbb{R}$</VisualBind> of eventual lower bounds:
+
+$$
+S = \{ x \in \mathbb{R} : \exists K \in \mathbb{N} \ \forall n \ge K \ (x \le x_n) \}
+$$
+
+The set $S$ is non-empty: $m \in S$, because $m \le x_n$ for all $n$ (take $K = 1$). And $M$ is an upper bound of $S$: if $x > M$, then $x > x_n$ for all $n$, so no $K$ satisfies the condition and $x \notin S$. By the <ConceptLink targetId="axioma-supremo" isDependency={true}>axiom of the supremum</ConceptLink> there exists the least upper bound <VisualBind element="supremoL" color="terracota">$L = \sup(S) \in \mathbb{R}$</VisualBind>, which satisfies:
+
+$$
+\forall x \in S \ (x \le L) \quad \land \quad \forall c \in \mathbb{R} \ \bigl(\forall x \in S \ (x \le c) \implies L \le c\bigr)
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step-convergencia" diagramStep="step-convergencia" title="Convergence of the sequence to the supremum L">
+Fix $\varepsilon > 0$. The Cauchy condition for $\frac{\varepsilon}{2}$ yields an index $N \in \mathbb{N}$ such that $|x_n - x_N| < \frac{\varepsilon}{2}$ for all $n \ge N$. That is, for all $n \ge N$:
+
+$$
+x_N - \frac{\varepsilon}{2} < x_n < x_N + \frac{\varepsilon}{2}
+$$
+
+Since <VisualBind element="pHalfMinus" color="pavo">$x_N - \frac{\varepsilon}{2}$</VisualBind> is less than $x_n$ for all $n \ge N$, we have $x_N - \frac{\varepsilon}{2} \in S$ (with $K = N$), hence $x_N - \frac{\varepsilon}{2} \le L$ because $L$ is an <ConceptLink targetId="cota-superior">upper bound</ConceptLink> of $S$.
+
+Now let $x \in S$ and $K$ such that $x \le x_n$ for all $n \ge K$. Taking $n = \max(K, N)$ gives $x \le x_n < x_N + \frac{\varepsilon}{2}$. Thus <VisualBind element="pHalfPlus" color="pavo">$x_N + \frac{\varepsilon}{2}$</VisualBind> is an upper bound of $S$, and since $L$ is the least upper bound, $L \le x_N + \frac{\varepsilon}{2}$. Both inequalities give $|x_N - L| \le \frac{\varepsilon}{2}$.
+
+By the triangle inequality of the absolute value, for all $n \ge N$:
+
+$$
+|x_n - L| \le |x_n - x_N| + |x_N - L| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+$$
+
+Consequently, all terms from index $N$ onward remain confined in the <VisualBind element="entornoEpsilon" color="mora">neighborhood</VisualBind> $(L - \varepsilon, L + \varepsilon)$ bounded by <VisualBind element="pEpsMinus" color="mora">$L - \varepsilon$</VisualBind> and <VisualBind element="pEpsPlus" color="mora">$L + \varepsilon$</VisualBind>:
+
+$$
+\forall n \ge N \ (|x_n - L| < \varepsilon) \implies \lim_{n \to \infty} x_n = L
+$$
+
+Since $\varepsilon$ was arbitrary, the sequence converges to the <ConceptLink targetId="limite">limit</ConceptLink> <VisualBind element="supremoL" color="terracota">$L$</VisualBind>, which belongs to $\mathbb{R}$. Metric completeness is proved.
+</ProofStep>
+
+</DemonstrationSection>

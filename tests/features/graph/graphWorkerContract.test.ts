@@ -87,6 +87,39 @@ describe('graph worker message contract', () => {
     });
   });
 
+  it('turns a model off while an axiom it falsifies is active', async () => {
+    const node = (id: string, type: string, extra: Partial<GraphWorkerStructure['nodes'][string]> = {}) => ({
+      id, type, title: id, description: '', proofs: [], directDependencies: [], ...extra,
+    });
+    const structure: GraphWorkerStructure = {
+      topologicalOrder: ['axioma-base', 'axioma-paralelas', 'modelo-finito'],
+      nodes: {
+        'axioma-base': node('axioma-base', 'axioma'),
+        'axioma-paralelas': node('axioma-paralelas', 'axioma'),
+        'modelo-finito': node('modelo-finito', 'modelo', {
+          directDependencies: ['axioma-base'],
+          falsifiedAxioms: ['axioma-paralelas'],
+        }),
+      },
+    };
+
+    const initialized = await processGraphWorkerMessage(
+      createGraphWorkerInitializeRequest(20, structure, []),
+    );
+    expect(initialized.type).toBe('initialized');
+    if (initialized.type === 'initialized') {
+      expect(initialized.result.activeStates['modelo-finito']).toBe(false);
+    }
+
+    const evaluated = await processGraphWorkerMessage(
+      createGraphWorkerEvaluateRequest(21, ['axioma-paralelas']),
+    );
+    expect(evaluated).toMatchObject({
+      type: 'evaluated',
+      result: { changedActiveStates: { 'axioma-paralelas': false, 'modelo-finito': true } },
+    });
+  });
+
   it('normalizes invalid messages and thrown values into a stable error shape', async () => {
     const response = await processGraphWorkerMessage({
       type: 'initialize-graph',

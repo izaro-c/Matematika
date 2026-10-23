@@ -161,6 +161,7 @@ export interface Model extends BaseContent {
   description?: string;
   satisfies: string | string[];
   axioms_verified?: string[];
+  axioms_falsified?: string[];
   builtIn?: string;
   hasDiagram?: boolean;
   Component: MDXComponent;

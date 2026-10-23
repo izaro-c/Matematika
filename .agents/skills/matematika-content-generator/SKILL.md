@@ -25,7 +25,7 @@ Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad tr
 | `definicion` derivada | `semiplano`, `segmento` | dependencias constitutivas, `<SeccionPropiedades>` |
 | `axioma` | `axioma-incidencia-1`, `axioma-congruencia-5` | `<Definicion title="Enunciado formal">`, diagrama, sin propiedades |
 | `teorema` + `demostracion` | `teorema-triangulo-isosceles` + `demo-triangulo-isosceles` | `demos` / `parentTheorem`, `<ProofStep diagramStep>` |
-| `modelo` | `modelo-fano` | dos `<PropiedadesGrupo>` (satisfacción / estructura) |
+| `modelo` | `modelo-fano` | dos `<PropiedadesGrupo>` (satisfacción / estructura); `axioms_verified` + `axioms_falsified` |
 | `sistema-axiomatico` | `sistema-incidencia`, `sistema-absoluto` | `axiomas`, `models`, `extends` |
 | `matematico` | `pasch` | solo prosa con enlaces |
 
@@ -174,7 +174,7 @@ No hay plantilla obligatoria. La estructura emerge de la naturaleza del nodo:
 | `teorema` / `lema` | Axiomas, teoremas y conceptos constitutivos (primitivos/derivados) | Opcional |
 | `demostracion` | Axiomas, lemas, método y conceptos de inferencia | — |
 | `sistema-axiomatico` | N/A (campo `axiomas`) | ❌ Prohibido |
-| `modelo` | Omitir | ✅ Requerido |
+| `modelo` | Omitir (`axioms_verified` y `axioms_falsified` van en metadatos, mismos IDs en los tres idiomas) | ✅ Requerido |
 | `metodo` / `ejercicio` / `caso-de-uso` | Según aplique | ❌ Prohibido |
 | `matematico` | ❌ Prohibido | ❌ Prohibido |
 

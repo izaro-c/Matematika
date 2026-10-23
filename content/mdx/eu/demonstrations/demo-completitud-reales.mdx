@@ -1,0 +1,106 @@
+export const metadata = {
+  id: "demo-completitud-reales",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Zenbaki errealen osotasunaren teorema",
+  description: "ℝ-ren osotasun metrikoaren froga analitikoa: Cauchyren segida ororen konbergentziaren dedukzioa gorenenaren axiomatik abiatuta.",
+  parentTheorem: "completitud-reales",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  proofMethod: "metodo-directo",
+  authors: ["dedekind"],
+  tags: ["analisis-real", "completitud", "sucesion-cauchy", "supremo", "continuo"],
+  layout: "split",
+  sources: [
+    {
+      title: "Stetigkeit und irrationale Zahlen",
+      author: "Richard Dedekind",
+      locator: "1872",
+      role: "primary"
+    },
+    {
+      title: "Principles of Mathematical Analysis",
+      author: "Walter Rudin",
+      locator: "3. Kapitulua",
+      role: "secondary"
+    }
+  ]
+};
+
+import { DemoCompletitudReales } from "@content/diagrams/Demos/DemoCompletitudReales";
+
+<DemonstrationSection diagram={<DemoCompletitudReales />}>
+
+<Capitular letra="Z" />enbaki errealen <ConceptLink targetId="cuerpo-ordenado" isDependency={true}>gorputz ordenatuaren</ConceptLink> osotasun metrikoaren <ConceptLink targetId="metodo-directo" isDependency={true}>froga deduktibo zuzenak</ConceptLink> ezartzen du $\mathbb{R}$-ko <ConceptLink targetId="sucesion-cauchy" isDependency={true}>Cauchyren segida</ConceptLink> orok $\mathbb{R}$-ko <ConceptLink targetId="limite">muga</ConceptLink> baterantz konbergitzen duela, <ConceptLink targetId="axioma-supremo" isDependency={true}>gorenenaren axiomatik</ConceptLink> abiatuta. Horrela, <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="completitud-reales">osotasunaren teoremaren</ConceptLink> bigarren baldintza frogatzen da.
+
+Arrazoibideak hiru etapa ditu: Cauchyren segida orok bornatuta dago <ConceptLink targetId="recta">zuzen</ConceptLink> errealean; segidaren balizko behe-borneen multzoak, hutsa ez denez eta goitik bornatuta dagoenez, goren bat du gorenenaren axiomagatik; eta goren hori segidaren muga da.
+
+<Separador />
+
+### Urratsez urratseko frogapena
+
+<ProofStep number={1} target="step-sucesion-cauchy" diagramStep="step-sucesion-cauchy" title="Hipotesia eta Cauchyren baldintza metrikoa">
+Izan bedi <VisualBind element="sucesionCauchy" color="carbon">$(x_n)_{n \in \mathbb{N}}$</VisualBind> <ConceptLink targetId="sucesion-cauchy" isDependency={true}>Cauchyren segida</ConceptLink> bat $\mathbb{R}$ <VisualBind element="rectaReal" color="carbon"><ConceptLink targetId="recta">zuzen errealean</ConceptLink></VisualBind>. $\varepsilon > 0$ <ConceptLink targetId="distancia">distantzia</ConceptLink> bakoitzerako badago $N \in \mathbb{N}$ indize bat, non edozein $n, m \ge N$-rako $x_n$ eta $x_m$ gaiek hau betetzen duten:
+
+$$
+\forall \varepsilon > 0 \ \exists N \in \mathbb{N} \ \forall n, m \ge N \ (|x_n - x_m| < \varepsilon)
+$$
+
+Indize jakin batetik aurrera, gaiak elkarrengandik nahi bezain distantzia txikian daude.
+</ProofStep>
+
+<ProofStep number={2} target="step-acotacion" diagramStep="step-acotacion" title="Segidaren bornapen orokorra">
+Cauchyren baldintza $\varepsilon = 1$ hartuta aplikatuz, badago $N_0 \in \mathbb{N}$ non $|x_n - x_m| < 1$ den $n, m \ge N_0$ guztietarako; bereziki, $m = N_0$ hartuta, $|x_n - x_{N_0}| < 1$ da $n \ge N_0$ guztietarako. Aurreko $\{x_1, \dots, x_{N_0-1}\}$ gaiek <ConceptLink targetId="conjunto">multzo</ConceptLink> finitu bat osatzen dute, hutsa $N_0 = 1$ bada. Defini ditzagun <VisualBind element="cotaMMin" color="ocre">$m$</VisualBind> <ConceptLink targetId="cota-inferior" isDependency={true}>behe-bornea</ConceptLink> eta <VisualBind element="cotaMMax" color="ocre">$M$</VisualBind> <ConceptLink targetId="cota-superior" isDependency={true}>goiko bornea</ConceptLink>:
+
+$$
+m = \min(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} - 1\}), \quad M = \max(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} + 1\})
+$$
+
+$n < N_0$ denean, $m \le x_n \le M$ betetzen da definizioz. $n \ge N_0$ denean, $|x_n - x_{N_0}| < 1$ delako, $m \le x_{N_0} - 1 < x_n < x_{N_0} + 1 \le M$ da. Segida osoa <VisualBind element="intervaloAcotacion" color="ocre">$[m, M]$</VisualBind> <ConceptLink targetId="intervalo" isDependency={true}>tarte itxian</ConceptLink> bornatuta geratzen da:
+
+$$
+\forall n \in \mathbb{N} \ (m \le x_n \le M)
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step-conjunto-supremo" diagramStep="step-conjunto-supremo" title="S multzoaren eraikuntza eta gorenenaren axiomaren aplikazioa">
+Defini dezagun balizko behe-borneen <VisualBind element="conjuntoS" color="canela">$S \subseteq \mathbb{R}$</VisualBind> <ConceptLink targetId="conjunto">azpimultzo</ConceptLink> laguntzailea:
+
+$$
+S = \{ x \in \mathbb{R} : \exists K \in \mathbb{N} \ \forall n \ge K \ (x \le x_n) \}
+$$
+
+$S$ multzoa ez da hutsa: $m \in S$, $m \le x_n$ baita $n$ guztietarako ($K = 1$ aski da). Eta $M$ $S$-ren goiko bornea da: $x > M$ bada, $x > x_n$ da $n$ guztietarako, beraz ez dago baldintza betetzen duen $K$-rik eta $x \notin S$. <ConceptLink targetId="axioma-supremo" isDependency={true}>Gorenenaren axiomagatik</ConceptLink>, badago goiko borne txikiena, <VisualBind element="supremoL" color="terracota">$L = \sup(S) \in \mathbb{R}$</VisualBind>, eta hau betetzen du:
+
+$$
+\forall x \in S \ (x \le L) \quad \land \quad \forall c \in \mathbb{R} \ \bigl(\forall x \in S \ (x \le c) \implies L \le c\bigr)
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step-convergencia" diagramStep="step-convergencia" title="Segidaren konbergentzia L gorenerantz">
+Finkatu $\varepsilon > 0$. $\frac{\varepsilon}{2}$-rako Cauchyren baldintzak $N \in \mathbb{N}$ indize bat ematen du, non $|x_n - x_N| < \frac{\varepsilon}{2}$ den $n \ge N$ guztietarako. Hau da, $n \ge N$ guztietarako:
+
+$$
+x_N - \frac{\varepsilon}{2} < x_n < x_N + \frac{\varepsilon}{2}
+$$
+
+<VisualBind element="pHalfMinus" color="pavo">$x_N - \frac{\varepsilon}{2}$</VisualBind> $x_n$ baino txikiagoa denez $n \ge N$ guztietarako, $x_N - \frac{\varepsilon}{2} \in S$ da ($K = N$ hartuta), eta beraz $x_N - \frac{\varepsilon}{2} \le L$, $L$ $S$-ren <ConceptLink targetId="cota-superior">goiko bornea</ConceptLink> baita.
+
+Izan bedi orain $x \in S$ eta $K$ non $x \le x_n$ den $n \ge K$ guztietarako. $n = \max(K, N)$ hartuz, $x \le x_n < x_N + \frac{\varepsilon}{2}$ da. Beraz, <VisualBind element="pHalfPlus" color="pavo">$x_N + \frac{\varepsilon}{2}$</VisualBind> $S$-ren goiko bornea da, eta $L$ goiko borne txikiena denez, $L \le x_N + \frac{\varepsilon}{2}$. Bi desberdintzek $|x_N - L| \le \frac{\varepsilon}{2}$ ematen dute.
+
+Balio absolutuaren desberdintza triangeluarraren bidez, $n \ge N$ guztietarako:
+
+$$
+|x_n - L| \le |x_n - x_N| + |x_N - L| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+$$
+
+Ondorioz, $N$ indizetik aurrerako gai guztiak <VisualBind element="pEpsMinus" color="mora">$L - \varepsilon$</VisualBind> eta <VisualBind element="pEpsPlus" color="mora">$L + \varepsilon$</VisualBind> muturrek mugatutako $(L - \varepsilon, L + \varepsilon)$ <VisualBind element="entornoEpsilon" color="mora">ingurunean</VisualBind> geratzen dira:
+
+$$
+\forall n \ge N \ (|x_n - L| < \varepsilon) \implies \lim_{n \to \infty} x_n = L
+$$
+
+$\varepsilon$ edozein zenez, segida <ConceptLink targetId="limite">muga</ConceptLink> den <VisualBind element="supremoL" color="terracota">$L$</VisualBind> balirantz konbergitzen da, eta hori $\mathbb{R}$-koa da. Osotasun metrikoa frogatuta dago.
+</ProofStep>
+
+</DemonstrationSection>

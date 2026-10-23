@@ -30,7 +30,7 @@ const CONTENT_ID_RE = /^[a-zA-Z0-9_-]+$/;
 const REFERENCE_FIELDS = new Set([
   'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
   'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'proofMethod',
-  'axioms_verified', 'concept', 'requiredNodes', 'dependencias', 'extends', 'builtIn',
+  'axioms_verified', 'axioms_falsified', 'concept', 'requiredNodes', 'dependencias', 'extends', 'builtIn',
 ]);
 
 const METADATA_SCHEMAS = {

@@ -1,0 +1,106 @@
+export const metadata = {
+  id: "demo-completitud-reales",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de completitud de los números reales",
+  description: "Demostración analítica de la completitud métrica de ℝ: deducción de la convergencia de toda sucesión de Cauchy a partir del axioma del supremo.",
+  parentTheorem: "completitud-reales",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  proofMethod: "metodo-directo",
+  authors: ["dedekind"],
+  tags: ["analisis-real", "completitud", "sucesion-cauchy", "supremo", "continuo"],
+  layout: "split",
+  sources: [
+    {
+      title: "Stetigkeit und irrationale Zahlen",
+      author: "Richard Dedekind",
+      locator: "1872",
+      role: "primary"
+    },
+    {
+      title: "Principles of Mathematical Analysis",
+      author: "Walter Rudin",
+      locator: "Capítulo 3",
+      role: "secondary"
+    }
+  ]
+};
+
+import { DemoCompletitudReales } from "@content/diagrams/Demos/DemoCompletitudReales";
+
+<DemonstrationSection diagram={<DemoCompletitudReales />}>
+
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración deductiva directa</ConceptLink> de la completitud métrica del <ConceptLink targetId="cuerpo-ordenado" isDependency={true}>cuerpo ordenado</ConceptLink> de los <ConceptLink targetId="numero-real">números reales</ConceptLink> establece que toda <ConceptLink targetId="sucesion-cauchy" isDependency={true}>sucesión de Cauchy</ConceptLink> en $\mathbb{R}$ converge hacia un <ConceptLink targetId="limite">límite</ConceptLink> perteneciente a $\mathbb{R}$, a partir del <ConceptLink targetId="axioma-supremo" isDependency={true}>axioma del supremo</ConceptLink>. Prueba así la segunda condición del <ConceptLink targetId="completitud-reales">teorema de completitud de los números reales</ConceptLink>.
+
+El argumento procede en tres etapas: toda sucesión de Cauchy está acotada en la <ConceptLink targetId="recta">recta</ConceptLink> real; el conjunto de sus cotas inferiores eventuales, no vacío y acotado superiormente, tiene supremo por el axioma del supremo; y ese supremo es el límite de la sucesión.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step-sucesion-cauchy" diagramStep="step-sucesion-cauchy" title="Hipótesis y condición métrica de Cauchy">
+Sea una <ConceptLink targetId="sucesion-cauchy" isDependency={true}>sucesión de Cauchy</ConceptLink> <VisualBind element="sucesionCauchy" color="carbon">$(x_n)_{n \in \mathbb{N}}$</VisualBind> sobre la <VisualBind element="rectaReal" color="carbon"><ConceptLink targetId="recta">recta real</ConceptLink></VisualBind> $\mathbb{R}$. Para cada <ConceptLink targetId="distancia">distancia</ConceptLink> $\varepsilon > 0$ existe un índice $N \in \mathbb{N}$ tal que, para cualesquiera $n, m \ge N$, los términos $x_n$ y $x_m$ verifican:
+
+$$
+\forall \varepsilon > 0 \ \exists N \in \mathbb{N} \ \forall n, m \ge N \ (|x_n - x_m| < \varepsilon)
+$$
+
+Los términos se concentran, a partir de un índice, a distancias arbitrariamente pequeñas entre sí.
+</ProofStep>
+
+<ProofStep number={2} target="step-acotacion" diagramStep="step-acotacion" title="Acotación global de la sucesión">
+Aplicando la condición de Cauchy con $\varepsilon = 1$ se obtiene $N_0 \in \mathbb{N}$ tal que $|x_n - x_m| < 1$ para $n, m \ge N_0$; en particular, con $m = N_0$, $|x_n - x_{N_0}| < 1$ para todo $n \ge N_0$. Los términos previos $\{x_1, \dots, x_{N_0-1}\}$ forman un <ConceptLink targetId="conjunto">conjunto</ConceptLink> finito, vacío si $N_0 = 1$. Definimos la <ConceptLink targetId="cota-inferior" isDependency={true}>cota inferior</ConceptLink> <VisualBind element="cotaMMin" color="ocre">$m$</VisualBind> y la <ConceptLink targetId="cota-superior" isDependency={true}>cota superior</ConceptLink> <VisualBind element="cotaMMax" color="ocre">$M$</VisualBind>:
+
+$$
+m = \min(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} - 1\}), \quad M = \max(\{x_1, \dots, x_{N_0-1}\} \cup \{x_{N_0} + 1\})
+$$
+
+Para $n < N_0$ se tiene $m \le x_n \le M$ por definición. Para $n \ge N_0$, de $|x_n - x_{N_0}| < 1$ resulta $m \le x_{N_0} - 1 < x_n < x_{N_0} + 1 \le M$. Toda la sucesión queda acotada en el <ConceptLink targetId="intervalo" isDependency={true}>intervalo cerrado</ConceptLink> <VisualBind element="intervaloAcotacion" color="ocre">$[m, M]$</VisualBind>:
+
+$$
+\forall n \in \mathbb{N} \ (m \le x_n \le M)
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step-conjunto-supremo" diagramStep="step-conjunto-supremo" title="Construcción del conjunto S y aplicación del axioma del supremo">
+Definimos el <ConceptLink targetId="conjunto">conjunto</ConceptLink> auxiliar <VisualBind element="conjuntoS" color="canela">$S \subseteq \mathbb{R}$</VisualBind> de cotas inferiores eventuales:
+
+$$
+S = \{ x \in \mathbb{R} : \exists K \in \mathbb{N} \ \forall n \ge K \ (x \le x_n) \}
+$$
+
+El conjunto $S$ no es vacío: $m \in S$, porque $m \le x_n$ para todo $n$ (basta $K = 1$). Y $M$ es cota superior de $S$: si $x > M$, entonces $x > x_n$ para todo $n$, de modo que ningún $K$ cumple la condición y $x \notin S$. Por el <ConceptLink targetId="axioma-supremo" isDependency={true}>axioma del supremo</ConceptLink> existe la menor cota superior <VisualBind element="supremoL" color="terracota">$L = \sup(S) \in \mathbb{R}$</VisualBind>, que verifica:
+
+$$
+\forall x \in S \ (x \le L) \quad \land \quad \forall c \in \mathbb{R} \ \bigl(\forall x \in S \ (x \le c) \implies L \le c\bigr)
+$$
+</ProofStep>
+
+<ProofStep number={4} target="step-convergencia" diagramStep="step-convergencia" title="Convergencia de la sucesión hacia el supremo L">
+Fijado $\varepsilon > 0$, la condición de Cauchy para $\frac{\varepsilon}{2}$ proporciona un índice $N \in \mathbb{N}$ tal que $|x_n - x_N| < \frac{\varepsilon}{2}$ para todo $n \ge N$. Es decir, para todo $n \ge N$:
+
+$$
+x_N - \frac{\varepsilon}{2} < x_n < x_N + \frac{\varepsilon}{2}
+$$
+
+Como <VisualBind element="pHalfMinus" color="pavo">$x_N - \frac{\varepsilon}{2}$</VisualBind> es menor que $x_n$ para todo $n \ge N$, se tiene $x_N - \frac{\varepsilon}{2} \in S$ (con $K = N$), luego $x_N - \frac{\varepsilon}{2} \le L$ por ser $L$ <ConceptLink targetId="cota-superior">cota superior</ConceptLink> de $S$.
+
+Sea ahora $x \in S$ y $K$ tal que $x \le x_n$ para todo $n \ge K$. Tomando $n = \max(K, N)$ resulta $x \le x_n < x_N + \frac{\varepsilon}{2}$. Así, <VisualBind element="pHalfPlus" color="pavo">$x_N + \frac{\varepsilon}{2}$</VisualBind> es cota superior de $S$, y por ser $L$ la menor cota superior, $L \le x_N + \frac{\varepsilon}{2}$. Ambas desigualdades dan $|x_N - L| \le \frac{\varepsilon}{2}$.
+
+Por la desigualdad triangular del valor absoluto, para todo $n \ge N$:
+
+$$
+|x_n - L| \le |x_n - x_N| + |x_N - L| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+$$
+
+En consecuencia, todos los términos a partir de $N$ quedan confinados en el <VisualBind element="entornoEpsilon" color="mora">entorno</VisualBind> $(L - \varepsilon, L + \varepsilon)$ delimitado por <VisualBind element="pEpsMinus" color="mora">$L - \varepsilon$</VisualBind> y <VisualBind element="pEpsPlus" color="mora">$L + \varepsilon$</VisualBind>:
+
+$$
+\forall n \ge N \ (|x_n - L| < \varepsilon) \implies \lim_{n \to \infty} x_n = L
+$$
+
+Como $\varepsilon$ era arbitrario, la sucesión converge al <ConceptLink targetId="limite">límite</ConceptLink> <VisualBind element="supremoL" color="terracota">$L$</VisualBind>, que pertenece a $\mathbb{R}$. Queda probada la completitud métrica.
+</ProofStep>
+
+</DemonstrationSection>

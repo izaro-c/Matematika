@@ -136,8 +136,11 @@ function evaluateActiveNodes(
     // lema, teorema, corolario → OR sobre demostraciones
     if (node.type === 'teorema' || node.type === 'corolario' || node.type === 'lema') {
       if (node.proofs.length === 0) {
-        // Sin demostraciones: activo si no tiene dependencias directas
-        active[id] = node.directDependencies.length === 0;
+        // Sin demostraciones: AND sobre dependencias directas (activo si no tiene ninguna)
+        active[id] = node.directDependencies.every((dep) => {
+          if (!filtered[dep]) return true;
+          return active[dep] !== false;
+        });
       } else {
         // OR: al menos una demostración con todas sus dependencias activas
         active[id] = node.proofs.some((proof) =>
@@ -147,6 +150,12 @@ function evaluateActiveNodes(
           }),
         );
       }
+      continue;
+    }
+
+    // Un modelo deja de valer en cuanto está activo un axioma que incumple.
+    if (node.falsifiedAxioms?.some((axiomId) => filtered[axiomId] && !disabledAxioms.has(axiomId))) {
+      active[id] = false;
       continue;
     }
 

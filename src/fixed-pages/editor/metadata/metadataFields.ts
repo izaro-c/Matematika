@@ -172,6 +172,7 @@ export function getMetadataFields(type?: string): MetadataFieldConfig[] {
         ...common,
         { key: 'satisfies', label: 'Sistema que satisface', type: 'text', required: true },
         { key: 'axioms_verified', label: 'Axiomas verificados', type: 'array' },
+        { key: 'axioms_falsified', label: 'Axiomas incumplidos', type: 'array' },
         { key: 'builtIn', label: 'Construido en el sistema', type: 'text' },
         { key: 'hasDiagram', label: 'Tiene diagrama', type: 'boolean' },
       ];

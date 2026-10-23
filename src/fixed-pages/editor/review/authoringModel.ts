@@ -40,7 +40,7 @@ export function extractSemanticReferences(source: string): SemanticReference[] {
 function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
   const keys = [
     'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
-    'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'axioms_verified',
+    'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'axioms_verified', 'axioms_falsified',
     'concept', 'requiredNodes', 'dependencias', 'proofMethod', 'axiomSystem', 'links',
     'extends', 'builtIn',
   ];

@@ -224,6 +224,8 @@ export const ModelSchema = z.object({
   satisfies: z.union([z.string(), z.array(z.string())]),
   /** IDs de los axiomas verificados en este modelo */
   axioms_verified: z.array(z.string()).optional(),
+  /** IDs de los axiomas que este modelo incumple: el modelo no es válido mientras alguno esté activo */
+  axioms_falsified: z.array(z.string()).optional(),
   /** ID del sistema axiomático dentro del cual se construye el modelo (consistencia relativa) */
   builtIn: z.string().optional(),
   /** Indica si este modelo tiene un diagrama interactivo asociado */

@@ -84,6 +84,7 @@
     "numero-natural",
     "numero-entero",
     "numero-racional",
+    "demo-completitud-reales",
     "completitud-reales",
     "numero-real",
     "dominio",
@@ -1724,6 +1725,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-completitud-reales": {
+      "id": "demo-completitud-reales",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de completitud de los números reales",
+      "description": "Demostración analítica de la completitud métrica de ℝ: deducción de la convergencia de toda sucesión de Cauchy a partir del axioma del supremo.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-congruencia-ala": {
       "id": "demo-congruencia-ala",
       "type": "demostracion",
@@ -2110,6 +2119,10 @@
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3"
+      ],
+      "falsifiedAxioms": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
       ]
     },
     "modelo-poincare": {
@@ -2146,6 +2159,10 @@
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3"
+      ],
+      "falsifiedAxioms": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
       ]
     },
     "plan-de-estudio-camino-teorema-pitagoras": {
@@ -2161,7 +2178,17 @@
       "type": "teorema",
       "title": "Completitud de los números reales",
       "description": "Propiedad del cuerpo ordenado de los números reales derivada del axioma del supremo, que garantiza la convergencia de sucesiones de Cauchy y la ausencia de discontinuidades.",
-      "proofs": [],
+      "proofs": [
+        {
+          "id": "demo-completitud-reales",
+          "dependencies": [
+            "axioma-supremo"
+          ],
+          "methods": [
+            "metodo-directo"
+          ]
+        }
+      ],
       "directDependencies": [
         "cuerpo",
         "axioma-supremo"

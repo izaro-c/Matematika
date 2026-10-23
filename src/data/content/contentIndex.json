@@ -16577,6 +16577,152 @@
       "eu"
     ]
   },
+  "en:demo-completitud-reales": {
+    "id": "demo-completitud-reales",
+    "slug": "demo-completitud-reales",
+    "lang": "en",
+    "filePath": "en/demonstrations/demo-completitud-reales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-completitud-reales",
+      "lang": "en",
+      "type": "demostracion",
+      "title": "Proof: Theorem of Completeness of the Real Numbers",
+      "description": "Analytical proof of the metric completeness of ℝ: deduction of the convergence of every Cauchy sequence from the axiom of the supremum.",
+      "parentTheorem": "completitud-reales",
+      "branch": "26A",
+      "branches": [
+        "26A",
+        "03E"
+      ],
+      "proofMethod": "metodo-directo",
+      "authors": [
+        "dedekind"
+      ],
+      "tags": [
+        "analisis-real",
+        "completitud",
+        "sucesion-cauchy",
+        "supremo",
+        "continuo"
+      ],
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Stetigkeit und irrationale Zahlen",
+          "author": "Richard Dedekind",
+          "locator": "1872",
+          "role": "primary"
+        },
+        {
+          "title": "Principles of Mathematical Analysis",
+          "author": "Walter Rudin",
+          "locator": "Chapter 3",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "metodo-directo",
+        "cuerpo-ordenado",
+        "numero-real",
+        "sucesion-cauchy",
+        "limite",
+        "axioma-supremo",
+        "completitud-reales",
+        "recta",
+        "cauchy",
+        "dedekind",
+        "distancia",
+        "conjunto",
+        "cota-inferior",
+        "cota-superior",
+        "intervalo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "demo-completitud-reales": {
+    "id": "demo-completitud-reales",
+    "slug": "demo-completitud-reales",
+    "lang": "es",
+    "filePath": "es/demonstrations/demo-completitud-reales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-completitud-reales",
+      "lang": "es",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de completitud de los números reales",
+      "description": "Demostración analítica de la completitud métrica de ℝ: deducción de la convergencia de toda sucesión de Cauchy a partir del axioma del supremo.",
+      "parentTheorem": "completitud-reales",
+      "branch": "26A",
+      "branches": [
+        "26A",
+        "03E"
+      ],
+      "proofMethod": "metodo-directo",
+      "authors": [
+        "dedekind"
+      ],
+      "tags": [
+        "analisis-real",
+        "completitud",
+        "sucesion-cauchy",
+        "supremo",
+        "continuo"
+      ],
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Stetigkeit und irrationale Zahlen",
+          "author": "Richard Dedekind",
+          "locator": "1872",
+          "role": "primary"
+        },
+        {
+          "title": "Principles of Mathematical Analysis",
+          "author": "Walter Rudin",
+          "locator": "Capítulo 3",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "metodo-directo",
+        "cuerpo-ordenado",
+        "numero-real",
+        "sucesion-cauchy",
+        "limite",
+        "axioma-supremo",
+        "completitud-reales",
+        "recta",
+        "cauchy",
+        "dedekind",
+        "distancia",
+        "conjunto",
+        "cota-inferior",
+        "cota-superior",
+        "intervalo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:demo-congruencia-ala": {
     "id": "demo-congruencia-ala",
     "slug": "demo-congruencia-ala",
@@ -21762,6 +21908,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -21842,6 +21992,10 @@
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3"
+      ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
       ],
       "hasDiagram": true,
       "sources": [
@@ -22182,6 +22336,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -22252,6 +22410,10 @@
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3"
+      ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
       ],
       "hasDiagram": true,
       "sources": [
@@ -22474,6 +22636,9 @@
         "03E"
       ],
       "hasSimulation": false,
+      "demos": [
+        "demo-completitud-reales"
+      ],
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -22551,6 +22716,9 @@
         "03E"
       ],
       "hasSimulation": false,
+      "demos": [
+        "demo-completitud-reales"
+      ],
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -34204,6 +34372,79 @@
       "eu"
     ]
   },
+  "es:demo-completitud-reales": {
+    "id": "demo-completitud-reales",
+    "slug": "demo-completitud-reales",
+    "lang": "es",
+    "filePath": "es/demonstrations/demo-completitud-reales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-completitud-reales",
+      "lang": "es",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de completitud de los números reales",
+      "description": "Demostración analítica de la completitud métrica de ℝ: deducción de la convergencia de toda sucesión de Cauchy a partir del axioma del supremo.",
+      "parentTheorem": "completitud-reales",
+      "branch": "26A",
+      "branches": [
+        "26A",
+        "03E"
+      ],
+      "proofMethod": "metodo-directo",
+      "authors": [
+        "dedekind"
+      ],
+      "tags": [
+        "analisis-real",
+        "completitud",
+        "sucesion-cauchy",
+        "supremo",
+        "continuo"
+      ],
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Stetigkeit und irrationale Zahlen",
+          "author": "Richard Dedekind",
+          "locator": "1872",
+          "role": "primary"
+        },
+        {
+          "title": "Principles of Mathematical Analysis",
+          "author": "Walter Rudin",
+          "locator": "Capítulo 3",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "metodo-directo",
+        "cuerpo-ordenado",
+        "numero-real",
+        "sucesion-cauchy",
+        "limite",
+        "axioma-supremo",
+        "completitud-reales",
+        "recta",
+        "cauchy",
+        "dedekind",
+        "distancia",
+        "conjunto",
+        "cota-inferior",
+        "cota-superior",
+        "intervalo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:demo-congruencia-ala": {
     "id": "demo-congruencia-ala",
     "slug": "demo-congruencia-ala",
@@ -36806,6 +37047,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -37016,6 +37261,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -37162,6 +37411,9 @@
         "03E"
       ],
       "hasSimulation": false,
+      "demos": [
+        "demo-completitud-reales"
+      ],
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -47162,6 +47414,79 @@
       "eu"
     ]
   },
+  "eu:demo-completitud-reales": {
+    "id": "demo-completitud-reales",
+    "slug": "demo-completitud-reales",
+    "lang": "eu",
+    "filePath": "eu/demonstrations/demo-completitud-reales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-completitud-reales",
+      "lang": "eu",
+      "type": "demostracion",
+      "title": "Frogapena: Zenbaki errealen osotasunaren teorema",
+      "description": "ℝ-ren osotasun metrikoaren froga analitikoa: Cauchyren segida ororen konbergentziaren dedukzioa gorenenaren axiomatik abiatuta.",
+      "parentTheorem": "completitud-reales",
+      "branch": "26A",
+      "branches": [
+        "26A",
+        "03E"
+      ],
+      "proofMethod": "metodo-directo",
+      "authors": [
+        "dedekind"
+      ],
+      "tags": [
+        "analisis-real",
+        "completitud",
+        "sucesion-cauchy",
+        "supremo",
+        "continuo"
+      ],
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Stetigkeit und irrationale Zahlen",
+          "author": "Richard Dedekind",
+          "locator": "1872",
+          "role": "primary"
+        },
+        {
+          "title": "Principles of Mathematical Analysis",
+          "author": "Walter Rudin",
+          "locator": "3. Kapitulua",
+          "role": "secondary"
+        }
+      ],
+      "conceptLinks": [
+        "cuerpo-ordenado",
+        "metodo-directo",
+        "sucesion-cauchy",
+        "limite",
+        "axioma-supremo",
+        "numero-real",
+        "completitud-reales",
+        "recta",
+        "cauchy",
+        "dedekind",
+        "distancia",
+        "conjunto",
+        "cota-inferior",
+        "cota-superior",
+        "intervalo"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:demo-congruencia-ala": {
     "id": "demo-congruencia-ala",
     "slug": "demo-congruencia-ala",
@@ -49764,6 +50089,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -49974,6 +50303,10 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ],
+      "axioms_falsified": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasDiagram": true,
       "sources": [
         {
@@ -50120,6 +50453,9 @@
         "03E"
       ],
       "hasSimulation": false,
+      "demos": [
+        "demo-completitud-reales"
+      ],
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",

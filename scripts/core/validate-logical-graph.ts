@@ -161,6 +161,7 @@ interface GraphNode {
   description: string;
   proofs: { id: string; dependencies: string[]; methods: string[] }[];
   directDependencies: string[];
+  falsifiedAxioms?: string[];
 }
 
 const graphNodes: Record<string, GraphNode> = {};
@@ -176,7 +177,10 @@ for (const id of allNodes) {
     title: meta.title || id,
     description: meta.description || '',
     proofs: [],
-    directDependencies: []
+    directDependencies: [],
+    falsifiedAxioms: meta.type === 'modelo' && Array.isArray(meta.axioms_falsified) && meta.axioms_falsified.length > 0
+      ? meta.axioms_falsified.filter((axiomId): axiomId is string => typeof axiomId === 'string')
+      : undefined,
   };
 }
 

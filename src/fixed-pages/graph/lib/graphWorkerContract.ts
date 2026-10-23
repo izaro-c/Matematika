@@ -14,6 +14,8 @@ export interface GraphWorkerNode {
   description: string;
   proofs: GraphWorkerProof[];
   directDependencies: string[];
+  /** Solo modelos: axiomas que el modelo incumple (no son dependencias). */
+  falsifiedAxioms?: string[];
 }
 
 export interface GraphWorkerStructure {
@@ -182,7 +184,8 @@ function isGraphWorkerNode(value: unknown): value is GraphWorkerNode {
     && typeof value.description === 'string'
     && Array.isArray(value.proofs)
     && value.proofs.every(isGraphWorkerProof)
-    && isStringArray(value.directDependencies);
+    && isStringArray(value.directDependencies)
+    && (value.falsifiedAxioms === undefined || isStringArray(value.falsifiedAxioms));
 }
 
 export function isGraphWorkerStructure(value: unknown): value is GraphWorkerStructure {
