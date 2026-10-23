@@ -10,6 +10,7 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. Kapitulua", role: "primary" },
+    { title: "Die Vollständigkeit der Axiome des logischen Funktionenkalküls", author: "Kurt Gödel", locator: "Monatshefte für Mathematik und Physik 37 (1930), pp. 349–360", role: "secondary" },
     { title: "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I", author: "Kurt Gödel", locator: "Monatshefte für Mathematik und Physik 38 (1931)", role: "secondary" }
   ]
 };
@@ -25,7 +26,7 @@ Logika klasikoan, teoria inkoherente batek bere hizkuntzako edozein formula frog
   $$
   \mathcal{T} \text{ koherentea da} \iff \forall \varphi \in \mathcal{L}_\sigma, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
   $$
-  Bestalde, $\mathcal{T}$ **semantikoki koherentea** da (edo betegarria) baldin eta gutxienez $\mathcal{M}$ <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat existitzen bada non $\mathcal{M} \models \mathcal{T}$ den.
+  Bestalde, $\mathcal{T}$ **semantikoki koherentea** da (edo eredu bat duena) baldin eta gutxienez $\mathcal{M}$ <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat existitzen bada non $\mathcal{M} \models \mathcal{T}$ den.
   
   Lehen mailako <ConceptLink targetId="logica">logikan</ConceptLink> <ConceptLink targetId="godel">Gödelen</ConceptLink> <ConceptLink targetId="teorema-completitud-godel">osotasun-teorema</ConceptLink> dela eta, bi nozio horiek bat datoz:
   $$
@@ -39,5 +40,5 @@ Logika klasikoan, teoria inkoherente batek bere hizkuntzako edozein formula frog
 
 Gödelen <ConceptLink targetId="teorema-incompletitud-godel">ez-osotasunaren bigarren teoremaren</ConceptLink> arabera, oinarrizko aritmetika barne hartzen duen teoria formal koherente eta errekurtsiboki axiomatizagarri batek ezin du bere koherentzia frogatu. Koherentzia-frogak, oro har, erlatiboak dira (<ConceptLink targetId="consistencia-relativa">koherentzia erlatiboa</ConceptLink>): teoria baten eredua beste teoria baten barruan eraikitzen da, eta lehenengoa koherentea da bigarrena koherentea bada.
 
-- **<ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink>:** *Grundlagen* lanaren II. kapituluan, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> geometria euklidearraren koherentzia erlatiboa ezarri zuen haren <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> terminoak $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink> interpretatuz. $\mathbb{R}$ <ConceptLink targetId="sistema-cuerpo-real">zenbaki errealen teoria</ConceptLink> koherentea bada, geometria euklidearra ere koherentea da.
-- **Geometria ez-euklidearrak:** Historikoki, ez <ConceptLink targetId="bolyai">Bolyaik</ConceptLink> ez <ConceptLink targetId="lobachevski">Lobatxevskik</ConceptLink> ez zuten lortu <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoaren</ConceptLink> koherentzia frogatzea. <ConceptLink targetId="beltrami">Eugenio Beltramik</ConceptLink> (1868), Felix <ConceptLink targetId="klein">Kleinek</ConceptLink> eta <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> frogatu zuten <ConceptLink targetId="plano">plano</ConceptLink> euklidearreko eredu analitikoen bidez, hala nola <ConceptLink targetId="modelo-poincare">Poincaréren diskoaren</ConceptLink> bidez; horrela, geometria hiperbolikoaren koherentzia geometria euklidearrera murrizten da.
+- **<ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink>:** *Grundlagen* lanaren II. kapituluan, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> geometria euklidearraren koherentzia erlatiboa ezarri zuen haren <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> terminoak plano bateko <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink> interpretatuz, zeinaren koordenatuak zenbaki aljebraiko erreal $\Omega$ gorputz zenbakigarri batekoak diren. Axiomen edozein kontraesan $\Omega$-ren aritmetikara eramango litzateke.
+- **Geometria ez-euklidearrak:** Historikoki, ez <ConceptLink targetId="bolyai">Bolyaik</ConceptLink> ez <ConceptLink targetId="lobachevski">Lobatxevskik</ConceptLink> ez zuten lortu <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoaren</ConceptLink> koherentzia frogatzea. <ConceptLink targetId="beltrami">Eugenio Beltramik</ConceptLink> (1868, kurbadura konstanteko gainazalen eta disko-ereduaren bidez), Felix <ConceptLink targetId="klein">Kleinek</ConceptLink> (1871) eta <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> (1882) frogatu zuten eredu euklidearren bidez, <ConceptLink targetId="plano">planokoak</ConceptLink> barne, hala nola <ConceptLink targetId="modelo-poincare">Poincaréren diskoaren</ConceptLink> bidez; horrela, geometria hiperbolikoaren koherentzia geometria euklidearrera murrizten da.

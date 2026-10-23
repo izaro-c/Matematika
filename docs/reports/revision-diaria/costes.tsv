@@ -3,3 +3,4 @@ fecha	id	modelo	usd	turnos	input	cache_read	cache_write	output
 2026-10-23	concepto-primitivo	opus/high	0.2255628	5	8	191294	11569	4736
 2026-10-23	congruencia	opus/high	0.7334930000000001	11	12	298705	59623	9836
 2026-10-23	conjunto	opus/high	1.9807751999999998	80	60	2515096	75167	43809
+2026-10-23	consistencia-logica	opus/high	1.1140807999999998	48	26	872764	44618	29124

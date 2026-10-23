@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 4 / 189
+Revisadas: 5 / 190
 
 ## Pendientes
 
-- [ ] `consistencia-logica` · definitions
 - [ ] `dimension` · definitions
 - [ ] `dominio` · definitions
 - [ ] `estar-entre` · definitions
@@ -191,6 +190,7 @@ Revisadas: 4 / 189
 - [ ] `tales` · mathematicians
 - [ ] `urysohn` · mathematicians
 - [ ] `wallman` · mathematicians
+- [ ] `subconjunto` · definitions
 
 ## Revisadas
 
@@ -198,3 +198,4 @@ Revisadas: 4 / 189
 - [x] `concepto-primitivo` · 2026-10-23 · errores · corregido cde8661a · [informe](2026-10-23-concepto-primitivo.md) · $0.23
 - [x] `congruencia` · 2026-10-23 · mejoras · propuestas 77c46375 · [informe](2026-10-23-congruencia.md) · $0.73
 - [x] `conjunto` · 2026-10-23 · errores · rescatado de rescate/revision-conjunto · [informe](2026-10-23-conjunto.md) · $1.98
+- [x] `consistencia-logica` · 2026-10-23 · errores · corregido 20020c7f · propuestas 439b14e7 · [informe](2026-10-23-consistencia-logica.md) · $1.11
