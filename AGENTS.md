@@ -28,3 +28,4 @@ Non-negotiables that also apply when the skill is not loaded:
 - Never JSX inside `$…$` or `$$…$$`. No invented components, sources or locators. Write whole files, never `...` placeholders.
 - Cross-theory relations go in metadata (`extends` on systems, `builtIn` on models), never as `isDependency`.
 - Done means `node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <id>...` printed `══ TODO OK`; quote that line in your report.
+- Its `check-links` / `check-style` WARNs (unlinked concepts, evasive steps, filler, long sentences, inline definitions) are not failures, but fix or justify each one. Lint and parity also run in pre-commit and CI (`npm run content:check`).

@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "numero-complejo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Zenbaki konplexuak",
+  description: "Zenbaki errealak unitate irudikariaren bidez hedatzen dituen gorputz aljebraikoki itxia, bi dimentsioko planoarekin geometrikoki identifikagarria.",
+  branch: "12",
+  branches: ["12", "30"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo VII, §1", role: "primary" },
+    { title: "Complex Analysis", author: "Lars V. Ahlfors", locator: "Capítulo 1, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="Z" />enbaki **konplexuak** <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="cuerpo">gorputza</ConceptLink> $i$ <ConceptLink targetId="unidad-imaginaria">unitate irudikariarekin</ConceptLink> hedatzearen bidez lortutako <ConceptLink targetId="cuerpo-algebraicamente-cerrado">gorputz aljebraikoki itxia</ConceptLink> dira, <ConceptLink targetId="polinomio">ekuazio polinomikoen</ConceptLink> ebazpen osoa formalizatuz eta bi dimentsioko <ConceptLink targetId="plano">planoari</ConceptLink> biderketa-egitura kanoniko bat emanez.
+
+<ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink>-ek eta Jean-Robert <ConceptLink targetId="argand">Argand</ConceptLink>-ek <ConceptLink targetId="plano-complejo">plano konplexuan</ConceptLink> geometrikoki irudikatuak, zenbaki konplexuek <ConceptLink targetId="algebra">aljebra</ConceptLink> eta geometria jarraitua bateratzen dituzte, <ConceptLink targetId="adicion">batuketa</ConceptLink> bektore-<ConceptLink targetId="traslacion">translazioarekin</ConceptLink> eta biderketa <ConceptLink targetId="rotacion">biraketa</ConceptLink> angeluarrarekin eta <ConceptLink targetId="homotecia">homoteziarekin</ConceptLink> lotuz.
+
+<Definicion title="Zenbaki konplexuen egitura formala">
+  **Zenbaki konplexu**en $\mathbb{C}$ gorputza formalki $\mathbb{R}$ <ConceptLink targetId="numero-real" isDependency={true}>zenbaki erreal</ConceptLink>en <ConceptLink targetId="cuerpo" isDependency={true}>gorputz</ConceptLink>aren <ConceptLink targetId="extension-algebraica">hedapen aljebraiko</ConceptLink> sinple gisa definitzen da, $x^2 + 1 = 0$ <ConceptLink targetId="polinomio-irreducible">polinomio laburtezinezkoaren</ConceptLink> $i$ erro bat gehituz:
+  $$
+  \mathbb{C} \cong \mathbb{R}[x] / \langle x^2 + 1 \rangle
+  $$
+  Modu baliokidean, $\mathbb{C}$ egitura $\mathbb{R} \times \mathbb{R}$ <ConceptLink targetId="producto-cartesiano">biderkadura kartesiarrarekin</ConceptLink> identifikatzen da, edozein $(a, b), (c, d) \in \mathbb{R}^2$ bikoterentzat batuketa eta biderketa honela emanak izanik:
+  $$
+  (a, b) + (c, d) = (a + c, b + d)
+  $$
+  $$
+  (a, b) \cdot (c, d) = (a \cdot c - b \cdot d, a \cdot d + b \cdot c)
+  $$
+  $(a, b)$ bikotea era binomiko kanonikoan $z = a + b i$ gisa adierazten da, non $a = \operatorname{Re}(z)$ <ConceptLink targetId="parte-real">parte erreala</ConceptLink> den eta $b = \operatorname{Im}(z)$ <ConceptLink targetId="parte-imaginaria">parte irudikaria</ConceptLink> den.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="clausura-algebraica" titulo="Itxitura aljebraikoa eta aljebraren oinarrizko teorema">
+    $\mathbb{C}$ gorputza aljebraikoki itxia da: $\mathbb{C}$-ko koefizienteak dituen polinomio ez-konstante orok gutxienez erro bat du $\mathbb{C}$-n, <ConceptLink targetId="teorema-fundamental-algebra">aljebraren oinarrizko teorema</ConceptLink> betez, $n \ge 1$ mailako polinomio orok $n$ faktore linealetan erabat faktorizatzen dela bermatuz.
+  </PropiedadItem>
+  <PropiedadItem id="estructura-espacio-vectorial-plano" titulo="Bektore-espazioa eta irudikapen geometrikoa">
+    $(\mathbb{C}, +)$ egitura eskalar errealekiko biderketarekin $2$ <ConceptLink targetId="dimension">dimentsioko</ConceptLink> <ConceptLink targetId="espacio-vectorial">bektore-espazio</ConceptLink> bat da $\mathbb{R}$-ren gainean $\{1, i\}$ <ConceptLink targetId="base-espacio-vectorial">oinarri</ConceptLink> kanonikoarekin, zenbaki konplexu bakoitza <ConceptLink targetId="espacio-euclidiano">plano euklidearreko</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> edo bektore batekin identifikatuz.
+  </PropiedadItem>
+  <PropiedadItem id="incompatibilidad-orden-cuerpo" titulo="Bateraezintasuna ordena oso bateragarriarekin">
+    $\mathbb{C}$-n ezinezkoa da gorputzeko eragiketekin bateragarria den <ConceptLink targetId="orden-total">ordena osoaren</ConceptLink> erlaziorik definitzea, edozein <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatutan</ConceptLink> zero ez den elementu ororen karratua hertsiki positiboa baita, definizioz $i^2 = -1 < 0$ den bitartean.
+  </PropiedadItem>
+</SeccionPropiedades>

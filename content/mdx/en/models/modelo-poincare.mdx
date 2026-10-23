@@ -35,9 +35,9 @@ export const metadata = {
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
 export const Diagram = ModeloPoincare;
 
-<Capitular letra="T" />he **Poincaré disk** is an analytic model of the hyperbolic plane: its <ConceptLink targetId="punto">points</ConceptLink> are those of the open unit disk $\mathbb{D}^2$, its <ConceptLink targetId="recta">lines</ConceptLink> are the diameters and the <ConceptLink targetId="circunferencia">circle</ConceptLink> arcs orthogonal to the boundary, and it satisfies the planar axioms of the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> (I.1–I.3, II, III, the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink> and V).
+<Capitular letra="T" />he **Poincaré disk** is an analytic model of the hyperbolic <ConceptLink targetId="plano">plane</ConceptLink>. Its <ConceptLink targetId="punto">points</ConceptLink> are those of the open unit disk $\mathbb{D}^2$, and its <ConceptLink targetId="recta">lines</ConceptLink> are the <ConceptLink targetId="diametro">diameters</ConceptLink> and the <ConceptLink targetId="circunferencia">circle</ConceptLink> arcs orthogonal to the boundary. It satisfies the planar axioms of the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> (I.1–I.3, II, III, the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink> and V).
 
-Since it is built inside Euclidean geometry, the model proves that plane hyperbolic geometry is <ConceptLink targetId="consistencia-logica">consistent</ConceptLink> if Euclidean geometry is. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> introduced it in 1882, after the models of <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) and <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). It is <ConceptLink targetId="aplicacion-conforme">conformal</ConceptLink>: the measure of hyperbolic angles coincides with that of the Euclidean angles formed by the curves.
+Since it is built inside <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, the model proves that plane hyperbolic geometry is <ConceptLink targetId="consistencia-logica">consistent</ConceptLink> if Euclidean geometry is. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> introduced it in 1882, after the models of <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) and <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). It is <ConceptLink targetId="aplicacion-conforme">conformal</ConceptLink>: the measure of hyperbolic angles coincides with that of the Euclidean angles formed by the curves.
 
 <Definicion title="Structure of the model">
   The model is the <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ defined as follows:
@@ -49,9 +49,9 @@ Since it is built inside Euclidean geometry, the model proves that plane hyperbo
     $$
     d(A, B) = \operatorname{arcosh}\!\left( 1 + \frac{2\,\lVert A - B \rVert^2}{(1 - \lVert A \rVert^2)(1 - \lVert B \rVert^2)} \right)
     $$
-    and two <ConceptLink targetId="angulo">angles</ConceptLink> are congruent if the Euclidean angles between the tangents to their sides have the same measure.
+    and two <ConceptLink targetId="angulo">angles</ConceptLink> are congruent if the Euclidean angles between the tangents to their <ConceptLink targetId="lado">sides</ConceptLink> have the same measure.
 
-  The distance comes from the line element $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; as a point approaches the boundary, its distance to any fixed point of the disk tends to $+\infty$.
+  The distance comes from the <ConceptLink targetId="longitud">length</ConceptLink> element $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; as a point approaches the boundary, its distance to any fixed point of the disk tends to $+\infty$.
 </Definicion>
 
 <Separador />
@@ -81,7 +81,7 @@ Limiting parallels and ultraparallels are <ConceptLink targetId="paralelas">para
       id="poincare-orden"
       title="Order axioms"
     >
-      Each line is an open arc ordered like an interval of $\mathbb{R}$, which yields axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; each line separates the disk into two regions, the <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">Pasch's axiom</ConceptLink> holds.
+      Each line is an open arc ordered like an <ConceptLink targetId="intervalo">interval</ConceptLink> of $\mathbb{R}$, which yields axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; each line separates the disk into two regions, the <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">Pasch's axiom</ConceptLink> holds.
     </PropiedadItem>
 
     <PropiedadItem
@@ -89,7 +89,7 @@ Limiting parallels and ultraparallels are <ConceptLink targetId="paralelas">para
       title="Congruence axioms"
       formula="z \longmapsto e^{i\varphi}\,\frac{z - a}{1 - \bar{a}\,z}, \quad |a| < 1"
     >
-      The Möbius transformations above (and their compositions with conjugation) are the <ConceptLink targetId="isometria">isometries</ConceptLink> of the model: they preserve $d$ and angles, and act transitively on points and directions. They transport segments and angles (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>), and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> and <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> are verified.
+      The Möbius transformations above (and their compositions with conjugation) are the <ConceptLink targetId="isometria">isometries</ConceptLink> of the model: they preserve $d$ and angles, and act transitively on points and directions. They transport <ConceptLink targetId="segmento">segments</ConceptLink> and angles (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>), and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> and <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> are verified.
     </PropiedadItem>
 
     <PropiedadItem

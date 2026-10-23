@@ -17,29 +17,29 @@ export const metadata = {
 import { Distancia } from '@content/diagrams/Definiciones/Distancia';
 export const Simulation = Distancia;
 
-<Capitular letra="L" />a **distancia métrica** es una función que cuantifica numéricamente la separación espacial entre pares de elementos de un conjunto, asignándoles un valor real no negativo conforme a un sistema formal de axiomas métricos.
+<Capitular letra="L" />a **distancia métrica** es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> que cuantifica la separación entre pares de elementos de un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>, asignándoles un valor <ConceptLink targetId="numero-real" isDependency={true}>real</ConceptLink> no negativo conforme a un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> métrico.
 
-La distancia escalar no es un concepto primitivo en la axiomática sintética ni forma parte de su signatura: el espacio se organiza cualitativamente a través de la relación primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos ($\cong$). La función distancia $d(A, B) \in \mathbb{R}$ interviene cuando el espacio se dota de coordenadas analíticas o cuando se construye un modelo métrico concreto.
+La distancia escalar no es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> en la axiomática sintética ni forma parte de su <ConceptLink targetId="signatura">signatura</ConceptLink>: el <ConceptLink targetId="espacio">espacio</ConceptLink> se organiza cualitativamente a través de la relación primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\cong$). La función distancia $d(A, B) \in \mathbb{R}$ interviene cuando el espacio se dota de coordenadas analíticas o cuando se construye un <ConceptLink targetId="espacio-metrico">espacio métrico</ConceptLink> concreto.
 
 <Definicion title="Definición formal de métrica">
   Sea $X$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío. Una función $d\colon X \times X \longrightarrow \mathbb{R}$ es una **distancia** (o métrica) sobre $X$ si y solo si satisface las siguientes condiciones para cualesquiera <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="canela">$C \in X$</VisualBind>:
   1. **No negatividad y separación:** $d(A, B) \ge 0$, y $d(A, B) = 0 \iff A = B$.
-  2. **Simetría:** $d(A, B) = d(B, A)$.
-  3. **Desigualdad triangular:**
+  2. **<ConceptLink targetId="relacion-simetrica">Simetría</ConceptLink>:** $d(A, B) = d(B, A)$.
+  3. **Desigualdad <ConceptLink targetId="triangulo">triangular</ConceptLink>:**
      $$
      d(A, C) \le d(A, B) + d(B, C)
      $$
   
-  El par $(X, d)$ constituye un espacio métrico, representado por los segmentos <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind> y <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>.
+  El par $(X, d)$ constituye un <ConceptLink targetId="espacio-metrico">espacio métrico</ConceptLink>, representado por los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind> y <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>.
 </Definicion>
 
 <Separador />
 
 ### Distancia euclídea y modelos geométricos
 
-En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> $\mathbb{R}^2$, la distancia euclídea usual entre dos puntos $A = (x_A, y_A)$ y $B = (x_B, y_B)$ viene definida analíticamente por:
+En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> $\mathbb{R}^2$, la distancia euclídea usual entre dos <ConceptLink targetId="punto">puntos</ConceptLink> $A = (x_A, y_A)$ y $B = (x_B, y_B)$ viene definida analíticamente por:
 $$
 d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}
 $$
 
-Esta distancia es invariante bajo el grupo de traslaciones, rotaciones y reflexiones, interpretando con rigor analítico los postulados de congruencia geométrica del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.
+Esta distancia es invariante bajo el grupo de <ConceptLink targetId="traslacion">traslaciones</ConceptLink>, <ConceptLink targetId="rotacion">rotaciones</ConceptLink> y reflexiones, interpretando los postulados de congruencia geométrica del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.

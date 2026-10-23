@@ -35,9 +35,9 @@ export const metadata = {
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
 export const Diagram = ModeloPoincare;
 
-<Capitular letra="P" />**oincaréren diskoa** plano hiperbolikoaren eredu analitiko bat da: haren <ConceptLink targetId="punto">puntuak</ConceptLink> $\mathbb{D}^2$ unitate-disko irekiko puntuak dira; haren <ConceptLink targetId="recta">zuzenak</ConceptLink>, diametroak eta ertzarekiko ortogonalak diren <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink>-arkuak; eta <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoaren</ConceptLink> axioma lauak betetzen ditu (I.1–I.3, II, III, <ConceptLink targetId="axioma-paralelas-hiperbolico">paralelo hiperbolikoen axioma</ConceptLink> eta V).
+<Capitular letra="P" />**oincaréren diskoa** <ConceptLink targetId="plano">plano</ConceptLink> hiperbolikoaren eredu analitiko bat da. Haren <ConceptLink targetId="punto">puntuak</ConceptLink> $\mathbb{D}^2$ unitate-disko irekiko puntuak dira, eta haren <ConceptLink targetId="recta">zuzenak</ConceptLink> <ConceptLink targetId="diametro">diametroak</ConceptLink> eta ertzarekiko ortogonalak diren <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink>-arkuak. <ConceptLink targetId="sistema-hiperbolico">Sistema hiperbolikoaren</ConceptLink> axioma lauak betetzen ditu (I.1–I.3, II, III, <ConceptLink targetId="axioma-paralelas-hiperbolico">paralelo hiperbolikoen axioma</ConceptLink> eta V).
 
-Geometria euklidearraren barruan eraikita dagoenez, ereduak frogatzen du geometria hiperboliko laua <ConceptLink targetId="consistencia-logica">sendoa</ConceptLink> dela euklidearra sendoa bada. <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> 1882an aurkeztu zuen, <ConceptLink targetId="beltrami">Eugenio Beltramiren</ConceptLink> (1868) eta <ConceptLink targetId="klein">Felix Kleinen</ConceptLink> (1871) ereduen ondoren. <ConceptLink targetId="aplicacion-conforme">Konformea</ConceptLink> da: angelu hiperbolikoen neurria bat dator kurbek eratzen dituzten angelu euklidearren neurriarekin.
+<ConceptLink targetId="sistema-euclidiano">Geometria euklidearraren</ConceptLink> barruan eraikita dagoenez, ereduak frogatzen du geometria hiperboliko laua <ConceptLink targetId="consistencia-logica">sendoa</ConceptLink> dela euklidearra sendoa bada. <ConceptLink targetId="poincare">Henri Poincarék</ConceptLink> 1882an aurkeztu zuen, <ConceptLink targetId="beltrami">Eugenio Beltramiren</ConceptLink> (1868) eta <ConceptLink targetId="klein">Felix Kleinen</ConceptLink> (1871) ereduen ondoren. <ConceptLink targetId="aplicacion-conforme">Konformea</ConceptLink> da: angelu hiperbolikoen neurria bat dator kurbek eratzen dituzten angelu euklidearren neurriarekin.
 
 <Definicion title="Ereduaren egitura">
   Eredua honela definitutako $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> da:
@@ -49,9 +49,9 @@ Geometria euklidearraren barruan eraikita dagoenez, ereduak frogatzen du geometr
     $$
     d(A, B) = \operatorname{arcosh}\!\left( 1 + \frac{2\,\lVert A - B \rVert^2}{(1 - \lVert A \rVert^2)(1 - \lVert B \rVert^2)} \right)
     $$
-    eta bi <ConceptLink targetId="angulo">angelu</ConceptLink> kongruenteak dira beren aldeen ukitzaileen arteko angelu euklidearrek neurri bera badute.
+    eta bi <ConceptLink targetId="angulo">angelu</ConceptLink> kongruenteak dira beren <ConceptLink targetId="lado">aldeen</ConceptLink> ukitzaileen arteko angelu euklidearrek neurri bera badute.
 
-  Distantzia $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$ luzera-elementutik dator; puntu bat mugara hurbiltzen denean, diskoko edozein puntu finkora duen distantzia $+\infty$ aldera doa.
+  Distantzia $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$ <ConceptLink targetId="longitud">luzera</ConceptLink>-elementutik dator; puntu bat mugara hurbiltzen denean, diskoko edozein puntu finkora duen distantzia $+\infty$ aldera doa.
 </Definicion>
 
 <Separador />
@@ -81,7 +81,7 @@ Muga-paraleloak eta ultraparaleloak $\ell$ zuzenaren <ConceptLink targetId="para
       id="poincare-orden"
       title="Ordena-axiomak"
     >
-      Zuzen bakoitza $\mathbb{R}$ multzoko tarte bat bezala ordenatutako arku ireki bat da, eta hortik datoz <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> axiomak; zuzen bakoitzak diskoa bi eskualdetan banatzen du, <ConceptLink targetId="semiplano">planoerdietan</ConceptLink>, eta <ConceptLink targetId="axioma-orden-4">Paschen axioma</ConceptLink> betetzen da.
+      Zuzen bakoitza $\mathbb{R}$ multzoko <ConceptLink targetId="intervalo">tarte</ConceptLink> bat bezala ordenatutako arku ireki bat da, eta hortik datoz <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> axiomak; zuzen bakoitzak diskoa bi eskualdetan banatzen du, <ConceptLink targetId="semiplano">planoerdietan</ConceptLink>, eta <ConceptLink targetId="axioma-orden-4">Paschen axioma</ConceptLink> betetzen da.
     </PropiedadItem>
 
     <PropiedadItem
@@ -89,7 +89,7 @@ Muga-paraleloak eta ultraparaleloak $\ell$ zuzenaren <ConceptLink targetId="para
       title="Kongruentzia-axiomak"
       formula="z \longmapsto e^{i\varphi}\,\frac{z - a}{1 - \bar{a}\,z}, \quad |a| < 1"
     >
-      Goiko Möbius-en transformazioak (eta haien konposizioak konjugazioarekin) dira ereduaren <ConceptLink targetId="isometria">isometriak</ConceptLink>: $d$ eta angeluak kontserbatzen dituzte, eta iragankorki eragiten dute puntuetan eta norabideetan. Haien bidez zuzenkiak eta angeluak garraiatzen dira (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4 axioma</ConceptLink>), eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> axiomak egiaztatzen dira.
+      Goiko Möbius-en transformazioak (eta haien konposizioak konjugazioarekin) dira ereduaren <ConceptLink targetId="isometria">isometriak</ConceptLink>: $d$ eta angeluak kontserbatzen dituzte, eta iragankorki eragiten dute puntuetan eta norabideetan. Haien bidez <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> eta angeluak garraiatzen dira (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4 axioma</ConceptLink>), eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> axiomak egiaztatzen dira.
     </PropiedadItem>
 
     <PropiedadItem

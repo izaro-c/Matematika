@@ -1,0 +1,33 @@
+export const metadata = {
+  id: "axioma-supremo",
+  lang: "eu",
+  type: "axioma",
+  title: "Gorenenaren axioma",
+  description: "Goitik bornatutako zenbaki errealen azpimultzo ez-huts orok goiko borne txikiena (gorena) du ℝ multzoan.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  axiomSystem: "sistema-cuerpo-real",
+  axiomFamily: "completitud",
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="G" />oitik <ConceptLink targetId="cota-superior" isDependency={true}>bornatutako</ConceptLink> <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="conjunto" isDependency={true}>azpimultzo</ConceptLink> ez-huts orok <ConceptLink targetId="orden-total" isDependency={true}>gorena</ConceptLink> (edo goiko borne txikiena) du $\mathbb{R}$ multzoan.
+
+Postulatu honek kontinuo errealaren axioma bereizlea osatzen du <ConceptLink targetId="analisis-matematico">analisi matematikoaren</ConceptLink> oinarri axiomatikoan. $\mathbb{Q}$ <ConceptLink targetId="numero-racional">zenbaki arrazionalen</ConceptLink> <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatuak</ConceptLink> <ConceptLink targetId="cuerpo">gorputzaren</ConceptLink> propietate aljebraikoak eta <ConceptLink targetId="axioma-arquimedes">ordena arkimedestarraren</ConceptLink> erlazioa $\mathbb{R}$ multzoarekin partekatzen dituen arren, gorenenaren propietatea falta du (adibidez, $\{x \in \mathbb{Q} : x^2 < 2\}$ <ConceptLink targetId="conjunto">multzoa</ConceptLink> goitik bornatuta dago $\mathbb{Q}$ multzoan, baina ez du arrazionalen arteko gorenik). Gorenenaren axiomak postulatzen du $\mathbb{R}$-n ez dagoela horrelako hutsune edo <ConceptLink targetId="continuidad">eten</ConceptLink> aritmetikorik.
+
+<Definicion title="Gorenenaren axioma ℝ-n">
+  Izan bedi $S \subseteq \mathbb{R}$ zenbaki errealen azpimultzo ez-huts bat. $S$ goitik bornatuta badago —hau da, $M \in \mathbb{R}$ <ConceptLink targetId="cota-superior">goiko borne</ConceptLink> bat existitzen bada non $x \in S, \, x \le M$ den—, orduan $S$-ren **gorena** (edo goiko borne txikiena) den $s = \sup(S) \in \mathbb{R}$ zenbaki erreala existitzen da, honela ezaugarritua:
+  $$
+  \forall x \in S \ (x \le s) \quad \land \quad \forall \varepsilon > 0 \ \exists x \in S \ (x > s - \varepsilon)
+  $$
+</Definicion>
+
+<Separador />
+
+### Esanahia analisi errealean
+
+Axioma honetatik abiatuta <ConceptLink targetId="calculo-infinitesimal">analisi infinitesimalaren</ConceptLink> propietateak ondorioztatzen dira: errealen <ConceptLink targetId="axioma-arquimedes">propietate arkimedestarra</ConceptLink>, <ConceptLink targetId="cantor">Cantorren</ConceptLink> tarte habiaratuen printzipioa, Bolzano-<ConceptLink targetId="weierstrass">Weierstrassen</ConceptLink> teorema eta <ConceptLink targetId="completitud-reales">osotasun metrikoa</ConceptLink>, zeinaren arabera <ConceptLink targetId="sucesion-cauchy">Cauchyren segida</ConceptLink> orok konbergitzen baitu (<ConceptLink targetId="limite">muga</ConceptLink>) $\mathbb{R}$ multzoan. <ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> oinarri analitikoan, printzipio honek <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="axioma-completitud">V.2 axioma (Osotasun lineala)</ConceptLink> sostengatzen du <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink>.

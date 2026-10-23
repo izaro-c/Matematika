@@ -14,25 +14,25 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />ardinality **(or** cardinal number) is the rigorous mathematical generalization of the concept of the "number of elements" of a collection, applicable with full validity to both finite and infinite sets.
+<Capitular letra="C" />ardinality **(or** cardinal number) is the mathematical generalization of the concept of the "number of elements" of a collection, applicable with full validity to both finite and <ConceptLink targetId="conjunto-infinito">infinite sets</ConceptLink>.
 
-Introduced by Georg Cantor, the theory of cardinals overcomes the paradoxes of infinity by dispensing with sequential counting and relying instead on the principle of equipotence: two sets possess the same intrinsic size if and only if their elements can be paired one-to-one via a <ConceptLink targetId="biyeccion">bijection</ConceptLink>.
+Introduced by <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, the theory of cardinals overcomes the paradoxes of infinity by dispensing with sequential counting and relying instead on the principle of equipotence: two sets possess the same intrinsic size if and only if their elements can be paired one-to-one via a <ConceptLink targetId="biyeccion">bijection</ConceptLink>.
 
 <Definicion title="Equipotence and cardinal comparison">
   Two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **equipotent** (denoted $A \sim B$) if and only if there exists a <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink> $f\colon A \longrightarrow B$:
   $$
   |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijective})
   $$
-  The order between cardinals is defined via injections: one writes $|A| \le |B|$ if there exists an injective map from $A$ into $B$. By the Cantor-Bernstein-Schröder theorem, if $|A| \le |B|$ and $|B| \le |A|$, then necessarily $|A| = |B|$.
+  The order between cardinals is defined via injections: one writes $|A| \le |B|$ if there exists an <ConceptLink targetId="inyectividad">injective map</ConceptLink> from $A$ into $B$. By the Cantor-Bernstein-Schröder theorem, if $|A| \le |B|$ and $|B| \le |A|$, then necessarily $|A| = |B|$.
   
   By Cantor's theorem, for any set $A$, its power set <ConceptLink targetId="conjunto-potencia">$\wp(A)$</ConceptLink> has strictly greater cardinality: $|A| < |\wp(A)|$.
 </Definicion>
 
 <Separador />
 
-### Scale of infinities and dimensions in geometry
+### Scale of infinities in geometry
 
-Cardinality enables the classification of geometric domains according to their ontological size:
-- **Finite structures:** Sets with finite cardinal $n \in \mathbb{N}$, such as the 7 points of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
-- **Countably infinite:** The cardinal $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$, characteristic of discrete sequences and rational numbers.
-- **The power of the continuum:** The cardinal $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$. In continuous Euclidean geometry, every line contains $\mathfrak{c}$ <ConceptLink targetId="punto">points</ConceptLink>, a density that formally guarantees geometric <ConceptLink targetId="continuidad">continuity</ConceptLink> and the absence of gaps in space.
+Cardinality enables the classification of geometric <ConceptLink targetId="dominio">domains</ConceptLink> according to their size or number of elements:
+- **Finite <ConceptLink targetId="estructura-geometrica">structures</ConceptLink>:** Sets with finite cardinal $n \in \mathbb{N}$, such as the 7 points of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
+- **Countably infinite:** The cardinal $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$, characteristic of discrete sequences and <ConceptLink targetId="numero-racional">rational numbers</ConceptLink>.
+- **The power of the continuum:** The cardinal $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$. In continuous <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, every <ConceptLink targetId="recta">line</ConceptLink> contains $\mathfrak{c}$ <ConceptLink targetId="punto">points</ConceptLink>, a density that formally guarantees geometric <ConceptLink targetId="continuidad">continuity</ConceptLink> and the absence of gaps in <ConceptLink targetId="espacio">space</ConceptLink>.

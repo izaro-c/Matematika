@@ -6,6 +6,8 @@
 // Runs, in order, and stops reporting only at the end:
 //   1. lint-node.mjs        hard rules per file (metadata, KaTeX/JSX, DAG, VisualBind ↔ diagram)
 //   2. check-parity.mjs     es/en/eu parity (links, dependencies, components, formulas)
+//   2b. check-links.mjs     concepts mentioned without <ConceptLink> (WARN only, never fails)
+//   2c. check-style.mjs     simplicity and modularity heuristics (WARN only, never fails)
 //   3. verify-diagram.ts    every diagram imported by these nodes is visual-exact
 //   4. validate-references  only the lines about these nodes (the corpus has known WARNs)
 //   5. validate-graph       whole DAG: cycles, axiomatic conflicts, `extends` inclusion
@@ -52,6 +54,17 @@ const step = (name, { ok, out }) => {
 
 step('lint-node', run('node', [path.join(SCRIPTS, 'lint-node.mjs'), ...ids]));
 step('check-parity', run('node', [path.join(SCRIPTS, 'check-parity.mjs'), ...ids]));
+// Heurísticas: cada WARN es una decisión del autor, así que informan pero no hacen fallar el lote.
+const advisory = (name, script) => {
+  const r = run('node', [path.join(SCRIPTS, script), ...ids]);
+  const warns = (r.out.match(/WARN/g) || []).length;
+  console.log(`\n── ${warns ? `AVISO (${warns})` : 'OK '} ${name}`);
+  if (warns) console.log(r.out);
+  advisories.push({ name, warns });
+};
+const advisories = [];
+advisory('check-links', 'check-links.mjs');
+advisory('check-style', 'check-style.mjs');
 
 const diagrams = new Set();
 for (const id of ids) {
@@ -88,6 +101,8 @@ if (typecheck) {
 }
 
 const failed = results.filter((r) => !r.ok);
+const warned = advisories.filter((a) => a.warns).map((a) => `${a.name} ${a.warns}`);
+if (warned.length) console.log(`\nAvisos a revisar (no bloquean): ${warned.join(', ')}. Corrige o justifica cada uno en el informe.`);
 console.log(`\n══ ${failed.length ? `FALLO en ${failed.map((r) => r.name).join(', ')}` : 'TODO OK'} · ${ids.length} nodo(s): ${ids.join(', ')}`);
 console.log('Los avisos «apunta a ID inexistente» de enlaces futuros son esperables; los ERROR no.');
 process.exit(failed.length ? 1 : 0);

@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "numero-racional",
+  lang: "eu",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Zenbaki arrazionalak",
+  description: "Zenbaki osoen zatiki guztiek osatutako gorputz ordenatu arkimedearra, zuzenean trinkoa baina osotasun analitikorik gabea.",
+  branch: "11A",
+  branches: ["11A", "12"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="Z" />enbaki **arrazionalak** bi zenbaki osoren arteko zatidura adierazgarri guztiek osatutako <ConceptLink targetId="fraccion">zatikien</ConceptLink> <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatua</ConceptLink> dira, aldi berean <ConceptLink targetId="conmensurabilidad">neurkidetasun</ConceptLink> geometrikoa eta zero ez diren kantitateen arteko <ConceptLink targetId="division">zatiketa</ConceptLink> zehatza formalizatuz.
+
+Nazioartean $\mathbb{Q}$ letraz izendatuak (italierazko *quoziente* hitzetik), arrazionalak aljebraikoki <ConceptLink targetId="numero-entero" isDependency={true}>zenbaki oso</ConceptLink>en <ConceptLink targetId="dominio-integridad">osotasun-eremuaren</ConceptLink> <ConceptLink targetId="cuerpo-fracciones">zatikien gorputz</ConceptLink> gisa sortzen dira, <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ri zero ez den elementu ororen biderketarekiko <ConceptLink targetId="elemento-inverso">alderantzizkoak</ConceptLink> emanez. Dena den, $\sqrt{2}$ bezalako magnitude <ConceptLink targetId="inconmensurabilidad">neurkideezinen</ConceptLink> aurkikuntza pitagorikoak historikoki frogatu zuen moduan, arrazionalek hutsuneak edo etenak dituzte, <ConceptLink targetId="recta">zuzen geometriko</ConceptLink> jarraitua $\mathbb{Q}$ hutsarekin identifikatzea eragotziz.
+
+<Definicion title="Zenbaki arrazionalen eraikuntza formala">
+  **Zenbaki arrazional**en $\mathbb{Q}$ multzoa $\mathbb{Z} \times (\mathbb{Z} \setminus \{0\})$ <ConceptLink targetId="producto-cartesiano">biderkadura kartesiarra</ConceptLink>ren zatidura-multzo gisa definitzen da, bi zatiki haien biderkadura gurutzatua berdina denean identifikatzen dituen <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink>aren pean:
+  $$
+  (a, b) \sim (c, d) \iff a \cdot d = b \cdot c
+  $$
+  $[(a, b)]$ <ConceptLink targetId="clase-equivalencia">baliokidetasun-klasea</ConceptLink> $\frac{a}{b}$ zatiki gisa adierazten da. Zatidura-multzo honen gainean <ConceptLink targetId="adicion">batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> honela definitzen dira:
+  $$
+  \frac{a}{b} + \frac{c}{d} = \frac{a \cdot d + b \cdot c}{b \cdot d}
+  $$
+  $$
+  \frac{a}{b} \cdot \frac{c}{d} = \frac{a \cdot c}{b \cdot d}
+  $$
+  Eragiketa hauez hornitua, $(\mathbb{Q}, +, \cdot)$ egitura <ConceptLink targetId="cuerpo" isDependency={true}>gorputz</ConceptLink> trukatzaile bat da, $\frac{0}{1} = 0$ batuketaren <ConceptLink targetId="elemento-neutro">elementu neutroarekin</ConceptLink>, $\frac{1}{1} = 1$ biderketaren unitatearekin eta $a \neq 0$ ororako $\left(\frac{a}{b}\right)^{-1} = \frac{b}{a}$ biderketaren alderantzizkoarekin.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="cuerpo-conmutativo-fracciones" titulo="Zatikien gorputza eta zero ezaugarria">
+    $(\mathbb{Q}, +, \cdot)$ egitura $\mathbb{Z}$-ren zatikien gorputz kanonikoa da, <ConceptLink targetId="caracteristica-cuerpo">zero ezaugarriko</ConceptLink> gorputzik txikiena osatuz, zero ezaugarriko beste edozein gorputzetan <ConceptLink targetId="subcuerpo">azpigorputz</ConceptLink> lehen gisa txertatuta baitago.
+  </PropiedadItem>
+  <PropiedadItem id="cuerpo-ordenado-arquimediano" titulo="Propietate arkimedearra">
+    $\mathbb{Q}$ gorputza arkimedearra da bere ohiko <ConceptLink targetId="orden-total">ordenarekiko</ConceptLink>: edozein bi $x, y \in \mathbb{Q}$ zenbaki arrazional positibo emanda ($x > 0$), beti existitzen da $n \in \mathbb{N}$ <ConceptLink targetId="numero-natural">zenbaki arrunt</ConceptLink> bat non $n \cdot x > y$ den, <ConceptLink targetId="axioma-arquimedes">Arkimedesen printzipioa</ConceptLink> betez.
+  </PropiedadItem>
+  <PropiedadItem id="densidad-lineal-incompletitud" titulo="Dentsitate lineala eta osatugabetasun analitikoa">
+    $\mathbb{Q}$-ren ordena bere baitan <ConceptLink targetId="conjunto-denso">trinkoa</ConceptLink> da, baina ez du betetzen supremoaren propietatea: badaude goitik bornatutako <ConceptLink targetId="conjunto">azpimultzo</ConceptLink> ez-hutsak ($\{q \in \mathbb{Q} : q^2 < 2\}$ esaterako) $\mathbb{Q}$-n goi-borne minimorik ez dutenak, <ConceptLink targetId="numero-real">zenbaki erreal</ConceptLink>etaranzko osatzea eraginez.
+  </PropiedadItem>
+</SeccionPropiedades>

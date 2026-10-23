@@ -17,9 +17,9 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="L" />a **intersección** es una operación fundamental entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne todos aquellos elementos que pertenecen simultáneamente a cada uno de los conjuntos considerados. En la lógica proposicional subyacente, se corresponde directamente con el conectivo de conjunción lógica ($\land$).
+<Capitular letra="L" />a **intersección** es una operación entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne todos aquellos elementos que pertenecen simultáneamente a cada uno de los conjuntos considerados. En la <ConceptLink targetId="logica">lógica</ConceptLink> proposicional subyacente, se corresponde directamente con el conectivo de conjunción lógica ($\land$).
 
-Constituye la base formal para definir regiones geométricas compuestas, restricciones de dominio e incidencias entre configuraciones de figuras.
+Constituye la base formal para definir regiones geométricas compuestas, restricciones de <ConceptLink targetId="dominio">dominio</ConceptLink> e <ConceptLink targetId="incidencia">incidencias</ConceptLink> entre figuras.
 
 <Definicion title="Definición formal de intersección">
   Sean $A$ y $B$ dos conjuntos. La **intersección** de $A$ y $B$ (denotada $A \cap B$) es el conjunto compuesto por los elementos que están en $A$ y en $B$:
@@ -36,9 +36,9 @@ Constituye la base formal para definir regiones geométricas compuestas, restric
 
 ### Propiedades algebraicas y delimitación geométrica
 
-La operación de intersección satisface las leyes booleanas fundamentales de conmutatividad ($A \cap B = B \cap A$), asociatividad ($A \cap (B \cap C) = (A \cap B) \cap C$) e idempotencia ($A \cap A = A$). Cuando dos conjuntos carecen por completo de elementos comunes ($A \cap B = \emptyset$), se denominan <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink>.
+La operación de intersección satisface las leyes booleanas de <ConceptLink targetId="conmutatividad">conmutatividad</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">asociatividad</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) e idempotencia ($A \cap A = A$). Cuando dos conjuntos carecen de elementos comunes ($A \cap B = \emptyset$), se denominan <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink>.
 
 La intersección de <ConceptLink targetId="conjunto-convexo">conjuntos convexos</ConceptLink> preserva siempre la convexidad:
-- El interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink> se define formalmente como la intersección de dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos determinados por sus rectas soporte.
-- La región interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> o polígono convexo surge de la intersección finita de los semiplanos asociados a sus lados.
-- Asimismo, la posición relativa de dos rectas coplanares se caracteriza por su corte puntual: <ConceptLink targetId="secante">rectas secantes</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> y <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> con punto común <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind>, frente a <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> disjuntas con $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
+- El interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink> se define formalmente como la intersección de dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos determinados por sus <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink>.
+- La región interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> o <ConceptLink targetId="poligono">polígono</ConceptLink> convexo surge de la intersección finita de los semiplanos asociados a sus <ConceptLink targetId="lado">lados</ConceptLink>.
+- Asimismo, la posición relativa de dos <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> se caracteriza por su corte puntual: <ConceptLink targetId="secante">rectas secantes</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> y <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> con <ConceptLink targetId="punto">punto</ConceptLink> común <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind>, frente a <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> disjuntas con $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

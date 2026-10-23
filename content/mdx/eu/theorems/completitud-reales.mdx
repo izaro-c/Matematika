@@ -1,0 +1,61 @@
+export const metadata = {
+  id: "completitud-reales",
+  lang: "eu",
+  type: "teorema",
+  title: "Zenbaki errealen osotasuna",
+  description: "Zenbaki errealen gorputz ordenatuaren propietatea, gorenenaren axiomatik eratorria, Cauchyren segiden konbergentzia eta etenik eza bermatzen dituena.",
+  statement: "ℝ zenbaki errealen gorputz ordenatua osoa da: goitik bornatutako azpimultzo ez-huts orok gorena du, Cauchyren segida orok konbergitzen du ℝ multzoan eta tarte itxi bornatuen segida beherakor orok ebakidura ez-hutsa du.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "1. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="Z" />enbaki errealen **osotasuna** $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="cuerpo" isDependency={true}>gorputz</ConceptLink> <ConceptLink targetId="orden-total" isDependency={true}>ordenatuaren</ConceptLink> egituratik eta <ConceptLink targetId="axioma-supremo" isDependency={true}>gorenenaren axiomatik</ConceptLink> eratorritako propietatea da, zenbaki-<ConceptLink targetId="recta">zuzen</ConceptLink> errealean hutsunerik edo etenik eza bermatzen duena.
+
+Propietate honek bermatzen du kontinuo errealak ez duela hutsune aritmetikorik, <ConceptLink targetId="calculo-infinitesimal">kalkulu infinitesimala</ConceptLink>, segiden <ConceptLink targetId="limite">mugak</ConceptLink> eta eraikuntza geometriko analitikoak oinarritzea ahalbidetuz. Gorputz ordenatu arkimedestar (<ConceptLink targetId="axioma-arquimedes">Arkimedes</ConceptLink>) <ConceptLink targetId="cuerpo-ordenado">batean</ConceptLink>, osotasunak formalki baliokideak diren hainbat formulazio onartzen ditu: gorenenaren propietatea (<ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink>), <ConceptLink targetId="cauchy">Cauchyren</ConceptLink> <ConceptLink targetId="sucesion-cauchy">segida</ConceptLink> ororen konbergentzia eta <ConceptLink targetId="cantor">Cantorren</ConceptLink> tarte habiaratuen printzipioa.
+
+<Definicion title="Zenbaki errealen osotasunaren teorema">
+  Izan bedi $(\mathbb{R}, +, \cdot, \le)$ zenbaki errealen gorputz ordenatua, <ConceptLink targetId="axioma-supremo">gorenenaren axioma</ConceptLink> betetzen duena. Orduan $\mathbb{R}$ multzoak osotasunaren baldintza baliokide hauek betetzen ditu:
+  1. **Gorenenaren propietatea:** $M \in \mathbb{R}$ <ConceptLink targetId="cota-superior">goiko borne</ConceptLink> bat duen $S \subseteq \mathbb{R}$ <ConceptLink targetId="conjunto">azpimultzo</ConceptLink> ez-huts orok goiko borne txikiena den $s = \sup(S) \in \mathbb{R}$ gorena du.
+  2. **Osotasun metrikoa (<ConceptLink targetId="cauchy">Cauchy</ConceptLink>):** $(x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R}$ Cauchyren segida orok konbergitzen du $\mathbb{R}$ multzoan:
+  $$
+  \forall (x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R} \ \Bigl(\lim_{n,m \to \infty} |x_n - x_m| = 0 \implies \exists L \in \mathbb{R} \ \lim_{n \to \infty} x_n = L\Bigr)
+  $$
+  3. **Tarte habiaratuen printzipioa:** $[a_n, b_n] \subseteq \mathbb{R}$ <ConceptLink targetId="intervalo">tarte</ConceptLink> itxi eta bornatuen segida beherakor orok $\bigcap_{n=1}^\infty [a_n, b_n] \neq \emptyset$ betetzen du.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak eta formulazio analitikoak">
+    <PropiedadItem 
+      id="propiedad-infimo-reales" 
+      title="Behenaren propietatea"
+      formula="\forall S \neq \emptyset \ (\exists m \in \mathbb{R} \ \forall x \in S \ m \le x \implies \exists \inf(S) \in \mathbb{R})"
+    >
+      Ordenaren <ConceptLink targetId="relacion-simetrica">simetriagatik</ConceptLink> batuketa-alderantzizkoaren bidez, behetik bornatutako zenbaki errealen azpimultzo ez-huts orok behena (edo beheko borne handiena) du $\mathbb{R}$ multzoan, $\inf(S) = -\sup(-S)$ betez.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="propiedad-cantor-intervalos" 
+      title="Cantorren tarte habiaratuen teorema"
+      formula="\lim_{n \to \infty} (b_n - a_n) = 0 \implies \exists! c \in \mathbb{R} \ \left(\{c\} = \bigcap_{n=1}^\infty [a_n, b_n]\right)"
+    >
+      Tarte itxi habiaratuen <ConceptLink targetId="longitud">luzera</ConceptLink> zerorantz badoa, haien ebakidura $\mathbb{R}$-ko <ConceptLink targetId="punto">puntu</ConceptLink> bakar batera murrizten da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+### Hilberten jarraitutasunaren oinarri analitikoa
+
+$\mathbb{R}$-ren osotasunak eginkizun frogatzailea betetzen du geometriaren eredu analitikoetan:
+
+<ConceptLink targetId="modelo-cartesiano">Eredu kartesiarrean</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> bakoitzaren <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> $\mathbb{R}$-rekiko <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> monotono baten bidez identifikatzen da analitikoki. Gorputz errealaren osotasunari esker, zuzen bateko <ConceptLink targetId="punto">puntuen</ConceptLink> edozein <ConceptLink targetId="particion">bipartizio</ConceptLink> konexuk berehala eramaten du <ConceptLink targetId="cortadura-dedekind">Dedekinden</ConceptLink> ebakidura zuzen geometrikoa, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="axioma-completitud">V.2 axioma (Osotasun lineala)</ConceptLink> frogatutako emaitza gisa ondorioztatuz.
+
+Modu horretan, $\mathbb{R}^3$ <ConceptLink targetId="espacio">espazio</ConceptLink> kartesiarrean <ConceptLink targetId="continuidad">jarraitutasun-axiomen</ConceptLink> <ConceptLink targetId="consistencia-logica">koherentzia</ConceptLink> eta betetzea zenbaki errealen gorputzaren osotasun analitikora murrizten da erabat.

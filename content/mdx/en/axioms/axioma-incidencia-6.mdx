@@ -23,7 +23,7 @@ export const Simulation = Incidence6;
 
 <Capitular letra="I" />f two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> are <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, then every point of that line is also incident with the plane.
 
-Since lines and planes are primitive objects of different sorts, the phrase "the line lies in the plane" cannot mean an inclusion between them. This axiom gives it a precise, checkable content: it suffices that two distinct points of the line be incident with the plane for all of them to be.
+Since lines and planes are primitive objects of different sorts, the phrase "the line lies in the plane" cannot mean a direct set-theoretic inclusion. This axiom gives it a precise, checkable content: it suffices that two distinct points of the line be incident with the plane for all of them to be.
 
 <Definicion title="Formal statement">
 Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind>, then every point incident with $\ell$ is also incident with $\pi$:
@@ -34,5 +34,5 @@ $$
 </Definicion>
 
 <Nota>
-In terms of <ConceptLink targetId="traza">point traces</ConceptLink>, the conclusion of the axiom is the inclusion of point <ConceptLink targetId="conjunto">sets</ConceptLink> $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. This is how planar statements, such as Pasch's <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink>, express that a line lies in a given plane.
+In terms of <ConceptLink targetId="traza">point traces</ConceptLink>, the conclusion of the axiom is the inclusion of point <ConceptLink targetId="conjunto">sets</ConceptLink> $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. This is how planar statements, such as <ConceptLink targetId="pasch">Pasch</ConceptLink>'s <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink>, express that a line lies in a given plane.
 </Nota>

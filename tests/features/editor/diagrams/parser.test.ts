@@ -39,7 +39,6 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     model!.showHeader = false;
     const gen = generateDiagramSource(model!, 'EjercicioClasificacionTriangulos');
     if (gen.ok) {
-      fs.writeFileSync(sourcePath, gen.source, 'utf8');
       source = gen.source;
     }
 

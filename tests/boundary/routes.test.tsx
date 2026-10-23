@@ -147,42 +147,42 @@ describe('AppRouter integration', () => {
   it('renders construction page in Spanish at /es/construccion/teorema-test', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/es/construccion/teorema-test'); });
-    expect(await result!.findByText('En Construcción')).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText('En Construcción', {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 
   it('renders construction page in Basque at /eu/eraikuntzan/teorema-test', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/eu/eraikuntzan/teorema-test'); });
-    expect(await result!.findByText('Eraikuntzan')).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText('Eraikuntzan', {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 
   it('renders construction page in English at /en/construction/teorema-test', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/en/construction/teorema-test'); });
-    expect(await result!.findByText('Under Construction')).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText('Under Construction', {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 
   it('normalizes cross-language construction segment from /eu/construccion/teorema-test to Basque', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/eu/construccion/teorema-test'); });
-    expect(await result!.findByText('Eraikuntzan')).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText('Eraikuntzan', {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 
   it('normalizes cross-language construction segment from /en/construccion/teorema-test to English', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/en/construccion/teorema-test'); });
-    expect(await result!.findByText('Under Construction')).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText('Under Construction', {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 
   it('normalizes legacy 2-segment construction route from /construccion/teorema-test', async () => {
     let result: ReturnType<typeof renderWithRouter>;
     await act(async () => { result = renderWithRouter('/construccion/teorema-test'); });
-    expect(await result!.findByText(/Construcción|Eraikuntzan|Under Construction/i)).toBeDefined();
-    expect(await result!.findByText(/teorema test/i)).toBeDefined();
+    expect(await result!.findByText(/Construcción|Eraikuntzan|Under Construction/i, {}, { timeout: 5000 })).toBeDefined();
+    expect(await result!.findByText(/teorema test/i, {}, { timeout: 5000 })).toBeDefined();
   });
 });

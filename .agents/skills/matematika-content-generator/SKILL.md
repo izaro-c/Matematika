@@ -87,9 +87,15 @@ node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <id>
 Un solo comando que encadena, para esos IDs:
 - `lint-node.mjs`: reglas duras por archivo (metadatos, JSX en KaTeX, componentes, DAG, IDs canónicos, `VisualBind` ↔ diagrama).
 - `check-parity.mjs`: compara los tres idiomas (metadatos no traducibles, `targetId`, `isDependency`, `PropiedadItem`, secuencia de componentes y número de fórmulas). Una diferencia de ±1 fórmula inline puede ser legítima (una traducción que fusiona dos símbolos): revísala y decide.
+- `check-links.mjs` (aviso): conceptos que el texto nombra sin `<ConceptLink>`, con el `targetId` sugerido a partir de los títulos y enlaces del corpus. Comprueba que el ID sugerido es el sentido correcto antes de aplicarlo.
+- `check-style.mjs` (aviso): saltos deductivos («obviamente», «es trivial»), relleno valorativo («riguroso», «fundamental»), frases de más de 50 palabras, términos en negrita que ya tienen nodo propio y nodos que parecen contener varios conceptos.
 - `verify-diagram.ts` para cada diagrama importado.
 - `validate-references`, filtrado a estos nodos. Los enlaces a páginas aún no escritas solo se cuentan: son obligatorios (Pilar 2), no un fallo.
 - `validate-graph`: ciclos, conflictos axiomáticos e inclusión de `extends`. Una línea `Ciclo roto forzosamente` es un fallo, casi siempre un `isDependency` de teorema → su demostración.
+
+Lint y paridad se ejecutan también en el pre-commit y en CI sobre los nodos modificados (`npm run content:check`), así que un `ERROR` bloquea el commit aunque no hayas lanzado este comando.
+
+Para revisar un lote ya escrito (propio o de otro agente), sigue [review-rubric.md](./references/review-rubric.md): cubre lo que los scripts no ven (corrección del enunciado, pasos justificados, un concepto por nodo, paridad de sentido). En Claude Code, el subagente `content-reviewer` la aplica.
 
 Si además tocaste `.ts`/`.tsx`, añade `--typecheck`. Corrige cada `ERROR`; cada `WARN` es una decisión tuya, justifícala en el informe si lo dejas.
 

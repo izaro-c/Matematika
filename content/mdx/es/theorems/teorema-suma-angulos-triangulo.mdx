@@ -19,13 +19,13 @@ export const Simulation = SumaAngulos;
 
 <Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> del plano euclidiano, la suma de las amplitudes de sus tres <ConceptLink targetId="angulo" isDependency={true}>ángulos interiores</ConceptLink> es constante e idéntica a la medida de dos <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink> ($180^\circ$ o $\pi$ radianes).
 
-Esta propiedad fundamental caracteriza la curvatura nula del espacio plano y depende de forma decisiva del trazado de paralelas. Sobre una <ConceptLink targetId="recta">recta</ConceptLink> soporte, la reunión de los tres ángulos reproduce la amplitud continua de un <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulo llano</ConceptLink>.
+Esta propiedad caracteriza la curvatura nula del espacio plano y depende del trazado de paralelas. Sobre una <ConceptLink targetId="recta">recta</ConceptLink> soporte, la reunión de los tres ángulos reproduce la amplitud continua de un <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulo llano</ConceptLink>.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea <VisualBind element="triangulo" color="terracota">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un plano euclidiano $\pi \in \Pi$, cuyos <ConceptLink targetId="angulo">ángulos interiores</ConceptLink> vienen dados por <VisualBind element="angulos" color="musgo">$\alpha = \angle CAB$</VisualBind>, $\beta = \angle ABC$ y $\gamma = \angle BCA$. Se verifica rigurosamente la igualdad:
+Sea <VisualBind element="triangulo" color="terracota">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> en un plano euclidiano $\pi \in \Pi$, cuyos <ConceptLink targetId="angulo">ángulos interiores</ConceptLink> vienen dados por <VisualBind element="angulos" color="musgo">$\alpha = \angle CAB$</VisualBind>, $\beta = \angle ABC$ y $\gamma = \angle BCA$. Se verifica la igualdad:
 
 <Formula>
   $$ \alpha + \beta + \gamma = 180^\circ \quad (\text{o } \pi \text{ rad}) $$
@@ -42,15 +42,15 @@ En formulación sintética libre de magnitudes métricas:
 ### Fundamento deductivo y la recta paralela
 
 La demostración clásica de la Proposición I.32 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> descansa en la construcción de una <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink>:
-- Por el vértice $C$ ($C\,\mathbf{I}\,\pi \land \neg(C\,\mathbf{I}\,\overleftrightarrow{AB})$) se traza la única <ConceptLink targetId="recta">recta</ConceptLink> paralela al lado $\overline{AB}$, cuya existencia y unicidad vienen postuladas por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
-- Los lados $\overline{AC}$ y $\overline{BC}$ actúan como <ConceptLink targetId="secante">secantes</ConceptLink> transversales, delimitando pares de ángulos alternos internos congruentes en $C$ ($\alpha \cong \alpha'$ y $\beta \cong \beta'$) en virtud del <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> y de la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> angular.
-- Los tres ángulos adyacentes $\alpha'$, $\gamma$ y $\beta'$ descansan sobre la recta paralela componiendo un <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulo llano</ConceptLink> ($\alpha' + \gamma + \beta' = 180^\circ$), deduciéndose de inmediato $\alpha + \beta + \gamma = 180^\circ$.
+- Por el vértice $C$ ($C\,\mathbf{I}\,\pi \land \neg(C\,\mathbf{I}\,\overleftrightarrow{AB})$) se traza la única <ConceptLink targetId="recta">recta</ConceptLink> paralela al lado $\overline{AB}$, postulada por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
+- Los lados $\overline{AC}$ y $\overline{BC}$ actúan como <ConceptLink targetId="secante">secantes</ConceptLink> transversales, delimitando pares de ángulos alternos internos congruentes en $C$ ($\alpha \cong \alpha'$ y $\beta \cong \beta'$) por el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> y la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> angular.
+- Los tres ángulos adyacentes $\alpha'$, $\gamma$ y $\beta'$ descansan sobre la recta paralela componiendo un <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulo llano</ConceptLink> ($\alpha' + \gamma + \beta' = 180^\circ$), deduciéndose $\alpha + \beta + \gamma = 180^\circ$.
 
 <Separador />
 
 ### Equivalencia con el postulado de Euclides y curvatura no euclidiana
 
-Este <ConceptLink targetId="teorema">teorema</ConceptLink> es lógicamente equivalente al <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>, constituyendo un criterio discriminante fundamental:
-- **Geometría hiperbólica**: En el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>, la suma de los ángulos de todo triángulo es estrictamente menor que dos rectos ($\alpha + \beta + \gamma < 180^\circ$). La diferencia $\delta(\triangle) = 180^\circ - (\alpha + \beta + \gamma)$ define el *defecto angular*, una cantidad positiva directamente proporcional al área del triángulo.
-- **Geometría elíptica y esférica**: En la <ConceptLink targetId="geometria-eliptica">geometría elíptica</ConceptLink>, la suma de los ángulos interiores supera siempre los dos rectos ($\alpha + \beta + \gamma > 180^\circ$), dando lugar al *exceso esférico* $\varepsilon(\triangle) = (\alpha + \beta + \gamma) - 180^\circ$.
-- **Marco absoluto**: En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (teorema de Saccheri-Legendre), se demuestra que la suma angular nunca puede exceder dos rectos ($\alpha + \beta + \gamma \le 180^\circ$), pero la igualdad estricta a $180^\circ$ es indisociable del postulado euclidiano.
+Este <ConceptLink targetId="teorema">teorema</ConceptLink> es lógicamente equivalente al <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>, constituyendo un criterio de clasificación:
+- **Geometría hiperbólica**: En el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>, la suma de los ángulos de todo triángulo es menor que dos rectos ($\alpha + \beta + \gamma < 180^\circ$). La diferencia $\delta(\triangle) = 180^\circ - (\alpha + \beta + \gamma)$ define el *defecto angular*, directamente proporcional al área del triángulo.
+- **Geometría elíptica y esférica**: En la <ConceptLink targetId="geometria-eliptica">geometría elíptica</ConceptLink>, la suma de los ángulos interiores supera los dos rectos ($\alpha + \beta + \gamma > 180^\circ$), dando lugar al *exceso esférico* $\varepsilon(\triangle) = (\alpha + \beta + \gamma) - 180^\circ$.
+- **Marco absoluto**: En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (teorema de Saccheri-Legendre), se demuestra que la suma angular nunca excede dos rectos ($\alpha + \beta + \gamma \le 180^\circ$), pero la igualdad a $180^\circ$ requiere el postulado euclidiano.

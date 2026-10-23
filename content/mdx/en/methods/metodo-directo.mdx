@@ -13,9 +13,9 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="T" />he **direct method** is the form of <ConceptLink targetId="demostracion">proof</ConceptLink> that establishes an <ConceptLink targetId="implicacion">implication</ConceptLink> $P \implies Q$ by assuming the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> and deducing from it the <ConceptLink targetId="tesis">conclusion</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> through a finite sequence of steps, each of them justified.
+<Capitular letra="T" />he **direct method** is the form of <ConceptLink targetId="demostracion">proof</ConceptLink> that establishes an <ConceptLink targetId="implicacion">implication</ConceptLink> $P \implies Q$ by deducing the <ConceptLink targetId="tesis">conclusion</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> from the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> through a finite sequence of justified steps.
 
-It is the basic pattern of every deduction: indirect methods, such as <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> or proof of the <ConceptLink targetId="contraposicion">contrapositive</ConceptLink> $\neg Q \implies \neg P$, first transform the statement and then reason directly.
+It is the basic deductive pattern: indirect methods, such as <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> or the <ConceptLink targetId="contraposicion">contrapositive</ConceptLink> $\neg Q \implies \neg P$, first transform the statement and then reason directly.
 
 <Separador />
 
@@ -24,34 +24,34 @@ It is the basic pattern of every deduction: indirect methods, such as <ConceptLi
 Direct proof structures step-by-step inference by applying the rule of <ConceptLink targetId="modus-ponens">modus ponens</ConceptLink> ($A \land (A \implies B) \vdash B$):
 
 <ProofStep number={1} target="pP" diagramStep="paso-hipotesis" title="Stating Hypothesis P">
-  The initial hypothesis <VisualBind element="pP" color="terracota">$P$</VisualBind> is established as the indisputable premise and starting point of the deduction:
+  The hypothesis <VisualBind element="pP" color="terracota">$P$</VisualBind> is established as the starting premise:
   <Formula>
     $$ P \text{ (Initial premise)} $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={2} target={["pP1", "segPP1"]} diagramStep="paso-primera-inferencia" title="First Deduction: P ⇒ P₁">
-  Applying an <ConceptLink targetId="axioma">axiom</ConceptLink> or definition via modus ponens, from <VisualBind element="pP" color="terracota">$P$</VisualBind> one validly deduces intermediate lemma <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>:
+  Applying an <ConceptLink targetId="axioma">axiom</ConceptLink> or definition via modus ponens, from <VisualBind element="pP" color="terracota">$P$</VisualBind> one deduces proposition <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>:
   <Formula>
     $$ P \implies P_1 $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={3} target={["pP2", "segP1P2"]} diagramStep="paso-segunda-inferencia" title="Chaining Steps: P₁ ⇒ P₂">
-  From <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>, drawing upon a prior <ConceptLink targetId="teorema">theorem</ConceptLink> or <ConceptLink targetId="lema">lemma</ConceptLink>, the subsequent deductive link <VisualBind element="pP2" color="carbon">$P_2$</VisualBind> is established:
+  From <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>, using a prior <ConceptLink targetId="teorema">theorem</ConceptLink> or <ConceptLink targetId="lema">lemma</ConceptLink>, one derives <VisualBind element="pP2" color="carbon">$P_2$</VisualBind>:
   <Formula>
     $$ P_1 \implies P_2 \implies \dots \implies P_n $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={4} target={["pQ", "segP2Q"]} diagramStep="paso-conclusion" title="Final Conclusion: P₂ ⇒ Q">
-  The deductive chain successfully terminates at the intended conclusion <VisualBind element="pQ" color="canela">$Q$</VisualBind>, completing the direct proof of $P \implies Q$:
+  The deductive chain reaches the conclusion <VisualBind element="pQ" color="canela">$Q$</VisualBind>, completing the direct proof of $P \implies Q$:
   <Formula>
     $$ P \implies P_1 \implies P_2 \implies \dots \implies Q $$
   </Formula>
 </ProofStep>
 
-Each intermediate implication $P_k \implies P_{k+1}$ is rigorously justified by:
+Each intermediate implication $P_k \implies P_{k+1}$ is justified by:
 - the hypothesis $P$ or a statement already obtained in the chain;
 - an <ConceptLink targetId="axioma">axiom</ConceptLink> of the system;
 - a previously proved <ConceptLink targetId="teorema">theorem</ConceptLink>, <ConceptLink targetId="lema">lemma</ConceptLink> or <ConceptLink targetId="corolario">corollary</ConceptLink>;
@@ -62,12 +62,12 @@ Each intermediate implication $P_k \implies P_{k+1}$ is rigorously justified by:
 
 ### Examples in geometry
 
-- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: from the hypothesis $\overline{AB} \cong \overline{AC}$ one obtains, by applying <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink> to the triangles $\triangle ABC$ and $\triangle ACB$, that $\angle ABC \cong \angle ACB$.
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angle sum of a triangle</ConceptLink>**: through a vertex one draws the <ConceptLink targetId="paralelas">parallel</ConceptLink> to the opposite side, whose uniqueness is guaranteed by <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>, and the congruence of <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink> shows that the three angles add up to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>.
-- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: in <ConceptLink targetId="demo-pitagoras-euclides">Euclid's proof</ConceptLink>, congruence criteria and comparisons of <ConceptLink targetId="area">areas</ConceptLink> lead directly from the hypothesis "the angle at $C$ is right" to the conclusion $a^2 + b^2 = c^2$.
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: from the hypothesis $\overline{AB} \cong \overline{AC}$, applying <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink> to the <ConceptLink targetId="triangulo">triangles</ConceptLink> $\triangle ABC$ and $\triangle ACB$ gives $\angle ABC \cong \angle ACB$.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angle sum of a triangle</ConceptLink>**: through a <ConceptLink targetId="vertice">vertex</ConceptLink> one draws the <ConceptLink targetId="paralelas">parallel</ConceptLink> to the opposite <ConceptLink targetId="lado">side</ConceptLink>, unique by <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>, and congruence of <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink> shows that the three angles sum to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: in <ConceptLink targetId="demo-pitagoras-euclides">Euclid's proof</ConceptLink>, congruence criteria and comparisons of <ConceptLink targetId="area">areas</ConceptLink> lead from the hypothesis "the angle at $C$ is right" to $a^2 + b^2 = c^2$.
 
 <Separador />
 
 ### When to use it
 
-The direct method is suitable when the hypothesis provides data that can be transformed step by step into the conclusion. Each step can be checked in isolation, and when the proof asserts the existence of an object it usually constructs it explicitly. If the conclusion is a statement of impossibility or uniqueness, an indirect method is often more natural.
+The direct method is suitable when the hypothesis provides data that transform constructively into the conclusion. Each step can be checked in isolation. If the conclusion asserts impossibility or uniqueness, an indirect method is often preferred.

@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **bijection** (or bijective map) is a functional correspondence between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that associates each element of the domain with a unique element of the codomain, such that every element of the codomain is the image of exactly one element of the domain.
+<Capitular letra="A" /> **bijection** (or bijective map) is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that associates each element of the <ConceptLink targetId="dominio">domain</ConceptLink> with a unique element of the <ConceptLink targetId="codominio">codomain</ConceptLink>, such that every element of the codomain is the image of exactly one element of the domain.
 
-By combining the preservation of distinctions with exhaustive coverage of the target space, a bijection establishes a perfect, symmetric one-to-one pairing between both sets, guaranteeing the existence of a well-defined inverse function.
+By combining the preservation of distinctions with exhaustive coverage of the codomain, a bijection establishes a one-to-one pairing between both sets that guarantees the existence of a well-defined inverse function.
 
 <Definicion title="Formal definition of bijection">
   Let $A$ and $B$ be two sets. A function $f\colon A \longrightarrow B$ is a **bijection** if and only if it simultaneously satisfies two conditions:
@@ -24,7 +24,7 @@ By combining the preservation of distinctions with exhaustive coverage of the ta
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
      $$
-  2. **Surjectivity:** Every element of the codomain is the image of at least one element of the domain:
+  2. **<ConceptLink targetId="sobreyectividad">Surjectivity</ConceptLink>:** Every element of the codomain is the image of at least one element of the domain:
      $$
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
@@ -38,5 +38,5 @@ By combining the preservation of distinctions with exhaustive coverage of the ta
 
 Bijections play a unifying role across multiple branches of mathematics:
 - **Measure of size:** Two sets have the same <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> if and only if there exists a bijection between them ($|A| = |B|$).
-- **Structural preservation:** A formal <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink> is simply a bijection between structures that additionally preserves all relations and operations of their <ConceptLink targetId="signatura">signature</ConceptLink>.
-- **Transformations and congruence:** In geometry, the <ConceptLink targetId="congruencia">congruence</ConceptLink> of composite figures (such as triangles or polygons) is defined via a bijective correspondence between their homologous <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the congruence of the respective <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.
+- **Structural preservation:** A formal <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink> is a bijection between <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that additionally preserves all relations and operations of their <ConceptLink targetId="signatura">signature</ConceptLink>.
+- **Transformations and congruence:** In geometry, the <ConceptLink targetId="congruencia">congruence</ConceptLink> of composite figures (such as <ConceptLink targetId="triangulo">triangles</ConceptLink> or <ConceptLink targetId="poligono">polygons</ConceptLink>) is defined via a bijective correspondence between their homologous <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the congruence of the respective <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.

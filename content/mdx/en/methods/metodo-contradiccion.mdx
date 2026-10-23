@@ -13,13 +13,13 @@ export const metadata = {
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="P" />roof by contradiction, historically known as *reductio ad absurdum*, is an indirect proof technique that establishes the truth of a statement <VisualBind element="pP" color="terracota">$P$</VisualBind> by provisionally assuming its negation $\neg P$ and rigorously deriving a formal contradiction of the form <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind>.
+<Capitular letra="P" />roof by contradiction, historically known as *reductio ad absurdum*, is an indirect proof technique that establishes the truth of a statement <VisualBind element="pP" color="terracota">$P$</VisualBind> by provisionally assuming its negation $\neg P$ and deriving a formal contradiction of the form <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind>.
 
 <Separador />
 
 ### Logical Foundations and Reductio ad Absurdum Stages
 
-The method relies strictly on the foundational principles of classical logic (the law of non-contradiction $\neg (R \land \neg R)$ and the law of excluded middle $P \lor \neg P$). For a conditional implication $P \implies Q$, the demonstration unfolds across four canonical stages:
+The method relies on the principles of classical <ConceptLink targetId="logica">logic</ConceptLink> (the law of non-contradiction $\neg (R \land \neg R)$ and the law of excluded middle $P \lor \neg P$). For a conditional implication $P \implies Q$, the demonstration unfolds across four canonical stages:
 
 <ProofStep number={1} target={["pP", "pNotQ"]} diagramStep="paso-supuesto" title="Stating Provisional Hypothesis ¬Q">
   Alongside the initial hypothesis <VisualBind element="pP" color="terracota">$P$</VisualBind>, the falsity of the conclusion is provisionally assumed via assumption <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind>:
@@ -36,7 +36,7 @@ The method relies strictly on the foundational principles of classical logic (th
 </ProofStep>
 
 <ProofStep number={3} target={["pAbsurdo", "segRColision", "segNotRColision"]} diagramStep="paso-colision-absurdo" title="Formal Collision and Contradiction (⊥)">
-  Both deduced consequences cannot simultaneously hold in the formal system. Their conjunction creates an unresolvable logical collision <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
+  Both deduced consequences cannot simultaneously hold in the <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>. Their conjunction creates an unresolvable logical collision <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
   <Formula>
     $$ R \land \neg R \equiv \bot \text{ (Absurdity)} $$
   </Formula>
@@ -54,11 +54,11 @@ The method relies strictly on the foundational principles of classical logic (th
 ### Classical Geometric and Analytic Examples
 
 - **Irrationality of $\sqrt{2}$**: Assuming $\sqrt{2} = a/b$ with $\operatorname{mcd}(a, b) = 1$ leads deductively to the conclusion that both $a$ and $b$ are even, contradicting the irreducible fraction hypothesis.
-- **Uniqueness of Perpendiculars**: To prove that at most one <ConceptLink targetId="perpendicular">perpendicular line</ConceptLink> passes through a <ConceptLink targetId="punto">point</ConceptLink> exterior to a given <ConceptLink targetId="recta">line</ConceptLink>, one assumes two distinct perpendiculars exist. This would form a <ConceptLink targetId="triangulo">triangle</ConceptLink> with two right <ConceptLink targetId="angulo">angles</ConceptLink>, contradicting the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> or the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink> in Euclidean geometry.
+- **Uniqueness of Perpendiculars**: To prove that at most one <ConceptLink targetId="perpendicular">perpendicular line</ConceptLink> passes through a <ConceptLink targetId="punto">point</ConceptLink> exterior to a given <ConceptLink targetId="recta">line</ConceptLink>, one assumes two distinct perpendiculars exist. This would form a <ConceptLink targetId="triangulo">triangle</ConceptLink> with two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>, contradicting the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> or the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink> in <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>.
 
 <Separador />
 
 ### Methodological Features
 
-- **Essential for Non-Existence and Uniqueness**: The primary strategy for establishing that certain mathematical configurations or counterexamples cannot exist.
+- **Power in Non-Existence and Uniqueness Proofs**: The primary strategy for establishing that certain mathematical configurations or counterexamples cannot exist.
 - **Non-Constructive Nature**: It proves that an object exists or a relation holds without necessarily constructing the witness object explicitly.

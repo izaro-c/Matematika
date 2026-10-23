@@ -14,12 +14,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura">signatura</ConceptLink> bera partekatzen duten bi sistema edo <ConceptLink targetId="estructura-geometrica">egitura matematikoren</ConceptLink> arteko bat-bateko korrespondentzia da, oinarrizko erlazioak, eragiketak eta konstante bereiziak osotasunean kontserbatzen dituena.
+<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura">signatura</ConceptLink> bera partekatzen duten bi sistema edo <ConceptLink targetId="estructura-geometrica">egitura matematikoren</ConceptLink> arteko bat-bateko korrespondentzia da, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink>, eragiketak eta konstante bereiziak osotasunean kontserbatzen dituena.
 
 Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</ConceptLink> hizkuntza formalean adieraz daitezkeen propietateei dagokienez: haietako batean egiazkoa den edozein enuntziatu nahitaez egiazkoa da bestean ere, oinarrizko elementuen izaera enpirikoa edo nomenklatura soilik aldatuz.
 
 <Definicion title="Isomorfismoaren definizio formala">
-  Izan bitez $\mathcal{M}$ eta $\mathcal{N}$ bi egitura $\sigma$ signatura baten gainean, hurrenez hurren $M$ eta $N$ domeinuekin.
+  Izan bitez $\mathcal{M}$ eta $\mathcal{N}$ bi egitura $\sigma$ signatura baten gainean, hurrenez hurren $M$ eta $N$ <ConceptLink targetId="dominio">domeinuekin</ConceptLink>.
   $$
   f\colon M \longrightarrow N
   $$
@@ -28,7 +28,7 @@ Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</
      $$
      (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
      $$
-  2. Edozein $k$-ar $g \in \sigma$ funtzio-ikurretarako eta edozein $a_1, \dots, a_k \in M$ elementutarako:
+  2. Edozein $k$-ar $g \in \sigma$ <ConceptLink targetId="funcion">funtzio-ikurretarako</ConceptLink> eta edozein $a_1, \dots, a_k \in M$ elementutarako:
      $$
      f(g^{\mathcal{M}}(a_1, \dots, a_k)) = g^{\mathcal{N}}(f(a_1), \dots, f(a_k))
      $$
@@ -44,5 +44,5 @@ Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</
 
 <ConceptLink targetId="teoria-modelos">Ereduen teorian</ConceptLink>, isomorfismoen existentziak egiturazko nozio garrantzitsuak finkatzen ditu:
 
-- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, jarraitutasun-axiomekin osatutako hiru dimentsioko <ConceptLink targetId="sistema-euclidiano">sistema euklidear</ConceptLink> osoa kategorikoa da: bere axiomak betetzen dituen eredu orok $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrera</ConceptLink> eramaten duen isomorfismo bat onartzen du.
-- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** Egitura batek bere buruarekin duen isomorfismoari ($\mathcal{M} \cong \mathcal{M}$) *automorfismo* deritzo. Automorfismo guztien multzoak talde bat osatzen du, egituraren barne-simetriak aljebraikoki atzematen dituena, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink> agertzen diren intzidentzia-eraldaketa autodualetan.
+- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, <ConceptLink targetId="continuidad">jarraitutasun-axiomekin</ConceptLink> osatutako hiru <ConceptLink targetId="dimension">dimentsioko</ConceptLink> <ConceptLink targetId="sistema-euclidiano">sistema euklidear</ConceptLink> osoa kategorikoa da: bere axiomak betetzen dituen eredu orok $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrera</ConceptLink> eramaten duen isomorfismo bat onartzen du.
+- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** Egitura batek bere buruarekin duen isomorfismoari ($\mathcal{M} \cong \mathcal{M}$) *automorfismo* deritzo. Automorfismo guztien <ConceptLink targetId="conjunto">multzoak</ConceptLink> <ConceptLink targetId="grupo">talde</ConceptLink> bat osatzen du, egituraren barne-simetriak aljebraikoki atzematen dituena, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink> agertzen diren <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-eraldaketa <ConceptLink targetId="dualidad">autodualetan</ConceptLink>.

@@ -1,0 +1,61 @@
+export const metadata = {
+  id: "completitud-reales",
+  lang: "en",
+  type: "teorema",
+  title: "Completeness of the Real Numbers",
+  description: "Property of the ordered field of real numbers derived from the axiom of the supremum, guaranteeing the convergence of Cauchy sequences and the absence of discontinuities.",
+  statement: "The ordered field of real numbers ℝ is complete: every non-empty subset bounded above has a supremum, every Cauchy sequence converges in ℝ, and every decreasing sequence of closed bounded intervals has non-empty intersection.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="C" />ompleteness of the <ConceptLink targetId="numero-real">real numbers</ConceptLink> is the property derived from the <ConceptLink targetId="cuerpo" isDependency={true}>field</ConceptLink> <ConceptLink targetId="orden-total" isDependency={true}>structure</ConceptLink> of $\mathbb{R}$ and the <ConceptLink targetId="axioma-supremo" isDependency={true}>axiom of the supremum</ConceptLink>, ensuring the absence of gaps, fissures, or discontinuities in the real numerical <ConceptLink targetId="recta">line</ConceptLink>.
+
+This property guarantees that the real continuum contains no arithmetic voids, establishing <ConceptLink targetId="calculo-infinitesimal">infinitesimal calculus</ConceptLink>, <ConceptLink targetId="limite">limits</ConceptLink> of sequences, and analytical geometric constructions. In an Archimedean (<ConceptLink targetId="axioma-arquimedes">Archimedes</ConceptLink>) <ConceptLink targetId="cuerpo-ordenado">ordered field</ConceptLink>, completeness admits several logically equivalent formulations: the supremum property (<ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink>), the convergence of every <ConceptLink targetId="sucesion-cauchy">Cauchy sequence</ConceptLink> (<ConceptLink targetId="cauchy">Cauchy</ConceptLink>), and <ConceptLink targetId="cantor">Cantor's</ConceptLink> nested interval theorem.
+
+<Definicion title="Theorem of completeness of the real numbers">
+  Let $(\mathbb{R}, +, \cdot, \le)$ be the ordered field of real numbers satisfying the <ConceptLink targetId="axioma-supremo">axiom of the supremum</ConceptLink>. Then $\mathbb{R}$ fulfills the following equivalent completeness conditions:
+  1. **Supremum property:** Every non-empty <ConceptLink targetId="conjunto">subset</ConceptLink> $S \subseteq \mathbb{R}$ that has an <ConceptLink targetId="cota-superior">upper bound</ConceptLink> $M \in \mathbb{R}$ possesses a least upper bound $s = \sup(S) \in \mathbb{R}$.
+  2. **Metric completeness (<ConceptLink targetId="cauchy">Cauchy</ConceptLink>):** Every Cauchy sequence $(x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R}$ is convergent in $\mathbb{R}$:
+  $$
+  \forall (x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R} \ \Bigl(\lim_{n,m \to \infty} |x_n - x_m| = 0 \implies \exists L \in \mathbb{R} \ \lim_{n \to \infty} x_n = L\Bigr)
+  $$
+  3. **Nested interval theorem:** Every decreasing sequence of closed bounded <ConceptLink targetId="intervalo">intervals</ConceptLink> $[a_n, b_n] \subseteq \mathbb{R}$ satisfies $\bigcap_{n=1}^\infty [a_n, b_n] \neq \emptyset$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Analytical formulations and consequences">
+    <PropiedadItem 
+      id="propiedad-infimo-reales" 
+      title="Infimum property"
+      formula="\forall S \neq \emptyset \ (\exists m \in \mathbb{R} \ \forall x \in S \ m \le x \implies \exists \inf(S) \in \mathbb{R})"
+    >
+      By order <ConceptLink targetId="relacion-simetrica">symmetry</ConceptLink> under additive inversion, every non-empty subset of real numbers bounded below has an infimum (or greatest lower bound) in $\mathbb{R}$, satisfying $\inf(S) = -\sup(-S)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="propiedad-cantor-intervalos" 
+      title="Cantor's nested interval theorem"
+      formula="\lim_{n \to \infty} (b_n - a_n) = 0 \implies \exists! c \in \mathbb{R} \ \left(\{c\} = \bigcap_{n=1}^\infty [a_n, b_n]\right)"
+    >
+      If the <ConceptLink targetId="longitud">length</ConceptLink> of the nested closed intervals tends to zero, their intersection reduces to a unique <ConceptLink targetId="punto">point</ConceptLink> in $\mathbb{R}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+### Analytical foundation of Hilbertian continuity
+
+The completeness of $\mathbb{R}$ plays a demonstrative role in the analytical models of geometry:
+
+In the <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>, the <ConceptLink targetId="traza">trace</ConceptLink> of each <ConceptLink targetId="recta">line</ConceptLink> is identified analytically via a monotonic <ConceptLink targetId="biyeccion">bijection</ConceptLink> with $\mathbb{R}$. In virtue of the completeness of the real field, any connected <ConceptLink targetId="particion">partition</ConceptLink> of the <ConceptLink targetId="punto">points</ConceptLink> of a line immediately transfers the <ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink> cut to the geometric line, deducing as a demonstrated result <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="axioma-completitud">Axiom V.2 (Linear completeness)</ConceptLink>.
+
+In this way, the <ConceptLink targetId="consistencia-logica">consistency</ConceptLink> and satisfaction of the <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms in Cartesian <ConceptLink targetId="espacio">space</ConceptLink> $\mathbb{R}^3$ is entirely reduced to the analytical completeness of the field of real numbers.

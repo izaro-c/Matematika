@@ -47,6 +47,7 @@
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
+    "axioma-supremo",
     "semirrectas-opuestas",
     "angulos-suplementarios",
     "angulo-recto",
@@ -58,7 +59,6 @@
     "funcion",
     "operacion-binaria",
     "asociatividad",
-    "concepto-primitivo",
     "axioma",
     "biyeccion",
     "cardinalidad",
@@ -68,24 +68,29 @@
     "cateto",
     "circunferencia",
     "cociente-incremental",
-    "elemento-neutro",
-    "elemento-inverso",
-    "grupo",
-    "cuerpo",
-    "completitud-reales",
+    "concepto-primitivo",
     "congruencia-triangulos",
     "interseccion",
     "conjunto-disjunto",
     "consistencia-logica",
+    "espacio",
     "continuidad",
     "cuadrilatero",
     "cuadrado",
+    "elemento-neutro",
+    "elemento-inverso",
+    "grupo",
+    "cuerpo",
+    "numero-natural",
+    "numero-entero",
+    "numero-racional",
+    "completitud-reales",
+    "numero-real",
+    "dominio",
     "limite",
     "derivada",
     "dimension",
     "distancia",
-    "dominio",
-    "espacio",
     "estructura-geometrica",
     "geometria-hilbertiana",
     "geometria-sintetica",
@@ -95,6 +100,7 @@
     "logica",
     "segmento-unidad",
     "longitud",
+    "numero-complejo",
     "orden-angulos",
     "paralelogramo",
     "rectangulo",
@@ -411,8 +417,8 @@
       "proofs": [],
       "directDependencies": [
         "recta",
-        "punto",
-        "incidencia"
+        "incidencia",
+        "punto"
       ]
     },
     "axioma-incidencia-3": {
@@ -424,8 +430,8 @@
       "proofs": [],
       "directDependencies": [
         "punto",
-        "recta",
-        "incidencia"
+        "incidencia",
+        "recta"
       ]
     },
     "axioma-incidencia-4": {
@@ -584,6 +590,17 @@
         "paralelas"
       ]
     },
+    "axioma-supremo": {
+      "id": "axioma-supremo",
+      "type": "axioma",
+      "axiomFamily": "completitud",
+      "title": "Axioma del supremo",
+      "description": "Todo subconjunto no vacío de números reales acotado superiormente posee una menor cota superior (supremo) en ℝ.",
+      "proofs": [],
+      "directDependencies": [
+        "conjunto"
+      ]
+    },
     "altura-triangulo": {
       "id": "altura-triangulo",
       "type": "definicion",
@@ -689,9 +706,7 @@
       "title": "Axioma",
       "description": "Proposición asumida como verdadera sin demostración previa que sirve de premisa o punto de partida formal en una teoría deductiva.",
       "proofs": [],
-      "directDependencies": [
-        "concepto-primitivo"
-      ]
+      "directDependencies": []
     },
     "biyeccion": {
       "id": "biyeccion",
@@ -701,6 +716,7 @@
       "description": "Función entre dos conjuntos que es simultáneamente inyectiva y sobreyectiva, estableciendo un emparejamiento uno a uno invertible.",
       "proofs": [],
       "directDependencies": [
+        "funcion",
         "conjunto"
       ]
     },
@@ -769,17 +785,6 @@
         "incidencia",
         "punto",
         "recta"
-      ]
-    },
-    "completitud-reales": {
-      "id": "completitud-reales",
-      "type": "definicion",
-      "subtype": "derivado",
-      "title": "Completitud de los números reales",
-      "description": "Propiedad fundamental del cuerpo ordenado de los números reales según la cual todo subconjunto no vacío acotado superiormente posee supremo.",
-      "proofs": [],
-      "directDependencies": [
-        "cuerpo"
       ]
     },
     "concepto-primitivo": {
@@ -853,7 +858,11 @@
       "title": "Continuidad",
       "description": "Propiedad topológica y geométrica que caracteriza la ausencia de fisuras, saltos o lagunas en una recta, espacio o función matemática.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "recta",
+        "funcion",
+        "espacio"
+      ]
     },
     "coplanaridad": {
       "id": "coplanaridad",
@@ -941,7 +950,9 @@
       "description": "Función real no negativa sobre pares de puntos que satisface identidad de indiscernibles, simetría y desigualdad triangular.",
       "proofs": [],
       "directDependencies": [
-        "conjunto"
+        "funcion",
+        "conjunto",
+        "numero-real"
       ]
     },
     "dominio": {
@@ -1134,7 +1145,9 @@
       "description": "Formalización métrica de la aproximación sucesiva de los valores de una función real hacia un valor numérico en un punto de acumulación.",
       "proofs": [],
       "directDependencies": [
-        "funcion"
+        "funcion",
+        "numero-real",
+        "dominio"
       ]
     },
     "logica": {
@@ -1161,6 +1174,71 @@
         "axioma-arquimedes",
         "axioma-completitud",
         "axioma-congruencia-3"
+      ]
+    },
+    "numero-complejo": {
+      "id": "numero-complejo",
+      "type": "definicion",
+      "subtype": "algebraico",
+      "title": "Números complejos",
+      "description": "Cuerpo algebraicamente cerrado que extiende a los reales mediante la unidad imaginaria, identificable geométricamente con el plano bidimensional.",
+      "proofs": [],
+      "directDependencies": [
+        "cuerpo",
+        "numero-real"
+      ]
+    },
+    "numero-entero": {
+      "id": "numero-entero",
+      "type": "definicion",
+      "subtype": "algebraico",
+      "title": "Números enteros",
+      "description": "Anillo conmutativo ordenado discreto que extiende a los números naturales incorporando los inversos aditivos o números negativos.",
+      "proofs": [],
+      "directDependencies": [
+        "numero-natural",
+        "relacion-equivalencia",
+        "operacion-binaria",
+        "grupo"
+      ]
+    },
+    "numero-natural": {
+      "id": "numero-natural",
+      "type": "definicion",
+      "subtype": "algebraico",
+      "title": "Números naturales",
+      "description": "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+      "proofs": [],
+      "directDependencies": [
+        "conjunto",
+        "funcion"
+      ]
+    },
+    "numero-racional": {
+      "id": "numero-racional",
+      "type": "definicion",
+      "subtype": "algebraico",
+      "title": "Números racionales",
+      "description": "Cuerpo ordenado arquimediano formado por todas las fracciones de enteros, denso en la recta pero carente de completitud analítica.",
+      "proofs": [],
+      "directDependencies": [
+        "numero-entero",
+        "relacion-equivalencia",
+        "cuerpo"
+      ]
+    },
+    "numero-real": {
+      "id": "numero-real",
+      "type": "definicion",
+      "subtype": "analitico",
+      "title": "Números reales",
+      "description": "Único cuerpo conmutativo ordenado completo y arquimediano, soporte del continuo geométrico y del cálculo infinitesimal.",
+      "proofs": [],
+      "directDependencies": [
+        "cuerpo",
+        "numero-racional",
+        "completitud-reales",
+        "continuidad"
       ]
     },
     "operacion-binaria": {
@@ -1374,9 +1452,7 @@
       "proofs": [],
       "directDependencies": [
         "punto",
-        "recta",
-        "estar-entre",
-        "axioma-orden-1"
+        "estar-entre"
       ]
     },
     "semejanza": {
@@ -1452,9 +1528,7 @@
       "title": "Sistema axiomático",
       "description": "Marco formal deductivo constituido por una signatura, un lenguaje, un conjunto de axiomas y reglas de inferencia para desarrollar una teoría matemática.",
       "proofs": [],
-      "directDependencies": [
-        "axioma"
-      ]
+      "directDependencies": []
     },
     "teorema": {
       "id": "teorema",
@@ -1463,9 +1537,7 @@
       "title": "Teorema",
       "description": "Proposición matemática formal cuya veracidad se establece de manera concluyente mediante una demostración deductiva a partir de axiomas.",
       "proofs": [],
-      "directDependencies": [
-        "axioma"
-      ]
+      "directDependencies": []
     },
     "teoria-medida-area": {
       "id": "teoria-medida-area",
@@ -1494,9 +1566,7 @@
       "title": "Teoría de modelos",
       "description": "Rama de la lógica matemática que investiga las relaciones entre las fórmulas de un lenguaje formal (sintaxis) y sus interpretaciones o estructuras matemáticas (semántica).",
       "proofs": [],
-      "directDependencies": [
-        "axioma"
-      ]
+      "directDependencies": []
     },
     "traza": {
       "id": "traza",
@@ -2085,6 +2155,17 @@
       "description": "Recorrido deductivo hasta el teorema de Pitágoras: desde los conceptos primitivos y la congruencia, pasando por el axioma de las paralelas y el teorema de Tales, hasta su aplicación en la localización por satélite.",
       "proofs": [],
       "directDependencies": []
+    },
+    "completitud-reales": {
+      "id": "completitud-reales",
+      "type": "teorema",
+      "title": "Completitud de los números reales",
+      "description": "Propiedad del cuerpo ordenado de los números reales derivada del axioma del supremo, que garantiza la convergencia de sucesiones de Cauchy y la ausencia de discontinuidades.",
+      "proofs": [],
+      "directDependencies": [
+        "cuerpo",
+        "axioma-supremo"
+      ]
     },
     "teorema-angulo-exterior": {
       "id": "teorema-angulo-exterior",

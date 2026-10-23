@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una correspondencia funcional entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que asocia cada elemento del dominio con un único elemento del codominio, de modo que cada elemento del codominio resulta ser imagen de exactamente un elemento del dominio.
+<Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que asocia cada elemento del <ConceptLink targetId="dominio">dominio</ConceptLink> con un único elemento del <ConceptLink targetId="codominio">codominio</ConceptLink>, de modo que cada elemento del codominio resulta ser imagen de exactamente un elemento del dominio.
 
-Al combinar la preservación de distinciones con la cobertura exhaustiva del espacio de llegada, una biyección establece un emparejamiento perfecto y simétrico uno a uno entre ambos conjuntos, garantizando la existencia de una función inversa bien definida.
+Al combinar la preservación de distinciones con la cobertura exhaustiva del codominio, una biyección establece un emparejamiento uno a uno entre ambos conjuntos que garantiza la existencia de una función inversa bien definida.
 
 <Definicion title="Definición formal de biyección">
   Sean $A$ y $B$ dos conjuntos. Una función $f\colon A \longrightarrow B$ es una **biyección** si y solo si satisface simultáneamente dos condiciones:
@@ -24,7 +24,7 @@ Al combinar la preservación de distinciones con la cobertura exhaustiva del esp
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
      $$
-  2. **Sobreyectividad:** Todo elemento del codominio es imagen de al menos un elemento del dominio:
+  2. **<ConceptLink targetId="sobreyectividad">Sobreyectividad</ConceptLink>:** Todo elemento del codominio es imagen de al menos un elemento del dominio:
      $$
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
@@ -38,5 +38,5 @@ Al combinar la preservación de distinciones con la cobertura exhaustiva del esp
 
 Las biyecciones desempeñan un papel vertebrador en múltiples ramas de la matemática:
 - **Medida del tamaño:** Dos conjuntos tienen la misma <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> si y solo si existe una biyección entre ellos ($|A| = |B|$).
-- **Preservación estructural:** Un <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink> formal no es sino una biyección entre estructuras que además preserva todas las relaciones y operaciones de su <ConceptLink targetId="signatura">signatura</ConceptLink>.
-- **Transformaciones y congruencia:** En geometría, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de figuras compuestas (como triángulos o polígonos) se define a través de una correspondencia biyectiva entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> homólogos que preserva la congruencia de los <ConceptLink targetId="lado">lados</ConceptLink> y de los <ConceptLink targetId="angulo">ángulos</ConceptLink> respectivos.
+- **Preservación estructural:** Un <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink> formal es una biyección entre <ConceptLink targetId="estructura-geometrica">estructuras</ConceptLink> que además preserva todas las relaciones y operaciones de su <ConceptLink targetId="signatura">signatura</ConceptLink>.
+- **Transformaciones y congruencia:** En geometría, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de figuras compuestas (como <ConceptLink targetId="triangulo">triángulos</ConceptLink> o <ConceptLink targetId="poligono">polígonos</ConceptLink>) se define a través de una correspondencia biyectiva entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> homólogos que preserva la congruencia de los <ConceptLink targetId="lado">lados</ConceptLink> y de los <ConceptLink targetId="angulo">ángulos</ConceptLink> respectivos.

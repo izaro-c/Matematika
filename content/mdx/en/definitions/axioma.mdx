@@ -16,7 +16,7 @@ export const metadata = {
 
 <Capitular letra="A" />n **axiom** (or postulate) is a mathematical statement accepted as true without prior proof within the framework of a formal deductive theory. It constitutes the elementary, irreducible premise from which all other propositions of the discipline are logically derived.
 
-In formal axiomatic thought, axioms do not claim to reflect self-evident empirical realities or absolute physical truths; their metatheoretical function is to specify explicitly the conditions, constraints, and mutual relations that must be satisfied by the <ConceptLink targetId="concepto-primitivo" isDependency={true}>primitive concepts</ConceptLink> of the theory. Consequently, any subsequent result deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> via rules of <ConceptLink targetId="inferencia">inference</ConceptLink> remains indissolubly conditioned on the validity of the initial postulates.
+In formal axiomatic thought, axioms do not claim to reflect self-evident empirical realities or absolute physical truths; their metatheoretical function is to specify explicitly the conditions, constraints, and mutual relations that must be satisfied by the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of the theory. Consequently, any subsequent result deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> via rules of <ConceptLink targetId="inferencia">inference</ConceptLink> remains indissolubly conditioned on the validity of the initial postulates.
 
 <Definicion title="Axiom in a formal system">
   Let $\mathcal{S} = (\sigma, \Phi)$ be an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> formalized over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ with formal language $\mathcal{L}_\sigma$. A **proper** or non-logical axiom of the theory is a closed formula $\alpha \in \Phi$ belonging to the distinguished set of postulates:
@@ -31,10 +31,10 @@ In formal axiomatic thought, axioms do not claim to reflect self-evident empiric
 
 <Separador />
 
-### Metatheoretical criteria for an axiomatic system
+### Metatheoretical criteria for an axiomatic repertoire
 
-When formulating or evaluating an axiomatic collection $\Phi$, mathematical methodology requires assessing three key metatheoretical properties:
+When formulating or evaluating an axiomatic collection $\Phi$, mathematical methodology examines three metatheoretical properties:
 
 1. **<ConceptLink targetId="consistencia-logica">Logical consistency</ConceptLink>:** The set of axioms must not harbor internal contradictions, meaning it must be impossible to derive from $\Phi$ both a proposition and its negation simultaneously ($\Phi \nvdash \varphi \land \neg \varphi$).
 2. **Axiomatic <ConceptLink targetId="independencia-logica">independence</ConceptLink>:** No axiom should be redundant or deducible from the remaining ones ($\forall \alpha_i \in \Phi, \ \Phi \setminus \{\alpha_i\} \nvdash \alpha_i$). To prove independence, one constructs dissenting models satisfying all axioms except the one tested.
-3. **Structuring into axiom groups:** In the *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organized geometric axioms into five organic groups with distinct functional roles: incidence (I), order (II), congruence (III), parallels (IV), and continuity (V).
+3. **Structuring into axiom families:** In the *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organized geometric axioms into five families with specific roles: <ConceptLink targetId="incidencia">incidence</ConceptLink> (I), <ConceptLink targetId="orden-total">order</ConceptLink> (II), <ConceptLink targetId="congruencia">congruence</ConceptLink> (III), <ConceptLink targetId="paralelas">parallels</ConceptLink> (IV), and <ConceptLink targetId="continuidad">continuity</ConceptLink> (V).

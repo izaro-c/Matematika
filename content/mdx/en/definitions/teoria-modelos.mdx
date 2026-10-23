@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="M" />odel **theory** is the branch of mathematical logic that investigates the semantic meaning of formal theories through the systematic study of relationships between formulas of a language and the structures in which these formulas make sense or hold true.
+<Capitular letra="M" />odel **theory** is the branch of <ConceptLink targetId="logica">mathematical logic</ConceptLink> that investigates the semantic meaning of formal theories through the systematic study of relationships between formulas of a language and the structures in which these formulas make sense or hold true.
 
-It constitutes the formal bridge between abstract syntax —the set of stated statements and <ConceptLink targetId="axioma" isDependency={true}>axioms</ConceptLink>— and concrete semantics, embodied by the mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that interpret those postulates.
+It constitutes the formal bridge between abstract syntax —the <ConceptLink targetId="conjunto">set</ConceptLink> of stated statements and <ConceptLink targetId="axioma">axioms</ConceptLink>— and concrete semantics, embodied by the mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that interpret those postulates.
 
 <Definicion title="Structure, satisfaction, and model">
   Given a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$, a **$\sigma$-structure** $\mathcal{M}$ comprises one or more non-empty <ConceptLink targetId="dominio">domains</ConceptLink> together with an assignment interpreting every relation, function, or constant symbol of $\sigma$ over those universes.
@@ -35,6 +35,6 @@ It constitutes the formal bridge between abstract syntax —the set of stated st
 
 In the foundations of mathematics, model theory plays a decisive demonstrative role:
 
-1. **Relative <ConceptLink targetId="consistencia-logica">logical consistency</ConceptLink>:** By Gödel's completeness theorem, a first-order theory is consistent if and only if it has at least one model. Thus, the analytic construction of the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$ proves the consistency of Euclidean geometry, while the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink> guarantees the relative consistency of hyperbolic geometry.
+1. **Relative <ConceptLink targetId="consistencia-logica">logical consistency</ConceptLink>:** By Gödel's completeness theorem, a first-order theory is consistent if and only if it has at least one model. Thus, the analytic construction of the Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> $\mathbb{R}^3$ proves the consistency of <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, while the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink> guarantees the relative consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
 2. **Axiomatic <ConceptLink targetId="independencia-logica">independence</ConceptLink>:** To show that an axiom cannot be deduced from the remainder, it suffices to construct a model satisfying all postulates except the axiom in question.
-3. **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink> and <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink>:** A theory is categorical in a given <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> $\kappa$ if all of its models of size $\kappa$ are mutually isomorphic, which ensures that the theory describes an essentially unique structure up to renaming of its elements.
+3. **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink> and <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink>:** A theory is categorical in a given <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> $\kappa$ if all of its models of size $\kappa$ are mutually isomorphic, which ensures that the theory describes a unique structure up to renaming of its elements.

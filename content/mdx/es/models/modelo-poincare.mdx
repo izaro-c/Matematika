@@ -35,9 +35,9 @@ export const metadata = {
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
 export const Diagram = ModeloPoincare;
 
-<Capitular letra="E" />l **disco de Poincaré** es un modelo analítico del plano hiperbólico: sus <ConceptLink targetId="punto">puntos</ConceptLink> son los del disco unidad abierto $\mathbb{D}^2$, sus <ConceptLink targetId="recta">rectas</ConceptLink> son los diámetros y los arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> ortogonales al borde, y satisface los axiomas planos del <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink> (I.1–I.3, II, III, el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink> y V).
+<Capitular letra="E" />l **disco de Poincaré** es un modelo analítico del <ConceptLink targetId="plano">plano</ConceptLink> hiperbólico. Sus <ConceptLink targetId="punto">puntos</ConceptLink> son los del disco unidad abierto $\mathbb{D}^2$, y sus <ConceptLink targetId="recta">rectas</ConceptLink> son los <ConceptLink targetId="diametro">diámetros</ConceptLink> y los arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> ortogonales al borde. Satisface los axiomas planos del <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink> (I.1–I.3, II, III, el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink> y V).
 
-Al estar construido dentro de la geometría euclidiana, el modelo prueba que la geometría hiperbólica plana es <ConceptLink targetId="consistencia-logica">consistente</ConceptLink> si lo es la euclidiana. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> lo introdujo en 1882, después de los modelos de <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) y <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). Es <ConceptLink targetId="aplicacion-conforme">conforme</ConceptLink>: la medida de los ángulos hiperbólicos coincide con la de los ángulos euclídeos que forman las curvas.
+Al estar construido dentro de la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, el modelo prueba que la geometría hiperbólica plana es <ConceptLink targetId="consistencia-logica">consistente</ConceptLink> si lo es la euclidiana. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> lo introdujo en 1882, después de los modelos de <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) y <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). Es <ConceptLink targetId="aplicacion-conforme">conforme</ConceptLink>: la medida de los ángulos hiperbólicos coincide con la de los ángulos euclídeos que forman las curvas.
 
 <Definicion title="Estructura del modelo">
   El modelo es la <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ definida así:
@@ -49,9 +49,9 @@ Al estar construido dentro de la geometría euclidiana, el modelo prueba que la 
     $$
     d(A, B) = \operatorname{arcosh}\!\left( 1 + \frac{2\,\lVert A - B \rVert^2}{(1 - \lVert A \rVert^2)(1 - \lVert B \rVert^2)} \right)
     $$
-    y dos <ConceptLink targetId="angulo">ángulos</ConceptLink> son congruentes si los ángulos euclídeos entre las tangentes a sus lados tienen la misma medida.
+    y dos <ConceptLink targetId="angulo">ángulos</ConceptLink> son congruentes si los ángulos euclídeos entre las tangentes a sus <ConceptLink targetId="lado">lados</ConceptLink> tienen la misma medida.
 
-  La distancia procede del elemento de longitud $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; cuando un punto se acerca a la frontera, su distancia a cualquier punto fijo del disco tiende a $+\infty$.
+  La distancia procede del elemento de <ConceptLink targetId="longitud">longitud</ConceptLink> $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; cuando un punto se acerca a la frontera, su distancia a cualquier punto fijo del disco tiende a $+\infty$.
 </Definicion>
 
 <Separador />
@@ -81,7 +81,7 @@ Las paralelas límite y las ultraparalelas son <ConceptLink targetId="paralelas"
       id="poincare-orden"
       title="Axiomas de orden"
     >
-      Cada recta es un arco abierto ordenado como un intervalo de $\mathbb{R}$, lo que da los axiomas <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; cada recta separa el disco en dos regiones, los <ConceptLink targetId="semiplano">semiplanos</ConceptLink>, y se cumple el <ConceptLink targetId="axioma-orden-4">axioma de Pasch</ConceptLink>.
+      Cada recta es un arco abierto ordenado como un <ConceptLink targetId="intervalo">intervalo</ConceptLink> de $\mathbb{R}$, lo que da los axiomas <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; cada recta separa el disco en dos regiones, los <ConceptLink targetId="semiplano">semiplanos</ConceptLink>, y se cumple el <ConceptLink targetId="axioma-orden-4">axioma de Pasch</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem
@@ -89,7 +89,7 @@ Las paralelas límite y las ultraparalelas son <ConceptLink targetId="paralelas"
       title="Axiomas de congruencia"
       formula="z \longmapsto e^{i\varphi}\,\frac{z - a}{1 - \bar{a}\,z}, \quad |a| < 1"
     >
-      Las transformaciones de Möbius anteriores (y sus composiciones con la conjugación) son las <ConceptLink targetId="isometria">isometrías</ConceptLink> del modelo: conservan $d$ y los ángulos, y actúan transitivamente sobre puntos y direcciones. Con ellas se transportan segmentos y ángulos (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>), y se verifican <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>.
+      Las transformaciones de Möbius anteriores (y sus composiciones con la conjugación) son las <ConceptLink targetId="isometria">isometrías</ConceptLink> del modelo: conservan $d$ y los ángulos, y actúan transitivamente sobre puntos y direcciones. Con ellas se transportan <ConceptLink targetId="segmento">segmentos</ConceptLink> y ángulos (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>), y se verifican <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem

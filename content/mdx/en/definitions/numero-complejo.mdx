@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "numero-complejo",
+  lang: "en",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Complex numbers",
+  description: "Algebraically closed field extending the real numbers via the imaginary unit, geometrically identifiable with the two-dimensional plane.",
+  branch: "12",
+  branches: ["12", "30"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo VII, §1", role: "primary" },
+    { title: "Complex Analysis", author: "Lars V. Ahlfors", locator: "Capítulo 1, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="T" />he **complex numbers** constitute the <ConceptLink targetId="cuerpo-algebraicamente-cerrado">algebraically closed field</ConceptLink> obtained by extending the <ConceptLink targetId="cuerpo">field</ConceptLink> of <ConceptLink targetId="numero-real">real numbers</ConceptLink> with the <ConceptLink targetId="unidad-imaginaria">imaginary unit</ConceptLink> $i$, formalizing the complete resolution of <ConceptLink targetId="polinomio">polynomial equations</ConceptLink> and endowing the two-dimensional <ConceptLink targetId="plano">plane</ConceptLink> with a canonical multiplicative structure.
+
+Geometrically represented by <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> and Jean-Robert <ConceptLink targetId="argand">Argand</ConceptLink> in the <ConceptLink targetId="plano-complejo">complex plane</ConceptLink>, complex numbers unify <ConceptLink targetId="algebra">algebra</ConceptLink> and continuous geometry by linking <ConceptLink targetId="adicion">addition</ConceptLink> with vector <ConceptLink targetId="traslacion">translation</ConceptLink> and multiplication with <ConceptLink targetId="homotecia">homothety</ConceptLink> and angular <ConceptLink targetId="rotacion">rotation</ConceptLink>.
+
+<Definicion title="Formal Structure of the Complex Numbers">
+  The field of **complex numbers** $\mathbb{C}$ is formally defined as the simple <ConceptLink targetId="extension-algebraica">algebraic extension</ConceptLink> of the <ConceptLink targetId="cuerpo" isDependency={true}>field</ConceptLink> of <ConceptLink targetId="numero-real" isDependency={true}>real numbers</ConceptLink> $\mathbb{R}$ by adjoining a root $i$ of the <ConceptLink targetId="polinomio-irreducible">irreducible polynomial</ConceptLink> $x^2 + 1 = 0$:
+  $$
+  \mathbb{C} \cong \mathbb{R}[x] / \langle x^2 + 1 \rangle
+  $$
+  Equivalently, $\mathbb{C}$ is identified with the <ConceptLink targetId="producto-cartesiano">Cartesian product</ConceptLink> $\mathbb{R} \times \mathbb{R}$ equipped with addition and multiplication given for any pairs $(a, b), (c, d) \in \mathbb{R}^2$ by:
+  $$
+  (a, b) + (c, d) = (a + c, b + d)
+  $$
+  $$
+  (a, b) \cdot (c, d) = (a \cdot c - b \cdot d, a \cdot d + b \cdot c)
+  $$
+  The pair $(a, b)$ is expressed in canonical binomial form as $z = a + b i$, where $a = \operatorname{Re}(z)$ is the <ConceptLink targetId="parte-real">real part</ConceptLink> and $b = \operatorname{Im}(z)$ is the <ConceptLink targetId="parte-imaginaria">imaginary part</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="clausura-algebraica" titulo="Algebraic closure and fundamental theorem of algebra">
+    The field $\mathbb{C}$ is algebraically closed: every non-constant polynomial with coefficients in $\mathbb{C}$ has at least one root in $\mathbb{C}$, satisfying the <ConceptLink targetId="teorema-fundamental-algebra">fundamental theorem of algebra</ConceptLink>, ensuring that every polynomial of degree $n \ge 1$ factors completely into $n$ linear factors.
+  </PropiedadItem>
+  <PropiedadItem id="estructura-espacio-vectorial-plano" titulo="Vector space and geometric representation">
+    The structure $(\mathbb{C}, +)$ with scalar multiplication by real numbers is a <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> of <ConceptLink targetId="dimension">dimension</ConceptLink> $2$ over $\mathbb{R}$ with standard <ConceptLink targetId="base-espacio-vectorial">basis</ConceptLink> $\{1, i\}$, identifying each complex number with a <ConceptLink targetId="punto">point</ConceptLink> or vector in the <ConceptLink targetId="espacio-euclidiano">Euclidean plane</ConceptLink>.
+  </PropiedadItem>
+  <PropiedadItem id="incompatibilidad-orden-cuerpo" titulo="Incompatibility with compatible total order">
+    In $\mathbb{C}$ it is impossible to define a <ConceptLink targetId="orden-total">total order</ConceptLink> relation compatible with the field operations, since in any <ConceptLink targetId="cuerpo-ordenado">ordered field</ConceptLink> the square of any non-zero element is strictly positive, whereas by definition $i^2 = -1 < 0$.
+  </PropiedadItem>
+</SeccionPropiedades>

@@ -2,5 +2,8 @@
 echo "Validando Grafo MDX y Enlaces Cruzados..."
 npm run prebuild
 
+echo "Validando nodos MDX modificados (lint, paridad; enlaces y estilo como avisos)..."
+npm run --silent content:check
+
 echo "Ejecutando linter y tests en archivos modificados..."
 npx lint-staged

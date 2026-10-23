@@ -17,29 +17,29 @@ export const metadata = {
 import { Distancia } from '@content/diagrams/Definiciones/Distancia';
 export const Simulation = Distancia;
 
-<Capitular letra="D" />**istantzia metrikoa** multzo bateko elementu-bikoteen arteko espazio-bereizketa zenbakiz kuantifikatzen duen funtzio bat da, axioma metrikoen sistema formal baten arabera balio erreal ez-negatibo bat esleituz.
+<Capitular letra="D" />**istantzia metrikoa** <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bateko elementu-bikoteen arteko espazio-bereizketa kuantifikatzen duen <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, axioma metrikoen <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> baten arabera balio <ConceptLink targetId="numero-real" isDependency={true}>erreal</ConceptLink> ez-negatibo bat esleituz.
 
-Distantzia eskalarra ez da oinarrizko kontzeptu bat axiomatika sintetikoan, ezta sinadura axiomatikoaren parte ere: espazioa kualitatiboki antolatzen da zuzenkien <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> oinarrizko erlazioaren bidez ($\cong$). $d(A, B) \in \mathbb{R}$ distantzia-funtzioak espazioa koordenatu analitikoz hornitzen denean edo eredu metriko zehatz bat eraikitzen denean soilik parte hartzen du.
+Distantzia eskalarra ez da <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptu</ConceptLink> bat axiomatika sintetikoan, ezta <ConceptLink targetId="signatura">sinadura</ConceptLink> axiomatikoaren parte ere: <ConceptLink targetId="espacio">espazioa</ConceptLink> kualitatiboki antolatzen da <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> oinarrizko erlazioaren bidez ($\cong$). $d(A, B) \in \mathbb{R}$ distantzia-funtzioak espazioa koordenatu analitikoz hornitzen denean edo <ConceptLink targetId="espacio-metrico">espazio metriko</ConceptLink> zehatz bat eraikitzen denean soilik parte hartzen du.
 
 <Definicion title="Metrikaren definizio formala">
   Izan bedi $X$ hutsik ez dagoen <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $d\colon X \times X \longrightarrow \mathbb{R}$ funtzio bat $X$-ren gaineko **distantzia** (edo metrika) bat da baldin eta soilik baldin baldintza hauek betetzen baditu edozein <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="canela">$C \in X$</VisualBind> elementutarako:
   1. **Ez-negatibotasuna eta banantzea:** $d(A, B) \ge 0$, eta $d(A, B) = 0 \iff A = B$.
-  2. **Simetria:** $d(A, B) = d(B, A)$.
-  3. **Desberdintza triangeluarra:**
+  2. **<ConceptLink targetId="relacion-simetrica">Simetria</ConceptLink>:** $d(A, B) = d(B, A)$.
+  3. **Desberdintza <ConceptLink targetId="triangulo">triangeluarra</ConceptLink>:**
      $$
      d(A, C) \le d(A, B) + d(B, C)
      $$
   
-  $(X, d)$ bikoteak espazio metriko bat osatzen du, <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind> eta <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind> zuzenkiek irudikatua.
+  $(X, d)$ bikoteak <ConceptLink targetId="espacio-metrico">espazio metriko</ConceptLink> bat osatzen du, <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="canela">$\overline{BC}$</VisualBind> eta <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind> <ConceptLink targetId="segmento">zuzenkiek</ConceptLink> irudikatua.
 </Definicion>
 
 <Separador />
 
 ### Distantzia euklidearra eta eredu geometrikoak
 
-$\mathbb{R}^2$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink>, $A = (x_A, y_A)$ eta $B = (x_B, y_B)$ bi punturen arteko ohiko distantzia euklidearra modu analitikoan definitzen da:
+$\mathbb{R}^2$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink>, $A = (x_A, y_A)$ eta $B = (x_B, y_B)$ bi <ConceptLink targetId="punto">punturen</ConceptLink> arteko ohiko distantzia euklidearra modu analitikoan definitzen da:
 $$
 d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}
 $$
 
-Distantzia hau aldaezina da translazioen, biraketen eta erreflexioen multzoaren pean, <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> kongruentzia geometrikoaren postulatuak zorroztasun analitiko osoz interpretatuz.
+Distantzia hau aldaezina da <ConceptLink targetId="traslacion">translazioen</ConceptLink>, <ConceptLink targetId="rotacion">biraketen</ConceptLink> eta erreflexioen pean, <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> kongruentzia geometrikoaren postulatuak interpretatuz.

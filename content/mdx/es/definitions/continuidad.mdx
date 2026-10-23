@@ -14,26 +14,26 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a **continuidad** es un principio matemático fundamental que expresa la plenitud, cohesión y ausencia de fisuras o saltos tanto en la línea geométrica como en las funciones y espacios topológicos.
+<Capitular letra="L" />a **continuidad** es la propiedad matemática que expresa la ausencia de fisuras, saltos o lagunas tanto en la <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> geométrica como en las <ConceptLink targetId="funcion" isDependency={true}>funciones</ConceptLink> y los <ConceptLink targetId="espacio" isDependency={true}>espacios</ConceptLink> topológicos.
 
-En la arquitectura conceptual de la matemática, la continuidad se manifiesta bajo dos perspectivas complementarias: la fundamentación geométrica sintética y el análisis algebraico-topológico del continuo real.
+En la matemática, la continuidad se manifiesta bajo dos perspectivas complementarias: la fundamentación sintética y el análisis algebraico-topológico del continuo real.
 
-Desde el punto de vista sintético, la continuidad no presupone un sistema numérico previo, sino que se articula mediante el grupo V de axiomas: el principio arquimediano (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink>) y el axioma de completitud lineal (<ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>). Juntos aseguran que la recta no admita ampliaciones conservando los axiomas previos, resolviendo vacíos clásicos de Euclides como la intersección obligada entre rectas y curvas como la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
+Desde el punto de vista sintético, la continuidad no presupone un sistema numérico previo, sino que se articula mediante el grupo V de axiomas: el principio arquimediano (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink>) y el axioma de completitud lineal (<ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>). Juntos aseguran que la <ConceptLink targetId="recta">recta</ConceptLink> no admita ampliaciones conservando los axiomas previos, resolviendo vacíos clásicos de <ConceptLink targetId="euclides">Euclides</ConceptLink> como la intersección obligada entre rectas y curvas como la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
 
-Por su parte, en el análisis sobre el <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> de los números reales $\mathbb{R}$, la continuidad se formaliza mediante la <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>, ya sea a través de las cortaduras de Dedekind, el principio del supremo o la convergencia de sucesiones de Cauchy.
+Por su parte, en el análisis sobre el <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> de los <ConceptLink targetId="numero-real">números reales</ConceptLink> $\mathbb{R}$, la continuidad se formaliza mediante la <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>, ya sea a través de las cortaduras de <ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink>, el <ConceptLink targetId="axioma-supremo">principio del supremo</ConceptLink> o la convergencia de sucesiones de <ConceptLink targetId="cauchy">Cauchy</ConceptLink>.
 
 <Definicion title="Principio de corte de Dedekind">
-  Sea $L$ un continuo lineal dotado de un orden denso. Si $L$ se divide en dos clases no vacías y disjuntas $\Sigma_1$ y $\Sigma_2$ tales que todo elemento de la primera precede a todo elemento de la segunda:
+  Sea $L$ un continuo lineal dotado de un <ConceptLink targetId="orden-total">orden denso</ConceptLink>. Si $L$ se divide en dos clases no vacías y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> $\Sigma_1$ y $\Sigma_2$ tales que todo elemento de la primera precede a todo elemento de la segunda:
   $$
   L = \Sigma_1 \cup \Sigma_2 \quad \land \quad \Sigma_1 \cap \Sigma_2 = \emptyset \quad \land \quad \forall x \in \Sigma_1, \, \forall y \in \Sigma_2 \ (x < y)
   $$
-  entonces el principio de continuidad estipula que existe un único elemento $p \in L$ que produce dicha división, actuando como el elemento máximo de $\Sigma_1$ o como el mínimo de $\Sigma_2$.
+  entonces el principio de continuidad estipula que existe un único elemento $p \in L$ que produce dicha <ConceptLink targetId="particion">partición</ConceptLink>, actuando como el elemento máximo de $\Sigma_1$ o como el mínimo de $\Sigma_2$.
 </Definicion>
 
 <Separador />
 
 ### Necesidad deductiva en el sistema absoluto
 
-En el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>, los axiomas de continuidad resultan indispensables para definir la longitud de curvas, la medida angular continua y el cálculo riguroso de áreas poligonales.
+En el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>, los axiomas de continuidad intervienen para definir la <ConceptLink targetId="longitud">longitud</ConceptLink> de curvas, la <ConceptLink targetId="medida-angular">medida angular</ConceptLink> continua y el cálculo de <ConceptLink targetId="teoria-medida-area">áreas</ConceptLink> de figuras.
 
-En geometrías sin axiomas de continuidad (como el plano racional $\mathbb{Q}^2$), una recta secante puede atravesar el interior de un círculo sin compartir ningún <ConceptLink targetId="punto">punto</ConceptLink> con su borde; la continuidad postula la existencia formal de dichos puntos de contacto, cerrando definitivamente la brecha entre la intuición espacial y la deducción lógica.
+En geometrías sin axiomas de continuidad (como el <ConceptLink targetId="plano">plano</ConceptLink> <ConceptLink targetId="numero-racional">racional</ConceptLink> $\mathbb{Q}^2$), una <ConceptLink targetId="secante">recta secante</ConceptLink> puede atravesar el interior de un círculo sin compartir ningún <ConceptLink targetId="punto">punto</ConceptLink> con su borde. La continuidad postula la existencia formal de dichos puntos de contacto, cerrando la brecha entre la intuición espacial y la deducción <ConceptLink targetId="logica">lógica</ConceptLink>.

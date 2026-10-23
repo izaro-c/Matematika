@@ -32,6 +32,14 @@ jobs:
         run: npm ci
       - name: Run full project check
         run: npm run full-check
+      - name: Content quality of changed nodes
+        if: github.event_name == 'pull_request'
+        run: |
+          set +e
+          out=$(npm run --silent content:check -- --base origin/${{ github.base_ref }} 2>&1); status=$?
+          echo "$out"
+          printf '### Calidad del contenido (nodos modificados)\n```\n%s\n```\n' "$out" >> "$GITHUB_STEP_SUMMARY"
+          exit $status
 
   # Gates específicos del editor que full-check no cubre
   editor-gates:

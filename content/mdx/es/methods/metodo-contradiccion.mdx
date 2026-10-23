@@ -13,13 +13,13 @@ export const metadata = {
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="L" />a demostración por contradicción, conocida históricamente como *reductio ad absurdum*, es una técnica de demostración indirecta que establece la veracidad de una proposición <VisualBind element="pP" color="terracota">$P$</VisualBind> asumiendo provisionalmente su negación $\neg P$ y derivando rigurosamente a partir de ella una contradicción lógica formal del tipo <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind>.
+<Capitular letra="L" />a demostración por contradicción, conocida históricamente como *reductio ad absurdum*, es una técnica de demostración indirecta que establece la veracidad de una proposición <VisualBind element="pP" color="terracota">$P$</VisualBind> asumiendo provisionalmente su negación $\neg P$ y derivando a partir de ella una contradicción lógica formal del tipo <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind>.
 
 <Separador />
 
 ### Fundamento lógico y fases de la reducción al absurdo
 
-El método se apoya en las leyes fundamentales de la lógica clásica (principio de no contradicción $\neg (R \land \neg R)$ y del tercero excluso $P \lor \neg P$). Para demostrar una implicación condicional $P \implies Q$, el procedimiento se desglosa en cuatro fases canónicas:
+El método se apoya en las leyes de la <ConceptLink targetId="logica">lógica</ConceptLink> clásica (principio de no contradicción $\neg (R \land \neg R)$ y del tercero excluso $P \lor \neg P$). Para demostrar una implicación condicional $P \implies Q$, el procedimiento se desglosa en cuatro fases canónicas:
 
 <ProofStep number={1} target={["pP", "pNotQ"]} diagramStep="paso-supuesto" title="Planteamiento del supuesto provisional ¬Q">
   Junto con la hipótesis de partida <VisualBind element="pP" color="terracota">$P$</VisualBind>, se asume provisionalmente la falsedad de la tesis mediante el supuesto <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind>:
@@ -36,7 +36,7 @@ El método se apoya en las leyes fundamentales de la lógica clásica (principio
 </ProofStep>
 
 <ProofStep number={3} target={["pAbsurdo", "segRColision", "segNotRColision"]} diagramStep="paso-colision-absurdo" title="Colisión formal y contradicción (⊥)">
-  Las dos consecuencias deducidas no pueden coexistir en el sistema formal. Su conjunción genera una colisión lógica irreparable <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
+  Las dos consecuencias deducidas no pueden coexistir en el <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink>. Su conjunción genera una colisión lógica irreparable <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
   <Formula>
     $$ R \land \neg R \equiv \bot \text{ (Absurdo)} $$
   </Formula>
@@ -54,7 +54,7 @@ El método se apoya en las leyes fundamentales de la lógica clásica (principio
 ### Ejemplos clásicos en geometría y análisis
 
 - **Irracionalidad de $\sqrt{2}$**: Se asume que $\sqrt{2} = a/b$ con $\operatorname{mcd}(a, b) = 1$. Se deduce que tanto $a$ como $b$ son pares, contradiciendo la hipótesis de fracción irreducible.
-- **Unicidad de perpendiculares**: Para demostrar que por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> pasa a lo sumo una <ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink>, se asume la existencia de dos perpendiculares distintas. Esto formaría un <ConceptLink targetId="triangulo">triángulo</ConceptLink> con dos <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos, contradiciendo el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> o el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos</ConceptLink> en la geometría euclidiana.
+- **Unicidad de perpendiculares**: Para demostrar que por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> pasa a lo sumo una <ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink>, se asume la existencia de dos perpendiculares distintas. Esto formaría un <ConceptLink targetId="triangulo">triángulo</ConceptLink> con dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>, contradiciendo el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> o el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos</ConceptLink> en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>.
 
 <Separador />
 

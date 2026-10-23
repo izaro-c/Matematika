@@ -14,10 +14,10 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="T" />he **difference quotient** (or average rate of change) quantifies the average variation rate experienced by a real <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> per unit of change in its independent variable across an interval. It constitutes the analytical and geometric core preceding the calculus of instantaneous variations, acting as a deductive bridge toward the <ConceptLink targetId="derivada">derivative</ConceptLink> through the operation of <ConceptLink targetId="limite">limit</ConceptLink>.
+<Capitular letra="T" />he **difference quotient** (or average rate of change) quantifies the average variation rate experienced by a real <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> per unit of change in its independent variable across an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink>. It constitutes the analytical and geometric core preceding the calculus of instantaneous variations, acting as a deductive bridge toward the <ConceptLink targetId="derivada">derivative</ConceptLink> through the operation of <ConceptLink targetId="limite">limit</ConceptLink>.
 
 <Definicion title="Formal definition of difference quotient">
-  Let $I \subseteq \mathbb{R}$ be an <ConceptLink targetId="intervalo">interval</ConceptLink> of the real line and let $f\colon I \longrightarrow \mathbb{R}$ be a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink>. Fixing a base point $x \in I$ and given a non-zero increment $h \in \mathbb{R} \setminus \{0\}$ such that $x + h \in I$, the **difference quotient** of $f$ between $x$ and $x + h$ is defined as:
+  Let $I \subseteq \mathbb{R}$ be an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink> of the real <ConceptLink targetId="recta">line</ConceptLink> and let $f\colon I \longrightarrow \mathbb{R}$ be a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink>. Fixing a base <ConceptLink targetId="punto">point</ConceptLink> $x \in I$ and given a non-zero increment $h \in \mathbb{R} \setminus \{0\}$ such that $x + h \in I$, the **difference quotient** of $f$ between $x$ and $x + h$ is defined as:
   $$
   \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
   $$
@@ -33,10 +33,10 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Interpretation and analytical properties">
     <PropiedadItem id="interpretacion-geometrica-secante" title="Geometric interpretation as secant slope" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
-      Geometrically, the difference quotient coincides with the <ConceptLink targetId="pendiente">slope</ConceptLink> of the secant line to the <ConceptLink targetId="grafica-funcion">graph</ConceptLink> of the <ConceptLink targetId="funcion">function</ConceptLink> connecting the points $(x, f(x))$ and $(x + h, f(x + h))$. As the increment $h$ approaches zero, this secant line tends, under regularity conditions, to the tangent line to the curve.
+      Geometrically, the difference quotient coincides with the <ConceptLink targetId="pendiente">slope</ConceptLink> of the <ConceptLink targetId="secante">secant line</ConceptLink> to the <ConceptLink targetId="grafica-funcion">graph</ConceptLink> of the <ConceptLink targetId="funcion">function</ConceptLink> connecting the <ConceptLink targetId="punto">points</ConceptLink> $(x, f(x))$ and $(x + h, f(x + h))$. As the increment $h$ approaches zero, this <ConceptLink targetId="secante">secant line</ConceptLink> tends to the <ConceptLink targetId="recta-tangente">tangent line</ConceptLink> to the curve.
     </PropiedadItem>
     <PropiedadItem id="fundamento-de-la-derivada" title="Foundation of the instantaneous derivative" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
-      The asymptotic behavior of the difference quotient as the increment tends to zero defines the notion of <ConceptLink targetId="derivada">derivative</ConceptLink>. If the <ConceptLink targetId="limite">limit</ConceptLink> exists in $\mathbb{R}$, the resulting value $f'(x)$ represents the instantaneous rate of change of the function at the point $x$.
+      The asymptotic behavior of the difference quotient as the increment tends to zero defines the notion of <ConceptLink targetId="derivada">derivative</ConceptLink>. If the <ConceptLink targetId="limite">limit</ConceptLink> exists in $\mathbb{R}$, the resulting value $f'(x)$ represents the instantaneous rate of change of the function at the <ConceptLink targetId="punto">point</ConceptLink> $x$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

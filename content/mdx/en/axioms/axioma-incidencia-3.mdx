@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> not lying on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
+<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> that are not <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
 
 Without this axiom, all points could be incident with a single line and geometry would reduce to one <ConceptLink targetId="dimension">dimension</ConceptLink>. Together with axioms <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> and <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, it completes the planar part of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, which already admits finite models such as the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
 
 <Definicion title="Formal statement">
-  There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
+  There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta">line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia">incident</ConceptLink> with all three:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$

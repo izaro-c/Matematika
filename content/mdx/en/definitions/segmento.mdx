@@ -28,9 +28,9 @@ export const metadata = {
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="A" /> line segment is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, called endpoints, together with all points lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> them.
+<Capitular letra="A" /> line segment is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink>, called endpoints, together with all points lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> them.
 
-The line segment is derived from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>, and is the elementary bounded figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are built.
+The line segment is derived from the <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>, and is the elementary bounded figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are built.
 
 <Definicion title="Formal Definition of Line Segment">
 Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the **open segment** $\operatorname{seg}(AB)$ is the set of all points $P \in \mathcal{P}$ lying between $A$ and $B$:
@@ -55,7 +55,7 @@ $$
       title="Symmetry of Endpoints"
       formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
     >
-      By the symmetry of <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> ($A * P * B \iff B * P * A$), a segment does not depend on the order in which its endpoints are named: $\overline{AB} = \overline{BA}$ and $\operatorname{seg}(AB) = \operatorname{seg}(BA)$ as an <ConceptLink targetId="igualdad-matematica">equality of sets</ConceptLink>.
+      By the <ConceptLink targetId="relacion-simetrica">symmetry</ConceptLink> of <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> ($A * P * B \iff B * P * A$), a segment does not depend on the order in which its endpoints are named: $\overline{AB} = \overline{BA}$ and $\operatorname{seg}(AB) = \operatorname{seg}(BA)$ as an <ConceptLink targetId="igualdad-matematica">equality of sets</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -63,7 +63,7 @@ $$
       title="Linear Convexity"
       formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
     >
-      Every closed segment $\overline{AB}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overline{AB}$, every point $X \in \mathcal{P}$ with $P * X * Q$ satisfies $X \in \overline{AB}$. This is not part of the definition but a <ConceptLink targetId="teorema">theorem</ConceptLink>: it follows from the <ConceptLink targetId="orden">linear order</ConceptLink> of the points of a line, which Hilbert derives from the order axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> (§4).
+      Every closed segment $\overline{AB}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overline{AB}$, every point $X \in \mathcal{P}$ with $P * X * Q$ satisfies $X \in \overline{AB}$. This is not part of the definition but a <ConceptLink targetId="teorema">theorem</ConceptLink>: it follows from the <ConceptLink targetId="orden">linear order</ConceptLink> of the points of a line, which <ConceptLink targetId="hilbert">Hilbert</ConceptLink> derives from the order axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> (§4).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -71,7 +71,7 @@ $$
       title="Uniqueness of the Supporting Line"
       formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subseteq \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
     >
-      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ determine a unique <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> $\overleftrightarrow{AB}$, and the segment is contained in its <ConceptLink targetId="traza">trace</ConceptLink>: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. The inclusion holds because, by <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>, every point between $A$ and $B$ is collinear with them.
+      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ determine a unique <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> $\overleftrightarrow{AB}$, and the segment is contained in its <ConceptLink targetId="traza">trace</ConceptLink>: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. The inclusion holds because, by <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>, every point between $A$ and $B$ is <ConceptLink targetId="colinealidad">collinear</ConceptLink> with them.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -1,0 +1,49 @@
+export const metadata = {
+  id: "numero-natural",
+  lang: "es",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Números naturales",
+  description: "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+  branch: "11A",
+  branches: ["11A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Arithmetices principia, nova methodo exposita", author: "Giuseppe Peano", locator: "1889", role: "primary" },
+    { title: "Was sind und was sollen die Zahlen?", author: "Richard Dedekind", locator: "1888", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />os **números naturales** constituyen el sistema numérico discreto sobre el que descansa la <ConceptLink targetId="aritmetica">aritmética</ConceptLink>, formalizando las operaciones primarias de contar los elementos de un <ConceptLink targetId="conjunto-finito">conjunto finito</ConceptLink> y ordenar secuencialmente sus términos.
+
+Formalizados por <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> y anticipados por <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>, los naturales pueden concebirse como una estructura caracterizada por un elemento inicial y una <ConceptLink targetId="sucesor">función sucesor</ConceptLink>. Asimismo, en <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink> se construyen mediante los <ConceptLink targetId="ordinales-von-neumann">ordinales de von Neumann</ConceptLink>, donde cada número se define como el conjunto de todos los naturales que lo preceden.
+
+<Definicion title="Axiomática de Peano para los números naturales">
+  Un sistema de **números naturales** es una terna $(\mathbb{N}, 0, S)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $\mathbb{N}$, un elemento distinguido $0 \in \mathbb{N}$ y una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <ConceptLink targetId="inyectividad">inyectiva</ConceptLink> $S \colon \mathbb{N} \to \mathbb{N}$ (denominada <ConceptLink targetId="sucesor">función sucesor</ConceptLink>) tales que:
+  1. El elemento $0$ no es el sucesor de ningún número natural:
+     $$
+     \forall n \in \mathbb{N}, \quad S(n) \neq 0
+     $$
+  2. La función sucesor es inyectiva:
+     $$
+     \forall m, n \in \mathbb{N}, \quad S(m) = S(n) \implies m = n
+     $$
+  3. Principio de <ConceptLink targetId="metodo-induccion">inducción matemática</ConceptLink>: si un subconjunto $K \subseteq \mathbb{N}$ satisface que $0 \in K$ y que para todo $n \in K$ se cumple $S(n) \in K$, entonces $K = \mathbb{N}$:
+     $$
+     (0 \in K \land \forall n \in K \ (S(n) \in K)) \implies K = \mathbb{N}
+     $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="principio-buen-orden" titulo="Principio del buen orden">
+    Todo subconjunto no vacío de números naturales $A \subseteq \mathbb{N}$ posee un elemento mínimo respecto de la relación de <ConceptLink targetId="orden-total">orden estándar</ConceptLink>, garantizando que $(\mathbb{N}, \le)$ es un <ConceptLink targetId="buen-orden">conjunto bien ordenado</ConceptLink>.
+  </PropiedadItem>
+  <PropiedadItem id="estructura-algebraica-semianillo" titulo="Estructura de semianillo conmutativo">
+    Definiendo la <ConceptLink targetId="adicion">adición</ConceptLink> y la <ConceptLink targetId="multiplicacion">multiplicación</ConceptLink> de forma recursiva a partir del sucesor, la estructura $(\mathbb{N}, +, \cdot)$ es un <ConceptLink targetId="semianillo">semianillo</ConceptLink> conmutativo unitario dotado de propiedad cancelativa para la suma.
+  </PropiedadItem>
+  <PropiedadItem id="cardinalidad-numerable" titulo="Cardinalidad numerable">
+    El conjunto $\mathbb{N}$ es un <ConceptLink targetId="conjunto-infinito">conjunto infinito</ConceptLink> y define la menor escala de infinitud transfinita, denominada <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> numerable y denotada por $\aleph_0 = |\mathbb{N}|$.
+  </PropiedadItem>
+</SeccionPropiedades>

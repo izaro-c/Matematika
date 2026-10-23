@@ -28,9 +28,9 @@ export const metadata = {
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="Z" />uzenkia <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinek (muturrak deituak) eta haien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dauden puntu guztiek osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da.
+<Capitular letra="Z" />uzenkia <ConceptLink targetId="recta">zuzen</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinek (muturrak deituak) eta haien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dauden puntu guztiek osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da.
 
-Zuzenkia <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunaren</ConceptLink> oinarrizko erlaziotik eta <ConceptLink targetId="axioma-orden-1" isDependency={true}>II.1 axiomatik</ConceptLink> eratortzen da, eta irudi bornatu oinarrizkoa da: haren gainean eraikitzen dira <ConceptLink targetId="poligono">poligonoak</ConceptLink>, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="congruencia">zuzenkien kongruentzia</ConceptLink>.
+Zuzenkia <ConceptLink targetId="estar-entre">bitartekotasunaren</ConceptLink> <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> erlaziotik eta <ConceptLink targetId="axioma-orden-1">II.1 axiomatik</ConceptLink> eratortzen da, eta irudi bornatu oinarrizkoa da: haren gainean eraikitzen dira <ConceptLink targetId="poligono">poligonoak</ConceptLink>, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="congruencia">zuzenkien kongruentzia</ConceptLink>.
 
 <Definicion title="Zuzenkiaren definizio formala">
 $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> puntu desberdinetarako, <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenean</ConceptLink> <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak, $\operatorname{seg}(AB)$ **zuzenki irekia** $A$ eta $B$ puntuen artean dauden $P \in \mathcal{P}$ puntu guztien multzoa da:
@@ -55,7 +55,7 @@ $$
       title="Muturren simetria"
       formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
     >
-      <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> simetriari esker ($A * P * B \iff B * P * A$), zuzenkia ez dago muturrak izendatzeko ordenaren mende: $\overline{AB} = \overline{BA}$ eta $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, multzoen arteko <ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> gisa.
+      <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> <ConceptLink targetId="relacion-simetrica">simetriari</ConceptLink> esker ($A * P * B \iff B * P * A$), zuzenkia ez dago muturrak izendatzeko ordenaren mende: $\overline{AB} = \overline{BA}$ eta $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, multzoen arteko <ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> gisa.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -63,7 +63,7 @@ $$
       title="Ganbiltasun lineala"
       formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
     >
-      $\overline{AB}$ zuzenki itxi oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: $P, Q \in \overline{AB}$ badira, $P * X * Q$ betetzen duen $X \in \mathcal{P}$ puntu orok $X \in \overline{AB}$ betetzen du. Ez da definizioaren parte, <ConceptLink targetId="teorema">teorema</ConceptLink> bat baizik: zuzen bateko puntuen <ConceptLink targetId="orden">ordena linealetik</ConceptLink> ondorioztatzen da, eta Hilbertek ordenako <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> axiometatik lortzen du ordena hori (§4).
+      $\overline{AB}$ zuzenki itxi oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: $P, Q \in \overline{AB}$ badira, $P * X * Q$ betetzen duen $X \in \mathcal{P}$ puntu orok $X \in \overline{AB}$ betetzen du. Ez da definizioaren parte, <ConceptLink targetId="teorema">teorema</ConceptLink> bat baizik: zuzen bateko puntuen <ConceptLink targetId="orden">ordena linealetik</ConceptLink> ondorioztatzen da, eta <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> ordenako <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> axiometatik lortzen du ordena hori (§4).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -71,7 +71,7 @@ $$
       title="Zuzen euskarriaren bakartasuna"
       formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subseteq \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
     >
-      <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera, $A \neq B$ mutur desberdinek $\overleftrightarrow{AB}$ <ConceptLink targetId="recta-soporte">zuzen euskarri</ConceptLink> bakarra zehazten dute, eta zuzenkia haren <ConceptLink targetId="traza">puntu-trazaduran</ConceptLink> dago: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. Inklusio hori <ConceptLink targetId="axioma-orden-1">II.1 axiomatik</ConceptLink> dator: $A$ eta $B$ puntuen artean dagoen puntu oro haiekin kolineala da.
+      <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera, $A \neq B$ mutur desberdinek $\overleftrightarrow{AB}$ <ConceptLink targetId="recta-soporte">zuzen euskarri</ConceptLink> bakarra zehazten dute, eta zuzenkia haren <ConceptLink targetId="traza">puntu-trazaduran</ConceptLink> dago: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. Inklusio hori <ConceptLink targetId="axioma-orden-1">II.1 axiomatik</ConceptLink> dator: $A$ eta $B$ puntuen artean dagoen puntu oro haiekin <ConceptLink targetId="colinealidad">kolineala</ConceptLink> da.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

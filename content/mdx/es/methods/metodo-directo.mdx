@@ -13,9 +13,9 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="E" />l **método directo** es la forma de <ConceptLink targetId="demostracion">demostración</ConceptLink> que prueba una <ConceptLink targetId="implicacion">implicación</ConceptLink> $P \implies Q$ suponiendo la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> y deduciendo de ella la <ConceptLink targetId="tesis">tesis</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> mediante una sucesión finita de pasos, cada uno justificado.
+<Capitular letra="E" />l **método directo** es la forma de <ConceptLink targetId="demostracion">demostración</ConceptLink> que prueba una <ConceptLink targetId="implicacion">implicación</ConceptLink> $P \implies Q$ deduciendo la <ConceptLink targetId="tesis">tesis</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> a partir de la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> mediante una sucesión finita de pasos justificados.
 
-Es el esquema básico de toda deducción: los métodos indirectos, como la <ConceptLink targetId="metodo-contradiccion">demostración por contradicción</ConceptLink> o la prueba del <ConceptLink targetId="contraposicion">contrarrecíproco</ConceptLink> $\neg Q \implies \neg P$, transforman primero el enunciado y después razonan de forma directa.
+Es el esquema básico deductivo: los métodos indirectos, como la <ConceptLink targetId="metodo-contradiccion">demostración por contradicción</ConceptLink> o el <ConceptLink targetId="contraposicion">contrarrecíproco</ConceptLink> $\neg Q \implies \neg P$, transforman primero el enunciado y luego razonan de forma directa.
 
 <Separador />
 
@@ -24,34 +24,34 @@ Es el esquema básico de toda deducción: los métodos indirectos, como la <Conc
 La deducción directa articula la inferencia paso a paso aplicando la regla de <ConceptLink targetId="modus-ponens">modus ponens</ConceptLink> ($A \land (A \implies B) \vdash B$):
 
 <ProofStep number={1} target="pP" diagramStep="paso-hipotesis" title="Planteamiento de la hipótesis P">
-  Se establece la hipótesis inicial <VisualBind element="pP" color="terracota">$P$</VisualBind> como premisa indiscutible y punto de partida de la deducción:
+  Se establece la hipótesis <VisualBind element="pP" color="terracota">$P$</VisualBind> como premisa de partida:
   <Formula>
-    $$ P \text{ (Premisa inicial dada)} $$
+    $$ P \text{ (Premisa inicial)} $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={2} target={["pP1", "segPP1"]} diagramStep="paso-primera-inferencia" title="Primera deducción: P ⇒ P₁">
-  Aplicando un <ConceptLink targetId="axioma">axioma</ConceptLink> o definición mediante modus ponens, de <VisualBind element="pP" color="terracota">$P$</VisualBind> se deduce válidamente la proposición intermedia <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>:
+  Por un <ConceptLink targetId="axioma">axioma</ConceptLink> o definición vía modus ponens, de <VisualBind element="pP" color="terracota">$P$</VisualBind> se deduce la proposición <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>:
   <Formula>
     $$ P \implies P_1 $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={3} target={["pP2", "segP1P2"]} diagramStep="paso-segunda-inferencia" title="Encadenamiento: P₁ ⇒ P₂">
-  A partir de <VisualBind element="pP1" color="carbon">$P_1$</VisualBind> y recurriendo a un <ConceptLink targetId="teorema">teorema</ConceptLink> o <ConceptLink targetId="lema">lema</ConceptLink> previo, se deriva el siguiente eslabón deductivo <VisualBind element="pP2" color="carbon">$P_2$</VisualBind>:
+  A partir de <VisualBind element="pP1" color="carbon">$P_1$</VisualBind> y recurriendo a un <ConceptLink targetId="teorema">teorema</ConceptLink> o <ConceptLink targetId="lema">lema</ConceptLink>, se deriva <VisualBind element="pP2" color="carbon">$P_2$</VisualBind>:
   <Formula>
     $$ P_1 \implies P_2 \implies \dots \implies P_n $$
   </Formula>
 </ProofStep>
 
 <ProofStep number={4} target={["pQ", "segP2Q"]} diagramStep="paso-conclusion" title="Conclusión final: P₂ ⇒ Q">
-  El encadenamiento deductivo alcanza finalmente la tesis buscada <VisualBind element="pQ" color="canela">$Q$</VisualBind>, completando la demostración directa de $P \implies Q$:
+  La cadena deductiva alcanza la tesis <VisualBind element="pQ" color="canela">$Q$</VisualBind>, completando la demostración directa de $P \implies Q$:
   <Formula>
     $$ P \implies P_1 \implies P_2 \implies \dots \implies Q $$
   </Formula>
 </ProofStep>
 
-Cada implicación intermedia $P_k \implies P_{k+1}$ se fundamenta rigurosamente en:
+Cada implicación intermedia $P_k \implies P_{k+1}$ se fundamenta en:
 - la hipótesis $P$ o una afirmación ya obtenida en la cadena;
 - un <ConceptLink targetId="axioma">axioma</ConceptLink> del sistema;
 - un <ConceptLink targetId="teorema">teorema</ConceptLink>, <ConceptLink targetId="lema">lema</ConceptLink> o <ConceptLink targetId="corolario">corolario</ConceptLink> demostrado antes;
@@ -62,12 +62,12 @@ Cada implicación intermedia $P_k \implies P_{k+1}$ se fundamenta rigurosamente 
 
 ### Ejemplos en geometría
 
-- **<ConceptLink targetId="teorema-triangulo-isosceles">Teorema del triángulo isósceles</ConceptLink>**: de la hipótesis $\overline{AB} \cong \overline{AC}$ se obtiene, aplicando el <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink> a los triángulos $\triangle ABC$ y $\triangle ACB$, que $\angle ABC \cong \angle ACB$.
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de los ángulos de un triángulo</ConceptLink>**: se traza por un vértice la <ConceptLink targetId="paralelas">paralela</ConceptLink> al lado opuesto, cuya unicidad garantiza el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>, y la congruencia de <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> lleva a que los tres ángulos suman dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: en la <ConceptLink targetId="demo-pitagoras-euclides">demostración de Euclides</ConceptLink>, criterios de congruencia y comparaciones de <ConceptLink targetId="area">áreas</ConceptLink> conducen directamente de la hipótesis «el ángulo en $C$ es recto» a la tesis $a^2 + b^2 = c^2$.
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Teorema del triángulo isósceles</ConceptLink>**: de $\overline{AB} \cong \overline{AC}$, aplicando el <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink> a los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABC$ y $\triangle ACB$, se obtiene $\angle ABC \cong \angle ACB$.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de los ángulos de un triángulo</ConceptLink>**: se traza por un <ConceptLink targetId="vertice">vértice</ConceptLink> la <ConceptLink targetId="paralelas">paralela</ConceptLink> al <ConceptLink targetId="lado">lado</ConceptLink> opuesto, única por el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>, y la congruencia de <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> muestra que los tres ángulos suman dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: en la <ConceptLink targetId="demo-pitagoras-euclides">demostración de Euclides</ConceptLink>, criterios de congruencia y comparaciones de <ConceptLink targetId="area">áreas</ConceptLink> conducen de «el ángulo en $C$ es recto» a $a^2 + b^2 = c^2$.
 
 <Separador />
 
 ### Cuándo conviene
 
-El método directo es adecuado cuando la hipótesis aporta datos que pueden transformarse paso a paso en la tesis. Cada paso puede verificarse de forma aislada, y cuando la prueba afirma la existencia de un objeto suele construirlo explícitamente. Si la tesis es una afirmación de imposibilidad o de unicidad, suele ser más natural un método indirecto.
+El método directo es adecuado cuando la hipótesis aporta datos que transforman constructivamente el problema hasta la tesis. Cada paso se comprueba de forma aislada. Para probar imposibilidad o unicidad, suele convenir un método indirecto.

@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "numero-real",
+  lang: "es",
+  type: "definicion",
+  subtype: "analitico",
+  title: "Números reales",
+  description: "Único cuerpo conmutativo ordenado completo y arquimediano, soporte del continuo geométrico y del cálculo infinitesimal.",
+  branch: "26A",
+  branches: ["26A", "12"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />os **números reales** constituyen el <ConceptLink targetId="continuo">continuo numérico</ConceptLink> formalizado como el único <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> completo, extendiendo a los <ConceptLink targetId="numero-racional">números racionales</ConceptLink> mediante la absorción de las magnitudes <ConceptLink targetId="inconmensurabilidad">inconmensurables</ConceptLink> o <ConceptLink targetId="numero-irracional">números irracionales</ConceptLink>.
+
+Construidos por <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink> mediante <ConceptLink targetId="cortadura-dedekind">cortaduras</ConceptLink> sobre $\mathbb{Q}$ y por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink> a través de <ConceptLink targetId="clase-equivalencia">clases de equivalencia</ConceptLink> de <ConceptLink targetId="sucesion-cauchy">sucesiones de Cauchy</ConceptLink>, los reales colman todas las lagunas de la <ConceptLink targetId="recta">recta numérica</ConceptLink>, fundamentando los <ConceptLink targetId="limite">límites</ConceptLink>, el <ConceptLink targetId="calculo-infinitesimal">cálculo infinitesimal</ConceptLink> y la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink>.
+
+<Definicion title="Estructura formal de los números reales">
+  El sistema de los **números reales** es una estructura $(\mathbb{R}, +, \cdot, \le)$ que constituye un <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> conmutativo con una relación de <ConceptLink targetId="orden-total">orden total</ConceptLink> compatible que extiende al cuerpo de los <ConceptLink targetId="numero-racional" isDependency={true}>números racionales</ConceptLink> $\mathbb{Q}$ y satisface la <ConceptLink targetId="completitud-reales" isDependency={true}>completitud de los números reales</ConceptLink>:
+  $$
+  \forall S \subseteq \mathbb{R} \ (S \neq \emptyset \land \exists M \in \mathbb{R} \ \forall x \in S \ (x \le M)) \implies \exists s \in \mathbb{R} \ (s = \sup(S))
+  $$
+  Esta propiedad garantiza la <ConceptLink targetId="continuidad" isDependency={true}>continuidad</ConceptLink> analítica de la recta real, deduciendo que toda sucesión de <ConceptLink targetId="intervalo">intervalos cerrados</ConceptLink> encajados $[a_n, b_n]$ con $a_n \le a_{n+1} \le b_{n+1} \le b_n$ posee intersección no vacía:
+  $$
+  \bigcap_{n=1}^\infty [a_n, b_n] \neq \emptyset
+  $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="completitud-dedekind" titulo="Axioma del supremo y ausencia de fisuras">
+    La estructura $(\mathbb{R}, +, \cdot, \le)$ es el único cuerpo ordenado completo y arquimediano salvo <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink>, caracterizándose porque toda sucesión de <ConceptLink targetId="cauchy">Cauchy</ConceptLink> converge a un elemento de $\mathbb{R}$.
+  </PropiedadItem>
+  <PropiedadItem id="potencia-del-continuo" titulo="Potencia del continuo">
+    El <ConceptLink targetId="conjunto">conjunto</ConceptLink> $\mathbb{R}$ es no numerable: por el argumento diagonal de Cantor, su <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> coincide con la <ConceptLink targetId="potencia-del-continuo">potencia del continuo</ConceptLink> $\mathfrak{c} = 2^{\aleph_0}$, estrictamente superior a la de $\mathbb{Q}$.
+  </PropiedadItem>
+  <PropiedadItem id="base-analitica-espacio-cartesiano" titulo="Fundamentación analítica de la geometría">
+    En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>, el producto $\mathbb{R}^n$ parametriza analíticamente el <ConceptLink targetId="espacio-euclidiano">espacio euclidiano</ConceptLink>, deduciendo la validez del <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> como consecuencia de la completitud analítica de $\mathbb{R}$.
+  </PropiedadItem>
+</SeccionPropiedades>

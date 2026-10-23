@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="S" />**istema axiomatiko** bat egitura deduktibo formal bat da, non teoria matematiko baten proposizio guztiak postulatutako enuntziatu edo <ConceptLink targetId="axioma">axiomen</ConceptLink> multzo esplizitu eta mugatu batetik zorrotz eratortzen diren.
+<Capitular letra="S" />**istema axiomatiko** bat egitura deduktibo formal bat da, non teoria matematiko baten proposizio guztiak postulatutako enuntziatu edo <ConceptLink targetId="axioma">axiomen</ConceptLink> multzo esplizitu eta mugatu batetik eratortzen diren.
 
-<ConceptLink targetId="euclides">Euklidesen</ConceptLink> *Elementuak* lanaren tradizio klasikoaren aldean —non espazio-intuizio sentikorrean oinarritutako definizioak erabiltzen baitziren—, Moritz <ConceptLink targetId="pasch">Paschek</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peanok</ConceptLink> eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> finkatutako axiomatika modernoak aldez aurreko eduki ontologiko orotatik askatzen ditu <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuak</ConceptLink>: haien esanahi formala axiomek haien artean ezartzen dituzten elkarrekiko erlazioen bidez soilik zehazten da.
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">*Elementuak*</ConceptLink> lanaren tradizio klasikoak espazio-intuizioan oinarritutako definizioak erabiltzen zituen. Aldiz, Moritz <ConceptLink targetId="pasch">Paschek</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peanok</ConceptLink> eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako axiomatika modernoak aldez aurreko interpretazioak baztertzen ditu: <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuen</ConceptLink> esanahi formala axiomek euren artean ezartzen dituzten erlazioen bidez soilik finkatzen da.
 
 <Definicion title="Sistema axiomatiko baten egitura formala">
   Sistema axiomatiko formalizatu bat honako hirukote hau da:
@@ -25,7 +25,7 @@ export const metadata = {
   $$
   non:
   - $\sigma$ motak edo <ConceptLink targetId="dominio">oinarrizko domeinuak</ConceptLink>, erlazioak eta eragiketak zehazten dituen <ConceptLink targetId="signatura">signatura</ConceptLink> den.
-  - $\Phi \subseteq \mathcal{L}_\sigma$ lehen mailako $\mathcal{L}_\sigma$ hizkuntza formalean formulatutako teoriaren berezko <ConceptLink targetId="axioma" isDependency={true}>axiomen</ConceptLink> multzoa den.
+  - $\Phi \subseteq \mathcal{L}_\sigma$ lehen mailako $\mathcal{L}_\sigma$ hizkuntza formalean formulatutako teoriaren berezko <ConceptLink targetId="axioma">axiomen</ConceptLink> <ConceptLink targetId="conjunto">multzoa</ConceptLink> den.
   - $\vdash$ <ConceptLink targetId="logica">logikaren</ConceptLink> <ConceptLink targetId="inferencia">inferentzia-arauek</ConceptLink> emandako kalkulu deduktiboa den.
 </Definicion>
 
@@ -37,6 +37,6 @@ Sistema axiomatiko bat ikuspuntu metamatematikotik ebaluatzen da nahikotasun- et
 
 1. **<ConceptLink targetId="consistencia-logica">Koherentzia</ConceptLink>:** Sistemak ez du kontraesanik sortu behar ($\Phi \nvdash \bot$). Osotasun-teoremaren arabera, koherentzia bermatuta dago baldin eta teoriak gutxienez <ConceptLink targetId="teoria-modelos">eredu</ConceptLink> bat onartzen badu.
 2. **<ConceptLink targetId="independencia-logica">Independentzia</ConceptLink>:** Axiometako bat ere ezin da gainerakoetatik ondorioztatu ($\Phi \setminus \{\alpha_i\} \nvdash \alpha_i$), alferrikako postulatuak saihestuz.
-3. **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** Kardinaltasun jakin bateko eredu guztiak elkarren artean <ConceptLink targetId="isomorfismo">isomorfoak</ConceptLink> gertatzen dira, eta horrek bermatzen du sistemak modu unibokoan finkatzen duela deskribatutako egitura.
+3. **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="cardinalidad">Kardinaltasun</ConceptLink> jakin bateko eredu guztiak elkarren artean <ConceptLink targetId="isomorfismo">isomorfoak</ConceptLink> gertatzen dira, eta horrek bermatzen du sistemak modu unibokoan finkatzen duela deskribatutako egitura.
 
 Ezagutza matematikoaren arkitekturan, sistema axiomatikoak hedapen-erlazioen bidez handitzen dira modu modularrean: <ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink> <ConceptLink targetId="sistema-absoluto">sistema absolutura</ConceptLink> hedatzen da, eta horretatik adarkatzen dira <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink> eta <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoa</ConceptLink>.

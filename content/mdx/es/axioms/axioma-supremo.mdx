@@ -1,0 +1,33 @@
+export const metadata = {
+  id: "axioma-supremo",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma del supremo",
+  description: "Todo subconjunto no vacío de números reales acotado superiormente posee una menor cota superior (supremo) en ℝ.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  axiomSystem: "sistema-cuerpo-real",
+  axiomFamily: "completitud",
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="T" />odo <ConceptLink targetId="conjunto" isDependency={true}>subconjunto</ConceptLink> no vacío de <ConceptLink targetId="numero-real">números reales</ConceptLink> que esté <ConceptLink targetId="cota-superior" isDependency={true}>acotado superiormente</ConceptLink> posee un <ConceptLink targetId="orden-total" isDependency={true}>supremo</ConceptLink> (o mínima cota superior) en $\mathbb{R}$.
+
+Este postulado constituye el axioma diferencial del continuo real en la fundamentación axiomática del <ConceptLink targetId="analisis-matematico">análisis matemático</ConceptLink>. Mientras que el <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> de los <ConceptLink targetId="numero-racional">números racionales</ConceptLink> $\mathbb{Q}$ comparte las propiedades algebraicas de <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> y la relación de <ConceptLink targetId="axioma-arquimedes">orden arquimediano</ConceptLink> con $\mathbb{R}$, carece de la propiedad del supremo (por ejemplo, el <ConceptLink targetId="conjunto">conjunto</ConceptLink> $\{x \in \mathbb{Q} : x^2 < 2\}$ está acotado superiormente en $\mathbb{Q}$ pero no posee supremo racional). El axioma del supremo postula que en $\mathbb{R}$ no existen tales huecos o <ConceptLink targetId="continuidad">discontinuidades</ConceptLink> aritméticas.
+
+<Definicion title="Axioma del supremo en ℝ">
+  Sea $S \subseteq \mathbb{R}$ un subconjunto no vacío de números reales. Si $S$ está acotado superiormente —es decir, si existe una <ConceptLink targetId="cota-superior">cota superior</ConceptLink> $M \in \mathbb{R}$ tal que para todo $x \in S, \, x \le M$—, entonces existe un número real $s = \sup(S) \in \mathbb{R}$ denominado **supremo** (o mínima cota superior) de $S$, caracterizado unívocamente por:
+  $$
+  \forall x \in S \ (x \le s) \quad \land \quad \forall \varepsilon > 0 \ \exists x \in S \ (x > s - \varepsilon)
+  $$
+</Definicion>
+
+<Separador />
+
+### Significado en el análisis real
+
+A partir de este axioma se deducen las propiedades del <ConceptLink targetId="calculo-infinitesimal">análisis infinitesimal</ConceptLink>: la <ConceptLink targetId="axioma-arquimedes">propiedad arquimediana</ConceptLink> de los reales, el principio de intervalos encajados de <ConceptLink targetId="cantor">Cantor</ConceptLink>, el teorema de Bolzano-<ConceptLink targetId="weierstrass">Weierstrass</ConceptLink> y la <ConceptLink targetId="completitud-reales">completitud métrica</ConceptLink> según la cual toda <ConceptLink targetId="sucesion-cauchy">sucesión de Cauchy</ConceptLink> converge (<ConceptLink targetId="limite">límite</ConceptLink>) en $\mathbb{R}$. En la fundamentación analítica de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink> (<ConceptLink targetId="hilbert">David Hilbert</ConceptLink>), este principio sustenta el <ConceptLink targetId="axioma-completitud">Axioma V.2 (Completitud lineal)</ConceptLink> en el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>.

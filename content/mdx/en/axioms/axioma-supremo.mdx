@@ -1,0 +1,33 @@
+export const metadata = {
+  id: "axioma-supremo",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom of the Supremum",
+  description: "Every non-empty subset of real numbers bounded above has a least upper bound (supremum) in ℝ.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  axiomSystem: "sistema-cuerpo-real",
+  axiomFamily: "completitud",
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />very non-empty <ConceptLink targetId="conjunto" isDependency={true}>subset</ConceptLink> of <ConceptLink targetId="numero-real">real numbers</ConceptLink> that is <ConceptLink targetId="cota-superior" isDependency={true}>bounded above</ConceptLink> has a <ConceptLink targetId="orden-total" isDependency={true}>supremum</ConceptLink> (or least upper bound) in $\mathbb{R}$.
+
+This postulate is the defining axiom of the real continuum in the axiomatic foundations of <ConceptLink targetId="analisis-matematico">mathematical analysis</ConceptLink>. While the <ConceptLink targetId="cuerpo-ordenado">ordered field</ConceptLink> of <ConceptLink targetId="numero-racional">rational numbers</ConceptLink> $\mathbb{Q}$ shares the algebraic <ConceptLink targetId="cuerpo">field</ConceptLink> properties and <ConceptLink targetId="axioma-arquimedes">Archimedean ordering</ConceptLink> with $\mathbb{R}$, it lacks the supremum property (for instance, the <ConceptLink targetId="conjunto">set</ConceptLink> $\{x \in \mathbb{Q} : x^2 < 2\}$ is bounded above in $\mathbb{Q}$ but has no rational supremum). The axiom of the supremum establishes that $\mathbb{R}$ contains no such arithmetic gaps or <ConceptLink targetId="continuidad">discontinuities</ConceptLink>.
+
+<Definicion title="Axiom of the supremum in ℝ">
+  Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers. If $S$ is bounded above —that is, if there exists an <ConceptLink targetId="cota-superior">upper bound</ConceptLink> $M \in \mathbb{R}$ such that for all $x \in S, \, x \le M$—, then there exists a real number $s = \sup(S) \in \mathbb{R}$ called the **supremum** (or least upper bound) of $S$, uniquely characterized by:
+  $$
+  \forall x \in S \ (x \le s) \quad \land \quad \forall \varepsilon > 0 \ \exists x \in S \ (x > s - \varepsilon)
+  $$
+</Definicion>
+
+<Separador />
+
+### Significance in real analysis
+
+From this axiom follow the properties of <ConceptLink targetId="calculo-infinitesimal">infinitesimal analysis</ConceptLink>: the <ConceptLink targetId="axioma-arquimedes">Archimedean property</ConceptLink> of the real numbers, <ConceptLink targetId="cantor">Cantor's</ConceptLink> nested interval theorem, the Bolzano-<ConceptLink targetId="weierstrass">Weierstrass</ConceptLink> theorem, and <ConceptLink targetId="completitud-reales">metric completeness</ConceptLink> according to which every <ConceptLink targetId="sucesion-cauchy">Cauchy sequence</ConceptLink> converges (<ConceptLink targetId="limite">limit</ConceptLink>) in $\mathbb{R}$. In the analytical foundations of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink> (<ConceptLink targetId="hilbert">David Hilbert</ConceptLink>), this principle underpins <ConceptLink targetId="axioma-completitud">Axiom V.2 (Linear completeness)</ConceptLink> in the <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>.

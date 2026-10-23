@@ -1,0 +1,61 @@
+export const metadata = {
+  id: "completitud-reales",
+  lang: "es",
+  type: "teorema",
+  title: "Completitud de los números reales",
+  description: "Propiedad del cuerpo ordenado de los números reales derivada del axioma del supremo, que garantiza la convergencia de sucesiones de Cauchy y la ausencia de discontinuidades.",
+  statement: "El cuerpo ordenado de los números reales ℝ es completo: todo subconjunto no vacío acotado superiormente posee supremo, toda sucesión de Cauchy converge en ℝ y toda sucesión decreciente de intervalos cerrados y acotados tiene intersección no vacía.",
+  branch: "26A",
+  branches: ["26A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **completitud** de los <ConceptLink targetId="numero-real">números reales</ConceptLink> es la propiedad derivada de la estructura de <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> <ConceptLink targetId="orden-total" isDependency={true}>ordenado</ConceptLink> de $\mathbb{R}$ y del <ConceptLink targetId="axioma-supremo" isDependency={true}>axioma del supremo</ConceptLink>, que asegura la ausencia de huecos, fisuras o discontinuidades en la <ConceptLink targetId="recta">recta</ConceptLink> numérica real.
+
+Esta propiedad garantiza que el continuo real no contiene lagunas aritméticas, permitiendo fundamentar el <ConceptLink targetId="calculo-infinitesimal">cálculo infinitesimal</ConceptLink>, los <ConceptLink targetId="limite">límites</ConceptLink> de sucesiones y las construcciones geométricas analíticas. En un <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> arquimediano (<ConceptLink targetId="axioma-arquimedes">Arquímedes</ConceptLink>), la completitud admite diversas formulaciones lógicamente equivalentes: la propiedad del supremo (<ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink>), la convergencia de toda <ConceptLink targetId="sucesion-cauchy">sucesión de Cauchy</ConceptLink> (<ConceptLink targetId="cauchy">Cauchy</ConceptLink>) y el principio de intervalos encajados de <ConceptLink targetId="cantor">Cantor</ConceptLink>.
+
+<Definicion title="Teorema de completitud de los números reales">
+  Sea $(\mathbb{R}, +, \cdot, \le)$ el cuerpo ordenado de los números reales que satisface el <ConceptLink targetId="axioma-supremo">axioma del supremo</ConceptLink>. Entonces $\mathbb{R}$ cumple las siguientes condiciones equivalentes de completitud:
+  1. **Propiedad del supremo:** Todo <ConceptLink targetId="conjunto">subconjunto</ConceptLink> no vacío $S \subseteq \mathbb{R}$ que posea una <ConceptLink targetId="cota-superior">cota superior</ConceptLink> $M \in \mathbb{R}$ tiene una menor cota superior $s = \sup(S) \in \mathbb{R}$.
+  2. **Completitud métrica (<ConceptLink targetId="cauchy">Cauchy</ConceptLink>):** Toda sucesión de Cauchy $(x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R}$ es convergente en $\mathbb{R}$:
+  $$
+  \forall (x_n)_{n \in \mathbb{N}} \subseteq \mathbb{R} \ \Bigl(\lim_{n,m \to \infty} |x_n - x_m| = 0 \implies \exists L \in \mathbb{R} \ \lim_{n \to \infty} x_n = L\Bigr)
+  $$
+  3. **Principio de intervalos encajados:** Toda sucesión decreciente de <ConceptLink targetId="intervalo">intervalos</ConceptLink> cerrados y acotados $[a_n, b_n] \subseteq \mathbb{R}$ verifica $\bigcap_{n=1}^\infty [a_n, b_n] \neq \emptyset$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias y formulaciones analíticas">
+    <PropiedadItem 
+      id="propiedad-infimo-reales" 
+      title="Propiedad del ínfimo"
+      formula="\forall S \neq \emptyset \ (\exists m \in \mathbb{R} \ \forall x \in S \ m \le x \implies \exists \inf(S) \in \mathbb{R})"
+    >
+      Por <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink> del orden respecto a la inversión aditiva, todo subconjunto no vacío de números reales acotado inferiormente posee un ínfimo (o máxima cota inferior) en $\mathbb{R}$, satisfaciendo $\inf(S) = -\sup(-S)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="propiedad-cantor-intervalos" 
+      title="Teorema de los intervalos encajados de Cantor"
+      formula="\lim_{n \to \infty} (b_n - a_n) = 0 \implies \exists! c \in \mathbb{R} \ \left(\{c\} = \bigcap_{n=1}^\infty [a_n, b_n]\right)"
+    >
+      Si la <ConceptLink targetId="longitud">longitud</ConceptLink> de los intervalos cerrados encajados tiende a cero, su intersección se reduce a un único <ConceptLink targetId="punto">punto</ConceptLink> en $\mathbb{R}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+### Fundamentación analítica de la continuidad hilbertiana
+
+La completitud de $\mathbb{R}$ ejerce un papel demostrativo en los modelos analíticos de la geometría:
+
+En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>, la <ConceptLink targetId="traza">traza</ConceptLink> de cada <ConceptLink targetId="recta">recta</ConceptLink> se identifica analíticamente mediante una <ConceptLink targetId="biyeccion">biyección</ConceptLink> monótona con $\mathbb{R}$. En virtud de la completitud del cuerpo real, cualquier <ConceptLink targetId="particion">bipartición</ConceptLink> conexa de los <ConceptLink targetId="punto">puntos</ConceptLink> de una recta traslada de forma inmediata el corte de <ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink> a la recta geométrica, deduciendo como resultado demostrado el <ConceptLink targetId="axioma-completitud">Axioma V.2 (Completitud lineal)</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>.
+
+De este modo, la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> y satisfacción de los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink> cartesiano $\mathbb{R}^3$ queda enteramente reducida a la completitud analítica del cuerpo de los números reales.

@@ -14,25 +14,25 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="K" />**ardinaltasuna** (edo zenbaki kardinala) bilduma baten «elementu-kopuruaren» kontzeptuaren orokortze matematiko zorrotza da, multzo finituetan zein multzo amaigabeetan erabateko baliozkotasunez aplikagarria dena.
+<Capitular letra="K" />**ardinaltasuna** (edo zenbaki kardinala) bilduma baten «elementu-kopuruaren» kontzeptuaren orokortze matematikoa da, multzo finituetan zein <ConceptLink targetId="conjunto-infinito">multzo amaigabeetan</ConceptLink> erabateko baliozkotasunez aplikagarria dena.
 
-Georg Cantorrek aurkeztutako kardinalen teoriak infinituaren paradoxak gainditzen ditu kontaketa sekuentzialari uko eginez eta ekipotentziaren printzipioan oinarrituz: bi multzok berezko tamaina bera dute baldin eta soilik baldin haien elementuak banan-banan pareka badaitezke <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> baten bidez.
+<ConceptLink targetId="cantor">Georg Cantorrek</ConceptLink> aurkeztutako kardinalen teoriak infinituaren paradoxak gainditzen ditu kontaketa sekuentzialari uko eginez eta ekipotentziaren printzipioan oinarrituz: bi multzok berezko tamaina bera dute baldin eta soilik baldin haien elementuak banan-banan pareka badaitezke <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> baten bidez.
 
 <Definicion title="Ekipotentzia eta konparaketa kardinala">
   Bi $A$ eta $B$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> **ekipotenteak** dira ($A \sim B$ idatzita) baldin eta soilik baldin $f\colon A \longrightarrow B$ <ConceptLink targetId="biyeccion" isDependency={true}>bijekzio</ConceptLink> bat existitzen bada:
   $$
   |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijektiboa})
   $$
-  Kardinalen arteko ordena injekzioen bidez definitzen da: $|A| \le |B|$ idazten da baldin eta $A$-tik $B$-rako aplikazio injektibo bat existitzen bada. Cantor-Bernstein-Schröder teoremaren arabera, $|A| \le |B|$ eta $|B| \le |A|$ badira, orduan ezinbestean $|A| = |B|$ da.
+  Kardinalen arteko ordena injekzioen bidez definitzen da: $|A| \le |B|$ idazten da baldin eta $A$-tik $B$-rako <ConceptLink targetId="inyectividad">aplikazio injektibo</ConceptLink> bat existitzen bada. Cantor-Bernstein-Schröder teoremaren arabera, $|A| \le |B|$ eta $|B| \le |A|$ badira, orduan ezinbestean $|A| = |B|$ da.
   
   Cantorren teoremaren arabera, edozein $A$ multzotarako, haren $\wp(A)$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoak</ConceptLink> kardinaltasun hertsiki handiagoa du: $|A| < |\wp(A)|$.
 </Definicion>
 
 <Separador />
 
-### Infinituen eskala eta dimentsioak geometrian
+### Infinituen eskala geometrian
 
-Kardinaltasunak domeinu geometrikoak haien tamaina ontologikoaren arabera sailkatzea ahalbidetzen du:
-- **Egitura finituak:** $n \in \mathbb{N}$ kardinal naturala duten multzoak, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoko</ConceptLink> 7 puntuak edo <ConceptLink targetId="modelo-tres-puntos">hiru puntuko ereduko</ConceptLink> 3 puntuak.
-- **Infinitu zenbakarria:** $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$ kardinala, segida diskretuen eta zenbaki arrazionalen ezaugarri dena.
-- **Kontinuoaren potentzia:** $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$ kardinala. Geometria euklidear jarraituan, zuzen bakoitzak $\mathfrak{c}$ <ConceptLink targetId="punto">puntu</ConceptLink> ditu, eta dentsitate horrek formalki bermatzen du geometria-<ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> eta espazioan hutsunerik ez egotea.
+Kardinaltasunak <ConceptLink targetId="dominio">domeinu</ConceptLink> geometrikoak haien tamainaren edo elementu-kopuruaren arabera sailkatzea ahalbidetzen du:
+- **<ConceptLink targetId="estructura-geometrica">Egitura</ConceptLink> finituak:** $n \in \mathbb{N}$ kardinal naturala duten multzoak, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoko</ConceptLink> 7 puntuak edo <ConceptLink targetId="modelo-tres-puntos">hiru puntuko ereduko</ConceptLink> 3 puntuak.
+- **Infinitu zenbakarria:** $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$ kardinala, segida diskretuen eta <ConceptLink targetId="numero-racional">zenbaki arrazionalen</ConceptLink> ezaugarri dena.
+- **Kontinuoaren potentzia:** $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$ kardinala. <ConceptLink targetId="sistema-euclidiano">Geometria euklidear</ConceptLink> jarraituan, <ConceptLink targetId="recta">zuzen</ConceptLink> bakoitzak $\mathfrak{c}$ <ConceptLink targetId="punto">puntu</ConceptLink> ditu, eta dentsitate horrek formalki bermatzen du geometria-<ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> eta <ConceptLink targetId="espacio">espazioan</ConceptLink> hutsunerik ez egotea.

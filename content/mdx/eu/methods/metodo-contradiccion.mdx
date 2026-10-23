@@ -19,7 +19,7 @@ export const Simulation = ContradictionSimulation;
 
 ### Oinarri logikoa eta absurdora eramatearen faseak
 
-Metodoa logika klasikoaren oinarrizko legeetan bermatzen da (ez-kontraesanaren printzipioa $\neg (R \land \neg R)$ eta hirugarren baztertuaren printzipioa $P \lor \neg P$). Baldintzazko $P \implies Q$ inplikazio bat frogatzeko, prozedura lau fase kanonikotan egituratzen da:
+Metodoa <ConceptLink targetId="logica">logika</ConceptLink> klasikoaren legeetan bermatzen da (ez-kontraesanaren printzipioa $\neg (R \land \neg R)$ eta hirugarren baztertuaren printzipioa $P \lor \neg P$). Baldintzazko $P \implies Q$ inplikazio bat frogatzeko, prozedura lau fase kanonikotan egituratzen da:
 
 <ProofStep number={1} target={["pP", "pNotQ"]} diagramStep="paso-supuesto" title="¬Q behin-behineko hipotesia planteatzea">
   Abiapuntuko <VisualBind element="pP" color="terracota">$P$</VisualBind> hipotesiarekin batera, behin-behinean tesiaren faltsutasuna onartzen da <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind> suposizioaren bidez:
@@ -36,7 +36,7 @@ Metodoa logika klasikoaren oinarrizko legeetan bermatzen da (ez-kontraesanaren p
 </ProofStep>
 
 <ProofStep number={3} target={["pAbsurdo", "segRColision", "segNotRColision"]} diagramStep="paso-colision-absurdo" title="Talka formala eta kontraesana (⊥)">
-  Deduzitutako bi ondorioak ezin dira aldi berean existitu sistema formalean. Haien konjuntzioak talka logiko konponezina eragiten du <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
+  Deduzitutako bi ondorioak ezin dira aldi berean existitu <ConceptLink targetId="sistema-axiomatico">sistema formalean</ConceptLink>. Haien konjuntzioak talka logiko konponezina eragiten du <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
   <Formula>
     $$ R \land \neg R \equiv \bot \text{ (Absurdoa)} $$
   </Formula>
@@ -54,7 +54,7 @@ Metodoa logika klasikoaren oinarrizko legeetan bermatzen da (ez-kontraesanaren p
 ### Adibide klasikoak geometrian eta analisian
 
 - **$\sqrt{2}$-ren irrazionaltasuna**: $\sqrt{2} = a/b$ dela suposatzen da, $\operatorname{mcd}(a, b) = 1$ izanik. Hortik $a$ zein $b$ bikoitiak direla ondorioztatzen da, zatiki laburtezina izatearen hipotesiarekin kontraesanean.
-- **Zuzen perpendikularren bakartasuna**: Kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik <ConceptLink targetId="recta">zuzen</ConceptLink> batera gehienez <ConceptLink targetId="perpendicular">zuzen perpendikular</ConceptLink> bakarra igarotzen dela frogatzeko, bi perpendikular ezberdin daudela suposatzen da. Horrek bi <ConceptLink targetId="angulo">angelu</ConceptLink> zuzen dituen <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat sortuko luke, <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> edo geometria euklidearreko <ConceptLink targetId="teorema-suma-angulos-triangulo">angeluen baturaren teoremaren</ConceptLink> aurka eginez.
+- **Zuzen perpendikularren bakartasuna**: Kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik <ConceptLink targetId="recta">zuzen</ConceptLink> batera gehienez <ConceptLink targetId="perpendicular">zuzen perpendikular</ConceptLink> bakarra igarotzen dela frogatzeko, bi perpendikular ezberdin daudela suposatzen da. Horrek bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> dituen <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat sortuko luke, <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> edo <ConceptLink targetId="sistema-euclidiano">geometria euklidearreko</ConceptLink> <ConceptLink targetId="teorema-suma-angulos-triangulo">angeluen baturaren teoremaren</ConceptLink> aurka eginez.
 
 <Separador />
 

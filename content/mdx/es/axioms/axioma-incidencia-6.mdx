@@ -23,7 +23,7 @@ export const Simulation = Incidence6;
 
 <Capitular letra="S" />i dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, entonces todos los puntos de esa recta inciden también en dicho plano.
 
-Como rectas y planos son objetos primitivos de tipos distintos, la frase «la recta está en el plano» no puede significar una inclusión entre ellos. Este axioma le da un contenido preciso y comprobable: basta que dos puntos distintos de la recta incidan en el plano para que lo hagan todos.
+Como rectas y planos son objetos primitivos de tipos distintos, la frase «la recta está en el plano» no puede significar una inclusión conjuntista directa. Este axioma le da un contenido preciso y comprobable: basta que dos puntos distintos de la recta incidan en el plano para que lo hagan todos.
 
 <Definicion title="Enunciado formal">
 Sean <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. Si $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind>, entonces todo punto que incide con $\ell$ incide también con $\pi$:
@@ -34,5 +34,5 @@ $$
 </Definicion>
 
 <Nota>
-En términos de <ConceptLink targetId="traza">trazas puntuales</ConceptLink>, la conclusión del axioma es la inclusión de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> de puntos $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. Esta es la forma en que los enunciados planos, como el <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> de Pasch, expresan que una recta está en un plano dado.
+En términos de <ConceptLink targetId="traza">trazas puntuales</ConceptLink>, la conclusión del axioma es la inclusión de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> de puntos $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. Esta es la forma en que los enunciados planos, como el <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> de <ConceptLink targetId="pasch">Pasch</ConceptLink>, expresan que una recta está en un plano dado.
 </Nota>

@@ -30,7 +30,7 @@ export const Simulation = Angulo;
 
 <Capitular letra="A" />n angle is the <ConceptLink targetId="par-no-ordenado">unordered pair</ConceptLink> of two <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> sharing the same <ConceptLink targetId="punto" isDependency={true}>origin</ConceptLink> whose <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> are distinct.
 
-The angle is neither a numerical magnitude nor a measure, but an object built from the notion of a <ConceptLink targetId="semirrecta">ray</ConceptLink> and from non-<ConceptLink targetId="colinealidad" isDependency={true}>collinearity</ConceptLink>. By definition there are no straight or null angles: the two sides of every angle lie on distinct lines. Angles are compared through <ConceptLink targetId="congruencia">congruence</ConceptLink>, not through numbers.
+The angle is neither a numerical magnitude nor a measure, but an object built from the notion of a <ConceptLink targetId="semirrecta">ray</ConceptLink> and from non-<ConceptLink targetId="colinealidad" isDependency={true}>collinearity</ConceptLink>. By definition there are no straight or null angles: the two sides of every angle lie on distinct <ConceptLink targetId="recta">lines</ConceptLink>. Angles are compared through <ConceptLink targetId="congruencia">congruence</ConceptLink>, not through numbers.
 
 <Definicion title="Formal Definition of Angle">
 Given a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ and two distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ such that $O$, $A$, and $B$ are not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **angle** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (also denoted $\angle(h, k)$) is the <ConceptLink targetId="par-no-ordenado">pair</ConceptLink> formed by the two <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
@@ -39,7 +39,7 @@ $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-The rays $h$ and $k$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the angle, and the common point $O$ is called its <ConceptLink targetId="vertice">vertex</ConceptLink>. Since rays are already sets of points, the **trace** of the angle, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, is simply the union of its sides:
+The rays $h$ and $k$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the angle, and the common point $O$ is called its <ConceptLink targetId="vertice">vertex</ConceptLink>. Since rays are already sets of points, the **<ConceptLink targetId="traza">trace</ConceptLink>** of the angle, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, is simply the union of its sides:
 
 $$
 \operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
@@ -63,7 +63,7 @@ $$
       title="Unique Supporting Plane"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
     >
-      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points $O$, $A$, and $B$ determine a unique <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$; by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, the lines $\overleftrightarrow{OA}$ and $\overleftrightarrow{OB}$ lie in it, so that $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points $O$, $A$, and $B$ determine a unique <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$; by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, the <ConceptLink targetId="recta">lines</ConceptLink> $\overleftrightarrow{OA}$ and $\overleftrightarrow{OB}$ lie in it, so that $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

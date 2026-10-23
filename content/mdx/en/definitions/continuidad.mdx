@@ -14,26 +14,26 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />ontinuity **is** a fundamental mathematical principle expressing the fullness, cohesion, and absence of gaps or jumps in geometric lines as well as in functions and topological spaces.
+<Capitular letra="C" />ontinuity is the mathematical property expressing the absence of gaps, jumps, or fissures in geometric <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> as well as in <ConceptLink targetId="funcion" isDependency={true}>functions</ConceptLink> and topological <ConceptLink targetId="espacio" isDependency={true}>spaces</ConceptLink>.
 
-In the conceptual architecture of mathematics, continuity manifests under two complementary perspectives: synthetic geometric foundations and the algebraic-topological analysis of the real continuum.
+In mathematics, continuity manifests under two complementary perspectives: synthetic geometric foundations and the algebraic-topological analysis of the real continuum.
 
-From a synthetic standpoint, continuity does not presuppose an antecedent numerical system, but is articulated through axiom Group V: the Archimedean principle (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink>) and the axiom of linear completeness (<ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>). Together they ensure that the line admits no extensions preserving previous axioms, resolving classical gaps in Euclid such as the necessary intersection between lines and curves like the <ConceptLink targetId="circunferencia">circle</ConceptLink>.
+From a synthetic standpoint, continuity does not presuppose an antecedent numerical system, but is articulated through axiom Group V: the Archimedean principle (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink>) and the axiom of linear completeness (<ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>). Together they ensure that the <ConceptLink targetId="recta">line</ConceptLink> admits no extensions preserving previous axioms, resolving classical gaps in <ConceptLink targetId="euclides">Euclid</ConceptLink> such as the necessary intersection between lines and curves like the <ConceptLink targetId="circunferencia">circle</ConceptLink>.
 
-Meanwhile, in analysis over the <ConceptLink targetId="cuerpo">field</ConceptLink> of real numbers $\mathbb{R}$, continuity is formalized through the <ConceptLink targetId="completitud-reales">completeness of the real numbers</ConceptLink>, whether via Dedekind cuts, the least upper bound principle, or the convergence of Cauchy sequences.
+Meanwhile, in analysis over the <ConceptLink targetId="cuerpo">field</ConceptLink> of <ConceptLink targetId="numero-real">real numbers</ConceptLink> $\mathbb{R}$, continuity is formalized through the <ConceptLink targetId="completitud-reales">completeness of the real numbers</ConceptLink>, whether via <ConceptLink targetId="cortadura-dedekind">Dedekind</ConceptLink> cuts, the <ConceptLink targetId="axioma-supremo">least upper bound principle</ConceptLink>, or the convergence of <ConceptLink targetId="cauchy">Cauchy</ConceptLink> sequences.
 
 <Definicion title="Dedekind cut principle">
-  Let $L$ be a linear continuum endowed with a dense order. If $L$ is divided into two non-empty, disjoint classes $\Sigma_1$ and $\Sigma_2$ such that every element of the first precedes every element of the second:
+  Let $L$ be a linear continuum endowed with a dense <ConceptLink targetId="orden-total">order</ConceptLink>. If $L$ is divided into two non-empty, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> classes $\Sigma_1$ and $\Sigma_2$ such that every element of the first precedes every element of the second:
   $$
   L = \Sigma_1 \cup \Sigma_2 \quad \land \quad \Sigma_1 \cap \Sigma_2 = \emptyset \quad \land \quad \forall x \in \Sigma_1, \, \forall y \in \Sigma_2 \ (x < y)
   $$
-  then the continuity principle stipulates that there exists a unique element $p \in L$ producing that partition, acting either as the maximum of $\Sigma_1$ or as the minimum of $\Sigma_2$.
+  then the continuity principle stipulates that there exists a unique element $p \in L$ producing that <ConceptLink targetId="particion">partition</ConceptLink>, acting either as the maximum of $\Sigma_1$ or as the minimum of $\Sigma_2$.
 </Definicion>
 
 <Separador />
 
 ### Deductive necessity in the absolute system
 
-In the <ConceptLink targetId="sistema-absoluto">absolute system</ConceptLink>, continuity axioms are indispensable for defining the length of curves, continuous angular measurement, and the rigorous computation of polygonal areas.
+In the <ConceptLink targetId="sistema-absoluto">absolute system</ConceptLink>, continuity axioms serve to define the <ConceptLink targetId="longitud">length</ConceptLink> of curves, continuous <ConceptLink targetId="medida-angular">angular measurement</ConceptLink>, and the computation of figure <ConceptLink targetId="teoria-medida-area">areas</ConceptLink>.
 
-In geometries lacking continuity axioms (such as the rational plane $\mathbb{Q}^2$), a secant line may cross the interior of a circle without sharing any <ConceptLink targetId="punto">point</ConceptLink> with its boundary; continuity postulates the formal existence of those contact points, definitively bridging the gap between spatial intuition and logical deduction.
+In geometries lacking continuity axioms (such as the <ConceptLink targetId="numero-racional">rational</ConceptLink> <ConceptLink targetId="plano">plane</ConceptLink> $\mathbb{Q}^2$), a <ConceptLink targetId="secante">secant line</ConceptLink> may cross the interior of a circle without sharing any <ConceptLink targetId="punto">point</ConceptLink> with its boundary. Continuity postulates the formal existence of those contact points, bridging the gap between spatial intuition and <ConceptLink targetId="logica">logical</ConceptLink> deduction.

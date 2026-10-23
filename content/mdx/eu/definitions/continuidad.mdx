@@ -14,26 +14,26 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="J" />**arraitutasuna** oinarrizko printzipio matematiko bat da, lerro geometrikoan zein funtzio eta espazio topologikoetan osotasuna, kohesioa eta arrakalarik edo jauzirik eza adierazten duena.
+<Capitular letra="J" />**arraitutasuna** lerro geometrikoan (<ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink>) zein <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> eta <ConceptLink targetId="espacio" isDependency={true}>espazio</ConceptLink> topologikoetan arrakalarik, jauzirik edo hutsunerik eza adierazten duen propietate matematikoa da.
 
-Matematikaren egitura kontzeptualean, jarraitutasuna bi ikuspegi osagarriren pean agertzen da: oinarri geometriko sintetikoa eta kontinuo errealaren analisi aljebraiko-topologikoa.
+Matematikan, jarraitutasuna bi ikuspegi osagarriren pean agertzen da: oinarri sintetikoa eta kontinuo errealaren analisi aljebraiko-topologikoa.
 
-Ikuspegi sintetikoari jarraituz, jarraitutasunak ez du aurretiazko zenbaki-sistemarik presuposatzen, baizik eta V. axioma-taldearen bidez egituratzen da: printzipio arkimedestarra (<ConceptLink targetId="axioma-arquimedes">V.1 axioma</ConceptLink>) eta osotasun linealaren axioma (<ConceptLink targetId="axioma-completitud">V.2 axioma</ConceptLink>). Biek bermatzen dute zuzenak ez duela zabalkuntzarik onartzen aurreko axiomak gordez, Euklidesen hutsune klasikoak konponduz, hala nola zuzenen eta <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink> bezalako kurben arteko ezinbesteko ebakidura.
+Ikuspegi sintetikoari jarraituz, jarraitutasunak ez du aurretiazko zenbaki-sistemarik presuposatzen, baizik eta V. axioma-taldearen bidez egituratzen da: printzipio arkimedestarra (<ConceptLink targetId="axioma-arquimedes">V.1 axioma</ConceptLink>) eta osotasun linealaren axioma (<ConceptLink targetId="axioma-completitud">V.2 axioma</ConceptLink>). Biek bermatzen dute <ConceptLink targetId="recta">zuzenak</ConceptLink> ez duela zabalkuntzarik onartzen aurreko axiomak gordez, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> hutsune klasikoak konponduz, hala nola zuzenen eta <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink> bezalako kurben arteko ebakidura.
 
-Bere aldetik, $\mathbb{R}$ zenbaki errealen <ConceptLink targetId="cuerpo">gorputzaren</ConceptLink> gaineko analisian, jarraitutasuna <ConceptLink targetId="completitud-reales">zenbaki errealen osotasunaren</ConceptLink> bidez formalizatzen da, dela Dedekinden ebakiduren bidez, dela gorenenaren printzipioaren bidez, dela Cauchyren segiden konbergentziaren bidez.
+Bere aldetik, $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="cuerpo">gorputzaren</ConceptLink> gaineko analisian, jarraitutasuna <ConceptLink targetId="completitud-reales">zenbaki errealen osotasunaren</ConceptLink> bidez formalizatzen da, dela <ConceptLink targetId="cortadura-dedekind">Dedekinden</ConceptLink> ebakiduren bidez, dela <ConceptLink targetId="axioma-supremo">gorenenaren printzipioaren</ConceptLink> bidez, dela <ConceptLink targetId="cauchy">Cauchyren</ConceptLink> segiden konbergentziaren bidez.
 
 <Definicion title="Dedekinden ebakiduraren printzipioa">
-  Izan bedi $L$ ordena trinko batez hornitutako kontinuo lineal bat. $L$ hutsik ez dauden bi $\Sigma_1$ eta $\Sigma_2$ klase disjuntutan banatzen bada, non lehenengoko elementu orok bigarreneko elementu ororen aurretik doan:
+  Izan bedi $L$ <ConceptLink targetId="orden-total">ordena trinko</ConceptLink> batez hornitutako kontinuo lineal bat. $L$ hutsik ez dauden bi $\Sigma_1$ eta $\Sigma_2$ klase <ConceptLink targetId="conjunto-disjunto">disjuntutan</ConceptLink> banatzen bada, non lehenengoko elementu orok bigarreneko elementu ororen aurretik doan:
   $$
   L = \Sigma_1 \cup \Sigma_2 \quad \land \quad \Sigma_1 \cap \Sigma_2 = \emptyset \quad \land \quad \forall x \in \Sigma_1, \, \forall y \in \Sigma_2 \ (x < y)
   $$
-  orduan jarraitutasunaren printzipioak ezartzen du banaketa hori eragiten duen $p \in L$ elementu bakarra existitzen dela, $\Sigma_1$-en maximo gisa edo $\Sigma_2$-ren minimo gisa jokatuz.
+  orduan jarraitutasunaren printzipioak ezartzen du <ConceptLink targetId="particion">banaketa</ConceptLink> hori eragiten duen $p \in L$ elementu bakarra existitzen dela, $\Sigma_1$-en maximo gisa edo $\Sigma_2$-ren minimo gisa jokatuz.
 </Definicion>
 
 <Separador />
 
 ### Premia deduktiboa sistema absolutuan
 
-<ConceptLink targetId="sistema-absoluto">Sistema absolutuan</ConceptLink>, jarraitutasun-axiomak ezinbestekoak dira kurben luzera, angelu-neurri jarraitua eta eskualde poligonalen azaleren kalkulu zorrotza definitzeko.
+<ConceptLink targetId="sistema-absoluto">Sistema absolutuan</ConceptLink>, jarraitutasun-axiomek kurben <ConceptLink targetId="longitud">luzera</ConceptLink>, <ConceptLink targetId="medida-angular">angelu-neurri</ConceptLink> jarraitua eta irudien <ConceptLink targetId="teoria-medida-area">azalerak</ConceptLink> definitzeko balio dute.
 
-Jarraitutasun-axiomarik gabeko geometrietan (hala nola $\mathbb{Q}^2$ plano arrazionalean), zuzen ebakitzaile batek zirkulu baten barrualdea zeharka dezake haren mugarekin inolako <ConceptLink targetId="punto">punturik</ConceptLink> partekatu gabe; jarraitutasunak ukipen-puntu horien existentzia formala postulatzen du, espazio-intuizioaren eta dedukzio logikoaren arteko arrakala behin betiko itxiz.
+Jarraitutasun-axiomarik gabeko geometrietan (hala nola $\mathbb{Q}^2$ <ConceptLink targetId="plano">plano</ConceptLink> <ConceptLink targetId="numero-racional">arrazionalean</ConceptLink>), <ConceptLink targetId="secante">zuzen ebakitzaile</ConceptLink> batek zirkulu baten barrualdea zeharka dezake haren mugarekin inolako <ConceptLink targetId="punto">punturik</ConceptLink> partekatu gabe. Jarraitutasunak ukipen-puntu horien existentzia formala postulatzen du, espazio-intuizioaren eta dedukzio <ConceptLink targetId="logica">logikoaren</ConceptLink> arteko arrakala itxiz.

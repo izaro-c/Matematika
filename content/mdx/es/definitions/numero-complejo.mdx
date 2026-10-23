@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "numero-complejo",
+  lang: "es",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Números complejos",
+  description: "Cuerpo algebraicamente cerrado que extiende a los reales mediante la unidad imaginaria, identificable geométricamente con el plano bidimensional.",
+  branch: "12",
+  branches: ["12", "30"],
+  hasSimulation: false,
+  sources: [
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo VII, §1", role: "primary" },
+    { title: "Complex Analysis", author: "Lars V. Ahlfors", locator: "Capítulo 1, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />os **números complejos** constituyen el <ConceptLink targetId="cuerpo-algebraicamente-cerrado">cuerpo algebraicamente cerrado</ConceptLink> obtenido mediante la extensión del <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> de los <ConceptLink targetId="numero-real">números reales</ConceptLink> con la <ConceptLink targetId="unidad-imaginaria">unidad imaginaria</ConceptLink> $i$, formalizando la resolución completa de <ConceptLink targetId="polinomio">ecuaciones polinómicas</ConceptLink> y dotando al <ConceptLink targetId="plano">plano</ConceptLink> bidimensional de una estructura multiplicativa canónica.
+
+Representados geométricamente por <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> y Jean-Robert <ConceptLink targetId="argand">Argand</ConceptLink> en el <ConceptLink targetId="plano-complejo">plano complejo</ConceptLink>, los números complejos unifican el <ConceptLink targetId="algebra">álgebra</ConceptLink> y la geometría continua al vincular la <ConceptLink targetId="adicion">adición</ConceptLink> con la <ConceptLink targetId="traslacion">traslación</ConceptLink> vectorial y la multiplicación con la <ConceptLink targetId="homotecia">homotecia</ConceptLink> y la <ConceptLink targetId="rotacion">rotación</ConceptLink> angular.
+
+<Definicion title="Estructura formal de los números complejos">
+  El cuerpo de los **números complejos** $\mathbb{C}$ se define formalmente como la <ConceptLink targetId="extension-algebraica">extensión algebraica</ConceptLink> simple del <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> de los <ConceptLink targetId="numero-real" isDependency={true}>números reales</ConceptLink> $\mathbb{R}$ mediante la adjunción de una raíz $i$ del <ConceptLink targetId="polinomio-irreducible">polinomio irreducible</ConceptLink> $x^2 + 1 = 0$:
+  $$
+  \mathbb{C} \cong \mathbb{R}[x] / \langle x^2 + 1 \rangle
+  $$
+  Equivalentemente, $\mathbb{C}$ se identifica con el <ConceptLink targetId="producto-cartesiano">producto cartesiano</ConceptLink> $\mathbb{R} \times \mathbb{R}$ provisto de las operaciones de adición y multiplicación dadas para cualesquiera pares $(a, b), (c, d) \in \mathbb{R}^2$ por:
+  $$
+  (a, b) + (c, d) = (a + c, b + d)
+  $$
+  $$
+  (a, b) \cdot (c, d) = (a \cdot c - b \cdot d, a \cdot d + b \cdot c)
+  $$
+  El par $(a, b)$ se expresa en forma binómica canónica como $z = a + b i$, donde $a = \operatorname{Re}(z)$ es la <ConceptLink targetId="parte-real">parte real</ConceptLink> y $b = \operatorname{Im}(z)$ es la <ConceptLink targetId="parte-imaginaria">parte imaginaria</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="clausura-algebraica" titulo="Clausura algebraica y teorema fundamental del álgebra">
+    El cuerpo $\mathbb{C}$ es algebraicamente cerrado: todo polinomio no constante con coeficientes en $\mathbb{C}$ posee al menos una raíz en $\mathbb{C}$, satisfaciendo el <ConceptLink targetId="teorema-fundamental-algebra">teorema fundamental del álgebra</ConceptLink>, lo que garantiza que todo polinomio de grado $n \ge 1$ se factoriza completamente en $n$ factores lineales.
+  </PropiedadItem>
+  <PropiedadItem id="estructura-espacio-vectorial-plano" titulo="Espacio vectorial y representación geométrica">
+    La estructura $(\mathbb{C}, +)$ con el producto por escalares reales es un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> de <ConceptLink targetId="dimension">dimensión</ConceptLink> $2$ sobre $\mathbb{R}$ con <ConceptLink targetId="base-espacio-vectorial">base</ConceptLink> canónica $\{1, i\}$, identificando cada número complejo con un <ConceptLink targetId="punto">punto</ConceptLink> o vector del <ConceptLink targetId="espacio-euclidiano">plano euclidiano</ConceptLink>.
+  </PropiedadItem>
+  <PropiedadItem id="incompatibilidad-orden-cuerpo" titulo="Incompatibilidad con orden total compatible">
+    En $\mathbb{C}$ es imposible definir una relación de <ConceptLink targetId="orden-total">orden total</ConceptLink> compatible con las operaciones de cuerpo, puesto que en todo <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> el cuadrado de cualquier elemento no nulo es estrictamente positivo, mientras que por definición $i^2 = -1 < 0$.
+  </PropiedadItem>
+</SeccionPropiedades>

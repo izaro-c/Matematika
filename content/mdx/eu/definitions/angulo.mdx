@@ -30,7 +30,7 @@ export const Simulation = Angulo;
 
 <Capitular letra="A" />ngelua <ConceptLink targetId="punto" isDependency={true}>jatorri</ConceptLink> bera duten eta <ConceptLink targetId="recta-soporte">zuzen euskarri</ConceptLink> desberdinak dituzten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiren</ConceptLink> <ConceptLink targetId="par-no-ordenado">bikote ez-ordenatua</ConceptLink> da.
 
-Angelua ez da zenbakizko magnitude bat, ezta neurri bat ere: <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> eraikitako objektua da. Definizioz, ez dago angelu lau edo nulurik: angelu ororen bi aldeak zuzen desberdinetan daude. Angeluak <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> bidez alderatzen dira, ez zenbakien bidez.
+Angelua ez da zenbakizko magnitude bat, ezta neurri bat ere: <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> eraikitako objektua da. Definizioz, ez dago angelu lau edo nulurik: angelu ororen bi aldeak <ConceptLink targetId="recta">zuzen</ConceptLink> desberdinetan daude. Angeluak <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> bidez alderatzen dira, ez zenbakien bidez.
 
 <Definicion title="Angeluaren definizio formala">
 Izan bitez $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto">puntua</ConceptLink> eta <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ bi puntu desberdin, $O$, $A$ eta $B$ <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez izanik. <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> **angelua** (edo $\angle(h, k)$) <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta">zuzenerdiek</ConceptLink> osatzen duten <ConceptLink targetId="par-no-ordenado">bikotea</ConceptLink> da:
@@ -39,7 +39,7 @@ $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpina</ConceptLink>. Zuzenerdiak dagoeneko puntu-multzoak direnez, angeluaren **trazadura**, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, haren aldeen bildura besterik ez da:
+$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpina</ConceptLink>. Zuzenerdiak dagoeneko puntu-multzoak direnez, angeluaren **<ConceptLink targetId="traza">trazadura</ConceptLink>**, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, haren aldeen bildura besterik ez da:
 
 $$
 \operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
@@ -63,7 +63,7 @@ $$
       title="Plano euskarri bakarra"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
     >
-      <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren $O$, $A$ eta $B$ puntuek $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra zehazten dute; <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, $\overleftrightarrow{OA}$ eta $\overleftrightarrow{OB}$ zuzenak plano horretan daude, eta, beraz, $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren $O$, $A$ eta $B$ puntuek $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra zehazten dute; <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, $\overleftrightarrow{OA}$ eta $\overleftrightarrow{OB}$ <ConceptLink targetId="recta">zuzenak</ConceptLink> plano horretan daude, eta, beraz, $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

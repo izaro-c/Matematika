@@ -14,12 +14,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **theorem** is a formal mathematical proposition whose truth is established conclusively through a deductive proof, grounded in an explicit set of <ConceptLink targetId="axioma" isDependency={true}>axioms</ConceptLink> and mediated by formal rules of inference.
+<Capitular letra="A" /> **theorem** is a formal mathematical proposition whose truth is established through a deductive proof, grounded in an explicit set of <ConceptLink targetId="axioma">axioms</ConceptLink> and mediated by formal rules of <ConceptLink targetId="inferencia">inference</ConceptLink>.
 
-It is distinguished ontologically from an axiom in that it is not freely postulated, but rather demands a complete deductive justification. In mathematical practice, theorems often take a conditional implicative form $H \implies T$, where the hypothesis $H$ states the starting conditions and the thesis $T$ states the deduced consequence. When a demonstrated result serves a preparatory auxiliary purpose it is called a <ConceptLink targetId="lema">lemma</ConceptLink>, whereas an immediate direct consequence drawn from a major theorem is termed a <ConceptLink targetId="corolario">corollary</ConceptLink>.
+It is distinguished from an axiom in that it is not freely postulated, but rather demands a complete deductive justification. In mathematical practice, theorems often take a conditional implicative form $H \implies T$, where the hypothesis $H$ states the starting conditions and the thesis $T$ states the deduced consequence. When a demonstrated result serves a preparatory auxiliary purpose it is called a <ConceptLink targetId="lema">lemma</ConceptLink>, whereas an immediate direct consequence drawn from a major theorem is termed a <ConceptLink targetId="corolario">corollary</ConceptLink>.
 
 <Definicion title="Theorem in a deductive system">
-  In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> with axiom set $\Phi$, a formula $\psi$ is a **formal theorem** (denoted $\Phi \vdash \psi$) if there exists a formal derivation, defined as a finite sequence of formulas $\varphi_1, \dots, \varphi_n$ such that $\varphi_n = \psi$ and each term $\varphi_i$ is an axiom in $\Phi$ or is inferred from previous terms via a rule of <ConceptLink targetId="inferencia">inference</ConceptLink>:
+  In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> with axiom set $\Phi$, a formula $\psi$ is a **formal theorem** (denoted $\Phi \vdash \psi$) if there exists a formal derivation for $\psi$. Such a derivation is a finite sequence of formulas $\varphi_1, \dots, \varphi_n$ such that $\varphi_n = \psi$, where each $\varphi_i$ is an axiom in $\Phi$ or is inferred from previous terms via a rule of <ConceptLink targetId="inferencia">inference</ConceptLink>:
   $$
   \Phi \vdash \psi \iff \exists (\varphi_1, \dots, \varphi_n) \quad (\varphi_n = \psi \land \forall i \le n \ (\varphi_i \in \Phi \lor \exists j < i \ \text{Inf}(\varphi_j, \varphi_i)))
   $$
@@ -29,10 +29,10 @@ It is distinguished ontologically from an axiom in that it is not freely postula
 
 ### Semantic soundness and deductive methods
 
-In the metamathematics of first-order <ConceptLink targetId="logica">logic</ConceptLink>, demonstrated theorems possess two essential properties:
+In the metamathematics of first-order <ConceptLink targetId="logica">logic</ConceptLink>, demonstrated theorems possess two notable properties:
 
 1. **Semantic soundness:** By the soundness theorem, every syntactically derivable formal theorem holds true in every <ConceptLink targetId="teoria-modelos">model</ConceptLink> satisfying the premises:
    $$
    \Phi \vdash \psi \implies \Phi \models \psi
    $$
-2. **Proof methods:** The proof of a theorem may be structured using diverse inferential strategies, notably the <ConceptLink targetId="metodo-directo">direct method</ConceptLink> —which chains progressive implications from hypothesis to thesis— and the <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> (*reductio ad absurdum*), in which the falsity of the thesis is assumed in order to derive a contradiction with the axioms.
+2. **Proof methods:** The proof of a theorem may be structured using diverse inferential strategies. Notable approaches include the <ConceptLink targetId="metodo-directo">direct method</ConceptLink>, chaining progressive implications from hypothesis to thesis, and the <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> (*reductio ad absurdum*), which assumes the falsity of the thesis to derive a contradiction with the axioms.

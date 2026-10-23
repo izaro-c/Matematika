@@ -13,13 +13,13 @@ export const metadata = {
 import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="I" />ndukzio matematikoa funtsezko froga-metodo deduktibo bat da, zenbaki arrunten $\mathbb{N}$ multzoan indexatutako $\{P(n)\}_{n \in \mathbb{N}}$ proposizio-familia infinituen egiazkotasun unibertsala ezartzeko erabiltzen dena. Axiomatikoki, $\mathbb{N}$-ren ondo-ordenatzearen printzipioan eta Peanoren axiometan oinarritzen da.
+<Capitular letra="I" />ndukzio matematikoa froga-metodo deduktibo bat da, <ConceptLink targetId="numero-natural">zenbaki arrunten</ConceptLink> $\mathbb{N}$ multzoan indexatutako $\{P(n)\}_{n \in \mathbb{N}}$ proposizio-familia infinituen egiazkotasun unibertsala ezartzeko erabiltzen dena. Axiomatikoki, $\mathbb{N}$-ren ondo-ordenatzearen printzipioan eta Peanoren axiometan oinarritzen da.
 
 <Separador />
 
 ### Froga induktiboaren egitura
 
-Indukziozko froga batek nahitaezko bi etapa kanoniko ditu:
+Indukziozko froga batek bi etapa kanoniko ditu:
 
 <ProofStep number={1} target="domino1" diagramStep="paso-caso-base" title="Oinarrizko kasua: P(1)">
   Proposizioa multzoko lehen elementurako betetzen dela frogatzen da (normalean $n = 1$ edo $n = 0$ kasuan), lehenengo <VisualBind element="domino1" color="terracota">$P(1)$</VisualBind> fitxa erortzen dela bermatuz:
@@ -29,7 +29,7 @@ Indukziozko froga batek nahitaezko bi etapa kanoniko ditu:
 </ProofStep>
 
 <ProofStep number={2} target="dominok" diagramStep="paso-hipotesis-induccion" title="Indukzio-hipotesia: P(k)">
-  *Indukzio-hipotesitzat* onartzen da propietatea $k \ge 1$ osoko hautazko baterako betetzen dela, <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind> fitxak adierazten duena:
+  *Indukzio-hipotesitzat* onartzen da propietatea $k \ge 1$ <ConceptLink targetId="numero-entero">osoko</ConceptLink> hautazko baterako betetzen dela, <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind> fitxak adierazten duena:
   <Formula>
     $$ P(k) \text{ egiazkotzat jotzen da } k \ge 1 \text{ baterako} $$
   </Formula>
@@ -55,7 +55,7 @@ Indukziozko froga batek nahitaezko bi etapa kanoniko ditu:
 
 - **Batura finituak eta progresioak**: Lehen $n$ zenbaki arrunten baturaren formula itxiaren froga:
   $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
-- **Geometria konbinatorioa**: $n$ aldeko poligono bakun baten barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $(n-2) \times 180^\circ$ dela frogatzea, <ConceptLink targetId="teorema-suma-angulos-triangulo">triangeluen teorema</ConceptLink> orokortuz ondoz ondoko triangelu-banaketen bidez.
+- **Geometria konbinatorioa**: $n$ <ConceptLink targetId="lado">aldeko</ConceptLink> <ConceptLink targetId="poligono">poligono</ConceptLink> bakun baten barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $(n-2) \times 180^\circ$ dela frogatzea, <ConceptLink targetId="teorema-suma-angulos-triangulo">triangeluen teorema</ConceptLink> orokortuz ondoz ondoko triangelu-banaketen bidez.
 - **Desberdintzak eta zatigarritasuna**: Bernoulli-ren desberdintzaren egiaztapena: $(1+x)^n \ge 1+nx$, non $x > -1$.
 
 <Separador />

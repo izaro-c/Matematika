@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "ac343e292aba02a906839689042e0ba6c8ac73013b6782417c1e7a6232f6ae97",
+  "corpusHash": "cd5c4deddef85f95544738b0e48c454a6da481a5df29469818f1d6373ecd0340",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -25,6 +25,7 @@
     "Pasch": "content/diagrams/Axiomas/Pasch.tsx",
     "SAS": "content/diagrams/Axiomas/SAS.tsx",
     "GpsTrilateracion": "content/diagrams/CasosUso/GpsTrilateracion.tsx",
+    "Altura": "content/diagrams/Definiciones/Altura.tsx",
     "Angulo": "content/diagrams/Definiciones/Angulo.tsx",
     "AnguloRecto": "content/diagrams/Definiciones/AnguloRecto.tsx",
     "AngulosSuplementarios": "content/diagrams/Definiciones/AngulosSuplementarios.tsx",
@@ -51,10 +52,13 @@
     "Triangulo": "content/diagrams/Definiciones/Triangulo.tsx",
     "TrianguloRectangulo": "content/diagrams/Definiciones/TrianguloRectangulo.tsx",
     "Vertice": "content/diagrams/Definiciones/Vertice.tsx",
+    "DemoAnguloExterno": "content/diagrams/Demos/DemoAnguloExterno.tsx",
     "DemoAngulosAlternosInternos": "content/diagrams/Demos/DemoAngulosAlternosInternos.tsx",
     "DemoAngulosOpuestos": "content/diagrams/Demos/DemoAngulosOpuestos.tsx",
     "DemoCongruenciaALA": "content/diagrams/Demos/DemoCongruenciaALA.tsx",
+    "DemoCongruenciaLLL": "content/diagrams/Demos/DemoCongruenciaLLL.tsx",
     "DemoExistenciaBisectriz": "content/diagrams/Demos/DemoExistenciaBisectriz.tsx",
+    "DemoExistenciaPerpendicular": "content/diagrams/Demos/DemoExistenciaPerpendicular.tsx",
     "DemoPitagorasAreas": "content/diagrams/Demos/DemoPitagorasAreas.tsx",
     "DemoPitagorasEuclides": "content/diagrams/Demos/DemoPitagorasEuclides.tsx",
     "DemoSumaAngulos": "content/diagrams/Demos/DemoSumaAngulos.tsx",
@@ -72,6 +76,7 @@
     "ModeloTresPuntos": "content/diagrams/Models/ModeloTresPuntos.tsx",
     "AngulosOpuestos": "content/diagrams/Teoremas/AngulosOpuestos.tsx",
     "CongruenciaALA": "content/diagrams/Teoremas/CongruenciaALA.tsx",
+    "CongruenciaLLL": "content/diagrams/Teoremas/CongruenciaLLL.tsx",
     "Pitagoras": "content/diagrams/Teoremas/Pitagoras.tsx",
     "SumaAngulos": "content/diagrams/Teoremas/SumaAngulos.tsx",
     "Tales": "content/diagrams/Teoremas/Tales.tsx",
@@ -780,6 +785,38 @@
           "end": 576
         },
         "blockId": "caso-gps-trilateracion:diagram:GpsTrilateracion"
+      }
+    ],
+    "Altura": [
+      {
+        "contentId": "altura-triangulo",
+        "contentPath": "content/mdx/en/definitions/altura-triangulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1051,
+          "end": 1083
+        },
+        "blockId": "altura-triangulo:diagram:Altura"
+      },
+      {
+        "contentId": "altura-triangulo",
+        "contentPath": "content/mdx/es/definitions/altura-triangulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1057,
+          "end": 1089
+        },
+        "blockId": "altura-triangulo:diagram:Altura"
+      },
+      {
+        "contentId": "altura-triangulo",
+        "contentPath": "content/mdx/eu/definitions/altura-triangulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1046,
+          "end": 1078
+        },
+        "blockId": "altura-triangulo:diagram:Altura"
       }
     ],
     "Angulo": [
@@ -1674,6 +1711,38 @@
         "blockId": "vertice:diagram:Vertice"
       }
     ],
+    "DemoAnguloExterno": [
+      {
+        "contentId": "demo-angulo-exterior",
+        "contentPath": "content/mdx/en/demonstrations/demo-angulo-exterior.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 915,
+          "end": 934
+        },
+        "blockId": "demo-angulo-exterior:diagram:DemoAnguloExterno"
+      },
+      {
+        "contentId": "demo-angulo-exterior",
+        "contentPath": "content/mdx/es/demonstrations/demo-angulo-exterior.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 954,
+          "end": 973
+        },
+        "blockId": "demo-angulo-exterior:diagram:DemoAnguloExterno"
+      },
+      {
+        "contentId": "demo-angulo-exterior",
+        "contentPath": "content/mdx/eu/demonstrations/demo-angulo-exterior.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 940,
+          "end": 959
+        },
+        "blockId": "demo-angulo-exterior:diagram:DemoAnguloExterno"
+      }
+    ],
     "DemoAngulosAlternosInternos": [
       {
         "contentId": "demo-angulos-alternos-internos",
@@ -1770,6 +1839,38 @@
         "blockId": "demo-congruencia-ala:diagram:DemoCongruenciaALA"
       }
     ],
+    "DemoCongruenciaLLL": [
+      {
+        "contentId": "demo-congruencia-lll",
+        "contentPath": "content/mdx/en/demonstrations/demo-congruencia-lll.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 994,
+          "end": 1014
+        },
+        "blockId": "demo-congruencia-lll:diagram:DemoCongruenciaLLL"
+      },
+      {
+        "contentId": "demo-congruencia-lll",
+        "contentPath": "content/mdx/es/demonstrations/demo-congruencia-lll.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1013,
+          "end": 1033
+        },
+        "blockId": "demo-congruencia-lll:diagram:DemoCongruenciaLLL"
+      },
+      {
+        "contentId": "demo-congruencia-lll",
+        "contentPath": "content/mdx/eu/demonstrations/demo-congruencia-lll.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1005,
+          "end": 1025
+        },
+        "blockId": "demo-congruencia-lll:diagram:DemoCongruenciaLLL"
+      }
+    ],
     "DemoExistenciaBisectriz": [
       {
         "contentId": "demo-existencia-bisectriz",
@@ -1800,6 +1901,38 @@
           "end": 1070
         },
         "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
+      }
+    ],
+    "DemoExistenciaPerpendicular": [
+      {
+        "contentId": "demo-existencia-perpendicular",
+        "contentPath": "content/mdx/en/demonstrations/demo-existencia-perpendicular.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1038,
+          "end": 1067
+        },
+        "blockId": "demo-existencia-perpendicular:diagram:DemoExistenciaPerpendicular"
+      },
+      {
+        "contentId": "demo-existencia-perpendicular",
+        "contentPath": "content/mdx/es/demonstrations/demo-existencia-perpendicular.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1063,
+          "end": 1092
+        },
+        "blockId": "demo-existencia-perpendicular:diagram:DemoExistenciaPerpendicular"
+      },
+      {
+        "contentId": "demo-existencia-perpendicular",
+        "contentPath": "content/mdx/eu/demonstrations/demo-existencia-perpendicular.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1041,
+          "end": 1070
+        },
+        "blockId": "demo-existencia-perpendicular:diagram:DemoExistenciaPerpendicular"
       }
     ],
     "DemoPitagorasAreas": [
@@ -2344,6 +2477,38 @@
           "end": 1080
         },
         "blockId": "teorema-congruencia-ala:diagram:CongruenciaALA"
+      }
+    ],
+    "CongruenciaLLL": [
+      {
+        "contentId": "teorema-congruencia-lll",
+        "contentPath": "content/mdx/en/theorems/teorema-congruencia-lll.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 979,
+          "end": 1019
+        },
+        "blockId": "teorema-congruencia-lll:diagram:CongruenciaLLL"
+      },
+      {
+        "contentId": "teorema-congruencia-lll",
+        "contentPath": "content/mdx/es/theorems/teorema-congruencia-lll.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 999,
+          "end": 1039
+        },
+        "blockId": "teorema-congruencia-lll:diagram:CongruenciaLLL"
+      },
+      {
+        "contentId": "teorema-congruencia-lll",
+        "contentPath": "content/mdx/eu/theorems/teorema-congruencia-lll.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1013,
+          "end": 1053
+        },
+        "blockId": "teorema-congruencia-lll:diagram:CongruenciaLLL"
       }
     ],
     "Pitagoras": [

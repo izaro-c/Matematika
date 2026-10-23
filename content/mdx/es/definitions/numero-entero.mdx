@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "numero-entero",
+  lang: "es",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Números enteros",
+  description: "Anillo conmutativo ordenado discreto que extiende a los números naturales incorporando los inversos aditivos o números negativos.",
+  branch: "11A",
+  branches: ["11A", "13F"],
+  hasSimulation: false,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />os **números enteros** constituyen el sistema numérico algebraico discreto formado por los números naturales, sus correspondientes inversos aditivos o <ConceptLink targetId="numero-negativo">números negativos</ConceptLink> y el cero, dotando a la <ConceptLink targetId="aritmetica">aritmética</ConceptLink> de invertibilidad completa respecto de la <ConceptLink targetId="adicion">adición</ConceptLink>.
+
+Identificados convencionalmente con el símbolo $\mathbb{Z}$ (del alemán *Zahlen*), los enteros surgen algebraicamente como la simetrización o <ConceptLink targetId="grupo-grothendieck">grupo de Grothendieck</ConceptLink> del <ConceptLink targetId="semianillo">semianillo</ConceptLink> de los <ConceptLink targetId="numero-natural" isDependency={true}>números naturales</ConceptLink>, resolviendo la imposibilidad intrínseca de restar libremente cantidades menores de cantidades mayores en $\mathbb{N}$.
+
+<Definicion title="Construcción formal de los números enteros">
+  El conjunto de los **números enteros** $\mathbb{Z}$ se define como el conjunto cociente del <ConceptLink targetId="producto-cartesiano">producto cartesiano</ConceptLink> $\mathbb{N} \times \mathbb{N}$ bajo la <ConceptLink targetId="relacion-equivalencia" isDependency={true}>relación de equivalencia</ConceptLink> que identifica dos pares de naturales cuando su suma cruzada coincide:
+  $$
+  (a, b) \sim (c, d) \iff a + d = b + c
+  $$
+  La <ConceptLink targetId="clase-equivalencia">clase de equivalencia</ConceptLink> $[(a, b)]$ formaliza la diferencia $a - b$. Sobre este conjunto cociente se definen dos <ConceptLink targetId="operacion-binaria" isDependency={true}>operaciones binarias</ConceptLink> compatibles con la relación de equivalencia:
+  $$
+  [(a, b)] + [(c, d)] = [(a + c, b + d)]
+  $$
+  $$
+  [(a, b)] \cdot [(c, d)] = [(a \cdot c + b \cdot d, a \cdot d + b \cdot c)]
+  $$
+  Bajo estas operaciones, la estructura $(\mathbb{Z}, +)$ es un <ConceptLink targetId="grupo" isDependency={true}>grupo</ConceptLink> abeliano con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> $0 = [(0, 0)]$ e <ConceptLink targetId="elemento-inverso">inverso aditivo</ConceptLink> $-[(a, b)] = [(b, a)]$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="grupo-abeliano-aditivo" titulo="Grupo abeliano aditivo">
+    La estructura $(\mathbb{Z}, +)$ es un <ConceptLink targetId="grupo-abeliano">grupo abeliano</ConceptLink> cíclico infinito generado por el elemento unidad $1 = [(1, 0)]$, garantizando que toda <ConceptLink targetId="ecuacion-lineal">ecuación lineal</ConceptLink> aditiva de la forma $a + x = b$ tiene solución única en $\mathbb{Z}$.
+  </PropiedadItem>
+  <PropiedadItem id="dominio-integridad" titulo="Dominio de integridad y factorización">
+    La estructura $(\mathbb{Z}, +, \cdot)$ es un <ConceptLink targetId="dominio-integridad">dominio de integridad</ConceptLink> conmutativo unitario y un <ConceptLink targetId="dominio-ideales-principales">dominio de ideales principales</ConceptLink>, satisfaciendo el <ConceptLink targetId="teorema-fundamental-aritmetica">teorema fundamental de la aritmética</ConceptLink> para la descomposición única en <ConceptLink targetId="numero-primo">factores primos</ConceptLink>.
+  </PropiedadItem>
+  <PropiedadItem id="orden-total-discreto" titulo="Orden lineal discreto">
+    El conjunto $\mathbb{Z}$ posee una relación de <ConceptLink targetId="orden-total">orden total</ConceptLink> compatible con la adición y la multiplicación por elementos positivos, en el que cada entero $z$ posee un sucesor inmediato $z + 1$ y un predecesor inmediato $z - 1$.
+  </PropiedadItem>
+</SeccionPropiedades>

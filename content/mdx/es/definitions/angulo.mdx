@@ -30,7 +30,7 @@ export const Simulation = Angulo;
 
 <Capitular letra="U" />n ángulo es el <ConceptLink targetId="par-no-ordenado">par no ordenado</ConceptLink> de dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> que comparten el mismo <ConceptLink targetId="punto" isDependency={true}>origen</ConceptLink> y cuyas <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> son distintas.
 
-El ángulo no es una magnitud numérica ni una medida, sino un objeto construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y de la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink>. Por definición no existen ángulos llanos ni nulos: todo ángulo tiene sus dos lados en rectas distintas. La comparación de ángulos se hace mediante la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, no mediante números.
+El ángulo no es una magnitud numérica ni una medida, sino un objeto construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y de la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink>. Por definición no existen ángulos llanos ni nulos: todo ángulo tiene sus dos lados en <ConceptLink targetId="recta">rectas</ConceptLink> distintas. La comparación de ángulos se hace mediante la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, no mediante números.
 
 <Definicion title="Definición formal de ángulo">
 Dados un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ y dos puntos distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ tales que $O$, $A$ y $B$ no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, el **ángulo** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (denotado también $\angle(h, k)$) es el <ConceptLink targetId="par-no-ordenado">par</ConceptLink> formado por las dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
@@ -39,7 +39,7 @@ $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-Las semirrectas $h$ y $k$ se denominan <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Como las semirrectas ya son conjuntos de puntos, la **traza** del ángulo, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, es simplemente la unión de sus lados:
+Las semirrectas $h$ y $k$ se denominan <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Como las semirrectas ya son conjuntos de puntos, la **<ConceptLink targetId="traza">traza</ConceptLink>** del ángulo, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, es simplemente la unión de sus lados:
 
 $$
 \operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
@@ -63,7 +63,7 @@ $$
       title="Plano soporte único"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
     >
-      Por los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, los tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $O$, $A$ y $B$ determinan un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$; por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, las rectas $\overleftrightarrow{OA}$ y $\overleftrightarrow{OB}$ están en él, de modo que $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      Por los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, los tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $O$, $A$ y $B$ determinan un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$; por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, las <ConceptLink targetId="recta">rectas</ConceptLink> $\overleftrightarrow{OA}$ y $\overleftrightarrow{OB}$ están en él, de modo que $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

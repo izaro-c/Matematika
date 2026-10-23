@@ -14,12 +14,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **isomorphism** is a bijective correspondence between two systems or mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> sharing the same <ConceptLink targetId="signatura">signature</ConceptLink>, such that all primitive relations, operations, and distinguished constants are completely preserved.
+<Capitular letra="A" />n **isomorphism** is a bijective correspondence between two systems or mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> sharing the same <ConceptLink targetId="signatura">signature</ConceptLink>, such that all <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, operations, and distinguished constants are completely preserved.
 
 Two isomorphic structures are indistinguishable from the standpoint of properties expressible in the formal language of <ConceptLink targetId="logica">logic</ConceptLink>: any statement holding true in one is necessarily true in the other, differing solely in the empirical nature or naming of their underlying elements.
 
 <Definicion title="Formal definition of isomorphism">
-  Let $\mathcal{M}$ and $\mathcal{N}$ be two structures over a signature $\sigma$ with domains $M$ and $N$ respectively. A <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink>
+  Let $\mathcal{M}$ and $\mathcal{N}$ be two structures over a signature $\sigma$ with <ConceptLink targetId="dominio">domains</ConceptLink> $M$ and $N$ respectively. A <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink>
   $$
   f\colon M \longrightarrow N
   $$
@@ -28,7 +28,7 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
      $$
      (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
      $$
-  2. For each $k$-ary function symbol $g \in \sigma$ and for all $a_1, \dots, a_k \in M$:
+  2. For each $k$-ary <ConceptLink targetId="funcion">function</ConceptLink> symbol $g \in \sigma$ and for all $a_1, \dots, a_k \in M$:
      $$
      f(g^{\mathcal{M}}(a_1, \dots, a_k)) = g^{\mathcal{N}}(f(a_1), \dots, f(a_k))
      $$
@@ -44,5 +44,5 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
 
 In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, the existence of isomorphisms underpins key structural concepts:
 
-- **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** An <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> is categorical if all its models are mutually isomorphic. For example, the complete three-dimensional <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> with continuity axioms is categorical: every model satisfying its axioms is isomorphic to the Cartesian <ConceptLink targetId="modelo-cartesiano">space</ConceptLink> $\mathbb{R}^3$.
-- **Automorphisms and <ConceptLink targetId="simetria">symmetry</ConceptLink>:** An isomorphism from a structure onto itself ($\mathcal{M} \cong \mathcal{M}$) is called an *automorphism*. The collection of all automorphisms forms a group that algebraically captures the internal symmetries of the structure, as exemplified by the autodual incidence transformations of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>.
+- **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** An <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> is categorical if all its models are mutually isomorphic. For example, the complete <ConceptLink targetId="dimension">three-dimensional</ConceptLink> <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> with <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms is categorical: every model satisfying its axioms is isomorphic to the Cartesian <ConceptLink targetId="modelo-cartesiano">space</ConceptLink> $\mathbb{R}^3$.
+- **Automorphisms and <ConceptLink targetId="simetria">symmetry</ConceptLink>:** An isomorphism from a structure onto itself ($\mathcal{M} \cong \mathcal{M}$) is called an *automorphism*. The <ConceptLink targetId="conjunto">set</ConceptLink> of all automorphisms forms a <ConceptLink targetId="grupo">group</ConceptLink> that algebraically captures the internal symmetries of the structure, as exemplified by the <ConceptLink targetId="dualidad">self-dual</ConceptLink> <ConceptLink targetId="incidencia">incidence</ConceptLink> transformations of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>.

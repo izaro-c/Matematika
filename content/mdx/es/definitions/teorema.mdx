@@ -14,12 +14,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n **teorema** es una proposición matemática formal cuya verdad queda fijada de manera irrefutable mediante una demostración deductiva, fundada en un conjunto explícito de <ConceptLink targetId="axioma" isDependency={true}>axiomas</ConceptLink> y mediada por reglas formales de inferencia.
+<Capitular letra="U" />n **teorema** es una proposición matemática formal cuya verdad se establece mediante una demostración deductiva, fundada en un conjunto explícito de <ConceptLink targetId="axioma">axiomas</ConceptLink> y mediada por reglas formales de <ConceptLink targetId="inferencia">inferencia</ConceptLink>.
 
-Se distingue ontológicamente del axioma en que no se postula libremente, sino que exige una justificación deductiva completa. En la práctica matemática, los teoremas adoptan con frecuencia una estructura implicativa condicional $H \implies T$, donde la hipótesis $H$ enuncia las condiciones de partida y la tesis $T$ la consecuencia deducida. Cuando un resultado demostrado cumple un cometido auxiliar preparatorio se denomina <ConceptLink targetId="lema">lema</ConceptLink>, mientras que una deducción directa e inmediata derivada de un teorema principal recibe el nombre de <ConceptLink targetId="corolario">corolario</ConceptLink>.
+Se diferencia del axioma en que no se postula libremente, sino que exige una justificación deductiva completa. En la práctica matemática, los teoremas adoptan con frecuencia una forma condicional $H \implies T$, donde la hipótesis $H$ enuncia las condiciones de partida y la tesis $T$ la consecuencia deducida. Cuando un resultado demostrado cumple un cometido auxiliar preparatorio se denomina <ConceptLink targetId="lema">lema</ConceptLink>, mientras que una deducción directa e inmediata obtenida de un teorema principal recibe el nombre de <ConceptLink targetId="corolario">corolario</ConceptLink>.
 
 <Definicion title="Teorema en un sistema deductivo">
-  En un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> con conjunto de axiomas $\Phi$, una fórmula $\psi$ es un **teorema formal** (denotado $\Phi \vdash \psi$) si existe una derivación formal, entendida como una sucesión finita de fórmulas $\varphi_1, \dots, \varphi_n$ tal que $\varphi_n = \psi$ y cada término $\varphi_i$ es un axioma perteneciente a $\Phi$ o se infiere de términos anteriores mediante una regla de <ConceptLink targetId="inferencia">inferencia</ConceptLink>:
+  En un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> con conjunto de axiomas $\Phi$, una fórmula $\psi$ es un **teorema formal** (denotado $\Phi \vdash \psi$) si existe una derivación formal para $\psi$. Dicha derivación es una sucesión finita de fórmulas $\varphi_1, \dots, \varphi_n$ tal que $\varphi_n = \psi$, donde cada $\varphi_i$ es un axioma de $\Phi$ o se infiere de términos anteriores mediante una regla de <ConceptLink targetId="inferencia">inferencia</ConceptLink>:
   $$
   \Phi \vdash \psi \iff \exists (\varphi_1, \dots, \varphi_n) \quad (\varphi_n = \psi \land \forall i \le n \ (\varphi_i \in \Phi \lor \exists j < i \ \text{Inf}(\varphi_j, \varphi_i)))
   $$
@@ -29,10 +29,10 @@ Se distingue ontológicamente del axioma en que no se postula libremente, sino q
 
 ### Corrección semántica y métodos deductivos
 
-En la metamatemática de la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, los teoremas demostrados gozan de dos propiedades capitales:
+En la metamatemática de la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, los teoremas demostrados gozan de dos propiedades destacadas:
 
 1. **Corrección semántica:** Por el teorema de corrección (*soundness*), todo teorema formal deducible sintácticamente es verdadero en todo <ConceptLink targetId="teoria-modelos">modelo</ConceptLink> que satisfaga los axiomas de partida:
    $$
    \Phi \vdash \psi \implies \Phi \models \psi
    $$
-2. **Métodos de prueba:** La demostración de un teorema puede estructurarse mediante diversas estrategias inferenciales, destacando el <ConceptLink targetId="metodo-directo">método directo</ConceptLink> —donde se encadenan implicaciones progresivas desde la hipótesis hasta la tesis— y el <ConceptLink targetId="metodo-contradiccion">método por contradicción</ConceptLink> (*reductio ad absurdum*), en el que se asume la falsedad de la tesis para derivar una contradicción con los axiomas.
+2. **Métodos de prueba:** La demostración de un teorema puede estructurarse mediante diversas estrategias inferenciales. Destacan el <ConceptLink targetId="metodo-directo">método directo</ConceptLink>, que encadena implicaciones sucesivas desde la hipótesis hasta la tesis, y el <ConceptLink targetId="metodo-contradiccion">método por contradicción</ConceptLink> (*reductio ad absurdum*), que asume la falsedad de la tesis para derivar una contradicción con los axiomas.

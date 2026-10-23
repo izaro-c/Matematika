@@ -13,7 +13,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n grupo es un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> <ConceptLink targetId="asociatividad">asociativa</ConceptLink> que tiene <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> y en la que todo elemento tiene <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>. Es la <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> que describe la composición de <ConceptLink targetId="transformacion">transformaciones</ConceptLink> reversibles: las <ConceptLink targetId="isometria">isometrías</ConceptLink> del plano, las <ConceptLink targetId="simetria">simetrías</ConceptLink> de una figura o las <ConceptLink targetId="permutacion">permutaciones</ConceptLink> de un conjunto finito forman grupos.
+<Capitular letra="U" />n grupo es un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> <ConceptLink targetId="asociatividad">asociativa</ConceptLink> que tiene <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> y en la que todo elemento tiene <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>. Es la <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> que describe la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de <ConceptLink targetId="transformacion">transformaciones</ConceptLink> reversibles: las <ConceptLink targetId="isometria">isometrías</ConceptLink> del <ConceptLink targetId="plano">plano</ConceptLink>, las <ConceptLink targetId="simetria">simetrías</ConceptLink> de una figura o las <ConceptLink targetId="permutacion">permutaciones</ConceptLink> de un conjunto finito forman grupos.
 
 <Definicion title="Grupo">
   Un grupo es un par $(G, \cdot)$ formado por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $G$ y una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink>
@@ -39,8 +39,8 @@ Los grupos se distinguen según la <ConceptLink targetId="conmutatividad">conmut
 
 | Tipo de grupo | Condición | Ejemplo |
 |---|---|---|
-| <ConceptLink targetId="grupo-abeliano">Abeliano</ConceptLink> (conmutativo) | $\forall a, b \in G, \ a \cdot b = b \cdot a$ | Los <ConceptLink targetId="numero-entero">enteros</ConceptLink> con la suma, $(\mathbb{Z}, +)$ |
-| No abeliano | $\exists a, b \in G, \ a \cdot b \neq b \cdot a$ | Las <ConceptLink targetId="matriz-invertible">matrices invertibles</ConceptLink> con el producto, $(\mathrm{GL}_n(\mathbb{R}), \cdot)$, con $n \geq 2$ |
+| <ConceptLink targetId="grupo-abeliano">Abeliano</ConceptLink> (conmutativo) | $\forall a, b \in G, \ a \cdot b = b \cdot a$ | Los <ConceptLink targetId="numero-entero">enteros</ConceptLink> con la <ConceptLink targetId="adicion">suma</ConceptLink>, $(\mathbb{Z}, +)$ |
+| No abeliano | $\exists a, b \in G, \ a \cdot b \neq b \cdot a$ | Las <ConceptLink targetId="matriz-invertible">matrices invertibles</ConceptLink> con el <ConceptLink targetId="multiplicacion">producto</ConceptLink>, $(\mathrm{GL}_n(\mathbb{R}), \cdot)$, con $n \geq 2$ |
 | Finito | $\lvert G \rvert$ finito | El <ConceptLink targetId="grupo-simetrico">grupo simétrico</ConceptLink> $S_n$, con $\lvert S_n \rvert = n!$ |
 | Infinito | $G$ infinito | Los <ConceptLink targetId="numero-real">reales</ConceptLink> no nulos con el producto, $(\mathbb{R} \setminus \{0\}, \cdot)$ |
 

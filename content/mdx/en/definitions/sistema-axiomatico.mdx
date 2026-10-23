@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **axiomatic system** is a formal deductive framework in which all propositions of a mathematical theory are rigorously derived from an explicit, delimited set of postulates or <ConceptLink targetId="axioma">axioms</ConceptLink>.
+<Capitular letra="A" />n **axiomatic system** is a formal deductive framework in which all propositions of a mathematical theory are derived from an explicit, delimited set of postulates or <ConceptLink targetId="axioma">axioms</ConceptLink>.
 
-In contrast to the classical tradition of Euclid's <ConceptLink targetId="euclides">Elements</ConceptLink> —which relied on definitions rooted in perceptual spatial intuition—, the modern axiomatics established by Moritz <ConceptLink targetId="pasch">Pasch</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peano</ConceptLink>, and <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> strips <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of any preconceived ontological content: their formal meaning is determined exclusively by the mutual relations that the axioms establish among them.
+The classical tradition of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> relied on definitions rooted in spatial intuition. In contrast, modern axiomatics developed by Moritz <ConceptLink targetId="pasch">Pasch</ConceptLink>, Giuseppe <ConceptLink targetId="peano">Peano</ConceptLink>, and <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> dispenses with external interpretations: the formal meaning of <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> is determined exclusively by the mutual relations that axioms establish among them.
 
 <Definicion title="Formal structure of an axiomatic system">
   A formalized axiomatic system is a triple:
@@ -25,7 +25,7 @@ In contrast to the classical tradition of Euclid's <ConceptLink targetId="euclid
   $$
   where:
   - $\sigma$ is the <ConceptLink targetId="signatura">signature</ConceptLink> specifying the primitive sorts or <ConceptLink targetId="dominio">domains</ConceptLink>, relations, and operations.
-  - $\Phi \subseteq \mathcal{L}_\sigma$ is the set of proper <ConceptLink targetId="axioma" isDependency={true}>axioms</ConceptLink> of the theory formulated in the first-order formal language $\mathcal{L}_\sigma$.
+  - $\Phi \subseteq \mathcal{L}_\sigma$ is the <ConceptLink targetId="conjunto">set</ConceptLink> of proper <ConceptLink targetId="axioma">axioms</ConceptLink> of the theory formulated in the first-order formal language $\mathcal{L}_\sigma$.
   - $\vdash$ is the deductive calculus provided by the rules of <ConceptLink targetId="inferencia">inference</ConceptLink> of <ConceptLink targetId="logica">logic</ConceptLink>.
 </Definicion>
 
@@ -37,6 +37,6 @@ An axiomatic system is appraised from a metamathematical perspective through cri
 
 1. **<ConceptLink targetId="consistencia-logica">Consistency</ConceptLink>:** The system must not generate contradictions ($\Phi \nvdash \bot$). By the completeness theorem, consistency is guaranteed if and only if the theory admits at least one <ConceptLink targetId="teoria-modelos">model</ConceptLink>.
 2. **Axiomatic <ConceptLink targetId="independencia-logica">independence</ConceptLink>:** No axiom can be deduced from the remainder ($\Phi \setminus \{\alpha_i\} \nvdash \alpha_i$), eliminating superfluous postulates.
-3. **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** All models of a given cardinality are mutually <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink>, ensuring that the system uniquely pins down the described structure.
+3. **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** All models of a given <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> are mutually <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink>, ensuring that the system uniquely pins down the described structure.
 
 In the architecture of mathematical knowledge, axiomatic systems are expanded modularly through extension relations: the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> extends to the <ConceptLink targetId="sistema-absoluto">absolute system</ConceptLink>, from which the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> and the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> branch off.

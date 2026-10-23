@@ -1,0 +1,49 @@
+export const metadata = {
+  id: "numero-natural",
+  lang: "en",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Natural numbers",
+  description: "Discrete numerical system for counting and sequential ordering, axiomatically characterized by Peano's postulates.",
+  branch: "11A",
+  branches: ["11A", "03E"],
+  hasSimulation: false,
+  sources: [
+    { title: "Arithmetices principia, nova methodo exposita", author: "Giuseppe Peano", locator: "1889", role: "primary" },
+    { title: "Was sind und was sollen die Zahlen?", author: "Richard Dedekind", locator: "1888", role: "secondary" }
+  ]
+};
+
+<Capitular letra="T" />he **natural numbers** constitute the discrete numerical system upon which <ConceptLink targetId="aritmetica">arithmetic</ConceptLink> rests, formalizing the primary operations of counting the elements of a <ConceptLink targetId="conjunto-finito">finite set</ConceptLink> and sequentially ordering its terms.
+
+Formalized by <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> and anticipated by <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>, the natural numbers can be conceived as a structure characterized by an initial element and a <ConceptLink targetId="sucesor">successor function</ConceptLink>. Furthermore, in <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink> they are constructed via <ConceptLink targetId="ordinales-von-neumann">von Neumann ordinals</ConceptLink>, where each number is defined as the set of all natural numbers preceding it.
+
+<Definicion title="Peano Axiomatics for Natural Numbers">
+  A system of **natural numbers** is a triple $(\mathbb{N}, 0, S)$ consisting of a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> $\mathbb{N}$, a distinguished element $0 \in \mathbb{N}$, and an <ConceptLink targetId="inyectividad">injective</ConceptLink> <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> $S \colon \mathbb{N} \to \mathbb{N}$ (termed the <ConceptLink targetId="sucesor">successor function</ConceptLink>) such that:
+  1. The element $0$ is not the successor of any natural number:
+     $$
+     \forall n \in \mathbb{N}, \quad S(n) \neq 0
+     $$
+  2. The successor function is injective:
+     $$
+     \forall m, n \in \mathbb{N}, \quad S(m) = S(n) \implies m = n
+     $$
+  3. Principle of <ConceptLink targetId="metodo-induccion">mathematical induction</ConceptLink>: if a subset $K \subseteq \mathbb{N}$ satisfies $0 \in K$ and for every $n \in K$ one has $S(n) \in K$, then $K = \mathbb{N}$:
+     $$
+     (0 \in K \land \forall n \in K \ (S(n) \in K)) \implies K = \mathbb{N}
+     $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadItem id="principio-buen-orden" titulo="Well-ordering principle">
+    Every non-empty subset of natural numbers $A \subseteq \mathbb{N}$ possesses a least element with respect to the standard <ConceptLink targetId="orden-total">order relation</ConceptLink>, ensuring that $(\mathbb{N}, \le)$ is a <ConceptLink targetId="buen-orden">well-ordered set</ConceptLink>.
+  </PropiedadItem>
+  <PropiedadItem id="estructura-algebraica-semianillo" titulo="Commutative semiring structure">
+    Defining <ConceptLink targetId="adicion">addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> recursively from the successor function, the structure $(\mathbb{N}, +, \cdot)$ is a unital commutative <ConceptLink targetId="semianillo">semiring</ConceptLink> endowed with the additive cancellation property.
+  </PropiedadItem>
+  <PropiedadItem id="cardinalidad-numerable" titulo="Countable cardinality">
+    The set $\mathbb{N}$ is an <ConceptLink targetId="conjunto-infinito">infinite set</ConceptLink> and defines the minimal scale of transfinite infinity, termed countable <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> and denoted by $\aleph_0 = |\mathbb{N}|$.
+  </PropiedadItem>
+</SeccionPropiedades>

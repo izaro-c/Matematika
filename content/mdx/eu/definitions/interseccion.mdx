@@ -17,9 +17,9 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="E" />**bakidura** <ConceptLink targetId="conjunto" isDependency={true}>multzoen</ConceptLink> arteko funtsezko eragiketa bat da, kontuan hartutako multzo bakoitzean aldi berean dauden elementu guztiak biltzen dituena. Azpiko logika proposizionalean, konjuntzio logikoaren konektorearekin bat dator zuzenean ($\land$).
+<Capitular letra="E" />**bakidura** <ConceptLink targetId="conjunto" isDependency={true}>multzoen</ConceptLink> arteko eragiketa bat da, kontuan hartutako multzo bakoitzean aldi berean dauden elementu guztiak biltzen dituena. Azpiko <ConceptLink targetId="logica">logika</ConceptLink> proposizionalean, konjuntzio logikoaren konektorearekin bat dator zuzenean ($\land$).
 
-Egitura geometriko konposatuak, domeinu-murrizketak eta figuren konfigurazioen arteko intzidentziak definitzeko oinarri formala osatzen du.
+Eskualde geometriko konposatuak, <ConceptLink targetId="dominio">domeinu</ConceptLink>-murrizketak eta figuren konfigurazioen arteko <ConceptLink targetId="incidencia">intzidentziak</ConceptLink> definitzeko oinarri formala osatzen du.
 
 <Definicion title="Ebakiduraren definizio formala">
   Izan bitez $A$ eta $B$ bi multzo. $A$ eta $B$ multzoen **ebakidura** ($A \cap B$ idatzita) $A$-n eta $B$-n dauden elementuek osatutako multzoa da:
@@ -36,9 +36,9 @@ Egitura geometriko konposatuak, domeinu-murrizketak eta figuren konfigurazioen a
 
 ### Propietate aljebraikoak eta muga geometrikoak
 
-Ebakidura-eragiketak konmutatibotasunaren ($A \cap B = B \cap A$), elkartzearen ($A \cap (B \cap C) = (A \cap B) \cap C$) eta idempotentziaren ($A \cap A = A$) oinarrizko lege boolearrak betetzen ditu. Bi multzok elementu komunik ez dutenean ($A \cap B = \emptyset$), <ConceptLink targetId="conjunto-disjunto">multzo disjuntuak</ConceptLink> deritze.
+Ebakidura-eragiketak <ConceptLink targetId="conmutatividad">konmutatibotasunaren</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">elkartzearen</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) eta idempotentziaren ($A \cap A = A$) lege boolearrak betetzen ditu. Bi multzok elementu komunik ez dutenean ($A \cap B = \emptyset$), <ConceptLink targetId="conjunto-disjunto">multzo disjuntuak</ConceptLink> deritze.
 
 <ConceptLink targetId="conjunto-convexo">Multzo konbexuen</ConceptLink> ebakidurak konbexutasuna gordetzen du beti:
-- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten barnealdea haren zuzen euskarriek zehaztutako bi <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekien ebakidura gisa definitzen da formalki.
-- <ConceptLink targetId="triangulo">Triangelu</ConceptLink> edo poligono konbexu baten barne-eskualdea bere aldeekin lotutako planoerdien ebakidura finituaren bidez sortzen da.
-- Era berean, bi zuzen koplanarren posizio erlatiboa haien puntu-ebakiduraren arabera bereizten da: <ConceptLink targetId="secante">zuzen ebakitzaileak</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> eta <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind> puntu komunarekin, eta zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> disjuntuak $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$ bada.
+- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten barnealdea haren <ConceptLink targetId="recta-soporte">zuzen euskarriek</ConceptLink> zehaztutako bi <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekien ebakidura gisa definitzen da formalki.
+- <ConceptLink targetId="triangulo">Triangelu</ConceptLink> edo <ConceptLink targetId="poligono">poligono</ConceptLink> konbexu baten barne-eskualdea bere <ConceptLink targetId="lado">aldeekin</ConceptLink> lotutako planoerdien ebakidura finituaren bidez sortzen da.
+- Era berean, bi <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanarren</ConceptLink> posizio erlatiboa haien puntu-ebakiduraren arabera bereizten da: <ConceptLink targetId="secante">zuzen ebakitzaileak</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> eta <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> komunarekin <VisualBind element="pInter" color="mora">$P \in \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2)$</VisualBind>, eta zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> disjuntuak $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$ bada.
