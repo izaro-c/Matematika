@@ -24,7 +24,7 @@ export const Simulation = EstarEntre;
 
 <Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> among <ConceptLink targetId="punto">points</ConceptLink> expressing that one point lies between two others on a <ConceptLink targetId="recta">line</ConceptLink>.
 
-Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>, so betweenness underlies the whole theory of <ConceptLink targetId="separacion">separation</ConceptLink> in lines and <ConceptLink targetId="plano">planes</ConceptLink>.
+Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>. Betweenness is used to define <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and to state the <ConceptLink targetId="separacion">separation</ConceptLink> of a line by one of its points and of a <ConceptLink targetId="plano">plane</ConceptLink> by one of its lines.
 
 <Definicion title="Primitive betweenness relation">
 In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a <ConceptLink targetId="subconjunto">subset</ConceptLink> $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, where $\mathcal{P}$ is the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points.
@@ -41,7 +41,3 @@ $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
 $$
 </Definicion>
-
-<Nota>
-This primitive relation is the foundation for defining <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and the separation of a line by one of its points.
-</Nota>

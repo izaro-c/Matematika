@@ -154,42 +154,6 @@ export const EstarEntreSpec = createDiagramSpec(
       }
     },
     {
-      "id": "pD",
-      "label": "D",
-      "color": "pavo",
-      "layerId": "geometry",
-      "order": 33,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto exterior D",
-        "role": "primary"
-      },
-      "target": true,
-      "targetId": "pD",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": 5.2,
-        "y": 0
-      },
-      "mobility": {
-        "type": "on-support",
-        "support": "lineAC"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {
-        "snapToGrid": false
-      }
-    },
-    {
       "id": "lineAC",
       "label": "Recta ℓ",
       "color": "carbon",
@@ -312,36 +276,6 @@ export const EstarEntreSpec = createDiagramSpec(
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
       }
-    },
-    {
-      "id": "segCD",
-      "label": "Segmento CD",
-      "color": "pavo",
-      "layerId": "geometry",
-      "order": 22,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Segmento extendido CD",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "segCD",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pC",
-          "pD"
-        ]
-      },
-      "appearance": {
-        "strokeWidth": 3.2,
-        "highlightStrokeWidth": 4.5,
-        "preserveColorOnHighlight": true
-      }
     }
   ],
   "relations": [],
@@ -373,9 +307,6 @@ export const EstarEntreSpec = createDiagramSpec(
           "visible": true,
           "emphasis": "none"
         },
-        "pD": {
-          "visible": false
-        },
         "lineAC": {
           "visible": true
         },
@@ -389,9 +320,6 @@ export const EstarEntreSpec = createDiagramSpec(
         },
         "segAC": {
           "visible": true
-        },
-        "segCD": {
-          "visible": false
         }
       }
     }
@@ -411,12 +339,10 @@ export const EstarEntreSpec = createDiagramSpec(
         "pA": "A puntua",
         "pC": "C puntua",
         "pB": "B bitarteko puntua",
-        "pD": "D kanpo-puntua",
         "lineAC": "ℓ zuzen euskarria",
         "segAB": "AB zuzenkia",
         "segBC": "BC zuzenkia",
-        "segAC": "AC zuzenki osoa",
-        "segCD": "CD zuzenki luzatua"
+        "segAC": "AC zuzenki osoa"
       }
     },
     "en": {
@@ -432,12 +358,10 @@ export const EstarEntreSpec = createDiagramSpec(
         "pA": "Point A",
         "pC": "Point C",
         "pB": "Intermediate point B",
-        "pD": "Exterior point D",
         "lineAC": "Supporting line ℓ",
         "segAB": "Segment AB",
         "segBC": "Segment BC",
-        "segAC": "Whole segment AC",
-        "segCD": "Extended segment CD"
+        "segAC": "Whole segment AC"
       }
     }
   }

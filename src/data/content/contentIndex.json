@@ -8136,6 +8136,9 @@
         "axioma-orden-3",
         "axioma-orden-4",
         "orden",
+        "segmento",
+        "semirrecta",
+        "semiplano",
         "separacion",
         "plano",
         "hilbert",
@@ -8145,10 +8148,7 @@
         "dominio",
         "terna",
         "colinealidad",
-        "incidencia",
-        "segmento",
-        "semirrecta",
-        "semiplano"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -8205,6 +8205,9 @@
         "axioma-orden-3",
         "axioma-orden-4",
         "orden",
+        "segmento",
+        "semirrecta",
+        "semiplano",
         "separacion",
         "plano",
         "signatura",
@@ -8214,10 +8217,7 @@
         "dominio",
         "terna",
         "colinealidad",
-        "incidencia",
-        "segmento",
-        "semirrecta",
-        "semiplano"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -30331,6 +30331,9 @@
         "axioma-orden-3",
         "axioma-orden-4",
         "orden",
+        "segmento",
+        "semirrecta",
+        "semiplano",
         "separacion",
         "plano",
         "signatura",
@@ -30340,10 +30343,7 @@
         "dominio",
         "terna",
         "colinealidad",
-        "incidencia",
-        "segmento",
-        "semirrecta",
-        "semiplano"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -43452,6 +43452,9 @@
         "axioma-orden-3",
         "axioma-orden-4",
         "orden",
+        "segmento",
+        "semirrecta",
+        "semiplano",
         "plano",
         "separacion",
         "hilbert",
@@ -43461,10 +43464,7 @@
         "dominio",
         "terna",
         "incidencia",
-        "colinealidad",
-        "segmento",
-        "semirrecta",
-        "semiplano"
+        "colinealidad"
       ],
       "availableLangs": [
         "en",
