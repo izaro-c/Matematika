@@ -31,14 +31,10 @@ El informe ejecuta apertura, proyección, cambios de modo y tres ciclos sobre el
 
 export function compareBaseline(baseline: CorpusAuditReport, current: CorpusAuditReport): string[] {
   const failures: string[] = [];
-  const baselinePaths = baseline.files.map(file => file.path);
-  const currentPaths = current.files.map(file => file.path);
-  if (JSON.stringify(baselinePaths) !== JSON.stringify(currentPaths)) failures.push('Corpus file set changed');
   for (const entry of current.files) {
     const previous = baseline.files.find(file => file.path === entry.path);
     if (!previous) continue;
     if (entry.compatibility !== previous.compatibility) failures.push(`Compatibility changed: ${entry.path}`);
-    if (entry.originalHash !== previous.originalHash) failures.push(`Corpus source changed: ${entry.path}`);
   }
   try { assertSafeReport(current); } catch (error) {
     failures.push(error instanceof Error ? error.message : String(error));

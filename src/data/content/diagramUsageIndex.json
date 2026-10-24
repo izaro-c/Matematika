@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "cd5c4deddef85f95544738b0e48c454a6da481a5df29469818f1d6373ecd0340",
+  "corpusHash": "57962a25cb09bcd4b8afc6e973263564ece234f3632c8b41472e06c10832a6bb",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -55,6 +55,7 @@
     "DemoAnguloExterno": "content/diagrams/Demos/DemoAnguloExterno.tsx",
     "DemoAngulosAlternosInternos": "content/diagrams/Demos/DemoAngulosAlternosInternos.tsx",
     "DemoAngulosOpuestos": "content/diagrams/Demos/DemoAngulosOpuestos.tsx",
+    "DemoCompletitudReales": "content/diagrams/Demos/DemoCompletitudReales.tsx",
     "DemoCongruenciaALA": "content/diagrams/Demos/DemoCongruenciaALA.tsx",
     "DemoCongruenciaLLL": "content/diagrams/Demos/DemoCongruenciaLLL.tsx",
     "DemoExistenciaBisectriz": "content/diagrams/Demos/DemoExistenciaBisectriz.tsx",
@@ -1807,6 +1808,38 @@
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       }
     ],
+    "DemoCompletitudReales": [
+      {
+        "contentId": "demo-completitud-reales",
+        "contentPath": "content/mdx/en/demonstrations/demo-completitud-reales.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 987,
+          "end": 1010
+        },
+        "blockId": "demo-completitud-reales:diagram:DemoCompletitudReales"
+      },
+      {
+        "contentId": "demo-completitud-reales",
+        "contentPath": "content/mdx/es/demonstrations/demo-completitud-reales.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1004,
+          "end": 1027
+        },
+        "blockId": "demo-completitud-reales:diagram:DemoCompletitudReales"
+      },
+      {
+        "contentId": "demo-completitud-reales",
+        "contentPath": "content/mdx/eu/demonstrations/demo-completitud-reales.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 980,
+          "end": 1003
+        },
+        "blockId": "demo-completitud-reales:diagram:DemoCompletitudReales"
+      }
+    ],
     "DemoCongruenciaALA": [
       {
         "contentId": "demo-congruencia-ala",
@@ -2325,8 +2358,8 @@
         "contentPath": "content/mdx/en/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 625,
-          "end": 658
+          "start": 708,
+          "end": 741
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       },
@@ -2335,8 +2368,8 @@
         "contentPath": "content/mdx/es/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 637,
-          "end": 670
+          "start": 720,
+          "end": 753
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       },
@@ -2345,8 +2378,8 @@
         "contentPath": "content/mdx/eu/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 629,
-          "end": 662
+          "start": 712,
+          "end": 745
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       }
@@ -2389,8 +2422,8 @@
         "contentPath": "content/mdx/en/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 594,
-          "end": 633
+          "start": 677,
+          "end": 716
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       },
@@ -2399,8 +2432,8 @@
         "contentPath": "content/mdx/es/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 608,
-          "end": 647
+          "start": 691,
+          "end": 730
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       },
@@ -2409,8 +2442,8 @@
         "contentPath": "content/mdx/eu/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 607,
-          "end": 646
+          "start": 690,
+          "end": 729
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       }

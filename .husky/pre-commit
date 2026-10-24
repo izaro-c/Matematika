@@ -2,6 +2,9 @@
 echo "Validando Grafo MDX y Enlaces Cruzados..."
 npm run prebuild
 
+echo "Regenerando índice de usos de diagramas..."
+npm run --silent diagram-usages:index && git add src/data/content/diagramUsageIndex.json
+
 echo "Validando nodos MDX modificados (lint, paridad; enlaces y estilo como avisos)..."
 npm run --silent content:check
 
