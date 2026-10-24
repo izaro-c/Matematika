@@ -27,15 +27,15 @@ export const Simulation = EstarEntre;
 Haren propietateak ez dira definitzen: ordenako <ConceptLink targetId="axioma">axiomek</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) finkatzen dituzte. Horietatik ondorioztatzen da zuzen bakoitzeko puntuek <ConceptLink targetId="orden">ordena lineal</ConceptLink> bat onartzen dutela; beraz, bitartekotasuna da zuzenetako eta <ConceptLink targetId="plano">planoetako</ConceptLink> <ConceptLink targetId="separacion">banaketaren</ConceptLink> teoria osoaren oinarria.
 
 <Definicion title="Bitartekotasunaren oinarrizko erlazioa">
-<ConceptLink targetId="hilbert">Hilberten</ConceptLink> $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna 3 <ConceptLink targetId="aridad">aritateko</ConceptLink> erlazio-ikurra da, eta haren interpretazioa puntuen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuaren</ConceptLink> azpimultzo bat da: $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$.
+<ConceptLink targetId="hilbert">Hilberten</ConceptLink> $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna 3 <ConceptLink targetId="aridad">aritateko</ConceptLink> erlazio-ikurra da, eta haren interpretazioa <ConceptLink targetId="subconjunto">azpimultzo</ConceptLink> bat da, $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, non $\mathcal{P}$ puntuen <ConceptLink targetId="dominio">oinarrizko domeinua</ConceptLink> den.
 
-<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, erlazioa honela adierazten da:
+<VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> edozein <ConceptLink targetId="terna">hirukoterako</ConceptLink>, erlazioa honela adierazten da:
 
 $$
 A * B * C \quad \text{edo} \quad \mathbf{B}(A, B, C)
 $$
 
-eta «$B$ puntua $A$ eta $C$ puntuen artean dago» predikatua adierazten du. Definizioak berak ez dio baldintzarik ezartzen hirukoteari: <ConceptLink targetId="axioma-orden-1">II.1 axiomak</ConceptLink> bermatzen du, $A * B * C$ bada, hiru puntuak desberdinak direla, zuzen berarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutelako <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> direla, eta $B$ ere $C$ eta $A$ puntuen artean dagoela:
+eta «$B$ puntua $A$ eta $C$ puntuen artean dago» predikatua adierazten du. Definizioak berak ez dio baldintzarik ezartzen hirukoteari: <ConceptLink targetId="axioma-orden-1">II.1 axiomak</ConceptLink> bermatzen du, $A * B * C$ bada, hiru puntuak desberdinak direla, <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen berarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutelako <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> direla, eta $B$ ere $C$ eta $A$ puntuen artean dagoela:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)

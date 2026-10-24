@@ -27,15 +27,15 @@ export const Simulation = EstarEntre;
 Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>, so betweenness underlies the whole theory of <ConceptLink targetId="separacion">separation</ConceptLink> in lines and <ConceptLink targetId="plano">planes</ConceptLink>.
 
 <Definicion title="Primitive betweenness relation">
-In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a subset $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ of the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points $\mathcal{P}$.
+In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a <ConceptLink targetId="subconjunto">subset</ConceptLink> $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, where $\mathcal{P}$ is the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points.
 
-For any <ConceptLink targetId="terna">triple</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is denoted:
+For any <ConceptLink targetId="terna">triple</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind>, the relation is denoted:
 
 $$
 A * B * C \quad \text{or} \quad \mathbf{B}(A, B, C)
 $$
 
-and expresses the predicate "point $B$ lies between $A$ and $C$". The definition itself imposes no condition on the triple: it is <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> that guarantees that, if $A * B * C$, the three points are distinct, <ConceptLink targetId="colinealidad">collinear</ConceptLink> by <ConceptLink targetId="incidencia">incidence</ConceptLink> with one line, and that $B$ also lies between $C$ and $A$:
+and expresses the predicate "point $B$ lies between $A$ and $C$". The definition itself imposes no condition on the triple: it is <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> that guarantees that, if $A * B * C$, the three points are distinct, <ConceptLink targetId="colinealidad">collinear</ConceptLink> by <ConceptLink targetId="incidencia">incidence</ConceptLink> with one line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, and that $B$ also lies between $C$ and $A$:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)

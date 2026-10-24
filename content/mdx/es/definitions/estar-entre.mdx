@@ -27,15 +27,15 @@ export const Simulation = EstarEntre;
 Sus propiedades no se definen: las fijan los <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). De ellos se deduce que los puntos de cada recta admiten un <ConceptLink targetId="orden">orden lineal</ConceptLink>, de modo que la intermediación es la base de toda la teoría de la <ConceptLink targetId="separacion">separación</ConceptLink> en rectas y <ConceptLink targetId="plano">planos</ConceptLink>.
 
 <Definicion title="Relación primitiva de intermediación">
-En la <ConceptLink targetId="signatura">signatura</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación de <ConceptLink targetId="aridad">aridad</ConceptLink> 3 cuya interpretación es un subconjunto $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos $\mathcal{P}$.
+En la <ConceptLink targetId="signatura">signatura</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación de <ConceptLink targetId="aridad">aridad</ConceptLink> 3 cuya interpretación es un <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, donde $\mathcal{P}$ es el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos.
 
-Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> de una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota:
+Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind>, la relación se denota:
 
 $$
 A * B * C \quad \text{o bien} \quad \mathbf{B}(A, B, C)
 $$
 
-y expresa el predicado «el punto $B$ está entre $A$ y $C$». La definición no impone por sí misma ninguna condición sobre la terna: es el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> el que garantiza que, si $A * B * C$, los tres puntos son distintos, <ConceptLink targetId="colinealidad">colineales</ConceptLink> por <ConceptLink targetId="incidencia">incidencia</ConceptLink> con una misma recta, y que $B$ también está entre $C$ y $A$:
+y expresa el predicado «el punto $B$ está entre $A$ y $C$». La definición no impone por sí misma ninguna condición sobre la terna: es el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> el que garantiza que, si $A * B * C$, los tres puntos son distintos, <ConceptLink targetId="colinealidad">colineales</ConceptLink> por <ConceptLink targetId="incidencia">incidencia</ConceptLink> con una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, y que $B$ también está entre $C$ y $A$:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)

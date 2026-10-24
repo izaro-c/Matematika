@@ -191,7 +191,7 @@ export const EstarEntreSpec = createDiagramSpec(
     },
     {
       "id": "lineAC",
-      "label": "Recta r",
+      "label": "Recta ℓ",
       "color": "carbon",
       "layerId": "geometry",
       "order": 10,
@@ -200,7 +200,7 @@ export const EstarEntreSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Recta soporte r",
+        "ariaLabel": "Recta soporte ℓ",
         "role": "construction"
       },
       "target": true,
@@ -348,8 +348,8 @@ export const EstarEntreSpec = createDiagramSpec(
   "steps": [
     {
       "id": "step-orden",
-      "label": "Intermediación A * B * C",
-      "description": "El punto B se sitúa en el interior del segmento delimitado por A y C.",
+      "label": "Intermediación $A * B * C$",
+      "description": "El punto $B$ está entre $A$ y $C$; los tres son puntos distintos de la recta $\\ell$.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -396,36 +396,36 @@ export const EstarEntreSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Arrastra los puntos A y C para mover la recta, o desliza B a lo largo de ella.",
+  "note": "Arrastra $A$ y $C$ para mover la recta; desliza $B$ entre ellos.",
   "translations": {
     "eu": {
-      "title": "Tartean egon (bitartekotasuna)",
-      "note": "Arrastatu A eta C puntuak zuzena mugitzeko, edo irristatu B zuzenaren gainean.",
+      "title": "Artean egotea (bitartekotasuna)",
+      "note": "Arrastatu $A$ eta $C$ zuzena mugitzeko; irristatu $B$ haien artean.",
       "steps": {
         "step-orden": {
-          "label": "Bitartekotasuna A * B * C",
-          "description": "B puntua A eta C-k mugatutako segmentuaren barnean kokatzen da."
+          "label": "Bitartekotasuna $A * B * C$",
+          "description": "$B$ puntua $A$ eta $C$ puntuen artean dago; hirurak $\\ell$ zuzeneko puntu desberdinak dira."
         }
       },
       "ariaLabels": {
         "pA": "A puntua",
         "pC": "C puntua",
-        "pB": "B tarteko puntua",
+        "pB": "B bitarteko puntua",
         "pD": "D kanpo-puntua",
-        "lineAC": "r euskarri-zuzena",
-        "segAB": "AB segmentua",
-        "segBC": "BC segmentua",
-        "segAC": "AC segmentu osoa",
-        "segCD": "CD segmentu luzatua"
+        "lineAC": "ℓ zuzen euskarria",
+        "segAB": "AB zuzenkia",
+        "segBC": "BC zuzenkia",
+        "segAC": "AC zuzenki osoa",
+        "segCD": "CD zuzenki luzatua"
       }
     },
     "en": {
       "title": "Betweenness (Intermediacy)",
-      "note": "Drag points A and C to move the line, or slide B along it.",
+      "note": "Drag $A$ and $C$ to move the line; slide $B$ between them.",
       "steps": {
         "step-orden": {
-          "label": "Betweenness A * B * C",
-          "description": "Point B lies strictly within the segment bounded by A and C."
+          "label": "Betweenness $A * B * C$",
+          "description": "Point $B$ lies between $A$ and $C$; the three are distinct points of line $\\ell$."
         }
       },
       "ariaLabels": {
@@ -433,7 +433,7 @@ export const EstarEntreSpec = createDiagramSpec(
         "pC": "Point C",
         "pB": "Intermediate point B",
         "pD": "Exterior point D",
-        "lineAC": "Supporting line r",
+        "lineAC": "Supporting line ℓ",
         "segAB": "Segment AB",
         "segBC": "Segment BC",
         "segAC": "Whole segment AC",
