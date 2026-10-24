@@ -22,7 +22,7 @@ export const Simulation = BiyeccionSagital;
 A bijection thus pairs the elements of the two sets one to one, and the pairing can be traversed in the opposite direction: assigning to each element of the codomain the unique element of the domain of which it is the image defines the <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink>.
 
 <Definicion title="Formal definition of bijection">
-  Let $A$ and $B$ be two sets. A function $f\colon A \longrightarrow B$ is a **bijection** if and only if it simultaneously satisfies two conditions:
+  Let <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> and <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> be two sets. A function <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> is a **bijection** if and only if it simultaneously satisfies two conditions:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Injectivity</ConceptLink>:** Distinct elements of the domain have distinct images:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
@@ -32,7 +32,7 @@ A bijection thus pairs the elements of the two sets one to one, and the pairing 
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Equivalently, $f$ is bijective if and only if there exists an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> $f^{-1}\colon B \longrightarrow A$ such that $f^{-1} \circ f = \operatorname{id}_A$ and $f \circ f^{-1} = \operatorname{id}_B$.
+  Equivalently, $f$ is bijective if and only if there exists an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> such that $f^{-1} \circ f = \operatorname{id}_A$ and $f \circ f^{-1} = \operatorname{id}_B$.
 </Definicion>
 
 <Separador />

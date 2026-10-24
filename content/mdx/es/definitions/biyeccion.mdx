@@ -22,7 +22,7 @@ export const Simulation = BiyeccionSagital;
 La biyección empareja así uno a uno los elementos de ambos conjuntos, y el emparejamiento puede recorrerse en sentido contrario: asignar a cada elemento del codominio el único elemento del dominio del que es imagen define la <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink>.
 
 <Definicion title="Definición formal de biyección">
-  Sean $A$ y $B$ dos conjuntos. Una función $f\colon A \longrightarrow B$ es una **biyección** si y solo si satisface simultáneamente dos condiciones:
+  Sean <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> y <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> dos conjuntos. Una función <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> es una **biyección** si y solo si satisface simultáneamente dos condiciones:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Inyectividad</ConceptLink>:** Elementos distintos del dominio poseen imágenes distintas:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
@@ -32,7 +32,7 @@ La biyección empareja así uno a uno los elementos de ambos conjuntos, y el emp
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Equivalentemente, $f$ es biyectiva si y solo si existe una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> $f^{-1}\colon B \longrightarrow A$ tal que $f^{-1} \circ f = \operatorname{id}_A$ y $f \circ f^{-1} = \operatorname{id}_B$.
+  Equivalentemente, $f$ es biyectiva si y solo si existe una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> tal que $f^{-1} \circ f = \operatorname{id}_A$ y $f \circ f^{-1} = \operatorname{id}_B$.
 </Definicion>
 
 <Separador />

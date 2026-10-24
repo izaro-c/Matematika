@@ -22,7 +22,7 @@ export const Simulation = BiyeccionSagital;
 Horrela, bijekzioak bi multzoetako elementuak banan-banan parekatzen ditu, eta parekatzea kontrako noranzkoan ere egin daiteke: kodomeinuko elementu bakoitzari hura irudi duen domeinuko elementu bakarra esleitzeak <ConceptLink targetId="funcion-inversa">alderantzizko funtzioa</ConceptLink> definitzen du.
 
 <Definicion title="Bijekzioaren definizio formala">
-  Izan bitez $A$ eta $B$ bi multzo. $f\colon A \longrightarrow B$ funtzio bat **bijekzio** bat da baldin eta soilik baldin bi baldintza hauek betetzen baditu aldi berean:
+  Izan bitez <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> bi multzo. <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> funtzio bat **bijekzio** bat da baldin eta soilik baldin bi baldintza hauek betetzen baditu aldi berean:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Injektibotasuna</ConceptLink>:** Domeinuko elementu desberdinek irudi desberdinak dituzte:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
@@ -32,7 +32,7 @@ Horrela, bijekzioak bi multzoetako elementuak banan-banan parekatzen ditu, eta p
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin $f^{-1}\colon B \longrightarrow A$ <ConceptLink targetId="funcion-inversa">alderantzizko funtzio</ConceptLink> bat existitzen bada non $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$ diren.
+  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> <ConceptLink targetId="funcion-inversa">alderantzizko funtzio</ConceptLink> bat existitzen bada non $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$ diren.
 </Definicion>
 
 <Separador />
