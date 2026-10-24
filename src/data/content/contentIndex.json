@@ -8411,9 +8411,9 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
-        "teoria-conjuntos",
         "dominio-funcion",
         "codominio",
         "imagen",
@@ -8421,6 +8421,7 @@
         "sobreyectividad",
         "biyeccion",
         "composicion-funciones",
+        "asociatividad",
         "igualdad-funciones",
         "asociatividad-composicion-funciones"
       ],
@@ -8472,9 +8473,9 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
-        "teoria-conjuntos",
         "dominio-funcion",
         "codominio",
         "imagen",
@@ -8482,6 +8483,7 @@
         "sobreyectividad",
         "biyeccion",
         "composicion-funciones",
+        "asociatividad",
         "igualdad-funciones",
         "asociatividad-composicion-funciones"
       ],
@@ -30467,9 +30469,9 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
-        "teoria-conjuntos",
         "dominio-funcion",
         "codominio",
         "imagen",
@@ -30477,6 +30479,7 @@
         "sobreyectividad",
         "biyeccion",
         "composicion-funciones",
+        "asociatividad",
         "igualdad-funciones",
         "asociatividad-composicion-funciones"
       ],
@@ -43589,9 +43592,9 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
-        "teoria-conjuntos",
         "dominio-funcion",
         "codominio",
         "imagen",
@@ -43599,6 +43602,7 @@
         "sobreyectividad",
         "biyeccion",
         "composicion-funciones",
+        "asociatividad",
         "igualdad-funciones",
         "asociatividad-composicion-funciones"
       ],

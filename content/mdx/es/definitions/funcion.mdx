@@ -14,7 +14,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Es uno de los conceptos estructurales más decisivos de la matemática moderna, fundamentando el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink>, el <ConceptLink targetId="algebra">álgebra</ConceptLink> y la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink> como vehículo formal de dependencia y transformación entre objetos.
+<Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Como la función es el propio conjunto de pares $(x, f(x))$, el concepto se formula por completo dentro de la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink>, y de ella lo toman el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink> y el <ConceptLink targetId="algebra">álgebra</ConceptLink>.
 
 <Definicion title="Definición formal de función">
   Sean $A$ y $B$ dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una **función** $f$ de $A$ en $B$ (notada $f\colon A \longrightarrow B$) es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $f \subseteq A \times B$ que satisface dos condiciones de existencia y unicidad:
@@ -32,7 +32,7 @@ export const metadata = {
 
 <Separador />
 
-### Clases fundamentales de funciones
+### Clases de funciones
 
 Una función $f\colon A \longrightarrow B$ se clasifica según el comportamiento de sus asignaciones:
 
@@ -45,10 +45,10 @@ Una función $f\colon A \longrightarrow B$ se clasifica según el comportamiento
 <SeccionPropiedades>
   <PropiedadesGrupo title="Álgebra de funciones">
     <PropiedadItem id="igualdad-funciones" title="Criterio de igualdad de funciones">
-      Dos funciones $f\colon A \longrightarrow B$ y $g\colon C \longrightarrow D$ son iguales ($f = g$) si y solo si comparten el mismo dominio ($A = C$), el mismo codominio ($B = D$) y coinciden puntualmente en cada elemento: $\forall x \in A, \ f(x) = g(x)$.
+      Dos funciones $f\colon A \longrightarrow B$ y $g\colon C \longrightarrow D$ son iguales ($f = g$) si y solo si tienen el mismo <ConceptLink targetId="dominio-funcion">dominio</ConceptLink> ($A = C$) y coinciden en cada elemento: $\forall x \in A, \ f(x) = g(x)$. El <ConceptLink targetId="codominio">codominio</ConceptLink> no interviene, porque $f$ y $g$ son conjuntos de pares: $\{(0, 0)\}$ es a la vez una función de $\{0\}$ en $\{0\}$ y de $\{0\}$ en $\{0, 1\}$.
     </PropiedadItem>
     <PropiedadItem id="asociatividad-composicion-funciones" title="Asociatividad de la composición">
-      Dadas tres funciones $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$ y $h\colon C \longrightarrow D$, la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> satisface la propiedad asociativa: $h \circ (g \circ f) = (h \circ g) \circ f$.
+      Dadas tres funciones $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$ y $h\colon C \longrightarrow D$, la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> satisface la <ConceptLink targetId="asociatividad">propiedad asociativa</ConceptLink>: $h \circ (g \circ f) = (h \circ g) \circ f$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

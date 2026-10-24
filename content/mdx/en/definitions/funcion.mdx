@@ -14,7 +14,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. It is one of the most foundational structural concepts in modern mathematics, underpinning <ConceptLink targetId="analisis-matematico">analysis</ConceptLink>, <ConceptLink targetId="algebra">algebra</ConceptLink>, and <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink> as a formal vehicle for dependency and transformation across mathematical objects.
+<Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. Since the function is itself the set of pairs $(x, f(x))$, the concept is formulated entirely within <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink>, from which <ConceptLink targetId="analisis-matematico">analysis</ConceptLink> and <ConceptLink targetId="algebra">algebra</ConceptLink> take it.
 
 <Definicion title="Formal definition of function">
   Let $A$ and $B$ be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A **function** $f$ from $A$ to $B$ (denoted $f\colon A \longrightarrow B$) is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $f \subseteq A \times B$ that satisfies two conditions of existence and uniqueness:
@@ -32,7 +32,7 @@ export const metadata = {
 
 <Separador />
 
-### Fundamental classes of functions
+### Classes of functions
 
 A function $f\colon A \longrightarrow B$ is classified according to the behavior of its assignments:
 
@@ -45,10 +45,10 @@ A function $f\colon A \longrightarrow B$ is classified according to the behavior
 <SeccionPropiedades>
   <PropiedadesGrupo title="Algebra of functions">
     <PropiedadItem id="igualdad-funciones" title="Equality criterion for functions">
-      Two functions $f\colon A \longrightarrow B$ and $g\colon C \longrightarrow D$ are equal ($f = g$) if and only if they share the same domain ($A = C$), the same codomain ($B = D$), and agree pointwise on every element: $\forall x \in A, \ f(x) = g(x)$.
+      Two functions $f\colon A \longrightarrow B$ and $g\colon C \longrightarrow D$ are equal ($f = g$) if and only if they have the same <ConceptLink targetId="dominio-funcion">domain</ConceptLink> ($A = C$) and agree on every element: $\forall x \in A, \ f(x) = g(x)$. The <ConceptLink targetId="codominio">codomain</ConceptLink> plays no part, because $f$ and $g$ are sets of pairs: $\{(0, 0)\}$ is at once a function from $\{0\}$ to $\{0\}$ and from $\{0\}$ to $\{0, 1\}$.
     </PropiedadItem>
     <PropiedadItem id="asociatividad-composicion-funciones" title="Associativity of composition">
-      Given three functions $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$, and $h\colon C \longrightarrow D$, <ConceptLink targetId="composicion-funciones">function composition</ConceptLink> satisfies the associative property: $h \circ (g \circ f) = (h \circ g) \circ f$.
+      Given three functions $f\colon A \longrightarrow B$, $g\colon B \longrightarrow C$, and $h\colon C \longrightarrow D$, <ConceptLink targetId="composicion-funciones">function composition</ConceptLink> satisfies the <ConceptLink targetId="asociatividad">associative property</ConceptLink>: $h \circ (g \circ f) = (h \circ g) \circ f$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
