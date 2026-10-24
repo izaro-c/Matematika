@@ -14,22 +14,22 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="B" />**ijekzio** bat (edo aplikazio bijektibo bat) bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> arteko <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, <ConceptLink targetId="dominio-funcion">domeinuko</ConceptLink> elementu bakoitzari <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bakar bat esleitzen diona, kodomeinuko elementu bakoitza domeinuko elementu bakar baten irudi izanik.
+<Capitular letra="B" />**ijekzio** bat (edo aplikazio bijektibo bat) bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> arteko <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, <ConceptLink targetId="dominio-funcion">domeinuko</ConceptLink> elementu bakoitzari <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bakar bat esleitzen diona, kodomeinuko elementu bakoitza domeinuko elementu bakar baten <ConceptLink targetId="imagen">irudi</ConceptLink> izanik.
 
-Bereizketen kontserbazioa eta kodomeinoaren estaldura exhaustiboa konbinatzean, bijekzio batek banan-banako parekatze bat ezartzen du bi multzoen artean, ongi definitutako alderantzizko funtzio baten existentzia bermatuz.
+Bereizketen kontserbazioa eta kodomeinuaren estaldura exhaustiboa konbinatzean, bijekzio batek banan-banako parekatze bat ezartzen du bi multzoen artean, ongi definitutako alderantzizko funtzio baten existentzia bermatuz.
 
 <Definicion title="Bijekzioaren definizio formala">
   Izan bitez $A$ eta $B$ bi multzo. $f\colon A \longrightarrow B$ funtzio bat **bijekzio** bat da baldin eta soilik baldin bi baldintza hauek betetzen baditu aldi berean:
-  1. **<ConceptLink targetId="inyectividad">Injektibotasuna</ConceptLink>:** Domeinuko elementu desberdinek irudi desberdinak dituzte:
+  1. **<ConceptLink targetId="inyectividad" isDependency={true}>Injektibotasuna</ConceptLink>:** Domeinuko elementu desberdinek irudi desberdinak dituzte:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
      $$
-  2. **<ConceptLink targetId="sobreyectividad">Sobrejektibotasuna</ConceptLink>:** Kodomeinuko elementu orori domeinuko gutxienez elementu bat dagokio irudi gisa:
+  2. **<ConceptLink targetId="sobreyectividad" isDependency={true}>Sobrejektibotasuna</ConceptLink>:** Kodomeinuko elementu oro domeinuko gutxienez elementu baten irudia da:
      $$
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin $f^{-1}\colon B \longrightarrow A$ alderantzizko funtzio bakarra existitzen bada non $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$ diren.
+  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin $f^{-1}\colon B \longrightarrow A$ <ConceptLink targetId="funcion-inversa">alderantzizko funtzio</ConceptLink> bat existitzen bada non $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$ diren.
 </Definicion>
 
 <Separador />
@@ -37,6 +37,6 @@ Bereizketen kontserbazioa eta kodomeinoaren estaldura exhaustiboa konbinatzean, 
 ### Egiturazko garrantzia eta aplikazio geometrikoak
 
 Bijekzioek eginkizun bateratzailea betetzen dute matematikaren hainbat adarretan:
-- **Tamainaren neurria:** Bi multzok <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> bera dute baldin eta soilik baldin haien artean bijekzio bat existitzen bada ($|A| = |B|$).
-- **Egituraren kontserbazioa:** <ConceptLink targetId="isomorfismo">Isomorfismo</ConceptLink> formal bat <ConceptLink targetId="estructura-geometrica">egituren</ConceptLink> arteko bijekzio bat besterik ez da, haien <ConceptLink targetId="signatura">signaturako</ConceptLink> erlazio eta eragiketa guztiak kontserbatzen dituena.
-- **Eraldaketak eta kongruentzia:** Geometrian, figura konposatuen (hala nola <ConceptLink targetId="triangulo">triangeluen</ConceptLink> edo <ConceptLink targetId="poligono">poligonoen</ConceptLink>) <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> erpin homologoen arteko korrespondentzia bijektibo baten bidez definitzen da, dagozkien <ConceptLink targetId="vertice">erpin</ConceptLink>, <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angeluen</ConceptLink> kongruentzia kontserbatuz.
+- **Tamainaren neurria:** Bi multzok <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> bera dute baldin eta soilik baldin haien artean bijekzio bat existitzen bada ($\lvert A \rvert = \lvert B \rvert$).
+- **Egituraren kontserbazioa:** <ConceptLink targetId="isomorfismo">Isomorfismo</ConceptLink> formal bat <ConceptLink targetId="estructura-geometrica">egituren</ConceptLink> arteko bijekzio bat da, haien <ConceptLink targetId="signatura">signaturako</ConceptLink> erlazio eta eragiketa guztiak ere kontserbatzen dituena.
+- **Eraldaketak eta kongruentzia:** Geometrian, bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> (eta, oro har, bi <ConceptLink targetId="poligono">poligonoren</ConceptLink>) <ConceptLink targetId="congruencia-triangulos">kongruentzia</ConceptLink> haien <ConceptLink targetId="vertice">erpinen</ConceptLink> arteko korrespondentzia bijektibo baten bidez definitzen da, <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologoen <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> kontserbatzen duena.
