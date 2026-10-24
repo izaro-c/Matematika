@@ -16,7 +16,7 @@ export const metadata = {
 
 <Capitular letra="A" /> **bijection** (or bijective map) is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that associates each element of the <ConceptLink targetId="dominio-funcion">domain</ConceptLink> with a unique element of the <ConceptLink targetId="codominio">codomain</ConceptLink>, such that every element of the codomain is the <ConceptLink targetId="imagen">image</ConceptLink> of exactly one element of the domain.
 
-By combining the preservation of distinctions with exhaustive coverage of the codomain, a bijection establishes a one-to-one pairing between both sets that guarantees the existence of a well-defined inverse function.
+A bijection thus pairs the elements of the two sets one to one, and the pairing can be traversed in the opposite direction: assigning to each element of the codomain the unique element of the domain of which it is the image defines the <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink>.
 
 <Definicion title="Formal definition of bijection">
   Let $A$ and $B$ be two sets. A function $f\colon A \longrightarrow B$ is a **bijection** if and only if it simultaneously satisfies two conditions:
@@ -34,9 +34,9 @@ By combining the preservation of distinctions with exhaustive coverage of the co
 
 <Separador />
 
-### Structural importance and geometric applications
+### Uses of bijections
 
-Bijections play a unifying role across multiple branches of mathematics:
+Three notions from different branches are formulated through bijections:
 - **Measure of size:** Two sets have the same <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> if and only if there exists a bijection between them ($\lvert A \rvert = \lvert B \rvert$).
-- **Structural preservation:** A formal <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink> is a bijection between <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that additionally preserves all relations and operations of their <ConceptLink targetId="signatura">signature</ConceptLink>.
-- **Transformations and congruence:** In geometry, the <ConceptLink targetId="congruencia-triangulos">congruence</ConceptLink> of two <ConceptLink targetId="triangulo">triangles</ConceptLink> (and, more generally, of two <ConceptLink targetId="poligono">polygons</ConceptLink>) is defined via a bijective correspondence between their <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the <ConceptLink targetId="congruencia">congruence</ConceptLink> of the homologous <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.
+- **Structural preservation:** An <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink> is a bijection between <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that additionally preserves all relations and operations of their <ConceptLink targetId="signatura">signature</ConceptLink>.
+- **Congruence of figures:** In geometry, the <ConceptLink targetId="congruencia-triangulos">congruence</ConceptLink> of two <ConceptLink targetId="triangulo">triangles</ConceptLink> (and, more generally, of two <ConceptLink targetId="poligono">polygons</ConceptLink>) is defined via a bijective correspondence between their <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the <ConceptLink targetId="congruencia">congruence</ConceptLink> of the homologous <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.
