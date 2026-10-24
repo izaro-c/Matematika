@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Kardinaltasuna",
-  description: "Multzo baten elementuen tamainaren edo kopuruaren neurria, bijekzioen peko ekipotentzia-klaseen bidez formalizatua.",
+  description: "Multzo baten tamaina: bi multzok kardinaltasun bera dute baldin eta soilik baldin haien artean bijekzio bat badago.",
   branch: "03E",
   branches: ["03", "00A"],
   hasSimulation: false,
@@ -14,25 +14,27 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="K" />**ardinaltasuna** (edo zenbaki kardinala) bilduma baten «elementu-kopuruaren» kontzeptuaren orokortze matematikoa da, multzo finituetan zein <ConceptLink targetId="conjunto-infinito">multzo amaigabeetan</ConceptLink> erabateko baliozkotasunez aplikagarria dena.
+<Capitular letra="K" />**ardinaltasuna** (edo zenbaki kardinala) bilduma baten «elementu-kopuruaren» kontzeptuaren orokortze matematikoa da, multzo finituetan zein <ConceptLink targetId="conjunto-infinito">multzo amaigabeetan</ConceptLink> aplikagarria dena.
 
-<ConceptLink targetId="cantor">Georg Cantorrek</ConceptLink> aurkeztutako kardinalen teoriak infinituaren paradoxak gainditzen ditu kontaketa sekuentzialari uko eginez eta ekipotentziaren printzipioan oinarrituz: bi multzok berezko tamaina bera dute baldin eta soilik baldin haien elementuak banan-banan pareka badaitezke <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> baten bidez.
+<ConceptLink targetId="cantor">Georg Cantorrek</ConceptLink> ekipotentzian oinarritu zuen, eta ez zenbaketan; horri esker, multzo amaigabeak ere konpara daitezke. Irizpide horren arabera, multzo amaigabe bat bere zati propio batekin ekipotentea izan daiteke: $n \longmapsto 2n$ <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> bat da $\mathbb{N}$-tik zenbaki bikoitien multzorako.
 
 <Definicion title="Ekipotentzia eta konparaketa kardinala">
   Bi $A$ eta $B$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> **ekipotenteak** dira ($A \sim B$ idatzita) baldin eta soilik baldin $f\colon A \longrightarrow B$ <ConceptLink targetId="biyeccion" isDependency={true}>bijekzio</ConceptLink> bat existitzen bada:
   $$
-  |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijektiboa})
+  A \sim B \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijektiboa})
   $$
-  Kardinalen arteko ordena injekzioen bidez definitzen da: $|A| \le |B|$ idazten da baldin eta $A$-tik $B$-rako <ConceptLink targetId="inyectividad">aplikazio injektibo</ConceptLink> bat existitzen bada. Cantor-Bernstein-Schröder teoremaren arabera, $|A| \le |B|$ eta $|B| \le |A|$ badira, orduan ezinbestean $|A| = |B|$ da.
-  
-  Cantorren teoremaren arabera, edozein $A$ multzotarako, haren $\wp(A)$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoak</ConceptLink> kardinaltasun hertsiki handiagoa du: $|A| < |\wp(A)|$.
+  Ekipotentzia <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazio</ConceptLink> bat da, identitatea, bijekzio baten <ConceptLink targetId="funcion-inversa">alderantzizkoa</ConceptLink> eta bi bijekzioren <ConceptLink targetId="composicion-funciones">konposizioa</ConceptLink> bijekzioak direlako. Horregatik, $A \sim B$ denean $\lvert A \rvert = \lvert B \rvert$ idazten da, eta $\lvert A \rvert$ adierazpenari $A$ multzoaren **kardinaltasuna** deritzo.
+
+  Kardinalen arteko ordena injekzioen bidez definitzen da: $\lvert A \rvert \le \lvert B \rvert$ idazten da baldin eta $A$-tik $B$-rako <ConceptLink targetId="inyectividad" isDependency={true}>aplikazio injektibo</ConceptLink> bat existitzen bada, eta $\lvert A \rvert < \lvert B \rvert$, gainera $A$ eta $B$ ekipotenteak ez badira.
 </Definicion>
+
+Bi teoremek ematen diote forma ordena horri. <ConceptLink targetId="teorema-cantor-bernstein">Cantor-Bernstein-Schröder teoremak</ConceptLink> antisimetriko egiten du: $\lvert A \rvert \le \lvert B \rvert$ eta $\lvert B \rvert \le \lvert A \rvert$ badira, orduan $\lvert A \rvert = \lvert B \rvert$ da. <ConceptLink targetId="teorema-cantor">Cantorren teoremak</ConceptLink> eragozten du maximorik izatea: edozein $A$ multzotarako, haren $\wp(A)$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoak</ConceptLink> $\lvert A \rvert < \lvert \wp(A) \rvert$ betetzen du.
 
 <Separador />
 
 ### Infinituen eskala geometrian
 
 Kardinaltasunak <ConceptLink targetId="dominio">domeinu</ConceptLink> geometrikoak haien tamainaren edo elementu-kopuruaren arabera sailkatzea ahalbidetzen du:
-- **<ConceptLink targetId="estructura-geometrica">Egitura</ConceptLink> finituak:** $n \in \mathbb{N}$ kardinal naturala duten multzoak, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoko</ConceptLink> 7 puntuak edo <ConceptLink targetId="modelo-tres-puntos">hiru puntuko ereduko</ConceptLink> 3 puntuak.
-- **Infinitu zenbakarria:** $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$ kardinala, segida diskretuen eta <ConceptLink targetId="numero-racional">zenbaki arrazionalen</ConceptLink> ezaugarri dena.
-- **Kontinuoaren potentzia:** $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$ kardinala. <ConceptLink targetId="sistema-euclidiano">Geometria euklidear</ConceptLink> jarraituan, <ConceptLink targetId="recta">zuzen</ConceptLink> bakoitzak $\mathfrak{c}$ <ConceptLink targetId="punto">puntu</ConceptLink> ditu, eta dentsitate horrek formalki bermatzen du geometria-<ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> eta <ConceptLink targetId="espacio">espazioan</ConceptLink> hutsunerik ez egotea.
+- **<ConceptLink targetId="estructura-geometrica">Egitura</ConceptLink> finituak:** $n \in \mathbb{N}$ kardinal naturala duten multzoak, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoko</ConceptLink> 7 <ConceptLink targetId="punto">puntuak</ConceptLink> edo <ConceptLink targetId="modelo-tres-puntos">hiru puntuko ereduko</ConceptLink> 3 puntuak.
+- **Infinitu zenbakarria:** <ConceptLink targetId="conjunto-numerable">Multzo zenbakarri</ConceptLink> amaigabeen $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ kardinala, hala nola <ConceptLink targetId="numero-natural">zenbaki arruntena</ConceptLink> eta <ConceptLink targetId="numero-racional">zenbaki arrazionalena</ConceptLink>.
+- **<ConceptLink targetId="potencia-del-continuo">Kontinuoaren potentzia</ConceptLink>:** $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$ kardinala. <ConceptLink targetId="continuidad">Jarraitutasun-axiomekin</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1 axioma</ConceptLink> eta <ConceptLink targetId="axioma-completitud">V.2 axioma</ConceptLink>), edozein $\ell$ <ConceptLink targetId="recta">zuzenen</ConceptLink> <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> $\mathbb{R}$-rekin bijekzioan dago; beraz, $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.

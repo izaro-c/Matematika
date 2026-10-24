@@ -727,7 +727,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Cardinalidad",
-      "description": "Medida del tamaño o cantidad de elementos de un conjunto formalizada mediante clases de equipotencia bajo biyecciones.",
+      "description": "Tamaño de un conjunto: dos conjuntos tienen la misma cardinalidad si y solo si existe una biyección entre ellos.",
       "proofs": [],
       "directDependencies": [
         "conjunto",
