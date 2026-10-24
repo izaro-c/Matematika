@@ -30,15 +30,7 @@ export const metadata = {
   Cuando $(x, y) \in f$, se escribe $y = f(x)$, donde $y$ es la <ConceptLink targetId="imagen">imagen</ConceptLink> de $x$ mediante $f$, y $x$ es una preimagen de $y$. El conjunto $A$ recibe el nombre de dominio de $f$, $B$ es su codominio, y el conjunto $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ es la imagen o recorrido de la función.
 </Definicion>
 
-<Separador />
-
-### Clases de funciones
-
-Una función $f\colon A \longrightarrow B$ se clasifica según el comportamiento de sus asignaciones:
-
-- **<ConceptLink targetId="inyectividad">Inyectiva</ConceptLink>:** Elementos distintos tienen imágenes distintas: $\forall x_1, x_2 \in A, \ f(x_1) = f(x_2) \implies x_1 = x_2$.
-- **<ConceptLink targetId="sobreyectividad">Sobreyectiva</ConceptLink>:** La imagen agota todo el codominio: $\forall y \in B, \ \exists x \in A \ (f(x) = y)$, es decir, $\operatorname{Im}(f) = B$.
-- **<ConceptLink targetId="biyeccion">Biyectiva</ConceptLink>:** Es simultáneamente inyectiva y sobreyectiva, lo que garantiza la existencia de una función inversa $f^{-1}\colon B \longrightarrow A$.
+Según cómo reparte las imágenes, una función $f\colon A \longrightarrow B$ puede ser <ConceptLink targetId="inyectividad">inyectiva</ConceptLink>, <ConceptLink targetId="sobreyectividad">sobreyectiva</ConceptLink> o <ConceptLink targetId="biyeccion">biyectiva</ConceptLink>; las biyectivas son exactamente las que admiten una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> $f^{-1}\colon B \longrightarrow A$.
 
 <Separador />
 

@@ -30,15 +30,7 @@ export const metadata = {
   When $(x, y) \in f$, one writes $y = f(x)$, where $y$ is the <ConceptLink targetId="imagen">image</ConceptLink> of $x$ under $f$, and $x$ is a preimage of $y$. The set $A$ is called the domain of $f$, $B$ is its codomain, and the set $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ is the image or range of the function.
 </Definicion>
 
-<Separador />
-
-### Classes of functions
-
-A function $f\colon A \longrightarrow B$ is classified according to the behavior of its assignments:
-
-- **<ConceptLink targetId="inyectividad">Injective</ConceptLink>:** Distinct elements have distinct images: $\forall x_1, x_2 \in A, \ f(x_1) = f(x_2) \implies x_1 = x_2$.
-- **<ConceptLink targetId="sobreyectividad">Surjective</ConceptLink>:** The image exhausts the entire codomain: $\forall y \in B, \ \exists x \in A \ (f(x) = y)$, that is, $\operatorname{Im}(f) = B$.
-- **<ConceptLink targetId="biyeccion">Bijective</ConceptLink>:** It is simultaneously injective and surjective, which guarantees the existence of an inverse function $f^{-1}\colon B \longrightarrow A$.
+Depending on how it distributes images, a function $f\colon A \longrightarrow B$ can be <ConceptLink targetId="inyectividad">injective</ConceptLink>, <ConceptLink targetId="sobreyectividad">surjective</ConceptLink>, or <ConceptLink targetId="biyeccion">bijective</ConceptLink>; the bijective ones are exactly those that admit an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> $f^{-1}\colon B \longrightarrow A$.
 
 <Separador />
 
