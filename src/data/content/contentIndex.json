@@ -5456,7 +5456,7 @@
       "branches": [
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Calculus",
@@ -5475,14 +5475,14 @@
         "numero-real",
         "funcion",
         "intervalo",
-        "derivada",
-        "limite",
         "pendiente",
         "recta-secante-grafica",
         "grafica-funcion",
         "punto",
         "funcion-derivable",
         "recta-tangente",
+        "derivada",
+        "limite",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -5515,7 +5515,7 @@
       "branches": [
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Calculus",
@@ -5534,14 +5534,14 @@
         "funcion",
         "numero-real",
         "intervalo",
-        "derivada",
-        "limite",
         "pendiente",
         "recta-secante-grafica",
         "grafica-funcion",
         "punto",
         "funcion-derivable",
         "recta-tangente",
+        "derivada",
+        "limite",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -29010,7 +29010,7 @@
       "branches": [
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Calculus",
@@ -29029,14 +29029,14 @@
         "funcion",
         "numero-real",
         "intervalo",
-        "derivada",
-        "limite",
         "pendiente",
         "recta-secante-grafica",
         "grafica-funcion",
         "punto",
         "funcion-derivable",
         "recta-tangente",
+        "derivada",
+        "limite",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -42147,7 +42147,7 @@
       "branches": [
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Calculus",
@@ -42166,14 +42166,14 @@
         "numero-real",
         "funcion",
         "intervalo",
-        "limite",
-        "derivada",
         "punto",
         "grafica-funcion",
         "recta-secante-grafica",
         "pendiente",
         "funcion-derivable",
         "recta-tangente",
+        "derivada",
+        "limite",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],

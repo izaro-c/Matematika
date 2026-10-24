@@ -7,17 +7,20 @@ export const metadata = {
   description: "Average rate of change of a real function over an interval, defined by the quotient between the variation of the dependent variable and that of the independent variable.",
   branch: "26A",
   branches: ["26A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 9", role: "primary" },
     { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 5", role: "secondary" }
   ]
 };
 
-<Capitular letra="T" />he **difference quotient** (or average rate of change) quantifies the average variation rate experienced by a <ConceptLink targetId="numero-real">real</ConceptLink> <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> per unit of change in its independent variable across an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink>. It constitutes the analytical and geometric core preceding the calculus of instantaneous variations, acting as a deductive bridge toward the <ConceptLink targetId="derivada">derivative</ConceptLink> through the operation of <ConceptLink targetId="limite">limit</ConceptLink>.
+import { CocienteIncremental } from '@content/diagrams/Definiciones/CocienteIncremental';
+export const Simulation = CocienteIncremental;
+
+<Capitular letra="T" />he <VisualBind element="secante" color="terracota">**difference quotient**</VisualBind> (or average rate of change) of a <ConceptLink targetId="numero-real">real</ConceptLink> <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two points of an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink> is the quotient of the change in the function by the change in its independent variable: it measures how much the function changes, on average, per unit change of the variable.
 
 <Definicion title="Formal definition of difference quotient">
-  Let $I \subseteq \mathbb{R}$ be an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink> of the <ConceptLink targetId="numero-real">real line</ConceptLink> and let $f\colon I \longrightarrow \mathbb{R}$ be a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink>. Fixing a base point $x \in I$ and given a non-zero increment $h \in \mathbb{R} \setminus \{0\}$ such that $x + h \in I$, the **difference quotient** of $f$ between $x$ and $x + h$ is defined as:
+  Let $I \subseteq \mathbb{R}$ be an <ConceptLink targetId="intervalo" isDependency={true}>interval</ConceptLink> of the <ConceptLink targetId="numero-real">real line</ConceptLink> and let $f\colon I \longrightarrow \mathbb{R}$ be a <VisualBind element="grafica" color="carbon"><ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink></VisualBind>. Fixing a base point $x \in I$ and given a non-zero increment $h \in \mathbb{R} \setminus \{0\}$ such that $x + h \in I$, the <VisualBind element="secante" color="terracota">**difference quotient**</VisualBind> of $f$ between <VisualBind element="pX" color="carbon">$x$</VisualBind> and <VisualBind element="pXh" color="terracota">$x + h$</VisualBind> is defined as:
   $$
   \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
   $$
@@ -25,7 +28,7 @@ export const metadata = {
   $$
   \frac{f(x_1) - f(x)}{x_1 - x}
   $$
-  where $\Delta y = f(x + h) - f(x)$ represents the absolute change experienced by the dependent variable and $\Delta x = h$ represents the increment of the independent variable.
+  where <VisualBind element="segDy" color="pavo">$\Delta y = f(x + h) - f(x)$</VisualBind> represents the absolute change experienced by the dependent variable and <VisualBind element="segDx" color="ocre">$\Delta x = h$</VisualBind> represents the increment of the independent variable.
 </Definicion>
 
 <Separador />
@@ -33,7 +36,7 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Interpretation and analytical properties">
     <PropiedadItem id="interpretacion-geometrica-secante" title="Geometric interpretation as secant slope" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
-      Geometrically, the difference quotient coincides with the <ConceptLink targetId="pendiente">slope</ConceptLink> of the <ConceptLink targetId="recta-secante-grafica">secant line</ConceptLink> to the <ConceptLink targetId="grafica-funcion">graph</ConceptLink> of the <ConceptLink targetId="funcion">function</ConceptLink> connecting the <ConceptLink targetId="punto">points</ConceptLink> $(x, f(x))$ and $(x + h, f(x + h))$. If $f$ is <ConceptLink targetId="funcion-derivable">differentiable</ConceptLink> at $x$, as $h$ tends to zero these secant lines tend to the <ConceptLink targetId="recta-tangente">tangent line</ConceptLink> to the graph at $(x, f(x))$.
+      Geometrically, the difference quotient coincides with the <ConceptLink targetId="pendiente">slope</ConceptLink> of the <VisualBind element="secante" color="terracota"><ConceptLink targetId="recta-secante-grafica">secant line</ConceptLink></VisualBind> to the <VisualBind element="grafica" color="carbon"><ConceptLink targetId="grafica-funcion">graph</ConceptLink></VisualBind> of the <ConceptLink targetId="funcion">function</ConceptLink> connecting the <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pP" color="carbon">$(x, f(x))$</VisualBind> and <VisualBind element="pQ" color="terracota">$(x + h, f(x + h))$</VisualBind>. If $f$ is <ConceptLink targetId="funcion-derivable">differentiable</ConceptLink> at $x$, as $h$ tends to zero these secant lines tend to the <VisualBind element="tangente" color="musgo"><ConceptLink targetId="recta-tangente">tangent line</ConceptLink></VisualBind> to the graph at $(x, f(x))$.
     </PropiedadItem>
     <PropiedadItem id="fundamento-de-la-derivada" title="Foundation of the instantaneous derivative" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
       The asymptotic behavior of the difference quotient as the increment tends to zero defines the notion of <ConceptLink targetId="derivada">derivative</ConceptLink>. If the <ConceptLink targetId="limite">limit</ConceptLink> exists in $\mathbb{R}$, the resulting value $f'(x)$ represents the instantaneous rate of change of the function at the point $x$.

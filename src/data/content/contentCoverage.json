@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 121,
-      "exported": 69
+      "none": 120,
+      "exported": 70
     },
     "theoremLike": {
       "total": 21,
@@ -584,9 +584,11 @@
       "type": "definicion",
       "title": "Gehikuntza-zatidura",
       "filePath": "eu/definitions/cociente-incremental.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
