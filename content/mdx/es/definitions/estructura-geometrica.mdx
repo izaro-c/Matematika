@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Estructura geométrica",
-  description: "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+  description: "Interpretación de una signatura formal: dominios no vacíos de objetos con las funciones y relaciones que interpretan sus símbolos.",
   branch: "03",
   hasSimulation: false,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" },
     { title: "Model Theory", author: "Wilfrid Hodges", locator: "Capítulo 1", role: "secondary" }
   ]
 };
@@ -16,7 +16,7 @@ export const metadata = {
 <Capitular letra="U" />na **estructura geométrica** es la especificación matemática que asigna significado e interpretación a una <ConceptLink targetId="signatura">signatura</ConceptLink> formal: define los <ConceptLink targetId="dominio">dominios</ConceptLink> de objetos de partida y las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> que operan entre ellos.
 
 <Definicion title="Definición Formal General">
-  Una **estructura matemática** $\mathcal{S}$ (o modelo) está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados <ConceptLink targetId="dominio">dominios</ConceptLink>), <ConceptLink targetId="funcion">funciones</ConceptLink> $\mathcal{F}_l$ y <ConceptLink targetId="relacion">relaciones</ConceptLink> $\mathcal{R}_j$:
+  Una **estructura matemática** $\mathcal{S}$ (un <ConceptLink targetId="modelo">modelo</ConceptLink> de una teoría si satisface sus axiomas) está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados <ConceptLink targetId="dominio">dominios</ConceptLink>), <ConceptLink targetId="funcion">funciones</ConceptLink> $\mathcal{F}_l$ y <ConceptLink targetId="relacion">relaciones</ConceptLink> $\mathcal{R}_j$:
   $$
   \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
@@ -42,6 +42,6 @@ $$
 
 ### Otras estructuras y signaturas geométricas
 
-- **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, signatura de la parte plana del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, común a <ConceptLink targetId="geometria-finita">geometrías finitas</ConceptLink> como el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> y a las <ConceptLink targetId="geometria-proyectiva">proyectivas</ConceptLink>.
+- **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, con la signatura de la parte plana del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, común a <ConceptLink targetId="geometria-finita">geometrías finitas</ConceptLink> como el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> y a las <ConceptLink targetId="geometria-proyectiva">proyectivas</ConceptLink>.
 - **<ConceptLink targetId="espacio-metrico">Espacio métrico</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, donde una función de <ConceptLink targetId="distancia">distancia</ConceptLink> numérica $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ sustituye a las relaciones sintéticas de congruencia y orden.
 - **<ConceptLink targetId="espacio-vectorial">Espacio vectorial</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, fundamentado en el <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink> sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink>.

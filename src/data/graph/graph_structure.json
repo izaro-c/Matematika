@@ -1018,7 +1018,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Estructura geométrica",
-      "description": "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+      "description": "Interpretación de una signatura formal: dominios no vacíos de objetos con las funciones y relaciones que interpretan sus símbolos.",
       "proofs": [],
       "directDependencies": []
     },

@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Geometric Structure",
-  description: "Formal specification composed of object domains and primitive relations satisfying an axiomatic system.",
+  description: "Interpretation of a formal signature: non-empty domains of objects with the functions and relations interpreting its symbols.",
   branch: "03",
   hasSimulation: false,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" },
     { title: "Model Theory", author: "Wilfrid Hodges", locator: "Chapter 1", role: "secondary" }
   ]
 };
@@ -16,7 +16,7 @@ export const metadata = {
 <Capitular letra="A" /> **geometric structure** is the mathematical specification assigning meaning and interpretation to a formal <ConceptLink targetId="signatura">signature</ConceptLink>: defining initial object <ConceptLink targetId="dominio">domains</ConceptLink> and the <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink> operating among them.
 
 <Definicion title="General Formal Definition">
-  A **mathematical structure** $\mathcal{S}$ (or model) is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called <ConceptLink targetId="dominio">domains</ConceptLink>), <ConceptLink targetId="funcion">functions</ConceptLink> $\mathcal{F}_l$, and <ConceptLink targetId="relacion">relations</ConceptLink> $\mathcal{R}_j$:
+  A **mathematical structure** $\mathcal{S}$ (a <ConceptLink targetId="modelo">model</ConceptLink> of a theory if it satisfies its axioms) is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called <ConceptLink targetId="dominio">domains</ConceptLink>), <ConceptLink targetId="funcion">functions</ConceptLink> $\mathcal{F}_l$, and <ConceptLink targetId="relacion">relations</ConceptLink> $\mathcal{R}_j$:
   $$
   \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
@@ -42,6 +42,6 @@ $$
 
 ### Other geometric structures and signatures
 
-- **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, signature of the planar part of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, shared by <ConceptLink targetId="geometria-finita">finite geometries</ConceptLink> such as the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> and by <ConceptLink targetId="geometria-proyectiva">projective</ConceptLink> ones.
+- **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, with the signature of the planar part of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, shared by <ConceptLink targetId="geometria-finita">finite geometries</ConceptLink> such as the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> and by <ConceptLink targetId="geometria-proyectiva">projective</ConceptLink> ones.
 - **<ConceptLink targetId="espacio-metrico">Metric space</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, where a numerical <ConceptLink targetId="distancia">distance</ConceptLink> function $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ replaces synthetic congruence and order.
 - **<ConceptLink targetId="espacio-vectorial">Vector space</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, based on <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink> over a <ConceptLink targetId="cuerpo">field</ConceptLink>.

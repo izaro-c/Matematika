@@ -8243,14 +8243,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Geometric Structure",
-      "description": "Formal specification composed of object domains and primitive relations satisfying an axiomatic system.",
+      "description": "Interpretation of a formal signature: non-empty domains of objects with the functions and relations interpreting its symbols.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I",
+          "locator": "Chapter I, §1",
           "role": "primary"
         },
         {
@@ -8264,6 +8264,7 @@
         "signatura",
         "dominio",
         "concepto-primitivo",
+        "modelo",
         "conjunto",
         "funcion",
         "relacion",
@@ -8314,14 +8315,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Estructura geométrica",
-      "description": "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+      "description": "Interpretación de una signatura formal: dominios no vacíos de objetos con las funciones y relaciones que interpretan sus símbolos.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I",
+          "locator": "Capítulo I, §1",
           "role": "primary"
         },
         {
@@ -8335,6 +8336,7 @@
         "signatura",
         "dominio",
         "concepto-primitivo",
+        "modelo",
         "conjunto",
         "funcion",
         "relacion",
@@ -30369,14 +30371,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Estructura geométrica",
-      "description": "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+      "description": "Interpretación de una signatura formal: dominios no vacíos de objetos con las funciones y relaciones que interpretan sus símbolos.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I",
+          "locator": "Capítulo I, §1",
           "role": "primary"
         },
         {
@@ -30390,6 +30392,7 @@
         "signatura",
         "dominio",
         "concepto-primitivo",
+        "modelo",
         "conjunto",
         "funcion",
         "relacion",
@@ -43490,14 +43493,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Egitura geometrikoa",
-      "description": "Sistema axiomatiko bat betetzen duten objektu-domeinuek eta oinarrizko erlazioek osatutako zehaztapen formala.",
+      "description": "Signatura formal baten interpretazioa: objektu-domeinu ez-hutsak eta haren ikurrak interpretatzen dituzten funtzioak eta erlazioak.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         },
         {
@@ -43511,6 +43514,7 @@
         "signatura",
         "dominio",
         "concepto-primitivo",
+        "modelo",
         "conjunto",
         "funcion",
         "relacion",
