@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a **cardinalidad** (o número cardinal) es la generalización matemática del concepto de «cantidad de elementos» de una colección, aplicable con plena validez tanto a conjuntos finitos como a <ConceptLink targetId="conjunto-infinito">conjuntos infinitos</ConceptLink>.
+<Capitular letra="L" />a **cardinalidad** (o número cardinal) es la generalización matemática del concepto de «cantidad de elementos» de una colección, aplicable tanto a conjuntos finitos como a <ConceptLink targetId="conjunto-infinito">conjuntos infinitos</ConceptLink>.
 
-Introducida por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, la teoría de cardinales supera las paradojas del infinito prescindiendo del recuento secuencial y fundándose en el principio de equipotencia: dos conjuntos poseen el mismo tamaño intrínseco si y solo si es posible emparejar sus elementos término a término mediante una <ConceptLink targetId="biyeccion">biyección</ConceptLink>.
+<ConceptLink targetId="cantor">Georg Cantor</ConceptLink> la fundó en la equipotencia y no en el recuento, lo que permite comparar también conjuntos infinitos. Con este criterio, un conjunto infinito puede ser equipotente a una parte propia suya: $n \longmapsto 2n$ es una <ConceptLink targetId="biyeccion">biyección</ConceptLink> de $\mathbb{N}$ en el conjunto de los números pares.
 
 <Definicion title="Equipotencia y comparación cardinal">
   Dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **equipotentes** (se escribe $A \sim B$) si y solo si existe una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink> $f\colon A \longrightarrow B$:
@@ -25,10 +25,10 @@ Introducida por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, la te
   $$
   La equipotencia es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, porque la identidad, la <ConceptLink targetId="funcion-inversa">inversa</ConceptLink> de una biyección y la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de dos biyecciones son biyecciones. Por eso se escribe $\lvert A \rvert = \lvert B \rvert$ cuando $A \sim B$, y $\lvert A \rvert$ se llama **cardinalidad** de $A$.
 
-  El orden entre cardinales se define mediante inyecciones: se escribe $\lvert A \rvert \le \lvert B \rvert$ si existe una <ConceptLink targetId="inyectividad" isDependency={true}>aplicación inyectiva</ConceptLink> de $A$ en $B$, y $\lvert A \rvert < \lvert B \rvert$ si además $A$ y $B$ no son equipotentes. Por el <ConceptLink targetId="teorema-cantor-bernstein">teorema de Cantor-Bernstein-Schröder</ConceptLink>, si $\lvert A \rvert \le \lvert B \rvert$ y $\lvert B \rvert \le \lvert A \rvert$, entonces $\lvert A \rvert = \lvert B \rvert$.
-  
-  Por el <ConceptLink targetId="teorema-cantor">teorema de Cantor</ConceptLink>, para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ tiene una cardinalidad estrictamente mayor: $\lvert A \rvert < \lvert \wp(A) \rvert$.
+  El orden entre cardinales se define mediante inyecciones: se escribe $\lvert A \rvert \le \lvert B \rvert$ si existe una <ConceptLink targetId="inyectividad" isDependency={true}>aplicación inyectiva</ConceptLink> de $A$ en $B$, y $\lvert A \rvert < \lvert B \rvert$ si además $A$ y $B$ no son equipotentes.
 </Definicion>
+
+Dos teoremas dan forma a este orden. El <ConceptLink targetId="teorema-cantor-bernstein">teorema de Cantor-Bernstein-Schröder</ConceptLink> lo hace antisimétrico: si $\lvert A \rvert \le \lvert B \rvert$ y $\lvert B \rvert \le \lvert A \rvert$, entonces $\lvert A \rvert = \lvert B \rvert$. El <ConceptLink targetId="teorema-cantor">teorema de Cantor</ConceptLink> impide que tenga un máximo: para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ cumple $\lvert A \rvert < \lvert \wp(A) \rvert$.
 
 <Separador />
 
@@ -36,5 +36,5 @@ Introducida por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, la te
 
 La cardinalidad permite clasificar los <ConceptLink targetId="dominio">dominios</ConceptLink> geométricos según su tamaño o número de elementos:
 - **<ConceptLink targetId="estructura-geometrica">Estructuras</ConceptLink> finitas:** Conjuntos con cardinal natural $n \in \mathbb{N}$, como los 7 <ConceptLink targetId="punto">puntos</ConceptLink> del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
-- **Infinito numerable:** El cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$, característico de las sucesiones discretas y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>.
+- **Infinito numerable:** El cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ de los <ConceptLink targetId="conjunto-numerable">conjuntos numerables</ConceptLink> infinitos, como los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>.
 - **La <ConceptLink targetId="potencia-del-continuo">potencia del continuo</ConceptLink>:** El cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$. Con los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>), la <ConceptLink targetId="traza">traza</ConceptLink> de toda <ConceptLink targetId="recta">recta</ConceptLink> $\ell$ está en biyección con $\mathbb{R}$, así que $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.

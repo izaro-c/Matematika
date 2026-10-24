@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />**ardinality** (or cardinal number) is the mathematical generalization of the concept of the "number of elements" of a collection, applicable with full validity to both finite and <ConceptLink targetId="conjunto-infinito">infinite sets</ConceptLink>.
+<Capitular letra="C" />**ardinality** (or cardinal number) is the mathematical generalization of the concept of the "number of elements" of a collection, applicable to both finite and <ConceptLink targetId="conjunto-infinito">infinite sets</ConceptLink>.
 
-Introduced by <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, the theory of cardinals overcomes the paradoxes of infinity by dispensing with sequential counting and relying instead on the principle of equipotence: two sets possess the same intrinsic size if and only if their elements can be paired one-to-one via a <ConceptLink targetId="biyeccion">bijection</ConceptLink>.
+<ConceptLink targetId="cantor">Georg Cantor</ConceptLink> based it on equipotence instead of counting, which also allows infinite sets to be compared. Under this criterion an infinite set can be equipotent to a proper part of itself: $n \longmapsto 2n$ is a <ConceptLink targetId="biyeccion">bijection</ConceptLink> from $\mathbb{N}$ onto the set of even numbers.
 
 <Definicion title="Equipotence and cardinal comparison">
   Two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **equipotent** (written $A \sim B$) if and only if there exists a <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink> $f\colon A \longrightarrow B$:
@@ -25,10 +25,10 @@ Introduced by <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, the the
   $$
   Equipotence is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, because the identity, the <ConceptLink targetId="funcion-inversa">inverse</ConceptLink> of a bijection and the <ConceptLink targetId="composicion-funciones">composition</ConceptLink> of two bijections are bijections. Hence one writes $\lvert A \rvert = \lvert B \rvert$ when $A \sim B$, and $\lvert A \rvert$ is called the **cardinality** of $A$.
 
-  The order between cardinals is defined via injections: one writes $\lvert A \rvert \le \lvert B \rvert$ if there exists an <ConceptLink targetId="inyectividad" isDependency={true}>injective map</ConceptLink> from $A$ into $B$, and $\lvert A \rvert < \lvert B \rvert$ if moreover $A$ and $B$ are not equipotent. By the <ConceptLink targetId="teorema-cantor-bernstein">Cantor-Bernstein-Schröder theorem</ConceptLink>, if $\lvert A \rvert \le \lvert B \rvert$ and $\lvert B \rvert \le \lvert A \rvert$, then $\lvert A \rvert = \lvert B \rvert$.
-  
-  By <ConceptLink targetId="teorema-cantor">Cantor's theorem</ConceptLink>, for any set $A$, its <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> $\wp(A)$ has strictly greater cardinality: $\lvert A \rvert < \lvert \wp(A) \rvert$.
+  The order between cardinals is defined via injections: one writes $\lvert A \rvert \le \lvert B \rvert$ if there exists an <ConceptLink targetId="inyectividad" isDependency={true}>injective map</ConceptLink> from $A$ into $B$, and $\lvert A \rvert < \lvert B \rvert$ if moreover $A$ and $B$ are not equipotent.
 </Definicion>
+
+Two theorems shape this order. The <ConceptLink targetId="teorema-cantor-bernstein">Cantor-Bernstein-Schröder theorem</ConceptLink> makes it antisymmetric: if $\lvert A \rvert \le \lvert B \rvert$ and $\lvert B \rvert \le \lvert A \rvert$, then $\lvert A \rvert = \lvert B \rvert$. <ConceptLink targetId="teorema-cantor">Cantor's theorem</ConceptLink> prevents it from having a maximum: for any set $A$, its <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> $\wp(A)$ satisfies $\lvert A \rvert < \lvert \wp(A) \rvert$.
 
 <Separador />
 
@@ -36,5 +36,5 @@ Introduced by <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, the the
 
 Cardinality enables the classification of geometric <ConceptLink targetId="dominio">domains</ConceptLink> according to their size or number of elements:
 - **Finite <ConceptLink targetId="estructura-geometrica">structures</ConceptLink>:** Sets with finite cardinal $n \in \mathbb{N}$, such as the 7 <ConceptLink targetId="punto">points</ConceptLink> of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
-- **Countably infinite:** The cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$, characteristic of discrete sequences and <ConceptLink targetId="numero-racional">rational numbers</ConceptLink>.
+- **Countably infinite:** The cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ of infinite <ConceptLink targetId="conjunto-numerable">countable sets</ConceptLink>, such as the <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> and the <ConceptLink targetId="numero-racional">rational numbers</ConceptLink>.
 - **The <ConceptLink targetId="potencia-del-continuo">power of the continuum</ConceptLink>:** The cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$. With the <ConceptLink targetId="continuidad">axioms of continuity</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>), the <ConceptLink targetId="traza">trace</ConceptLink> of every <ConceptLink targetId="recta">line</ConceptLink> $\ell$ is in bijection with $\mathbb{R}$, so $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.
