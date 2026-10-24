@@ -14,10 +14,10 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />l **cociente incremental** (o razón de cambio media) cuantifica la tasa de variación promedio que experimenta una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> real por unidad de cambio en su variable independiente a lo largo de un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink>. Constituye el núcleo analítico y geométrico previo al cálculo de variaciones instantáneas, sirviendo de puente deductivo hacia la <ConceptLink targetId="derivada">derivada</ConceptLink> a través de la operación de <ConceptLink targetId="limite">límite</ConceptLink>.
+<Capitular letra="E" />l **cociente incremental** (o razón de cambio media) cuantifica la tasa de variación promedio que experimenta una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <ConceptLink targetId="numero-real">real</ConceptLink> por unidad de cambio en su variable independiente a lo largo de un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink>. Constituye el núcleo analítico y geométrico previo al cálculo de variaciones instantáneas, sirviendo de puente deductivo hacia la <ConceptLink targetId="derivada">derivada</ConceptLink> a través de la operación de <ConceptLink targetId="limite">límite</ConceptLink>.
 
 <Definicion title="Definición formal de cociente incremental">
-  Sea $I \subseteq \mathbb{R}$ un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink> de la <ConceptLink targetId="recta">recta</ConceptLink> real y sea $f\colon I \longrightarrow \mathbb{R}$ una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink>. Fijado un <ConceptLink targetId="punto">punto</ConceptLink> base $x \in I$ y dado un incremento no nulo $h \in \mathbb{R} \setminus \{0\}$ tal que $x + h \in I$, el **cociente incremental** de $f$ entre $x$ y $x + h$ se define como:
+  Sea $I \subseteq \mathbb{R}$ un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink> de la <ConceptLink targetId="numero-real">recta real</ConceptLink> y sea $f\colon I \longrightarrow \mathbb{R}$ una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink>. Fijado un punto base $x \in I$ y dado un incremento no nulo $h \in \mathbb{R} \setminus \{0\}$ tal que $x + h \in I$, el **cociente incremental** de $f$ entre $x$ y $x + h$ se define como:
   $$
   \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
   $$
@@ -33,10 +33,10 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Interpretación y propiedades analíticas">
     <PropiedadItem id="interpretacion-geometrica-secante" title="Interpretación geométrica como pendiente secante" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
-      Geométricamente, el cociente incremental coincide con la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la <ConceptLink targetId="secante">recta secante</ConceptLink> a la <ConceptLink targetId="grafica-funcion">gráfica</ConceptLink> de la <ConceptLink targetId="funcion">función</ConceptLink> que une los <ConceptLink targetId="punto">puntos</ConceptLink> $(x, f(x))$ y $(x + h, f(x + h))$. A medida que el incremento $h$ se aproxima a cero, dicha <ConceptLink targetId="secante">recta secante</ConceptLink> tiende a la <ConceptLink targetId="recta-tangente">recta tangente</ConceptLink> a la curva.
+      Geométricamente, el cociente incremental coincide con la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la <ConceptLink targetId="recta-secante-grafica">recta secante</ConceptLink> a la <ConceptLink targetId="grafica-funcion">gráfica</ConceptLink> de la <ConceptLink targetId="funcion">función</ConceptLink> que une los <ConceptLink targetId="punto">puntos</ConceptLink> $(x, f(x))$ y $(x + h, f(x + h))$. Si $f$ es <ConceptLink targetId="funcion-derivable">derivable</ConceptLink> en $x$, cuando $h$ tiende a cero esas rectas secantes tienden a la <ConceptLink targetId="recta-tangente">recta tangente</ConceptLink> a la gráfica en $(x, f(x))$.
     </PropiedadItem>
     <PropiedadItem id="fundamento-de-la-derivada" title="Fundamento de la derivada instantánea" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
-      El comportamiento asintótico del cociente incremental cuando el incremento tiende a cero define la noción de <ConceptLink targetId="derivada">derivada</ConceptLink>. Si el <ConceptLink targetId="limite">límite</ConceptLink> existe en $\mathbb{R}$, el valor resultante $f'(x)$ representa la tasa de variación instantánea de la función en el <ConceptLink targetId="punto">punto</ConceptLink> $x$.
+      El comportamiento asintótico del cociente incremental cuando el incremento tiende a cero define la noción de <ConceptLink targetId="derivada">derivada</ConceptLink>. Si el <ConceptLink targetId="limite">límite</ConceptLink> existe en $\mathbb{R}$, el valor resultante $f'(x)$ representa la tasa de variación instantánea de la función en el punto $x$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

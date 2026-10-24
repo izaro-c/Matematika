@@ -5451,7 +5451,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Difference quotient",
-      "description": "Average rate of change of a real function over an interval, defined by the quotient between the variation of the dependent variable and the independent variable.",
+      "description": "Average rate of change of a real function over an interval, defined by the quotient between the variation of the dependent variable and that of the independent variable.",
       "branch": "26A",
       "branches": [
         "26A"
@@ -5472,15 +5472,16 @@
         }
       ],
       "conceptLinks": [
+        "numero-real",
         "funcion",
         "intervalo",
         "derivada",
         "limite",
-        "recta",
-        "punto",
         "pendiente",
-        "secante",
+        "recta-secante-grafica",
         "grafica-funcion",
+        "punto",
+        "funcion-derivable",
         "recta-tangente",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
@@ -5531,14 +5532,15 @@
       ],
       "conceptLinks": [
         "funcion",
+        "numero-real",
         "intervalo",
         "derivada",
         "limite",
-        "recta",
-        "punto",
         "pendiente",
-        "secante",
+        "recta-secante-grafica",
         "grafica-funcion",
+        "punto",
+        "funcion-derivable",
         "recta-tangente",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
@@ -29025,14 +29027,15 @@
       ],
       "conceptLinks": [
         "funcion",
+        "numero-real",
         "intervalo",
         "derivada",
         "limite",
-        "recta",
-        "punto",
         "pendiente",
-        "secante",
+        "recta-secante-grafica",
         "grafica-funcion",
+        "punto",
+        "funcion-derivable",
         "recta-tangente",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
@@ -42160,15 +42163,16 @@
         }
       ],
       "conceptLinks": [
+        "numero-real",
         "funcion",
         "intervalo",
         "limite",
         "derivada",
-        "recta",
         "punto",
         "grafica-funcion",
-        "secante",
+        "recta-secante-grafica",
         "pendiente",
+        "funcion-derivable",
         "recta-tangente",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
