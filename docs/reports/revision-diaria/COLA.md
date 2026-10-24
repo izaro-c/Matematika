@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 8 / 190
+Revisadas: 10 / 190
 
 ## Pendientes
 
-- [ ] `estructura-geometrica` · definitions
-- [ ] `funcion` · definitions
 - [ ] `biyeccion` · definitions
 - [ ] `cardinalidad` · definitions
 - [ ] `cociente-incremental` · definitions
@@ -199,3 +197,5 @@ Revisadas: 8 / 190
 - [x] `dimension` · 2026-10-23 · errores · corregido 193003e8 · propuestas 00c30771 · [informe](2026-10-23-dimension.md) · $1.05
 - [x] `dominio` · 2026-10-24 · ok · sin cambios · [informe](2026-10-24-dominio.md) · $0.54
 - [x] `estar-entre` · 2026-10-24 · errores · corregido 04deb78c · propuestas c961e55a · [informe](2026-10-24-estar-entre.md) · $1.24
+- [x] `estructura-geometrica` · 2026-10-24 · errores · corregido 51399a49 · propuestas 102c570f · [informe](2026-10-24-estructura-geometrica.md) · $1.1
+- [x] `funcion` · 2026-10-24 · errores · corregido 87487966 · propuestas 11eef7d0 · [informe](2026-10-24-funcion.md) · $0.79
