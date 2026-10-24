@@ -8,6 +8,7 @@ export function pointMode(point: PositionedPoint): PointConstraint {
     case 'axis-x': return 'horizontal';
     case 'axis-y': return 'vertical';
     case 'on-support': return 'glider';
+    case 'on-points': return 'discrete';
     case 'constrained': return 'constrained';
     case 'fixed': return 'fixed';
     default: return 'free';
@@ -17,6 +18,8 @@ export function pointMode(point: PositionedPoint): PointConstraint {
 export interface PointModeOptions {
   /** Soporte del modo `glider`. */
   gliderTarget?: string;
+  /** Posiciones candidatas del modo `discrete`. */
+  candidatePointIds?: string[];
   /** Relaciones del modo `constrained`. */
   relationIds?: string[];
   /** Expresiones del modo `derived`; por defecto, la posición actual. */
@@ -63,6 +66,11 @@ export function withPointMode<T extends PositionedPoint>(point: T, mode: PointCo
     case 'glider': {
       const support = options.gliderTarget ?? (point.mobility.type === 'on-support' ? point.mobility.support : undefined);
       next = { ...point, definition: coordinates, mobility: support ? { type: 'on-support', support } : { type: 'free' } };
+      break;
+    }
+    case 'discrete': {
+      const points = options.candidatePointIds ?? (point.mobility.type === 'on-points' ? point.mobility.points : []);
+      next = { ...point, definition: coordinates, mobility: points.length > 0 ? { type: 'on-points', points } : { type: 'free' } };
       break;
     }
     case 'constrained': {

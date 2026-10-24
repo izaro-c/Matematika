@@ -394,6 +394,51 @@ function applyConstraint(spec: DiagramScene, point: PositionedPoint, result: Coo
   }
 }
 
+/** Posición del candidato más cercano a `coordinates` (movilidad `on-points`). */
+function nearestCandidatePoint(spec: DiagramScene, candidateIds: readonly string[], coordinates: Coordinates): Coordinates | undefined {
+  let nearest: Coordinates | undefined;
+  let nearestDistance = Infinity;
+  for (const candidateId of candidateIds) {
+    const candidate = resolvePointCoordinates(spec, candidateId);
+    if (!candidate) continue;
+    const distance = Math.hypot(candidate.x - coordinates.x, candidate.y - coordinates.y);
+    if (distance < nearestDistance) {
+      nearest = candidate;
+      nearestDistance = distance;
+    }
+  }
+  return nearest;
+}
+
+/**
+ * Candidato `on-points` más cercano en la dirección `(dx, dy)` desde la
+ * posición actual: el teclado recorre las posiciones discretas, porque un
+ * paso pequeño volvería siempre al mismo candidato.
+ */
+export function nextCandidatePointInDirection(
+  spec: DiagramScene,
+  point: PositionedPoint,
+  direction: Coordinates,
+): Coordinates | undefined {
+  if (point.mobility.type !== 'on-points') return undefined;
+  const position = pointPosition(point)!;
+  const candidates = point.mobility.points.flatMap(candidateId => {
+    const candidate = resolvePointCoordinates(spec, candidateId);
+    if (!candidate) return [];
+    const offset = { x: candidate.x - position.x, y: candidate.y - position.y };
+    const along = offset.x * direction.x + offset.y * direction.y;
+    const across = Math.abs(offset.x * direction.y - offset.y * direction.x);
+    return along > 1e-9 ? [{ candidate, along, across, distance: Math.hypot(offset.x, offset.y) }] : [];
+  });
+  // Primero los candidatos dentro de un cono de 45° alrededor de la dirección; si no hay, todo el semiplano.
+  const inCone = candidates.filter(entry => entry.along >= entry.across);
+  const pool = inCone.length > 0 ? inCone : candidates;
+  return pool.reduce<typeof pool[number] | undefined>(
+    (nearest, entry) => (!nearest || entry.distance < nearest.distance ? entry : nearest),
+    undefined,
+  )?.candidate;
+}
+
 function findOnSupportRelation(relations: readonly DiagramRelation[], pointId: string): RelationOf<'on-support'> | undefined {
   return relations.find((relation): relation is RelationOf<'on-support'> => relation.type === 'on-support' && relation.point === pointId);
 }
@@ -412,6 +457,7 @@ export function constrainPointCoordinates(
     return projectPointToSupport(spec, asGliderPoint(point, supportId), coordinates);
   }
   const position = pointPosition(point)!;
+  if (point.mobility.type === 'on-points') return nearestCandidatePoint(spec, point.mobility.points, coordinates) ?? position;
   if (point.mobility.type === 'axis-x') return { x: coordinates.x, y: position.y };
   if (point.mobility.type === 'axis-y') return { x: position.x, y: coordinates.y };
   const activeConstraints = activePointConstraints(spec, point);

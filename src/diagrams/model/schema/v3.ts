@@ -45,6 +45,8 @@ export type PointMobility =
   | { type: 'axis-x'; coordinate: number }
   | { type: 'axis-y'; coordinate: number }
   | { type: 'on-support'; support: string }
+  /** Posiciones discretas: el punto solo ocupa la de uno de estos puntos y salta al más cercano al arrastrarlo. */
+  | { type: 'on-points'; points: string[] }
   | { type: 'constrained'; relationIds: string[] };
 
 export interface PointAppearance {
@@ -94,8 +96,12 @@ export type PathGeometry =
   | { type: 'poincare-arc'; refs: [string, string, string, string] }
   | { type: 'dimension'; points: [string, string]; offset?: number; text?: string; unit?: string; precision?: number };
 
+export type PathArrow = 'start' | 'end' | 'both';
+
 export interface PathAppearance {
   dashed?: boolean;
+  /** Punta de flecha en los extremos de un segmento. */
+  arrow?: PathArrow;
   strokeWidth?: number;
   strokeOpacity?: number;
   fillOpacity?: number;

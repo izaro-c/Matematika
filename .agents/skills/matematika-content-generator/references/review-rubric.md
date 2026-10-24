@@ -42,12 +42,27 @@ Un `ERROR` ya es un fallo: no hace falta repetirlo en el informe. Los `WARN` de 
 
 `check-parity` compara estructura, no significado. Comprueba que `en` y `eu` dicen lo mismo que `es`: misma afirmación, mismo cuantificador, mismo matiz. En `eu`, revisa además gramática y terminología con [euskara-glossary.md](./euskara-glossary.md).
 
+## 6. Diagrama
+
+Un diagrama merece existir cuando manipularlo enseña algo que el texto solo afirma: por qué hace falta una hipótesis, qué se conserva al mover un punto, qué condición se rompe y dónde, cómo avanza una prueba. Lo que decide es esa manipulación, no la rama de la matemática.
+
+- **Suele merecerlo:**
+  - Definiciones de objetos geométricos, axiomas con figura, teoremas con figura y sus demostraciones (un paso del diagrama por cada paso de la prueba).
+  - Definiciones con condiciones que el lector puede romper una a una: función (totalidad y unicidad), inyectividad, sobreyectividad, biyección, función inversa, composición, relaciones de equivalencia sobre conjuntos finitos. Se ilustran con un diagrama de flechas entre conjuntos donde el lector arrastra las flechas y ve qué condición falla. El modelo es `content/diagrams/Definiciones/FuncionSagital.tsx`.
+  - Métodos de prueba cuya mecánica se puede animar, como el dominó de la inducción.
+- **No suele merecerlo:**
+  - Conceptos lógicos o metamatemáticos sin nada que manipular (signatura, concepto primitivo), sistemas axiomáticos y biografías.
+  - Métodos de prueba que otro nodo ya ilustra.
+  - Una página cuyo diagrama sería una figura estática que repite la definición.
+- Una demostración reutiliza o extiende con pasos el diagrama de su teorema; no crea uno paralelo.
+- El sistema de diagramas no es solo geométrico: tiene flechas, posiciones discretas (`on-points`), botones y paneles de estado. Que un concepto sea «de teoría de conjuntos» o «no geométrico» no basta para descartarlo. Si concluyes «no necesita», di qué manipulación probaste a imaginar y por qué no enseña nada nuevo.
+
 ## Formato del informe
 
 Un bloque por nodo, solo con lo que hay que cambiar, ordenado por gravedad:
 
 ```
-### <id>  — rigor ✗ · simpleza △ · modularidad ✓ · enlaces △ · paridad ✓
+### <id>  — rigor ✗ · simpleza △ · modularidad ✓ · enlaces △ · paridad ✓ · diagrama ✓|△|✗|falta|no necesita
 - [rigor] es: «<cita literal>» — <qué falla> → <cambio propuesto>
 - [enlaces] es/en/eu: «Georg Cantor» sin enlace → <ConceptLink targetId="cantor">
 ```

@@ -29,12 +29,13 @@ import {
   objectKind,
   objectLabelVisible,
   objectStyle,
+  pointIsImmovable,
   pointPosition,
   withPointPosition,
   type DiagramBounds,
   type DiagramSpec,
 } from '@/diagrams/model'
-import {createSceneConstructionPlan, createScenePlan, isCurveObject, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
+import {createSceneConstructionPlan, createScenePlan, isCurveObject, itemLayerNumber, withMovedPoint, nextCandidatePointInDirection, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
 import {
   attachLabelSelection,
   attachSelection,
@@ -702,8 +703,11 @@ export function useBoardLifecycle({
           const step = (bounds[2] - bounds[0]) / (largeStep ? 20 : 100);
           const dx = key === 'ArrowLeft' ? -step : key === 'ArrowRight' ? step : 0;
           const dy = key === 'ArrowDown' ? -step : key === 'ArrowUp' ? step : 0;
-          const requested = { x: element.X() + dx, y: element.Y() + dy };
           const liveSpec = buildLiveDragSpec(spec, elements, sceneItem.id, resolvedDragCoordsRef);
+          // Con posiciones discretas (`on-points`) cada pulsación salta al candidato siguiente.
+          const livePoint = liveSpec.objects.find(object => object.id === sceneItem.id);
+          const requested = (isPositionedPoint(livePoint) ? nextCandidatePointInDirection(liveSpec, livePoint, { x: dx, y: dy }) : undefined)
+            ?? { x: element.X() + dx, y: element.Y() + dy };
           const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
           const nextPoints = positionedCoordinates(nextSpec);
           nextPoints.forEach(point => {
@@ -867,7 +871,9 @@ export function useBoardLifecycle({
     const rendNode = element.rendNode as HTMLElement | undefined;
     rendNode?.setAttribute('data-diagram-selectable', String(selectable));
     if (rendNode) {
-      rendNode.style.cursor = selectable && mode === 'editor' ? 'pointer' : '';
+      // Fuera del editor, un punto que el alumno puede arrastrar se anuncia con la mano de agarre.
+      const draggable = isPositionedPoint(item) && !base.fixed && !pointIsImmovable(item);
+      rendNode.style.cursor = mode === 'editor' ? (selectable ? 'pointer' : '') : (draggable ? 'grab' : '');
     }
     element.borders?.forEach((border: { rendNode?: HTMLElement }) => {
       border.rendNode?.setAttribute('data-diagram-selectable', String(selectable));
@@ -908,11 +914,15 @@ export function useBoardLifecycle({
       }
     }
     if (item.objectType === 'point') {
+      // Opacidad propia del punto: atenúa relleno y trazo. Con 0 queda un asa
+      // invisible (p. ej. sobre una punta de flecha) que reaparece al pasar el ratón.
+      const ownOpacity = item.appearance?.opacity;
       commitElementVisuals(element, base, {
         size: resolveStepEmphasisPointSize(sceneStyle, emphasisState),
         fillColor: color,
         strokeColor: color,
-        fillOpacity: resolveStepEmphasisPointFillOpacity(opacity, emphasisState),
+        fillOpacity: resolveStepEmphasisPointFillOpacity(opacity * (ownOpacity ?? 1), emphasisState),
+        ...(ownOpacity !== undefined ? { strokeOpacity: opacity * ownOpacity } : {}),
       }, shouldAnimate);
     } else if (item.objectType === 'control' && isDiagramButton(element)) {
       if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {

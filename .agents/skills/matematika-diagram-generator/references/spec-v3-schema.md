@@ -30,13 +30,23 @@ color: 'carbon' | 'terracota' | 'canela' | 'mora' | 'ocre' | 'pavo' | 'granada' 
     "y": 0
   },
   "mobility": {
-    "type": "free" // "free" | "fixed" | "on-support" | "axis-x" | "axis-y" | "constrained"
+    "type": "free" // "free" | "fixed" | "on-support" | "on-points" | "axis-x" | "axis-y" | "constrained"
   },
   "appearance": {
     "size": 6,
     "labelVisible": true
   }
 }
+```
+- `appearance.opacity` (0–1) atenúa relleno y trazo del punto. Con `0` el punto es un asa invisible que sigue siendo arrastrable y vuelve a verse al pasar el ratón (las puntas de flecha de `FuncionSagital.tsx`). Fuera del editor, los puntos arrastrables muestran el cursor de mano.
+
+#### Movilidad `on-points` (posiciones discretas)
+```json
+"mobility": { "type": "on-points", "points": ["llegaB1", "llegaB2", "reposo"] }
+```
+El punto solo ocupa la posición de uno de esos puntos (entre 1 y 16, distintos de él mismo). Al arrastrarlo salta al más cercano al cursor. Con el teclado, cada flecha salta al candidato más cercano en esa dirección, primero dentro de un cono de 45° y, si no hay ninguno, en todo el semiplano. Su posición inicial (`definition`) debe coincidir con la de un candidato. En el editor visual aparece como «Solo en puntos dados», con una casilla por candidato. Como la posición queda fija en un candidato, una condición puede compararla exactamente: `approx(h.y, 0.8, 0.01)`.
+
+```json
 ```
 
 ### `path`
@@ -59,7 +69,8 @@ color: 'carbon' | 'terracota' | 'canela' | 'mora' | 'ocre' | 'pavo' | 'granada' 
     "points": ["pA", "pB"]
   },
   "appearance": {
-    "strokeWidth": 2.5
+    "strokeWidth": 2.5,
+    "arrow": "end" // opcional, solo en `segment`: "start" | "end" | "both"
   }
 }
 ```
@@ -122,6 +133,9 @@ Un botón es un control numérico que, al pulsarlo, anima su valor de `range.min
 - `effects` (opcional): `on` = `press` | `release` (solo `toggle`) | `complete`; `do` = `reset` (vuelve al valor inicial) | `play` (anima otro botón desde la expresión `from`); `when` = condición opcional. Las expresiones de `effects` no crean dependencias de construcción.
 - **Física natural**: para caídas o choques, usa un botón `linear` como reloj `t` (en segundos) y escribe el movimiento en puntos `expression` auxiliares ocultos (p. ej. `θ = min(θmax, a·t² + v·t)`); un punto puede leer otro con `id.x` / `id.y`. Referencia: `content/diagrams/Metodos/InduccionSimulation.tsx`.
 - **Botones independientes en cualquier orden**: prefiere que cada botón sea solo un reloj propio y combina los relojes en una expresión (p. ej. el instante en que ocurren dos sucesos es `min(t₁ − retardo, t₂)`), en vez de usar `effects`. Así el estado es función pura de los controles: funciona en cualquier orden, con los pasos y en el editor.
+
+### Expresiones
+`visibleWhen`, las coordenadas `expression` y las reglas admiten como máximo **512 caracteres**. Para condiciones largas, guarda resultados intermedios en puntos `expression` ocultos (`"visible": false`) y léelos con `id.x` / `id.y` (p. ej. un punto `llegadas12` cuyo `x` cuenta las flechas que llegan a $b_1$).
 
 ## 3. Pasos de Demostración (`steps`)
 ```json

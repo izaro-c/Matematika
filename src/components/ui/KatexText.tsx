@@ -49,15 +49,20 @@ export function renderKatexTextToHtml(text: string): string {
       .replace(/&gt;/g, '>')
       .replace(/&amp;/g, '&');
 
+  // Las fórmulas renderizadas se apartan tras un marcador para que el formato
+  // de texto (paso 4) no lea los `_` o `*` de su anotación TeX como cursiva.
+  const renderedMath: string[] = [];
+  const setAside = (rendered: string) => `\uE000${renderedMath.push(rendered) - 1}\uE000`;
+
   // 2. Renderizado de fórmulas en bloque
   html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
     try {
-      return katex.renderToString(unescapeMath(math), {
+      return setAside(katex.renderToString(unescapeMath(math), {
         displayMode: true,
         throwOnError: false,
         trust: false, // Bloquea javascript: en \href
         strict: 'warn',
-      });
+      }));
     } catch {
       return match;
     }
@@ -66,12 +71,12 @@ export function renderKatexTextToHtml(text: string): string {
   // 3. Renderizado de fórmulas inline
   html = html.replace(/\$([^$\n]+?)\$/g, (match, math) => {
     try {
-      return katex.renderToString(unescapeMath(math), {
+      return setAside(katex.renderToString(unescapeMath(math), {
         displayMode: false,
         throwOnError: false,
         trust: false, // Bloquea javascript: en \href
         strict: 'warn',
-      });
+      }));
     } catch {
       return match;
     }
@@ -88,7 +93,8 @@ export function renderKatexTextToHtml(text: string): string {
         return `<span style="color: var(--theme-${colorName})">${innerText}</span>`;
       }
       return match;
-    });
+    })
+    .replace(/\uE000(\d+)\uE000/g, (_match, index: string) => renderedMath[Number(index)]);
 
   if (katexCache.size >= MAX_CACHE_SIZE) {
     const firstKey = katexCache.keys().next().value;

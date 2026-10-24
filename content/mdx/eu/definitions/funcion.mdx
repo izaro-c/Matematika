@@ -7,17 +7,20 @@ export const metadata = {
   description: "Bi multzoren arteko erlazio bitarra, domeinuko elementu bakoitzari kodomeinuko elementu bakarra esleitzen diona.",
   branch: "03E",
   branches: ["03E", "26A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
 
+import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
+export const Simulation = FuncionSagital;
+
 <Capitular letra="F" />untzio (edo aplikazio) bat $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> artean hasierako multzoko elementu bakoitzari helmugako multzoko elementu bakarra esleitzen dion <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da. Funtzioa $(x, f(x))$ bikoteen multzoa bera denez, kontzeptua osorik <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> formulatzen da, eta handik hartzen dute <ConceptLink targetId="analisis-matematico">analisiak</ConceptLink> eta <ConceptLink targetId="algebra">aljebrak</ConceptLink>.
 
 <Definicion title="Funtzioaren definizio formala">
-  Izan bitez $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. $A$-tik $B$-rako $f$ **funtzio** bat ($f\colon A \longrightarrow B$ idatzia) existentzia eta bakartasuneko bi baldintza betetzen dituen $f \subseteq A \times B$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da:
+  Izan bitez <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. $A$-tik $B$-rako $f$ **funtzio** bat ($f\colon A \longrightarrow B$ idatzia) existentzia eta bakartasuneko bi baldintza betetzen dituen <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da:
   1. **Osotasuna (irudiaren existentzia):** <ConceptLink targetId="dominio-funcion">Domeinuko</ConceptLink> elementu bakoitzak gutxienez lotutako elementu bat du:
      $$
      \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)

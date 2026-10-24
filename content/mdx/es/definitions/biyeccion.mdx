@@ -7,12 +7,15 @@ export const metadata = {
   description: "Función entre dos conjuntos que es simultáneamente inyectiva y sobreyectiva, estableciendo un emparejamiento uno a uno invertible.",
   branch: "03E",
   branches: ["03", "08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
+
+import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
+export const Simulation = BiyeccionSagital;
 
 <Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que asocia cada elemento del <ConceptLink targetId="dominio-funcion">dominio</ConceptLink> con un único elemento del <ConceptLink targetId="codominio">codominio</ConceptLink>, de modo que cada elemento del codominio resulta ser imagen de exactamente un elemento del dominio.
 

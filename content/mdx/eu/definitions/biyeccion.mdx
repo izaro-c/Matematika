@@ -7,12 +7,15 @@ export const metadata = {
   description: "Bi multzoren arteko funtzioa, aldi berean injektiboa eta sobrejektiboa dena, banan-banako parekatze alderantzizgarria ezarriz.",
   branch: "03E",
   branches: ["03", "08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "8. Kapitulua", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "I. Kapitulua, §1", role: "secondary" }
   ]
 };
+
+import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
+export const Simulation = BiyeccionSagital;
 
 <Capitular letra="B" />**ijekzio** bat (edo aplikazio bijektibo bat) bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> arteko <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, <ConceptLink targetId="dominio-funcion">domeinuko</ConceptLink> elementu bakoitzari <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bakar bat esleitzen diona, kodomeinuko elementu bakoitza domeinuko elementu bakar baten irudi izanik.
 

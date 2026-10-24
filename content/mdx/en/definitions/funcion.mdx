@@ -7,17 +7,20 @@ export const metadata = {
   description: "Binary relation between two sets that associates each element of the domain with a unique element in the codomain.",
   branch: "03E",
   branches: ["03E", "26A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
 
+import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
+export const Simulation = FuncionSagital;
+
 <Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. Since the function is itself the set of pairs $(x, f(x))$, the concept is formulated entirely within <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink>, from which <ConceptLink targetId="analisis-matematico">analysis</ConceptLink> and <ConceptLink targetId="algebra">algebra</ConceptLink> take it.
 
 <Definicion title="Formal definition of function">
-  Let $A$ and $B$ be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A **function** $f$ from $A$ to $B$ (denoted $f\colon A \longrightarrow B$) is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $f \subseteq A \times B$ that satisfies two conditions of existence and uniqueness:
+  Let <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> and <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A **function** $f$ from $A$ to $B$ (denoted $f\colon A \longrightarrow B$) is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> that satisfies two conditions of existence and uniqueness:
   1. **Totality (existence of image):** Every element of the <ConceptLink targetId="dominio-funcion">domain</ConceptLink> has at least one associated element:
      $$
      \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)

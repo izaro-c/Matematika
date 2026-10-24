@@ -44,7 +44,7 @@ const pointAppearance = z.object({
   highlightVisible: z.boolean().optional(),
 }).strict();
 const pathAppearance = z.object({
-  dashed: z.boolean().optional(), strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(),
+  dashed: z.boolean().optional(), arrow: z.enum(['start', 'end', 'both']).optional(), strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(),
   fillOpacity: number.min(0).max(1).optional(), labelVisible: z.boolean().optional(), labelOffset: z.tuple([number, number]).optional(),
   textOffset: z.tuple([number, number]).optional(),
   labelPosition: z.union([number, z.string()]).optional(), labelSize: number.min(6).max(72).optional(),
@@ -62,6 +62,7 @@ const mobility = z.discriminatedUnion('type', [
   z.object({ type: z.literal('free') }).strict(), z.object({ type: z.literal('fixed') }).strict(),
   z.object({ type: z.literal('axis-x'), coordinate: number }).strict(), z.object({ type: z.literal('axis-y'), coordinate: number }).strict(),
   z.object({ type: z.literal('on-support'), support: id }).strict(),
+  z.object({ type: z.literal('on-points'), points: z.array(id).min(1).max(16) }).strict(),
   z.object({ type: z.literal('constrained'), relationIds: z.array(id).min(1) }).strict(),
 ]);
 const pointObject = z.object({
@@ -286,6 +287,7 @@ function constructionSources(object: DiagramObject): string[] {
     return [
       ...objectConstructionReferences(object),
       ...(object.mobility.type === 'on-support' ? [object.mobility.support] : []),
+      ...(object.mobility.type === 'on-points' ? object.mobility.points : []),
       ...(definition.type === 'expression' ? expressionRoots([definition.x, definition.y]) : []),
     ];
   }
@@ -362,6 +364,12 @@ function validatePointObject(object: PointObject, index: number, validation: Val
   if (mobility.type === 'on-support') {
     const support = validation.objectMap.get(mobility.support);
     if (!support || !objectHasCapability(support, 'support')) addIssue(context, ['objects', index, 'mobility', 'support'], `${mobility.support} no admite pertenencia.`);
+  }
+  if (mobility.type === 'on-points') {
+    mobility.points.forEach((ref, refIndex) => {
+      if (ref === object.id) addIssue(context, ['objects', index, 'mobility', 'points', refIndex], 'Un punto no puede saltar a sí mismo.');
+      else validation.requirePoint(ref, ['objects', index, 'mobility', 'points', refIndex]);
+    });
   }
   if (definition.type !== 'coordinates' && mobility.type !== 'fixed') {
     addIssue(context, ['objects', index, 'mobility'], 'Un punto construido debe tener movilidad fixed.');

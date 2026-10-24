@@ -58,11 +58,7 @@ En euskara, revisa la gramática y la terminología con el glosario: el sufijo `
 
 ## Criterio de diagrama
 
-Un diagrama merece existir cuando muestra una configuración que el lector, si no, tendría que imaginar, y cuando manipularla enseña algo: por qué una hipótesis hace falta, qué se conserva al mover un punto, cómo avanza una prueba.
-
-- Suele merecerlo: definiciones de objetos geométricos (segmento, ángulo, triángulo), axiomas de incidencia, orden, congruencia, paralelas y continuidad, teoremas con figura y sus demostraciones (un paso del diagrama por paso de la prueba).
-- No suele merecerlo: conceptos lógicos o metamatemáticos (signatura, dominio, concepto primitivo), sistemas axiomáticos, biografías, métodos de prueba ya ilustrados en otro nodo.
-- Si su teorema ya tiene diagrama, una demostración debería reutilizarlo o extenderlo con pasos, no crear uno paralelo.
+Aplica la sección «6. Diagrama» de la rúbrica de revisión, que tienes más abajo.
 
 # Formato de salida
 

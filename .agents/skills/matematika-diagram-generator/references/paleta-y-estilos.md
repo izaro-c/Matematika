@@ -44,6 +44,11 @@ píldoras, puntos de estado, mayúsculas con tracking).
 - Lámina pequeña (ancho < 480 px o figura < 400 px de alto, p. ej. móvil): las rúbricas vuelven dentro del tablero como raíles laterales de solo glifos (zoom a la izquierda, pasos a la derecha) para no robar altura al dibujo; el pie sigue debajo.
 - La nota de exploración (`note`) y las lecturas quedan dentro, arriba. El título ya no va dentro del tablero salvo en el lienzo del editor y en miniaturas.
 
+## 3 ter. Flechas
+
+- Punta de grabado: muesca (tipo 2 de JSXGraph), del mismo color y grosor que el trazo. Se pide con `appearance.arrow` en un `segment`; no se dibujan triángulos con polígonos.
+- Una flecha sin destino (elemento sin imagen) es un muñón discontinuo con punta, no una flecha borrada. El alumno tiene que ver que falta algo y poder agarrarla.
+
 ## 4. Preferir objetos editables
 
 Los textos explicativos deben ser **anotaciones `panel`** (título, subtítulo, texto, bloques y reglas

@@ -21,6 +21,7 @@ export {
   resolveDiagramScene,
   withMovedPoint,
   constrainPointCoordinates,
+  nextCandidatePointInDirection,
   withResolvedPointConstraints,
 } from '@/diagrams/geometry/coordinates/scenePointMotion';
 

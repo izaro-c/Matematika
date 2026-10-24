@@ -13,9 +13,15 @@ import { DiagramNativeLabelEditor } from '@/fixed-pages/editor/diagrams/ui/Diagr
 import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 import { elementKind } from '@/fixed-pages/editor/diagrams/model';
 import { dashedPatch, stylePatch } from '../../elementSettings';
-import { curveAreaFill, objectDashed, objectStyle, withObjectLabelVisible, withObjectStylePatch } from '@/diagrams';
+import { curveAreaFill, objectDashed, objectStyle, omitKeys, withObjectLabelVisible, withObjectStylePatch, type DiagramObject, type PathArrow } from '@/diagrams';
 import { useI18n } from '@/i18n';
 import { Callout, Swatch, controlClassName } from '@/fixed-pages/editor/ui/primitives';
+
+function withPathArrow<T extends DiagramObject>(current: T, arrow: PathArrow | undefined): T {
+  if (current.objectType !== 'path') return current;
+  const appearance = arrow ? { ...current.appearance, arrow } : omitKeys(current.appearance ?? {}, 'arrow');
+  return (Object.keys(appearance).length > 0 ? { ...current, appearance } : omitKeys(current, 'appearance')) as T;
+}
 
 /** Propiedades: color, strokeWidth, highlightStrokeWidth, fillOpacity, highlightFillOpacity, angleRadius, dashed, preserveColorOnHighlight, highlightable, layerId */
 export const ElementStyleSection: React.FC<ElementPanelProps> = ({
@@ -217,6 +223,25 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             <p className="mt-1 text-[10px] text-carbon/55">{t('editor.diagramInspector.linkedLabelHint')}</p>
           )}
         </Callout>
+      )}
+
+      {kind === 'segment' && element.objectType === 'path' && (
+        <div className="pt-2 border-t border-carbon/10">
+          <label htmlFor={`arrow-${element.id}`} className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            {t('editor.diagramInspector.arrowHead')}
+          </label>
+          <select
+            id={`arrow-${element.id}`}
+            value={element.appearance?.arrow ?? ''}
+            onChange={e => onUpdateElement(element.id, current => withPathArrow(current, (e.target.value || undefined) as PathArrow | undefined))}
+            className={controlClassName}
+          >
+            <option value="">{t('editor.diagramInspector.arrowNone')}</option>
+            <option value="start">{t('editor.diagramInspector.arrowStart')}</option>
+            <option value="end">{t('editor.diagramInspector.arrowEnd')}</option>
+            <option value="both">{t('editor.diagramInspector.arrowBoth')}</option>
+          </select>
+        </div>
       )}
 
       <div className="space-y-2 pt-2 border-t border-carbon/10">

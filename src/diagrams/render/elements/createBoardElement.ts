@@ -1,4 +1,5 @@
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
+import type { PathArrow } from '@/diagrams/model/schema/v3';
 import {
   createAngle,
   createAngleBisectorRay,
@@ -124,6 +125,16 @@ export function nativeLabelPlacementOptions(
   };
 }
 
+/** Punta de flecha de grabado (muesca, tipo 2 de JSXGraph) en los extremos pedidos. */
+function segmentArrowOptions(arrow: PathArrow | undefined) {
+  if (!arrow) return {};
+  const head = { type: 2, size: 5, highlightSize: 5 };
+  return {
+    ...(arrow === 'start' || arrow === 'both' ? { firstArrow: head } : {}),
+    ...(arrow === 'end' || arrow === 'both' ? { lastArrow: head } : {}),
+  };
+}
+
 /** Escena que necesita la factoría de objetos JSXGraph. */
 type BoardElementScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport' | 'showLabels'>;
 
@@ -214,7 +225,7 @@ export function createElement(
             return refs ? createSegmentExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
           }
           const refs = rendered(geometry.points);
-          return refs ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
+          return refs ? createSegment(board, [refs[0], refs[1]], { ...lineOptions, ...segmentArrowOptions(item.appearance?.arrow) }, theme) : null;
         }
         case 'line': {
           const construction = geometry.construction;

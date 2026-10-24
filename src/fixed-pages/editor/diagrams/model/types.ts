@@ -31,7 +31,7 @@ export type CanvasTool = 'select' | 'point' | ElementKind;
  * Modo de movilidad que el editor ofrece para un punto con posición propia.
  * Se traduce a `definition` + `mobility` de V3 (ver `pointMode`/`withPointMode`).
  */
-export type PointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'derived' | 'constrained';
+export type PointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'discrete' | 'derived' | 'constrained';
 
 export type ConstructionRefKey = 'a' | 'b' | 'c';
 

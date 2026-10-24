@@ -8,3 +8,4 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `estar-entre` · 2026-10-24 · `c961e55a` · [informe](2026-10-24-estar-entre.md)
 - [ ] `estructura-geometrica` · 2026-10-24 · `102c570f` · [informe](2026-10-24-estructura-geometrica.md)
 - [ ] `funcion` · 2026-10-24 · `11eef7d0` · [informe](2026-10-24-funcion.md)
+- [ ] `biyeccion` · 2026-10-24 · `a5f1020e` · [informe](2026-10-24-biyeccion.md)

@@ -5,7 +5,7 @@ description: Use whenever creating, modifying, refactoring, fixing or reviewing 
 
 # Generador y Estándar de Diagramas Interactivos — Matematika
 
-Motor interactivo y declarativo de representaciones geométricas y analíticas 2D para la enciclopedia deductiva Matematika, compatible con el **Editor Visual** del proyecto y renderizado en JSXGraph / React.
+Motor interactivo y declarativo de representaciones geométricas y analíticas 2D, y de diagramas de flechas entre conjuntos, para la enciclopedia deductiva Matematika, compatible con el **Editor Visual** del proyecto y renderizado en JSXGraph / React.
 
 ## Antes de empezar (cualquier agente: Claude, Gemini/Antigravity, Codex)
 
@@ -18,6 +18,7 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
    | Grupos resaltables (`groups` con `target`) | `content/diagrams/Axiomas/SAS.tsx` |
    | Demostración por pasos (`steps`, `objectStates`) | `content/diagrams/Demos/DemoTrianguloIsosceles.tsx` |
    | Animación con deslizador | `content/diagrams/Demos/DemoPitagorasAreas.tsx` |
+   | Flechas entre conjuntos con puntas arrastrables y estado (§5 F) | `content/diagrams/Definiciones/FuncionSagital.tsx`, `BiyeccionSagital.tsx` |
 
 3. El bloque entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` es **JSON estricto**: comillas dobles, sin comentarios, sin comas finales. El editor visual lo reescribe; cualquier cosa que no sea JSON hace que el diagrama deje de ser editable.
 4. Escribe el archivo completo, sin marcadores tipo `...` ni `// resto igual`.
@@ -30,7 +31,7 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
 | Principio | Regla Innegociable |
 |---|---|
 | **1. Compatibilidad Visual Exacta (`visual-exact`)** | Los diagramas deben ser compatibles con el Editor Visual de Matematika. Importación canónica obligatoria desde **`@/diagrams/public`** (`import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';`). Deben usar la especificación **`v3`** envuelta entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` con `createDiagramSpec(JSON_VALIDO)` y exportar `<DiagramRenderer spec={...Spec} />`. |
-| **2. Interactividad Pedagógica** | Salvo necesidad puramente estática, los diagramas deben permitir la exploración activa del alumno: puntos móviles arrastrables con restricciones geométricas coherentes (`free`, `on-support`, `intersection`, `midpoint`, `projection`). |
+| **2. Interactividad Pedagógica** | Salvo necesidad puramente estática, los diagramas deben permitir la exploración activa del alumno: puntos móviles arrastrables con restricciones coherentes (`free`, `on-support`, `on-points`, `intersection`, `midpoint`, `projection`). |
 | **3. Persistencia de la Figura Base** | En demostraciones y teoremas divididos por pasos (`steps`): **NUNCA ocultar la figura base**. La figura completa debe mantenerse visible (`visibleTargets`) y el foco cognitivo debe dirigirse mediante resaltes de énfasis (`objectStates: { id: { emphasis: 'primary' } }`). |
 | **4. Sincronización Estricta con MDX** | Todos los elementos resaltables en el texto mediante `<VisualBind element="ID" color="COLOR">` deben corresponderse exactamente 1:1 con un `id` o `targetId` definido en el diagrama (con `target: true`). Mismos identificadores y colores en **Castellano**, **Euskara** e **Inglés**. |
 | **5. Paleta de Diseño Oficial** | Utilizar exclusivamente los tokens de color del sistema: `carbon`, `terracota`, `canela`, `mora`, `ocre`, `pavo`, `granada`, `musgo`. |
@@ -148,7 +149,7 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
 
 2. **Tipos de objetos geométricos (`objectType`):**
    - `point`: coordenadas directas, punto medio (`midpoint`), intersección (`intersection`), proyección perpendicular (`projection`).
-   - `path`: segmentos (`segment`), rectas (`line`), semirrectas (`ray`), polígonos (`polygon`), circunferencias (`circle`), arcos (`arc`).
+   - `path`: segmentos (`segment`, con punta de flecha opcional `appearance.arrow`: `start` | `end` | `both`), rectas (`line`), semirrectas (`ray`), polígonos (`polygon`), circunferencias (`circle`), arcos (`arc`).
    - `angle`: medido entre tres puntos, con marcador de arco o cuadrado (`marker: 'square'`).
    - `region` / `area`: descomposiciones de áreas o semiplanos.
 
@@ -253,6 +254,17 @@ Al pasar de un paso a otro en la demostración:
      - El **caso base** $P(1)$ debe activar el impulso inicial de la cadena.
      - La **hipótesis/paso inductivo** $P(k) \implies P(k+1)$ debe modelar el *puente de transmisión* (ej. separación geométrica entre fichas tal que si el paso no está probado, la distancia $d > H$ impide el contacto y la propagación se interrumpe).
      - Solo cuando ambos controles son verdaderos la cadena se propaga íntegramente hacia el infinito.
+
+### F. Flechas entre conjuntos (diagramas sagitales)
+Para conceptos de conjuntos cuyas condiciones el alumno puede romper (función, inyectividad, sobreyectividad, biyección, inversa). Los dos diagramas de referencia se generan con un script porque repiten mucho; copia su estructura, no los reescribas a mano.
+
+- **Elementos:** puntos fijos dentro de dos `circle` (`conjuntoA`, `conjuntoB`, con `target: true` para `<VisualBind>`).
+- **La punta es el asa.** Cada flecha es un `segment` con `appearance.arrow: "end"` desde un punto `expression` (el elemento de A desplazado hacia la punta) hasta un punto arrastrable invisible (`appearance.opacity: 0`, `size: 10`, `highlightSize: 5`). Ese punto es la punta: el alumno la agarra (cursor de mano; aparece un punto al pasar por encima) y no un punto aparte. Si el asa estuviera en otro sitio, el alumno intentaría arrastrar la punta y no pasaría nada.
+- **Posiciones discretas:** el asa tiene `mobility: { "type": "on-points", "points": [...] }`. Sus candidatos son puntos ocultos de llegada, uno por elemento de B, en la recta origen→destino y a 0,24 del destino para que la punta no tape el punto, más un punto de reposo junto al origen. Al arrastrar salta al candidato más cercano. Con el teclado, cada flecha del cursor salta al candidato siguiente en esa dirección.
+- **Quitar una flecha:** en el punto de reposo, la flecha sólida se oculta (`visibleWhen: lt(h.x, 0)`) y aparece un muñón discontinuo con punta. El alumno ve que ese elemento no tiene imagen y puede volver a arrastrarlo desde ahí.
+- **Estado:** un panel de una línea por cada combinación de fallos (`visibleWhen` excluyentes), anclado arriba (`anchor.position: [0.5, 0]`), con un único bloque coloreado (`musgo` si se cumple, `granada` si falla). La escena solo reserva una línea para un panel superior (unos 42 px), así que cada texto cabe en ≤ 40 caracteres visibles en los tres idiomas. Señala además en la figura dónde falla: un anillo `granada` alrededor del elemento (discontinuo si le falta algo).
+- **Condiciones largas:** una expresión admite como máximo 512 caracteres. Guarda los resultados intermedios (recuentos de flechas por elemento, indicadores 0/1) en puntos `expression` ocultos y léelos con `id.x` / `id.y`.
+- **Composición para todas las láminas:** en móvil la lámina mide unos 374×272 px y la figura queda por debajo de 150 px de alto. Mantén el contenido cerca de 2:1 (ancho:alto), la `note` en una línea y los botones bajo la figura con margen. Comprueba escritorio, tableta y móvil antes de dar el diagrama por terminado.
 
 ---
 

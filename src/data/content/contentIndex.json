@@ -4877,7 +4877,7 @@
         "03",
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -4940,7 +4940,7 @@
         "03",
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -8393,7 +8393,7 @@
         "03E",
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -8456,7 +8456,7 @@
         "03E",
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -28695,7 +28695,7 @@
         "03",
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -30453,7 +30453,7 @@
         "03E",
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -41819,7 +41819,7 @@
         "03",
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -43577,7 +43577,7 @@
         "03E",
         "26A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",

@@ -7,12 +7,15 @@ export const metadata = {
   description: "Function between two sets that is simultaneously injective and surjective, establishing an invertible one-to-one pairing.",
   branch: "03E",
   branches: ["03", "08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "secondary" }
   ]
 };
+
+import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
+export const Simulation = BiyeccionSagital;
 
 <Capitular letra="A" /> **bijection** (or bijective map) is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that associates each element of the <ConceptLink targetId="dominio-funcion">domain</ConceptLink> with a unique element of the <ConceptLink targetId="codominio">codomain</ConceptLink>, such that every element of the codomain is the image of exactly one element of the domain.
 

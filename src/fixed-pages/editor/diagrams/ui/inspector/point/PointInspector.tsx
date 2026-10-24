@@ -40,7 +40,9 @@ export const PointInspector: React.FC<PointPanelProps & {
   const gliderTarget = point.mobility.type === 'on-support' ? point.mobility.support : undefined;
   const layers = availableLayers(model, t);
   const gliderSupports = supportElements(model);
-  const changeMode = (nextMode: PointConstraint, options: { gliderTarget?: string } = {}) => {
+  const candidatePointIds = point.mobility.type === 'on-points' ? point.mobility.points : [];
+  const candidatePoints = model.objects.filter(item => item.objectType === 'point' && item.id !== point.id);
+  const changeMode = (nextMode: PointConstraint, options: { gliderTarget?: string; candidatePointIds?: string[] } = {}) => {
     if (onUpdateModel) onUpdateModel(setPointMode(model, point.id, nextMode, options), `Cambiar movilidad de ${point.id}`);
     else onUpdatePoint(point.id, current => withPointMode(current, nextMode, options));
   };
@@ -152,7 +154,9 @@ export const PointInspector: React.FC<PointPanelProps & {
                   const nextConstraint = e.target.value as PointConstraint;
                   changeMode(nextConstraint, nextConstraint === 'glider' && !gliderTarget && gliderSupports[0]
                     ? { gliderTarget: gliderSupports[0].id }
-                    : {});
+                    : nextConstraint === 'discrete' && candidatePoints[0]
+                      ? { candidatePointIds: [candidatePoints[0].id] }
+                      : {});
                 }}
                 className={controlClassName}
               >
@@ -161,6 +165,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                 <option value="horizontal">{t('editor.diagramInspector.horizontallyConstrained')}</option>
                 <option value="vertical">{t('editor.diagramInspector.verticallyConstrained')}</option>
                 <option value="glider">{t('editor.diagramInspector.gliderOnObject')}</option>
+                <option value="discrete">{t('editor.diagramInspector.discreteOnPoints')}</option>
                 <option value="derived">{t('editor.diagramInspector.derivedExpressions')}</option>
                 <option value="constrained">{t('editor.diagramInspector.withGeometricConstraints')}</option>
               </select>
@@ -183,6 +188,29 @@ export const PointInspector: React.FC<PointPanelProps & {
                     </option>
                   ))}
                 </select>
+              </Callout>
+            )}
+
+            {mode === 'discrete' && (
+              <Callout className="space-y-1.5">
+                <p className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">
+                  {t('editor.diagramInspector.candidatePositions')}
+                </p>
+                {candidatePoints.map(candidate => (
+                  <label key={candidate.id} className="flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={candidatePointIds.includes(candidate.id)}
+                      onChange={e => changeMode('discrete', {
+                        candidatePointIds: e.target.checked
+                          ? [...candidatePointIds, candidate.id]
+                          : candidatePointIds.filter(id => id !== candidate.id),
+                      })}
+                      className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
+                    />
+                    <span className="font-mono">{candidate.label || candidate.id} ({candidate.id})</span>
+                  </label>
+                ))}
               </Callout>
             )}
           </div>

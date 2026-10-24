@@ -62,7 +62,9 @@ export function objectConstructionReferences(object: DiagramObject): string[] {
 /** Todas las referencias directas a otros objetos (construcción, soporte y atractores). */
 export function objectReferences(object: DiagramObject): string[] {
   if (object.objectType === 'point') {
-    const mobilityRefs = object.mobility.type === 'on-support' ? [object.mobility.support] : [];
+    const mobilityRefs = object.mobility.type === 'on-support'
+      ? [object.mobility.support]
+      : object.mobility.type === 'on-points' ? object.mobility.points : [];
     return [...pointDefinitionReferences(object.definition), ...mobilityRefs, ...(object.interaction?.attractorIds ?? [])];
   }
   if (object.objectType === 'annotation') {
@@ -124,6 +126,7 @@ export function diagramDependencies(objects: readonly DiagramObject[]): DiagramD
     } else objectReferences(object).forEach(id => add(id, object.id, 'construction'));
     objectExpressions(object).forEach(source => expressionSourceIds(source).forEach(id => add(id, object.id, 'expression')));
     if (object.objectType === 'point') object.interaction?.attractorIds?.forEach(id => add(id, object.id, 'constraint'));
+    if (object.objectType === 'point' && object.mobility.type === 'on-points') object.mobility.points.forEach(id => add(id, object.id, 'constraint'));
   });
   return dependencies;
 }

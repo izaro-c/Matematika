@@ -7,17 +7,20 @@ export const metadata = {
   description: "Relación binaria entre dos conjuntos que asocia a cada elemento del dominio un único elemento en el codominio.",
   branch: "03E",
   branches: ["03E", "26A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
 
+import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
+export const Simulation = FuncionSagital;
+
 <Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Como la función es el propio conjunto de pares $(x, f(x))$, el concepto se formula por completo dentro de la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink>, y de ella lo toman el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink> y el <ConceptLink targetId="algebra">álgebra</ConceptLink>.
 
 <Definicion title="Definición formal de función">
-  Sean $A$ y $B$ dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una **función** $f$ de $A$ en $B$ (notada $f\colon A \longrightarrow B$) es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $f \subseteq A \times B$ que satisface dos condiciones de existencia y unicidad:
+  Sean <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> y <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una **función** $f$ de $A$ en $B$ (notada $f\colon A \longrightarrow B$) es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> que satisface dos condiciones de existencia y unicidad:
   1. **Totalidad (existencia de imagen):** Todo elemento del <ConceptLink targetId="dominio-funcion">dominio</ConceptLink> tiene al menos un elemento asociado:
      $$
      \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)

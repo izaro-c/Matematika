@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "57962a25cb09bcd4b8afc6e973263564ece234f3632c8b41472e06c10832a6bb",
+  "corpusHash": "d924322b8e03f0ad3e30d81ba84dd4319c0767498e208cda09f5638f888fa926",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -30,6 +30,7 @@
     "AnguloRecto": "content/diagrams/Definiciones/AnguloRecto.tsx",
     "AngulosSuplementarios": "content/diagrams/Definiciones/AngulosSuplementarios.tsx",
     "Bisectriz": "content/diagrams/Definiciones/Bisectriz.tsx",
+    "BiyeccionSagital": "content/diagrams/Definiciones/BiyeccionSagital.tsx",
     "Circunferencia": "content/diagrams/Definiciones/Circunferencia.tsx",
     "Colinealidad": "content/diagrams/Definiciones/Colinealidad.tsx",
     "CongruenciaTriangulos": "content/diagrams/Definiciones/CongruenciaTriangulos.tsx",
@@ -37,6 +38,7 @@
     "Cuadrilatero": "content/diagrams/Definiciones/Cuadrilatero.tsx",
     "Distancia": "content/diagrams/Definiciones/Distancia.tsx",
     "EstarEntre": "content/diagrams/Definiciones/EstarEntre.tsx",
+    "FuncionSagital": "content/diagrams/Definiciones/FuncionSagital.tsx",
     "Interseccion": "content/diagrams/Definiciones/Interseccion.tsx",
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
@@ -948,6 +950,38 @@
         "blockId": "teorema-existencia-bisectriz:diagram:Bisectriz"
       }
     ],
+    "BiyeccionSagital": [
+      {
+        "contentId": "biyeccion",
+        "contentPath": "content/mdx/en/definitions/biyeccion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 630,
+          "end": 672
+        },
+        "blockId": "biyeccion:diagram:BiyeccionSagital"
+      },
+      {
+        "contentId": "biyeccion",
+        "contentPath": "content/mdx/es/definitions/biyeccion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 641,
+          "end": 683
+        },
+        "blockId": "biyeccion:diagram:BiyeccionSagital"
+      },
+      {
+        "contentId": "biyeccion",
+        "contentPath": "content/mdx/eu/definitions/biyeccion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 641,
+          "end": 683
+        },
+        "blockId": "biyeccion:diagram:BiyeccionSagital"
+      }
+    ],
     "Circunferencia": [
       {
         "contentId": "circunferencia",
@@ -1170,6 +1204,38 @@
           "end": 646
         },
         "blockId": "estar-entre:diagram:EstarEntre"
+      }
+    ],
+    "FuncionSagital": [
+      {
+        "contentId": "funcion",
+        "contentPath": "content/mdx/en/definitions/funcion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 619,
+          "end": 659
+        },
+        "blockId": "funcion:diagram:FuncionSagital"
+      },
+      {
+        "contentId": "funcion",
+        "contentPath": "content/mdx/es/definitions/funcion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 614,
+          "end": 654
+        },
+        "blockId": "funcion:diagram:FuncionSagital"
+      },
+      {
+        "contentId": "funcion",
+        "contentPath": "content/mdx/eu/definitions/funcion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 617,
+          "end": 657
+        },
+        "blockId": "funcion:diagram:FuncionSagital"
       }
     ],
     "Interseccion": [

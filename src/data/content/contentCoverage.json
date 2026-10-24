@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 123,
-      "exported": 67
+      "none": 121,
+      "exported": 69
     },
     "theoremLike": {
       "total": 21,
@@ -526,9 +526,11 @@
       "type": "definicion",
       "title": "Bijekzioa",
       "filePath": "eu/definitions/biyeccion.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -880,9 +882,11 @@
       "type": "definicion",
       "title": "Funtzioa",
       "filePath": "eu/definitions/funcion.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

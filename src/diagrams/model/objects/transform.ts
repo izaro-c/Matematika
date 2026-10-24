@@ -33,9 +33,11 @@ export function mapObjectReferences<T extends DiagramObject>(object: T, map: IdM
     case 'point': {
       const mobility = base.mobility.type === 'on-support'
         ? { ...base.mobility, support: map(base.mobility.support) }
-        : base.mobility.type === 'constrained'
-          ? { ...base.mobility, relationIds: base.mobility.relationIds.map(map) }
-          : base.mobility;
+        : base.mobility.type === 'on-points'
+          ? { ...base.mobility, points: base.mobility.points.map(map) }
+          : base.mobility.type === 'constrained'
+            ? { ...base.mobility, relationIds: base.mobility.relationIds.map(map) }
+            : base.mobility;
       return {
         ...base,
         definition: mapPointDefinition(base.definition, map),

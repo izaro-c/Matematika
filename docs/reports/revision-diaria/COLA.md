@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 10 / 190
+Revisadas: 11 / 190
 
 ## Pendientes
 
-- [ ] `biyeccion` · definitions
 - [ ] `cardinalidad` · definitions
 - [ ] `cociente-incremental` · definitions
 - [ ] `geometria-hilbertiana` · definitions
@@ -199,3 +198,4 @@ Revisadas: 10 / 190
 - [x] `estar-entre` · 2026-10-24 · errores · corregido 04deb78c · propuestas c961e55a · [informe](2026-10-24-estar-entre.md) · $1.24
 - [x] `estructura-geometrica` · 2026-10-24 · errores · corregido 51399a49 · propuestas 102c570f · [informe](2026-10-24-estructura-geometrica.md) · $1.1
 - [x] `funcion` · 2026-10-24 · errores · corregido 87487966 · propuestas 11eef7d0 · [informe](2026-10-24-funcion.md) · $0.79
+- [x] `biyeccion` · 2026-10-24 · errores · corregido 9401d86d · propuestas a5f1020e · [informe](2026-10-24-biyeccion.md) · $1.26

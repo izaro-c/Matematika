@@ -1584,6 +1584,11 @@ export interface TranslationDictionary {
       linkedLabelHint: string;
       dashedAuxiliaryLine: string;
       keepOwnColorNoYellow: string;
+      arrowHead: string;
+      arrowNone: string;
+      arrowStart: string;
+      arrowEnd: string;
+      arrowBoth: string;
       allowPointerHighlight: string;
       boardLayer: string;
       visibleWhenExample: string;
@@ -1605,6 +1610,8 @@ export interface TranslationDictionary {
       horizontallyConstrained: string;
       verticallyConstrained: string;
       gliderOnObject: string;
+      discreteOnPoints: string;
+      candidatePositions: string;
       derivedExpressions: string;
       withGeometricConstraints: string;
       supportObjectGlidertarget: string;
