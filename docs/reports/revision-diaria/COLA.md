@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 7 / 190
+Revisadas: 8 / 190
 
 ## Pendientes
 
-- [ ] `estar-entre` · definitions
 - [ ] `estructura-geometrica` · definitions
 - [ ] `funcion` · definitions
 - [ ] `biyeccion` · definitions
@@ -199,3 +198,4 @@ Revisadas: 7 / 190
 - [x] `consistencia-logica` · 2026-10-23 · errores · corregido 20020c7f · propuestas 439b14e7 · [informe](2026-10-23-consistencia-logica.md) · $1.11
 - [x] `dimension` · 2026-10-23 · errores · corregido 193003e8 · propuestas 00c30771 · [informe](2026-10-23-dimension.md) · $1.05
 - [x] `dominio` · 2026-10-24 · ok · sin cambios · [informe](2026-10-24-dominio.md) · $0.54
+- [x] `estar-entre` · 2026-10-24 · errores · corregido 04deb78c · propuestas c961e55a · [informe](2026-10-24-estar-entre.md) · $1.24

@@ -88,7 +88,7 @@ export const NombreDiagramaSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Nota explicativa para el alumno",
+  "note": "Nota explicativa para el alumno (texto plano: sin $…$; etiquetas como A, no $A$)",
   "translations": {
     "eu": {
       "title": "Izenburua euskaraz",

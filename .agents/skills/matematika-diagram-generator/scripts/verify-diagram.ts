@@ -41,8 +41,8 @@ if (parsed.status === 'visual-exact') {
   type Item = { id: string; target?: boolean; targetId?: string };
   type Step = { id: string; visibleTargets?: string[]; objectStates?: Record<string, unknown> };
   const spec = JSON.parse(json) as {
-    objects: Item[]; groups?: Item[]; steps?: Step[];
-    translations?: Record<string, { title?: string; steps?: Record<string, unknown> }>;
+    objects: Item[]; groups?: Item[]; steps?: Step[]; note?: string;
+    translations?: Record<string, { title?: string; note?: string; steps?: Record<string, unknown> }>;
   };
   const problem = (msg: string) => { problems++; console.error(`✗ ${msg}`); };
 
@@ -66,6 +66,9 @@ if (parsed.status === 'visual-exact') {
     const missing = (spec.steps ?? []).filter(step => !tr?.steps?.[step.id]).map(step => step.id);
     if (missing.length) problem(`faltan translations.${lang}.steps para: ${missing.join(', ')}`);
   }
+  // `note` se pinta como texto plano (ExplorationCue colorea las etiquetas sueltas): sin KaTeX.
+  const notes: Array<[string, string | undefined]> = [['note', spec.note], ...Object.entries(spec.translations ?? {}).map(([lang, tr]): [string, string | undefined] => [`translations.${lang}.note`, tr.note])];
+  for (const [where, text] of notes) if (text?.includes('$')) problem(`${where} contiene "$": la nota no admite KaTeX, escribe las etiquetas sin marcar (A, no $A$)`);
   if (!problems) console.log('✓ Destinos únicos, pasos coherentes y traducciones eu/en completas.');
 }
 

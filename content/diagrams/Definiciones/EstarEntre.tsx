@@ -324,11 +324,11 @@ export const EstarEntreSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Arrastra $A$ y $C$ para mover la recta; desliza $B$ entre ellos.",
+  "note": "Arrastra A y C para mover la recta; desliza B entre ellos.",
   "translations": {
     "eu": {
       "title": "Artean egotea (bitartekotasuna)",
-      "note": "Arrastatu $A$ eta $C$ zuzena mugitzeko; irristatu $B$ haien artean.",
+      "note": "Arrastatu A eta C zuzena mugitzeko; irristatu B haien artean.",
       "steps": {
         "step-orden": {
           "label": "Bitartekotasuna $A * B * C$",
@@ -347,7 +347,7 @@ export const EstarEntreSpec = createDiagramSpec(
     },
     "en": {
       "title": "Betweenness (Intermediacy)",
-      "note": "Drag $A$ and $C$ to move the line; slide $B$ between them.",
+      "note": "Drag A and C to move the line; slide B between them.",
       "steps": {
         "step-orden": {
           "label": "Betweenness $A * B * C$",

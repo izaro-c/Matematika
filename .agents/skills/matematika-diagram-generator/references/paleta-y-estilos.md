@@ -26,7 +26,8 @@ píldoras, puntos de estado, mayúsculas con tracking).
   - **Cuerpo**: redonda, `--ink-text-body`.
   - **Título de bloque**: versalitas, `--ink-text-muted`. Los bloques con color solo tiñen el texto.
 - Un panel de paso usa la misma piel: título = etiqueta del paso (versalitas) y `overlay.title` como subtítulo en cursiva.
-- Todo texto admite KaTeX `$…$`: escribir `$P(k)$`, nunca `P(k)` plano.
+- Etiquetas, pasos (`label`, `description`) y paneles admiten KaTeX `$…$`: escribir `$P(k)$`, nunca `P(k)` plano.
+- **Excepción: `note`** (y `translations.*.note`) es texto plano. `ExplorationCue` colorea en ella las etiquetas de los puntos móviles buscándolas como palabras sueltas: escribir `Arrastra A y C`, nunca `$A$`. `verify-diagram.ts` lo comprueba.
 
 ## 3. Botones de control: «rótulo impreso»
 
