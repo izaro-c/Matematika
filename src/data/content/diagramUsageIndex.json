@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "d924322b8e03f0ad3e30d81ba84dd4319c0767498e208cda09f5638f888fa926",
+  "corpusHash": "0729aecbf4d5ba8072c2342ecf99521a3e9be22569195bc4a6e8a7b97b5ad3d9",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
