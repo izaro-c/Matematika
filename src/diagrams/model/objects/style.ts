@@ -20,6 +20,7 @@ export function objectStyle(object: DiagramObject): DiagramVisualStyle | undefin
   const style: DiagramVisualStyle = {};
   if ('strokeWidth' in appearance) style.strokeWidth = appearance.strokeWidth;
   if ('strokeOpacity' in appearance) style.strokeOpacity = appearance.strokeOpacity;
+  if ('opacity' in appearance) style.strokeOpacity = appearance.opacity;
   if ('labelOffset' in appearance) style.labelOffset = appearance.labelOffset;
   if ('labelPosition' in appearance) style.labelPosition = appearance.labelPosition;
   if ('fontSize' in appearance) style.labelSize = appearance.fontSize;
@@ -80,7 +81,7 @@ export function withObjectStyle<T extends DiagramObject>(object: T, style: Diagr
         labelOffset: value.labelOffset,
         labelPosition: value.labelPosition,
         labelSize: value.labelSize,
-        opacity: value.strokeOpacity ?? object.appearance?.opacity,
+        opacity: value.strokeOpacity,
         highlightSize: value.highlightPointSize,
         highlightVisible: value.highlightVisible,
         preserveColorOnHighlight: value.preserveColorOnHighlight,

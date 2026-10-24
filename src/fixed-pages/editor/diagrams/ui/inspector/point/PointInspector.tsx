@@ -298,6 +298,21 @@ export const PointInspector: React.FC<PointPanelProps & {
             </div>
           </div>
 
+          <div>
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+              {t('editor.diagramInspector.opacity')}
+            </label>
+            <input
+              type="number"
+              step="0.05"
+              min="0"
+              max="1"
+              value={style?.strokeOpacity ?? 1}
+              onChange={e => updateStyle({ strokeOpacity: parseOptionalNumber(e.target.value, 1) })}
+              className={controlClassName}
+            />
+          </div>
+
           <div className="space-y-2 pt-1">
             <div className="flex items-center space-x-2">
               <input
@@ -309,6 +324,19 @@ export const PointInspector: React.FC<PointPanelProps & {
               />
               <label htmlFor={`preserveColor-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
                 {t('editor.diagramInspector.keepOwnColorOnHover')}
+              </label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={`highlightVisible-pt-${point.id}`}
+                checked={style?.highlightVisible === true}
+                onChange={e => updateStyle({ highlightVisible: e.target.checked ? true : undefined })}
+                className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
+              />
+              <label htmlFor={`highlightVisible-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
+                {t('editor.diagramInspector.revealOnHighlight')}
               </label>
             </div>
 

@@ -1620,6 +1620,8 @@ export const esLanguage: LanguageConfig = {
         baseSizePx: 'Tamaño Base (px)',
         hoverSizePx: 'Tamaño Hover (px)',
         keepOwnColorOnHover: 'Conservar color propio en hover',
+        opacity: 'Opacidad',
+        revealOnHighlight: 'Mostrar al resaltar si está oculto',
         identityAndName: 'Identidad & Nombre',
         identifierId: 'Identificador (ID)',
         parameterName: 'Nombre del Parámetro',

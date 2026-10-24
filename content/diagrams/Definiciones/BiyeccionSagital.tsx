@@ -210,8 +210,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Conjunto A, dominio"
+        "ariaLabel": "Conjunto A, dominio",
+        "role": "secondary"
       },
       "target": true,
       "objectType": "path",
@@ -225,8 +225,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "strokeOpacity": 0.75,
         "fillOpacity": 0.05,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "highlightFillOpacity": 0.14
+        "highlightFillOpacity": 0.14,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -270,8 +270,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Conjunto B, codominio"
+        "ariaLabel": "Conjunto B, codominio",
+        "role": "secondary"
       },
       "target": true,
       "objectType": "path",
@@ -285,8 +285,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "strokeOpacity": 0.75,
         "fillOpacity": 0.05,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "highlightFillOpacity": 0.14
+        "highlightFillOpacity": 0.14,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -315,9 +315,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 0,
         "labelVisible": true,
+        "labelPosition": "ulft",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "ulft"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -346,9 +346,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 0,
         "labelVisible": true,
+        "labelPosition": "ulft",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "ulft"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -362,8 +362,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento a₁ de A"
+        "ariaLabel": "Elemento a₁ de A",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
@@ -378,9 +378,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "lft",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "lft"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -394,15 +394,15 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento a₂ de A"
+        "ariaLabel": "Elemento a₂ de A",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
       "definition": {
         "type": "coordinates",
         "x": -2.6,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -410,9 +410,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "lft",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "lft"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -426,8 +426,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento a₃ de A"
+        "ariaLabel": "Elemento a₃ de A",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
@@ -442,9 +442,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "lft",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "lft"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -458,8 +458,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento b₁ de B"
+        "ariaLabel": "Elemento b₁ de B",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
@@ -474,9 +474,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "rt",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "rt"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -490,15 +490,15 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento b₂ de B"
+        "ariaLabel": "Elemento b₂ de B",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
       "definition": {
         "type": "coordinates",
         "x": 2.6,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -506,9 +506,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "rt",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "rt"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -522,8 +522,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary",
-        "ariaLabel": "Elemento b₃ de B"
+        "ariaLabel": "Elemento b₃ de B",
+        "role": "secondary"
       },
       "target": false,
       "objectType": "point",
@@ -538,9 +538,9 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "appearance": {
         "size": 5,
         "labelVisible": true,
+        "labelPosition": "rt",
         "labelSize": 16,
-        "preserveColorOnHighlight": true,
-        "labelPosition": "rt"
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -719,8 +719,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "end",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -749,8 +749,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "start",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -779,11 +779,11 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 1.8,
+        "dashed": true,
         "arrow": "end",
+        "strokeWidth": 1.8,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -797,8 +797,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "primary",
-        "ariaLabel": "Punta de la flecha de a₁: elige su imagen en B o devuélvela junto a a₁"
+        "ariaLabel": "Punta de la flecha de a₁: elige su imagen en B o devuélvela junto a a₁",
+        "role": "primary"
       },
       "target": false,
       "objectType": "point",
@@ -818,8 +818,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       },
       "appearance": {
         "size": 10,
-        "opacity": 0,
         "labelVisible": false,
+        "opacity": 0,
         "highlightSize": 5,
         "preserveColorOnHighlight": true
       }
@@ -872,7 +872,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": 2.36,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -932,7 +932,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": -1.85,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -965,7 +965,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "y": "a2.y + 0.24 * (hf2.y - a2.y) / max(hypot((hf2.x - a2.x), (hf2.y - a2.y)), 0.001)",
         "fallback": [
           -2.36,
-          0.0
+          0
         ]
       },
       "mobility": {
@@ -1000,8 +1000,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "end",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -1030,8 +1030,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "start",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -1060,11 +1060,11 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 1.8,
+        "dashed": true,
         "arrow": "end",
+        "strokeWidth": 1.8,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1078,15 +1078,15 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "primary",
-        "ariaLabel": "Punta de la flecha de a₂: elige su imagen en B o devuélvela junto a a₂"
+        "ariaLabel": "Punta de la flecha de a₂: elige su imagen en B o devuélvela junto a a₂",
+        "role": "primary"
       },
       "target": false,
       "objectType": "point",
       "definition": {
         "type": "coordinates",
         "x": 2.36,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "on-points",
@@ -1099,8 +1099,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       },
       "appearance": {
         "size": 10,
-        "opacity": 0,
         "labelVisible": false,
+        "opacity": 0,
         "highlightSize": 5,
         "preserveColorOnHighlight": true
       }
@@ -1281,8 +1281,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "end",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -1311,8 +1311,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.2,
         "arrow": "start",
+        "strokeWidth": 2.2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
       }
@@ -1341,11 +1341,11 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 1.8,
+        "dashed": true,
         "arrow": "end",
+        "strokeWidth": 1.8,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1359,8 +1359,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "primary",
-        "ariaLabel": "Punta de la flecha de a₃: elige su imagen en B o devuélvela junto a a₃"
+        "ariaLabel": "Punta de la flecha de a₃: elige su imagen en B o devuélvela junto a a₃",
+        "role": "primary"
       },
       "target": false,
       "objectType": "point",
@@ -1380,8 +1380,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       },
       "appearance": {
         "size": 10,
-        "opacity": 0,
         "labelVisible": false,
+        "opacity": 0,
         "highlightSize": 5,
         "preserveColorOnHighlight": true
       }
@@ -1397,8 +1397,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "primary",
-        "ariaLabel": "Invertir el sentido de todas las flechas"
+        "ariaLabel": "Invertir el sentido de todas las flechas",
+        "role": "primary"
       },
       "target": false,
       "objectType": "control",
@@ -1415,7 +1415,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "value": 0,
       "action": {
         "to": 1,
-        "durationMs": 450,
+        "durationMs": 0,
         "easing": "ease-in-out",
         "behavior": "toggle"
       }
@@ -1561,7 +1561,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": -2.34,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -1772,12 +1772,12 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "point": "avisoVacio1Radio"
       },
       "appearance": {
+        "dashed": true,
         "strokeWidth": 2,
         "strokeOpacity": 0.75,
         "fillOpacity": 0,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1798,7 +1798,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": 2.86,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -1857,7 +1857,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": 2.86,
-        "y": 0.0
+        "y": 0
       },
       "mobility": {
         "type": "fixed"
@@ -1891,12 +1891,12 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "point": "avisoVacio2Radio"
       },
       "appearance": {
+        "dashed": true,
         "strokeWidth": 2,
         "strokeOpacity": 0.75,
         "fillOpacity": 0,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -2010,12 +2010,12 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "point": "avisoVacio3Radio"
       },
       "appearance": {
+        "dashed": true,
         "strokeWidth": 2,
         "strokeOpacity": 0.75,
         "fillOpacity": 0,
         "labelVisible": false,
-        "preserveColorOnHighlight": true,
-        "dashed": true
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -2030,8 +2030,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: no es función"
+        "ariaLabel": "Estado: no es función",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2069,8 +2069,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: biyección"
+        "ariaLabel": "Estado: biyección",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2108,8 +2108,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: ni inyectiva ni sobreyectiva"
+        "ariaLabel": "Estado: ni inyectiva ni sobreyectiva",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2147,8 +2147,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: no inyectiva"
+        "ariaLabel": "Estado: no inyectiva",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2186,8 +2186,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: no sobreyectiva"
+        "ariaLabel": "Estado: no sobreyectiva",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2225,8 +2225,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: inversa"
+        "ariaLabel": "Estado: inversa",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2264,8 +2264,8 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "annotation",
-        "ariaLabel": "Estado: sin inversa"
+        "ariaLabel": "Estado: sin inversa",
+        "role": "annotation"
       },
       "target": false,
       "objectType": "annotation",
@@ -2310,6 +2310,22 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "inversaf2": "$a_2$-rako gezi alderantzikatua",
         "inversaf3": "$a_3$-rako gezi alderantzikatua"
       },
+      "ariaLabels": {
+        "conjuntoA": "A multzoa, domeinua",
+        "conjuntoB": "B multzoa, kodomeinua",
+        "a1": "A-ko a₁ elementua",
+        "a2": "A-ko a₂ elementua",
+        "a3": "A-ko a₃ elementua",
+        "b1": "B-ko b₁ elementua",
+        "b2": "B-ko b₂ elementua",
+        "b3": "B-ko b₃ elementua",
+        "hf1": "a₁-en geziaren punta: aukeratu bere irudia B-n edo itzuli a₁-en ondora",
+        "hf2": "a₂-ren geziaren punta: aukeratu bere irudia B-n edo itzuli a₂-ren ondora",
+        "hf3": "a₃-ren geziaren punta: aukeratu bere irudia B-n edo itzuli a₃-ren ondora",
+        "invertir": "Alderantzikatu gezi guztien noranzkoa",
+        "grupoFlechas": "Nabarmendu f-ren geziak",
+        "grupoInversa": "Nabarmendu gezi alderantzikatuak"
+      },
       "blocks": {
         "estadoNoFuncion": {
           "estado": {
@@ -2346,22 +2362,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
             "text": "Alderantzikatuta ez da funtzioa."
           }
         }
-      },
-      "ariaLabels": {
-        "conjuntoA": "A multzoa, domeinua",
-        "conjuntoB": "B multzoa, kodomeinua",
-        "a1": "A-ko a₁ elementua",
-        "a2": "A-ko a₂ elementua",
-        "a3": "A-ko a₃ elementua",
-        "b1": "B-ko b₁ elementua",
-        "b2": "B-ko b₂ elementua",
-        "b3": "B-ko b₃ elementua",
-        "hf1": "a₁-en geziaren punta: aukeratu bere irudia B-n edo itzuli a₁-en ondora",
-        "hf2": "a₂-ren geziaren punta: aukeratu bere irudia B-n edo itzuli a₂-ren ondora",
-        "hf3": "a₃-ren geziaren punta: aukeratu bere irudia B-n edo itzuli a₃-ren ondora",
-        "invertir": "Alderantzikatu gezi guztien noranzkoa",
-        "grupoFlechas": "Nabarmendu f-ren geziak",
-        "grupoInversa": "Nabarmendu gezi alderantzikatuak"
       }
     },
     "en": {
@@ -2377,6 +2377,22 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "inversaf1": "Reversed arrow to $a_1$",
         "inversaf2": "Reversed arrow to $a_2$",
         "inversaf3": "Reversed arrow to $a_3$"
+      },
+      "ariaLabels": {
+        "conjuntoA": "Set A, the domain",
+        "conjuntoB": "Set B, the codomain",
+        "a1": "Element a₁ of A",
+        "a2": "Element a₂ of A",
+        "a3": "Element a₃ of A",
+        "b1": "Element b₁ of B",
+        "b2": "Element b₂ of B",
+        "b3": "Element b₃ of B",
+        "hf1": "Tip of the arrow from a₁: choose its image in B or bring it back next to a₁",
+        "hf2": "Tip of the arrow from a₂: choose its image in B or bring it back next to a₂",
+        "hf3": "Tip of the arrow from a₃: choose its image in B or bring it back next to a₃",
+        "invertir": "Reverse the direction of every arrow",
+        "grupoFlechas": "Highlight the arrows of f",
+        "grupoInversa": "Highlight the reversed arrows"
       },
       "blocks": {
         "estadoNoFuncion": {
@@ -2414,22 +2430,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
             "text": "Reversed, not a function from $B$ to $A$."
           }
         }
-      },
-      "ariaLabels": {
-        "conjuntoA": "Set A, the domain",
-        "conjuntoB": "Set B, the codomain",
-        "a1": "Element a₁ of A",
-        "a2": "Element a₂ of A",
-        "a3": "Element a₃ of A",
-        "b1": "Element b₁ of B",
-        "b2": "Element b₂ of B",
-        "b3": "Element b₃ of B",
-        "hf1": "Tip of the arrow from a₁: choose its image in B or bring it back next to a₁",
-        "hf2": "Tip of the arrow from a₂: choose its image in B or bring it back next to a₂",
-        "hf3": "Tip of the arrow from a₃: choose its image in B or bring it back next to a₃",
-        "invertir": "Reverse the direction of every arrow",
-        "grupoFlechas": "Highlight the arrows of f",
-        "grupoInversa": "Highlight the reversed arrows"
       }
     }
   }

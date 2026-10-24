@@ -1622,6 +1622,8 @@ export interface TranslationDictionary {
       baseSizePx: string;
       hoverSizePx: string;
       keepOwnColorOnHover: string;
+      opacity: string;
+      revealOnHighlight: string;
       identityAndName: string;
       identifierId: string;
       parameterName: string;

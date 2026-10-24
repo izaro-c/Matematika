@@ -1620,6 +1620,8 @@ export const euLanguage: LanguageConfig = {
         baseSizePx: 'Oinarrizko tamaina (px)',
         hoverSizePx: 'Kurtsorea gainean dagoenean, tamaina (px)',
         keepOwnColorOnHover: 'Mantendu kolore propioa kurtsorea gainean dagoenean',
+        opacity: 'Opakotasuna',
+        revealOnHighlight: 'Erakutsi nabarmentzean ezkutuan badago',
         identityAndName: 'Identitatea eta izena',
         identifierId: 'Identifikatzailea (ID)',
         parameterName: 'Parametroaren izena',

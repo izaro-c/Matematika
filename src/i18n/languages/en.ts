@@ -1620,6 +1620,8 @@ export const enLanguage: LanguageConfig = {
         baseSizePx: 'Base size (px)',
         hoverSizePx: 'Hover size (px)',
         keepOwnColorOnHover: 'Keep own color on hover',
+        opacity: 'Opacity',
+        revealOnHighlight: 'Reveal on highlight when hidden',
         identityAndName: 'Identity and name',
         identifierId: 'Identifier (ID)',
         parameterName: 'Parameter name',

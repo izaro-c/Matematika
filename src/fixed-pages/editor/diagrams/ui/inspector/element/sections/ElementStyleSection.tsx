@@ -99,6 +99,27 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         </div>
       )}
 
+
+      {(showStroke || capabilities.content !== 'none') && (
+        <div className="pt-1">
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            {t('editor.diagramInspector.opacity')}
+          </label>
+          <input
+            type="number"
+            step="0.05"
+            min="0"
+            max="1"
+            aria-label={t('editor.diagramInspector.opacity')}
+            value={style?.strokeOpacity ?? 1}
+            onChange={e =>
+              onUpdateElement(element.id, stylePatch({ strokeOpacity: parseOptionalNumber(e.target.value, 1) }))
+            }
+            className={controlClassName}
+          />
+        </div>
+      )}
+
       {showFill && (
         <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-carbon/10">
           <div>
@@ -274,6 +295,23 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             {t('editor.diagramInspector.keepOwnColorNoYellow')}
           </label>
         </div>
+
+        {(element.objectType === 'path' || element.objectType === 'angle') && (
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id={`highlightVisible-${element.id}`}
+              checked={style?.highlightVisible === true}
+              onChange={e =>
+                onUpdateElement(element.id, stylePatch({ highlightVisible: e.target.checked ? true : undefined }))
+              }
+              className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
+            />
+            <label htmlFor={`highlightVisible-${element.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
+              {t('editor.diagramInspector.revealOnHighlight')}
+            </label>
+          </div>
+        )}
 
         <div className="flex items-center space-x-2">
           <input
