@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Cardinalidad",
-  description: "Medida del tamaño o cantidad de elementos de un conjunto formalizada mediante clases de equipotencia bajo biyecciones.",
+  description: "Tamaño de un conjunto: dos conjuntos tienen la misma cardinalidad si y solo si existe una biyección entre ellos.",
   branch: "03E",
   branches: ["03", "00A"],
   hasSimulation: false,
@@ -19,13 +19,15 @@ export const metadata = {
 Introducida por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, la teoría de cardinales supera las paradojas del infinito prescindiendo del recuento secuencial y fundándose en el principio de equipotencia: dos conjuntos poseen el mismo tamaño intrínseco si y solo si es posible emparejar sus elementos término a término mediante una <ConceptLink targetId="biyeccion">biyección</ConceptLink>.
 
 <Definicion title="Equipotencia y comparación cardinal">
-  Dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **equipotentes** (notado $A \sim B$) si y solo si existe una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink> $f\colon A \longrightarrow B$:
+  Dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **equipotentes** (se escribe $A \sim B$) si y solo si existe una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink> $f\colon A \longrightarrow B$:
   $$
-  |A| = |B| \iff \exists f\colon A \longrightarrow B \quad (f \text{ biyectiva})
+  A \sim B \iff \exists f\colon A \longrightarrow B \quad (f \text{ biyectiva})
   $$
-  El orden entre cardinales se define mediante inyecciones: se escribe $|A| \le |B|$ si existe una <ConceptLink targetId="inyectividad">aplicación inyectiva</ConceptLink> de $A$ en $B$. Por el teorema de Cantor-Bernstein-Schröder, si $|A| \le |B|$ y $|B| \le |A|$, entonces necesariamente $|A| = |B|$.
+  La equipotencia es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, porque la identidad, la <ConceptLink targetId="funcion-inversa">inversa</ConceptLink> de una biyección y la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de dos biyecciones son biyecciones. Por eso se escribe $\lvert A \rvert = \lvert B \rvert$ cuando $A \sim B$, y $\lvert A \rvert$ se llama **cardinalidad** de $A$.
+
+  El orden entre cardinales se define mediante inyecciones: se escribe $\lvert A \rvert \le \lvert B \rvert$ si existe una <ConceptLink targetId="inyectividad" isDependency={true}>aplicación inyectiva</ConceptLink> de $A$ en $B$, y $\lvert A \rvert < \lvert B \rvert$ si además $A$ y $B$ no son equipotentes. Por el <ConceptLink targetId="teorema-cantor-bernstein">teorema de Cantor-Bernstein-Schröder</ConceptLink>, si $\lvert A \rvert \le \lvert B \rvert$ y $\lvert B \rvert \le \lvert A \rvert$, entonces $\lvert A \rvert = \lvert B \rvert$.
   
-  Por el teorema de Cantor, para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ posee una cardinalidad estrictamente mayor: $|A| < |\wp(A)|$.
+  Por el <ConceptLink targetId="teorema-cantor">teorema de Cantor</ConceptLink>, para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ tiene una cardinalidad estrictamente mayor: $\lvert A \rvert < \lvert \wp(A) \rvert$.
 </Definicion>
 
 <Separador />
@@ -33,6 +35,6 @@ Introducida por <ConceptLink targetId="cantor">Georg Cantor</ConceptLink>, la te
 ### Escala de infinitos en geometría
 
 La cardinalidad permite clasificar los <ConceptLink targetId="dominio">dominios</ConceptLink> geométricos según su tamaño o número de elementos:
-- **<ConceptLink targetId="estructura-geometrica">Estructuras</ConceptLink> finitas:** Conjuntos con cardinal natural $n \in \mathbb{N}$, como los 7 puntos del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
-- **Infinito numerable:** El cardinal $\aleph_0 = |\mathbb{N}| = |\mathbb{Q}|$, característico de las sucesiones discretas y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>.
-- **La potencia del continuo:** El cardinal $\mathfrak{c} = |\mathbb{R}| = 2^{\aleph_0}$. En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> continua, toda <ConceptLink targetId="recta">recta</ConceptLink> contiene $\mathfrak{c}$ <ConceptLink targetId="punto">puntos</ConceptLink>, una densidad que garantiza formalmente la <ConceptLink targetId="continuidad">continuidad</ConceptLink> geométrica y la ausencia de huecos en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+- **<ConceptLink targetId="estructura-geometrica">Estructuras</ConceptLink> finitas:** Conjuntos con cardinal natural $n \in \mathbb{N}$, como los 7 <ConceptLink targetId="punto">puntos</ConceptLink> del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
+- **Infinito numerable:** El cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$, característico de las sucesiones discretas y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>.
+- **La <ConceptLink targetId="potencia-del-continuo">potencia del continuo</ConceptLink>:** El cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$. Con los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>), la <ConceptLink targetId="traza">traza</ConceptLink> de toda <ConceptLink targetId="recta">recta</ConceptLink> $\ell$ está en biyección con $\mathbb{R}$, así que $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.
