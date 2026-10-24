@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "460beefef64ad0f0044a70809c03c4fe1ea3b4e43ea328f4bcf41feee8d5a7c4",
+  "corpusHash": "bac421ae2bf90815b590a782221c3da2dacb2195558d24eaf48ce8863b735c74",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -32,6 +32,7 @@
     "Bisectriz": "content/diagrams/Definiciones/Bisectriz.tsx",
     "BiyeccionSagital": "content/diagrams/Definiciones/BiyeccionSagital.tsx",
     "Circunferencia": "content/diagrams/Definiciones/Circunferencia.tsx",
+    "CocienteIncremental": "content/diagrams/Definiciones/CocienteIncremental.tsx",
     "Colinealidad": "content/diagrams/Definiciones/Colinealidad.tsx",
     "CongruenciaTriangulos": "content/diagrams/Definiciones/CongruenciaTriangulos.tsx",
     "Cuadrado": "content/diagrams/Definiciones/Cuadrado.tsx",
@@ -1012,6 +1013,38 @@
           "end": 789
         },
         "blockId": "circunferencia:diagram:Circunferencia"
+      }
+    ],
+    "CocienteIncremental": [
+      {
+        "contentId": "cociente-incremental",
+        "contentPath": "content/mdx/en/definitions/cociente-incremental.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 719,
+          "end": 764
+        },
+        "blockId": "cociente-incremental:diagram:CocienteIncremental"
+      },
+      {
+        "contentId": "cociente-incremental",
+        "contentPath": "content/mdx/es/definitions/cociente-incremental.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 718,
+          "end": 763
+        },
+        "blockId": "cociente-incremental:diagram:CocienteIncremental"
+      },
+      {
+        "contentId": "cociente-incremental",
+        "contentPath": "content/mdx/eu/definitions/cociente-incremental.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 723,
+          "end": 768
+        },
+        "blockId": "cociente-incremental:diagram:CocienteIncremental"
       }
     ],
     "Colinealidad": [

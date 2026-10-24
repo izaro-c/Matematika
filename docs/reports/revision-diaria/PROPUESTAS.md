@@ -9,3 +9,5 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `estructura-geometrica` · 2026-10-24 · `102c570f` · [informe](2026-10-24-estructura-geometrica.md)
 - [ ] `funcion` · 2026-10-24 · `11eef7d0` · [informe](2026-10-24-funcion.md)
 - [ ] `biyeccion` · 2026-10-24 · `a5f1020e` · [informe](2026-10-24-biyeccion.md)
+- [ ] `cardinalidad` · 2026-10-24 · `fd6eb9e4` · [informe](2026-10-24-cardinalidad.md)
+- [ ] `cociente-incremental` · 2026-10-24 · `b6c93f17` · [informe](2026-10-24-cociente-incremental.md)

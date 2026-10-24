@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 11 / 190
+Revisadas: 13 / 190
 
 ## Pendientes
 
-- [ ] `cardinalidad` · definitions
-- [ ] `cociente-incremental` · definitions
 - [ ] `geometria-hilbertiana` · definitions
 - [ ] `geometria-sintetica` · definitions
 - [ ] `incidencia` · definitions
@@ -199,3 +197,5 @@ Revisadas: 11 / 190
 - [x] `estructura-geometrica` · 2026-10-24 · errores · corregido 51399a49 · propuestas 102c570f · [informe](2026-10-24-estructura-geometrica.md) · $1.1
 - [x] `funcion` · 2026-10-24 · errores · corregido 87487966 · propuestas 11eef7d0 · [informe](2026-10-24-funcion.md) · $0.79
 - [x] `biyeccion` · 2026-10-24 · errores · corregido 9401d86d · propuestas a5f1020e · [informe](2026-10-24-biyeccion.md) · $1.26
+- [x] `cardinalidad` · 2026-10-24 · errores · corregido 0b9bc41f · propuestas fd6eb9e4 · [informe](2026-10-24-cardinalidad.md) · $2.45
+- [x] `cociente-incremental` · 2026-10-24 · errores · corregido 6d493efc · propuestas b6c93f17 · [informe](2026-10-24-cociente-incremental.md) · $2.56
