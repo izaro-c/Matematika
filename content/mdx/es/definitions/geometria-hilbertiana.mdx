@@ -14,21 +14,21 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a **geometría hilbertiana** es el sistema axiomático formal de <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en *Grundlagen der Geometrie* (1899). Se cita aquí por la 7.ª edición (1930): la primera ordenaba los grupos de otro modo (paralelas antes que congruencia) e incluía un axioma de orden redundante, señalado por E. H. Moore en 1902.
+<Capitular letra="L" />a **geometría hilbertiana** es el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formal de <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en *Grundlagen der Geometrie* (1899). Se cita aquí por la 7.ª edición (1930): la primera ordenaba los grupos de otro modo (paralelas antes que congruencia) e incluía un axioma de orden redundante, señalado por <ConceptLink targetId="moore">E. H. Moore</ConceptLink> en 1902.
 
-Es el modelo del <ConceptLink targetId="metodo-axiomatico">método axiomático</ConceptLink> moderno: prescinde de la intuición espacial y caracteriza los objetos primitivos solo a través de las relaciones que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen entre ellos.
+Es el modelo del <ConceptLink targetId="metodo-axiomatico">método axiomático</ConceptLink> moderno: prescinde de la intuición espacial y caracteriza los <ConceptLink targetId="concepto-primitivo">objetos primitivos</ConceptLink> solo a través de las relaciones que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen entre ellos.
 
 <Definicion title="Estructura y Signatura de Hilbert (3D)">
-  La **geometría hilbertiana tridimensional** se modela mediante una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> de <ConceptLink targetId="logica">lógica multitipo</ConceptLink> cuya <ConceptLink targetId="signatura">signatura</ConceptLink> reúne tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos dos a dos</ConceptLink> y cinco <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> irreducibles:
+  La **geometría hilbertiana tridimensional** se modela mediante una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> de <ConceptLink targetId="logica">lógica multitipo</ConceptLink> que satisface el conjunto $\mathcal{T}_{\text{Hil}}$ de los 20 axiomas descritos abajo. La estructura consta de tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos dos a dos</ConceptLink> y cinco <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink>, que interpretan los símbolos de su <ConceptLink targetId="signatura">signatura</ConceptLink>:
   $$
   \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   donde:
   - $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los dominios disjuntos de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
-  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ son las relaciones binarias de <ConceptLink targetId="incidencia">incidencia</ConceptLink> tipadas punto-recta y punto-plano.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ son las <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> tipadas punto-recta y punto-plano.
   - $\mathbf{B} \subseteq \mathcal{P}^3$ es la relación ternaria de <ConceptLink targetId="estar-entre">orden e intermediación</ConceptLink> ($A * B * C$).
   - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> (pares de puntos).
-  - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (entre ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, $\angle ABC \cong \angle DEF$, o, equivalentemente, entre pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> de origen común).
+  - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (entre ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, $\angle ABC \cong \angle DEF$, o, equivalentemente, entre pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no colineales de origen común).
 </Definicion>
 
 <Separador />
@@ -52,15 +52,7 @@ El sistema consta de 20 axiomas organizados en cinco grupos:
       title="Independencia de axiomas concretos"
       formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      En el capítulo II, Hilbert prueba la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> del sistema y, mediante <ConceptLink targetId="teoria-modelos">modelos</ConceptLink> que satisfacen todos los axiomas salvo uno, la <ConceptLink targetId="independencia-logica">independencia</ConceptLink> de axiomas concretos: el de las paralelas (IV), el último de congruencia (III.5) y el de Arquímedes (V.1). No se trata de una independencia global de cada grupo respecto de los demás. La organización por grupos permite, con todo, aislar subsistemas como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-    </PropiedadItem>
-
-    <PropiedadItem 
-      id="distincion-predicados-congruencia" 
-      title="Distinción categorial de la congruencia"
-      formula="\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \cong_{\angle} \, \subseteq \mathcal{P}^6"
-    >
-      La congruencia no es un único predicado, sino dos relaciones primitivas con aridades distintas: la <ConceptLink targetId="segmento">congruencia de segmentos</ConceptLink> ($\cong_{\text{seg}}$) y la <ConceptLink targetId="angulo">congruencia de ángulos</ConceptLink> ($\cong_{\angle}$).
+      En el capítulo II, Hilbert prueba la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> del sistema relativa a la aritmética y, mediante <ConceptLink targetId="modelo">modelos</ConceptLink> que satisfacen todos los axiomas salvo uno, la <ConceptLink targetId="independencia-logica">independencia</ConceptLink> de axiomas concretos: el de las paralelas (IV), el último de congruencia (III.5) y el de Arquímedes (V.1). No se trata de una independencia global de cada grupo respecto de los demás. La organización por grupos permite, con todo, aislar subsistemas como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
