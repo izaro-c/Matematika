@@ -8560,6 +8560,12 @@
           "author": "Robin Hartshorne",
           "locator": "Chapter 2",
           "role": "secondary"
+        },
+        {
+          "title": "On the projective axioms of geometry",
+          "author": "E. H. Moore",
+          "locator": "Trans. Amer. Math. Soc. 3 (1902), 142–158",
+          "role": "secondary"
         }
       ],
       "conceptLinks": [
@@ -8658,6 +8664,12 @@
           "title": "Geometry: Euclid and Beyond",
           "author": "Robin Hartshorne",
           "locator": "Capítulo 2",
+          "role": "secondary"
+        },
+        {
+          "title": "On the projective axioms of geometry",
+          "author": "E. H. Moore",
+          "locator": "Trans. Amer. Math. Soc. 3 (1902), 142–158",
           "role": "secondary"
         }
       ],
@@ -8768,12 +8780,13 @@
         "modelo-cartesiano",
         "sistema-euclidiano",
         "euclides",
+        "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectiva",
+        "perspectividad",
         "pasch",
         "peano",
         "hilbert",
@@ -8835,12 +8848,13 @@
         "modelo-cartesiano",
         "sistema-euclidiano",
         "euclides",
+        "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectiva",
+        "perspectividad",
         "pasch",
         "peano",
         "hilbert",
@@ -30576,6 +30590,12 @@
           "author": "Robin Hartshorne",
           "locator": "Capítulo 2",
           "role": "secondary"
+        },
+        {
+          "title": "On the projective axioms of geometry",
+          "author": "E. H. Moore",
+          "locator": "Trans. Amer. Math. Soc. 3 (1902), 142–158",
+          "role": "secondary"
         }
       ],
       "conceptLinks": [
@@ -30685,12 +30705,13 @@
         "modelo-cartesiano",
         "sistema-euclidiano",
         "euclides",
+        "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectiva",
+        "perspectividad",
         "pasch",
         "peano",
         "hilbert",
@@ -43716,6 +43737,12 @@
           "author": "Robin Hartshorne",
           "locator": "2. Kapitulua",
           "role": "secondary"
+        },
+        {
+          "title": "On the projective axioms of geometry",
+          "author": "E. H. Moore",
+          "locator": "Trans. Amer. Math. Soc. 3 (1902), 142–158",
+          "role": "secondary"
         }
       ],
       "conceptLinks": [
@@ -43801,7 +43828,7 @@
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia",
+          "locator": "I. liburua",
           "role": "primary"
         },
         {
@@ -43825,12 +43852,13 @@
         "modelo-cartesiano",
         "sistema-euclidiano",
         "euclides",
+        "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectiva",
+        "perspectividad",
         "pasch",
         "peano",
         "hilbert",
