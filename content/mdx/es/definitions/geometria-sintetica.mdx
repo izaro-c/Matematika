@@ -9,17 +9,18 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I", role: "primary" },
-    { title: "Traité des propriétés projectives des figures", author: "Jean-Victor Poncelet", locator: "Introducción", role: "secondary" }
+    { title: "Traité des propriétés projectives des figures", author: "Jean-Victor Poncelet", locator: "Introducción", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "primary" }
   ]
 };
 
 <Capitular letra="L" />a **geometría sintética** (o geometría pura) es el enfoque axiomático y deductivo que estudia las propiedades de las figuras geométricas directamente a partir de <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> (como <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>) y <ConceptLink targetId="axioma">axiomas</ConceptLink>, sin recurrir a sistemas de coordenadas numéricas ni fórmulas algebraicas.
 
-Este enfoque se contrapone conceptualmente a la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink> de <ConceptLink targetId="descartes">René Descartes</ConceptLink> y <ConceptLink targetId="fermat">Pierre de Fermat</ConceptLink>, donde los puntos se identifican con elementos de $\mathbb{R}^n$ y las demostraciones se transforman en cálculo <ConceptLink targetId="algebra">algebraico</ConceptLink>.
+Este enfoque se contrapone a la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink>, iniciada por <ConceptLink targetId="descartes">René Descartes</ConceptLink> y <ConceptLink targetId="fermat">Pierre de Fermat</ConceptLink>, en la que los puntos se identifican con elementos de $\mathbb{R}^n$ y las demostraciones se transforman en cálculo <ConceptLink targetId="algebra">algebraico</ConceptLink>.
 
 <Definicion title="Definición Conceptual">
   La **geometría sintética** es el método geométrico caracterizado por:
-  1. **Autonomía estructural:** Las propiedades geométricas se deducen mediante razonamientos lógicos y construcciones a partir de un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formal.
+  1. **Autonomía estructural:** Las propiedades geométricas se deducen mediante razonamientos lógicos y construcciones a partir de un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink>.
   2. **Independencia de coordenadas:** No presupone una escala métrica numérica preexistente ni un sistema de referencia <ConceptLink targetId="modelo-cartesiano">cartesiano</ConceptLink>.
 </Definicion>
 
@@ -27,6 +28,6 @@ Este enfoque se contrapone conceptualmente a la <ConceptLink targetId="geometria
 
 ### Evolución histórica del método sintético
 
-- **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana clásica</ConceptLink>:** Fundada por <ConceptLink targetId="euclides">Euclides</ConceptLink> en los <ConceptLink targetId="elementos-euclides">*Elementos*</ConceptLink>, basada en definiciones en lenguaje común, cinco <ConceptLink targetId="axioma">postulados</ConceptLink> y nociones comunes.
-- **<ConceptLink targetId="geometria-proyectiva">Geometría proyectiva</ConceptLink> sintética (siglo XIX):** Desarrollada por <ConceptLink targetId="poncelet">Jean-Victor Poncelet</ConceptLink>, <ConceptLink targetId="steiner">Jakob Steiner</ConceptLink> y <ConceptLink targetId="staudt">Karl von Staudt</ConceptLink>, mostró que conceptos como la <ConceptLink targetId="razon-doble">razón doble</ConceptLink> y la <ConceptLink targetId="perspectividad">perspectividad</ConceptLink> pueden fundarse sin referencia métrica.
+- **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana clásica</ConceptLink>:** Sistematizada por <ConceptLink targetId="euclides">Euclides</ConceptLink> en los <ConceptLink targetId="elementos-euclides">*Elementos*</ConceptLink>, basada en definiciones en lenguaje común, cinco <ConceptLink targetId="axioma">postulados</ConceptLink> y nociones comunes.
+- **<ConceptLink targetId="geometria-proyectiva">Geometría proyectiva</ConceptLink> sintética (siglo XIX):** Iniciada por <ConceptLink targetId="poncelet">Jean-Victor Poncelet</ConceptLink>, que estudió las propiedades de las figuras que se conservan por proyección central (<ConceptLink targetId="perspectividad">perspectividad</ConceptLink>) y sección, y desarrollada por <ConceptLink targetId="steiner">Jakob Steiner</ConceptLink> y <ConceptLink targetId="staudt">Karl von Staudt</ConceptLink>. Von Staudt la fundó sin referencia métrica: sustituyó la definición de la <ConceptLink targetId="razon-doble">razón doble</ConceptLink> mediante <ConceptLink targetId="distancia">distancias</ConceptLink> por construcciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink>.
 - **Refundación axiomática formal:** Desarrollada a finales del siglo XIX por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> y <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink>, y culminada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, que eliminó las apelaciones a la intuición visual y estableció el <ConceptLink targetId="metodo-axiomatico">método axiomático</ConceptLink> moderno.

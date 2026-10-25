@@ -9,17 +9,18 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book I", role: "primary" },
-    { title: "Traité des propriétés projectives des figures", author: "Jean-Victor Poncelet", locator: "Introduction", role: "secondary" }
+    { title: "Traité des propriétés projectives des figures", author: "Jean-Victor Poncelet", locator: "Introduction", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" }
   ]
 };
 
 <Capitular letra="S" />**ynthetic geometry** (or pure geometry) is the axiomatic and deductive approach that investigates the properties of geometric figures directly from <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> (such as <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>) and <ConceptLink targetId="axioma">axioms</ConceptLink>, without relying on numerical coordinate systems or algebraic formulas.
 
-This methodology conceptually contrasts with <ConceptLink targetId="descartes">René Descartes</ConceptLink> and <ConceptLink targetId="fermat">Pierre de Fermat's</ConceptLink> <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink>, where points are identified with elements of $\mathbb{R}^n$ and geometric proofs are reduced to <ConceptLink targetId="algebra">algebraic computations</ConceptLink>.
+This approach contrasts with <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink>, initiated by <ConceptLink targetId="descartes">René Descartes</ConceptLink> and <ConceptLink targetId="fermat">Pierre de Fermat</ConceptLink>, in which points are identified with elements of $\mathbb{R}^n$ and geometric proofs are reduced to <ConceptLink targetId="algebra">algebraic computations</ConceptLink>.
 
 <Definicion title="Conceptual Definition">
   **Synthetic geometry** is characterized by:
-  1. **Structural autonomy:** Geometric properties are deduced through logical reasoning and constructions from a formal <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>.
+  1. **Structural autonomy:** Geometric properties are deduced through logical reasoning and constructions from an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>.
   2. **Coordinate independence:** It presupposes no pre-existing numeric metric scale or <ConceptLink targetId="modelo-cartesiano">Cartesian</ConceptLink> coordinate frame.
 </Definicion>
 
@@ -27,6 +28,6 @@ This methodology conceptually contrasts with <ConceptLink targetId="descartes">R
 
 ### Historical evolution of the synthetic method
 
-- **<ConceptLink targetId="sistema-euclidiano">Classical Euclidean geometry</ConceptLink>:** Founded by <ConceptLink targetId="euclides">Euclid</ConceptLink> in the <ConceptLink targetId="elementos-euclides">*Elements*</ConceptLink>, grounded in definitions in plain language, five <ConceptLink targetId="axioma">postulates</ConceptLink>, and common notions.
-- **Synthetic <ConceptLink targetId="geometria-proyectiva">projective geometry</ConceptLink> (19th century):** Developed by <ConceptLink targetId="poncelet">Jean-Victor Poncelet</ConceptLink>, <ConceptLink targetId="steiner">Jakob Steiner</ConceptLink>, and <ConceptLink targetId="staudt">Karl von Staudt</ConceptLink>, showed that concepts such as the <ConceptLink targetId="razon-doble">cross-ratio</ConceptLink> and <ConceptLink targetId="perspectividad">perspectivity</ConceptLink> can be founded without metric reference.
+- **<ConceptLink targetId="sistema-euclidiano">Classical Euclidean geometry</ConceptLink>:** Systematized by <ConceptLink targetId="euclides">Euclid</ConceptLink> in the <ConceptLink targetId="elementos-euclides">*Elements*</ConceptLink>, grounded in definitions in plain language, five <ConceptLink targetId="axioma">postulates</ConceptLink>, and common notions.
+- **Synthetic <ConceptLink targetId="geometria-proyectiva">projective geometry</ConceptLink> (19th century):** Initiated by <ConceptLink targetId="poncelet">Jean-Victor Poncelet</ConceptLink>, who studied the properties of figures preserved under central projection (<ConceptLink targetId="perspectividad">perspectivity</ConceptLink>) and section, and developed by <ConceptLink targetId="steiner">Jakob Steiner</ConceptLink> and <ConceptLink targetId="staudt">Karl von Staudt</ConceptLink>. Von Staudt founded it without metric reference: he replaced the definition of the <ConceptLink targetId="razon-doble">cross-ratio</ConceptLink> by <ConceptLink targetId="distancia">distances</ConceptLink> with <ConceptLink targetId="incidencia">incidence</ConceptLink> constructions.
 - **Formal axiomatic refoundation:** Developed at the end of the 19th century by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> and <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> and brought to fruition by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, which eliminated appeals to visual intuition and established the modern <ConceptLink targetId="metodo-axiomatico">axiomatic method</ConceptLink>.
