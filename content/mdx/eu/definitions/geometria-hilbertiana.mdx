@@ -10,13 +10,14 @@ export const metadata = {
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. Kapitulua", role: "primary" },
-    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "2. Kapitulua", role: "secondary" }
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "2. Kapitulua", role: "secondary" },
+    { title: "On the projective axioms of geometry", author: "E. H. Moore", locator: "Trans. Amer. Math. Soc. 3 (1902), 142–158", role: "secondary" }
   ]
 };
 
 <Capitular letra="G" />**eometria hilbertiarra** <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* (1899) lanean garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> <ConceptLink targetId="sistema-axiomatico">sistema axiomatiko</ConceptLink> formala da. Hemen 7. argitalpenaren (1930) arabera aipatzen da: lehenengoak beste ordena batean zituen taldeak (paraleloak kongruentziaren aurretik) eta ordena-axioma erredundante bat zuen, <ConceptLink targetId="moore">E. H. Moorek</ConceptLink> 1902an adierazi zuena.
 
-<ConceptLink targetId="metodo-axiomatico">Metodo axiomatiko</ConceptLink> modernoaren eredua da: intuizio espaziala alde batera uzten du, eta <ConceptLink targetId="concepto-primitivo">oinarrizko objektuak</ConceptLink> <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazioen bidez soilik ezaugarritzen ditu.
+<ConceptLink targetId="metodo-axiomatico">Metodo axiomatiko</ConceptLink> modernoa aplikatzen du: intuizio espaziala alde batera uzten du, eta <ConceptLink targetId="concepto-primitivo">oinarrizko objektuak</ConceptLink> <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazioen bidez soilik ezaugarritzen ditu.
 
 <Definicion title="Hilberten Egitura eta Signatura (3D)">
   **Hiru dimentsioko geometria hilbertiarra** <ConceptLink targetId="logica">mota anitzeko logikako</ConceptLink> <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> baten bidez modelatzen da; egitura horrek behean deskribatutako 20 axiomen $\mathcal{T}_{\text{Hil}}$ multzoa betetzen du. Egitura <ConceptLink targetId="conjunto-disjunto">binaka disjuntuak diren</ConceptLink> hiru <ConceptLink targetId="dominio">domeinuz</ConceptLink> eta bost <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioz</ConceptLink> osatuta dago, eta horiek haren <ConceptLink targetId="signatura">signaturako</ConceptLink> ikurrak interpretatzen dituzte:
@@ -24,10 +25,10 @@ export const metadata = {
   \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   non:
-  - $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ <ConceptLink targetId="punto">puntuen</ConceptLink>, <ConceptLink targetId="recta">zuzenen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> domeinu disjuntuak diren.
-  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ eta $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ puntu-zuzen eta puntu-plano <ConceptLink targetId="incidencia">intzidentziako</ConceptLink> <ConceptLink targetId="relacion-binaria">erlazio bitarrak</ConceptLink> diren.
-  - $\mathbf{B} \subseteq \mathcal{P}^3$ <ConceptLink targetId="estar-entre">ordenako eta bitartekotasuneko</ConceptLink> erlazio hirutarra den ($A * B * C$).
-  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ <ConceptLink targetId="segmento">zuzenkien</ConceptLink> (puntu-pareen) <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den.
+  - $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink>, <ConceptLink targetId="recta" isDependency={true}>zuzenen</ConceptLink> eta <ConceptLink targetId="plano" isDependency={true}>planoen</ConceptLink> domeinu disjuntuak diren.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ eta $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ puntu-zuzen eta puntu-plano <ConceptLink targetId="incidencia" isDependency={true}>intzidentziako</ConceptLink> <ConceptLink targetId="relacion-binaria">erlazio bitarrak</ConceptLink> diren.
+  - $\mathbf{B} \subseteq \mathcal{P}^3$ <ConceptLink targetId="estar-entre" isDependency={true}>ordenako eta bitartekotasuneko</ConceptLink> erlazio hirutarra den ($A * B * C$).
+  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ <ConceptLink targetId="segmento">zuzenkien</ConceptLink> (puntu-pareen) <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia-erlazioa</ConceptLink> den.
   - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den (<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren puntu-hirukoteen artean, $\angle ABC \cong \angle DEF$, edo, baliokideki, jatorri bereko <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> ez-kolinealen pareen artean).
 </Definicion>
 
@@ -52,7 +53,7 @@ Sistemak bost taldetan antolatutako 20 axioma ditu:
       title="Axioma jakin batzuen independentzia"
       formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      II. kapituluan, Hilbertek sistemaren <ConceptLink targetId="consistencia-logica">koherentzia</ConceptLink> aritmetikarekiko frogatzen du eta, axioma guztiak bat izan ezik betetzen dituzten <ConceptLink targetId="modelo">ereduen</ConceptLink> bidez, axioma jakin batzuen <ConceptLink targetId="independencia-logica">independentzia</ConceptLink>: paraleloen axiomarena (IV), kongruentziako azkenarena (III.5) eta Arkimedesenarena (V.1). Ez da talde bakoitzak gainerakoekiko duen independentzia globala. Taldekako antolaketak, hala ere, azpisistemak bereiztea ahalbidetzen du, hala nola <ConceptLink targetId="sistema-incidencia">intzidentzia-geometria</ConceptLink>, geometria ordenatua edo <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>.
+      II. kapituluan, Hilbertek sistemaren <ConceptLink targetId="consistencia-logica">koherentzia</ConceptLink> aritmetikarekiko frogatzen du eta, axioma guztiak bat izan ezik betetzen dituzten <ConceptLink targetId="modelo">ereduen</ConceptLink> bidez, axioma jakin batzuen <ConceptLink targetId="independencia-logica">independentzia</ConceptLink>: paraleloen axiomarena (IV), kongruentziako azkenarena (III.5) eta Arkimedesenarena (V.1). Ez da talde bakoitzak gainerakoekiko duen independentzia globala. Taldekako antolaketak, hala ere, azpisistemak bereiztea ahalbidetzen du, hala nola <ConceptLink targetId="sistema-incidencia">intzidentzia-geometria</ConceptLink>, <ConceptLink targetId="geometria-ordenada">geometria ordenatua</ConceptLink> edo <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -10,13 +10,14 @@ export const metadata = {
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter II", role: "primary" },
-    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 2", role: "secondary" }
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 2", role: "secondary" },
+    { title: "On the projective axioms of geometry", author: "E. H. Moore", locator: "Trans. Amer. Math. Soc. 3 (1902), 142–158", role: "secondary" }
   ]
 };
 
 <Capitular letra="H" />**ilbertian geometry** is the formal <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in *Grundlagen der Geometrie* (1899). It is cited here from the 7th edition (1930): the first edition ordered the groups differently (parallels before congruence) and included a redundant order axiom, pointed out by <ConceptLink targetId="moore">E. H. Moore</ConceptLink> in 1902.
 
-It is the model of the modern <ConceptLink targetId="metodo-axiomatico">axiomatic method</ConceptLink>: it dispenses with spatial intuition and characterizes the <ConceptLink targetId="concepto-primitivo">primitive objects</ConceptLink> solely through the relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose among them.
+It applies the modern <ConceptLink targetId="metodo-axiomatico">axiomatic method</ConceptLink>: it dispenses with spatial intuition and characterizes the <ConceptLink targetId="concepto-primitivo">primitive objects</ConceptLink> solely through the relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose among them.
 
 <Definicion title="Hilbert's Structure and Signature (3D)">
   **Three-dimensional Hilbertian geometry** is modeled by a <ConceptLink targetId="logica">many-sorted</ConceptLink> mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> that satisfies the set $\mathcal{T}_{\text{Hil}}$ of the 20 axioms described below. The structure consists of three <ConceptLink targetId="conjunto-disjunto">pairwise disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink> and five <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, which interpret the symbols of its <ConceptLink targetId="signatura">signature</ConceptLink>:
@@ -24,10 +25,10 @@ It is the model of the modern <ConceptLink targetId="metodo-axiomatico">axiomati
   \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   where:
-  - $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the disjoint domains of <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>.
-  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ and $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ are the typed point-line and point-plane <ConceptLink targetId="incidencia">incidence</ConceptLink> <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>.
-  - $\mathbf{B} \subseteq \mathcal{P}^3$ is the ternary <ConceptLink targetId="estar-entre">order and betweenness</ConceptLink> relation ($A * B * C$).
-  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="segmento">segments</ConceptLink> (point pairs).
+  - $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the disjoint domains of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink>, and <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink>.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ and $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ are the typed point-line and point-plane <ConceptLink targetId="incidencia" isDependency={true}>incidence</ConceptLink> <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>.
+  - $\mathbf{B} \subseteq \mathcal{P}^3$ is the ternary <ConceptLink targetId="estar-entre" isDependency={true}>order and betweenness</ConceptLink> relation ($A * B * C$).
+  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ is the <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink> relation for <ConceptLink targetId="segmento">segments</ConceptLink> (point pairs).
   - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="angulo">angles</ConceptLink> (between non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> point triples, $\angle ABC \cong \angle DEF$, or, equivalently, between pairs of non-collinear <ConceptLink targetId="semirrecta">rays</ConceptLink> with a common origin).
 </Definicion>
 
@@ -52,7 +53,7 @@ The system consists of 20 axioms organized into five groups:
       title="Independence of Specific Axioms"
       formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      In Chapter II, Hilbert proves the <ConceptLink targetId="consistencia-logica">consistency</ConceptLink> of the system relative to arithmetic and, through <ConceptLink targetId="modelo">models</ConceptLink> satisfying all axioms but one, the <ConceptLink targetId="independencia-logica">independence</ConceptLink> of specific axioms: the parallel axiom (IV), the last congruence axiom (III.5), and the Archimedean axiom (V.1). This is not a global independence of each group from the others. The grouping nonetheless allows subsystems to be isolated, such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, ordered geometry, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+      In Chapter II, Hilbert proves the <ConceptLink targetId="consistencia-logica">consistency</ConceptLink> of the system relative to arithmetic and, through <ConceptLink targetId="modelo">models</ConceptLink> satisfying all axioms but one, the <ConceptLink targetId="independencia-logica">independence</ConceptLink> of specific axioms: the parallel axiom (IV), the last congruence axiom (III.5), and the Archimedean axiom (V.1). This is not a global independence of each group from the others. The grouping nonetheless allows subsystems to be isolated, such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, <ConceptLink targetId="geometria-ordenada">ordered geometry</ConceptLink>, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
