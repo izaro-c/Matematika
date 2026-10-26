@@ -10015,12 +10015,16 @@
         }
       ],
       "conceptLinks": [
+        "lenguaje-formal",
+        "demostracion",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
+        "formula",
         "axioma",
+        "modus-ponens",
         "teorema",
         "geometria-sintetica",
         "hilbert",
@@ -10031,8 +10035,7 @@
         "recta",
         "plano",
         "relacion-binaria",
-        "incidencia",
-        "consistencia-logica"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -10080,12 +10083,16 @@
         }
       ],
       "conceptLinks": [
+        "lenguaje-formal",
+        "demostracion",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
+        "formula",
         "axioma",
+        "modus-ponens",
         "teorema",
         "geometria-sintetica",
         "hilbert",
@@ -10096,8 +10103,7 @@
         "recta",
         "plano",
         "relacion-binaria",
-        "incidencia",
-        "consistencia-logica"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -31380,12 +31386,16 @@
         }
       ],
       "conceptLinks": [
+        "lenguaje-formal",
+        "demostracion",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
+        "formula",
         "axioma",
+        "modus-ponens",
         "teorema",
         "geometria-sintetica",
         "hilbert",
@@ -31396,8 +31406,7 @@
         "recta",
         "plano",
         "relacion-binaria",
-        "incidencia",
-        "consistencia-logica"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -44558,12 +44567,16 @@
         }
       ],
       "conceptLinks": [
+        "lenguaje-formal",
+        "demostracion",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
+        "formula",
         "conjunto",
         "axioma",
+        "modus-ponens",
         "teorema",
         "hilbert",
         "geometria-sintetica",
@@ -44574,8 +44587,7 @@
         "recta",
         "plano",
         "relacion-binaria",
-        "incidencia",
-        "consistencia-logica"
+        "incidencia"
       ],
       "availableLangs": [
         "en",
