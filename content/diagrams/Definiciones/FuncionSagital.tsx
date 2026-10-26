@@ -80,7 +80,6 @@ export const FuncionSagitalSpec = createDiagramSpec(
       "locked": false,
       "selection": {
         "selectable": true,
-        "dimOthersOnHighlight": false,
         "ariaLabel": "Resaltar las flechas: los pares de la relación",
         "role": "secondary"
       },

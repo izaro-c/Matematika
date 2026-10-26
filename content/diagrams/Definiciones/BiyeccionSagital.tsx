@@ -79,7 +79,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "locked": false,
       "selection": {
         "selectable": true,
-        "dimOthersOnHighlight": false,
         "ariaLabel": "Resaltar las flechas de f",
         "role": "secondary"
       },
@@ -99,7 +98,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       "locked": false,
       "selection": {
         "selectable": true,
-        "dimOthersOnHighlight": false,
         "ariaLabel": "Resaltar las flechas invertidas",
         "role": "secondary"
       },

@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 18 / 190
+Revisadas: 19 / 190
 
 ## Pendientes
 
-- [ ] `isomorfismo` · definitions
 - [ ] `logica` · definitions
 - [ ] `numero-natural` · definitions
 - [ ] `operacion-binaria` · definitions
@@ -199,3 +198,4 @@ Revisadas: 18 / 190
 - [x] `incidencia` · 2026-10-26 · mejoras · corregido b44a97dc · [informe](2026-10-26-incidencia.md) · $0.8
 - [x] `interseccion` · 2026-10-26 · errores · corregido 273482d8 · propuestas 2d50f20c · [informe](2026-10-26-interseccion.md) · $1.18
 - [x] `conjunto-disjunto` · 2026-10-26 · errores · corregido 3a8a9bae · propuestas f042426f · [informe](2026-10-26-conjunto-disjunto.md) · $2.4
+- [x] `isomorfismo` · 2026-10-26 · errores · corregido 318f3b6c · propuestas 6baf1d17 · [informe](2026-10-26-isomorfismo.md) · $1.61

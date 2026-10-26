@@ -15,3 +15,4 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `geometria-sintetica` · 2026-10-25 · `4b282eea` · [informe](2026-10-25-geometria-sintetica.md)
 - [ ] `interseccion` · 2026-10-26 · `2d50f20c` · [informe](2026-10-26-interseccion.md)
 - [ ] `conjunto-disjunto` · 2026-10-26 · `f042426f` · [informe](2026-10-26-conjunto-disjunto.md)
+- [ ] `isomorfismo` · 2026-10-26 · `6baf1d17` · [informe](2026-10-26-isomorfismo.md)

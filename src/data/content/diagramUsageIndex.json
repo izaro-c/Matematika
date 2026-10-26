@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "90488f96370ef57b3074fe7bbfdf6bb18f1a58d6022c22f5749be7ceb0581a42",
+  "corpusHash": "46c8164528b5272e68420f0e98c157fdb93db7b3fce9c017bf8bfe301bfa3388",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -42,6 +42,7 @@
     "EstarEntre": "content/diagrams/Definiciones/EstarEntre.tsx",
     "FuncionSagital": "content/diagrams/Definiciones/FuncionSagital.tsx",
     "Interseccion": "content/diagrams/Definiciones/Interseccion.tsx",
+    "IsomorfismoRelacion": "content/diagrams/Definiciones/IsomorfismoRelacion.tsx",
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
@@ -1334,6 +1335,38 @@
           "end": 670
         },
         "blockId": "interseccion:diagram:Interseccion"
+      }
+    ],
+    "IsomorfismoRelacion": [
+      {
+        "contentId": "isomorfismo",
+        "contentPath": "content/mdx/en/definitions/isomorfismo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 661,
+          "end": 706
+        },
+        "blockId": "isomorfismo:diagram:IsomorfismoRelacion"
+      },
+      {
+        "contentId": "isomorfismo",
+        "contentPath": "content/mdx/es/definitions/isomorfismo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 662,
+          "end": 707
+        },
+        "blockId": "isomorfismo:diagram:IsomorfismoRelacion"
+      },
+      {
+        "contentId": "isomorfismo",
+        "contentPath": "content/mdx/eu/definitions/isomorfismo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 671,
+          "end": 716
+        },
+        "blockId": "isomorfismo:diagram:IsomorfismoRelacion"
       }
     ],
     "Lado": [

@@ -97,6 +97,7 @@
     "geometria-sintetica",
     "hipotenusa",
     "interior-triangulo",
+    "signatura",
     "isomorfismo",
     "logica",
     "segmento-unidad",
@@ -108,7 +109,6 @@
     "region-triangular",
     "region-poligonal",
     "semejanza",
-    "signatura",
     "sistema-axiomatico",
     "subconjunto",
     "teorema",
@@ -1130,6 +1130,8 @@
       "description": "Biyección entre dos estructuras matemáticas que preserva todas las operaciones, relaciones y constantes de su signatura formal.",
       "proofs": [],
       "directDependencies": [
+        "estructura-geometrica",
+        "signatura",
         "biyeccion"
       ]
     },

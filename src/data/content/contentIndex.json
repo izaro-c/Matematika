@@ -9595,7 +9595,7 @@
         "08A",
         "20"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "A Shorter Model Theory",
@@ -9618,19 +9618,27 @@
         "dominio",
         "biyeccion",
         "funcion",
+        "punto",
+        "recta",
+        "plano",
+        "equivalencia-logica",
+        "implicacion",
+        "funcion-identidad",
         "teoria-modelos",
         "categoricidad",
         "sistema-axiomatico",
-        "dimension",
         "sistema-euclidiano",
+        "dimension",
         "continuidad",
         "modelo-cartesiano",
         "simetria",
+        "automorfismo",
         "conjunto",
         "grupo",
-        "dualidad",
-        "incidencia",
-        "modelo-fano"
+        "composicion-funciones",
+        "modelo-fano",
+        "colineacion",
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -9662,7 +9670,7 @@
         "08A",
         "20"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "A Shorter Model Theory",
@@ -9685,6 +9693,12 @@
         "dominio",
         "biyeccion",
         "funcion",
+        "punto",
+        "recta",
+        "plano",
+        "equivalencia-logica",
+        "implicacion",
+        "funcion-identidad",
         "teoria-modelos",
         "categoricidad",
         "sistema-axiomatico",
@@ -9693,11 +9707,13 @@
         "continuidad",
         "modelo-cartesiano",
         "simetria",
+        "automorfismo",
         "conjunto",
         "grupo",
-        "incidencia",
-        "dualidad",
-        "modelo-fano"
+        "composicion-funciones",
+        "modelo-fano",
+        "colineacion",
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -31146,7 +31162,7 @@
         "08A",
         "20"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "A Shorter Model Theory",
@@ -31169,6 +31185,12 @@
         "dominio",
         "biyeccion",
         "funcion",
+        "punto",
+        "recta",
+        "plano",
+        "equivalencia-logica",
+        "implicacion",
+        "funcion-identidad",
         "teoria-modelos",
         "categoricidad",
         "sistema-axiomatico",
@@ -31177,11 +31199,13 @@
         "continuidad",
         "modelo-cartesiano",
         "simetria",
+        "automorfismo",
         "conjunto",
         "grupo",
-        "incidencia",
-        "dualidad",
-        "modelo-fano"
+        "composicion-funciones",
+        "modelo-fano",
+        "colineacion",
+        "incidencia"
       ],
       "availableLangs": [
         "en",
@@ -44316,7 +44340,7 @@
         "08A",
         "20"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "A Shorter Model Theory",
@@ -44339,19 +44363,27 @@
         "dominio",
         "biyeccion",
         "funcion",
+        "punto",
+        "recta",
+        "plano",
+        "equivalencia-logica",
+        "implicacion",
+        "funcion-identidad",
         "teoria-modelos",
         "categoricidad",
         "sistema-axiomatico",
-        "continuidad",
-        "dimension",
         "sistema-euclidiano",
+        "dimension",
+        "continuidad",
         "modelo-cartesiano",
         "simetria",
+        "automorfismo",
         "conjunto",
         "grupo",
+        "composicion-funciones",
         "modelo-fano",
-        "incidencia",
-        "dualidad"
+        "colineacion",
+        "incidencia"
       ],
       "availableLangs": [
         "en",

@@ -7,24 +7,23 @@ export const metadata = {
   description: "Biyección entre dos estructuras matemáticas que preserva todas las operaciones, relaciones y constantes de su signatura formal.",
   branch: "03C",
   branches: ["08A", "20"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "A Shorter Model Theory", author: "Wilfrid Hodges", locator: "Capítulo 1", role: "primary" },
     { title: "Lattice Theory", author: "Garrett Birkhoff", locator: "Capítulo 1", role: "secondary" }
   ]
 };
 
-<Capitular letra="U" />n **isomorfismo** es una correspondencia biunívoca entre dos sistemas o <ConceptLink targetId="estructura-geometrica">estructuras matemáticas</ConceptLink> que comparten la misma <ConceptLink targetId="signatura">signatura</ConceptLink>, de tal modo que se preservan íntegramente las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink>, las operaciones y las constantes distinguidas.
+import { IsomorfismoRelacion } from '@content/diagrams/Definiciones/IsomorfismoRelacion';
+export const Simulation = IsomorfismoRelacion;
 
-Dos estructuras isomorfas son indistinguibles desde la perspectiva de las propiedades expresables en el lenguaje formal de la <ConceptLink targetId="logica">lógica</ConceptLink>: cualquier enunciado verdadero en una de ellas es necesariamente verdadero en la otra, variando únicamente la naturaleza empírica o la nomenclatura de sus elementos base.
+<Capitular letra="U" />n **isomorfismo** es una correspondencia biunívoca entre dos <ConceptLink targetId="estructura-geometrica" isDependency={true}>estructuras matemáticas</ConceptLink> que comparten la misma <ConceptLink targetId="signatura" isDependency={true}>signatura</ConceptLink>, de tal modo que se preservan las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink>, las operaciones y las constantes distinguidas.
+
+Dos estructuras isomorfas satisfacen los mismos enunciados de la <ConceptLink targetId="logica">lógica</ConceptLink> escritos con su signatura: solo se distinguen por la naturaleza de sus elementos, de la que ningún símbolo de la signatura habla.
 
 <Definicion title="Definición formal de isomorfismo">
-  Sean $\mathcal{M}$ y $\mathcal{N}$ dos estructuras sobre una signatura $\sigma$ con <ConceptLink targetId="dominio">dominios</ConceptLink> $M$ y $N$ respectivamente. Una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink>
-  $$
-  f\colon M \longrightarrow N
-  $$
-  es un **isomorfismo** de $\mathcal{M}$ en $\mathcal{N}$ (notado $\mathcal{M} \cong \mathcal{N}$) si satisface:
-  1. Para cada símbolo de relación $n$-aria $R \in \sigma$ y para cualesquiera $a_1, \dots, a_n \in M$:
+  Sean <VisualBind element="estructura-m" color="carbon">$\mathcal{M}$</VisualBind> y <VisualBind element="estructura-n" color="carbon">$\mathcal{N}$</VisualBind> dos estructuras sobre una signatura $\sigma$ con <ConceptLink targetId="dominio">dominios</ConceptLink> <VisualBind element="dominio-m" color="carbon">$M$</VisualBind> y <VisualBind element="dominio-n" color="carbon">$N$</VisualBind> respectivamente. Una <ConceptLink targetId="biyeccion" isDependency={true}>biyección</ConceptLink> <VisualBind element="biyeccion-f" color="terracota">$f\colon M \longrightarrow N$</VisualBind> es un **isomorfismo** de $\mathcal{M}$ en $\mathcal{N}$ si satisface:
+  1. Para cada símbolo de relación $n$-aria $R \in \sigma$, que $\mathcal{M}$ interpreta como <VisualBind element="relacion-m" color="mora">$R^{\mathcal{M}} \subseteq M^n$</VisualBind> y $\mathcal{N}$ como <VisualBind element="relacion-n" color="mora">$R^{\mathcal{N}} \subseteq N^n$</VisualBind>, y para cualesquiera $a_1, \dots, a_n \in M$:
      $$
      (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
      $$
@@ -36,13 +35,17 @@ Dos estructuras isomorfas son indistinguibles desde la perspectiva de las propie
      $$
      f(c^{\mathcal{M}}) = c^{\mathcal{N}}
      $$
+
+  Si $\sigma$ tiene varios tipos, como la signatura de la geometría con <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>, cada estructura tiene un dominio por tipo y $f$ es una familia de biyecciones, una por tipo; en las condiciones anteriores, cada $a_i$ se transforma con la biyección de su tipo. Las estructuras son *isomorfas*, $\mathcal{M} \cong \mathcal{N}$, si existe un isomorfismo de $\mathcal{M}$ en $\mathcal{N}$.
 </Definicion>
+
+La condición 1 pide la <ConceptLink targetId="equivalencia-logica">equivalencia</ConceptLink>, no solo la <ConceptLink targetId="implicacion">implicación</ConceptLink> $\Rightarrow$. Si $R^{\mathcal{M}} = \emptyset$ y $R^{\mathcal{N}} \neq \emptyset$ sobre el mismo dominio, la <ConceptLink targetId="funcion-identidad">identidad</ConceptLink> cumple $\Rightarrow$ sin ser un isomorfismo.
 
 <Separador />
 
 ### Categoricidad y automorfismos
 
-En la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, la existencia de isomorfismos fundamenta nociones estructurales clave:
+Dos nociones de la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink> se definen mediante isomorfismos:
 
-- **<ConceptLink targetId="categoricidad">Categoricidad</ConceptLink>:** Un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> es categórico si todos sus modelos son mutuamente isomorfos. Por ejemplo, el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> <ConceptLink targetId="dimension">tridimensional</ConceptLink> completo con axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> es categórico: todo modelo que satisface sus axiomas es isomorfo al <ConceptLink targetId="modelo-cartesiano">espacio cartesiano</ConceptLink> $\mathbb{R}^3$.
-- **Automorfismos y <ConceptLink targetId="simetria">simetría</ConceptLink>:** Un isomorfismo de una estructura en sí misma ($\mathcal{M} \cong \mathcal{M}$) se denomina *automorfismo*. El <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los automorfismos forma un <ConceptLink targetId="grupo">grupo</ConceptLink> que captura algebraicamente las simetrías internas de la estructura, como ocurre con las transformaciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink> <ConceptLink targetId="dualidad">autoduales</ConceptLink> en el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>.
+- **<ConceptLink targetId="categoricidad">Categoricidad</ConceptLink>:** Un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> es categórico si todos sus modelos son mutuamente isomorfos. Por ejemplo, el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, que es <ConceptLink targetId="dimension">tridimensional</ConceptLink> e incluye los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink>, es categórico: todo modelo que satisface sus axiomas es isomorfo al <ConceptLink targetId="modelo-cartesiano">espacio cartesiano</ConceptLink> $\mathbb{R}^3$.
+- **Automorfismos y <ConceptLink targetId="simetria">simetría</ConceptLink>:** Un isomorfismo de $\mathcal{M}$ en $\mathcal{M}$ se denomina <ConceptLink targetId="automorfismo">automorfismo</ConceptLink>. El <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los automorfismos forma un <ConceptLink targetId="grupo">grupo</ConceptLink> con la <ConceptLink targetId="composicion-funciones">composición</ConceptLink>, que captura algebraicamente las simetrías internas de la estructura. En el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>, por ejemplo, los automorfismos son las <ConceptLink targetId="colineacion">colineaciones</ConceptLink>, que permutan los puntos y las rectas conservando la <ConceptLink targetId="incidencia">incidencia</ConceptLink>, y forman un grupo de 168 elementos.

@@ -11,6 +11,7 @@ import {
   type MathBoardSafeArea,
 } from '@/diagrams/jsxgraph/mathBoardViewport';
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
+import { keepArrowTransitions } from '@/diagrams/jsxgraph/arrowMarkerTransitions';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 import { useDiagramPaintReport } from '@/components/ui/skeletons';
 import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
@@ -266,6 +267,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       showCopyright: false,
       showNavigation: false,
     });
+    keepArrowTransitions(board as any);
 
     // JSXGraph replaces accessibility attributes while initializing its
     // container. Restore the editor-owned name and instructions afterwards.

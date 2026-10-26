@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 119,
-      "exported": 71
+      "none": 118,
+      "exported": 72
     },
     "theoremLike": {
       "total": 21,
@@ -996,9 +996,11 @@
       "type": "definicion",
       "title": "Isomorfismoa",
       "filePath": "eu/definitions/isomorfismo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
