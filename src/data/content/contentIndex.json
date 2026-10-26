@@ -10565,7 +10565,7 @@
         "11A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Arithmetices principia, nova methodo exposita",
@@ -10636,7 +10636,7 @@
         "11A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Arithmetices principia, nova methodo exposita",
@@ -31659,7 +31659,7 @@
         "11A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Arithmetices principia, nova methodo exposita",
@@ -44843,7 +44843,7 @@
         "11A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Arithmetices principia, nova methodo exposita",

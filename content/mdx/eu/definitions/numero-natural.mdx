@@ -7,19 +7,22 @@ export const metadata = {
   description: "Zenbatzeko eta sekuentzialki ordenatzeko zenbaki-sistema diskretua, Peanoren postulatuen bidez axiomatikoki karakterizatua.",
   branch: "11A",
   branches: ["11A", "03E"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Arithmetices principia, nova methodo exposita", author: "Giuseppe Peano", locator: "1889", role: "primary" },
     { title: "Was sind und was sollen die Zahlen?", author: "Richard Dedekind", locator: "1888", role: "secondary" }
   ]
 };
 
+import { PeanoSucesor } from '@content/diagrams/Definiciones/PeanoSucesor';
+export const Simulation = PeanoSucesor;
+
 <Capitular letra="Z" />enbaki **arruntak** <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ren oinarrian dagoen zenbaki-sistema diskretua dira, <ConceptLink targetId="conjunto-finito">multzo finitu</ConceptLink> bateko elementuak zenbatzeko eta haiek segidan ordenatzeko lehen mailako eragiketak formalizatuz.
 
 <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink>k formalizatu eta <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>ek aurreratuta, zenbaki arruntak hasierako elementu batez eta <ConceptLink targetId="sucesor">ondorengo-funtzio</ConceptLink> batez karakterizatutako <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> gisa uler daitezke. Era berean, <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> <ConceptLink targetId="ordinales-von-neumann">von Neumannen ordinalen</ConceptLink> bidez eraikitzen dira, non zenbaki bakoitza haren aurretik dauden zenbaki arrunt guztien multzo gisa definitzen den.
 
 <Definicion title="Peanoren axiomatika zenbaki arruntetarako">
-  **Zenbaki arrunt**en sistema bat $(\mathbb{N}, 0, S)$ hirukote bat da, $\mathbb{N}$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek, $0 \in \mathbb{N}$ elementu berezi batek eta $S \colon \mathbb{N} \to \mathbb{N}$ <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> batek (<ConceptLink targetId="sucesor">ondorengo-funtzioa</ConceptLink> deitua) osatua, honako hauek betetzen direlarik:
+  **Zenbaki arrunt**en sistema bat $(\mathbb{N}, 0, S)$ hirukote bat da, <VisualBind element="conjuntoN" color="carbon">$\mathbb{N}$</VisualBind> <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek, <VisualBind element="e0" color="mora">$0 \in \mathbb{N}$</VisualBind> elementu berezi batek eta <VisualBind element="flechas" color="terracota">$S \colon \mathbb{N} \to \mathbb{N}$</VisualBind> <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> batek (<ConceptLink targetId="sucesor">ondorengo-funtzioa</ConceptLink> deitua) osatua, honako hauek betetzen direlarik:
   1. $0$ elementua ez da inongo zenbaki arruntaren ondorengoa:
      $$
      \forall n \in \mathbb{N}, \quad S(n) \neq 0

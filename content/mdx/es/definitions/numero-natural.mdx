@@ -7,19 +7,22 @@ export const metadata = {
   description: "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
   branch: "11A",
   branches: ["11A", "03E"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Arithmetices principia, nova methodo exposita", author: "Giuseppe Peano", locator: "1889", role: "primary" },
     { title: "Was sind und was sollen die Zahlen?", author: "Richard Dedekind", locator: "1888", role: "secondary" }
   ]
 };
 
+import { PeanoSucesor } from '@content/diagrams/Definiciones/PeanoSucesor';
+export const Simulation = PeanoSucesor;
+
 <Capitular letra="L" />os **números naturales** constituyen el sistema numérico discreto sobre el que descansa la <ConceptLink targetId="aritmetica">aritmética</ConceptLink>, formalizando las operaciones primarias de contar los elementos de un <ConceptLink targetId="conjunto-finito">conjunto finito</ConceptLink> y ordenarlos en sucesión.
 
 Formalizados por <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> y anticipados por <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>, los naturales pueden concebirse como una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> caracterizada por un elemento inicial y una <ConceptLink targetId="sucesor">función sucesor</ConceptLink>. Asimismo, en <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink> se construyen mediante los <ConceptLink targetId="ordinales-von-neumann">ordinales de von Neumann</ConceptLink>, donde cada número se define como el conjunto de todos los naturales que lo preceden.
 
 <Definicion title="Axiomática de Peano para los números naturales">
-  Un sistema de **números naturales** es una terna $(\mathbb{N}, 0, S)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $\mathbb{N}$, un elemento distinguido $0 \in \mathbb{N}$ y una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> $S \colon \mathbb{N} \to \mathbb{N}$ (denominada <ConceptLink targetId="sucesor">función sucesor</ConceptLink>) tales que:
+  Un sistema de **números naturales** es una terna $(\mathbb{N}, 0, S)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> <VisualBind element="conjuntoN" color="carbon">$\mathbb{N}$</VisualBind>, un elemento distinguido <VisualBind element="e0" color="mora">$0 \in \mathbb{N}$</VisualBind> y una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <VisualBind element="flechas" color="terracota">$S \colon \mathbb{N} \to \mathbb{N}$</VisualBind> (denominada <ConceptLink targetId="sucesor">función sucesor</ConceptLink>) tales que:
   1. El elemento $0$ no es el sucesor de ningún número natural:
      $$
      \forall n \in \mathbb{N}, \quad S(n) \neq 0

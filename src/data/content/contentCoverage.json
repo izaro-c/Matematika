@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 118,
-      "exported": 72
+      "none": 117,
+      "exported": 73
     },
     "theoremLike": {
       "total": 21,
@@ -1091,9 +1091,11 @@
       "type": "definicion",
       "title": "Zenbaki arruntak",
       "filePath": "eu/definitions/numero-natural.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
