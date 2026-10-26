@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "46c8164528b5272e68420f0e98c157fdb93db7b3fce9c017bf8bfe301bfa3388",
+  "corpusHash": "7382dbb7977e9e9bfaf76970085dfb05291efa5076cb2ad887f11dd8ae7e4024",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -46,6 +46,7 @@
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
+    "PeanoSucesor": "content/diagrams/Definiciones/PeanoSucesor.tsx",
     "Perpendicular": "content/diagrams/Definiciones/Perpendicular.tsx",
     "Plano": "content/diagrams/Definiciones/Plano.tsx",
     "Punto": "content/diagrams/Definiciones/Punto.tsx",
@@ -1463,6 +1464,38 @@
           "end": 701
         },
         "blockId": "paralelogramo:diagram:Paralelogramo"
+      }
+    ],
+    "PeanoSucesor": [
+      {
+        "contentId": "numero-natural",
+        "contentPath": "content/mdx/en/definitions/numero-natural.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 678,
+          "end": 716
+        },
+        "blockId": "numero-natural:diagram:PeanoSucesor"
+      },
+      {
+        "contentId": "numero-natural",
+        "contentPath": "content/mdx/es/definitions/numero-natural.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 698,
+          "end": 736
+        },
+        "blockId": "numero-natural:diagram:PeanoSucesor"
+      },
+      {
+        "contentId": "numero-natural",
+        "contentPath": "content/mdx/eu/definitions/numero-natural.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 688,
+          "end": 726
+        },
+        "blockId": "numero-natural:diagram:PeanoSucesor"
       }
     ],
     "Perpendicular": [

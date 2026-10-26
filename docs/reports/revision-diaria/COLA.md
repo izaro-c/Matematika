@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 19 / 190
+Revisadas: 21 / 190
 
 ## Pendientes
 
-- [ ] `logica` · definitions
-- [ ] `numero-natural` · definitions
 - [ ] `operacion-binaria` · definitions
 - [ ] `asociatividad` · definitions
 - [ ] `elemento-neutro` · definitions
@@ -199,3 +197,5 @@ Revisadas: 19 / 190
 - [x] `interseccion` · 2026-10-26 · errores · corregido 273482d8 · propuestas 2d50f20c · [informe](2026-10-26-interseccion.md) · $1.18
 - [x] `conjunto-disjunto` · 2026-10-26 · errores · corregido 3a8a9bae · propuestas f042426f · [informe](2026-10-26-conjunto-disjunto.md) · $2.4
 - [x] `isomorfismo` · 2026-10-26 · errores · corregido 318f3b6c · propuestas 6baf1d17 · [informe](2026-10-26-isomorfismo.md) · $1.61
+- [x] `logica` · 2026-10-26 · errores · corregido 2096b35d · propuestas 6c8ada02 · [informe](2026-10-26-logica.md) · $1.04
+- [x] `numero-natural` · 2026-10-26 · errores · corregido 566112cc · propuestas c55b938a · propuestas 7473941b · [informe](2026-10-26-numero-natural.md) · $3.74

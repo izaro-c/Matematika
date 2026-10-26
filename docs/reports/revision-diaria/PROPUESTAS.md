@@ -16,3 +16,6 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `interseccion` · 2026-10-26 · `2d50f20c` · [informe](2026-10-26-interseccion.md)
 - [ ] `conjunto-disjunto` · 2026-10-26 · `f042426f` · [informe](2026-10-26-conjunto-disjunto.md)
 - [ ] `isomorfismo` · 2026-10-26 · `6baf1d17` · [informe](2026-10-26-isomorfismo.md)
+- [ ] `logica` · 2026-10-26 · `6c8ada02` · [informe](2026-10-26-logica.md)
+- [ ] `numero-natural` · 2026-10-26 · `c55b938a` · [informe](2026-10-26-numero-natural.md)
+- [ ] `numero-natural` · 2026-10-26 · `7473941b` · [informe](2026-10-26-numero-natural.md)
