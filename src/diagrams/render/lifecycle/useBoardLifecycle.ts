@@ -644,6 +644,7 @@ export function useBoardLifecycle({
       } else if (sceneItem.variant === 'button') {
         elements[sceneItem.id] = createDiagramButton(board, sceneItem, {
           labelHtml: renderKatexTextToHtml(sceneItem.label),
+          valueLabelsHtml: sceneItem.action?.valueLabels?.map(text => renderKatexTextToHtml(text)),
           theme,
           disabled: directInteractionLocked,
           layer: itemLayerNumber(spec, sceneItem),

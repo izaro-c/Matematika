@@ -532,6 +532,36 @@
   cursor: not-allowed;
 }
 
+/* Botón `cycle` (celda de tabla): la cifra impresa en la casilla, sin filete ni manícula.
+ * Las líneas de la tabla son geometría del diagrama; el botón solo pone la cifra y,
+ * al pasar el ratón, un lavado del color del control. */
+.diagram-control-button--cycle > button {
+  justify-content: center;
+  gap: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-variant-caps: normal;
+  font-variant-numeric: oldstyle-nums;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.diagram-control-button--cycle > button::before {
+  content: none;
+}
+
+.diagram-control-button--cycle > button:not(:disabled):hover {
+  background: color-mix(in srgb, var(--diagram-button-accent) 10%, transparent);
+  color: var(--ink-text);
+}
+
+.diagram-control-button--cycle > button:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
 /* ---------- Lámina: pie de figura y barra de rúbricas (fuera del dibujo) ---------- */
 
 .diagram-figure-caption {

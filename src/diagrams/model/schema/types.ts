@@ -114,6 +114,8 @@ export type DiagramControlEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-
  * durante `durationMs`; las expresiones que leen el control se recalculan en cada fotograma.
  * - `toggle`: una segunda pulsación devuelve el valor a `min` con la misma animación.
  * - `restart`: cada pulsación reinicia el valor en `min` y vuelve a animar hasta `to`.
+ * - `cycle`: cada pulsación suma `range.step` sin animar y, pasado `max`, vuelve a `min`
+ *   (celdas de una tabla de Cayley o de verdad). `to` y las duraciones no se usan.
  */
 export interface DiagramControlAction {
   to: number;
@@ -121,7 +123,12 @@ export interface DiagramControlAction {
   /** Duración del viaje de vuelta a `min` (desactivar un `toggle`); por defecto `durationMs`. */
   returnDurationMs?: number;
   easing: DiagramControlEasing;
-  behavior: 'toggle' | 'restart';
+  behavior: 'toggle' | 'restart' | 'cycle';
+  /**
+   * Solo `cycle`: texto (admite `$…$`) que muestra el botón para cada valor, por índice
+   * `(valor − min) / step`. Sin él, el botón muestra su `label`.
+   */
+  valueLabels?: string[];
   /** Efectos sobre otros controles encadenados a las pulsaciones de este botón. */
   effects?: DiagramControlEffect[];
 }
@@ -254,6 +261,8 @@ export interface DiagramTranslation {
   ariaLabels?: Record<string, string>;
   /** Textos de las variantes condicionales (`content.rules`) por id de objeto, alineados por índice ("" = texto base). */
   rules?: Record<string, string[]>;
+  /** `action.valueLabels` de botones `cycle` por id de objeto, alineados por índice ("" = texto base). */
+  valueLabels?: Record<string, string[]>;
   /** Bloques de paneles informativos por id de objeto y id de bloque. */
   blocks?: Record<string, Record<string, DiagramPanelBlockTranslation>>;
 }

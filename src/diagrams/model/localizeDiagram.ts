@@ -97,6 +97,13 @@ export function localizeDiagramSpec<T extends DiagramSpecV3>(spec: T, lang?: str
       if (tr.subtitles?.[obj.id] && updatedObj.subtitle) {
         updatedObj.subtitle = tr.subtitles[obj.id];
       }
+      const valueLabels = tr.valueLabels?.[obj.id];
+      if (valueLabels && updatedObj.objectType === 'control' && updatedObj.action?.valueLabels) {
+        updatedObj.action = {
+          ...updatedObj.action,
+          valueLabels: updatedObj.action.valueLabels.map((text: string, index: number) => valueLabels[index] || text),
+        };
+      }
       if (tr.ariaLabels?.[obj.id] && updatedObj.selection) {
         updatedObj.selection = { ...updatedObj.selection, ariaLabel: tr.ariaLabels[obj.id] };
       }

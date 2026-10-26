@@ -7,12 +7,15 @@ export const metadata = {
   description: "Mapping that assigns to each ordered pair of elements of a set a unique element of the same set.",
   branch: "08A",
   branches: ["08A", "03E"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
+
+import { OperacionBinariaTabla } from '@content/diagrams/Definiciones/OperacionBinariaTabla';
+export const Simulation = OperacionBinariaTabla;
 
 <Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each <ConceptLink targetId="par-ordenado">ordered pair</ConceptLink> of elements of the set a unique result belonging to that set. The <ConceptLink targetId="estructura-algebraica">algebraic structures</ConceptLink> of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink> and <ConceptLink targetId="cuerpo">fields</ConceptLink>, are defined as sets equipped with one or more binary operations.
 
@@ -31,6 +34,8 @@ Since the <ConceptLink targetId="codominio">codomain</ConceptLink> of the functi
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
+
+When $S$ is finite, a binary operation can be given by a table. In the figure, $S = \{0, 1, 2\}$ and $a * b$ is the larger of $a$ and $b$. The row of $a$ and the column of $b$ meet in the cell of $a * b$. The nine cells are the pairs of <VisualBind element="productoCartesiano" color="canela">$S \times S$</VisualBind>, and each one has a unique value in <VisualBind element="conjuntoS" color="carbon">$S$</VisualBind>, to which the <VisualBind element="flechaPar" color="terracota">arrow</VisualBind> points. By contrast, ordinary <ConceptLink targetId="adicion">addition</ConceptLink> is not a binary operation on $S$: $1 + 2 =$ <VisualBind element="elementoFuera" color="granada">$3$</VisualBind> and $3 \notin S$.
 
 <Separador />
 

@@ -147,6 +147,12 @@ Un botón es un control numérico que, al pulsarlo, anima su valor de `range.min
 - `returnDurationMs` (opcional): duración del viaje de vuelta a `min` al desactivar; por defecto `durationMs`.
 - `behavior`: `toggle` (la segunda pulsación vuelve a `min`) o `restart` (cada pulsación reinicia en `min` y vuelve a correr; nunca se rebobina).
 - `effects` (opcional): `on` = `press` | `release` (solo `toggle`) | `complete`; `do` = `reset` (vuelve al valor inicial) | `play` (anima otro botón desde la expresión `from`); `when` = condición opcional. Las expresiones de `effects` no crean dependencias de construcción.
+- `behavior: "cycle"` (casilla de tabla): cada pulsación suma `range.step` sin animar y, pasado `max`, vuelve a `min`. `to` debe estar en el rango pero no se usa, y `durationMs` puede ser `0`. `action.valueLabels` (opcional, admite `$…$`) da el texto que muestra el botón para cada valor, por índice `(valor − min) / step`; si lo pones, necesita exactamente un texto por valor. Con `width`, el botón es un cuadrado de ese lado en unidades del tablero, sin filete ni manícula: es la cifra impresa en la casilla y llena su celda a cualquier zoom. La cifra sigue la escala de las etiquetas (como un punto con `labelSize: 18`). Las líneas de la tabla las dibujas tú con segmentos. Las expresiones leen el valor por su id (`eq(c01, 3)`). En el editor aparece como «Pasar al valor siguiente», con un campo por valor. Referencia: `content/diagrams/Definiciones/OperacionBinariaTabla.tsx`.
+  ```json
+  { "id": "c01", "label": "Casilla $0 * 1$", "objectType": "control", "variant": "button", "position": [-2.35, -0.2],
+    "range": { "min": 0, "max": 3, "step": 1 }, "value": 1, "width": 0.92,
+    "action": { "to": 3, "durationMs": 0, "easing": "linear", "behavior": "cycle", "valueLabels": ["$0$", "$1$", "$2$", "$3$"] } }
+  ```
 - **Física natural**: para caídas o choques, usa un botón `linear` como reloj `t` (en segundos) y escribe el movimiento en puntos `expression` auxiliares ocultos (p. ej. `θ = min(θmax, a·t² + v·t)`); un punto puede leer otro con `id.x` / `id.y`. Referencia: `content/diagrams/Metodos/InduccionSimulation.tsx`.
 - **Botones independientes en cualquier orden**: prefiere que cada botón sea solo un reloj propio y combina los relojes en una expresión (p. ej. el instante en que ocurren dos sucesos es `min(t₁ − retardo, t₂)`), en vez de usar `effects`. Así el estado es función pura de los controles: funciona en cualquier orden, con los pasos y en el editor.
 
@@ -185,6 +191,7 @@ Todo texto visible debe existir en `eu` y `en`. Claves por idioma (todas opciona
     "descriptions": { "objId": "…" },
     "ariaLabels": { "objId": "…" },
     "rules": { "panelId": ["…", "", "…"] },
+    "valueLabels": { "botonCycleId": ["E", "F"] },
     "blocks": { "panelId": { "blockId": { "title": "…", "text": "…", "rules": ["…"] } } }
   }
 }
@@ -193,6 +200,7 @@ Todo texto visible debe existir en `eu` y `en`. Claves por idioma (todas opciona
 - `titles` / `texts`: `content.title` / `content.text` de anotaciones (`panel`, `label`, `measurement`); conserva `{value}` y el LaTeX tal cual.
 - `ariaLabels`: `selection.ariaLabel` (lector de pantalla). Tradúcelas también.
 - `rules`: textos de las variantes condicionales `content.rules`, **alineados por índice**; `""` hereda el texto en castellano.
+- `valueLabels`: `action.valueLabels` de botones `cycle`, por id y alineados por índice; `""` hereda el texto en castellano. Las cifras no necesitan traducción, pero los textos sí (V/F → E/F en una tabla de verdad).
 - `blocks`: bloques `content.blocks` de paneles, por id de bloque (`title`, `text` y `rules` alineadas por índice). Las fórmulas puras no necesitan traducción.
 - En el editor visual, al elegir EU/EN, el inspector muestra y edita estos textos directamente: se guardan en `translations` sin tocar el castellano.
 - Las claves no declaradas en el esquema Zod (`schemaV3.ts`) se eliminan al parsear: si añades una nueva, declárala allí.

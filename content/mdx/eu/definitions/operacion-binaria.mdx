@@ -7,12 +7,15 @@ export const metadata = {
   description: "Multzo baten elementuen bikote ordenatu bakoitzari multzo bereko elementu bakarra esleitzen dion aplikazioa.",
   branch: "08A",
   branches: ["08A", "03E"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
+
+import { OperacionBinariaTabla } from '@content/diagrams/Definiciones/OperacionBinariaTabla';
+export const Simulation = OperacionBinariaTabla;
 
 <Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuko</ConceptLink> <ConceptLink targetId="estructura-algebraica">egitura aljebraikoak</ConceptLink>, hala nola <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink>, eragiketa bitar bat edo gehiago dituzten multzo gisa definitzen dira.
 
@@ -31,6 +34,8 @@ Funtzioaren <ConceptLink targetId="codominio">kodomeinua</ConceptLink> $S$ bera 
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
+
+$S$ finitua denean, eragiketa bitar bat taula baten bidez eman daiteke. Irudian, $S = \{0, 1, 2\}$ da, eta $a * b$ zenbakia $a$ eta $b$ zenbakietatik handiena da. $a$-ren errenkada eta $b$-ren zutabea $a * b$-ren laukian gurutzatzen dira. Bederatzi laukiak <VisualBind element="productoCartesiano" color="canela">$S \times S$</VisualBind> multzoko bikoteak dira, eta bakoitzak balio bakarra du <VisualBind element="conjuntoS" color="carbon">$S$</VisualBind> multzoan; <VisualBind element="flechaPar" color="terracota">geziak</VisualBind> balio hori seinalatzen du. Aldiz, ohiko <ConceptLink targetId="adicion">batuketa</ConceptLink> ez da $S$-ren gaineko eragiketa bitarra: $1 + 2 =$ <VisualBind element="elementoFuera" color="granada">$3$</VisualBind> da, eta $3 \notin S$.
 
 <Separador />
 

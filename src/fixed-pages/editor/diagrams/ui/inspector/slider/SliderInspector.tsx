@@ -34,7 +34,32 @@ export const SliderInspector: React.FC<SliderPanelProps & {
     if (variant === 'button') return { ...current, variant, action };
     return { ...omitKeys(current, 'action'), variant };
   });
-  const updateRange = (update: Partial<typeof slider.range>) => onUpdateSlider(slider.id, current => ({ ...current, range: { ...current.range, ...update } }));
+  const updateRange = (update: Partial<typeof slider.range>) => onUpdateSlider(slider.id, current => {
+    const range = { ...current.range, ...update };
+    const labels = current.action?.valueLabels;
+    if (!current.action || !labels || range.step <= 0) return { ...current, range };
+    // Un botón `cycle` necesita un texto por valor: al cambiar el rango se recorta o se completa con los números.
+    const count = Math.min(32, Math.max(1, Math.floor((range.max - range.min) / range.step + 1e-9) + 1));
+    const valueLabels = Array.from({ length: count }, (_, index) => labels[index] ?? String(Number((range.min + index * range.step).toFixed(6))));
+    return { ...current, range, action: { ...current.action, valueLabels } };
+  });
+  const isCycle = isButton && action.behavior === 'cycle';
+  const cycleCount = Math.min(32, Math.floor((slider.range.max - slider.range.min) / slider.range.step + 1e-9) + 1);
+  const cycleValue = (index: number) => String(Number((slider.range.min + index * slider.range.step).toFixed(6)));
+  const setValueLabel = (index: number, text: string) => updateAction({
+    valueLabels: Array.from({ length: cycleCount }, (_, labelIndex) => (
+      labelIndex === index ? text : action.valueLabels?.[labelIndex] ?? cycleValue(labelIndex)
+    )),
+  });
+  const setBehavior = (behavior: DiagramControlAction['behavior']) => {
+    if (behavior === 'cycle') {
+      updateAction({ behavior });
+      return;
+    }
+    const next: DiagramControlAction = { ...action, behavior };
+    delete next.valueLabels;
+    onUpdateSlider(slider.id, { action: next });
+  };
   const effects = action.effects ?? [];
   const setEffects = (next: DiagramControlEffect[]) => updateAction({ effects: next.length > 0 ? next : undefined });
   const updateEffect = (index: number, update: Partial<DiagramControlEffect>) => setEffects(effects.map((effect, effectIndex) => {
@@ -98,9 +123,10 @@ export const SliderInspector: React.FC<SliderPanelProps & {
           {isButton ? (
             <div className="space-y-3">
               <p className="text-[11px] leading-snug text-carbon/60">
-                {renderRichText(t('editor.diagramInspector.buttonSliderHelp', { min: slider.range.min, id: slider.id }), { code: c => <span className="font-mono">{c}</span> })}
+                {renderRichText(t(isCycle ? 'editor.diagramInspector.cycleHelp' : 'editor.diagramInspector.buttonSliderHelp', { min: slider.range.min, id: slider.id }), { code: c => <span className="font-mono">{c}</span> })}
               </p>
               <div className="grid grid-cols-2 gap-2">
+                {!isCycle && (<>
                 <div>
                   <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.target')}</label>
                   <input
@@ -158,18 +184,41 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                     <option value="ease-in-out">{t('editor.diagramInspector.smooth')}</option>
                   </select>
                 </div>
+                </>)}
                 <div>
                   <label className="block text-[10px] font-bold text-carbon/75 tracking-tight mb-1">{t('editor.diagramInspector.onPressingAgain')}</label>
                   <select
                     value={action.behavior}
-                    onChange={e => updateAction({ behavior: e.target.value as DiagramControlAction['behavior'] })}
+                    onChange={e => setBehavior(e.target.value as DiagramControlAction['behavior'])}
                     className={controlClassName}
                   >
                     <option value="toggle">{t('editor.diagramInspector.returnToMinimum')}</option>
                     <option value="restart">{t('editor.diagramInspector.restartAndRepeat')}</option>
+                    <option value="cycle">{t('editor.diagramInspector.cycleValues')}</option>
                   </select>
                 </div>
               </div>
+              {isCycle && (
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-bold text-carbon/75 tracking-tight">{t('editor.diagramInspector.valueLabels')}</label>
+                  <div className="grid grid-cols-[auto_1fr] items-center gap-x-2 gap-y-1">
+                    {Array.from({ length: cycleCount }, (_, index) => (
+                      <React.Fragment key={index}>
+                        <span className="font-mono text-[10px] text-carbon/60">{cycleValue(index)}</span>
+                        <input
+                          type="text"
+                          aria-label={`${t('editor.diagramInspector.valueLabels')} ${cycleValue(index)}`}
+                          placeholder={cycleValue(index)}
+                          defaultValue={action.valueLabels?.[index] ?? ''}
+                          key={`value-label-${index}-${action.valueLabels?.[index] ?? ''}`}
+                          onBlur={e => setValueLabel(index, e.target.value.trim() || cycleValue(index))}
+                          className={controlClassName}
+                        />
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+              )}
               {otherControls.length > 0 && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">

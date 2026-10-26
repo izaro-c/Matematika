@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 117,
-      "exported": 73
+      "none": 116,
+      "exported": 74
     },
     "theoremLike": {
       "total": 21,
@@ -1132,9 +1132,11 @@
       "type": "definicion",
       "title": "Eragiketa bitarra",
       "filePath": "eu/definitions/operacion-binaria.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "7382dbb7977e9e9bfaf76970085dfb05291efa5076cb2ad887f11dd8ae7e4024",
+  "corpusHash": "178c74bc75974c0b9e02dd058a088b2a0abecc191eb045f9edeef0e34867b94f",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -44,6 +44,7 @@
     "Interseccion": "content/diagrams/Definiciones/Interseccion.tsx",
     "IsomorfismoRelacion": "content/diagrams/Definiciones/IsomorfismoRelacion.tsx",
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
+    "OperacionBinariaTabla": "content/diagrams/Definiciones/OperacionBinariaTabla.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
     "PeanoSucesor": "content/diagrams/Definiciones/PeanoSucesor.tsx",
@@ -1400,6 +1401,38 @@
           "end": 798
         },
         "blockId": "lado:diagram:Lado"
+      }
+    ],
+    "OperacionBinariaTabla": [
+      {
+        "contentId": "operacion-binaria",
+        "contentPath": "content/mdx/en/definitions/operacion-binaria.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 664,
+          "end": 711
+        },
+        "blockId": "operacion-binaria:diagram:OperacionBinariaTabla"
+      },
+      {
+        "contentId": "operacion-binaria",
+        "contentPath": "content/mdx/es/definitions/operacion-binaria.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 676,
+          "end": 723
+        },
+        "blockId": "operacion-binaria:diagram:OperacionBinariaTabla"
+      },
+      {
+        "contentId": "operacion-binaria",
+        "contentPath": "content/mdx/eu/definitions/operacion-binaria.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 677,
+          "end": 724
+        },
+        "blockId": "operacion-binaria:diagram:OperacionBinariaTabla"
       }
     ],
     "Paralelas": [

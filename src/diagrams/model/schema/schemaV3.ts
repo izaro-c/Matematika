@@ -159,7 +159,8 @@ const annotationObject = z.object({
 }).strict();
 const controlAction = z.object({
   to: number, durationMs: number.int().min(0).max(60000), returnDurationMs: number.int().min(0).max(60000).optional(), easing: z.enum(['linear', 'ease-in', 'ease-out', 'ease-in-out']),
-  behavior: z.enum(['toggle', 'restart']),
+  behavior: z.enum(['toggle', 'restart', 'cycle']),
+  valueLabels: z.array(z.string()).min(1).max(32).optional(),
   effects: z.array(z.object({
     on: z.enum(['press', 'release', 'complete']), control: id, do: z.enum(['reset', 'play']),
     from: expression.optional(), when: expression.optional(),
@@ -436,6 +437,13 @@ function validateControlObject(object: Extract<DiagramObject, { objectType: 'con
     addIssue(context, ['objects', index, 'action'], 'Un control botón necesita action.');
     return;
   }
+  if (object.action.valueLabels && object.action.behavior !== 'cycle') {
+    addIssue(context, ['objects', index, 'action', 'valueLabels'], 'Solo un botón cycle admite valueLabels.');
+  }
+  if (object.action.behavior === 'cycle' && object.action.valueLabels) {
+    const count = Math.floor((object.range.max - object.range.min) / object.range.step + 1e-9) + 1;
+    if (object.action.valueLabels.length !== count) addIssue(context, ['objects', index, 'action', 'valueLabels'], `Un botón cycle de ${count} valores necesita ${count} valueLabels.`);
+  }
   if (object.action.to < object.range.min || object.action.to > object.range.max) {
     addIssue(context, ['objects', index, 'action', 'to'], 'action.to debe estar dentro de [min, max].');
   }
@@ -531,6 +539,7 @@ export const diagramSpecV3Schema = z.object({
     descriptions: z.record(z.string(), z.string()).optional(),
     ariaLabels: z.record(z.string(), z.string()).optional(),
     rules: z.record(z.string(), z.array(z.string())).optional(),
+    valueLabels: z.record(z.string(), z.array(z.string())).optional(),
     blocks: z.record(z.string(), z.record(z.string(), z.object({ title: z.string().optional(), text: z.string().optional(), rules: z.array(z.string()).optional() }).strict())).optional(),
   })).optional(),
 }).strict().superRefine((spec, context) => {

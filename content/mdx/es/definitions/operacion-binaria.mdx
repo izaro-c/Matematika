@@ -7,12 +7,15 @@ export const metadata = {
   description: "Aplicación que asigna a cada par ordenado de elementos de un conjunto un único elemento del mismo conjunto.",
   branch: "08A",
   branches: ["08A", "03E"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
+
+import { OperacionBinariaTabla } from '@content/diagrams/Definiciones/OperacionBinariaTabla';
+export const Simulation = OperacionBinariaTabla;
 
 <Capitular letra="U" />na **operación binaria** (o ley de composición interna) sobre un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> que asigna a cada <ConceptLink targetId="par-ordenado">par ordenado</ConceptLink> de elementos del conjunto un único resultado perteneciente a dicho conjunto. Las <ConceptLink targetId="estructura-algebraica">estructuras algebraicas</ConceptLink> del <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>, como los <ConceptLink targetId="semigrupo">semigrupos</ConceptLink>, los <ConceptLink targetId="monoide">monoides</ConceptLink>, los <ConceptLink targetId="grupo">grupos</ConceptLink> y los <ConceptLink targetId="cuerpo">cuerpos</ConceptLink>, se definen como conjuntos dotados de una o varias operaciones binarias.
 
@@ -31,6 +34,8 @@ Como el <ConceptLink targetId="codominio">codominio</ConceptLink> de la función
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
+
+Cuando $S$ es finito, una operación binaria se puede dar con una tabla. En la figura, $S = \{0, 1, 2\}$ y $a * b$ es el mayor de $a$ y $b$. La fila de $a$ y la columna de $b$ se cruzan en la casilla de $a * b$. Las nueve casillas son los pares de <VisualBind element="productoCartesiano" color="canela">$S \times S$</VisualBind> y cada una tiene un único valor en <VisualBind element="conjuntoS" color="carbon">$S$</VisualBind>, al que apunta la <VisualBind element="flechaPar" color="terracota">flecha</VisualBind>. En cambio, la <ConceptLink targetId="adicion">suma</ConceptLink> usual no es una operación binaria sobre $S$: $1 + 2 =$ <VisualBind element="elementoFuera" color="granada">$3$</VisualBind> y $3 \notin S$.
 
 <Separador />
 

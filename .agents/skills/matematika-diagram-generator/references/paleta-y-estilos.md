@@ -37,6 +37,8 @@ píldoras, puntos de estado, mayúsculas con tracking).
   lavado del 7 % y la manícula se vuelve **☜**.
 - Foco `outline 2px pavo`; deshabilitado `opacity .35`. Sin `transform`, sombras ni puntos.
 
+- **Casilla (`behavior: "cycle"`)**: solo la cifra, en cifras de estilo antiguo, sin filete, sin manícula y sin fondo. Al pasar el ratón, un lavado del 10 % del color del control. Estilo en `.diagram-control-button--cycle`. Las líneas de la tabla son segmentos del diagrama, a la manera de un libro: filetes de cabecera `carbon` de 1,4 y rejilla interior fina al 40 %.
+
 ## 3 bis. Lámina
 
 - Tablero con filete de 2 px en `--page-accent` y radio `--radius-sm` (4 px), el mismo de los números de paso.

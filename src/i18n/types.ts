@@ -1642,6 +1642,9 @@ export interface TranslationDictionary {
       onPressingAgain: string;
       returnToMinimum: string;
       restartAndRepeat: string;
+      cycleValues: string;
+      cycleHelp: string;
+      valueLabels: string;
       effectsOnOtherControls: string;
       effect: string;
       moment: string;

@@ -11013,7 +11013,7 @@
         "08A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -11040,6 +11040,7 @@
         "cuerpo",
         "producto-cartesiano",
         "codominio",
+        "adicion",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
@@ -11077,7 +11078,7 @@
         "08A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -11104,6 +11105,7 @@
         "cuerpo",
         "producto-cartesiano",
         "codominio",
+        "adicion",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
@@ -31891,7 +31893,7 @@
         "08A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -31918,6 +31920,7 @@
         "cuerpo",
         "producto-cartesiano",
         "codominio",
+        "adicion",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
@@ -45079,7 +45082,7 @@
         "08A",
         "03E"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -45106,6 +45109,7 @@
         "cuerpo",
         "producto-cartesiano",
         "codominio",
+        "adicion",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",

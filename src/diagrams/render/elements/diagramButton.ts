@@ -2,6 +2,10 @@ import type JXG from 'jsxgraph';
 import type { ControlObject, DiagramControlAction, DiagramControlEasing, DiagramControlEffect } from '@/diagrams/model';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
+import { getDiagramScale } from './diagramAdaptiveScale';
+
+/** Tamaño (px, a escala 1) de la cifra de un botón `cycle`: el de una etiqueta de punto con `labelSize: 18`. */
+const CYCLE_LABEL_SIZE = 18;
 
 /**
  * Control botón: elemento HTML de JSXGraph que expone la misma interfaz numérica
@@ -37,9 +41,21 @@ export function isDiagramButton(element: unknown): element is DiagramButtonEleme
   return Boolean(element && (element as { __matematikaButton?: boolean }).__matematikaButton);
 }
 
+/** Valor siguiente de un botón `cycle`: suma un paso y, pasado el máximo, vuelve al mínimo. */
+export function nextCycleValue(range: { min: number; max: number; step: number }, current: number): number {
+  const next = current + range.step;
+  return next > range.max + range.step * 1e-6 ? range.min : next;
+}
+
+/** Índice de `valueLabels` que corresponde a un valor de un botón `cycle`. */
+export function cycleValueIndex(range: { min: number; step: number }, value: number): number {
+  return Math.round((value - range.min) / range.step);
+}
+
 /** Valor objetivo de una pulsación según el comportamiento del botón. */
 export function nextButtonTarget(action: DiagramControlAction, min: number, current: number, animatingTo: number | undefined): { from: number; to: number } {
   if (action.behavior === 'restart') return { from: min, to: action.to };
+  if (action.behavior === 'cycle') return { from: current, to: current };
   const heading = animatingTo ?? current;
   const active = Math.abs(heading - action.to) < Math.abs(heading - min);
   return { from: current, to: active ? min : action.to };
@@ -50,6 +66,8 @@ export function createDiagramButton(
   item: ControlObject,
   options: {
     labelHtml: string;
+    /** HTML de `action.valueLabels` (botones `cycle`), por índice de valor. */
+    valueLabelsHtml?: string[];
     theme: ThemeColors;
     disabled: boolean;
     layer: number;
@@ -62,6 +80,7 @@ export function createDiagramButton(
   let max = item.range.max;
   let frame: number | undefined;
   let animatingTo: number | undefined;
+  const cycling = action.behavior === 'cycle';
 
   const clamp = (next: number) => Math.min(max, Math.max(item.range.min, next));
   const stop = () => {
@@ -73,6 +92,13 @@ export function createDiagramButton(
   // eslint-disable-next-line prefer-const -- se asigna tras crear el elemento JSXGraph
   let element: DiagramButtonElement;
   const syncPressed = () => {
+    if (cycling) {
+      const index = cycleValueIndex(item.range, value);
+      const shown = (action.valueLabels?.[index] ?? String(value)).replace(/\$/g, '');
+      element.rendNodeButton?.setAttribute('aria-label', `${item.selection.ariaLabel ?? item.label}: ${shown}`);
+      styleButton(element.rendNodeButton, options.theme, item);
+      return;
+    }
     const heading = animatingTo ?? value;
     const pressed = Math.abs(heading - action.to) < Math.abs(heading - item.range.min);
     element.rendNodeButton?.setAttribute('aria-pressed', String(pressed));
@@ -122,19 +148,52 @@ export function createDiagramButton(
 
   const press = () => {
     if (options.disabled) return;
+    if (cycling) {
+      value = nextCycleValue({ ...item.range, max }, value);
+      syncPressed();
+      safeBoardUpdate(board);
+      runEffects('press');
+      runEffects('complete');
+      return;
+    }
     const { from, to } = nextButtonTarget(action, item.range.min, value, animatingTo);
     const releasing = to === item.range.min && action.behavior === 'toggle';
     runEffects(releasing ? 'release' : 'press');
     animateBetween(from, to, releasing ? undefined : () => runEffects('complete'));
   };
 
-  element = board.create('button', [item.position[0], item.position[1], options.labelHtml, press], {
+  // En un botón `cycle` el texto es una función: JSXGraph la reevalúa en cada actualización del tablero.
+  const content = cycling
+    ? () => options.valueLabelsHtml?.[cycleValueIndex(item.range, value)] ?? options.labelHtml
+    : options.labelHtml;
+  const cssClass = cycling ? 'font-diagram diagram-control-button diagram-control-button--cycle' : 'font-diagram diagram-control-button';
+  element = board.create('button', [item.position[0], item.position[1], content, press], {
     fixed: true,
     layer: options.layer,
-    cssClass: 'font-diagram diagram-control-button',
-    highlightCssClass: 'font-diagram diagram-control-button',
+    cssClass,
+    highlightCssClass: cssClass,
     disabled: options.disabled,
+    ...(cycling ? { anchorX: 'middle', anchorY: 'middle' } : {}),
   } as never) as unknown as DiagramButtonElement;
+
+  // Un botón `cycle` con `width` es un cuadrado de ese lado en unidades del tablero: llena su celda a cualquier zoom.
+  const side = cycling ? item.width : undefined;
+  const fitToCell = side === undefined ? undefined : () => {
+    const node = element.rendNode;
+    const unit = (board as unknown as { unitX?: number }).unitX;
+    if (!node || !unit || !Number.isFinite(unit)) return;
+    const px = `${Math.max(12, side * unit)}px`;
+    if (node.style.width === px) return;
+    node.style.width = px;
+    node.style.height = px;
+    // La cifra sigue la escala de las etiquetas del tablero (como las cabeceras de la tabla), sin salirse de la casilla.
+    const fontPx = Math.max(10, Math.min(CYCLE_LABEL_SIZE * getDiagramScale(board), side * unit * 0.62));
+    element.rendNodeButton?.style.setProperty('font-size', `${fontPx}px`);
+  };
+  if (fitToCell) {
+    fitToCell();
+    (board as unknown as { on: (event: string, handler: () => void) => void }).on('update', fitToCell);
+  }
 
   element.__matematikaButton = true;
   element.Value = () => value;
@@ -167,6 +226,7 @@ export function createDiagramButton(
   const originalRemove = (element as { remove?: () => void }).remove;
   (element as { remove?: () => void }).remove = function removeButton(this: unknown) {
     stop();
+    if (fitToCell) (board as unknown as { off: (event: string, handler: () => void) => void }).off('update', fitToCell);
     originalRemove?.call(this);
   };
   syncPressed();

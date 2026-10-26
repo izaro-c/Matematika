@@ -21,6 +21,7 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
    | Flechas entre conjuntos con puntas arrastrables y estado (§5 F) | `content/diagrams/Definiciones/FuncionSagital.tsx`, `BiyeccionSagital.tsx` |
    | Conjuntos como regiones arrastrables, su intersección y un panel que la calcula | `content/diagrams/Definiciones/Interseccion.tsx` |
    | Semiplanos sombreados (`area` · `half-plane`) | `content/diagrams/Definiciones/Semiplano.tsx` |
+   | Tabla de Cayley o de verdad con casillas pulsables (botón `cycle`) y flecha del par elegido (§5 G) | `content/diagrams/Definiciones/OperacionBinariaTabla.tsx` |
 
 3. El bloque entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` es **JSON estricto**: comillas dobles, sin comentarios, sin comas finales. El editor visual lo reescribe; cualquier cosa que no sea JSON hace que el diagrama deje de ser editable.
 4. Escribe el archivo completo, sin marcadores tipo `...` ni `// resto igual`.
@@ -267,6 +268,15 @@ Para conceptos de conjuntos cuyas condiciones el alumno puede romper (función, 
 - **Estado:** un panel de una línea por cada combinación de fallos (`visibleWhen` excluyentes), anclado arriba (`anchor.position: [0.5, 0]`), con un único bloque coloreado (`musgo` si se cumple, `granada` si falla). La escena solo reserva una línea para un panel superior (unos 42 px), así que cada texto cabe en ≤ 40 caracteres visibles en los tres idiomas. Señala además en la figura dónde falla: un anillo `granada` alrededor del elemento (discontinuo si le falta algo).
 - **Condiciones largas:** una expresión admite como máximo 512 caracteres. Guarda los resultados intermedios (recuentos de flechas por elemento, indicadores 0/1) en puntos `expression` ocultos y léelos con `id.x` / `id.y`.
 - **Composición para todas las láminas:** en móvil la lámina mide unos 374×272 px y la figura queda por debajo de 150 px de alto. Mantén el contenido cerca de 2:1 (ancho:alto), la `note` en una línea y los botones bajo la figura con margen. Comprueba escritorio, tableta y móvil antes de dar el diagrama por terminado.
+
+### G. Tablas con casillas pulsables (tabla de Cayley, tabla de verdad)
+Para operaciones sobre conjuntos finitos y conectivas lógicas: el alumno cambia los valores de la tabla y el diagrama reacciona.
+
+- **Casilla:** un control botón con `behavior: "cycle"` centrado en la celda, con `width` igual al lado de la celda (un poco menos, para que se vean las líneas) y `valueLabels` con el texto de cada valor (ver [spec-v3-schema.md](./references/spec-v3-schema.md)). Una pulsación pasa al valor siguiente; del último vuelve al primero. Con el teclado, Intro o Espacio.
+- **Tabla:** filetes con segmentos (cabecera y columna de cabecera de 1,4; rejilla interior fina al 40 %). Las cifras de las cabeceras son puntos sin tamaño con `labelSize: 18`, `labelPosition: "top"` y `labelOffset: [0, -11]`, que las centra en la celda. Así tienen la misma escala que la cifra de las casillas.
+- **Leer la tabla:** cada casilla es una variable (`c01`). Elige el par con dos asas `on-points` fuera de la tabla, una para la fila y otra para la columna (no sobre las casillas: el botón HTML tapa el puntero). Calcula el valor elegido en un punto `expression` oculto (`eq(par.x,0)*eq(par.y,1)*c01 + …`) y pon los recuentos (casillas fuera del conjunto, asimetrías…) en otros puntos ocultos.
+- **Señalar el fallo:** un polígono `granada` por celda con `visibleWhen: eq(cij, valorMalo)` y un panel de estado arriba, como en §5 F.
+- En el editor visual el botón sigue siendo funcional: pulsarlo cambia el valor en la vista previa, no el valor guardado. Para editar la casilla, selecciónala en la lista de objetos («Deslizadores»).
 
 ---
 

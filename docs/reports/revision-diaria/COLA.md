@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 21 / 190
+Revisadas: 22 / 190
 
 ## Pendientes
 
-- [ ] `operacion-binaria` · definitions
 - [ ] `asociatividad` · definitions
 - [ ] `elemento-neutro` · definitions
 - [ ] `elemento-inverso` · definitions
@@ -199,3 +198,4 @@ Revisadas: 21 / 190
 - [x] `isomorfismo` · 2026-10-26 · errores · corregido 318f3b6c · propuestas 6baf1d17 · [informe](2026-10-26-isomorfismo.md) · $1.61
 - [x] `logica` · 2026-10-26 · errores · corregido 2096b35d · propuestas 6c8ada02 · [informe](2026-10-26-logica.md) · $1.04
 - [x] `numero-natural` · 2026-10-26 · errores · corregido 566112cc · propuestas c55b938a · propuestas 7473941b · [informe](2026-10-26-numero-natural.md) · $3.74
+- [x] `operacion-binaria` · 2026-10-26 · errores · corregido 5d2f7d2e · propuestas 071a5759 · [informe](2026-10-26-operacion-binaria.md) · $1.52
