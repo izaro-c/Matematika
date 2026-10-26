@@ -314,7 +314,7 @@ export const InterseccionSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto común de intersección P = ℓ₁ ∩ ℓ₂",
+        "ariaLabel": "Punto común P de ℓ₁ y ℓ₂: {P} = tr(ℓ₁) ∩ tr(ℓ₂)",
         "role": "primary"
       },
       "target": true,
@@ -343,11 +343,11 @@ export const InterseccionSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve los puntos generadores para modificar las rectas y observar cómo el punto común P = ℓ₁ ∩ ℓ₂ satisface la pertenencia simultánea a ambos conjuntos.",
+  "note": "Mueve los puntos generadores para modificar las rectas: el punto común P pertenece a la vez a las trazas de ℓ₁ y de ℓ₂, y {P} = tr(ℓ₁) ∩ tr(ℓ₂).",
   "translations": {
     "eu": {
       "title": "Konfigurazio geometrikoen ebakidura",
-      "note": "Mugitu puntu sortzaileak zuzenak aldatzeko eta P = ℓ₁ ∩ ℓ₂ puntu komuna bi multzoetakoa aldi berean dela ikusteko.",
+      "note": "Mugitu puntu sortzaileak zuzenak aldatzeko: P puntu komuna ℓ₁ eta ℓ₂ zuzenen trazaduretan dago aldi berean, eta {P} = tr(ℓ₁) ∩ tr(ℓ₂).",
       "ariaLabels": {
         "pA1": "Mugitu ℓ₁ zuzeneko A₁ puntua",
         "pA2": "Mugitu ℓ₁ zuzeneko A₂ puntua",
@@ -355,14 +355,14 @@ export const InterseccionSpec = createDiagramSpec(
         "pB1": "Mugitu ℓ₂ zuzeneko B₁ puntua",
         "pB2": "Mugitu ℓ₂ zuzeneko B₂ puntua",
         "lineL2": "ℓ₂ zuzena",
-        "pP": "P = ℓ₁ ∩ ℓ₂ ebakidura-puntu komuna",
+        "pP": "ℓ₁ eta ℓ₂ zuzenen P puntu komuna: {P} = tr(ℓ₁) ∩ tr(ℓ₂)",
         "gL1": "ℓ₁ zuzeneko puntuen multzoa",
         "gL2": "ℓ₂ zuzeneko puntuen multzoa"
       }
     },
     "en": {
       "title": "Intersection of geometric configurations",
-      "note": "Move the generator points to modify the lines and observe how the intersection point P = ℓ₁ ∩ ℓ₂ simultaneously belongs to both sets.",
+      "note": "Move the generator points to modify the lines: the common point P lies on the traces of both ℓ₁ and ℓ₂, and {P} = tr(ℓ₁) ∩ tr(ℓ₂).",
       "ariaLabels": {
         "pA1": "Move point A₁ on line ℓ₁",
         "pA2": "Move point A₂ on line ℓ₁",
@@ -370,7 +370,7 @@ export const InterseccionSpec = createDiagramSpec(
         "pB1": "Move point B₁ on line ℓ₂",
         "pB2": "Move point B₂ on line ℓ₂",
         "lineL2": "Line ℓ₂",
-        "pP": "Common intersection point P = ℓ₁ ∩ ℓ₂",
+        "pP": "Common point P of ℓ₁ and ℓ₂: {P} = tr(ℓ₁) ∩ tr(ℓ₂)",
         "gL1": "Set of points on line ℓ₁",
         "gL2": "Set of points on line ℓ₂"
       }
