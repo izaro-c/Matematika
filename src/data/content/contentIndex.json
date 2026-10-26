@@ -9453,8 +9453,10 @@
       "conceptLinks": [
         "conjunto",
         "logica",
+        "conjuncion",
         "conmutatividad",
         "asociatividad",
+        "idempotencia",
         "conjunto-disjunto",
         "conjunto-convexo",
         "interior-angulo",
@@ -9520,8 +9522,10 @@
       "conceptLinks": [
         "conjunto",
         "logica",
+        "conjuncion",
         "conmutatividad",
         "asociatividad",
+        "idempotencia",
         "conjunto-disjunto",
         "conjunto-convexo",
         "interior-angulo",
@@ -31058,8 +31062,10 @@
       "conceptLinks": [
         "conjunto",
         "logica",
+        "conjuncion",
         "conmutatividad",
         "asociatividad",
+        "idempotencia",
         "conjunto-disjunto",
         "conjunto-convexo",
         "interior-angulo",
@@ -44215,8 +44221,10 @@
       "conceptLinks": [
         "conjunto",
         "logica",
+        "conjuncion",
         "conmutatividad",
         "asociatividad",
+        "idempotencia",
         "conjunto-disjunto",
         "conjunto-convexo",
         "angulo",

@@ -17,7 +17,7 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="I" />**ntersection** is an operation between <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that gathers all elements belonging simultaneously to each of the considered sets. In the underlying propositional <ConceptLink targetId="logica">logic</ConceptLink>, it corresponds directly to the logical conjunction connective ($\land$).
+<Capitular letra="I" />**ntersection** is an operation between <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that gathers all elements belonging simultaneously to each of the considered sets. In the underlying propositional <ConceptLink targetId="logica">logic</ConceptLink>, it corresponds to the <ConceptLink targetId="conjuncion">conjunction</ConceptLink> connective ($\land$).
 
 It makes it possible to define composite geometric regions and to describe the points common to two figures.
 
@@ -36,7 +36,7 @@ It makes it possible to define composite geometric regions and to describe the p
 
 ### Algebraic properties and geometric delimitation
 
-The intersection operation satisfies the Boolean laws of <ConceptLink targetId="conmutatividad">commutativity</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">associativity</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$), and idempotence ($A \cap A = A$). When two sets share no elements in common ($A \cap B = \emptyset$), they are called <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink>.
+The intersection operation satisfies the Boolean laws of <ConceptLink targetId="conmutatividad">commutativity</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">associativity</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$), and <ConceptLink targetId="idempotencia">idempotence</ConceptLink> ($A \cap A = A$). When two sets share no elements in common ($A \cap B = \emptyset$), they are called <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink>.
 
 The intersection of <ConceptLink targetId="conjunto-convexo">convex sets</ConceptLink> always preserves convexity:
 - The <ConceptLink targetId="interior-angulo">interior</ConceptLink> of an <ConceptLink targetId="angulo">angle</ConceptLink> is the intersection of two open <ConceptLink targetId="semiplano">half-planes</ConceptLink>: for each side, the one bounded by its <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> that contains the other side.
