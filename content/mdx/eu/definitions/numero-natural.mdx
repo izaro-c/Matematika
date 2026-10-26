@@ -14,17 +14,17 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="Z" />enbaki **arruntak** <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ren oinarrian dagoen zenbaki-sistema diskretua dira, <ConceptLink targetId="conjunto-finito">multzo finitu</ConceptLink> bateko elementuak zenbatzeko eta haien gaiak sekuentzialki ordenatzeko lehen mailako eragiketak formalizatuz.
+<Capitular letra="Z" />enbaki **arruntak** <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ren oinarrian dagoen zenbaki-sistema diskretua dira, <ConceptLink targetId="conjunto-finito">multzo finitu</ConceptLink> bateko elementuak zenbatzeko eta haiek segidan ordenatzeko lehen mailako eragiketak formalizatuz.
 
 <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink>k formalizatu eta <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>ek aurreratuta, zenbaki arruntak hasierako elementu batez eta <ConceptLink targetId="sucesor">ondorengo-funtzio</ConceptLink> batez karakterizatutako <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> gisa uler daitezke. Era berean, <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> <ConceptLink targetId="ordinales-von-neumann">von Neumannen ordinalen</ConceptLink> bidez eraikitzen dira, non zenbaki bakoitza haren aurretik dauden zenbaki arrunt guztien multzo gisa definitzen den.
 
 <Definicion title="Peanoren axiomatika zenbaki arruntetarako">
-  **Zenbaki arrunt**en sistema bat $(\mathbb{N}, 0, S)$ hirukote bat da, $\mathbb{N}$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek, $0 \in \mathbb{N}$ elementu berezi batek eta $S \colon \mathbb{N} \to \mathbb{N}$ <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> <ConceptLink targetId="inyectividad">injektibo</ConceptLink> batek (<ConceptLink targetId="sucesor">ondorengo-funtzioa</ConceptLink> deitua) osatua, honako hauek betetzen direlarik:
+  **Zenbaki arrunt**en sistema bat $(\mathbb{N}, 0, S)$ hirukote bat da, $\mathbb{N}$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek, $0 \in \mathbb{N}$ elementu berezi batek eta $S \colon \mathbb{N} \to \mathbb{N}$ <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> batek (<ConceptLink targetId="sucesor">ondorengo-funtzioa</ConceptLink> deitua) osatua, honako hauek betetzen direlarik:
   1. $0$ elementua ez da inongo zenbaki arruntaren ondorengoa:
      $$
      \forall n \in \mathbb{N}, \quad S(n) \neq 0
      $$
-  2. Ondorengo-funtzioa injektiboa da:
+  2. Ondorengo-funtzioa <ConceptLink targetId="inyectividad">injektiboa</ConceptLink> da:
      $$
      \forall m, n \in \mathbb{N}, \quad S(m) = S(n) \implies m = n
      $$
@@ -37,13 +37,13 @@ export const metadata = {
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="principio-buen-orden" titulo="Ondo ordenatzearen printzipioa">
-    Zenbaki arruntetako $A \subseteq \mathbb{N}$ <ConceptLink targetId="subconjunto">azpimultzo</ConceptLink> ez-huts orok elementu minimo bat du <ConceptLink targetId="orden-total">ordena estandarra</ConceptLink>rekiko, $(\mathbb{N}, \le)$ <ConceptLink targetId="buen-orden">multzo ondo ordenatua</ConceptLink> dela bermatuz.
-  </PropiedadItem>
   <PropiedadItem id="estructura-algebraica-semianillo" titulo="Semieraztun trukakorraren egitura">
     <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> ondorengotik abiatuta modu errekurtsiboan definituz, $(\mathbb{N}, +, \cdot)$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> <ConceptLink targetId="semianillo">semieraztun</ConceptLink> trukakor unitarioa da, baturarako baliogabetze-propietatearekin hornitua.
   </PropiedadItem>
+  <PropiedadItem id="principio-buen-orden" titulo="Ondo ordenatzearen printzipioa">
+    Zenbaki arruntetako $A \subseteq \mathbb{N}$ <ConceptLink targetId="subconjunto">azpimultzo</ConceptLink> ez-huts orok elementu minimo bat du $m \le n \iff \exists k \in \mathbb{N} \ (m + k = n)$ bidez definitutako <ConceptLink targetId="orden-total">ordenarekiko</ConceptLink>; beraz, $(\mathbb{N}, \le)$ <ConceptLink targetId="buen-orden">multzo ondo ordenatua</ConceptLink> da.
+  </PropiedadItem>
   <PropiedadItem id="cardinalidad-numerable" titulo="Kardinaltasun zenbagarria">
-    $\mathbb{N}$ multzoa <ConceptLink targetId="conjunto-infinito">multzo infinitua</ConceptLink> da eta infinitu transfinituaren eskalarik txikiena definitzen du, <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> zenbagarria deitua eta $\aleph_0 = |\mathbb{N}|$ ikurraz adierazia.
+    $\mathbb{N}$ multzoa <ConceptLink targetId="conjunto-infinito">multzo infinitua</ConceptLink> da. Haren <ConceptLink targetId="cardinalidad">kardinaltasunari</ConceptLink>, $\aleph_0 = |\mathbb{N}|$ ikurraz adierazten denari, kardinaltasun zenbagarria deritzo, eta, <ConceptLink targetId="axioma-eleccion">aukeraren axioma</ConceptLink> onartuz gero, kardinaltasun infinitu txikiena da.
   </PropiedadItem>
 </SeccionPropiedades>
