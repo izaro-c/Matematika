@@ -4622,7 +4622,7 @@
       "branches": [
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -4641,14 +4641,17 @@
         "operacion-binaria",
         "algebra-abstracta",
         "conjunto",
-        "semigrupo",
         "estructura-algebraica",
         "adicion",
         "multiplicacion",
         "numero-entero",
         "numero-real",
+        "multiplicacion-matrices",
         "composicion-funciones",
+        "sustraccion",
         "division",
+        "producto-vectorial",
+        "semigrupo",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -4685,7 +4688,7 @@
       "branches": [
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -4704,14 +4707,17 @@
         "operacion-binaria",
         "algebra-abstracta",
         "conjunto",
-        "semigrupo",
         "estructura-algebraica",
         "adicion",
         "multiplicacion",
         "numero-entero",
         "numero-real",
+        "multiplicacion-matrices",
         "composicion-funciones",
+        "sustraccion",
         "division",
+        "producto-vectorial",
+        "semigrupo",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -28703,7 +28709,7 @@
       "branches": [
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -28722,14 +28728,17 @@
         "operacion-binaria",
         "algebra-abstracta",
         "conjunto",
-        "semigrupo",
         "estructura-algebraica",
         "adicion",
         "multiplicacion",
         "numero-entero",
         "numero-real",
+        "multiplicacion-matrices",
         "composicion-funciones",
+        "sustraccion",
         "division",
+        "producto-vectorial",
+        "semigrupo",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -41895,7 +41904,7 @@
       "branches": [
         "08A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -41914,14 +41923,17 @@
         "operacion-binaria",
         "algebra-abstracta",
         "conjunto",
-        "semigrupo",
         "estructura-algebraica",
         "adicion",
         "multiplicacion",
         "numero-entero",
         "numero-real",
+        "multiplicacion-matrices",
         "composicion-funciones",
+        "sustraccion",
         "division",
+        "producto-vectorial",
+        "semigrupo",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",

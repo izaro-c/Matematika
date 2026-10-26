@@ -7,22 +7,26 @@ export const metadata = {
   description: "Propiedad de una operación binaria por la cual el agrupamiento de los operandos no altera el resultado final.",
   branch: "08A",
   branches: ["08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
 
-<Capitular letra="L" />a **asociatividad** (o propiedad asociativa) es una propiedad algebraica que puede poseer una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink>, en virtud de la cual la evaluación sucesiva de tres o más operandos resulta invariante frente a la disposición de los paréntesis de agrupamiento. Constituye la condición indispensable para prescindir de paréntesis al componer múltiples operaciones en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>.
+import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
+export const Simulation = AsociatividadTabla;
+
+<Capitular letra="L" />a **asociatividad** (o propiedad asociativa) es la propiedad de una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> según la cual, al operar tres elementos en un orden dado, el resultado no depende de cómo se agrupen. Gracias a ella, en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink> los productos de varios factores se escriben sin paréntesis.
 
 <Definicion title="Definición formal de asociatividad">
   Sea $S$ un <ConceptLink targetId="conjunto">conjunto</ConceptLink> y sea $*\colon S \times S \longrightarrow S$ una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> sobre $S$. Se dice que la operación $*$ es **asociativa** si y solo si satisface la identidad:
   $$
   \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
   $$
-  Un par $(S, *)$ formado por un conjunto y una operación binaria asociativa constituye un <ConceptLink targetId="semigrupo">semigrupo</ConceptLink>.
 </Definicion>
+
+Cuando $S$ es finito, la asociatividad se comprueba en la tabla de la operación. En la figura, $S = \{0, 1, 2\}$ y la tabla inicial es $a * b = \max(a, b)$. Para cada terna $(a, b, c)$, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> se lee en la casilla de $a * b$ y después en la de ese resultado con $c$; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, en la casilla de $b * c$ y después en la de $a$ con ese resultado. La operación es asociativa si las dos lecturas coinciden en las $27$ ternas. Si la casilla de $0 * 1$ pasa a valer $2$, la terna $(1, 0, 1)$ da $(1 * 0) * 1 = 1$ y $1 * (0 * 1) = 2$.
 
 <Separador />
 
@@ -30,9 +34,9 @@ export const metadata = {
 
 Muchas operaciones habituales son asociativas y otras no; la asociatividad forma parte de la definición de varias <ConceptLink targetId="estructura-algebraica">estructuras algebraicas</ConceptLink>:
 
-- **Operaciones asociativas estándar:** La <ConceptLink targetId="adicion">suma</ConceptLink> y el <ConceptLink targetId="multiplicacion">producto</ConceptLink> en los <ConceptLink targetId="numero-entero">enteros</ConceptLink> $\mathbb{Z}$ y en los <ConceptLink targetId="numero-real">reales</ConceptLink> $\mathbb{R}$; la multiplicación de matrices; y la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> de un conjunto en sí mismo.
-- **Operaciones no asociativas:** La resta en $\mathbb{R}$ no es asociativa, pues $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; análogamente, la <ConceptLink targetId="division">división</ConceptLink> en $\mathbb{R} \setminus \{0\}$ o el producto vectorial en $\mathbb{R}^3$ carecen de asociatividad.
-- **Jerarquía algebraica:** Un semigrupo con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> constituye un <ConceptLink targetId="monoide">monoide</ConceptLink>; si además cada elemento admite <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>, conforma un <ConceptLink targetId="grupo">grupo</ConceptLink>.
+- **Operaciones asociativas estándar:** La <ConceptLink targetId="adicion">suma</ConceptLink> y el <ConceptLink targetId="multiplicacion">producto</ConceptLink> en los <ConceptLink targetId="numero-entero">enteros</ConceptLink> $\mathbb{Z}$ y en los <ConceptLink targetId="numero-real">reales</ConceptLink> $\mathbb{R}$; la <ConceptLink targetId="multiplicacion-matrices">multiplicación de matrices</ConceptLink>; y la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink> de un conjunto en sí mismo.
+- **Operaciones no asociativas:** La <ConceptLink targetId="sustraccion">resta</ConceptLink> en $\mathbb{R}$ no es asociativa, pues $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; tampoco lo son la <ConceptLink targetId="division">división</ConceptLink> en $\mathbb{R} \setminus \{0\}$ ni el <ConceptLink targetId="producto-vectorial">producto vectorial</ConceptLink> en $\mathbb{R}^3$.
+- **Jerarquía algebraica:** Un conjunto con una operación binaria asociativa es un <ConceptLink targetId="semigrupo">semigrupo</ConceptLink>; un semigrupo con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink>, un <ConceptLink targetId="monoide">monoide</ConceptLink>; y un monoide en el que cada elemento admite <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>, un <ConceptLink targetId="grupo">grupo</ConceptLink>.
 
 <Separador />
 

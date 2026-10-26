@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 116,
-      "exported": 74
+      "none": 115,
+      "exported": 75
     },
     "theoremLike": {
       "total": 21,
@@ -500,9 +500,11 @@
       "type": "definicion",
       "title": "Elkartze-propietatea",
       "filePath": "eu/definitions/asociatividad.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

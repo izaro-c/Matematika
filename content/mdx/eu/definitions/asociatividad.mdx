@@ -7,22 +7,26 @@ export const metadata = {
   description: "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkarketak ez baitu azken emaitza aldatzen.",
   branch: "08A",
   branches: ["08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "1. kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> batek izan dezakeen propietate aljebraiko bat da, zeinaren bidez hiru eragigai edo gehiagoren ebaluazio jarraitua aldaezin mantentzen baita elkartze-parentesien kokapenaren aurrean. Ezinbesteko baldintza da <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> eragiketa anitz konposatzean parentesirik gabe jarduteko.
+import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
+export const Simulation = AsociatividadTabla;
+
+<Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> baten propietatea da: hiru elementu ordena jakin batean eragitean, emaitza bera da, haiek nola elkartzen diren gorabehera. Horri esker, <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> zenbait faktoreren biderkadurak parentesirik gabe idazten dira.
 
 <Definicion title="Elkartze-propietatearen definizio formala">
   Izan bedi $S$ <ConceptLink targetId="conjunto">multzo</ConceptLink> bat eta izan bedi $*\colon S \times S \longrightarrow S$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bat. $*$ eragiketa **elkartzailea** dela esaten da baldin eta soilik baldin honako identitatea betetzen badu:
   $$
   \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
   $$
-  Multzo batez eta eragiketa bitar elkartzaile batez osatutako $(S, *)$ bikoteak <ConceptLink targetId="semigrupo">semitalde</ConceptLink> bat osatzen du.
 </Definicion>
+
+$S$ finitua denean, elkartze-propietatea eragiketaren taulan egiazta daiteke. Irudian, $S = \{0, 1, 2\}$ da eta hasierako taula $a * b = \max(a, b)$ da. $(a, b, c)$ hirukote bakoitzerako, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> $a * b$ laukian irakurtzen da, eta gero emaitza horren eta $c$-ren laukian; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, berriz, $b * c$ laukian, eta gero $a$-ren eta emaitza horren laukian. Eragiketa elkartzailea da bi irakurketak $27$ hirukoteetan bat badatoz. $0 * 1$ laukiak $2$ balio badu, $(1, 0, 1)$ hirukoteak $(1 * 0) * 1 = 1$ eta $1 * (0 * 1) = 2$ ematen ditu.
 
 <Separador />
 
@@ -30,9 +34,9 @@ export const metadata = {
 
 Ohiko eragiketa asko elkartzaileak dira eta beste batzuk ez; elkartze-propietatea zenbait <ConceptLink targetId="estructura-algebraica">egitura aljebraikoren</ConceptLink> definizioaren parte da:
 
-- **Eragiketa elkartzaile estandarrak:** <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; matrizeen biderketa; eta multzo batetik multzo berera doazen <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
-- **Eragiketa ez-elkartzaileak:** Kenketa $\mathbb{R}$ multzoan ez da elkartzailea, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; era berean, <ConceptLink targetId="division">zatiketak</ConceptLink> $\mathbb{R} \setminus \{0\}$ multzoan edo biderketa bektorialak $\mathbb{R}^3$ espazioan ez dute elkartze-propietaterik.
-- **Hierarkia aljebraikoa:** <ConceptLink targetId="elemento-neutro">Elementu neutroa</ConceptLink> duen semitalde batek <ConceptLink targetId="monoide">monoide</ConceptLink> bat osatzen du; elementu bakoitzak gainera <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> onartzen badu, egiturak <ConceptLink targetId="grupo">talde</ConceptLink> bat eratzen du.
+- **Eragiketa elkartzaile estandarrak:** <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; <ConceptLink targetId="multiplicacion-matrices">matrizeen biderketa</ConceptLink>; eta multzo batetik multzo berera doazen <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
+- **Eragiketa ez-elkartzaileak:** <ConceptLink targetId="sustraccion">Kenketa</ConceptLink> $\mathbb{R}$ multzoan ez da elkartzailea, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; ez dira elkartzaileak, halaber, <ConceptLink targetId="division">zatiketa</ConceptLink> $\mathbb{R} \setminus \{0\}$ multzoan eta <ConceptLink targetId="producto-vectorial">biderketa bektoriala</ConceptLink> $\mathbb{R}^3$ espazioan.
+- **Hierarkia aljebraikoa:** Eragiketa bitar elkartzaile bat duen multzoa <ConceptLink targetId="semigrupo">semitalde</ConceptLink> bat da; <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> duen semitaldea, <ConceptLink targetId="monoide">monoide</ConceptLink> bat; eta elementu bakoitzak <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> onartzen duen monoidea, <ConceptLink targetId="grupo">talde</ConceptLink> bat.
 
 <Separador />
 

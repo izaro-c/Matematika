@@ -7,22 +7,26 @@ export const metadata = {
   description: "Property of a binary operation whereby the grouping of operands does not alter the final result.",
   branch: "08A",
   branches: ["08A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Chapter 1", role: "secondary" }
   ]
 };
 
-<Capitular letra="A" />ssociativity (or the associative property) is an algebraic property that a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> may possess, whereby the sequential evaluation of three or more operands remains invariant under the grouping of parentheses. It constitutes the indispensable condition for omitting parentheses when composing multiple operations in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
+import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
+export const Simulation = AsociatividadTabla;
+
+<Capitular letra="A" />ssociativity (or the associative property) is the property of a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> whereby, when three elements are combined in a given order, the result does not depend on how they are grouped. Thanks to it, products of several factors are written without parentheses in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
 
 <Definicion title="Formal definition of associativity">
   Let $S$ be a <ConceptLink targetId="conjunto">set</ConceptLink> and let $*\colon S \times S \longrightarrow S$ be a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> on $S$. The operation $*$ is said to be **associative** if and only if it satisfies the identity:
   $$
   \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
   $$
-  A pair $(S, *)$ consisting of a set and an associative binary operation constitutes a <ConceptLink targetId="semigrupo">semigroup</ConceptLink>.
 </Definicion>
+
+When $S$ is finite, associativity can be checked on the operation table. In the figure, $S = \{0, 1, 2\}$ and the initial table is $a * b = \max(a, b)$. For each triple $(a, b, c)$, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> is read in the cell of $a * b$ and then in the cell of that result with $c$; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, in the cell of $b * c$ and then in the cell of $a$ with that result. The operation is associative if the two readings agree on all $27$ triples. If the cell of $0 * 1$ is changed to $2$, the triple $(1, 0, 1)$ gives $(1 * 0) * 1 = 1$ and $1 * (0 * 1) = 2$.
 
 <Separador />
 
@@ -30,9 +34,9 @@ export const metadata = {
 
 Many familiar operations are associative and others are not; associativity is part of the definition of several <ConceptLink targetId="estructura-algebraica">algebraic structures</ConceptLink>:
 
-- **Standard associative operations:** <ConceptLink targetId="adicion">Addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> in the <ConceptLink targetId="numero-entero">integers</ConceptLink> $\mathbb{Z}$ and the <ConceptLink targetId="numero-real">reals</ConceptLink> $\mathbb{R}$; matrix multiplication; and <ConceptLink targetId="composicion-funciones">composition of functions</ConceptLink> from a set to itself.
-- **Non-associative operations:** Subtraction in $\mathbb{R}$ is not associative, since $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; analogously, <ConceptLink targetId="division">division</ConceptLink> in $\mathbb{R} \setminus \{0\}$ or the cross product in $\mathbb{R}^3$ lack associativity.
-- **Algebraic hierarchy:** A semigroup with an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> constitutes a <ConceptLink targetId="monoide">monoid</ConceptLink>; if every element additionally admits an <ConceptLink targetId="elemento-inverso">inverse</ConceptLink>, it forms a <ConceptLink targetId="grupo">group</ConceptLink>.
+- **Standard associative operations:** <ConceptLink targetId="adicion">Addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> in the <ConceptLink targetId="numero-entero">integers</ConceptLink> $\mathbb{Z}$ and the <ConceptLink targetId="numero-real">reals</ConceptLink> $\mathbb{R}$; <ConceptLink targetId="multiplicacion-matrices">matrix multiplication</ConceptLink>; and <ConceptLink targetId="composicion-funciones">composition of functions</ConceptLink> from a set to itself.
+- **Non-associative operations:** <ConceptLink targetId="sustraccion">Subtraction</ConceptLink> in $\mathbb{R}$ is not associative, since $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$; neither are <ConceptLink targetId="division">division</ConceptLink> in $\mathbb{R} \setminus \{0\}$ nor the <ConceptLink targetId="producto-vectorial">cross product</ConceptLink> in $\mathbb{R}^3$.
+- **Algebraic hierarchy:** A set with an associative binary operation is a <ConceptLink targetId="semigrupo">semigroup</ConceptLink>; a semigroup with an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> is a <ConceptLink targetId="monoide">monoid</ConceptLink>; and a monoid in which every element admits an <ConceptLink targetId="elemento-inverso">inverse</ConceptLink> is a <ConceptLink targetId="grupo">group</ConceptLink>.
 
 <Separador />
 
