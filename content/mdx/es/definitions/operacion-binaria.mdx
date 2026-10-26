@@ -14,10 +14,10 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na **operación binaria** (o ley de composición interna) sobre un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> que asigna a cada par ordenado de elementos del conjunto un único resultado perteneciente a dicho conjunto. Constituye el bloque de construcción primordial del <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>, permitiendo articular estructuras como los <ConceptLink targetId="semigrupo">semigrupos</ConceptLink>, los <ConceptLink targetId="monoide">monoides</ConceptLink>, los <ConceptLink targetId="grupo">grupos</ConceptLink> y los <ConceptLink targetId="cuerpo">cuerpos</ConceptLink>.
+<Capitular letra="U" />na **operación binaria** (o ley de composición interna) sobre un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> que asigna a cada <ConceptLink targetId="par-ordenado">par ordenado</ConceptLink> de elementos del conjunto un único resultado perteneciente a dicho conjunto. Constituye el bloque de construcción primordial del <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>, permitiendo articular estructuras como los <ConceptLink targetId="semigrupo">semigrupos</ConceptLink>, los <ConceptLink targetId="monoide">monoides</ConceptLink>, los <ConceptLink targetId="grupo">grupos</ConceptLink> y los <ConceptLink targetId="cuerpo">cuerpos</ConceptLink>.
 
 <Definicion title="Definición formal de operación binaria">
-  Sea $S$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío. Una **operación binaria interna** sobre $S$ es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink>
+  Sea $S$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío. Una **operación binaria interna** sobre $S$ es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> del <ConceptLink targetId="producto-cartesiano" isDependency={true}>producto cartesiano</ConceptLink> $S \times S$ en $S$
   $$
   \begin{aligned}
   *\colon S \times S &\longrightarrow S \\
@@ -27,15 +27,15 @@ export const metadata = {
   que asocia a cada par ordenado $(a, b) \in S \times S$ un único elemento $a * b \in S$.
 </Definicion>
 
-La pertenencia del resultado al propio conjunto $S$ formaliza la clausura o cierre algebraico:
+La pertenencia del resultado al propio conjunto $S$ expresa la propiedad de clausura:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
-Bajo esta formulación funcional, la clausura queda intrínsecamente asegurada al fijar $S$ como el codominio de la aplicación.
+Bajo esta formulación funcional, la clausura queda intrínsecamente asegurada al fijar $S$ como el <ConceptLink targetId="codominio">codominio</ConceptLink> de la aplicación.
 
 <Separador />
 
-### Propiedades estructurales fundamentales
+### Propiedades de una operación binaria
 
 Una operación binaria $*$ sobre $S$ puede exhibir propiedades algebraicas que condicionan la estructura global del par $(S, *)$:
 
@@ -48,9 +48,6 @@ Una operación binaria $*$ sobre $S$ puede exhibir propiedades algebraicas que c
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Comportamiento algebraico">
-    <PropiedadItem id="unicidad-resultado-operacion" title="Unicidad del resultado">
-      Al ser una función bien definida, el resultado de aplicar la operación binaria a cualquier par de operandos es único: si $a = a'$ y $b = b'$, entonces $a * b = a' * b'$.
-    </PropiedadItem>
     <PropiedadItem id="clausura-inducida" title="Estabilidad de subconjuntos">
       Un subconjunto no vacío $T \subseteq S$ es estable o cerrado bajo $*$ si y solo si la restricción de la operación a $T \times T$ toma valores en $T$, definiendo una operación binaria inducida $*|_T\colon T \times T \longrightarrow T$.
     </PropiedadItem>

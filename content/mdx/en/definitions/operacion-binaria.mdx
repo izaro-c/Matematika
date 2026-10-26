@@ -14,10 +14,10 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each ordered pair of elements of the set a unique result belonging to that set. It constitutes the primary building block of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, allowing the articulation of structures such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink>, and <ConceptLink targetId="cuerpo">fields</ConceptLink>.
+<Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each <ConceptLink targetId="par-ordenado">ordered pair</ConceptLink> of elements of the set a unique result belonging to that set. It constitutes the primary building block of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, allowing the articulation of structures such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink>, and <ConceptLink targetId="cuerpo">fields</ConceptLink>.
 
 <Definicion title="Formal definition of binary operation">
-  Let $S$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. An **internal binary operation** on $S$ is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink>
+  Let $S$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. An **internal binary operation** on $S$ is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> from the <ConceptLink targetId="producto-cartesiano" isDependency={true}>Cartesian product</ConceptLink> $S \times S$ to $S$
   $$
   \begin{aligned}
   *\colon S \times S &\longrightarrow S \\
@@ -27,15 +27,15 @@ export const metadata = {
   that associates with each ordered pair $(a, b) \in S \times S$ a unique element $a * b \in S$.
 </Definicion>
 
-The membership of the result in the set $S$ itself formalizes the closure property or algebraic closure:
+The membership of the result in the set $S$ itself expresses the closure property:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
-Under this functional formulation, closure is intrinsically ensured by specifying $S$ as the codomain of the mapping.
+Under this functional formulation, closure is intrinsically ensured by specifying $S$ as the <ConceptLink targetId="codominio">codomain</ConceptLink> of the mapping.
 
 <Separador />
 
-### Fundamental structural properties
+### Properties of a binary operation
 
 A binary operation $*$ on $S$ can exhibit algebraic properties that govern the global structure of the pair $(S, *)$:
 
@@ -48,9 +48,6 @@ A binary operation $*$ on $S$ can exhibit algebraic properties that govern the g
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Algebraic behavior">
-    <PropiedadItem id="unicidad-resultado-operacion" title="Uniqueness of result">
-      As a well-defined function, the result of applying the binary operation to any pair of operands is unique: if $a = a'$ and $b = b'$, then $a * b = a' * b'$.
-    </PropiedadItem>
     <PropiedadItem id="clausura-inducida" title="Stability of subsets">
       A non-empty subset $T \subseteq S$ is stable or closed under $*$ if and only if the restriction of the operation to $T \times T$ takes values in $T$, defining an induced binary operation $*|_T\colon T \times T \longrightarrow T$.
     </PropiedadItem>

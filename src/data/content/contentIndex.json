@@ -11031,16 +11031,18 @@
       "conceptLinks": [
         "conjunto",
         "funcion",
+        "par-ordenado",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
         "grupo",
         "cuerpo",
+        "producto-cartesiano",
+        "codominio",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
-        "unicidad-resultado-operacion",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -11091,16 +11093,18 @@
       "conceptLinks": [
         "conjunto",
         "funcion",
+        "par-ordenado",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
         "grupo",
         "cuerpo",
+        "producto-cartesiano",
+        "codominio",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
-        "unicidad-resultado-operacion",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -31901,16 +31905,18 @@
       "conceptLinks": [
         "conjunto",
         "funcion",
+        "par-ordenado",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
         "grupo",
         "cuerpo",
+        "producto-cartesiano",
+        "codominio",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
-        "unicidad-resultado-operacion",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -45084,17 +45090,19 @@
       ],
       "conceptLinks": [
         "conjunto",
+        "par-ordenado",
         "funcion",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
         "grupo",
         "cuerpo",
+        "producto-cartesiano",
+        "codominio",
         "asociatividad",
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
-        "unicidad-resultado-operacion",
         "clausura-inducida"
       ],
       "availableLangs": [

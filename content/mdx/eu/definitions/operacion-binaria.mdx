@@ -14,28 +14,28 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen bikote ordenatu bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuaren</ConceptLink> oinarrizko eraikuntza-blokea da, <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink> bezalako egiturak eratzea ahalbidetuz.
+<Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuaren</ConceptLink> oinarrizko eraikuntza-blokea da, <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink> bezalako egiturak eratzea ahalbidetuz.
 
 <Definicion title="Eragiketa bitarraren definizio formala">
-  Izan bedi $S$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts bat. $S$-ren gaineko **barne-eragiketa bitar** bat
+  Izan bedi $S$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts bat. $S$-ren gaineko **barne-eragiketa bitar** bat $S \times S$ <ConceptLink targetId="producto-cartesiano" isDependency={true}>biderkadura kartesiarretik</ConceptLink> $S$ multzora doan <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da,
   $$
   \begin{aligned}
   *\colon S \times S &\longrightarrow S \\
   (a, b) &\longmapsto a * b
   \end{aligned}
   $$
-  motako <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, $(a, b) \in S \times S$ bikote ordenatu bakoitzari $a * b \in S$ elementu bakarra lotzen diona.
+  $(a, b) \in S \times S$ bikote ordenatu bakoitzari $a * b \in S$ elementu bakarra lotzen diona.
 </Definicion>
 
-Emaitza $S$ multzoari berari egoteak itxitura-propietatea edo itxidura aljebraikoa formalizatzen du:
+Emaitza $S$ multzoan bertan egoteak itxitura-propietatea adierazten du:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
-Formulazio funtzional honen bidez, itxitura berez bermatuta geratzen da $S$ aplikazioaren kodomeinutzat finkatzean.
+Formulazio funtzional honen bidez, itxitura berez bermatuta geratzen da $S$ aplikazioaren <ConceptLink targetId="codominio">kodomeinutzat</ConceptLink> finkatzean.
 
 <Separador />
 
-### Oinarrizko egitura-propietateak
+### Eragiketa bitar baten propietateak
 
 $S$-ren gaineko $*$ eragiketa bitar batek $(S, *)$ bikotearen egitura orokorra zehazten duten propietate aljebraikoak izan ditzake:
 
@@ -48,9 +48,6 @@ $S$-ren gaineko $*$ eragiketa bitar batek $(S, *)$ bikotearen egitura orokorra z
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Portaera aljebraikoa">
-    <PropiedadItem id="unicidad-resultado-operacion" title="Emaitzaren bakartasuna">
-      Ondo definitutako funtzio bat denez, eragiketa bitarra edozein eragigai bikoteri aplikatzearen emaitza bakarra da: baldin eta $a = a'$ eta $b = b'$, orduan $a * b = a' * b'$.
-    </PropiedadItem>
     <PropiedadItem id="clausura-inducida" title="Azpimultzoen egonkortasuna">
       $T \subseteq S$ azpimultzo ez-huts bat egonkorra edo itxia da $*$ eragiketarekiko baldin eta soilik baldin eragiketa $T \times T$ multzora murrizteak balioak $T$ multzoan hartzen baditu, $*|_T\colon T \times T \longrightarrow T$ eragiketa bitar induzitua definituz.
     </PropiedadItem>
