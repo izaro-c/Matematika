@@ -8763,7 +8763,13 @@
           "title": "Traité des propriétés projectives des figures",
           "author": "Jean-Victor Poncelet",
           "locator": "Introduction",
-          "role": "secondary"
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I",
+          "role": "primary"
         }
       ],
       "conceptLinks": [
@@ -8783,10 +8789,12 @@
         "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
+        "perspectividad",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectividad",
+        "distancia",
+        "incidencia",
         "pasch",
         "peano",
         "hilbert",
@@ -8831,7 +8839,13 @@
           "title": "Traité des propriétés projectives des figures",
           "author": "Jean-Victor Poncelet",
           "locator": "Introducción",
-          "role": "secondary"
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
         }
       ],
       "conceptLinks": [
@@ -8851,10 +8865,12 @@
         "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
+        "perspectividad",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectividad",
+        "distancia",
+        "incidencia",
         "pasch",
         "peano",
         "hilbert",
@@ -9167,6 +9183,7 @@
         "punto",
         "recta",
         "plano",
+        "axioma",
         "sistema-incidencia",
         "estructura-geometrica",
         "relacion-binaria",
@@ -9231,6 +9248,7 @@
         "punto",
         "recta",
         "plano",
+        "axioma",
         "sistema-incidencia",
         "estructura-geometrica",
         "relacion-binaria",
@@ -30688,7 +30706,13 @@
           "title": "Traité des propriétés projectives des figures",
           "author": "Jean-Victor Poncelet",
           "locator": "Introducción",
-          "role": "secondary"
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
         }
       ],
       "conceptLinks": [
@@ -30708,10 +30732,12 @@
         "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
+        "perspectividad",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectividad",
+        "distancia",
+        "incidencia",
         "pasch",
         "peano",
         "hilbert",
@@ -30891,6 +30917,7 @@
         "punto",
         "recta",
         "plano",
+        "axioma",
         "sistema-incidencia",
         "estructura-geometrica",
         "relacion-binaria",
@@ -43835,7 +43862,13 @@
           "title": "Traité des propriétés projectives des figures",
           "author": "Jean-Victor Poncelet",
           "locator": "Sarrera",
-          "role": "secondary"
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. kapitulua",
+          "role": "primary"
         }
       ],
       "conceptLinks": [
@@ -43855,10 +43888,12 @@
         "elementos-euclides",
         "geometria-proyectiva",
         "poncelet",
+        "perspectividad",
         "steiner",
         "staudt",
         "razon-doble",
-        "perspectividad",
+        "distancia",
+        "incidencia",
         "pasch",
         "peano",
         "hilbert",
@@ -44039,6 +44074,7 @@
         "plano",
         "concepto-primitivo",
         "sistema-incidencia",
+        "axioma",
         "estructura-geometrica",
         "dominio",
         "relacion-binaria",
