@@ -14,9 +14,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **isomorphism** is a bijective correspondence between two systems or mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> sharing the same <ConceptLink targetId="signatura">signature</ConceptLink>, such that all <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, operations, and distinguished constants are completely preserved.
+<Capitular letra="A" />n **isomorphism** is a bijective correspondence between two systems or mathematical <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> sharing the same <ConceptLink targetId="signatura">signature</ConceptLink>, such that all <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, operations, and distinguished constants are preserved.
 
-Two isomorphic structures are indistinguishable from the standpoint of properties expressible in the formal language of <ConceptLink targetId="logica">logic</ConceptLink>: any statement holding true in one is necessarily true in the other, differing solely in the empirical nature or naming of their underlying elements.
+Two isomorphic structures satisfy the same sentences of <ConceptLink targetId="logica">logic</ConceptLink> written in their signature: they differ only in the nature of their elements, about which no symbol of the signature says anything.
 
 <Definicion title="Formal definition of isomorphism">
   Let $\mathcal{M}$ and $\mathcal{N}$ be two structures over a signature $\sigma$ with <ConceptLink targetId="dominio">domains</ConceptLink> $M$ and $N$ respectively. A <ConceptLink targetId="biyeccion" isDependency={true}>bijection</ConceptLink>
@@ -37,14 +37,14 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
      f(c^{\mathcal{M}}) = c^{\mathcal{N}}
      $$
 
-  If $\sigma$ has several sorts, like the signature of geometry with points, lines and planes, each structure has one domain per sort and $f$ is a family of bijections, one per sort; in the conditions above, each $a_i$ is mapped by the bijection of its sort. The structures are *isomorphic*, $\mathcal{M} \cong \mathcal{N}$, if there exists an isomorphism from $\mathcal{M}$ onto $\mathcal{N}$.
+  If $\sigma$ has several sorts, like the signature of geometry with <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink> and <ConceptLink targetId="plano">planes</ConceptLink>, each structure has one domain per sort and $f$ is a family of bijections, one per sort; in the conditions above, each $a_i$ is mapped by the bijection of its sort. The structures are *isomorphic*, $\mathcal{M} \cong \mathcal{N}$, if there exists an isomorphism from $\mathcal{M}$ onto $\mathcal{N}$.
 </Definicion>
 
 <Separador />
 
 ### Categoricity and automorphisms
 
-In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, the existence of isomorphisms underpins key structural concepts:
+Two notions of <ConceptLink targetId="teoria-modelos">model theory</ConceptLink> are defined through isomorphisms:
 
 - **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** An <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> is categorical if all its models are mutually isomorphic. For example, the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, which is <ConceptLink targetId="dimension">three-dimensional</ConceptLink> and includes the <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms, is categorical: every model satisfying its axioms is isomorphic to the Cartesian <ConceptLink targetId="modelo-cartesiano">space</ConceptLink> $\mathbb{R}^3$.
 - **Automorphisms and <ConceptLink targetId="simetria">symmetry</ConceptLink>:** An isomorphism from $\mathcal{M}$ onto $\mathcal{M}$ is called an <ConceptLink targetId="automorfismo">automorphism</ConceptLink>. The <ConceptLink targetId="conjunto">set</ConceptLink> of all automorphisms forms a <ConceptLink targetId="grupo">group</ConceptLink> under <ConceptLink targetId="composicion-funciones">composition</ConceptLink>, which algebraically captures the internal symmetries of the structure. In the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>, for example, the automorphisms are the <ConceptLink targetId="colineacion">collineations</ConceptLink>, which permute points and lines while preserving <ConceptLink targetId="incidencia">incidence</ConceptLink>, and they form a group of 168 elements.
