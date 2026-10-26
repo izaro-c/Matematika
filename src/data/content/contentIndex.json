@@ -11032,6 +11032,7 @@
         "conjunto",
         "funcion",
         "par-ordenado",
+        "estructura-algebraica",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
@@ -11043,6 +11044,7 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto-estable",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -11094,6 +11096,7 @@
         "conjunto",
         "funcion",
         "par-ordenado",
+        "estructura-algebraica",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
@@ -11105,6 +11108,7 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto-estable",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -31906,6 +31910,7 @@
         "conjunto",
         "funcion",
         "par-ordenado",
+        "estructura-algebraica",
         "algebra-abstracta",
         "semigrupo",
         "monoide",
@@ -31917,6 +31922,7 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto-estable",
         "clausura-inducida"
       ],
       "availableLangs": [
@@ -45093,6 +45099,7 @@
         "par-ordenado",
         "funcion",
         "algebra-abstracta",
+        "estructura-algebraica",
         "semigrupo",
         "monoide",
         "grupo",
@@ -45103,6 +45110,7 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto-estable",
         "clausura-inducida"
       ],
       "availableLangs": [

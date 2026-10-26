@@ -14,7 +14,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each <ConceptLink targetId="par-ordenado">ordered pair</ConceptLink> of elements of the set a unique result belonging to that set. It constitutes the primary building block of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, allowing the articulation of structures such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink>, and <ConceptLink targetId="cuerpo">fields</ConceptLink>.
+<Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each <ConceptLink targetId="par-ordenado">ordered pair</ConceptLink> of elements of the set a unique result belonging to that set. The <ConceptLink targetId="estructura-algebraica">algebraic structures</ConceptLink> of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink> and <ConceptLink targetId="cuerpo">fields</ConceptLink>, are defined as sets equipped with one or more binary operations.
 
 <Definicion title="Formal definition of binary operation">
   Let $S$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. An **internal binary operation** on $S$ is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> from the <ConceptLink targetId="producto-cartesiano" isDependency={true}>Cartesian product</ConceptLink> $S \times S$ to $S$
@@ -27,29 +27,23 @@ export const metadata = {
   that associates with each ordered pair $(a, b) \in S \times S$ a unique element $a * b \in S$.
 </Definicion>
 
-The membership of the result in the set $S$ itself expresses the closure property:
+Since the <ConceptLink targetId="codominio">codomain</ConceptLink> of the function is $S$ itself, the operation is closed in $S$:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
-Under this functional formulation, closure is intrinsically ensured by specifying $S$ as the <ConceptLink targetId="codominio">codomain</ConceptLink> of the mapping.
 
 <Separador />
 
 ### Properties of a binary operation
 
-A binary operation $*$ on $S$ can exhibit algebraic properties that govern the global structure of the pair $(S, *)$:
-
-- **<ConceptLink targetId="asociatividad">Associativity</ConceptLink>:** Grouping does not alter the result: $\forall a, b, c \in S, \ (a * b) * c = a * (b * c)$.
-- **<ConceptLink targetId="conmutatividad">Commutativity</ConceptLink>:** The order of the operands does not alter the result: $\forall a, b \in S, \ a * b = b * a$.
-- **Existence of <ConceptLink targetId="elemento-neutro">identity element</ConceptLink>:** There exists an element $e \in S$ such that $\forall a \in S, \ a * e = e * a = a$.
-- **Existence of <ConceptLink targetId="elemento-inverso">inverse element</ConceptLink>:** Given an identity $e$, each $a \in S$ admits an element $a^{-1} \in S$ such that $a * a^{-1} = a^{-1} * a = e$.
+A binary operation $*$ on $S$ may be <ConceptLink targetId="asociatividad">associative</ConceptLink> or <ConceptLink targetId="conmutatividad">commutative</ConceptLink>, and may have an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> and <ConceptLink targetId="elemento-inverso">inverse elements</ConceptLink> with respect to that identity. Depending on which of these it satisfies, the pair $(S, *)$ is a semigroup (associative), a monoid (associative with identity) or a group (associative, with identity and an inverse for every element).
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Algebraic behavior">
-    <PropiedadItem id="clausura-inducida" title="Stability of subsets">
-      A non-empty subset $T \subseteq S$ is stable or closed under $*$ if and only if the restriction of the operation to $T \times T$ takes values in $T$, defining an induced binary operation $*|_T\colon T \times T \longrightarrow T$.
+    <PropiedadItem id="clausura-inducida" title="Induced operation on a stable subset">
+      If a non-empty subset $T \subseteq S$ is <ConceptLink targetId="subconjunto-estable">stable</ConceptLink> under $*$ ($a * b \in T$ for all $a, b \in T$), the restriction of $*$ to $T \times T$ is a binary operation $*|_T\colon T \times T \longrightarrow T$ on $T$, the induced operation.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

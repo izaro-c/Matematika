@@ -14,7 +14,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuaren</ConceptLink> oinarrizko eraikuntza-blokea da, <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink> bezalako egiturak eratzea ahalbidetuz.
+<Capitular letra="E" />ragiketa **bitar** bat (edo barne-konposizioko lege bat) <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts baten gainean multzoko elementuen <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> bakoitzari multzo bereko emaitza bakar bat esleitzen dion <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da. <ConceptLink targetId="algebra-abstracta">Aljebra abstraktuko</ConceptLink> <ConceptLink targetId="estructura-algebraica">egitura aljebraikoak</ConceptLink>, hala nola <ConceptLink targetId="semigrupo">semitaldeak</ConceptLink>, <ConceptLink targetId="monoide">monoideak</ConceptLink>, <ConceptLink targetId="grupo">taldeak</ConceptLink> eta <ConceptLink targetId="cuerpo">gorputzak</ConceptLink>, eragiketa bitar bat edo gehiago dituzten multzo gisa definitzen dira.
 
 <Definicion title="Eragiketa bitarraren definizio formala">
   Izan bedi $S$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> ez-huts bat. $S$-ren gaineko **barne-eragiketa bitar** bat $S \times S$ <ConceptLink targetId="producto-cartesiano" isDependency={true}>biderkadura kartesiarretik</ConceptLink> $S$ multzora doan <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da,
@@ -27,29 +27,23 @@ export const metadata = {
   $(a, b) \in S \times S$ bikote ordenatu bakoitzari $a * b \in S$ elementu bakarra lotzen diona.
 </Definicion>
 
-Emaitza $S$ multzoan bertan egoteak itxitura-propietatea adierazten du:
+Funtzioaren <ConceptLink targetId="codominio">kodomeinua</ConceptLink> $S$ bera denez, eragiketa itxia da $S$ multzoan:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
-Formulazio funtzional honen bidez, itxitura berez bermatuta geratzen da $S$ aplikazioaren <ConceptLink targetId="codominio">kodomeinutzat</ConceptLink> finkatzean.
 
 <Separador />
 
 ### Eragiketa bitar baten propietateak
 
-$S$-ren gaineko $*$ eragiketa bitar batek $(S, *)$ bikotearen egitura orokorra zehazten duten propietate aljebraikoak izan ditzake:
-
-- **<ConceptLink targetId="asociatividad">Elkartze-propietatea</ConceptLink>:** Elkartzeak ez du emaitza aldatzen: $\forall a, b, c \in S, \ (a * b) * c = a * (b * c)$.
-- **<ConceptLink targetId="conmutatividad">Trukakortasuna</ConceptLink>:** Eragigaien ordenak ez du emaitza aldatzen: $\forall a, b \in S, \ a * b = b * a$.
-- **<ConceptLink targetId="elemento-neutro">Elementu neutroaren</ConceptLink> existentzia:** Existitzen da $e \in S$ elementu bat non $\forall a \in S, \ a * e = e * a = a$.
-- **<ConceptLink targetId="elemento-inverso">Alderantzizko elementuaren</ConceptLink> existentzia:** $e$ neutro bat finkatuta, $a \in S$ bakoitzak $a^{-1} \in S$ elementu bat onartzen du non $a * a^{-1} = a^{-1} * a = e$.
+$S$-ren gaineko $*$ eragiketa bitar bat <ConceptLink targetId="asociatividad">elkarkorra</ConceptLink> edo <ConceptLink targetId="conmutatividad">trukakorra</ConceptLink> izan daiteke, eta <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> eta neutro horrekiko <ConceptLink targetId="elemento-inverso">alderantzizko elementuak</ConceptLink> izan ditzake. Betetzen dituen propietateen arabera, $(S, *)$ bikotea semitaldea (elkarkorra), monoidea (elkarkorra eta neutroduna) edo taldea (elkarkorra, neutroduna eta elementu bakoitzak alderantzizkoa duena) da.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Portaera aljebraikoa">
-    <PropiedadItem id="clausura-inducida" title="Azpimultzoen egonkortasuna">
-      $T \subseteq S$ azpimultzo ez-huts bat egonkorra edo itxia da $*$ eragiketarekiko baldin eta soilik baldin eragiketa $T \times T$ multzora murrizteak balioak $T$ multzoan hartzen baditu, $*|_T\colon T \times T \longrightarrow T$ eragiketa bitar induzitua definituz.
+    <PropiedadItem id="clausura-inducida" title="Azpimultzo egonkor batean induzitutako eragiketa">
+      $T \subseteq S$ azpimultzo ez-huts bat $*$ eragiketarekiko <ConceptLink targetId="subconjunto-estable">egonkorra</ConceptLink> bada ($a * b \in T$ da $a, b \in T$ guztietarako), $*$ eragiketa $T \times T$ multzora murriztuta $*|_T\colon T \times T \longrightarrow T$ eragiketa bitarra lortzen da $T$ multzoaren gainean: eragiketa induzitua.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
