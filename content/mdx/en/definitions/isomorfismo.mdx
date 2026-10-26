@@ -23,7 +23,7 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
   $$
   f\colon M \longrightarrow N
   $$
-  is an **isomorphism** from $\mathcal{M}$ onto $\mathcal{N}$ (denoted $\mathcal{M} \cong \mathcal{N}$) if it satisfies:
+  is an **isomorphism** from $\mathcal{M}$ onto $\mathcal{N}$ if it satisfies:
   1. For each $n$-ary relation symbol $R \in \sigma$ and for all $a_1, \dots, a_n \in M$:
      $$
      (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
@@ -36,6 +36,8 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
      $$
      f(c^{\mathcal{M}}) = c^{\mathcal{N}}
      $$
+
+  If $\sigma$ has several sorts, like the signature of geometry with points, lines and planes, each structure has one domain per sort and $f$ is a family of bijections, one per sort; in the conditions above, each $a_i$ is mapped by the bijection of its sort. The structures are *isomorphic*, $\mathcal{M} \cong \mathcal{N}$, if there exists an isomorphism from $\mathcal{M}$ onto $\mathcal{N}$.
 </Definicion>
 
 <Separador />
@@ -44,5 +46,5 @@ Two isomorphic structures are indistinguishable from the standpoint of propertie
 
 In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, the existence of isomorphisms underpins key structural concepts:
 
-- **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** An <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> is categorical if all its models are mutually isomorphic. For example, the complete <ConceptLink targetId="dimension">three-dimensional</ConceptLink> <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> with <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms is categorical: every model satisfying its axioms is isomorphic to the Cartesian <ConceptLink targetId="modelo-cartesiano">space</ConceptLink> $\mathbb{R}^3$.
-- **Automorphisms and <ConceptLink targetId="simetria">symmetry</ConceptLink>:** An isomorphism from a structure onto itself ($\mathcal{M} \cong \mathcal{M}$) is called an *automorphism*. The <ConceptLink targetId="conjunto">set</ConceptLink> of all automorphisms forms a <ConceptLink targetId="grupo">group</ConceptLink> that algebraically captures the internal symmetries of the structure, as exemplified by the <ConceptLink targetId="dualidad">self-dual</ConceptLink> <ConceptLink targetId="incidencia">incidence</ConceptLink> transformations of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>.
+- **<ConceptLink targetId="categoricidad">Categoricity</ConceptLink>:** An <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> is categorical if all its models are mutually isomorphic. For example, the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, which is <ConceptLink targetId="dimension">three-dimensional</ConceptLink> and includes the <ConceptLink targetId="continuidad">continuity</ConceptLink> axioms, is categorical: every model satisfying its axioms is isomorphic to the Cartesian <ConceptLink targetId="modelo-cartesiano">space</ConceptLink> $\mathbb{R}^3$.
+- **Automorphisms and <ConceptLink targetId="simetria">symmetry</ConceptLink>:** An isomorphism from $\mathcal{M}$ onto $\mathcal{M}$ is called an <ConceptLink targetId="automorfismo">automorphism</ConceptLink>. The <ConceptLink targetId="conjunto">set</ConceptLink> of all automorphisms forms a <ConceptLink targetId="grupo">group</ConceptLink> under <ConceptLink targetId="composicion-funciones">composition</ConceptLink>, which algebraically captures the internal symmetries of the structure. In the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>, for example, the automorphisms are the <ConceptLink targetId="colineacion">collineations</ConceptLink>, which permute points and lines while preserving <ConceptLink targetId="incidencia">incidence</ConceptLink>, and they form a group of 168 elements.

@@ -14,7 +14,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura">signatura</ConceptLink> bera partekatzen duten bi sistema edo <ConceptLink targetId="estructura-geometrica">egitura matematikoren</ConceptLink> arteko bat-bateko korrespondentzia da, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink>, eragiketak eta konstante bereiziak osotasunean kontserbatzen dituena.
+<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura">signatura</ConceptLink> bera partekatzen duten bi sistema edo <ConceptLink targetId="estructura-geometrica">egitura matematikoren</ConceptLink> arteko bana-banako korrespondentzia da, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink>, eragiketak eta konstante bereiziak osotasunean kontserbatzen dituena.
 
 Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</ConceptLink> hizkuntza formalean adieraz daitezkeen propietateei dagokienez: haietako batean egiazkoa den edozein enuntziatu nahitaez egiazkoa da bestean ere, oinarrizko elementuen izaera enpirikoa edo nomenklatura soilik aldatuz.
 
@@ -23,7 +23,7 @@ Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</
   $$
   f\colon M \longrightarrow N
   $$
-  <ConceptLink targetId="biyeccion" isDependency={true}>bijekzio</ConceptLink> bat $\mathcal{M}$-tik $\mathcal{N}$-rako **isomorfismo** bat da ($\mathcal{M} \cong \mathcal{N}$ idatzita), baldin eta honako hauek betetzen baditu:
+  <ConceptLink targetId="biyeccion" isDependency={true}>bijekzio</ConceptLink> bat $\mathcal{M}$-tik $\mathcal{N}$-rako **isomorfismo** bat da, baldin eta honako hauek betetzen baditu:
   1. Edozein $n$-ar $R \in \sigma$ erlazio-ikurretarako eta edozein $a_1, \dots, a_n \in M$ elementutarako:
      $$
      (a_1, \dots, a_n) \in R^{\mathcal{M}} \iff (f(a_1), \dots, f(a_n)) \in R^{\mathcal{N}}
@@ -36,6 +36,8 @@ Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</
      $$
      f(c^{\mathcal{M}}) = c^{\mathcal{N}}
      $$
+
+  $\sigma$ signaturak mota bat baino gehiago baditu, geometriarenak bezala (puntuak, zuzenak eta planoak), egitura bakoitzak domeinu bat du mota bakoitzeko, eta $f$ bijekzio-familia bat da, mota bakoitzeko bijekzio bat duena; aurreko baldintzetan, $a_i$ bakoitza bere motako bijekzioaz eraldatzen da. Egiturak *isomorfoak* dira, $\mathcal{M} \cong \mathcal{N}$, $\mathcal{M}$-tik $\mathcal{N}$-rako isomorfismoren bat existitzen bada.
 </Definicion>
 
 <Separador />
@@ -44,5 +46,5 @@ Bi egitura isomorfo bereizezinak dira <ConceptLink targetId="logica">logikaren</
 
 <ConceptLink targetId="teoria-modelos">Ereduen teorian</ConceptLink>, isomorfismoen existentziak egiturazko nozio garrantzitsuak finkatzen ditu:
 
-- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, <ConceptLink targetId="continuidad">jarraitutasun-axiomekin</ConceptLink> osatutako hiru <ConceptLink targetId="dimension">dimentsioko</ConceptLink> <ConceptLink targetId="sistema-euclidiano">sistema euklidear</ConceptLink> osoa kategorikoa da: bere axiomak betetzen dituen eredu orok $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrera</ConceptLink> eramaten duen isomorfismo bat onartzen du.
-- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** Egitura batek bere buruarekin duen isomorfismoari ($\mathcal{M} \cong \mathcal{M}$) *automorfismo* deritzo. Automorfismo guztien <ConceptLink targetId="conjunto">multzoak</ConceptLink> <ConceptLink targetId="grupo">talde</ConceptLink> bat osatzen du, egituraren barne-simetriak aljebraikoki atzematen dituena, hala nola <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink> agertzen diren <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-eraldaketa <ConceptLink targetId="dualidad">autodualetan</ConceptLink>.
+- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink> hiru <ConceptLink targetId="dimension">dimentsiokoa</ConceptLink> da eta <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> barne hartzen ditu, eta kategorikoa da: bere axiomak betetzen dituen eredu oro $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrarekin</ConceptLink> isomorfoa da.
+- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** $\mathcal{M}$-tik $\mathcal{M}$-rako isomorfismoari <ConceptLink targetId="automorfismo">automorfismo</ConceptLink> deritzo. Automorfismo guztien <ConceptLink targetId="conjunto">multzoak</ConceptLink> <ConceptLink targetId="grupo">talde</ConceptLink> bat osatzen du <ConceptLink targetId="composicion-funciones">konposizioarekin</ConceptLink>, egituraren barne-simetriak aljebraikoki atzematen dituena. <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink>, adibidez, automorfismoak <ConceptLink targetId="colineacion">kolineazioak</ConceptLink> dira: puntuak eta zuzenak permutatzen dituzte <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> kontserbatuz, eta 168 elementuko talde bat osatzen dute.
