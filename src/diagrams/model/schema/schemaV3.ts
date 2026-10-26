@@ -404,7 +404,8 @@ function validateObject(object: DiagramObject, index: number, validation: Valida
     if (object.geometry.type === 'intersection') {
       object.geometry.areas.forEach((ref, refIndex) => {
         const target = validation.objectMap.get(ref);
-        if (target?.objectType !== 'area' && target?.objectType !== 'region') {
+        const isPathArea = target?.objectType === 'path' && (target.geometry.type === 'polygon' || target.geometry.type === 'circle');
+        if (target?.objectType !== 'area' && target?.objectType !== 'region' && !isPathArea) {
           addIssue(context, ['objects', index, 'geometry', 'areas', refIndex], `${ref} debe ser un área.`);
         }
       });

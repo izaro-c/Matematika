@@ -19,6 +19,8 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
    | Demostración por pasos (`steps`, `objectStates`) | `content/diagrams/Demos/DemoTrianguloIsosceles.tsx` |
    | Animación con deslizador | `content/diagrams/Demos/DemoPitagorasAreas.tsx` |
    | Flechas entre conjuntos con puntas arrastrables y estado (§5 F) | `content/diagrams/Definiciones/FuncionSagital.tsx`, `BiyeccionSagital.tsx` |
+   | Conjuntos como regiones arrastrables, su intersección y un panel que la calcula | `content/diagrams/Definiciones/Interseccion.tsx` |
+   | Semiplanos sombreados (`area` · `half-plane`) | `content/diagrams/Definiciones/Semiplano.tsx` |
 
 3. El bloque entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` es **JSON estricto**: comillas dobles, sin comentarios, sin comas finales. El editor visual lo reescribe; cualquier cosa que no sea JSON hace que el diagrama deje de ser editable.
 4. Escribe el archivo completo, sin marcadores tipo `...` ni `// resto igual`.
@@ -151,7 +153,7 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
    - `point`: coordenadas directas, punto medio (`midpoint`), intersección (`intersection`), proyección perpendicular (`projection`).
    - `path`: segmentos (`segment`, con punta de flecha opcional `appearance.arrow`: `start` | `end` | `both`), rectas (`line`), semirrectas (`ray`), polígonos (`polygon`), circunferencias (`circle`), arcos (`arc`).
    - `angle`: medido entre tres puntos, con marcador de arco o cuadrado (`marker: 'square'`).
-   - `region` / `area`: descomposiciones de áreas o semiplanos.
+   - `region`: descomposiciones de áreas. `area`: semiplanos (`half-plane`) e intersecciones de regiones (`intersection`), ver [spec-v3-schema.md](./references/spec-v3-schema.md#area).
 
 3. **Validación:**
    Desde la raíz del repositorio:

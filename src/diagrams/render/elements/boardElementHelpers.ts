@@ -7,10 +7,11 @@ import {
   type AreaIntersectionComposite,
   updateStaticAreaPolygon,
 } from '@/diagrams/jsxgraph/MathFactory';
-import {findObject, isPositionedPoint, objectConstructionReferences, pointPosition, type DiagramBounds, type DiagramObject, type DiagramSpec} from '@/diagrams/model'
+import {findObject, isPositionedPoint, pointPosition, type DiagramBounds, type DiagramObject, type DiagramSpec} from '@/diagrams/model'
 import {resolveAreaDisplayPolygons, resolveCurveAreaPolygons, resolvePointCoordinates, sampleCurveElement, type AreaPointResolver, type CurvePath} from '@/diagrams/geometry';
 
 type BoardScene = Pick<DiagramSpec, 'objects' | 'relations' | 'viewport'>;
+type RedrawableElement = { prepareUpdate(): RedrawableElement; update(): RedrawableElement; updateRenderer(): RedrawableElement };
 import { liveVariables } from '@/diagrams/render/diagramRuntimeUtils';
 
 export function createLiveAreaPointResolver(
@@ -105,20 +106,31 @@ export function updateAreaIntersectionFills(
   if (!areaState) return;
   const liveResolver = createLiveAreaPointResolver(elements);
   const bounds = resolveCurveAreaBounds(board, spec);
-  const signature = JSON.stringify({
-    bounds,
-    refs: objectConstructionReferences(item),
-    objects: spec.objects,
-  });
-  if (areaState.lastSignature === signature) return;
+  // The polygons depend on live point positions, not only on the spec, so they are part of the signature.
   const polygons = resolveAreaDisplayPolygons(
     { ...spec, viewport: { ...spec.viewport, bounds } },
     item,
     liveResolver,
   );
+  const signature = JSON.stringify({ bounds, polygons });
+  if (areaState.lastSignature === signature) return;
   areaState.fills.forEach((fill, index) => {
     const polygon = polygons[index];
-    if (polygon && polygon.length >= 3) updateStaticAreaPolygon(fill, polygon);
+    if (polygon && polygon.length >= 3) {
+      updateStaticAreaPolygon(fill, polygon);
+      return;
+    }
+    // No piece left for this fill (e.g. disjoint areas): collapse it onto a point so it disappears.
+    const anchor = fill.vertices?.[0];
+    if (anchor) {
+      const collapsed = { x: anchor.X(), y: anchor.Y() };
+      updateStaticAreaPolygon(fill, [collapsed, collapsed, collapsed]);
+    }
+  });
+  // This runs inside the board's own update, after the fills were drawn, so they are redrawn here
+  // instead of waiting for the next update (which never comes once a drag ends).
+  areaState.fills.forEach(fill => {
+    [fill, ...(fill.borders ?? [])].forEach(element => (element as unknown as RedrawableElement).prepareUpdate().update().updateRenderer());
   });
   areaState.lastSignature = signature;
 }

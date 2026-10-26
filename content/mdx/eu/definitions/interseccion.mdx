@@ -17,29 +17,34 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="E" />**bakidura** <ConceptLink targetId="conjunto" isDependency={true}>multzoen</ConceptLink> arteko eragiketa bat da, kontuan hartutako multzo bakoitzean aldi berean dauden elementu guztiak biltzen dituena. Azpiko <ConceptLink targetId="logica">logika</ConceptLink> proposizionalean, <ConceptLink targetId="conjuncion">konjuntzio</ConceptLink> konektorearekin bat dator ($\land$).
+<Capitular letra="E" />**bakidura** <ConceptLink targetId="conjunto" isDependency={true}>multzoen</ConceptLink> arteko <ConceptLink targetId="operacion-binaria">eragiketa</ConceptLink> bat da, multzo guztietan aldi berean dauden elementuak biltzen dituena. <ConceptLink targetId="logica">Logika</ConceptLink> proposizionaleko <ConceptLink targetId="conjuncion">konjuntzio</ConceptLink>-konektoreari ($\land$) dagokio: elementu bat bi multzoren ebakiduran dago lehenengoan eta bigarrenean badago.
 
-Eskualde geometriko konposatuak definitzeko eta bi figuraren puntu komunak deskribatzeko balio du.
+Eskualde geometriko konposatuak definitzeko balio du, hala nola angelu baten barnealdea, baita bi irudiren puntu komunak deskribatzeko ere.
 
 <Definicion title="Ebakiduraren definizio formala">
-  Izan bitez $A$ eta $B$ bi multzo. $A$ eta $B$ multzoen **ebakidura** ($A \cap B$ idatzita) $A$-n eta $B$-n dauden elementuek osatutako multzoa da:
+  Izan bitez <VisualBind element="conjuntoA" color="terracota">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="pavo">$B$</VisualBind> bi multzo. $A$ eta $B$ multzoen **ebakidura**, <VisualBind element="interseccionAB" color="mora">$A \cap B$</VisualBind> idatzita, $B$-n ere dauden $A$-ren elementuen multzoa da:
   $$
-  A \cap B = \{x \mid x \in A \land x \in B\}
+  A \cap B = \{x \in A \mid x \in B\}
   $$
-  Modu orokorrean, $\{A_i\}_{i \in I}$ hutsik ez dagoen multzo-familia arbitrario baterako, haren ebakidura orokortua honela definitzen da:
+  <ConceptLink targetId="axioma-separacion" isDependency={true}>Bereizketaren axiomak</ConceptLink> bermatzen du $A \cap B$ multzo bat dela, eta edozein $x$-tarako $x \in A \cap B \iff (x \in A \land x \in B)$ betetzen da.
+
+  $\{A_i\}_{i \in I}$ multzo-familia ez-huts baterako eta edozein $i_0 \in I$ indizerako, haren ebakidura hau da:
   $$
-  \bigcap_{i \in I} A_i = \{x \mid \forall i \in I, \ x \in A_i\}
+  \bigcap_{i \in I} A_i = \{x \in A_{i_0} \mid \forall i \in I, \ x \in A_i\}
   $$
+  Emaitza ez dago aukeratutako $i_0$ indizearen mende. Familiak ez-hutsa izan behar du: $I = \emptyset$ bada, objektu orok beteko luke baldintza, eta objektu guztien bilduma ez da multzo bat.
 </Definicion>
 
 <Separador />
 
-### Propietate aljebraikoak eta muga geometrikoak
+### Propietate aljebraikoak
 
-Ebakidura-eragiketak <ConceptLink targetId="conmutatividad">trukakortasunaren</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">elkarkortasunaren</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) eta <ConceptLink targetId="idempotencia">idempotentziaren</ConceptLink> ($A \cap A = A$) lege boolearrak betetzen ditu. Bi multzok elementu komunik ez dutenean ($A \cap B = \emptyset$), <ConceptLink targetId="conjunto-disjunto">multzo disjuntuak</ConceptLink> deritze.
+Ebakidurak <ConceptLink targetId="conmutatividad">trukakortasuna</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">elkarkortasuna</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) eta <ConceptLink targetId="idempotencia">idempotentzia</ConceptLink> ($A \cap A = A$) betetzen ditu. $A \cap B$ multzoa $A$-ren eta $B$-ren <ConceptLink targetId="subconjunto">azpimultzoa</ConceptLink> da, eta $A \cap B = A$ da baldin eta soilik baldin $A \subseteq B$ bada. Gainera, ebakidura <ConceptLink targetId="distributividad">banakorra</ConceptLink> da <ConceptLink targetId="union">bildurarekiko</ConceptLink>: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$. $A \cap B$ <ConceptLink targetId="conjunto-vacio">multzo hutsa</ConceptLink> denean, $A$ eta $B$ <ConceptLink targetId="conjunto-disjunto">multzo disjuntuak</ConceptLink> dira.
 
-<ConceptLink targetId="conjunto-convexo">Multzo konbexuen</ConceptLink> ebakidurak konbexutasuna gordetzen du beti:
-- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten <ConceptLink targetId="interior-angulo">barnealdea</ConceptLink> bi <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekiren ebakidura da: alde bakoitzeko, haren <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> mugatzen duena eta beste aldea barnean duena.
+### Ebakidurak geometrian
+
+<ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera, bi <ConceptLink targetId="recta">zuzen</ConceptLink> desberdinek <ConceptLink targetId="punto">puntu</ConceptLink> komun bat dute gehienez. Horregatik, haien <ConceptLink targetId="traza">puntu-trazaduren</ConceptLink> ebakidurak bereizten ditu bi zuzen <ConceptLink targetId="coplanaridad">koplanar</ConceptLink> desberdinen bi posizioak. Bi <ConceptLink targetId="secante">zuzen ebakitzailek</ConceptLink>, $\ell_1$ eta $\ell_2$, puntu komun bakarra dute, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$, eta bi zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdinek ez dute bat ere: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
+
+<ConceptLink targetId="conjunto-convexo">Multzo konbexuen</ConceptLink> familia ez-huts baten ebakidura konbexua da: $X$ eta $Y$ bi puntu multzo guztietan badaude, $\overline{XY}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> multzo bakoitzean dago eta, beraz, ebakiduran. <ConceptLink targetId="semiplano">Planoerdi</ConceptLink> irekiak konbexuak dira <ConceptLink targetId="teorema-separacion-plano">planoaren banaketa-teoremaren</ConceptLink> arabera; beraz, haiek ebakiz lortzen diren eskualdeak ere konbexuak dira:
+- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten <ConceptLink targetId="interior-angulo">barnealdea</ConceptLink> bi planoerdi irekiren ebakidura da: alde bakoitzeko, haren <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> mugatzen duena eta beste aldea barnean duena. $Q$ eta $R$, hurrenez hurren, $\ell_1$ eta $\ell_2$ zuzenetako puntuak badira eta $P$ ez badira, orduan $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\ell_1}(R) \cap \mathcal{H}_{\ell_2}(Q)$.
 - <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten <ConceptLink targetId="interior-triangulo">barnealdea</ConceptLink> hiru planoerdi irekiren ebakidura da: <ConceptLink targetId="lado">alde</ConceptLink> bakoitzeko, haren zuzen euskarriak mugatzen duena eta aurkako <ConceptLink targetId="vertice">erpina</ConceptLink> barnean duena. <ConceptLink targetId="poligono">Poligono</ConceptLink> konbexu baten barnealdea modu berean lortzen da, alde bakoitzeko planoerdi batekin.
-
-Ebakidurak bi <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanar</ConceptLink> desberdinen posizioak ere bereizten ditu: bi <ConceptLink targetId="secante">zuzen ebakitzailek</ConceptLink>, <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> eta <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind>, <ConceptLink targetId="punto">puntu</ConceptLink> komun bakarra dute, <VisualBind element="pInter" color="mora">$\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$</VisualBind>, eta bi zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdinek ez dute bat ere: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

@@ -338,9 +338,10 @@ export function updateStaticAreaPolygon(
   if (!polygon?.vertices || points.length < 3) return;
   const vertices = polygon.vertices as JXG.Point[];
   const sampled = subsamplePolygonPoints(points, vertices.length);
-  sampled.forEach((point, index) => {
-    const vertex = vertices[index];
-    if (vertex) setExactPointPosition(vertex, JXG.COORDS_BY_USER, [point.x, point.y]);
+  // With fewer points than vertices, the extra vertices repeat the last point instead of keeping stale positions.
+  vertices.forEach((vertex, index) => {
+    const point = sampled[Math.min(index, sampled.length - 1)];
+    setExactPointPosition(vertex, JXG.COORDS_BY_USER, [point.x, point.y]);
   });
 }
 export function updateSampledCurve(
@@ -1107,8 +1108,10 @@ export function createAreaIntersectionFills(
   options: GeometryOptions = {},
   theme: ThemeColors,
 ): JXGPolygon[] {
-  const polygons = resolvePolygons().filter(polygon => polygon.length >= 3);
-  if (polygons.length === 0) return [];
+  const resolved = resolvePolygons().filter(polygon => polygon.length >= 3);
+  // An empty intersection still gets one collapsed fill (with enough vertices for a smooth outline later),
+  // so it can appear when its areas start to overlap.
+  const polygons = resolved.length > 0 ? resolved : [Array.from({ length: 64 }, () => ({ x: 0, y: 0 }))];
   return polygons.map(polygon => createStaticAreaPolygon(board, polygon, {
     fillOpacity: 0.14,
     borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.5 },
@@ -1121,7 +1124,12 @@ export function createAreaIntersectionComposite(
   fills: JXGPolygon[],
 ): JXGPolygon | AreaIntersectionComposite | null {
   if (fills.length === 0) return null;
-  if (fills.length === 1) return fills[0];
+  if (fills.length === 1) {
+    // A single fill is returned as is, but it still needs the state so it follows its points when they move.
+    const fill = fills[0] as JXGPolygon & Pick<AreaIntersectionComposite, '__matematikaAreaIntersection'>;
+    fill.__matematikaAreaIntersection = { fills };
+    return fill;
+  }
   const composite = createComposite(fills) as AreaIntersectionComposite;
   composite.__matematikaAreaIntersection = { fills };
   return composite;

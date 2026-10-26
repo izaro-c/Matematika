@@ -94,6 +94,22 @@ El punto solo ocupa la posición de uno de esos puntos (entre 1 y 16, distintos 
   "sweep": "non-reflex",
   "marker": "arc" // "arc" | "square"
 }
+```
+
+### `area`
+Regiones rellenas. Dos geometrías:
+```json
+{ "id": "areaH1", "objectType": "area", "geometry": { "type": "half-plane", "boundary": ["pC", "pA"], "side": "pB" },
+  "appearance": { "strokeWidth": 0, "fillOpacity": 0.12 } }
+{ "id": "areaAB", "objectType": "area", "geometry": { "type": "intersection", "areas": ["discoA", "discoB"] },
+  "appearance": { "strokeWidth": 0, "fillOpacity": 0.3 } }
+```
+- `half-plane`: semiplano abierto de borde la recta `boundary` que contiene a `side`.
+- `intersection`: corte de dos o más regiones. Cada operando es un `area`, un `region` o un `path` `circle` o `polygon`. Para conjuntos como regiones (diagrama de Venn), los operandos son dos círculos con `fillOpacity`.
+- La intersección sigue a sus puntos al arrastrar y se recorta al tablero visible. Si queda vacía (regiones disjuntas), desaparece y vuelve a aparecer cuando las regiones se cortan: el caso $A \cap B = \emptyset$ se puede enseñar arrastrando.
+- Un disco que se arrastra entero: centro libre y punto del borde `expression` oculto (`"x": "cA.x + 2"`, `"y": "cA.y"`). Con el borde libre, mover el centro cambia el radio.
+- Para que un panel o un halo reaccione a qué puntos caen dentro, escribe la condición en un punto `expression` oculto (`lt(hypot(e1.x - cA.x, e1.y - cA.y), 2)`, o el signo de un producto vectorial para un semiplano) y léela desde `visibleWhen`. Referencia: `Interseccion.tsx`, que codifica en binario qué elementos están en $A \cap B$ y muestra un panel por combinación.
+
 ### `control` (ej. deslizador / slider de animación)
 ```json
 {
@@ -173,7 +189,7 @@ Todo texto visible debe existir en `eu` y `en`. Claves por idioma (todas opciona
   }
 }
 ```
-- `labels`: `label` de puntos, trazados y controles (botones/deslizadores).
+- `labels`: `label` de puntos, trazados y controles (botones/deslizadores). **No pongas en `labels` los paneles sin título**: si falta `titles`, `labels` se usa como título del panel y en `eu`/`en` aparece un título que en castellano no existe.
 - `titles` / `texts`: `content.title` / `content.text` de anotaciones (`panel`, `label`, `measurement`); conserva `{value}` y el LaTeX tal cual.
 - `ariaLabels`: `selection.ariaLabel` (lector de pantalla). Tradúcelas también.
 - `rules`: textos de las variantes condicionales `content.rules`, **alineados por índice**; `""` hereda el texto en castellano.

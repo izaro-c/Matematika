@@ -11,3 +11,6 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `biyeccion` · 2026-10-24 · `a5f1020e` · [informe](2026-10-24-biyeccion.md)
 - [ ] `cardinalidad` · 2026-10-24 · `fd6eb9e4` · [informe](2026-10-24-cardinalidad.md)
 - [ ] `cociente-incremental` · 2026-10-24 · `b6c93f17` · [informe](2026-10-24-cociente-incremental.md)
+- [ ] `geometria-hilbertiana` · 2026-10-25 · `fd2b95a2` · [informe](2026-10-25-geometria-hilbertiana.md)
+- [ ] `geometria-sintetica` · 2026-10-25 · `4b282eea` · [informe](2026-10-25-geometria-sintetica.md)
+- [ ] `interseccion` · 2026-10-26 · `2d50f20c` · [informe](2026-10-26-interseccion.md)

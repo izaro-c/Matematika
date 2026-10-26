@@ -17,29 +17,34 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="L" />a **intersección** es una operación entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne todos aquellos elementos que pertenecen simultáneamente a cada uno de los conjuntos considerados. En la <ConceptLink targetId="logica">lógica</ConceptLink> proposicional subyacente, se corresponde con el conectivo de <ConceptLink targetId="conjuncion">conjunción</ConceptLink> ($\land$).
+<Capitular letra="L" />a **intersección** es una <ConceptLink targetId="operacion-binaria">operación</ConceptLink> entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne los elementos que pertenecen a la vez a cada uno de ellos. Corresponde al conectivo de <ConceptLink targetId="conjuncion">conjunción</ConceptLink> ($\land$) de la <ConceptLink targetId="logica">lógica</ConceptLink> proposicional: un elemento está en la intersección de dos conjuntos si está en el primero y está en el segundo.
 
-Permite definir regiones geométricas compuestas y describir los puntos comunes a dos figuras.
+Permite definir regiones geométricas compuestas, como el interior de un ángulo, y describir los puntos comunes a dos figuras.
 
 <Definicion title="Definición formal de intersección">
-  Sean $A$ y $B$ dos conjuntos. La **intersección** de $A$ y $B$ (denotada $A \cap B$) es el conjunto compuesto por los elementos que están en $A$ y en $B$:
+  Sean <VisualBind element="conjuntoA" color="terracota">$A$</VisualBind> y <VisualBind element="conjuntoB" color="pavo">$B$</VisualBind> dos conjuntos. La **intersección** de $A$ y $B$, denotada <VisualBind element="interseccionAB" color="mora">$A \cap B$</VisualBind>, es el conjunto de los elementos de $A$ que están también en $B$:
   $$
-  A \cap B = \{x \mid x \in A \land x \in B\}
+  A \cap B = \{x \in A \mid x \in B\}
   $$
-  De forma general, para una familia arbitraria no vacía de conjuntos $\{A_i\}_{i \in I}$, su intersección generalizada se define como:
+  El <ConceptLink targetId="axioma-separacion" isDependency={true}>axioma de separación</ConceptLink> garantiza que $A \cap B$ es un conjunto, y para todo $x$ se cumple $x \in A \cap B \iff (x \in A \land x \in B)$.
+
+  Para una familia no vacía de conjuntos $\{A_i\}_{i \in I}$ y un índice cualquiera $i_0 \in I$, su intersección es:
   $$
-  \bigcap_{i \in I} A_i = \{x \mid \forall i \in I, \ x \in A_i\}
+  \bigcap_{i \in I} A_i = \{x \in A_{i_0} \mid \forall i \in I, \ x \in A_i\}
   $$
+  El resultado no depende del índice $i_0$ elegido. La familia ha de ser no vacía: si $I = \emptyset$, todo objeto cumpliría la condición, y la colección de todos los objetos no es un conjunto.
 </Definicion>
 
 <Separador />
 
-### Propiedades algebraicas y delimitación geométrica
+### Propiedades algebraicas
 
-La operación de intersección satisface las leyes booleanas de <ConceptLink targetId="conmutatividad">conmutatividad</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">asociatividad</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) e <ConceptLink targetId="idempotencia">idempotencia</ConceptLink> ($A \cap A = A$). Cuando dos conjuntos carecen de elementos comunes ($A \cap B = \emptyset$), se denominan <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink>.
+La intersección cumple la <ConceptLink targetId="conmutatividad">conmutatividad</ConceptLink> ($A \cap B = B \cap A$), la <ConceptLink targetId="asociatividad">asociatividad</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) y la <ConceptLink targetId="idempotencia">idempotencia</ConceptLink> ($A \cap A = A$). El conjunto $A \cap B$ es un <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> de $A$ y de $B$, y $A \cap B = A$ si y solo si $A \subseteq B$. Además, la intersección es <ConceptLink targetId="distributividad">distributiva</ConceptLink> respecto de la <ConceptLink targetId="union">unión</ConceptLink>: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$. Cuando $A \cap B$ es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink>, $A$ y $B$ son <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink>.
 
-La intersección de <ConceptLink targetId="conjunto-convexo">conjuntos convexos</ConceptLink> preserva siempre la convexidad:
-- El <ConceptLink targetId="interior-angulo">interior</ConceptLink> de un <ConceptLink targetId="angulo">ángulo</ConceptLink> es la intersección de dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos: para cada lado, el limitado por su <ConceptLink targetId="recta-soporte">recta soporte</ConceptLink> que contiene al otro lado.
+### Intersecciones en geometría
+
+Por el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas tienen a lo sumo un <ConceptLink targetId="punto">punto</ConceptLink> común. Por eso, la intersección de sus <ConceptLink targetId="traza">trazas</ConceptLink> distingue las dos posiciones de dos rectas <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> distintas. Dos <ConceptLink targetId="secante">rectas secantes</ConceptLink> $\ell_1$ y $\ell_2$ tienen un único punto común, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$, y dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> distintas no tienen ninguno: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
+
+La intersección de una familia no vacía de <ConceptLink targetId="conjunto-convexo">conjuntos convexos</ConceptLink> es convexa: si dos puntos $X$ e $Y$ están en todos ellos, el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{XY}$ está contenido en cada uno y, por tanto, en la intersección. Los <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos son convexos por el <ConceptLink targetId="teorema-separacion-plano">teorema de separación del plano</ConceptLink>, así que también lo son las regiones que se obtienen al cortarlos:
+- El <ConceptLink targetId="interior-angulo">interior</ConceptLink> de un <ConceptLink targetId="angulo">ángulo</ConceptLink> es la intersección de dos semiplanos abiertos: para cada lado, el limitado por su <ConceptLink targetId="recta-soporte">recta soporte</ConceptLink> que contiene al otro lado. Si $Q$ y $R$ son puntos de $\ell_1$ y de $\ell_2$ distintos de $P$, entonces $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\ell_1}(R) \cap \mathcal{H}_{\ell_2}(Q)$.
 - El <ConceptLink targetId="interior-triangulo">interior</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es la intersección de tres semiplanos abiertos: para cada <ConceptLink targetId="lado">lado</ConceptLink>, el limitado por su recta soporte que contiene al <ConceptLink targetId="vertice">vértice</ConceptLink> opuesto. El de un <ConceptLink targetId="poligono">polígono</ConceptLink> convexo se obtiene igual, con un semiplano por lado.
-
-La intersección distingue también las posiciones de dos <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> distintas: dos <ConceptLink targetId="secante">rectas secantes</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> y <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> tienen un único <ConceptLink targetId="punto">punto</ConceptLink> común, <VisualBind element="pInter" color="mora">$\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$</VisualBind>, y dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> distintas no tienen ninguno: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

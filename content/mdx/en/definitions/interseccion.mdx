@@ -17,29 +17,34 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="I" />**ntersection** is an operation between <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that gathers all elements belonging simultaneously to each of the considered sets. In the underlying propositional <ConceptLink targetId="logica">logic</ConceptLink>, it corresponds to the <ConceptLink targetId="conjuncion">conjunction</ConceptLink> connective ($\land$).
+<Capitular letra="I" />**ntersection** is an <ConceptLink targetId="operacion-binaria">operation</ConceptLink> on <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that gathers the elements belonging to each of them at once. It corresponds to the <ConceptLink targetId="conjuncion">conjunction</ConceptLink> connective ($\land$) of propositional <ConceptLink targetId="logica">logic</ConceptLink>: an element is in the intersection of two sets if it is in the first and it is in the second.
 
-It makes it possible to define composite geometric regions and to describe the points common to two figures.
+It makes it possible to define composite geometric regions, such as the interior of an angle, and to describe the points common to two figures.
 
 <Definicion title="Formal definition of intersection">
-  Let $A$ and $B$ be two sets. The **intersection** of $A$ and $B$ (denoted $A \cap B$) is the set consisting of all elements belonging to both $A$ and $B$:
+  Let <VisualBind element="conjuntoA" color="terracota">$A$</VisualBind> and <VisualBind element="conjuntoB" color="pavo">$B$</VisualBind> be two sets. The **intersection** of $A$ and $B$, denoted <VisualBind element="interseccionAB" color="mora">$A \cap B$</VisualBind>, is the set of the elements of $A$ that are also in $B$:
   $$
-  A \cap B = \{x \mid x \in A \land x \in B\}
+  A \cap B = \{x \in A \mid x \in B\}
   $$
-  In general, for any non-empty family of sets $\{A_i\}_{i \in I}$, its generalized intersection is defined as:
+  The <ConceptLink targetId="axioma-separacion" isDependency={true}>axiom of separation</ConceptLink> guarantees that $A \cap B$ is a set, and for every $x$ we have $x \in A \cap B \iff (x \in A \land x \in B)$.
+
+  For a non-empty family of sets $\{A_i\}_{i \in I}$ and any index $i_0 \in I$, its intersection is:
   $$
-  \bigcap_{i \in I} A_i = \{x \mid \forall i \in I, \ x \in A_i\}
+  \bigcap_{i \in I} A_i = \{x \in A_{i_0} \mid \forall i \in I, \ x \in A_i\}
   $$
+  The result does not depend on the chosen index $i_0$. The family must be non-empty: if $I = \emptyset$, every object would satisfy the condition, and the collection of all objects is not a set.
 </Definicion>
 
 <Separador />
 
-### Algebraic properties and geometric delimitation
+### Algebraic properties
 
-The intersection operation satisfies the Boolean laws of <ConceptLink targetId="conmutatividad">commutativity</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">associativity</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$), and <ConceptLink targetId="idempotencia">idempotence</ConceptLink> ($A \cap A = A$). When two sets share no elements in common ($A \cap B = \emptyset$), they are called <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink>.
+Intersection satisfies <ConceptLink targetId="conmutatividad">commutativity</ConceptLink> ($A \cap B = B \cap A$), <ConceptLink targetId="asociatividad">associativity</ConceptLink> ($A \cap (B \cap C) = (A \cap B) \cap C$) and <ConceptLink targetId="idempotencia">idempotence</ConceptLink> ($A \cap A = A$). The set $A \cap B$ is a <ConceptLink targetId="subconjunto">subset</ConceptLink> of both $A$ and $B$, and $A \cap B = A$ if and only if $A \subseteq B$. Moreover, intersection is <ConceptLink targetId="distributividad">distributive</ConceptLink> over <ConceptLink targetId="union">union</ConceptLink>: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$. When $A \cap B$ is the <ConceptLink targetId="conjunto-vacio">empty set</ConceptLink>, $A$ and $B$ are <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink>.
 
-The intersection of <ConceptLink targetId="conjunto-convexo">convex sets</ConceptLink> always preserves convexity:
-- The <ConceptLink targetId="interior-angulo">interior</ConceptLink> of an <ConceptLink targetId="angulo">angle</ConceptLink> is the intersection of two open <ConceptLink targetId="semiplano">half-planes</ConceptLink>: for each side, the one bounded by its <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> that contains the other side.
+### Intersections in geometry
+
+By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, two distinct <ConceptLink targetId="recta">lines</ConceptLink> have at most one common <ConceptLink targetId="punto">point</ConceptLink>. Hence the intersection of their <ConceptLink targetId="traza">traces</ConceptLink> tells apart the two positions of two distinct <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> lines. Two <ConceptLink targetId="secante">secant lines</ConceptLink> $\ell_1$ and $\ell_2$ have exactly one common point, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$, and two distinct <ConceptLink targetId="paralelas">parallel lines</ConceptLink> have none: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
+
+The intersection of a non-empty family of <ConceptLink targetId="conjunto-convexo">convex sets</ConceptLink> is convex: if two points $X$ and $Y$ lie in all of them, the <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{XY}$ is contained in each one and therefore in the intersection. Open <ConceptLink targetId="semiplano">half-planes</ConceptLink> are convex by the <ConceptLink targetId="teorema-separacion-plano">plane separation theorem</ConceptLink>, so the regions obtained by intersecting them are convex too:
+- The <ConceptLink targetId="interior-angulo">interior</ConceptLink> of an <ConceptLink targetId="angulo">angle</ConceptLink> is the intersection of two open half-planes: for each side, the one bounded by its <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> that contains the other side. If $Q$ and $R$ are points of $\ell_1$ and $\ell_2$ other than $P$, then $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\ell_1}(R) \cap \mathcal{H}_{\ell_2}(Q)$.
 - The <ConceptLink targetId="interior-triangulo">interior</ConceptLink> of a <ConceptLink targetId="triangulo">triangle</ConceptLink> is the intersection of three open half-planes: for each <ConceptLink targetId="lado">side</ConceptLink>, the one bounded by its supporting line that contains the opposite <ConceptLink targetId="vertice">vertex</ConceptLink>. The interior of a convex <ConceptLink targetId="poligono">polygon</ConceptLink> is obtained in the same way, with one half-plane per side.
-
-Intersection also distinguishes the positions of two distinct <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> <ConceptLink targetId="recta">lines</ConceptLink>: two <ConceptLink targetId="secante">secant lines</ConceptLink> <VisualBind element="lineL1" color="terracota">$\ell_1$</VisualBind> and <VisualBind element="lineL2" color="pavo">$\ell_2$</VisualBind> have exactly one common <ConceptLink targetId="punto">point</ConceptLink>, <VisualBind element="pInter" color="mora">$\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$</VisualBind>, and two distinct <ConceptLink targetId="paralelas">parallel lines</ConceptLink> have none: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.

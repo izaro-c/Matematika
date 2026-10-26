@@ -2,14 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 13 / 190
+Revisadas: 17 / 190
 
 ## Pendientes
 
-- [ ] `geometria-hilbertiana` · definitions
-- [ ] `geometria-sintetica` · definitions
-- [ ] `incidencia` · definitions
-- [ ] `interseccion` · definitions
 - [ ] `conjunto-disjunto` · definitions
 - [ ] `isomorfismo` · definitions
 - [ ] `logica` · definitions
@@ -199,3 +195,7 @@ Revisadas: 13 / 190
 - [x] `biyeccion` · 2026-10-24 · errores · corregido 9401d86d · propuestas a5f1020e · [informe](2026-10-24-biyeccion.md) · $1.26
 - [x] `cardinalidad` · 2026-10-24 · errores · corregido 0b9bc41f · propuestas fd6eb9e4 · [informe](2026-10-24-cardinalidad.md) · $2.45
 - [x] `cociente-incremental` · 2026-10-24 · errores · corregido 6d493efc · propuestas b6c93f17 · [informe](2026-10-24-cociente-incremental.md) · $2.56
+- [x] `geometria-hilbertiana` · 2026-10-25 · errores · corregido 8918d7fe · propuestas fd2b95a2 · [informe](2026-10-25-geometria-hilbertiana.md) · $1.54
+- [x] `geometria-sintetica` · 2026-10-25 · errores · corregido 6f6eff06 · propuestas 4b282eea · [informe](2026-10-25-geometria-sintetica.md) · $0.68
+- [x] `incidencia` · 2026-10-26 · mejoras · corregido b44a97dc · [informe](2026-10-26-incidencia.md) · $0.8
+- [x] `interseccion` · 2026-10-26 · errores · corregido 273482d8 · propuestas 2d50f20c · [informe](2026-10-26-interseccion.md) · $1.18

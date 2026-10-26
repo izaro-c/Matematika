@@ -49,6 +49,7 @@ Un diagrama merece existir cuando manipularlo enseña algo que el texto solo afi
 - **Suele merecerlo:**
   - Definiciones de objetos geométricos, axiomas con figura, teoremas con figura y sus demostraciones (un paso del diagrama por cada paso de la prueba).
   - Definiciones con condiciones que el lector puede romper una a una: función (totalidad y unicidad), inyectividad, sobreyectividad, biyección, función inversa, composición, relaciones de equivalencia sobre conjuntos finitos. Se ilustran con un diagrama de flechas entre conjuntos donde el lector arrastra las flechas y ve qué condición falla. El modelo es `content/diagrams/Definiciones/FuncionSagital.tsx`.
+  - Operaciones entre conjuntos (intersección, unión, diferencia): conjuntos como regiones arrastrables con elementos dentro, y un panel que calcula el resultado. El modelo es `content/diagrams/Definiciones/Interseccion.tsx`.
   - Métodos de prueba cuya mecánica se puede animar, como el dominó de la inducción.
 - **No suele merecerlo:**
   - Conceptos lógicos o metamatemáticos sin nada que manipular (signatura, concepto primitivo), sistemas axiomáticos y biografías.

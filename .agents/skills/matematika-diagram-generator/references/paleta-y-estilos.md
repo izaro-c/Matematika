@@ -27,7 +27,7 @@ píldoras, puntos de estado, mayúsculas con tracking).
   - **Título de bloque**: versalitas, `--ink-text-muted`. Los bloques con color solo tiñen el texto.
 - Un panel de paso usa la misma piel: título = etiqueta del paso (versalitas) y `overlay.title` como subtítulo en cursiva.
 - Etiquetas, pasos (`label`, `description`) y paneles admiten KaTeX `$…$`: escribir `$P(k)$`, nunca `P(k)` plano.
-- **Excepción: `note`** (y `translations.*.note`) es texto plano. `ExplorationCue` colorea en ella las etiquetas de los puntos móviles buscándolas como palabras sueltas: escribir `Arrastra A y C`, nunca `$A$`. `verify-diagram.ts` lo comprueba.
+- **Excepción: `note`** (y `translations.*.note`) es texto plano. `ExplorationCue` colorea en ella las etiquetas de los puntos móviles buscándolas como palabras sueltas: escribir `Arrastra A y C`, nunca `$A$`. `verify-diagram.ts` lo comprueba. Como busca palabras sueltas, una etiqueta que es también una palabra corriente se colorea donde no toca (la «a» de «a la vez», la «y» de «X y B», la «e» en euskera): usa etiquetas que no sean palabras en ningún idioma (números, mayúsculas, subíndices).
 
 ## 3. Botones de control: «rótulo impreso»
 
@@ -56,7 +56,7 @@ editables en el editor visual), no `objectStates[*].overlay` de los pasos, que e
 Para que el panel siga lo que hace el alumno, usar `visibleWhen` sobre los controles
 (ej. `and(gte(empuje, 0.01), not(gte(acercar, 1.4)))`) e incluir los paneles en `visibleTargets` de cada paso.
 
-Traducciones de paneles: `labels` (nombre en el editor), `titles`, `subtitles` y `annotations` (texto), por id.
+Traducciones de paneles: `titles`, `subtitles` y `annotations` (texto), por id. `labels` también sirve de título cuando falta `titles`: no lo uses para un panel sin título.
 Overlays de paso, si se usan: `steps.<stepId>.overlays.<objectId>.{title,content}`.
 
 ## 5. Paleta de objetos
