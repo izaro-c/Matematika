@@ -81,6 +81,7 @@
     "elemento-inverso",
     "grupo",
     "cuerpo",
+    "subconjunto",
     "numero-natural",
     "numero-entero",
     "numero-racional",
@@ -110,7 +111,6 @@
     "region-poligonal",
     "semejanza",
     "sistema-axiomatico",
-    "subconjunto",
     "teorema",
     "teoria-medida-area",
     "teoria-modelos",
@@ -1221,7 +1221,8 @@
       "proofs": [],
       "directDependencies": [
         "conjunto",
-        "funcion"
+        "funcion",
+        "subconjunto"
       ]
     },
     "numero-racional": {
