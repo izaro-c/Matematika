@@ -4,17 +4,17 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Elkartze-propietatea",
-  description: "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkartze-ordenak ez baitu azken emaitza aldatzen.",
+  description: "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkarketak ez baitu azken emaitza aldatzen.",
   branch: "08A",
   branches: ["08A"],
   hasSimulation: false,
   sources: [
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
-    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+    { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "1. kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> batek izan dezakeen oinarrizko propietate aljebraiko bat da, zeinaren bidez hiru eragigai edo gehiagoren ebaluazio jarraitua aldaezin mantentzen baita elkartze-parentesien kokapenaren aurrean. Ezinbesteko baldintza da <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> eragiketa anitz konposatzean parentesirik gabe jarduteko.
+<Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> batek izan dezakeen propietate aljebraiko bat da, zeinaren bidez hiru eragigai edo gehiagoren ebaluazio jarraitua aldaezin mantentzen baita elkartze-parentesien kokapenaren aurrean. Ezinbesteko baldintza da <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> eragiketa anitz konposatzean parentesirik gabe jarduteko.
 
 <Definicion title="Elkartze-propietatearen definizio formala">
   Izan bedi $S$ <ConceptLink targetId="conjunto">multzo</ConceptLink> bat eta izan bedi $*\colon S \times S \longrightarrow S$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bat. $*$ eragiketa **elkartzailea** dela esaten da baldin eta soilik baldin honako identitatea betetzen badu:
@@ -28,10 +28,10 @@ export const metadata = {
 
 ### Egitura aljebraikoak eta kontraadibideak
 
-Elkartze-propietatea egoteak edo ez egoteak <ConceptLink targetId="estructura-algebraica">egitura aljebraikoen</ConceptLink> funtsezko klaseak mugatzen ditu:
+Ohiko eragiketa asko elkartzaileak dira eta beste batzuk ez; elkartze-propietatea zenbait <ConceptLink targetId="estructura-algebraica">egitura aljebraikoren</ConceptLink> definizioaren parte da:
 
-- **Eragiketa elkartzaile estandarrak:** Batuketa eta biderketa $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; matrizeen biderketa; eta edozein multzoren gaineko <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
-- **Eragiketa ez-elkartzaileak:** Kenketa $\mathbb{R}$ multzoan ez da elkartzailea, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; era berean, zatiketak $\mathbb{R} \setminus \{0\}$ multzoan edo biderketa bektorialak $\mathbb{R}^3$ espazioan ez dute elkartze-propietaterik.
+- **Eragiketa elkartzaile estandarrak:** <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; matrizeen biderketa; eta multzo batetik multzo berera doazen <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
+- **Eragiketa ez-elkartzaileak:** Kenketa $\mathbb{R}$ multzoan ez da elkartzailea, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; era berean, <ConceptLink targetId="division">zatiketak</ConceptLink> $\mathbb{R} \setminus \{0\}$ multzoan edo biderketa bektorialak $\mathbb{R}^3$ espazioan ez dute elkartze-propietaterik.
 - **Hierarkia aljebraikoa:** <ConceptLink targetId="elemento-neutro">Elementu neutroa</ConceptLink> duen semitalde batek <ConceptLink targetId="monoide">monoide</ConceptLink> bat osatzen du; elementu bakoitzak gainera <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> onartzen badu, egiturak <ConceptLink targetId="grupo">talde</ConceptLink> bat eratzen du.
 
 <Separador />
@@ -39,10 +39,10 @@ Elkartze-propietatea egoteak edo ez egoteak <ConceptLink targetId="estructura-al
 <SeccionPropiedades>
   <PropiedadesGrupo title="Ondorio deduktiboak">
     <PropiedadItem id="asociatividad-generalizada" title="Elkartze-propietate orokortuaren teorema">
-      Baldin eta $*$ $S$-ren gaineko eragiketa bitar elkartzailea bada, $n$ elementuren edozein $a_1 * a_2 * \cdots * a_n$ biderkadurak ($n \ge 3$ izanik) emaitza bakarra ematen du ebaluazio-parentesiak aplikatzeko ordenarekiko independentea dena, parentesiak erabat baztertzea ahalbidetuz.
+      $*$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> elkartzailea bada, $n$ elementuren edozein $a_1 * a_2 * \cdots * a_n$ biderkadurak ($n \ge 3$ izanik) balio bera hartzen du parentesiak nola kokatzen diren gorabehera, faktoreen ordena aldatzen ez bada; beraz, parentesiak ken daitezke.
     </PropiedadItem>
     <PropiedadItem id="unicidad-inversos-asociatividad" title="Alderantzizko elementuen bakartasuna">
-      $e$ elementu neutroa duen edozein egitura elkartzailetan, $a$ elementu batek ezkerreko $b$ alderantzizkoa ($b * a = e$) eta eskuineko $c$ alderantzizkoa ($a * c = e$) onartzen baditu, biak nahitaez bat datoz: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$.
+      $*$ elkartzailea bada eta $e$ <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> badu, eta $a$ elementu batek ezkerreko $b$ <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> ($b * a = e$) eta eskuineko $c$ alderantzizkoa ($a * c = e$) onartzen baditu, biak bat datoz: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$. Bereziki, $a$-ren alderantzizkoa, baldin badago, bakarra da.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

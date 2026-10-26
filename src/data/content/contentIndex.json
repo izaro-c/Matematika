@@ -4627,13 +4627,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "Chapter I, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "Chapter 1",
           "role": "secondary"
         }
       ],
@@ -4643,9 +4643,12 @@
         "conjunto",
         "semigrupo",
         "estructura-algebraica",
+        "adicion",
+        "multiplicacion",
         "numero-entero",
         "numero-real",
         "composicion-funciones",
+        "division",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -4703,9 +4706,12 @@
         "conjunto",
         "semigrupo",
         "estructura-algebraica",
+        "adicion",
+        "multiplicacion",
         "numero-entero",
         "numero-real",
         "composicion-funciones",
+        "division",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -28718,9 +28724,12 @@
         "conjunto",
         "semigrupo",
         "estructura-algebraica",
+        "adicion",
+        "multiplicacion",
         "numero-entero",
         "numero-real",
         "composicion-funciones",
+        "division",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
@@ -41881,7 +41890,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Elkartze-propietatea",
-      "description": "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkartze-ordenak ez baitu azken emaitza aldatzen.",
+      "description": "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkarketak ez baitu azken emaitza aldatzen.",
       "branch": "08A",
       "branches": [
         "08A"
@@ -41891,13 +41900,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "1. kapitulua",
           "role": "secondary"
         }
       ],
@@ -41907,9 +41916,12 @@
         "conjunto",
         "semigrupo",
         "estructura-algebraica",
+        "adicion",
+        "multiplicacion",
         "numero-entero",
         "numero-real",
         "composicion-funciones",
+        "division",
         "elemento-neutro",
         "monoide",
         "elemento-inverso",
