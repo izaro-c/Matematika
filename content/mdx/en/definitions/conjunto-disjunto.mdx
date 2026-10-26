@@ -6,19 +6,22 @@ export const metadata = {
   title: "Disjoint sets",
   description: "Property of two sets or a family of sets that share no common elements, emphasizing the condition of pairwise (mutually) disjoint sets.",
   branch: "03",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul Halmos", locator: "Chapter 4", role: "primary" }
   ]
 };
 
-<Capitular letra="T" />wo <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **disjoint** (or mutually exclusive) if they share no elements in common, that is, if their <ConceptLink targetId="interseccion" isDependency={true}>intersection</ConceptLink> is the <ConceptLink targetId="conjunto-vacio">empty set</ConceptLink>:
+import { ConjuntosDisjuntos } from '@content/diagrams/Definiciones/ConjuntosDisjuntos';
+export const Simulation = ConjuntosDisjuntos;
+
+<Capitular letra="T" />wo <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ are **disjoint** (or mutually exclusive) if they share no elements in common, that is, if their <ConceptLink targetId="interseccion" isDependency={true}>intersection</ConceptLink> is the <ConceptLink targetId="conjunto-vacio" isDependency={true}>empty set</ConceptLink>:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
 
 <Definicion title="Family of Mutually Disjoint Sets (Pairwise Disjoint)">
-  Let $\{A_i\}_{i \in I}$ be a family of sets indexed by a set $I$. The family is said to be **mutually disjoint** (or **pairwise disjoint**) if any two distinct sets in the family have empty intersection:
+  Let <VisualBind element="familia" color="carbon">$\{A_i\}_{i \in I}$</VisualBind> be a <ConceptLink targetId="familia-indexada" isDependency={true}>family of sets indexed</ConceptLink> by a set $I$. The family is said to be **mutually disjoint** (or **pairwise disjoint**) if the intersection <VisualBind element="interseccionesDosADos" color="mora">$A_i \cap A_j$</VisualBind> of any two members with distinct indices $i \neq j$ is empty:
   $$
   \forall i, j \in I \ (i \neq j \implies A_i \cap A_j = \emptyset)
   $$
@@ -33,11 +36,11 @@ $$
       title="Pairwise Disjointness vs. Empty Global Intersection"
       formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
-      If the family has at least two members ($\lvert I \rvert \ge 2$), being pairwise disjoint implies having empty global intersection. The converse fails from three sets on: $A_1 = \{1, 2\}$, $A_2 = \{2, 3\}$, and $A_3 = \{1, 3\}$ have empty global intersection, yet they meet pairwise.
+      If the index set has at least two elements ($\lvert I \rvert \ge 2$), being pairwise disjoint implies having empty global intersection, because $\bigcap_{k \in I} A_k \subseteq A_i \cap A_j$ for any $i \neq j$. With exactly two indices both conditions coincide. The converse fails from three on: <VisualBind element="conjuntoA1" color="terracota">$A_1 = \{1, 2\}$</VisualBind>, <VisualBind element="conjuntoA2" color="pavo">$A_2 = \{2, 3\}$</VisualBind>, and <VisualBind element="conjuntoA3" color="ocre">$A_3 = \{1, 3\}$</VisualBind> have empty global intersection, yet they meet pairwise, since <VisualBind element="interseccionA1A2" color="mora">$A_1 \cap A_2 = \{2\}$</VisualBind>, <VisualBind element="interseccionA1A3" color="mora">$A_1 \cap A_3 = \{1\}$</VisualBind>, and <VisualBind element="interseccionA2A3" color="mora">$A_2 \cap A_3 = \{3\}$</VisualBind>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="fundamento-geometrico-sorts" 
+      id="particion-dominios-geometricos" 
       title="Partition of the Universe of Discourse into Domains"
       formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >

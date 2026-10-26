@@ -6,19 +6,22 @@ export const metadata = {
   title: "Conjuntos disjuntos",
   description: "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
   branch: "03",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul Halmos", locator: "Capítulo 4", role: "primary" }
   ]
 };
 
-<Capitular letra="D" />os <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su <ConceptLink targetId="interseccion" isDependency={true}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink>:
+import { ConjuntosDisjuntos } from '@content/diagrams/Definiciones/ConjuntosDisjuntos';
+export const Simulation = ConjuntosDisjuntos;
+
+<Capitular letra="D" />os <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su <ConceptLink targetId="interseccion" isDependency={true}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio" isDependency={true}>conjunto vacío</ConceptLink>:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
 
-<Definicion title="Familia de Conjuntos Mutuamente Disjuntos (Disjuntos dos a dos)">
-  Sea $\{A_i\}_{i \in I}$ una familia de conjuntos indexada por un conjunto $I$. Se dice que la familia es **mutuamente disjunta** (o **disjunta dos a dos**) si cualesquiera dos conjuntos distintos de la familia tienen intersección vacía:
+<Definicion title="Familia de conjuntos mutuamente disjuntos (disjuntos dos a dos)">
+  Sea <VisualBind element="familia" color="carbon">$\{A_i\}_{i \in I}$</VisualBind> una <ConceptLink targetId="familia-indexada" isDependency={true}>familia de conjuntos indexada</ConceptLink> por un conjunto $I$. Se dice que la familia es **mutuamente disjunta** (o **disjunta dos a dos**) si la intersección <VisualBind element="interseccionesDosADos" color="mora">$A_i \cap A_j$</VisualBind> de cualesquiera dos miembros con índices distintos $i \neq j$ es vacía:
   $$
   \forall i, j \in I \ (i \neq j \implies A_i \cap A_j = \emptyset)
   $$
@@ -33,11 +36,11 @@ $$
       title="Disyunción dos a dos vs. intersección global vacía"
       formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
-      Si la familia tiene al menos dos miembros ($\lvert I \rvert \ge 2$), ser disjunta dos a dos implica tener intersección global vacía. La recíproca falla a partir de tres conjuntos: $A_1 = \{1, 2\}$, $A_2 = \{2, 3\}$ y $A_3 = \{1, 3\}$ tienen intersección global vacía, pero se cortan dos a dos.
+      Si el conjunto de índices tiene al menos dos elementos ($\lvert I \rvert \ge 2$), ser disjunta dos a dos implica tener intersección global vacía, porque $\bigcap_{k \in I} A_k \subseteq A_i \cap A_j$ para cualesquiera $i \neq j$. Con exactamente dos índices ambas condiciones coinciden. La recíproca falla a partir de tres: <VisualBind element="conjuntoA1" color="terracota">$A_1 = \{1, 2\}$</VisualBind>, <VisualBind element="conjuntoA2" color="pavo">$A_2 = \{2, 3\}$</VisualBind> y <VisualBind element="conjuntoA3" color="ocre">$A_3 = \{1, 3\}$</VisualBind> tienen intersección global vacía, pero se cortan dos a dos, pues <VisualBind element="interseccionA1A2" color="mora">$A_1 \cap A_2 = \{2\}$</VisualBind>, <VisualBind element="interseccionA1A3" color="mora">$A_1 \cap A_3 = \{1\}$</VisualBind> y <VisualBind element="interseccionA2A3" color="mora">$A_2 \cap A_3 = \{3\}$</VisualBind>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="fundamento-geometrico-sorts" 
+      id="particion-dominios-geometricos" 
       title="Partición del universo del discurso en dominios"
       formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >

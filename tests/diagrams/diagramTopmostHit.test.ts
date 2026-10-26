@@ -62,6 +62,36 @@ describe('hit preferido bajo el puntero', () => {
     })).toBe('pA');
   });
 
+  it('un área hovered no retiene el hit cuando el puntero llega a un punto dentro de ella', () => {
+    const order = new Map([['pA', 10], ['lente', 50]]);
+    expect(resolveCanvasSelectionHitId({
+      hitIds: ['pA', 'lente'],
+      selectableIds: new Set(['pA', 'lente']),
+      visualOrderById: order,
+      pointLikeIds: new Set(['pA']),
+      hoveredId: 'lente',
+    })).toBe('pA');
+
+    const visualOrder = buildVisualOrderById([
+      { item: { id: 'pA' }, visualOrder: 10 },
+      { item: { id: 'lente' }, visualOrder: 50 },
+    ]);
+    const elements = {
+      pA: { hasPoint: () => true, visPropCalc: { visible: true } },
+      lente: { hasPoint: () => true, visPropCalc: { visible: true } },
+    };
+    installTopmostOnlyHitTesting(
+      elements,
+      visualOrder,
+      undefined,
+      new Set(['pA', 'lente']),
+      new Set(['pA']),
+      () => 'lente',
+    );
+    expect(elements.pA.hasPoint(0, 0)).toBe(true);
+    expect(elements.lente.hasPoint(0, 0)).toBe(false);
+  });
+
   it('hasPoint del extremo queda enmascarado si el glider dependiente también hittea', () => {
     const visualOrder = buildVisualOrderById([
       { item: { id: 'pD' }, visualOrder: 34 },

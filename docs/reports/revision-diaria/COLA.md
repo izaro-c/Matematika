@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 17 / 190
+Revisadas: 18 / 190
 
 ## Pendientes
 
-- [ ] `conjunto-disjunto` · definitions
 - [ ] `isomorfismo` · definitions
 - [ ] `logica` · definitions
 - [ ] `numero-natural` · definitions
@@ -199,3 +198,4 @@ Revisadas: 17 / 190
 - [x] `geometria-sintetica` · 2026-10-25 · errores · corregido 6f6eff06 · propuestas 4b282eea · [informe](2026-10-25-geometria-sintetica.md) · $0.68
 - [x] `incidencia` · 2026-10-26 · mejoras · corregido b44a97dc · [informe](2026-10-26-incidencia.md) · $0.8
 - [x] `interseccion` · 2026-10-26 · errores · corregido 273482d8 · propuestas 2d50f20c · [informe](2026-10-26-interseccion.md) · $1.18
+- [x] `conjunto-disjunto` · 2026-10-26 · errores · corregido 3a8a9bae · propuestas f042426f · [informe](2026-10-26-conjunto-disjunto.md) · $2.4

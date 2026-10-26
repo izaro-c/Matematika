@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 120,
-      "exported": 70
+      "none": 119,
+      "exported": 71
     },
     "theoremLike": {
       "total": 21,
@@ -655,9 +655,11 @@
       "type": "definicion",
       "title": "Multzo disjuntuak",
       "filePath": "eu/definitions/conjunto-disjunto.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,

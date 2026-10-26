@@ -47,9 +47,13 @@ export function objectStyle(object: DiagramObject): DiagramVisualStyle | undefin
       style.highlightVisible = object.appearance?.highlightVisible;
       break;
     case 'region':
+      style.fillOpacity = object.appearance?.fillOpacity;
+      style.highlightFillOpacity = object.appearance?.highlightFillOpacity;
+      break;
     case 'area':
       style.fillOpacity = object.appearance?.fillOpacity;
       style.highlightFillOpacity = object.appearance?.highlightFillOpacity;
+      style.highlightVisible = object.appearance?.highlightVisible;
       break;
     case 'mark':
       style.markHeight = object.height;
@@ -133,6 +137,7 @@ export function withObjectStyle<T extends DiagramObject>(object: T, style: Diagr
         strokeOpacity: value.strokeOpacity,
         fillOpacity: value.fillOpacity,
         highlightFillOpacity: value.highlightFillOpacity,
+        highlightVisible: object.objectType === 'area' ? value.highlightVisible : undefined,
         preserveColorOnHighlight: value.preserveColorOnHighlight,
       });
       const rest = omitKeys(object, 'appearance');

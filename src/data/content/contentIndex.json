@@ -6129,7 +6129,7 @@
       "title": "Disjoint sets",
       "description": "Property of two sets or a family of sets that share no common elements, emphasizing the condition of pairwise (mutually) disjoint sets.",
       "branch": "03",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -6142,6 +6142,7 @@
         "conjunto",
         "interseccion",
         "conjunto-vacio",
+        "familia-indexada",
         "logica",
         "geometria-hilbertiana",
         "dominio",
@@ -6151,7 +6152,7 @@
         "particion",
         "universo-discurso",
         "disjuncion-dos-a-dos-vs-global",
-        "fundamento-geometrico-sorts"
+        "particion-dominios-geometricos"
       ],
       "availableLangs": [
         "en",
@@ -6179,7 +6180,7 @@
       "title": "Conjuntos disjuntos",
       "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
       "branch": "03",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -6192,6 +6193,7 @@
         "conjunto",
         "interseccion",
         "conjunto-vacio",
+        "familia-indexada",
         "logica",
         "geometria-hilbertiana",
         "dominio",
@@ -6201,7 +6203,7 @@
         "particion",
         "universo-discurso",
         "disjuncion-dos-a-dos-vs-global",
-        "fundamento-geometrico-sorts"
+        "particion-dominios-geometricos"
       ],
       "availableLangs": [
         "en",
@@ -29409,7 +29411,7 @@
       "title": "Conjuntos disjuntos",
       "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
       "branch": "03",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -29422,6 +29424,7 @@
         "conjunto",
         "interseccion",
         "conjunto-vacio",
+        "familia-indexada",
         "logica",
         "geometria-hilbertiana",
         "dominio",
@@ -29431,7 +29434,7 @@
         "particion",
         "universo-discurso",
         "disjuncion-dos-a-dos-vs-global",
-        "fundamento-geometrico-sorts"
+        "particion-dominios-geometricos"
       ],
       "availableLangs": [
         "en",
@@ -42578,7 +42581,7 @@
       "title": "Multzo disjuntuak",
       "description": "Elementu komunik partekatzen ez duten bi multzoren edo multzo-familia baten propietatea, binaka disjuntuak (elkarren artean disjuntuak) diren multzoen baldintza nabarmenduz.",
       "branch": "03",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
@@ -42591,6 +42594,7 @@
         "conjunto",
         "interseccion",
         "conjunto-vacio",
+        "familia-indexada",
         "geometria-hilbertiana",
         "logica",
         "punto",
@@ -42600,7 +42604,7 @@
         "universo-discurso",
         "particion",
         "disjuncion-dos-a-dos-vs-global",
-        "fundamento-geometrico-sorts"
+        "particion-dominios-geometricos"
       ],
       "availableLangs": [
         "en",

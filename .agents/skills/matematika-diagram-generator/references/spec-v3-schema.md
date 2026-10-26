@@ -105,7 +105,7 @@ Regiones rellenas. Dos geometrías:
   "appearance": { "strokeWidth": 0, "fillOpacity": 0.3 } }
 ```
 - `half-plane`: semiplano abierto de borde la recta `boundary` que contiene a `side`.
-- `intersection`: corte de dos o más regiones. Cada operando es un `area`, un `region` o un `path` `circle` o `polygon`. Para conjuntos como regiones (diagrama de Venn), los operandos son dos círculos con `fillOpacity`.
+- `intersection`: corte de dos o más regiones (admite `appearance.highlightVisible` para mostrarse al resaltarla desde el texto aunque `visibleWhen` la oculte). Cada operando es un `area`, un `region` o un `path` `circle` o `polygon`. Para conjuntos como regiones (diagrama de Venn), los operandos son dos círculos con `fillOpacity`.
 - La intersección sigue a sus puntos al arrastrar y se recorta al tablero visible. Si queda vacía (regiones disjuntas), desaparece y vuelve a aparecer cuando las regiones se cortan: el caso $A \cap B = \emptyset$ se puede enseñar arrastrando.
 - Un disco que se arrastra entero: centro libre y punto del borde `expression` oculto (`"x": "cA.x + 2"`, `"y": "cA.y"`). Con el borde libre, mover el centro cambia el radio.
 - Para que un panel o un halo reaccione a qué puntos caen dentro, escribe la condición en un punto `expression` oculto (`lt(hypot(e1.x - cA.x, e1.y - cA.y), 2)`, o el signo de un producto vectorial para un semiplano) y léela desde `visibleWhen`. Referencia: `Interseccion.tsx`, que codifica en binario qué elementos están en $A \cap B$ y muestra un panel por combinación.

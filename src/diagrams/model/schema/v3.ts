@@ -169,6 +169,7 @@ export interface AreaObject extends DiagramObjectBase {
     strokeOpacity?: number;
     fillOpacity?: number;
     highlightFillOpacity?: number;
+    highlightVisible?: boolean;
     preserveColorOnHighlight?: boolean;
   };
 }

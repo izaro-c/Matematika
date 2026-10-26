@@ -371,14 +371,16 @@ export function createStaticAreaPolygon(
   if (points.length < 3) return null;
   const budget = Math.min(maxVertices, Math.max(12, points.length));
   const vertexPoints = subsamplePolygonPoints(points, budget);
-  const polygonPoints = vertexPoints.map(point => board.create('point', [point.x, point.y], { visible: false } as never) as JXG.Point);
+  // The vertices and borders are fixed: otherwise grabbing an edge of the fill drags its hidden vertices,
+  // and inside the fill that edge steals the grab from the draggable points drawn over it.
+  const polygonPoints = vertexPoints.map(point => board.create('point', [point.x, point.y], { visible: false, fixed: true } as never) as JXG.Point);
   return createPolygon(board, polygonPoints, {
     fillColor: theme.canela,
     fillOpacity: 0.12,
-    borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.45 },
     fixed: true,
     hasInnerPoints: true,
     ...options,
+    borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.45, ...options.borders, fixed: true },
   }, theme);
 }
 

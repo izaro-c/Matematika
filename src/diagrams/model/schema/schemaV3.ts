@@ -117,7 +117,7 @@ const areaObject = z.object({
     z.object({ type: z.literal('intersection'), areas: z.tuple([id, id]).rest(id) }).strict(),
   ]), appearance: z.object({
     strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(), fillOpacity: number.min(0).max(1).optional(),
-    highlightFillOpacity: number.min(0).max(1).optional(), preserveColorOnHighlight: z.boolean().optional(),
+    highlightFillOpacity: number.min(0).max(1).optional(), highlightVisible: z.boolean().optional(), preserveColorOnHighlight: z.boolean().optional(),
   }).strict().optional(),
 }).strict();
 const markObject = z.object({

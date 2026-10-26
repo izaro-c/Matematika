@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "bce7277158802c396290e4441c9b241feb33e00bda72ae54551c2866642f152f",
+  "corpusHash": "90488f96370ef57b3074fe7bbfdf6bb18f1a58d6022c22f5749be7ceb0581a42",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -35,6 +35,7 @@
     "CocienteIncremental": "content/diagrams/Definiciones/CocienteIncremental.tsx",
     "Colinealidad": "content/diagrams/Definiciones/Colinealidad.tsx",
     "CongruenciaTriangulos": "content/diagrams/Definiciones/CongruenciaTriangulos.tsx",
+    "ConjuntosDisjuntos": "content/diagrams/Definiciones/ConjuntosDisjuntos.tsx",
     "Cuadrado": "content/diagrams/Definiciones/Cuadrado.tsx",
     "Cuadrilatero": "content/diagrams/Definiciones/Cuadrilatero.tsx",
     "Distancia": "content/diagrams/Definiciones/Distancia.tsx",
@@ -1109,6 +1110,38 @@
           "end": 941
         },
         "blockId": "congruencia-triangulos:diagram:CongruenciaTriangulos"
+      }
+    ],
+    "ConjuntosDisjuntos": [
+      {
+        "contentId": "conjunto-disjunto",
+        "contentPath": "content/mdx/en/definitions/conjunto-disjunto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 535,
+          "end": 579
+        },
+        "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
+      },
+      {
+        "contentId": "conjunto-disjunto",
+        "contentPath": "content/mdx/es/definitions/conjunto-disjunto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 578,
+          "end": 622
+        },
+        "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
+      },
+      {
+        "contentId": "conjunto-disjunto",
+        "contentPath": "content/mdx/eu/definitions/conjunto-disjunto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 580,
+          "end": 624
+        },
+        "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
       }
     ],
     "Cuadrado": [

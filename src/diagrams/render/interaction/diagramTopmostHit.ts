@@ -48,6 +48,20 @@ export function pickPreferredHitId(
   ));
 }
 
+/**
+ * El objeto hovered conserva el hit mientras siga bajo el puntero, salvo que sea un path o un área
+ * y el puntero esté ya sobre un punto: si no, un punto dentro de un área no se podría agarrar.
+ */
+function hoverHolds(
+  hoveredId: string | null | undefined,
+  hits: readonly string[],
+  pointLikeIds?: ReadonlySet<string>,
+): hoveredId is string {
+  if (!hoveredId || !hits.includes(hoveredId)) return false;
+  if (!pointLikeIds || pointLikeIds.has(hoveredId)) return true;
+  return !hits.some(id => pointLikeIds.has(id));
+}
+
 export function resolveCanvasSelectionHitId(options: {
   hitIds: readonly string[];
   selectableIds: ReadonlySet<string>;
@@ -61,7 +75,7 @@ export function resolveCanvasSelectionHitId(options: {
   if (
     options.hoveredId
     && options.selectableIds.has(options.hoveredId)
-    && selectableHits.includes(options.hoveredId)
+    && hoverHolds(options.hoveredId, selectableHits, options.pointLikeIds)
   ) {
     return options.hoveredId;
   }
@@ -138,7 +152,7 @@ export function installTopmostOnlyHitTesting(
           })()
           : allHits;
         const hoveredId = getHoveredId?.();
-        if (hoveredId && competing.includes(hoveredId)) return hoveredId === id;
+        if (hoverHolds(hoveredId, competing, pointLikeIds)) return hoveredId === id;
         return pickPreferredHitId(
           competing,
           visualOrderById,
