@@ -14,8 +14,8 @@ export const metadata = {
   ]
 };
 
-import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
-export const Simulation = AsociatividadTabla;
+import { AsociatividadArbol } from '@content/diagrams/Definiciones/AsociatividadArbol';
+export const Simulation = AsociatividadArbol;
 
 <Capitular letra="A" />ssociativity (or the associative property) is the property of a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> whereby, when three elements are combined in a given order, the result does not depend on how they are grouped. Thanks to it, products of several factors are written without parentheses in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
 
@@ -26,7 +26,7 @@ export const Simulation = AsociatividadTabla;
   $$
 </Definicion>
 
-When $S$ is finite, associativity can be checked on the operation table. In the figure, $S = \{0, 1, 2\}$ and the initial table is $a * b = \max(a, b)$. For each triple $(a, b, c)$, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> is read in the cell of $a * b$ and then in the cell of that result with $c$; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, in the cell of $b * c$ and then in the cell of $a$ with that result. The operation is associative if the two readings agree on all $27$ triples. If the cell of $0 * 1$ is changed to $2$, the triple $(1, 0, 1)$ gives $(1 * 0) * 1 = 1$ and $1 * (0 * 1) = 2$.
+In the figure, the three operands always keep their order; only the <VisualBind element="parentesis" color="ocre">parentheses</VisualBind> move. When they group the first two, the tree computes <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind>; when they group the last two, it computes <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>. With <ConceptLink targetId="adicion">addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> the result does not change, whatever the operands are. With <ConceptLink targetId="sustraccion">subtraction</ConceptLink> it does: with $a = 8$, $b = 4$ and $c = 2$ it goes from $2$ to $6$.
 
 <Separador />
 

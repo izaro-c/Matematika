@@ -14,8 +14,8 @@ export const metadata = {
   ]
 };
 
-import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
-export const Simulation = AsociatividadTabla;
+import { AsociatividadArbol } from '@content/diagrams/Definiciones/AsociatividadArbol';
+export const Simulation = AsociatividadArbol;
 
 <Capitular letra="L" />a **asociatividad** (o propiedad asociativa) es la propiedad de una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> según la cual, al operar tres elementos en un orden dado, el resultado no depende de cómo se agrupen. Gracias a ella, en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink> los productos de varios factores se escriben sin paréntesis.
 
@@ -26,7 +26,7 @@ export const Simulation = AsociatividadTabla;
   $$
 </Definicion>
 
-Cuando $S$ es finito, la asociatividad se comprueba en la tabla de la operación. En la figura, $S = \{0, 1, 2\}$ y la tabla inicial es $a * b = \max(a, b)$. Para cada terna $(a, b, c)$, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> se lee en la casilla de $a * b$ y después en la de ese resultado con $c$; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, en la casilla de $b * c$ y después en la de $a$ con ese resultado. La operación es asociativa si las dos lecturas coinciden en las $27$ ternas. Si la casilla de $0 * 1$ pasa a valer $2$, la terna $(1, 0, 1)$ da $(1 * 0) * 1 = 1$ y $1 * (0 * 1) = 2$.
+En la figura, los tres operandos conservan siempre su orden y solo se mueve el <VisualBind element="parentesis" color="ocre">paréntesis</VisualBind>. Cuando agrupa los dos primeros, el árbol calcula <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind>; cuando agrupa los dos últimos, calcula <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>. Con la <ConceptLink targetId="adicion">suma</ConceptLink> y con el <ConceptLink targetId="multiplicacion">producto</ConceptLink>, el resultado no cambia, sean cuales sean los operandos. Con la <ConceptLink targetId="sustraccion">resta</ConceptLink> sí cambia: con $a = 8$, $b = 4$ y $c = 2$ pasa de $2$ a $6$.
 
 <Separador />
 

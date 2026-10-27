@@ -20,3 +20,4 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `numero-natural` · 2026-10-26 · `c55b938a` · [informe](2026-10-26-numero-natural.md)
 - [ ] `numero-natural` · 2026-10-26 · `7473941b` · [informe](2026-10-26-numero-natural.md)
 - [ ] `operacion-binaria` · 2026-10-26 · `071a5759` · [informe](2026-10-26-operacion-binaria.md)
+- [ ] `asociatividad` · 2026-10-27 · `b390dbc0` · [informe](2026-10-27-asociatividad.md)

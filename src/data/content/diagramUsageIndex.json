@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "178c74bc75974c0b9e02dd058a088b2a0abecc191eb045f9edeef0e34867b94f",
+  "corpusHash": "b396df02a07a7539a01d41f37adcb935071cd8e7f4b785f0d6ec771c5655c99e",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -29,6 +29,7 @@
     "Angulo": "content/diagrams/Definiciones/Angulo.tsx",
     "AnguloRecto": "content/diagrams/Definiciones/AnguloRecto.tsx",
     "AngulosSuplementarios": "content/diagrams/Definiciones/AngulosSuplementarios.tsx",
+    "AsociatividadArbol": "content/diagrams/Definiciones/AsociatividadArbol.tsx",
     "Bisectriz": "content/diagrams/Definiciones/Bisectriz.tsx",
     "BiyeccionSagital": "content/diagrams/Definiciones/BiyeccionSagital.tsx",
     "Circunferencia": "content/diagrams/Definiciones/Circunferencia.tsx",
@@ -921,6 +922,38 @@
           "end": 885
         },
         "blockId": "angulos-suplementarios:diagram:AngulosSuplementarios"
+      }
+    ],
+    "AsociatividadArbol": [
+      {
+        "contentId": "asociatividad",
+        "contentPath": "content/mdx/en/definitions/asociatividad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 642,
+          "end": 686
+        },
+        "blockId": "asociatividad:diagram:AsociatividadArbol"
+      },
+      {
+        "contentId": "asociatividad",
+        "contentPath": "content/mdx/es/definitions/asociatividad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 657,
+          "end": 701
+        },
+        "blockId": "asociatividad:diagram:AsociatividadArbol"
+      },
+      {
+        "contentId": "asociatividad",
+        "contentPath": "content/mdx/eu/definitions/asociatividad.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 663,
+          "end": 707
+        },
+        "blockId": "asociatividad:diagram:AsociatividadArbol"
       }
     ],
     "Bisectriz": [

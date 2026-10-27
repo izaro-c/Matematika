@@ -14,8 +14,8 @@ export const metadata = {
   ]
 };
 
-import { AsociatividadTabla } from '@content/diagrams/Definiciones/AsociatividadTabla';
-export const Simulation = AsociatividadTabla;
+import { AsociatividadArbol } from '@content/diagrams/Definiciones/AsociatividadArbol';
+export const Simulation = AsociatividadArbol;
 
 <Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> baten propietatea da: hiru elementu ordena jakin batean eragitean, emaitza bera da, haiek nola elkartzen diren gorabehera. Horri esker, <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> zenbait faktoreren biderkadurak parentesirik gabe idazten dira.
 
@@ -26,7 +26,7 @@ export const Simulation = AsociatividadTabla;
   $$
 </Definicion>
 
-$S$ finitua denean, elkartze-propietatea eragiketaren taulan egiazta daiteke. Irudian, $S = \{0, 1, 2\}$ da eta hasierako taula $a * b = \max(a, b)$ da. $(a, b, c)$ hirukote bakoitzerako, <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> $a * b$ laukian irakurtzen da, eta gero emaitza horren eta $c$-ren laukian; <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>, berriz, $b * c$ laukian, eta gero $a$-ren eta emaitza horren laukian. Eragiketa elkartzailea da bi irakurketak $27$ hirukoteetan bat badatoz. $0 * 1$ laukiak $2$ balio badu, $(1, 0, 1)$ hirukoteak $(1 * 0) * 1 = 1$ eta $1 * (0 * 1) = 2$ ematen ditu.
+Irudian, hiru eragigaiek beti ordena bera dute, eta <VisualBind element="parentesis" color="ocre">parentesia</VisualBind> baino ez da mugitzen. Lehen biak elkartzen dituenean, zuhaitzak <VisualBind element="agrupacionIzquierda" color="mora">$(a * b) * c$</VisualBind> kalkulatzen du; azken biak elkartzen dituenean, <VisualBind element="agrupacionDerecha" color="pavo">$a * (b * c)$</VisualBind>. <ConceptLink targetId="adicion">Batuketarekin</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketarekin</ConceptLink> emaitza ez da aldatzen, eragigaiak edozein direla ere. <ConceptLink targetId="sustraccion">Kenketarekin</ConceptLink>, aldiz, aldatu egiten da: $a = 8$, $b = 4$ eta $c = 2$ direnean, $2$ izatetik $6$ izatera igarotzen da.
 
 <Separador />
 

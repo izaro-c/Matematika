@@ -2,11 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 22 / 190
+Revisadas: 23 / 190
 
 ## Pendientes
 
-- [ ] `asociatividad` · definitions
 - [ ] `elemento-neutro` · definitions
 - [ ] `elemento-inverso` · definitions
 - [ ] `grupo` · definitions
@@ -199,3 +198,4 @@ Revisadas: 22 / 190
 - [x] `logica` · 2026-10-26 · errores · corregido 2096b35d · propuestas 6c8ada02 · [informe](2026-10-26-logica.md) · $1.04
 - [x] `numero-natural` · 2026-10-26 · errores · corregido 566112cc · propuestas c55b938a · propuestas 7473941b · [informe](2026-10-26-numero-natural.md) · $3.74
 - [x] `operacion-binaria` · 2026-10-26 · errores · corregido 5d2f7d2e · propuestas 071a5759 · [informe](2026-10-26-operacion-binaria.md) · $1.52
+- [x] `asociatividad` · 2026-10-26 · errores · corregido 5739ff11 · propuestas b390dbc0 · [informe](2026-10-27-asociatividad.md) · $4.51
