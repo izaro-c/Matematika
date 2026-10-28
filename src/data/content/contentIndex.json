@@ -7190,15 +7190,17 @@
         "grupo",
         "elemento-neutro",
         "consistencia-logica",
-        "orden-total",
         "cuerpo-ordenado",
+        "orden-total",
         "isomorfismo",
         "completitud-reales",
         "modelo-cartesiano",
         "continuidad",
         "hilbert",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-euclidiano",
+        "sistema-cuerpo-real"
       ],
       "availableLangs": [
         "en",
@@ -7261,15 +7263,17 @@
         "grupo-abeliano",
         "elemento-neutro",
         "consistencia-logica",
-        "orden-total",
         "cuerpo-ordenado",
+        "orden-total",
         "isomorfismo",
         "completitud-reales",
         "modelo-cartesiano",
         "continuidad",
         "hilbert",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-euclidiano",
+        "sistema-cuerpo-real"
       ],
       "availableLangs": [
         "en",
@@ -30089,15 +30093,17 @@
         "grupo-abeliano",
         "elemento-neutro",
         "consistencia-logica",
-        "orden-total",
         "cuerpo-ordenado",
+        "orden-total",
         "isomorfismo",
         "completitud-reales",
         "modelo-cartesiano",
         "continuidad",
         "hilbert",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-euclidiano",
+        "sistema-cuerpo-real"
       ],
       "availableLangs": [
         "en",
@@ -43324,15 +43330,17 @@
         "grupo-abeliano",
         "elemento-neutro",
         "consistencia-logica",
-        "orden-total",
         "cuerpo-ordenado",
+        "orden-total",
         "isomorfismo",
         "completitud-reales",
         "modelo-cartesiano",
         "hilbert",
         "continuidad",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-euclidiano",
+        "sistema-cuerpo-real"
       ],
       "availableLangs": [
         "en",
