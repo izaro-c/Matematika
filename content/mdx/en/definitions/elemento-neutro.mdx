@@ -7,12 +7,15 @@ export const metadata = {
   description: "Distinguished element of an algebraic structure that leaves every element unchanged when combined under a binary operation.",
   branch: "08A",
   branches: ["08A", "20A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Chapter 1", role: "secondary" }
   ]
 };
+
+import { ElementoNeutroTabla } from '@content/diagrams/Definiciones/ElementoNeutroTabla';
+export const Simulation = ElementoNeutroTabla;
 
 <Capitular letra="A" />n **identity element** (or neutral element) with respect to a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> is a distinguished element of a <ConceptLink targetId="conjunto">set</ConceptLink> that leaves every element unaltered when operated with it. Its existence is part of the definition of a <ConceptLink targetId="monoide">monoid</ConceptLink>, a <ConceptLink targetId="grupo">group</ConceptLink> and a <ConceptLink targetId="anillo">ring</ConceptLink>.
 
@@ -21,7 +24,7 @@ export const metadata = {
   $$
   \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
   $$
-  An element $e_L \in S$ that satisfies $e_L * a = a$ for all $a \in S$ is called a left identity element; an element $e_R \in S$ that satisfies $a * e_R = a$ for all $a \in S$, a right identity element. Thus an element is a two-sided identity if and only if it is both a left and a right identity. When an <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> has a two-sided identity element, it is said to be a structure with identity.
+  An element $e_L \in S$ that satisfies <VisualBind element="filasNeutras" color="pavo">$e_L * a = a$</VisualBind> for all $a \in S$ is called a left identity element; an element $e_R \in S$ that satisfies <VisualBind element="columnasNeutras" color="mora">$a * e_R = a$</VisualBind> for all $a \in S$, a right identity element. Thus an element is a two-sided identity if and only if it is both a left and a right identity. When an <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> has a two-sided identity element, it is said to be a structure with identity.
 </Definicion>
 
 <Separador />

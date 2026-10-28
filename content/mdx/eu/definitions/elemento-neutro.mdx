@@ -7,12 +7,15 @@ export const metadata = {
   description: "Egitura aljebraiko bateko elementu berezia, eragiketa bitar baten bidez beste edozein elementurekin eragitean hura aldatu gabe uzten duena.",
   branch: "08A",
   branches: ["08A", "20A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "1. kapitulua", role: "secondary" }
   ]
 };
+
+import { ElementoNeutroTabla } from '@content/diagrams/Definiciones/ElementoNeutroTabla';
+export const Simulation = ElementoNeutroTabla;
 
 <Capitular letra="E" />lementu neutroa (edo unitate-elementua) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bati dagokionez <ConceptLink targetId="conjunto">multzo</ConceptLink> bateko elementu berezi bat da, edozein elementurekin eragitean hura aldatu gabe uzten duena. Haren existentzia <ConceptLink targetId="monoide">monoidearen</ConceptLink>, <ConceptLink targetId="grupo">taldearen</ConceptLink> eta <ConceptLink targetId="anillo">eraztunaren</ConceptLink> definizioaren parte da.
 
@@ -21,7 +24,7 @@ export const metadata = {
   $$
   \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
   $$
-  $e_L \in S$ elementu batek $e_L * a = a$ betetzen badu $a \in S$ guztietarako, ezker-neutroa deritzo; $e_R \in S$ elementu batek $a * e_R = a$ betetzen badu $a \in S$ guztietarako, eskuin-neutroa deritzo. Beraz, elementu bat alde biko neutroa da baldin eta soilik baldin ezker-neutroa eta eskuin-neutroa bada. <ConceptLink targetId="estructura-algebraica">Egitura aljebraiko</ConceptLink> batek alde biko elementu neutroa duenean, identitatedun egitura dela esaten da.
+  $e_L \in S$ elementu batek <VisualBind element="filasNeutras" color="pavo">$e_L * a = a$</VisualBind> betetzen badu $a \in S$ guztietarako, ezker-neutroa deritzo; $e_R \in S$ elementu batek <VisualBind element="columnasNeutras" color="mora">$a * e_R = a$</VisualBind> betetzen badu $a \in S$ guztietarako, eskuin-neutroa deritzo. Beraz, elementu bat alde biko neutroa da baldin eta soilik baldin ezker-neutroa eta eskuin-neutroa bada. <ConceptLink targetId="estructura-algebraica">Egitura aljebraiko</ConceptLink> batek alde biko elementu neutroa duenean, identitatedun egitura dela esaten da.
 </Definicion>
 
 <Separador />

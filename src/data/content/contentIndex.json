@@ -7935,7 +7935,7 @@
         "08A",
         "20A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -7989,7 +7989,7 @@
         "08A",
         "20A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -30430,7 +30430,7 @@
         "08A",
         "20A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",
@@ -43657,7 +43657,7 @@
         "08A",
         "20A"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Algebra",

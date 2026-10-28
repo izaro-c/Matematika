@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 115,
-      "exported": 75
+      "none": 114,
+      "exported": 76
     },
     "theoremLike": {
       "total": 21,
@@ -834,9 +834,11 @@
       "type": "definicion",
       "title": "Elementu neutroa",
       "filePath": "eu/definitions/elemento-neutro.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

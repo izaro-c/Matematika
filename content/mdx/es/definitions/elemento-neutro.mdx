@@ -7,12 +7,15 @@ export const metadata = {
   description: "Elemento distinguido de una estructura algebraica que, al operarse con cualquier otro elemento mediante una operación binaria, lo deja invariante.",
   branch: "08A",
   branches: ["08A", "20A"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
+
+import { ElementoNeutroTabla } from '@content/diagrams/Definiciones/ElementoNeutroTabla';
+export const Simulation = ElementoNeutroTabla;
 
 <Capitular letra="U" />n **elemento neutro** (o elemento identidad) respecto a una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> es un elemento distinguido de un <ConceptLink targetId="conjunto">conjunto</ConceptLink> que deja inalterado a todo elemento cuando se opera con él. Su existencia forma parte de la definición de <ConceptLink targetId="monoide">monoide</ConceptLink>, de <ConceptLink targetId="grupo">grupo</ConceptLink> y de <ConceptLink targetId="anillo">anillo</ConceptLink>.
 
@@ -21,7 +24,7 @@ export const metadata = {
   $$
   \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
   $$
-  Un elemento $e_L \in S$ que satisface $e_L * a = a$ para todo $a \in S$ se denomina elemento neutro por la izquierda; un elemento $e_R \in S$ que satisface $a * e_R = a$ para todo $a \in S$, elemento neutro por la derecha. Así, un elemento es neutro bilateral si y solo si es neutro por la izquierda y por la derecha. Cuando una <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> posee un elemento neutro bilateral, se dice que es una estructura con identidad.
+  Un elemento $e_L \in S$ que satisface <VisualBind element="filasNeutras" color="pavo">$e_L * a = a$</VisualBind> para todo $a \in S$ se denomina elemento neutro por la izquierda; un elemento $e_R \in S$ que satisface <VisualBind element="columnasNeutras" color="mora">$a * e_R = a$</VisualBind> para todo $a \in S$, elemento neutro por la derecha. Así, un elemento es neutro bilateral si y solo si es neutro por la izquierda y por la derecha. Cuando una <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> posee un elemento neutro bilateral, se dice que es una estructura con identidad.
 </Definicion>
 
 <Separador />
