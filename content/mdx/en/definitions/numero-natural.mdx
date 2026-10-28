@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Natural numbers",
-  description: "Discrete numerical system for counting and sequential ordering, axiomatically characterized by Peano's postulates.",
+  description: "The numbers 0, 1, 2, 3, … used to count and to order, characterized by the Peano axioms.",
   branch: "11A",
   branches: ["11A", "03E"],
   hasSimulation: true,
@@ -17,11 +17,11 @@ export const metadata = {
 import { PeanoSucesor } from '@content/diagrams/Definiciones/PeanoSucesor';
 export const Simulation = PeanoSucesor;
 
-<Capitular letra="T" />he **natural numbers** constitute the discrete numerical system upon which <ConceptLink targetId="aritmetica">arithmetic</ConceptLink> rests, formalizing the primary operations of counting the elements of a <ConceptLink targetId="conjunto-finito">finite set</ConceptLink> and arranging them in sequence.
+<Capitular letra="T" />he **natural numbers** are the numbers $0, 1, 2, 3, \dots$ used to count the elements of a <ConceptLink targetId="conjunto-finito">finite set</ConceptLink> and to arrange them in sequence; <ConceptLink targetId="aritmetica">arithmetic</ConceptLink> is built on them.
 
-Formalized by <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> and anticipated by <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>, the natural numbers can be conceived as a <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> characterized by an initial element and a <ConceptLink targetId="sucesor">successor function</ConceptLink>. Furthermore, in <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink> they are constructed via <ConceptLink targetId="ordinales-von-neumann">von Neumann ordinals</ConceptLink>, where each number is defined as the set of all natural numbers preceding it.
+<ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> stated the axioms below in 1889, anticipated by <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink> in 1888. Peano started the sequence at $1$; here, as in <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink>, $0 \in \mathbb{N}$. In that theory the natural numbers are constructed as the <ConceptLink targetId="ordinales-von-neumann">von Neumann ordinals</ConceptLink>, where each number is the set of the natural numbers preceding it.
 
-<Definicion title="Peano Axiomatics for Natural Numbers">
+<Definicion title="Peano axioms for the natural numbers">
   A system of **natural numbers** is a triple $(\mathbb{N}, 0, S)$ consisting of a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> <VisualBind element="conjuntoN" color="carbon">$\mathbb{N}$</VisualBind>, a distinguished element <VisualBind element="e0" color="mora">$0 \in \mathbb{N}$</VisualBind>, and a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> <VisualBind element="flechas" color="terracota">$S \colon \mathbb{N} \to \mathbb{N}$</VisualBind> (termed the <ConceptLink targetId="sucesor">successor function</ConceptLink>) such that:
   1. The element $0$ is not the successor of any natural number:
      $$
@@ -37,16 +37,18 @@ Formalized by <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> and ant
      $$
 </Definicion>
 
+In the figure, the arrow leaving $3$ can be moved to $0$ or to $1$. If $S(3) = 0$, axiom 1 fails; if $S(3) = 1$, axiom 2 fails, because $S(0) = S(3)$. The button adds two elements $a$ and $b$ with $S(a) = b$ and $S(b) = a$: the set <VisualBind element="regionK" color="pavo">$K$</VisualBind> of the elements reached from $0$ by applying $S$ repeatedly contains $0$ and is closed under $S$, but it is not all of $\mathbb{N}$, so axiom 3 fails.
+
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="estructura-algebraica-semianillo" titulo="Commutative semiring structure">
-    Defining <ConceptLink targetId="adicion">addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> recursively from the successor function, the <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $(\mathbb{N}, +, \cdot)$ is a unital commutative <ConceptLink targetId="semianillo">semiring</ConceptLink> endowed with the additive cancellation property.
+  <PropiedadItem id="estructura-algebraica-semianillo" title="Commutative semiring structure">
+    Defining <ConceptLink targetId="adicion">addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> recursively from the successor function, the <ConceptLink targetId="estructura-algebraica">structure</ConceptLink> $(\mathbb{N}, +, \cdot)$ is a unital commutative <ConceptLink targetId="semianillo">semiring</ConceptLink> endowed with the additive cancellation property.
   </PropiedadItem>
-  <PropiedadItem id="principio-buen-orden" titulo="Well-ordering principle">
+  <PropiedadItem id="principio-buen-orden" title="Well-ordering principle">
     Every non-empty <ConceptLink targetId="subconjunto">subset</ConceptLink> of natural numbers $A \subseteq \mathbb{N}$ possesses a least element with respect to the <ConceptLink targetId="orden-total">order</ConceptLink> defined by $m \le n \iff \exists k \in \mathbb{N} \ (m + k = n)$; hence $(\mathbb{N}, \le)$ is a <ConceptLink targetId="buen-orden">well-ordered set</ConceptLink>.
   </PropiedadItem>
-  <PropiedadItem id="cardinalidad-numerable" titulo="Countable cardinality">
+  <PropiedadItem id="cardinalidad-numerable" title="Countable cardinality">
     The set $\mathbb{N}$ is an <ConceptLink targetId="conjunto-infinito">infinite set</ConceptLink>. Its <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>, denoted by $\aleph_0 = |\mathbb{N}|$, is called countable cardinality and, under the <ConceptLink targetId="axioma-eleccion">axiom of choice</ConceptLink>, it is the least infinite cardinality.
   </PropiedadItem>
 </SeccionPropiedades>

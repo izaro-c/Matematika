@@ -9,7 +9,7 @@ export const metadata = {
   branches: ["03", "08A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 8", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Section 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "secondary" }
   ]
 };
@@ -17,12 +17,12 @@ export const metadata = {
 import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
 export const Simulation = BiyeccionSagital;
 
-<Capitular letra="A" /> **bijection** (or bijective map) is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> that associates each element of the <ConceptLink targetId="dominio-funcion">domain</ConceptLink> with a unique element of the <ConceptLink targetId="codominio">codomain</ConceptLink>, such that every element of the codomain is the <ConceptLink targetId="imagen">image</ConceptLink> of exactly one element of the domain.
+<Capitular letra="A" /> **bijection** (or bijective map) is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> such that every element of the <ConceptLink targetId="codominio">codomain</ConceptLink> is the <ConceptLink targetId="imagen">image</ConceptLink> of exactly one element of the <ConceptLink targetId="dominio-funcion">domain</ConceptLink>.
 
 A bijection thus pairs the elements of the two sets one to one, and the pairing can be traversed in the opposite direction: assigning to each element of the codomain the unique element of the domain of which it is the image defines the <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink>.
 
 <Definicion title="Formal definition of bijection">
-  Let <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> and <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> be two sets. A function <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> is a **bijection** if and only if it simultaneously satisfies two conditions:
+  Let <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> and <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> is a **bijection** if and only if it simultaneously satisfies two conditions:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Injectivity</ConceptLink>:** Distinct elements of the domain have distinct images:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
@@ -32,14 +32,18 @@ A bijection thus pairs the elements of the two sets one to one, and the pairing 
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Equivalently, $f$ is bijective if and only if there exists an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> such that $f^{-1} \circ f = \operatorname{id}_A$ and $f \circ f^{-1} = \operatorname{id}_B$.
+  Equivalently, $f$ is bijective if and only if there exists an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> such that its <ConceptLink targetId="composicion-funciones">composition</ConceptLink> with $f$ gives the <ConceptLink targetId="funcion-identidad">identity</ConceptLink>: $f^{-1} \circ f = \operatorname{id}_A$ and $f \circ f^{-1} = \operatorname{id}_B$.
 </Definicion>
+
+In the figure, the “Reverse the arrows” button traverses each pair in the opposite direction: only when $f$ is bijective is the result a function $f^{-1}$ from $B$ to $A$.
+
+Between <ConceptLink targetId="conjunto-finito">finite sets</ConceptLink> with the same number of elements, a function is injective if and only if it is surjective: in the figure, as long as all three arrows reach $B$, there is no way to break one condition without breaking the other.
 
 <Separador />
 
 ### Uses of bijections
 
 Three notions from different branches are formulated through bijections:
-- **Measure of size:** Two sets have the same <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> if and only if there exists a bijection between them ($\lvert A \rvert = \lvert B \rvert$).
+- **Size of a set:** Two sets have the same <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> if and only if there exists a bijection between them ($\lvert A \rvert = \lvert B \rvert$).
 - **Structural preservation:** An <ConceptLink targetId="isomorfismo">isomorphism</ConceptLink> is a bijection between <ConceptLink targetId="estructura-geometrica">structures</ConceptLink> that additionally preserves all relations and operations of their <ConceptLink targetId="signatura">signature</ConceptLink>.
 - **Congruence of figures:** In geometry, the <ConceptLink targetId="congruencia-triangulos">congruence</ConceptLink> of two <ConceptLink targetId="triangulo">triangles</ConceptLink> (and, more generally, of two <ConceptLink targetId="poligono">polygons</ConceptLink>) is defined via a bijective correspondence between their <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the <ConceptLink targetId="congruencia">congruence</ConceptLink> of the homologous <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.

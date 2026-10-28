@@ -14,21 +14,17 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **axiom** (or postulate) is a mathematical statement accepted as true without prior <ConceptLink targetId="demostracion">proof</ConceptLink> within the framework of a <ConceptLink targetId="teoria-formal">formal deductive theory</ConceptLink>. The axioms of a theory are the premises from which all its theorems are deduced.
+<Capitular letra="A" />n **axiom** (or postulate) is a mathematical statement accepted as true without prior <ConceptLink targetId="demostracion">proof</ConceptLink> within the framework of a <ConceptLink targetId="teoria-formal">formal deductive theory</ConceptLink>. The axioms of a theory are the premises from which all its <ConceptLink targetId="teorema">theorems</ConceptLink> are deduced.
 
-In formal axiomatic thought, axioms do not claim to reflect empirical evidence or absolute physical truths; their role is to specify explicitly the conditions, constraints, and mutual relations that must be satisfied by the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of the theory. Consequently, any result deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> via rules of <ConceptLink targetId="inferencia">inference</ConceptLink> is conditioned on the axioms: it holds in every structure that satisfies them.
+In formal axiomatic thought, axioms do not claim to reflect empirical evidence or absolute physical truths; their role is to specify explicitly the conditions, constraints, and mutual relations that must be satisfied by the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of the theory. Consequently, any result deduced as a theorem via rules of <ConceptLink targetId="inferencia">inference</ConceptLink> is conditioned on the axioms: it holds in every <ConceptLink targetId="modelo">model</ConceptLink> of the theory.
 
 <Definicion title="Axiom in a formal system">
-  Let $\mathcal{S} = (\sigma, \Phi)$ be an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> formalized over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ with <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$. A **proper** or non-logical axiom of the theory is a <ConceptLink targetId="formula">closed formula</ConceptLink> $\alpha$ of $\mathcal{L}_\sigma$ that belongs to the distinguished set $\Phi$ of postulates:
+  Let $\mathcal{S} = (\sigma, \Phi, \vdash)$ be an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> formalized over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ with <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$. A **proper** or non-logical axiom of the theory is a <ConceptLink targetId="formula">closed formula</ConceptLink> $\alpha$ of $\mathcal{L}_\sigma$ that belongs to the distinguished set $\Phi$ of postulates:
   $$
   \alpha \in \Phi
-  $$
-  A mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M}$ constitutes a <ConceptLink targetId="modelo">model</ConceptLink> of the system if it satisfies every axiom in $\Phi$:
-  $$
-  \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
   $$
 </Definicion>
 
 In the *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organized the axioms of geometry into five groups: <ConceptLink targetId="incidencia">incidence</ConceptLink> (I), <ConceptLink targetId="estar-entre">order</ConceptLink> (II), <ConceptLink targetId="congruencia">congruence</ConceptLink> (III), <ConceptLink targetId="paralelas">parallels</ConceptLink> (IV), and <ConceptLink targetId="continuidad">continuity</ConceptLink> (V).
 
-Consistency and independence are properties of the set $\Phi$, not of a single axiom. <ConceptLink targetId="consistencia-logica">Consistency</ConceptLink> is always required: a formula and its <ConceptLink targetId="negacion">negation</ConceptLink> cannot both be deduced from $\Phi$. <ConceptLink targetId="independencia-logica">Independence</ConceptLink>, that is, no axiom being deducible from the remaining ones, is desirable.
+Consistency and independence are properties of the set $\Phi$, not of a single axiom. <ConceptLink targetId="consistencia-logica">Consistency</ConceptLink> is always required: no formula and its <ConceptLink targetId="negacion">negation</ConceptLink> can both be deduced from $\Phi$. <ConceptLink targetId="independencia-logica">Independence</ConceptLink>, that is, no axiom being deducible from the remaining ones, is desirable.

@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Conjuntos disjuntos",
-  description: "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
+  description: "Dos conjuntos son disjuntos si su intersección es vacía; una familia es disjunta dos a dos si lo son cualesquiera dos de sus miembros con índices distintos.",
   branch: "03",
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul Halmos", locator: "Capítulo 4", role: "primary" }
+    { title: "Naive Set Theory", author: "Paul Halmos", locator: "Sección 4", role: "primary" }
   ]
 };
 
@@ -33,7 +33,7 @@ $$
   <PropiedadesGrupo title="Propiedades y distinciones formales">
     <PropiedadItem 
       id="disjuncion-dos-a-dos-vs-global" 
-      title="Disyunción dos a dos vs. intersección global vacía"
+      title="Disjunta dos a dos frente a intersección global vacía"
       formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
       Si el conjunto de índices tiene al menos dos elementos ($\lvert I \rvert \ge 2$), ser disjunta dos a dos implica tener intersección global vacía, porque $\bigcap_{k \in I} A_k \subseteq A_i \cap A_j$ para cualesquiera $i \neq j$. Con exactamente dos índices ambas condiciones coinciden. La recíproca falla a partir de tres: <VisualBind element="conjuntoA1" color="terracota">$A_1 = \{1, 2\}$</VisualBind>, <VisualBind element="conjuntoA2" color="pavo">$A_2 = \{2, 3\}$</VisualBind> y <VisualBind element="conjuntoA3" color="ocre">$A_3 = \{1, 3\}$</VisualBind> tienen intersección global vacía, pero se cortan dos a dos, pues <VisualBind element="interseccionA1A2" color="mora">$A_1 \cap A_2 = \{2\}$</VisualBind>, <VisualBind element="interseccionA1A3" color="mora">$A_1 \cap A_3 = \{1\}$</VisualBind> y <VisualBind element="interseccionA2A3" color="mora">$A_2 \cap A_3 = \{3\}$</VisualBind>.

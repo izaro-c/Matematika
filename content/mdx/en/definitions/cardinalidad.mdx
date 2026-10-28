@@ -10,7 +10,7 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen", author: "Georg Cantor", locator: "Journal für die reine und angewandte Mathematik 77 (1874)", role: "primary" },
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapters 21–24", role: "secondary" }
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Sections 22–25", role: "secondary" }
   ]
 };
 
@@ -23,18 +23,18 @@ export const metadata = {
   $$
   A \sim B \iff \exists f\colon A \longrightarrow B \quad (f \text{ bijective})
   $$
-  Equipotence is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, because the identity, the <ConceptLink targetId="funcion-inversa">inverse</ConceptLink> of a bijection and the <ConceptLink targetId="composicion-funciones">composition</ConceptLink> of two bijections are bijections. Hence one writes $\lvert A \rvert = \lvert B \rvert$ when $A \sim B$, and $\lvert A \rvert$ is called the **cardinality** of $A$.
+  Equipotence is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, because the identity, the <ConceptLink targetId="funcion-inversa">inverse</ConceptLink> of a bijection and the <ConceptLink targetId="composicion-funciones">composition</ConceptLink> of two bijections are bijections. Hence one writes $\lvert A \rvert = \lvert B \rvert$ when $A \sim B$, and $\lvert A \rvert$ is called the **cardinality** of $A$. With the <ConceptLink targetId="axioma-eleccion">axiom of choice</ConceptLink>, $\lvert A \rvert$ can be taken to be the least <ConceptLink targetId="ordinales-von-neumann">ordinal</ConceptLink> equipotent to $A$.
 
-  The order between cardinals is defined via injections: one writes $\lvert A \rvert \le \lvert B \rvert$ if there exists an <ConceptLink targetId="inyectividad" isDependency={true}>injective map</ConceptLink> from $A$ into $B$, and $\lvert A \rvert < \lvert B \rvert$ if moreover $A$ and $B$ are not equipotent.
+  The order between cardinals is defined via <ConceptLink targetId="inyectividad" isDependency={true}>injections</ConceptLink>: one writes $\lvert A \rvert \le \lvert B \rvert$ if there exists an injective map from $A$ into $B$, and $\lvert A \rvert < \lvert B \rvert$ if moreover $A$ and $B$ are not equipotent.
 </Definicion>
 
 Two theorems shape this order. The <ConceptLink targetId="teorema-cantor-bernstein">Cantor-Bernstein-Schröder theorem</ConceptLink> makes it antisymmetric: if $\lvert A \rvert \le \lvert B \rvert$ and $\lvert B \rvert \le \lvert A \rvert$, then $\lvert A \rvert = \lvert B \rvert$. <ConceptLink targetId="teorema-cantor">Cantor's theorem</ConceptLink> prevents it from having a maximum: for any set $A$, its <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> $\wp(A)$ satisfies $\lvert A \rvert < \lvert \wp(A) \rvert$.
 
 <Separador />
 
-### Scale of infinities in geometry
+### Cardinals in geometry
 
 Cardinality enables the classification of geometric <ConceptLink targetId="dominio">domains</ConceptLink> according to their size or number of elements:
-- **Finite <ConceptLink targetId="estructura-geometrica">structures</ConceptLink>:** Sets with finite cardinal $n \in \mathbb{N}$, such as the 7 <ConceptLink targetId="punto">points</ConceptLink> of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
-- **Countably infinite:** The cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ of infinite <ConceptLink targetId="conjunto-numerable">countable sets</ConceptLink>, such as the <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> and the <ConceptLink targetId="numero-racional">rational numbers</ConceptLink>.
-- **The <ConceptLink targetId="potencia-del-continuo">power of the continuum</ConceptLink>:** The cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$. With the <ConceptLink targetId="continuidad">axioms of continuity</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>), the <ConceptLink targetId="traza">trace</ConceptLink> of every <ConceptLink targetId="recta">line</ConceptLink> $\ell$ is in bijection with $\mathbb{R}$, so $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.
+- **Finite domains:** Natural cardinal $n \in \mathbb{N}$, such as the 7 <ConceptLink targetId="punto">points</ConceptLink> of the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> or the 3 points of the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>; both models are finite <ConceptLink targetId="estructura-geometrica">structures</ConceptLink>.
+- **Countably infinite:** The cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ of infinite <ConceptLink targetId="conjunto-numerable">countable sets</ConceptLink>, such as the <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> and the <ConceptLink targetId="numero-racional">rational numbers</ConceptLink>. Without the <ConceptLink targetId="axioma-completitud">completeness axiom</ConceptLink>, the <ConceptLink targetId="traza">trace</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> may have only $\aleph_0$ points: in the model with which <ConceptLink targetId="hilbert">Hilbert</ConceptLink> proves <ConceptLink targetId="consistencia-logica">consistency</ConceptLink>, the coordinates range over a countable <ConceptLink targetId="cuerpo">field</ConceptLink>.
+- **The <ConceptLink targetId="potencia-del-continuo">power of the continuum</ConceptLink>:** The cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = \lvert \wp(\mathbb{N}) \rvert$ (written $2^{\aleph_0}$). With the <ConceptLink targetId="continuidad">axioms of continuity</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>), the <ConceptLink targetId="traza">trace</ConceptLink> of every <ConceptLink targetId="recta">line</ConceptLink> $\ell$ is in bijection with $\mathbb{R}$, so $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.

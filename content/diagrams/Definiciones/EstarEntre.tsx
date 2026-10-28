@@ -5,29 +5,29 @@ export const EstarEntreSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Estar entre (intermediación)",
+  "title": "Estar entre",
   "componentId": "estar-entre",
-  "category": "Fundamentos",
+  "category": "Definiciones",
   "mode": "simulation",
   "axis": false,
   "grid": false,
   "showLabels": true,
   "viewport": {
     "bounds": [
-      -6,
-      3.5,
-      6,
-      -3.5
+      -5.5,
+      2.9,
+      5.5,
+      -2.6
     ],
     "home": [
-      -6,
-      3.5,
-      6,
-      -3.5
+      -5.5,
+      2.9,
+      5.5,
+      -2.6
     ],
-    "minZoom": 0.2,
-    "maxZoom": 10,
-    "padding": 0.16
+    "minZoom": 0.5,
+    "maxZoom": 4,
+    "padding": 0.06
   },
   "layers": [
     {
@@ -67,7 +67,7 @@ export const EstarEntreSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": -3.5,
-        "y": -0.8
+        "y": -0.9
       },
       "mobility": {
         "type": "free"
@@ -102,7 +102,7 @@ export const EstarEntreSpec = createDiagramSpec(
       "definition": {
         "type": "coordinates",
         "x": 3.5,
-        "y": 0.89
+        "y": 0.9
       },
       "mobility": {
         "type": "free"
@@ -128,7 +128,7 @@ export const EstarEntreSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto intermedio B",
+        "ariaLabel": "Punto B",
         "role": "primary"
       },
       "target": true,
@@ -136,12 +136,12 @@ export const EstarEntreSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0,
-        "y": 0.013721423405848698
+        "x": -0.7,
+        "y": -0.18
       },
       "mobility": {
         "type": "on-support",
-        "support": "segAC"
+        "support": "lineAC"
       },
       "appearance": {
         "size": 8,
@@ -188,180 +188,214 @@ export const EstarEntreSpec = createDiagramSpec(
       }
     },
     {
-      "id": "segAB",
-      "label": "Segmento AB",
-      "color": "pavo",
-      "layerId": "geometry",
-      "order": 20,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Segmento AB",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "segAB",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pA",
-          "pB"
-        ]
-      },
-      "appearance": {
-        "strokeWidth": 3.2,
-        "highlightStrokeWidth": 4.5,
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "segBC",
-      "label": "Segmento BC",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 21,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Segmento BC",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "segBC",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pB",
-          "pC"
-        ]
-      },
-      "appearance": {
-        "strokeWidth": 3.2,
-        "highlightStrokeWidth": 4.5,
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "segAC",
-      "label": "Segmento AC",
-      "color": "musgo",
-      "layerId": "geometry",
-      "order": 19,
+      "id": "tB",
+      "label": "Posición de B en la recta",
+      "color": "carbon",
+      "layerId": "annotations",
+      "order": 40,
       "visible": false,
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
-        "ariaLabel": "Segmento total AC",
+        "selectable": false,
+        "ariaLabel": "Posición de B en la recta",
         "role": "secondary"
       },
-      "target": true,
-      "targetId": "segAC",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pA",
-          "pC"
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "((pB.x - pA.x) * (pC.x - pA.x) + (pB.y - pA.y) * (pC.y - pA.y)) / max(0.0001, (pC.x - pA.x) * (pC.x - pA.x) + (pC.y - pA.y) * (pC.y - pA.y))",
+        "y": "hypot(pC.x - pA.x, pC.y - pA.y)",
+        "fallback": [
+          0.5,
+          7
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 2,
+        "labelVisible": false
+      }
+    },
+    {
+      "id": "haloB",
+      "label": "Marca: B no está entre A y C",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 29,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "visibleWhen": "not(and(gt(tB.x, 0), lt(tB.x, 1), gt(hypot(pB.x - pA.x, pB.y - pA.y), 0.15), gt(hypot(pC.x - pB.x, pC.y - pB.y), 0.15), gt(tB.y, 0.3)))",
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "B no está entre A y C",
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "pB.x",
+        "y": "pB.y",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 13,
+        "labelVisible": false,
+        "opacity": 0.4
+      }
+    },
+    {
+      "id": "estadoSi",
+      "label": "Estado: B está entre A y C",
+      "color": "carbon",
+      "layerId": "annotations",
+      "order": 700,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "visibleWhen": "and(gt(tB.x, 0), lt(tB.x, 1), gt(hypot(pB.x - pA.x, pB.y - pA.y), 0.15), gt(hypot(pC.x - pB.x, pC.y - pB.y), 0.15), gt(tB.y, 0.3))",
+      "selection": {
+        "selectable": true,
+        "role": "annotation",
+        "ariaLabel": "Estado de A * B * C"
+      },
+      "target": false,
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
+          {
+            "id": "estado",
+            "text": "$A * B * C$: sí",
+            "color": "musgo"
+          }
+        ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0.5,
+          0
         ]
       },
       "appearance": {
-        "strokeWidth": 2.6,
-        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "estadoNo",
+      "label": "Estado: B no está entre A y C",
+      "color": "carbon",
+      "layerId": "annotations",
+      "order": 701,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "visibleWhen": "not(and(gt(tB.x, 0), lt(tB.x, 1), gt(hypot(pB.x - pA.x, pB.y - pA.y), 0.15), gt(hypot(pC.x - pB.x, pC.y - pB.y), 0.15), gt(tB.y, 0.3)))",
+      "selection": {
+        "selectable": true,
+        "role": "annotation",
+        "ariaLabel": "Estado de A * B * C"
+      },
+      "target": false,
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
+          {
+            "id": "estado",
+            "text": "$A * B * C$: no",
+            "color": "granada"
+          }
+        ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0.5,
+          0
+        ]
+      },
+      "appearance": {
         "preserveColorOnHighlight": true
       }
     }
   ],
   "relations": [],
-  "steps": [
-    {
-      "id": "step-orden",
-      "label": "Intermediación $A * B * C$",
-      "description": "El punto $B$ está entre $A$ y $C$; los tres son puntos distintos de la recta $\\ell$.",
-      "visibleTargets": [
-        "pA",
-        "pB",
-        "pC",
-        "lineAC",
-        "segAB",
-        "segBC",
-        "segAC"
-      ],
-      "durationMs": 1200,
-      "objectStates": {
-        "pA": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "pB": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "pC": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "lineAC": {
-          "visible": true
-        },
-        "segAB": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "segBC": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "segAC": {
-          "visible": true
-        }
-      }
-    }
-  ],
-  "note": "Arrastra A y C para mover la recta; desliza B entre ellos.",
+  "steps": [],
+  "note": "Arrastra A y C para mover la recta; desliza B por ella.",
   "translations": {
     "eu": {
-      "title": "Artean egotea (bitartekotasuna)",
-      "note": "Arrastatu A eta C zuzena mugitzeko; irristatu B haien artean.",
-      "steps": {
-        "step-orden": {
-          "label": "Bitartekotasuna $A * B * C$",
-          "description": "$B$ puntua $A$ eta $C$ puntuen artean dago; hirurak $\\ell$ zuzeneko puntu desberdinak dira."
+      "title": "Artean egotea",
+      "note": "Arrastatu A eta C zuzena mugitzeko; irristatu B zuzenean zehar.",
+      "labels": {
+        "tB": "B-ren posizioa zuzenean",
+        "haloB": "Marka: B ez dago A eta C puntuen artean"
+      },
+      "blocks": {
+        "estadoSi": {
+          "estado": {
+            "text": "$A * B * C$: bai"
+          }
+        },
+        "estadoNo": {
+          "estado": {
+            "text": "$A * B * C$: ez"
+          }
         }
       },
       "ariaLabels": {
         "pA": "A puntua",
         "pC": "C puntua",
-        "pB": "B bitarteko puntua",
+        "pB": "B puntua",
         "lineAC": "ℓ zuzen euskarria",
-        "segAB": "AB zuzenkia",
-        "segBC": "BC zuzenkia",
-        "segAC": "AC zuzenki osoa"
+        "tB": "B-ren posizioa zuzenean",
+        "haloB": "B ez dago A eta C puntuen artean",
+        "estadoSi": "A * B * C egoera",
+        "estadoNo": "A * B * C egoera"
       }
     },
     "en": {
-      "title": "Betweenness (Intermediacy)",
-      "note": "Drag A and C to move the line; slide B between them.",
-      "steps": {
-        "step-orden": {
-          "label": "Betweenness $A * B * C$",
-          "description": "Point $B$ lies between $A$ and $C$; the three are distinct points of line $\\ell$."
+      "title": "Betweenness",
+      "note": "Drag A and C to move the line; slide B along it.",
+      "labels": {
+        "tB": "Position of B on the line",
+        "haloB": "Mark: B does not lie between A and C"
+      },
+      "blocks": {
+        "estadoSi": {
+          "estado": {
+            "text": "$A * B * C$: yes"
+          }
+        },
+        "estadoNo": {
+          "estado": {
+            "text": "$A * B * C$: no"
+          }
         }
       },
       "ariaLabels": {
         "pA": "Point A",
         "pC": "Point C",
-        "pB": "Intermediate point B",
+        "pB": "Point B",
         "lineAC": "Supporting line ℓ",
-        "segAB": "Segment AB",
-        "segBC": "Segment BC",
-        "segAC": "Whole segment AC"
+        "tB": "Position of B on the line",
+        "haloB": "B does not lie between A and C",
+        "estadoSi": "State of A * B * C",
+        "estadoNo": "State of A * B * C"
       }
     }
   }

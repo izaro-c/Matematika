@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Lógica matemática",
-  description: "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis y las reglas de inferencia válidas.",
+  description: "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis, la semántica y las reglas de inferencia válidas.",
   branch: "03B",
   branches: ["03", "03A"],
   hasSimulation: false,
@@ -16,17 +16,17 @@ export const metadata = {
 
 <Capitular letra="L" />a **lógica matemática** es la disciplina formal que estudia la validez del razonamiento deductivo, la estructura de los <ConceptLink targetId="lenguaje-formal">lenguajes formales</ConceptLink> y los fundamentos de las teorías matemáticas. Proporciona el marco mediante el cual se formulan los enunciados matemáticos y se establecen <ConceptLink targetId="demostracion">demostraciones</ConceptLink> a partir de premisas explícitas.
 
-El análisis metamatemático distingue dos vertientes. La sintáctica analiza la manipulación formal de cadenas de símbolos según reglas gramaticales y reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> ($\Gamma \vdash \varphi$). La semántica, abordada por la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, estudia la interpretación de los símbolos en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> y la noción de verdad en una estructura ($\mathcal{M} \models \varphi$).
+El análisis <ConceptLink targetId="metamatematica">metamatemático</ConceptLink> distingue dos vertientes. La sintáctica analiza la manipulación formal de cadenas de símbolos según reglas gramaticales y reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> ($\Gamma \vdash \varphi$). La semántica, abordada por la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, estudia la interpretación de los símbolos en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> y la noción de verdad en una estructura ($\mathcal{M} \models \varphi$).
 
 <Definicion title="Sistema deductivo formal de primer orden">
   Un **sistema lógico de primer orden** sobre una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$ consta de los siguientes elementos constitutivos:
-  1. **<ConceptLink targetId="lenguaje-formal">Lenguaje formal</ConceptLink>** $\mathcal{L}_\sigma$: <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="formula">fórmulas</ConceptLink> bien formadas generadas a partir de variables, conectivas lógicas ($\neg, \land, \lor, \implies, \iff$), cuantificadores ($\forall, \exists$) e igualdad ($=$), combinados con los símbolos no lógicos de $\sigma$.
+  1. **<ConceptLink targetId="lenguaje-formal">Lenguaje formal</ConceptLink>** $\mathcal{L}_\sigma$: <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="formula">fórmulas</ConceptLink> bien formadas generadas a partir de variables, <ConceptLink targetId="conectiva-logica">conectivas lógicas</ConceptLink> ($\neg, \land, \lor, \implies, \iff$), <ConceptLink targetId="cuantificador">cuantificadores</ConceptLink> ($\forall, \exists$) e <ConceptLink targetId="igualdad-matematica">igualdad</ConceptLink> ($=$), combinados con los símbolos no lógicos de $\sigma$.
   2. **<ConceptLink targetId="axioma">Axiomas</ConceptLink> lógicos**: fórmulas universalmente válidas que rigen la deducción general con independencia de la teoría específica considerada.
   3. **Reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink>**: mecanismos algorítmicos que permiten derivar nuevas fórmulas a partir de premisas establecidas, como la regla clásica de <ConceptLink targetId="modus-ponens">*modus ponens*</ConceptLink>:
      $$
      \frac{\varphi, \quad \varphi \implies \psi}{\psi}
      $$
-  4. **<ConceptLink targetId="demostracion">Demostración</ConceptLink> y <ConceptLink targetId="teorema">teorema</ConceptLink>**: una sucesión finita de fórmulas $\varphi_1, \dots, \varphi_n$ donde cada término es un axioma o se obtiene de términos anteriores mediante una regla de inferencia; el último término $\varphi_n$ se denomina teorema formal del sistema.
+  4. **<ConceptLink targetId="demostracion">Demostración</ConceptLink> y <ConceptLink targetId="teorema">teorema</ConceptLink>**: una sucesión finita de fórmulas $\varphi_1, \dots, \varphi_n$ donde cada término es un axioma lógico, una fórmula de un conjunto de premisas $\Gamma$ o se obtiene de términos anteriores mediante una regla de inferencia; se escribe $\Gamma \vdash \varphi_n$, y $\varphi_n$ es un teorema de la teoría de axiomas $\Gamma$.
 </Definicion>
 
 <Separador />
@@ -35,4 +35,4 @@ El análisis metamatemático distingue dos vertientes. La sintáctica analiza la
 
 En la formalización contemporánea de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el sistema se modela mediante una **lógica multitipo** (*many-sorted logic*). En este marco coexisten tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitivos</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> dos a dos: el dominio de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, el de <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y el de <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$, de modo que $\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$ y $\mathcal{L} \cap \Pi = \emptyset$.
 
-El tipado multisort asegura que las <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> punto-recta ($\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$) o punto-plano ($\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$), reciban argumentos exclusivamente del tipo correspondiente. Por eso $\ell \,\mathbf{I}\, \pi$ no es una fórmula del lenguaje: que una recta esté en un plano se expresa cuantificando sobre puntos, $\forall P \in \mathcal{P}\ (P \,\mathbf{I}_{\mathcal{P}\mathcal{L}}\, \ell \implies P \,\mathbf{I}_{\mathcal{P}\Pi}\, \pi)$.
+La separación en tipos asegura que las <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> punto-recta ($\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$) o punto-plano ($\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$), reciban argumentos exclusivamente del tipo correspondiente. Por eso $\ell \,\mathbf{I}\, \pi$ no es una fórmula del lenguaje: que una recta esté en un plano se expresa cuantificando sobre puntos, $\forall P \in \mathcal{P}\ (P \,\mathbf{I}_{\mathcal{P}\mathcal{L}}\, \ell \implies P \,\mathbf{I}_{\mathcal{P}\Pi}\, \pi)$.

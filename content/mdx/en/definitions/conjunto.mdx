@@ -14,14 +14,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **set** is a mathematical notion formalizing the collection into a unified whole of definite, distinct objects —termed elements—, related to the set through the <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> relation of membership.
+<Capitular letra="A" /> **set** is a collection of well-determined, mutually distinct objects, called elements, regarded as a single whole. Each element is related to the set by the <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> relation of membership.
 
-Almost every object of modern mathematics (numbers, <ConceptLink targetId="funcion">functions</ConceptLink>, <ConceptLink targetId="relacion-binaria">relations</ConceptLink>, figures) is constructed as a set. Accepting any definable collection as a set leads to contradictions, such as <ConceptLink targetId="paradoja-russell">Russell's paradox</ConceptLink> about the collection of all sets that do not belong to themselves. The <ConceptLink targetId="teoria-conjuntos">axiomatic set theory</ConceptLink> ZFC avoids them by restricting the formation of collections through <ConceptLink targetId="axioma">axioms</ConceptLink>: the <ConceptLink targetId="axioma-separacion">axiom of separation</ConceptLink>, for example, only allows forming <ConceptLink targetId="subconjunto">subsets</ConceptLink> of an already given set.
+Almost every object of modern mathematics (numbers, <ConceptLink targetId="funcion">functions</ConceptLink>, <ConceptLink targetId="relacion-binaria">relations</ConceptLink>, figures) is constructed as a set. Accepting any definable collection as a set leads to contradictions, such as <ConceptLink targetId="paradoja-russell">Russell's paradox</ConceptLink> about the collection of all sets that do not belong to themselves. The <ConceptLink targetId="teoria-conjuntos">axiomatic set theory</ConceptLink> ZFC blocks this paradox by restricting the formation of collections through <ConceptLink targetId="axioma">axioms</ConceptLink>: the <ConceptLink targetId="axioma-separacion">axiom of separation</ConceptLink>, for example, only allows forming <ConceptLink targetId="subconjunto">subsets</ConceptLink> of an already given set.
 
 <Definicion title="Membership and equality">
   Let $x$ be an object and $A$ a set. The expression $x \in A$ formalizes that $x$ **belongs to** $A$ (is an element of $A$), while $x \notin A$ formalizes $\neg(x \in A)$.
   
-  Two sets $A$ and $B$ are **equal** if and only if they possess exactly the same elements (<ConceptLink targetId="axioma-extensionalidad">axiom of extensionality</ConceptLink>):
+  Two sets $A$ and $B$ are **equal** if and only if they have exactly the same elements (<ConceptLink targetId="axioma-extensionalidad">axiom of extensionality</ConceptLink>):
   $$
   A = B \iff \forall x \ (x \in A \iff x \in B)
   $$
@@ -33,4 +33,4 @@ Almost every object of modern mathematics (numbers, <ConceptLink targetId="funci
 
 From given sets, other sets are constructed: the <ConceptLink targetId="union">union</ConceptLink> $A \cup B$, the <ConceptLink targetId="interseccion">intersection</ConceptLink> $A \cap B$, the <ConceptLink targetId="diferencia-conjuntos">difference</ConceptLink> $A \setminus B$, and the <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> $\wp(A)$.
 
-In the formalization of the <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, <ConceptLink targetId="espacio">space</ConceptLink> is conceived as the set $\mathcal{P}$ of all <ConceptLink targetId="punto">points</ConceptLink>. Composite figures such as the <ConceptLink targetId="segmento">segment</ConceptLink>, the <ConceptLink targetId="semirrecta">ray</ConceptLink>, and the <ConceptLink targetId="semiplano">half-plane</ConceptLink> are subsets of $\mathcal{P}$, enabling the application of set algebra to the analysis of regions and boundaries.
+In the formalization of the <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, <ConceptLink targetId="espacio">space</ConceptLink> is conceived as the set $\mathcal{P}$ of all <ConceptLink targetId="punto">points</ConceptLink>. Composite figures such as the <ConceptLink targetId="segmento">segment</ConceptLink>, the <ConceptLink targetId="semirrecta">ray</ConceptLink>, and the <ConceptLink targetId="semiplano">half-plane</ConceptLink> are subsets of $\mathcal{P}$, so the operations above apply to them.

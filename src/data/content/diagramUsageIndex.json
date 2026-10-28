@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "b396df02a07a7539a01d41f37adcb935071cd8e7f4b785f0d6ec771c5655c99e",
+  "corpusHash": "0df933b708b43fa36d1bf391522130092b28694ad2a34069093d45f1cbd643e9",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -950,8 +950,8 @@
         "contentPath": "content/mdx/eu/definitions/asociatividad.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 663,
-          "end": 707
+          "start": 669,
+          "end": 713
         },
         "blockId": "asociatividad:diagram:AsociatividadArbol"
       }
@@ -1004,8 +1004,8 @@
         "contentPath": "content/mdx/es/definitions/biyeccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 641,
-          "end": 683
+          "start": 640,
+          "end": 682
         },
         "blockId": "biyeccion:diagram:BiyeccionSagital"
       },
@@ -1014,8 +1014,8 @@
         "contentPath": "content/mdx/eu/definitions/biyeccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 641,
-          "end": 683
+          "start": 637,
+          "end": 679
         },
         "blockId": "biyeccion:diagram:BiyeccionSagital"
       }
@@ -1058,8 +1058,8 @@
         "contentPath": "content/mdx/en/definitions/cociente-incremental.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 719,
-          "end": 764
+          "start": 717,
+          "end": 762
         },
         "blockId": "cociente-incremental:diagram:CocienteIncremental"
       },
@@ -1078,8 +1078,8 @@
         "contentPath": "content/mdx/eu/definitions/cociente-incremental.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 723,
-          "end": 768
+          "start": 727,
+          "end": 772
         },
         "blockId": "cociente-incremental:diagram:CocienteIncremental"
       }
@@ -1154,8 +1154,8 @@
         "contentPath": "content/mdx/en/definitions/conjunto-disjunto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 535,
-          "end": 579
+          "start": 536,
+          "end": 580
         },
         "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
       },
@@ -1164,8 +1164,8 @@
         "contentPath": "content/mdx/es/definitions/conjunto-disjunto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 578,
-          "end": 622
+          "start": 562,
+          "end": 606
         },
         "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
       },
@@ -1174,8 +1174,8 @@
         "contentPath": "content/mdx/eu/definitions/conjunto-disjunto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 580,
-          "end": 624
+          "start": 545,
+          "end": 589
         },
         "blockId": "conjunto-disjunto:diagram:ConjuntosDisjuntos"
       }
@@ -1282,8 +1282,8 @@
         "contentPath": "content/mdx/en/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 594,
-          "end": 630
+          "start": 598,
+          "end": 634
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       },
@@ -1314,8 +1314,8 @@
         "contentPath": "content/mdx/en/definitions/funcion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 619,
-          "end": 659
+          "start": 617,
+          "end": 657
         },
         "blockId": "funcion:diagram:FuncionSagital"
       },
@@ -1324,8 +1324,8 @@
         "contentPath": "content/mdx/es/definitions/funcion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 614,
-          "end": 654
+          "start": 613,
+          "end": 653
         },
         "blockId": "funcion:diagram:FuncionSagital"
       },
@@ -1356,8 +1356,8 @@
         "contentPath": "content/mdx/es/definitions/interseccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 648,
-          "end": 686
+          "start": 647,
+          "end": 685
         },
         "blockId": "interseccion:diagram:Interseccion"
       },
@@ -1366,8 +1366,8 @@
         "contentPath": "content/mdx/eu/definitions/interseccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 632,
-          "end": 670
+          "start": 628,
+          "end": 666
         },
         "blockId": "interseccion:diagram:Interseccion"
       }
@@ -1398,8 +1398,8 @@
         "contentPath": "content/mdx/eu/definitions/isomorfismo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 671,
-          "end": 716
+          "start": 672,
+          "end": 717
         },
         "blockId": "isomorfismo:diagram:IsomorfismoRelacion"
       }
@@ -1442,8 +1442,8 @@
         "contentPath": "content/mdx/en/definitions/operacion-binaria.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 664,
-          "end": 711
+          "start": 662,
+          "end": 709
         },
         "blockId": "operacion-binaria:diagram:OperacionBinariaTabla"
       },
@@ -1462,8 +1462,8 @@
         "contentPath": "content/mdx/eu/definitions/operacion-binaria.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 677,
-          "end": 724
+          "start": 681,
+          "end": 728
         },
         "blockId": "operacion-binaria:diagram:OperacionBinariaTabla"
       }
@@ -1538,8 +1538,8 @@
         "contentPath": "content/mdx/en/definitions/numero-natural.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 678,
-          "end": 716
+          "start": 652,
+          "end": 690
         },
         "blockId": "numero-natural:diagram:PeanoSucesor"
       },
@@ -1548,8 +1548,8 @@
         "contentPath": "content/mdx/es/definitions/numero-natural.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 698,
-          "end": 736
+          "start": 667,
+          "end": 705
         },
         "blockId": "numero-natural:diagram:PeanoSucesor"
       },
@@ -1558,8 +1558,8 @@
         "contentPath": "content/mdx/eu/definitions/numero-natural.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 688,
-          "end": 726
+          "start": 673,
+          "end": 711
         },
         "blockId": "numero-natural:diagram:PeanoSucesor"
       }

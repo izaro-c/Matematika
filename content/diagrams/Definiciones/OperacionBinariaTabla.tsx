@@ -3488,7 +3488,7 @@ export const OperacionBinariaTablaSpec = createDiagramSpec(
     },
     {
       "id": "estadoOperacion",
-      "label": "Estado: es operación en S",
+      "label": "Estado: es operación sobre S",
       "color": "carbon",
       "layerId": "annotations",
       "order": 108,
@@ -3499,7 +3499,7 @@ export const OperacionBinariaTablaSpec = createDiagramSpec(
       "selection": {
         "selectable": true,
         "role": "annotation",
-        "ariaLabel": "Estado: es operación en S"
+        "ariaLabel": "Estado: es operación sobre S"
       },
       "target": false,
       "objectType": "annotation",
@@ -3509,7 +3509,7 @@ export const OperacionBinariaTablaSpec = createDiagramSpec(
         "blocks": [
           {
             "id": "estado",
-            "text": "$*$ es una operación binaria en $S$.",
+            "text": "$*$ es una operación binaria sobre $S$.",
             "color": "musgo"
           }
         ]
@@ -3590,12 +3590,12 @@ export const OperacionBinariaTablaSpec = createDiagramSpec(
       "blocks": {
         "estadoOperacion": {
           "estado": {
-            "text": "$*$ eragiketa bitarra da $S$-n."
+            "text": "$*$ $S$-ren gaineko eragiketa bitarra da."
           }
         },
         "estadoFuera": {
           "estado": {
-            "text": "$a * b$ batzuk ez daude $S$-n."
+            "text": "$a * b$ emaitzaren bat ez dago $S$ multzoan."
           }
         }
       },
@@ -3627,7 +3627,7 @@ export const OperacionBinariaTablaSpec = createDiagramSpec(
         "c21": "2 ∗ 1 laukia: sakatu balioa aldatzeko",
         "c22": "2 ∗ 2 laukia: sakatu balioa aldatzeko",
         "lectura": "Aukeratutako bikotea eta bere irudia",
-        "estadoOperacion": "Egoera: eragiketa da S-n",
+        "estadoOperacion": "Egoera: S-ren gaineko eragiketa da",
         "estadoFuera": "Egoera: emaitza bat S-tik kanpo",
         "grupoFlecha": "Nabarmendu aukeratutako bikotearen gezia",
         "grupoValores": "Nabarmendu taularen balioak"

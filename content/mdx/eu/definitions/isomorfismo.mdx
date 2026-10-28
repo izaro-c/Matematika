@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Isomorfismoa",
-  description: "Bi egitura matematikoren arteko bijekzioa, haien sinadura formaleko eragiketa, erlazio eta konstante guztiak kontserbatzen dituena.",
+  description: "Bi egitura matematikoren arteko bijekzioa, haien signatura formaleko eragiketa, erlazio eta konstante guztiak kontserbatzen dituena.",
   branch: "03C",
   branches: ["08A", "20"],
   hasSimulation: true,
@@ -17,7 +17,7 @@ export const metadata = {
 import { IsomorfismoRelacion } from '@content/diagrams/Definiciones/IsomorfismoRelacion';
 export const Simulation = IsomorfismoRelacion;
 
-<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura" isDependency={true}>signatura</ConceptLink> bera partekatzen duten bi <ConceptLink targetId="estructura-geometrica" isDependency={true}>egitura matematikoren</ConceptLink> arteko bana-banako korrespondentzia da, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink>, eragiketak eta konstante bereiziak kontserbatzen dituena.
+<Capitular letra="I" />**somorfismoa** <ConceptLink targetId="signatura" isDependency={true}>signatura</ConceptLink> bera partekatzen duten bi <ConceptLink targetId="estructura-geometrica" isDependency={true}>egitura matematikoren</ConceptLink> arteko <ConceptLink targetId="biyeccion" isDependency={true}>bana-banako korrespondentzia</ConceptLink> da, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink>, eragiketak eta konstante bereiziak kontserbatzen dituena.
 
 Bi egitura isomorfok beren signaturaz idatzitako <ConceptLink targetId="logica">logikaren</ConceptLink> enuntziatu berberak betetzen dituzte: elementuen izaeran soilik bereizten dira, eta signaturako ezein ikurrek ez du horretaz ezer esaten.
 
@@ -39,7 +39,7 @@ Bi egitura isomorfok beren signaturaz idatzitako <ConceptLink targetId="logica">
   $\sigma$ signaturak mota bat baino gehiago baditu, geometriarenak bezala (<ConceptLink targetId="punto">puntuak</ConceptLink>, <ConceptLink targetId="recta">zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink>), egitura bakoitzak domeinu bat du mota bakoitzeko, eta $f$ bijekzio-familia bat da, mota bakoitzeko bijekzio bat duena; aurreko baldintzetan, $a_i$ bakoitza bere motako bijekzioaz eraldatzen da. Egiturak *isomorfoak* dira, $\mathcal{M} \cong \mathcal{N}$, $\mathcal{M}$-tik $\mathcal{N}$-rako isomorfismoren bat existitzen bada.
 </Definicion>
 
-1. baldintzak <ConceptLink targetId="equivalencia-logica">baliokidetasuna</ConceptLink> eskatzen du, ez $\Rightarrow$ <ConceptLink targetId="implicacion">inplikazioa</ConceptLink> soilik. Domeinu berean $R^{\mathcal{M}} = \emptyset$ eta $R^{\mathcal{N}} \neq \emptyset$ badira, <ConceptLink targetId="funcion-identidad">identitateak</ConceptLink> $\Rightarrow$ betetzen du, isomorfismoa izan gabe.
+Lehenengo baldintzak <ConceptLink targetId="equivalencia-logica">baliokidetasuna</ConceptLink> eskatzen du, ez $\Rightarrow$ <ConceptLink targetId="implicacion">inplikazioa</ConceptLink> soilik. Domeinu berean $R^{\mathcal{M}} = \emptyset$ eta $R^{\mathcal{N}} \neq \emptyset$ badira, <ConceptLink targetId="funcion-identidad">identitateak</ConceptLink> $\Rightarrow$ betetzen du, isomorfismoa izan gabe. Diagraman, botoiak $(a_2, a_3)$ bikotea kentzen du $R^{\mathcal{M}}$-tik: lehengo isomorfismoak $\Rightarrow$ betetzen jarraitzen du, baina $\Leftarrow$ ez da betetzen $(b_1, b_3)$ bikotean.
 
 <Separador />
 
@@ -47,5 +47,5 @@ Bi egitura isomorfok beren signaturaz idatzitako <ConceptLink targetId="logica">
 
 <ConceptLink targetId="teoria-modelos">Ereduen teoriako</ConceptLink> bi nozio isomorfismoen bidez definitzen dira:
 
-- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink>, hiru <ConceptLink targetId="dimension">dimentsiokoa</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> barne hartzen dituena, kategorikoa da: bere axiomak betetzen dituen eredu oro $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrarekin</ConceptLink> isomorfoa da.
-- **Automorfismoak eta <ConceptLink targetId="simetria">simetria</ConceptLink>:** $\mathcal{M}$-tik $\mathcal{M}$-rako isomorfismoari <ConceptLink targetId="automorfismo">automorfismo</ConceptLink> deritzo. Automorfismo guztien <ConceptLink targetId="conjunto">multzoak</ConceptLink> <ConceptLink targetId="grupo">talde</ConceptLink> bat osatzen du <ConceptLink targetId="composicion-funciones">konposizioarekin</ConceptLink>, egituraren barne-simetriak aljebraikoki atzematen dituena. <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink>, adibidez, automorfismoak <ConceptLink targetId="colineacion">kolineazioak</ConceptLink> dira: puntuak eta zuzenak permutatzen dituzte <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> kontserbatuz, eta 168 elementuko talde bat osatzen dute.
+- **<ConceptLink targetId="categoricidad">Kategorikotasuna</ConceptLink>:** <ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> bat kategorikoa da baldin eta bere eredu guztiak elkarren artean isomorfoak badira. Adibidez, <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink>, hiru <ConceptLink targetId="dimension">dimentsiokoa</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> barne hartzen dituena, kategorikoa da: haren axiomak betetzen dituen eredu oro $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio kartesiarrarekin</ConceptLink> isomorfoa da.
+- **Automorfismoak eta simetria:** $\mathcal{M}$-tik $\mathcal{M}$-rako isomorfismoari <ConceptLink targetId="automorfismo">automorfismo</ConceptLink> deritzo. Automorfismo guztien <ConceptLink targetId="conjunto">multzoak</ConceptLink> <ConceptLink targetId="grupo">talde</ConceptLink> bat osatzen du <ConceptLink targetId="composicion-funciones">konposizioarekin</ConceptLink>, egituraren barne-simetriak aljebraikoki atzematen dituena. <ConceptLink targetId="modelo-fano">Fanoren planoan</ConceptLink>, adibidez, automorfismoak <ConceptLink targetId="colineacion">kolineazioak</ConceptLink> dira: puntuak eta zuzenak permutatzen dituzte <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> kontserbatuz, eta 168 elementuko talde bat osatzen dute.

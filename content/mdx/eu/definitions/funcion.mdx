@@ -9,19 +9,19 @@ export const metadata = {
   branches: ["03E", "26A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "8. atala", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "secondary" }
   ]
 };
 
 import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
 export const Simulation = FuncionSagital;
 
-<Capitular letra="F" />untzio (edo aplikazio) bat $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> artean hasierako multzoko elementu bakoitzari helmugako multzoko elementu bakarra esleitzen dion <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da. Funtzioa $(x, f(x))$ bikoteen multzoa bera denez, kontzeptua osorik <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> formulatzen da, eta handik hartzen dute <ConceptLink targetId="analisis-matematico">analisiak</ConceptLink> eta <ConceptLink targetId="algebra">aljebrak</ConceptLink>.
+<Capitular letra="F" />untzio (edo aplikazio) bat $A$ eta $B$ bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> artean hasierako multzoko elementu bakoitzari helmugako multzoko elementu bakarra esleitzen dion <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da. Funtzioa $(x, f(x))$ <ConceptLink targetId="par-ordenado">bikoteen</ConceptLink> multzoa bera denez, kontzeptua osorik <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> formulatzen da, eta handik hartzen dute <ConceptLink targetId="analisis-matematico">analisiak</ConceptLink> eta <ConceptLink targetId="algebra">aljebrak</ConceptLink>.
 
 <Definicion title="Funtzioaren definizio formala">
   Izan bitez <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. $A$-tik $B$-rako $f$ **funtzio** bat ($f\colon A \longrightarrow B$ idatzia) existentzia eta bakartasuneko bi baldintza betetzen dituen <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat da:
-  1. **Osotasuna (irudiaren existentzia):** <ConceptLink targetId="dominio-funcion">Domeinuko</ConceptLink> elementu bakoitzak gutxienez lotutako elementu bat du:
+  1. **Osotasuna (irudiaren existentzia):** <ConceptLink targetId="dominio-funcion">Domeinuko</ConceptLink> elementu bakoitzak gutxienez elementu bat du lotuta:
      $$
      \forall x \in A, \quad \exists y \in B \quad ((x, y) \in f)
      $$
@@ -30,15 +30,17 @@ export const Simulation = FuncionSagital;
      \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
      $$
   
-  $(x, y) \in f$ denean, $y = f(x)$ idazten da, non $y$ elementua $x$-ren <ConceptLink targetId="imagen">irudia</ConceptLink> baita $f$ funtzioaren bidez, eta $x$ elementua $y$-ren aurreirudi bat den. $A$ multzoari $f$-ren domeinua deritzo, $B$ haren kodomeinua da, eta $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ multzoa funtzioaren irudia da.
+  $(x, y) \in f$ denean, $y = f(x)$ idazten da, non $y$ elementua $x$-ren <ConceptLink targetId="imagen">irudia</ConceptLink> den $f$ funtzioaren bidez, eta $x$ elementua $y$-ren <ConceptLink targetId="preimagen">aurreirudi</ConceptLink> bat. $A$ multzoari $f$-ren domeinua deritzo, $B$ haren kodomeinua da, eta $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ multzoa funtzioaren irudia da.
 </Definicion>
 
-Irudiak banatzeko moduaren arabera, $f\colon A \longrightarrow B$ funtzio bat <ConceptLink targetId="inyectividad">injektiboa</ConceptLink>, <ConceptLink targetId="sobreyectividad">gainjektiboa</ConceptLink> edo <ConceptLink targetId="biyeccion">bijektiboa</ConceptLink> izan daiteke; bijektiboek, eta haiek bakarrik, onartzen dute $f^{-1}\colon B \longrightarrow A$ <ConceptLink targetId="funcion-inversa">alderantzizko funtzioa</ConceptLink>.
+Irudiak banatzeko moduaren arabera, $f\colon A \longrightarrow B$ funtzio bat <ConceptLink targetId="inyectividad">injektiboa</ConceptLink>, <ConceptLink targetId="sobreyectividad">supraiektiboa</ConceptLink> edo <ConceptLink targetId="biyeccion">bijektiboa</ConceptLink> izan daiteke; bijektiboak dira, hain zuzen, $f^{-1}\colon B \longrightarrow A$ <ConceptLink targetId="funcion-inversa">alderantzizko funtzioa</ConceptLink> duten funtzioak.
+
+Diagraman, gezi bakoitza $f$-ren bikote bat da. $A$-ko elementu baten gezi bakarraren punta haren ondora itzultzen baduzu, elementu hori irudirik gabe geratzen da, eta osotasuna ez da betetzen; «Eman $a_1$-i bigarren gezi bat» sakatuta, $a_1$-ek bi irudi izan ditzake, eta bakartasuna ez da betetzen. $b$ berera doazen bi gezi bikote bera dira.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Funtzioen aljebra">
+  <PropiedadesGrupo title="Berdintasuna eta konposizioa">
     <PropiedadItem id="igualdad-funciones" title="Funtzioen berdintasun-irizpidea">
       Bi funtzio, $f\colon A \longrightarrow B$ eta $g\colon C \longrightarrow D$, berdinak dira ($f = g$) baldin eta soilik baldin <ConceptLink targetId="dominio-funcion">domeinu</ConceptLink> bera badute ($A = C$) eta elementu bakoitzean bat badatoz: $\forall x \in A, \ f(x) = g(x)$. <ConceptLink targetId="codominio">Kodomeinuak</ConceptLink> ez du parte hartzen, $f$ eta $g$ bikote-multzoak baitira: $\{(0, 0)\}$ funtzio bat da aldi berean $\{0\}$ multzotik $\{0\}$ multzorako eta $\{0\}$ multzotik $\{0, 1\}$ multzorako.
     </PropiedadItem>

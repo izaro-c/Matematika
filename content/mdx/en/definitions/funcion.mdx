@@ -9,15 +9,15 @@ export const metadata = {
   branches: ["03E", "26A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Section 8", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "secondary" }
   ]
 };
 
 import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
 export const Simulation = FuncionSagital;
 
-<Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. Since the function is itself the set of pairs $(x, f(x))$, the concept is formulated entirely within <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink>, from which <ConceptLink targetId="analisis-matematico">analysis</ConceptLink> and <ConceptLink targetId="algebra">algebra</ConceptLink> take it.
+<Capitular letra="A" /> **function** (or map) between two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink> $A$ and $B$ is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> that associates with each element of the starting set a unique element in the target set. Since the function is itself the set of <ConceptLink targetId="par-ordenado">pairs</ConceptLink> $(x, f(x))$, the concept is formulated entirely within <ConceptLink targetId="teoria-conjuntos">set theory</ConceptLink>, from which <ConceptLink targetId="analisis-matematico">analysis</ConceptLink> and <ConceptLink targetId="algebra">algebra</ConceptLink> take it.
 
 <Definicion title="Formal definition of function">
   Let <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> and <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> be two <ConceptLink targetId="conjunto" isDependency={true}>sets</ConceptLink>. A **function** $f$ from $A$ to $B$ (denoted $f\colon A \longrightarrow B$) is a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> that satisfies two conditions of existence and uniqueness:
@@ -30,15 +30,17 @@ export const Simulation = FuncionSagital;
      \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
      $$
   
-  When $(x, y) \in f$, one writes $y = f(x)$, where $y$ is the <ConceptLink targetId="imagen">image</ConceptLink> of $x$ under $f$, and $x$ is a preimage of $y$. The set $A$ is called the domain of $f$, $B$ is its codomain, and the set $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ is the image or range of the function.
+  When $(x, y) \in f$, one writes $y = f(x)$, where $y$ is the <ConceptLink targetId="imagen">image</ConceptLink> of $x$ under $f$, and $x$ is a <ConceptLink targetId="preimagen">preimage</ConceptLink> of $y$. The set $A$ is called the domain of $f$, $B$ is its codomain, and the set $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ is the image of the function.
 </Definicion>
 
 Depending on how it distributes images, a function $f\colon A \longrightarrow B$ can be <ConceptLink targetId="inyectividad">injective</ConceptLink>, <ConceptLink targetId="sobreyectividad">surjective</ConceptLink>, or <ConceptLink targetId="biyeccion">bijective</ConceptLink>; the bijective ones are exactly those that admit an <ConceptLink targetId="funcion-inversa">inverse function</ConceptLink> $f^{-1}\colon B \longrightarrow A$.
 
+In the figure, each arrow is a pair of $f$. If you bring the head of an element's only arrow back to it in $A$, that element is left without an image and totality fails; with “Give $a_1$ a second arrow”, $a_1$ can have two images and uniqueness fails. Two arrows into the same $b$ are the same pair.
+
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Algebra of functions">
+  <PropiedadesGrupo title="Equality and composition">
     <PropiedadItem id="igualdad-funciones" title="Equality criterion for functions">
       Two functions $f\colon A \longrightarrow B$ and $g\colon C \longrightarrow D$ are equal ($f = g$) if and only if they have the same <ConceptLink targetId="dominio-funcion">domain</ConceptLink> ($A = C$) and agree on every element: $\forall x \in A, \ f(x) = g(x)$. The <ConceptLink targetId="codominio">codomain</ConceptLink> plays no part, because $f$ and $g$ are sets of pairs: $\{(0, 0)\}$ is at once a function from $\{0\}$ to $\{0\}$ and from $\{0\}$ to $\{0, 1\}$.
     </PropiedadItem>

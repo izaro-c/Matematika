@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Multzoa",
-  description: "Objektu matematiko bereizgarrien (elementuen) bilduma ongi zehaztua, kidetasunaren oinarrizko erlazioaren pean.",
+  description: "Elkarrengandik bereizten diren objektu matematikoen (elementuen) bilduma ongi zehaztua, kidetasunaren oinarrizko erlazioaren bidez emana.",
   branch: "03E",
   branches: ["03", "00A"],
   hasSimulation: false,
@@ -14,14 +14,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="M" />**ultzoa** nozio matematiko bat da, objektu zehatz, bereizgarri eta mugatuen —elementu deritzenak— batasun bateratu bat formalizatzen duena, multzoarekin kidetasunaren <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> erlazioaren bidez lotuta.
+<Capitular letra="M" />**ultzoa** ongi zehaztutako eta elkarrengandik bereizten diren objektuen bilduma bat da, osotasun bakar gisa hartua; objektu horiei elementu deritze. Elementu bakoitza multzoarekin kidetasunaren <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> erlazioaren bidez lotzen da.
 
-Matematika modernoaren ia objektu guztiak (zenbakiak, <ConceptLink targetId="funcion">funtzioak</ConceptLink>, <ConceptLink targetId="relacion-binaria">erlazioak</ConceptLink>, irudiak) multzo gisa eraikitzen dira. Bilduma definigarri oro multzotzat onartzeak kontraesanak dakartza, hala nola bere buruaren kide ez diren multzo guztien bildumari buruzko <ConceptLink targetId="paradoja-russell">Russellen paradoxa</ConceptLink>. ZFC <ConceptLink targetId="teoria-conjuntos">multzo-teoria axiomatikoak</ConceptLink> saihestu egiten ditu, bildumen eraketa <ConceptLink targetId="axioma">axiomen</ConceptLink> bidez murriztuta: <ConceptLink targetId="axioma-separacion">bereizketaren axiomak</ConceptLink>, adibidez, aurretik emandako multzo baten <ConceptLink targetId="subconjunto">azpimultzoak</ConceptLink> soilik eratzen uzten du.
+Matematika modernoaren ia objektu guztiak (zenbakiak, <ConceptLink targetId="funcion">funtzioak</ConceptLink>, <ConceptLink targetId="relacion-binaria">erlazioak</ConceptLink>, irudiak) multzo gisa eraikitzen dira. Bilduma definigarri oro multzotzat onartzeak kontraesanak dakartza, hala nola bere buruaren kide ez diren multzo guztien bildumari buruzko <ConceptLink targetId="paradoja-russell">Russellen paradoxa</ConceptLink>. ZFC <ConceptLink targetId="teoria-conjuntos">multzo-teoria axiomatikoak</ConceptLink> paradoxa hori saihesten du, bildumen eraketa <ConceptLink targetId="axioma">axiomen</ConceptLink> bidez murriztuta: <ConceptLink targetId="axioma-separacion">bereizketaren axiomak</ConceptLink>, adibidez, aurretik emandako multzo baten <ConceptLink targetId="subconjunto">azpimultzoak</ConceptLink> soilik eratzen uzten du.
 
 <Definicion title="Kidetasuna eta berdintza">
   Izan bitez $x$ objektu bat eta $A$ multzo bat. $x \in A$ adierazpenak $x$ objektua $A$ multzoaren **kide** dela formalizatzen du ($A$ multzoko elementua da), eta $x \notin A$ adierazpenak $\neg(x \in A)$ formalizatzen du.
   
-  Bi $A$ eta $B$ multzo **berdinak** dira baldin eta soilik baldin zehazki elementu berak badituzte (<ConceptLink targetId="axioma-extensionalidad">hedagarritasunaren axioma</ConceptLink>):
+  $A$ eta $B$ multzoak **berdinak** dira baldin eta soilik baldin elementu berberak badituzte (<ConceptLink targetId="axioma-extensionalidad">hedaduraren axioma</ConceptLink>):
   $$
   A = B \iff \forall x \ (x \in A \iff x \in B)
   $$
@@ -33,4 +33,4 @@ Matematika modernoaren ia objektu guztiak (zenbakiak, <ConceptLink targetId="fun
 
 Emandako multzoetatik abiatuta beste multzo batzuk eraikitzen dira: $A \cup B$ <ConceptLink targetId="union">bildura</ConceptLink>, $A \cap B$ <ConceptLink targetId="interseccion">ebakidura</ConceptLink>, $A \setminus B$ <ConceptLink targetId="diferencia-conjuntos">diferentzia</ConceptLink> eta $\wp(A)$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoa</ConceptLink>.
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> formalizazioan, <ConceptLink targetId="espacio">espazioa</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> guztien $\mathcal{P}$ multzo gisa ulertzen da. Figura konposatuak, hala nola <ConceptLink targetId="segmento">zuzenkia</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> eta <ConceptLink targetId="semiplano">planoerdia</ConceptLink>, $\mathcal{P}$ multzoaren azpimultzoak dira, eta horrek multzoen aljebra aplikatzea ahalbidetzen du eskualdeen eta mugen azterketan.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> formalizazioan, <ConceptLink targetId="espacio">espazioa</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> guztien $\mathcal{P}$ multzo gisa ulertzen da. Irudi konposatuak, hala nola <ConceptLink targetId="segmento">zuzenkia</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> eta <ConceptLink targetId="semiplano">planoerdia</ConceptLink>, $\mathcal{P}$ multzoaren azpimultzoak dira; beraz, aurreko eragiketak aplika dakizkieke.

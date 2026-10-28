@@ -9,7 +9,7 @@ export const metadata = {
   branches: ["03E", "26A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Sección 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
@@ -17,7 +17,7 @@ export const metadata = {
 import { FuncionSagital } from '@content/diagrams/Definiciones/FuncionSagital';
 export const Simulation = FuncionSagital;
 
-<Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Como la función es el propio conjunto de pares $(x, f(x))$, el concepto se formula por completo dentro de la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink>, y de ella lo toman el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink> y el <ConceptLink targetId="algebra">álgebra</ConceptLink>.
+<Capitular letra="U" />na **función** (o aplicación) entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> $A$ y $B$ es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> que asigna a cada elemento del conjunto de partida un único elemento en el conjunto de llegada. Como la función es el propio conjunto de <ConceptLink targetId="par-ordenado">pares</ConceptLink> $(x, f(x))$, el concepto se formula por completo dentro de la <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink>, y de ella lo toman el <ConceptLink targetId="analisis-matematico">análisis</ConceptLink> y el <ConceptLink targetId="algebra">álgebra</ConceptLink>.
 
 <Definicion title="Definición formal de función">
   Sean <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> y <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una **función** $f$ de $A$ en $B$ (notada $f\colon A \longrightarrow B$) es una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> <VisualBind element="flechas" color="terracota">$f \subseteq A \times B$</VisualBind> que satisface dos condiciones de existencia y unicidad:
@@ -30,15 +30,17 @@ export const Simulation = FuncionSagital;
      \forall x \in A \ \forall y_1, y_2 \in B, \quad ((x, y_1) \in f \land (x, y_2) \in f) \implies y_1 = y_2
      $$
   
-  Cuando $(x, y) \in f$, se escribe $y = f(x)$, donde $y$ es la <ConceptLink targetId="imagen">imagen</ConceptLink> de $x$ mediante $f$, y $x$ es una preimagen de $y$. El conjunto $A$ recibe el nombre de dominio de $f$, $B$ es su codominio, y el conjunto $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ es la imagen o recorrido de la función.
+  Cuando $(x, y) \in f$, se escribe $y = f(x)$, donde $y$ es la <ConceptLink targetId="imagen">imagen</ConceptLink> de $x$ mediante $f$, y $x$ es una <ConceptLink targetId="preimagen">preimagen</ConceptLink> de $y$. El conjunto $A$ recibe el nombre de dominio de $f$, $B$ es su codominio, y el conjunto $\operatorname{Im}(f) = \{f(x) \mid x \in A\} \subseteq B$ es la imagen de la función.
 </Definicion>
 
 Según cómo reparte las imágenes, una función $f\colon A \longrightarrow B$ puede ser <ConceptLink targetId="inyectividad">inyectiva</ConceptLink>, <ConceptLink targetId="sobreyectividad">sobreyectiva</ConceptLink> o <ConceptLink targetId="biyeccion">biyectiva</ConceptLink>; las biyectivas son exactamente las que admiten una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> $f^{-1}\colon B \longrightarrow A$.
 
+En la figura, cada flecha es un par de $f$. Si devuelves a su elemento de $A$ la punta de su única flecha, ese elemento se queda sin imagen y falla la totalidad; con «Dar a $a_1$ una segunda flecha», $a_1$ puede tener dos imágenes y falla la unicidad. Dos flechas al mismo $b$ son el mismo par.
+
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Álgebra de funciones">
+  <PropiedadesGrupo title="Igualdad y composición">
     <PropiedadItem id="igualdad-funciones" title="Criterio de igualdad de funciones">
       Dos funciones $f\colon A \longrightarrow B$ y $g\colon C \longrightarrow D$ son iguales ($f = g$) si y solo si tienen el mismo <ConceptLink targetId="dominio-funcion">dominio</ConceptLink> ($A = C$) y coinciden en cada elemento: $\forall x \in A, \ f(x) = g(x)$. El <ConceptLink targetId="codominio">codominio</ConceptLink> no interviene, porque $f$ y $g$ son conjuntos de pares: $\{(0, 0)\}$ es a la vez una función de $\{0\}$ en $\{0\}$ y de $\{0\}$ en $\{0, 1\}$.
     </PropiedadItem>

@@ -49,6 +49,55 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "appearance": { "strokeWidth": 2.2, "preserveColorOnHighlight": true }
     },
     {
+      "id": "recorridoMin",
+      "label": "Límite izquierdo del recorrido",
+      "color": "carbon",
+      "layerId": "construction",
+      "order": 1,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "highlightable": false, "ariaLabel": "Límite izquierdo del recorrido de x y x + h", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -4.5, "y": 0 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 0, "labelVisible": false, "highlightSize": 0 },
+      "interaction": {}
+    },
+    {
+      "id": "recorridoMax",
+      "label": "Límite derecho del recorrido",
+      "color": "carbon",
+      "layerId": "construction",
+      "order": 2,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "highlightable": false, "ariaLabel": "Límite derecho del recorrido de x y x + h", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 4.5, "y": 0 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 0, "labelVisible": false, "highlightSize": 0 },
+      "interaction": {}
+    },
+    {
+      "id": "recorridoX",
+      "label": "Recorrido permitido de x y x + h",
+      "color": "carbon",
+      "layerId": "construction",
+      "order": 3,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "highlightable": false, "ariaLabel": "Recorrido permitido de x y x + h", "role": "construction" },
+      "target": false,
+      "objectType": "path",
+      "geometry": { "type": "segment", "points": ["recorridoMin", "recorridoMax"] },
+      "appearance": { "strokeWidth": 1, "strokeOpacity": 0 }
+    },
+    {
       "id": "pX",
       "label": "x",
       "color": "carbon",
@@ -62,7 +111,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "targetId": "pX",
       "objectType": "point",
       "definition": { "type": "coordinates", "x": -2.6, "y": 0 },
-      "mobility": { "type": "axis-x", "coordinate": 0 },
+      "mobility": { "type": "on-support", "support": "recorridoX" },
       "appearance": { "size": 6, "labelVisible": true, "labelOffset": [-4, -14], "highlightSize": 9, "preserveColorOnHighlight": true },
       "interaction": { "snapToGrid": false }
     },
@@ -80,7 +129,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "targetId": "pXh",
       "objectType": "point",
       "definition": { "type": "coordinates", "x": 1.6, "y": 0 },
-      "mobility": { "type": "axis-x", "coordinate": 0 },
+      "mobility": { "type": "on-support", "support": "recorridoX" },
       "appearance": { "size": 6, "labelVisible": true, "labelOffset": [-4, -14], "highlightSize": 9, "preserveColorOnHighlight": true },
       "interaction": { "snapToGrid": false }
     },
@@ -203,7 +252,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 20,
       "visible": true,
-      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.05)",
+      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.005)",
       "locked": false,
       "groupIds": [],
       "selection": { "selectable": true, "role": "primary", "ariaLabel": "Recta secante por P y Q" },
@@ -220,7 +269,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 25,
       "visible": true,
-      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.05)",
+      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.005)",
       "locked": false,
       "groupIds": [],
       "selection": { "selectable": true, "role": "primary", "ariaLabel": "Incremento Δx = h" },
@@ -237,7 +286,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 26,
       "visible": true,
-      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.05)",
+      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.005)",
       "locked": false,
       "groupIds": [],
       "selection": { "selectable": true, "role": "primary", "ariaLabel": "Variación Δy = f(x + h) − f(x)" },
@@ -254,7 +303,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "layerId": "annotations",
       "order": 100,
       "visible": true,
-      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.05)",
+      "visibleWhen": "gt(abs(pXh.x - pX.x), 0.005)",
       "locked": false,
       "groupIds": [],
       "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Valor del cociente incremental y de la pendiente de la tangente" },
@@ -280,7 +329,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "layerId": "annotations",
       "order": 101,
       "visible": true,
-      "visibleWhen": "lte(abs(pXh.x - pX.x), 0.05)",
+      "visibleWhen": "lte(abs(pXh.x - pX.x), 0.005)",
       "locked": false,
       "groupIds": [],
       "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Con h = 0 el cociente no está definido" },
@@ -290,7 +339,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
       "content": {
         "text": "",
         "blocks": [
-          { "id": "bloque-indefinido", "text": "h = 0: el cociente no está definido", "color": "granada", "rules": [] }
+          { "id": "bloque-indefinido", "text": "h ≈ 0: en h = 0 el cociente no está definido", "color": "granada", "rules": [] }
         ],
         "layout": "stack"
       },
@@ -324,7 +373,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
         "panelIndefinido": "h = 0 denean zatidura ez dago definituta"
       },
       "blocks": {
-        "panelIndefinido": { "bloque-indefinido": { "text": "h = 0: zatidura ez dago definituta" } }
+        "panelIndefinido": { "bloque-indefinido": { "text": "h ≈ 0: h = 0 denean zatidura ez dago definituta" } }
       }
     },
     "en": {
@@ -349,7 +398,7 @@ export const CocienteIncrementalSpec = createDiagramSpec(
         "panelIndefinido": "With h = 0 the quotient is undefined"
       },
       "blocks": {
-        "panelIndefinido": { "bloque-indefinido": { "text": "h = 0: the quotient is undefined" } }
+        "panelIndefinido": { "bloque-indefinido": { "text": "h ≈ 0: at h = 0 the quotient is undefined" } }
       }
     }
   }

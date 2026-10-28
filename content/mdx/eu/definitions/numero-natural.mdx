@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Zenbaki arruntak",
-  description: "Zenbatzeko eta sekuentzialki ordenatzeko zenbaki-sistema diskretua, Peanoren postulatuen bidez axiomatikoki karakterizatua.",
+  description: "Zenbatzeko eta ordenatzeko erabiltzen diren 0, 1, 2, 3, … zenbakiak, Peanoren axiomen bidez karakterizatuak.",
   branch: "11A",
   branches: ["11A", "03E"],
   hasSimulation: true,
@@ -17,9 +17,9 @@ export const metadata = {
 import { PeanoSucesor } from '@content/diagrams/Definiciones/PeanoSucesor';
 export const Simulation = PeanoSucesor;
 
-<Capitular letra="Z" />enbaki **arruntak** <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ren oinarrian dagoen zenbaki-sistema diskretua dira, <ConceptLink targetId="conjunto-finito">multzo finitu</ConceptLink> bateko elementuak zenbatzeko eta haiek segidan ordenatzeko lehen mailako eragiketak formalizatuz.
+<Capitular letra="Z" />**enbaki arruntak** $0, 1, 2, 3, \dots$ zenbakiak dira, <ConceptLink targetId="conjunto-finito">multzo finitu</ConceptLink> bateko elementuak zenbatzeko eta segidan ordenatzeko erabiltzen direnak; haien gainean eraikitzen da <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>.
 
-<ConceptLink targetId="peano">Giuseppe Peano</ConceptLink>k formalizatu eta <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>ek aurreratuta, zenbaki arruntak hasierako elementu batez eta <ConceptLink targetId="sucesor">ondorengo-funtzio</ConceptLink> batez karakterizatutako <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> gisa uler daitezke. Era berean, <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> <ConceptLink targetId="ordinales-von-neumann">von Neumannen ordinalen</ConceptLink> bidez eraikitzen dira, non zenbaki bakoitza haren aurretik dauden zenbaki arrunt guztien multzo gisa definitzen den.
+<ConceptLink targetId="peano">Giuseppe Peano</ConceptLink>k 1889an formulatu zituen ondoko axiomak, eta <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>ek 1888an aurreratu zituen. Peanok $1$ zenbakitik hasten zuen segida; hemen, <ConceptLink targetId="teoria-conjuntos">multzo-teorian</ConceptLink> bezala, $0 \in \mathbb{N}$ da. Teoria horretan, zenbaki arruntak <ConceptLink targetId="ordinales-von-neumann">von Neumannen ordinalen</ConceptLink> bidez eraikitzen dira: zenbaki bakoitza bere aurreko zenbaki arrunt guztien multzoa da.
 
 <Definicion title="Peanoren axiomatika zenbaki arruntetarako">
   **Zenbaki arrunt**en sistema bat $(\mathbb{N}, 0, S)$ hirukote bat da, <VisualBind element="conjuntoN" color="carbon">$\mathbb{N}$</VisualBind> <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek, <VisualBind element="e0" color="mora">$0 \in \mathbb{N}$</VisualBind> elementu berezi batek eta <VisualBind element="flechas" color="terracota">$S \colon \mathbb{N} \to \mathbb{N}$</VisualBind> <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> batek (<ConceptLink targetId="sucesor">ondorengo-funtzioa</ConceptLink> deitua) osatua, honako hauek betetzen direlarik:
@@ -31,22 +31,24 @@ export const Simulation = PeanoSucesor;
      $$
      \forall m, n \in \mathbb{N}, \quad S(m) = S(n) \implies m = n
      $$
-  3. <ConceptLink targetId="metodo-induccion">Matematika-indukzioaren printzipioa</ConceptLink>: $K \subseteq \mathbb{N}$ <ConceptLink targetId="subconjunto" isDependency={true}>azpimultzo</ConceptLink> orotarako, baldin eta $0 \in K$ bada eta $n \in K$ bakoitzeko $S(n) \in K$ bada, orduan $K = \mathbb{N}$ da:
+  3. <ConceptLink targetId="metodo-induccion">Indukzio matematikoaren printzipioa</ConceptLink>: $K \subseteq \mathbb{N}$ <ConceptLink targetId="subconjunto" isDependency={true}>azpimultzo</ConceptLink> orotarako, baldin eta $0 \in K$ bada eta $n \in K$ bakoitzeko $S(n) \in K$ bada, orduan $K = \mathbb{N}$ da:
      $$
      \forall K \subseteq \mathbb{N} \ \big( (0 \in K \land \forall n \in K \ (S(n) \in K)) \implies K = \mathbb{N} \big)
      $$
 </Definicion>
 
+Irudian, $3$-tik irteten den gezia $0$ edo $1$ elementura eraman daiteke. $S(3) = 0$ bada, 1. axioma ez da betetzen; $S(3) = 1$ bada, 2. axioma ez da betetzen, $S(0) = S(3)$ baita. Botoiak $a$ eta $b$ elementuak gehitzen ditu, $S(a) = b$ eta $S(b) = a$ izanik: $0$-tik abiatuta $S$ behin eta berriz aplikatuz lortzen diren elementuen <VisualBind element="regionK" color="pavo">$K$</VisualBind> multzoak $0$ dauka eta $S$-rekiko itxia da, baina ez da $\mathbb{N}$ osoa; beraz, 3. axioma ez da betetzen.
+
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="estructura-algebraica-semianillo" titulo="Semieraztun trukakorraren egitura">
-    <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> ondorengotik abiatuta modu errekurtsiboan definituz, $(\mathbb{N}, +, \cdot)$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> <ConceptLink targetId="semianillo">semieraztun</ConceptLink> trukakor unitarioa da, baturarako baliogabetze-propietatearekin hornitua.
+  <PropiedadItem id="estructura-algebraica-semianillo" title="Semieraztun trukakorraren egitura">
+    <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> ondorengotik abiatuta modu errekurtsiboan definituz, $(\mathbb{N}, +, \cdot)$ <ConceptLink targetId="estructura-algebraica">egitura</ConceptLink> <ConceptLink targetId="semianillo">semieraztun</ConceptLink> trukakor unitarioa da, baturarako baliogabetze-propietatearekin hornitua.
   </PropiedadItem>
-  <PropiedadItem id="principio-buen-orden" titulo="Ondo ordenatzearen printzipioa">
+  <PropiedadItem id="principio-buen-orden" title="Ondo ordenatzearen printzipioa">
     Zenbaki arruntetako $A \subseteq \mathbb{N}$ <ConceptLink targetId="subconjunto">azpimultzo</ConceptLink> ez-huts orok elementu minimo bat du $m \le n \iff \exists k \in \mathbb{N} \ (m + k = n)$ bidez definitutako <ConceptLink targetId="orden-total">ordenarekiko</ConceptLink>; beraz, $(\mathbb{N}, \le)$ <ConceptLink targetId="buen-orden">multzo ondo ordenatua</ConceptLink> da.
   </PropiedadItem>
-  <PropiedadItem id="cardinalidad-numerable" titulo="Kardinaltasun zenbagarria">
+  <PropiedadItem id="cardinalidad-numerable" title="Kardinaltasun zenbagarria">
     $\mathbb{N}$ multzoa <ConceptLink targetId="conjunto-infinito">multzo infinitua</ConceptLink> da. Haren <ConceptLink targetId="cardinalidad">kardinaltasunari</ConceptLink>, $\aleph_0 = |\mathbb{N}|$ ikurraz adierazten denari, kardinaltasun zenbagarria deritzo, eta, <ConceptLink targetId="axioma-eleccion">aukeraren axioma</ConceptLink> onartuz gero, kardinaltasun infinitu txikiena da.
   </PropiedadItem>
 </SeccionPropiedades>

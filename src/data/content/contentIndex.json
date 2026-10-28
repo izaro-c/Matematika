@@ -4657,7 +4657,7 @@
         "elemento-inverso",
         "grupo",
         "asociatividad-generalizada",
-        "unicidad-inversos-asociatividad"
+        "unicidad-elemento-inverso"
       ],
       "availableLangs": [
         "en",
@@ -4723,7 +4723,7 @@
         "elemento-inverso",
         "grupo",
         "asociatividad-generalizada",
-        "unicidad-inversos-asociatividad"
+        "unicidad-elemento-inverso"
       ],
       "availableLangs": [
         "en",
@@ -4773,15 +4773,14 @@
       "conceptLinks": [
         "demostracion",
         "teoria-formal",
-        "concepto-primitivo",
         "teorema",
+        "concepto-primitivo",
         "inferencia",
+        "modelo",
         "sistema-axiomatico",
         "signatura",
         "lenguaje-formal",
         "formula",
-        "estructura-geometrica",
-        "modelo",
         "hilbert",
         "incidencia",
         "estar-entre",
@@ -4840,15 +4839,14 @@
       "conceptLinks": [
         "demostracion",
         "teoria-formal",
-        "concepto-primitivo",
         "teorema",
+        "concepto-primitivo",
         "inferencia",
+        "modelo",
         "sistema-axiomatico",
         "signatura",
         "lenguaje-formal",
         "formula",
-        "estructura-geometrica",
-        "modelo",
         "hilbert",
         "incidencia",
         "estar-entre",
@@ -4894,7 +4892,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Chapter 8",
+          "locator": "Section 8",
           "role": "primary"
         },
         {
@@ -4907,12 +4905,15 @@
       "conceptLinks": [
         "funcion",
         "conjunto",
-        "dominio-funcion",
         "codominio",
         "imagen",
+        "dominio-funcion",
         "funcion-inversa",
         "inyectividad",
         "sobreyectividad",
+        "composicion-funciones",
+        "funcion-identidad",
+        "conjunto-finito",
         "cardinalidad",
         "isomorfismo",
         "estructura-geometrica",
@@ -4960,7 +4961,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "Sección 8",
           "role": "primary"
         },
         {
@@ -4973,12 +4974,15 @@
       "conceptLinks": [
         "funcion",
         "conjunto",
-        "dominio-funcion",
         "codominio",
         "imagen",
+        "dominio-funcion",
         "funcion-inversa",
         "inyectividad",
         "sobreyectividad",
+        "composicion-funciones",
+        "funcion-identidad",
+        "conjunto-finito",
         "cardinalidad",
         "isomorfismo",
         "estructura-geometrica",
@@ -5032,7 +5036,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Chapters 21–24",
+          "locator": "Sections 22–25",
           "role": "secondary"
         }
       ],
@@ -5044,24 +5048,29 @@
         "relacion-equivalencia",
         "funcion-inversa",
         "composicion-funciones",
+        "axioma-eleccion",
+        "ordinales-von-neumann",
         "inyectividad",
         "teorema-cantor-bernstein",
         "teorema-cantor",
         "conjunto-potencia",
         "dominio",
-        "estructura-geometrica",
         "punto",
         "modelo-fano",
         "modelo-tres-puntos",
+        "estructura-geometrica",
         "conjunto-numerable",
         "numero-natural",
         "numero-racional",
-        "potencia-del-continuo",
-        "continuidad",
-        "axioma-arquimedes",
         "axioma-completitud",
         "traza",
-        "recta"
+        "recta",
+        "hilbert",
+        "consistencia-logica",
+        "cuerpo",
+        "potencia-del-continuo",
+        "continuidad",
+        "axioma-arquimedes"
       ],
       "availableLangs": [
         "en",
@@ -5104,7 +5113,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulos 21–24",
+          "locator": "Secciones 22–25",
           "role": "secondary"
         }
       ],
@@ -5116,24 +5125,29 @@
         "relacion-equivalencia",
         "funcion-inversa",
         "composicion-funciones",
+        "axioma-eleccion",
+        "ordinales-von-neumann",
         "inyectividad",
         "teorema-cantor-bernstein",
         "teorema-cantor",
         "conjunto-potencia",
         "dominio",
-        "estructura-geometrica",
         "punto",
         "modelo-fano",
         "modelo-tres-puntos",
+        "estructura-geometrica",
         "conjunto-numerable",
         "numero-natural",
         "numero-racional",
-        "potencia-del-continuo",
-        "continuidad",
-        "axioma-arquimedes",
         "axioma-completitud",
         "traza",
-        "recta"
+        "recta",
+        "hilbert",
+        "consistencia-logica",
+        "cuerpo",
+        "potencia-del-continuo",
+        "continuidad",
+        "axioma-arquimedes"
       ],
       "availableLangs": [
         "en",
@@ -5473,13 +5487,13 @@
         {
           "title": "Calculus",
           "author": "Michael Spivak",
-          "locator": "Capítulo 9",
+          "locator": "Chapter 9",
           "role": "primary"
         },
         {
           "title": "Principles of Mathematical Analysis",
           "author": "Walter Rudin",
-          "locator": "Capítulo 5",
+          "locator": "Chapter 5",
           "role": "secondary"
         }
       ],
@@ -5489,12 +5503,12 @@
         "intervalo",
         "pendiente",
         "recta-secante-grafica",
-        "grafica-funcion",
         "punto",
+        "grafica-funcion",
         "funcion-derivable",
         "recta-tangente",
-        "derivada",
         "limite",
+        "derivada",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -5548,12 +5562,12 @@
         "intervalo",
         "pendiente",
         "recta-secante-grafica",
-        "grafica-funcion",
         "punto",
+        "grafica-funcion",
         "funcion-derivable",
         "recta-tangente",
-        "derivada",
         "limite",
+        "derivada",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -5735,7 +5749,7 @@
         "lenguaje-formal",
         "signatura",
         "estructura-geometrica",
-        "teoria-modelos",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "dominio",
@@ -5792,7 +5806,7 @@
         "lenguaje-formal",
         "signatura",
         "estructura-geometrica",
-        "teoria-modelos",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "dominio",
@@ -6000,7 +6014,7 @@
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Common Notions 4",
+          "locator": "Book I, Common Notion 4",
           "role": "primary"
         },
         {
@@ -6024,11 +6038,9 @@
         "medida-angular",
         "continuidad",
         "geometria-hilbertiana",
-        "relacion-binaria",
-        "conjunto",
-        "punto",
         "dominio",
-        "espacio",
+        "punto",
+        "relacion-binaria",
         "plano",
         "triangulo",
         "poligono",
@@ -6078,7 +6090,7 @@
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Nociones Comunes 4",
+          "locator": "Libro I, Noción común 4",
           "role": "primary"
         },
         {
@@ -6102,11 +6114,9 @@
         "medida-angular",
         "continuidad",
         "geometria-hilbertiana",
-        "relacion-binaria",
-        "conjunto",
-        "punto",
         "dominio",
-        "espacio",
+        "punto",
+        "relacion-binaria",
         "plano",
         "triangulo",
         "poligono",
@@ -6139,14 +6149,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Disjoint sets",
-      "description": "Property of two sets or a family of sets that share no common elements, emphasizing the condition of pairwise (mutually) disjoint sets.",
+      "description": "Two sets are disjoint if their intersection is empty; a family is pairwise disjoint if any two of its members with distinct indices are.",
       "branch": "03",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
           "author": "Paul Halmos",
-          "locator": "Chapter 4",
+          "locator": "Section 4",
           "role": "primary"
         }
       ],
@@ -6190,14 +6200,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Conjuntos disjuntos",
-      "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
+      "description": "Dos conjuntos son disjuntos si su intersección es vacía; una familia es disjunta dos a dos si lo son cualesquiera dos de sus miembros con índices distintos.",
       "branch": "03",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
           "author": "Paul Halmos",
-          "locator": "Capítulo 4",
+          "locator": "Sección 4",
           "role": "primary"
         }
       ],
@@ -6375,7 +6385,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Logical Consistency",
-      "description": "Property of a formal theory guaranteeing the impossibility of deducing simultaneously a proposition and its negation (absence of contradictions).",
+      "description": "Property of a formal theory from which a formula and its negation cannot both be deduced.",
       "branch": "03B",
       "branches": [
         "03",
@@ -6404,23 +6414,33 @@
       ],
       "conceptLinks": [
         "teoria-formal",
+        "formula",
+        "negacion",
+        "logica",
         "principio-explosion",
         "teorema",
+        "axioma",
         "lenguaje-formal",
-        "teoria-modelos",
+        "estructura-geometrica",
+        "modelo",
+        "teorema-correccion",
         "godel",
         "teorema-completitud-godel",
-        "logica",
         "teorema-incompletitud-godel",
         "consistencia-relativa",
         "sistema-euclidiano",
         "hilbert",
         "concepto-primitivo",
         "modelo-cartesiano",
+        "cuerpo",
+        "numero-real",
+        "espacio",
+        "axioma-completitud",
         "bolyai",
         "lobachevski",
         "sistema-hiperbolico",
         "beltrami",
+        "curvatura",
         "klein",
         "poincare",
         "plano",
@@ -6450,7 +6470,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Consistencia lógica",
-      "description": "Propiedad de una teoría formal que garantiza la imposibilidad de deducir simultáneamente una proposición y su negación (ausencia de contradicciones).",
+      "description": "Propiedad de una teoría formal de la que no se pueden deducir a la vez una fórmula y su negación.",
       "branch": "03B",
       "branches": [
         "03",
@@ -6479,23 +6499,33 @@
       ],
       "conceptLinks": [
         "teoria-formal",
+        "formula",
+        "negacion",
+        "logica",
         "principio-explosion",
         "teorema",
+        "axioma",
         "lenguaje-formal",
-        "teoria-modelos",
+        "estructura-geometrica",
+        "modelo",
+        "teorema-correccion",
         "teorema-completitud-godel",
         "godel",
-        "logica",
         "teorema-incompletitud-godel",
         "consistencia-relativa",
         "sistema-euclidiano",
         "hilbert",
         "concepto-primitivo",
         "modelo-cartesiano",
+        "cuerpo",
+        "numero-real",
+        "espacio",
+        "axioma-completitud",
         "bolyai",
         "lobachevski",
         "sistema-hiperbolico",
         "beltrami",
+        "curvatura",
         "klein",
         "poincare",
         "plano",
@@ -7403,6 +7433,10 @@
       "title": "Dimension",
       "description": "Number of degrees of freedom or independent parameters required to specify the position of a point in a space or figure.",
       "branch": "51",
+      "branches": [
+        "15A",
+        "54F"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -7446,6 +7480,7 @@
         "semirrecta",
         "triangulo",
         "poligono",
+        "traza",
         "semiplano",
         "region-poligonal",
         "teoria-medida-area",
@@ -7477,6 +7512,10 @@
       "title": "Dimensión",
       "description": "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
       "branch": "51",
+      "branches": [
+        "15A",
+        "54F"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -7520,6 +7559,7 @@
         "semirrecta",
         "triangulo",
         "poligono",
+        "traza",
         "semiplano",
         "region-poligonal",
         "teoria-medida-area",
@@ -7695,6 +7735,8 @@
         "estructura-geometrica",
         "universo-discurso",
         "conjunto-disjunto",
+        "union",
+        "dominio-funcion",
         "hilbert",
         "geometria-sintetica",
         "punto",
@@ -7726,7 +7768,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Dominio",
-      "description": "Conjunto no vacío de partida que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
+      "description": "Conjunto no vacío que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -7744,6 +7786,8 @@
         "estructura-geometrica",
         "universo-discurso",
         "conjunto-disjunto",
+        "union",
+        "dominio-funcion",
         "geometria-sintetica",
         "hilbert",
         "punto",
@@ -8145,7 +8189,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Betweenness",
-      "description": "Primitive ternary relation formalizing the intermediation of points along a line.",
+      "description": "Primitive ternary relation expressing that a point lies between two others on a line.",
       "branch": "51A",
       "branches": [
         "51A"
@@ -8175,6 +8219,7 @@
         "axioma-orden-2",
         "axioma-orden-3",
         "axioma-orden-4",
+        "sistema-incidencia",
         "orden",
         "segmento",
         "semirrecta",
@@ -8244,6 +8289,7 @@
         "axioma-orden-2",
         "axioma-orden-3",
         "axioma-orden-4",
+        "sistema-incidencia",
         "orden",
         "segmento",
         "semirrecta",
@@ -8303,11 +8349,11 @@
       "conceptLinks": [
         "signatura",
         "dominio",
-        "concepto-primitivo",
-        "modelo",
-        "conjunto",
         "funcion",
+        "concepto-primitivo",
+        "conjunto",
         "relacion",
+        "modelo",
         "hilbert",
         "geometria-sintetica",
         "conjunto-disjunto",
@@ -8328,8 +8374,8 @@
         "espacio-metrico",
         "distancia",
         "espacio-vectorial",
-        "algebra-lineal",
-        "cuerpo"
+        "cuerpo",
+        "algebra-lineal"
       ],
       "availableLangs": [
         "en",
@@ -8375,11 +8421,11 @@
       "conceptLinks": [
         "signatura",
         "dominio",
-        "concepto-primitivo",
-        "modelo",
-        "conjunto",
         "funcion",
+        "concepto-primitivo",
+        "conjunto",
         "relacion",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "conjunto-disjunto",
@@ -8400,8 +8446,8 @@
         "espacio-metrico",
         "distancia",
         "espacio-vectorial",
-        "algebra-lineal",
-        "cuerpo"
+        "cuerpo",
+        "algebra-lineal"
       ],
       "availableLangs": [
         "en",
@@ -8438,25 +8484,27 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "Section 8",
           "role": "primary"
         },
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "Chapter I, §1",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "par-ordenado",
         "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
         "dominio-funcion",
         "codominio",
         "imagen",
+        "preimagen",
         "inyectividad",
         "sobreyectividad",
         "biyeccion",
@@ -8501,7 +8549,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "Sección 8",
           "role": "primary"
         },
         {
@@ -8514,12 +8562,14 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "par-ordenado",
         "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
         "dominio-funcion",
         "codominio",
         "imagen",
+        "preimagen",
         "inyectividad",
         "sobreyectividad",
         "biyeccion",
@@ -8592,6 +8642,7 @@
         "axioma",
         "logica",
         "estructura-geometrica",
+        "sistema-euclidiano",
         "conjunto-disjunto",
         "dominio",
         "signatura",
@@ -8620,7 +8671,6 @@
         "distancia",
         "paralelas",
         "axioma-paralelas-euclides",
-        "sistema-euclidiano",
         "axioma-paralelas-hiperbolico",
         "sistema-hiperbolico",
         "continuidad",
@@ -8658,7 +8708,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Geometría hilbertiana",
-      "description": "Axiomatización de la geometría euclídea publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
+      "description": "Axiomatización de la geometría euclidiana publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -8697,6 +8747,7 @@
         "axioma",
         "estructura-geometrica",
         "logica",
+        "sistema-euclidiano",
         "dominio",
         "conjunto-disjunto",
         "signatura",
@@ -8725,7 +8776,6 @@
         "distancia",
         "paralelas",
         "axioma-paralelas-euclides",
-        "sistema-euclidiano",
         "axioma-paralelas-hiperbolico",
         "sistema-hiperbolico",
         "continuidad",
@@ -8762,7 +8812,7 @@
       "lang": "en",
       "type": "definicion",
       "subtype": "nominal",
-      "title": "Synthetic Geometry",
+      "title": "Synthetic geometry",
       "description": "Direct axiomatic approach to geometry studying figures and constructions from primitive notions and postulates, without employing numerical coordinates.",
       "branch": "51",
       "hasSimulation": false,
@@ -8795,6 +8845,7 @@
         "geometria-analitica",
         "descartes",
         "fermat",
+        "demostracion",
         "algebra",
         "sistema-axiomatico",
         "modelo-cartesiano",
@@ -8871,6 +8922,7 @@
         "geometria-analitica",
         "descartes",
         "fermat",
+        "demostracion",
         "algebra",
         "sistema-axiomatico",
         "modelo-cartesiano",
@@ -9454,7 +9506,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Chapter 4",
+          "locator": "Section 4",
           "role": "primary"
         },
         {
@@ -9470,6 +9522,7 @@
         "conjuncion",
         "logica",
         "axioma-separacion",
+        "familia-indexada",
         "conmutatividad",
         "asociatividad",
         "idempotencia",
@@ -9496,7 +9549,7 @@
         "triangulo",
         "lado",
         "vertice",
-        "poligono"
+        "poligono-convexo"
       ],
       "availableLangs": [
         "en",
@@ -9533,7 +9586,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 4",
+          "locator": "Sección 4",
           "role": "primary"
         },
         {
@@ -9549,6 +9602,7 @@
         "conjuncion",
         "logica",
         "axioma-separacion",
+        "familia-indexada",
         "conmutatividad",
         "asociatividad",
         "idempotencia",
@@ -9575,7 +9629,7 @@
         "triangulo",
         "lado",
         "vertice",
-        "poligono"
+        "poligono-convexo"
       ],
       "availableLangs": [
         "en",
@@ -9623,12 +9677,12 @@
         }
       ],
       "conceptLinks": [
+        "biyeccion",
         "estructura-geometrica",
         "signatura",
         "concepto-primitivo",
         "logica",
         "dominio",
-        "biyeccion",
         "funcion",
         "punto",
         "recta",
@@ -9643,7 +9697,6 @@
         "dimension",
         "continuidad",
         "modelo-cartesiano",
-        "simetria",
         "automorfismo",
         "conjunto",
         "grupo",
@@ -9698,12 +9751,12 @@
         }
       ],
       "conceptLinks": [
+        "biyeccion",
         "estructura-geometrica",
         "signatura",
         "concepto-primitivo",
         "logica",
         "dominio",
-        "biyeccion",
         "funcion",
         "punto",
         "recta",
@@ -9718,7 +9771,6 @@
         "dimension",
         "continuidad",
         "modelo-cartesiano",
-        "simetria",
         "automorfismo",
         "conjunto",
         "grupo",
@@ -10005,7 +10057,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Mathematical Logic",
-      "description": "Formal discipline studying deductive systems, formal languages, syntax, and valid inference rules.",
+      "description": "Formal discipline studying deductive systems, formal languages, syntax, semantics, and valid inference rules.",
       "branch": "03B",
       "branches": [
         "03",
@@ -10029,12 +10081,16 @@
       "conceptLinks": [
         "lenguaje-formal",
         "demostracion",
+        "metamatematica",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
         "formula",
+        "conectiva-logica",
+        "cuantificador",
+        "igualdad-matematica",
         "axioma",
         "modus-ponens",
         "teorema",
@@ -10073,7 +10129,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Lógica matemática",
-      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis y las reglas de inferencia válidas.",
+      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis, la semántica y las reglas de inferencia válidas.",
       "branch": "03B",
       "branches": [
         "03",
@@ -10097,12 +10153,16 @@
       "conceptLinks": [
         "lenguaje-formal",
         "demostracion",
+        "metamatematica",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
         "formula",
+        "conectiva-logica",
+        "cuantificador",
+        "igualdad-matematica",
         "axioma",
         "modus-ponens",
         "teorema",
@@ -10571,7 +10631,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Natural numbers",
-      "description": "Discrete numerical system for counting and sequential ordering, axiomatically characterized by Peano's postulates.",
+      "description": "The numbers 0, 1, 2, 3, … used to count and to order, characterized by the Peano axioms.",
       "branch": "11A",
       "branches": [
         "11A",
@@ -10593,21 +10653,21 @@
         }
       ],
       "conceptLinks": [
-        "aritmetica",
         "conjunto-finito",
+        "aritmetica",
         "peano",
         "dedekind",
-        "estructura-geometrica",
-        "sucesor",
         "teoria-conjuntos",
         "ordinales-von-neumann",
         "conjunto",
         "funcion",
+        "sucesor",
         "inyectividad",
         "metodo-induccion",
         "subconjunto",
         "adicion",
         "multiplicacion",
+        "estructura-algebraica",
         "semianillo",
         "orden-total",
         "buen-orden",
@@ -10642,7 +10702,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Números naturales",
-      "description": "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+      "description": "Los números 0, 1, 2, 3, … con los que se cuenta y se ordena, caracterizados por los axiomas de Peano.",
       "branch": "11A",
       "branches": [
         "11A",
@@ -10664,21 +10724,21 @@
         }
       ],
       "conceptLinks": [
-        "aritmetica",
         "conjunto-finito",
+        "aritmetica",
         "peano",
         "dedekind",
-        "estructura-geometrica",
-        "sucesor",
         "teoria-conjuntos",
         "ordinales-von-neumann",
         "conjunto",
         "funcion",
+        "sucesor",
         "inyectividad",
         "metodo-induccion",
         "subconjunto",
         "adicion",
         "multiplicacion",
+        "estructura-algebraica",
         "semianillo",
         "orden-total",
         "buen-orden",
@@ -11030,13 +11090,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "Chapter I, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "Chapter 1",
           "role": "secondary"
         }
       ],
@@ -11057,8 +11117,9 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto",
         "subconjunto-estable",
-        "clausura-inducida"
+        "operacion-inducida"
       ],
       "availableLangs": [
         "en",
@@ -11122,8 +11183,9 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto",
         "subconjunto-estable",
-        "clausura-inducida"
+        "operacion-inducida"
       ],
       "availableLangs": [
         "en",
@@ -28744,7 +28806,7 @@
         "elemento-inverso",
         "grupo",
         "asociatividad-generalizada",
-        "unicidad-inversos-asociatividad"
+        "unicidad-elemento-inverso"
       ],
       "availableLangs": [
         "en",
@@ -28794,15 +28856,14 @@
       "conceptLinks": [
         "demostracion",
         "teoria-formal",
-        "concepto-primitivo",
         "teorema",
+        "concepto-primitivo",
         "inferencia",
+        "modelo",
         "sistema-axiomatico",
         "signatura",
         "lenguaje-formal",
         "formula",
-        "estructura-geometrica",
-        "modelo",
         "hilbert",
         "incidencia",
         "estar-entre",
@@ -28848,7 +28909,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "Sección 8",
           "role": "primary"
         },
         {
@@ -28861,12 +28922,15 @@
       "conceptLinks": [
         "funcion",
         "conjunto",
-        "dominio-funcion",
         "codominio",
         "imagen",
+        "dominio-funcion",
         "funcion-inversa",
         "inyectividad",
         "sobreyectividad",
+        "composicion-funciones",
+        "funcion-identidad",
+        "conjunto-finito",
         "cardinalidad",
         "isomorfismo",
         "estructura-geometrica",
@@ -28920,7 +28984,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulos 21–24",
+          "locator": "Secciones 22–25",
           "role": "secondary"
         }
       ],
@@ -28932,24 +28996,29 @@
         "relacion-equivalencia",
         "funcion-inversa",
         "composicion-funciones",
+        "axioma-eleccion",
+        "ordinales-von-neumann",
         "inyectividad",
         "teorema-cantor-bernstein",
         "teorema-cantor",
         "conjunto-potencia",
         "dominio",
-        "estructura-geometrica",
         "punto",
         "modelo-fano",
         "modelo-tres-puntos",
+        "estructura-geometrica",
         "conjunto-numerable",
         "numero-natural",
         "numero-racional",
-        "potencia-del-continuo",
-        "continuidad",
-        "axioma-arquimedes",
         "axioma-completitud",
         "traza",
-        "recta"
+        "recta",
+        "hilbert",
+        "consistencia-logica",
+        "cuerpo",
+        "potencia-del-continuo",
+        "continuidad",
+        "axioma-arquimedes"
       ],
       "availableLangs": [
         "en",
@@ -29153,12 +29222,12 @@
         "intervalo",
         "pendiente",
         "recta-secante-grafica",
-        "grafica-funcion",
         "punto",
+        "grafica-funcion",
         "funcion-derivable",
         "recta-tangente",
-        "derivada",
         "limite",
+        "derivada",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -29272,7 +29341,7 @@
         "lenguaje-formal",
         "signatura",
         "estructura-geometrica",
-        "teoria-modelos",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "dominio",
@@ -29404,7 +29473,7 @@
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Nociones Comunes 4",
+          "locator": "Libro I, Noción común 4",
           "role": "primary"
         },
         {
@@ -29428,11 +29497,9 @@
         "medida-angular",
         "continuidad",
         "geometria-hilbertiana",
-        "relacion-binaria",
-        "conjunto",
-        "punto",
         "dominio",
-        "espacio",
+        "punto",
+        "relacion-binaria",
         "plano",
         "triangulo",
         "poligono",
@@ -29465,14 +29532,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Conjuntos disjuntos",
-      "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
+      "description": "Dos conjuntos son disjuntos si su intersección es vacía; una familia es disjunta dos a dos si lo son cualesquiera dos de sus miembros con índices distintos.",
       "branch": "03",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
           "author": "Paul Halmos",
-          "locator": "Capítulo 4",
+          "locator": "Sección 4",
           "role": "primary"
         }
       ],
@@ -29583,7 +29650,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Consistencia lógica",
-      "description": "Propiedad de una teoría formal que garantiza la imposibilidad de deducir simultáneamente una proposición y su negación (ausencia de contradicciones).",
+      "description": "Propiedad de una teoría formal de la que no se pueden deducir a la vez una fórmula y su negación.",
       "branch": "03B",
       "branches": [
         "03",
@@ -29612,23 +29679,33 @@
       ],
       "conceptLinks": [
         "teoria-formal",
+        "formula",
+        "negacion",
+        "logica",
         "principio-explosion",
         "teorema",
+        "axioma",
         "lenguaje-formal",
-        "teoria-modelos",
+        "estructura-geometrica",
+        "modelo",
+        "teorema-correccion",
         "teorema-completitud-godel",
         "godel",
-        "logica",
         "teorema-incompletitud-godel",
         "consistencia-relativa",
         "sistema-euclidiano",
         "hilbert",
         "concepto-primitivo",
         "modelo-cartesiano",
+        "cuerpo",
+        "numero-real",
+        "espacio",
+        "axioma-completitud",
         "bolyai",
         "lobachevski",
         "sistema-hiperbolico",
         "beltrami",
+        "curvatura",
         "klein",
         "poincare",
         "plano",
@@ -30098,6 +30175,10 @@
       "title": "Dimensión",
       "description": "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
       "branch": "51",
+      "branches": [
+        "15A",
+        "54F"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -30141,6 +30222,7 @@
         "semirrecta",
         "triangulo",
         "poligono",
+        "traza",
         "semiplano",
         "region-poligonal",
         "teoria-medida-area",
@@ -30234,7 +30316,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Dominio",
-      "description": "Conjunto no vacío de partida que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
+      "description": "Conjunto no vacío que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -30252,6 +30334,8 @@
         "estructura-geometrica",
         "universo-discurso",
         "conjunto-disjunto",
+        "union",
+        "dominio-funcion",
         "geometria-sintetica",
         "hilbert",
         "punto",
@@ -30498,6 +30582,7 @@
         "axioma-orden-2",
         "axioma-orden-3",
         "axioma-orden-4",
+        "sistema-incidencia",
         "orden",
         "segmento",
         "semirrecta",
@@ -30557,11 +30642,11 @@
       "conceptLinks": [
         "signatura",
         "dominio",
-        "concepto-primitivo",
-        "modelo",
-        "conjunto",
         "funcion",
+        "concepto-primitivo",
+        "conjunto",
         "relacion",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "conjunto-disjunto",
@@ -30582,8 +30667,8 @@
         "espacio-metrico",
         "distancia",
         "espacio-vectorial",
-        "algebra-lineal",
-        "cuerpo"
+        "cuerpo",
+        "algebra-lineal"
       ],
       "availableLangs": [
         "en",
@@ -30620,7 +30705,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "Sección 8",
           "role": "primary"
         },
         {
@@ -30633,12 +30718,14 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "par-ordenado",
         "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
         "dominio-funcion",
         "codominio",
         "imagen",
+        "preimagen",
         "inyectividad",
         "sobreyectividad",
         "biyeccion",
@@ -30672,7 +30759,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Geometría hilbertiana",
-      "description": "Axiomatización de la geometría euclídea publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
+      "description": "Axiomatización de la geometría euclidiana publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -30711,6 +30798,7 @@
         "axioma",
         "estructura-geometrica",
         "logica",
+        "sistema-euclidiano",
         "dominio",
         "conjunto-disjunto",
         "signatura",
@@ -30739,7 +30827,6 @@
         "distancia",
         "paralelas",
         "axioma-paralelas-euclides",
-        "sistema-euclidiano",
         "axioma-paralelas-hiperbolico",
         "sistema-hiperbolico",
         "continuidad",
@@ -30809,6 +30896,7 @@
         "geometria-analitica",
         "descartes",
         "fermat",
+        "demostracion",
         "algebra",
         "sistema-axiomatico",
         "modelo-cartesiano",
@@ -31128,7 +31216,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 4",
+          "locator": "Sección 4",
           "role": "primary"
         },
         {
@@ -31144,6 +31232,7 @@
         "conjuncion",
         "logica",
         "axioma-separacion",
+        "familia-indexada",
         "conmutatividad",
         "asociatividad",
         "idempotencia",
@@ -31170,7 +31259,7 @@
         "triangulo",
         "lado",
         "vertice",
-        "poligono"
+        "poligono-convexo"
       ],
       "availableLangs": [
         "en",
@@ -31218,12 +31307,12 @@
         }
       ],
       "conceptLinks": [
+        "biyeccion",
         "estructura-geometrica",
         "signatura",
         "concepto-primitivo",
         "logica",
         "dominio",
-        "biyeccion",
         "funcion",
         "punto",
         "recta",
@@ -31238,7 +31327,6 @@
         "dimension",
         "continuidad",
         "modelo-cartesiano",
-        "simetria",
         "automorfismo",
         "conjunto",
         "grupo",
@@ -31398,7 +31486,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Lógica matemática",
-      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis y las reglas de inferencia válidas.",
+      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis, la semántica y las reglas de inferencia válidas.",
       "branch": "03B",
       "branches": [
         "03",
@@ -31422,12 +31510,16 @@
       "conceptLinks": [
         "lenguaje-formal",
         "demostracion",
+        "metamatematica",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
         "conjunto",
         "formula",
+        "conectiva-logica",
+        "cuantificador",
+        "igualdad-matematica",
         "axioma",
         "modus-ponens",
         "teorema",
@@ -31681,7 +31773,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Números naturales",
-      "description": "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+      "description": "Los números 0, 1, 2, 3, … con los que se cuenta y se ordena, caracterizados por los axiomas de Peano.",
       "branch": "11A",
       "branches": [
         "11A",
@@ -31703,21 +31795,21 @@
         }
       ],
       "conceptLinks": [
-        "aritmetica",
         "conjunto-finito",
+        "aritmetica",
         "peano",
         "dedekind",
-        "estructura-geometrica",
-        "sucesor",
         "teoria-conjuntos",
         "ordinales-von-neumann",
         "conjunto",
         "funcion",
+        "sucesor",
         "inyectividad",
         "metodo-induccion",
         "subconjunto",
         "adicion",
         "multiplicacion",
+        "estructura-algebraica",
         "semianillo",
         "orden-total",
         "buen-orden",
@@ -31943,8 +32035,9 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto",
         "subconjunto-estable",
-        "clausura-inducida"
+        "operacion-inducida"
       ],
       "availableLangs": [
         "en",
@@ -41899,7 +41992,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Elkartze-propietatea",
-      "description": "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkarketak ez baitu azken emaitza aldatzen.",
+      "description": "Eragiketa bitar baten propietatea: eragigaiak nola elkartzen diren aldatuta ere, azken emaitza ez da aldatzen.",
       "branch": "08A",
       "branches": [
         "08A"
@@ -41939,7 +42032,7 @@
         "elemento-inverso",
         "grupo",
         "asociatividad-generalizada",
-        "unicidad-inversos-asociatividad"
+        "unicidad-elemento-inverso"
       ],
       "availableLangs": [
         "en",
@@ -41965,7 +42058,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Axioma",
-      "description": "Aldez aurreko frogarik gabe egiazkotzat onartutako proposizioa, teoria deduktibo batean premisa edo abiapuntu formal gisa balio duena.",
+      "description": "Aldez aurreko frogapenik gabe egiazkotzat onartutako proposizioa, teoria deduktibo batean premisa edo abiapuntu formal gisa balio duena.",
       "branch": "03B",
       "branches": [
         "03",
@@ -41989,15 +42082,14 @@
       "conceptLinks": [
         "demostracion",
         "teoria-formal",
+        "teorema",
         "concepto-primitivo",
         "inferencia",
-        "teorema",
+        "modelo",
         "lenguaje-formal",
         "signatura",
         "sistema-axiomatico",
         "formula",
-        "estructura-geometrica",
-        "modelo",
         "hilbert",
         "incidencia",
         "estar-entre",
@@ -42032,7 +42124,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Bijekzioa",
-      "description": "Bi multzoren arteko funtzioa, aldi berean injektiboa eta sobrejektiboa dena, banan-banako parekatze alderantzizgarria ezarriz.",
+      "description": "Bi multzoren arteko funtzioa, aldi berean injektiboa eta supraiektiboa dena, banan-banako parekatze alderantzizgarria ezarriz.",
       "branch": "03E",
       "branches": [
         "03",
@@ -42043,25 +42135,28 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "8. Kapitulua",
+          "locator": "8. atala",
           "role": "primary"
         },
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "I. Kapitulua, §1",
+          "locator": "I. kapitulua, §1",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
         "conjunto",
         "funcion",
-        "dominio-funcion",
         "codominio",
+        "dominio-funcion",
         "imagen",
         "funcion-inversa",
         "inyectividad",
         "sobreyectividad",
+        "composicion-funciones",
+        "funcion-identidad",
+        "conjunto-finito",
         "cardinalidad",
         "isomorfismo",
         "estructura-geometrica",
@@ -42115,7 +42210,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "21–24. Kapituluak",
+          "locator": "22–25. atalak",
           "role": "secondary"
         }
       ],
@@ -42127,24 +42222,29 @@
         "relacion-equivalencia",
         "funcion-inversa",
         "composicion-funciones",
+        "axioma-eleccion",
+        "ordinales-von-neumann",
         "inyectividad",
         "teorema-cantor-bernstein",
         "teorema-cantor",
         "conjunto-potencia",
         "dominio",
-        "estructura-geometrica",
         "modelo-fano",
         "punto",
         "modelo-tres-puntos",
+        "estructura-geometrica",
         "conjunto-numerable",
         "numero-natural",
         "numero-racional",
-        "potencia-del-continuo",
-        "continuidad",
-        "axioma-arquimedes",
         "axioma-completitud",
         "recta",
-        "traza"
+        "traza",
+        "hilbert",
+        "consistencia-logica",
+        "cuerpo",
+        "potencia-del-continuo",
+        "continuidad",
+        "axioma-arquimedes"
       ],
       "availableLangs": [
         "en",
@@ -42332,28 +42432,28 @@
         {
           "title": "Calculus",
           "author": "Michael Spivak",
-          "locator": "Capítulo 9",
+          "locator": "9. kapitulua",
           "role": "primary"
         },
         {
           "title": "Principles of Mathematical Analysis",
           "author": "Walter Rudin",
-          "locator": "Capítulo 5",
+          "locator": "5. kapitulua",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
-        "numero-real",
         "funcion",
+        "numero-real",
         "intervalo",
-        "punto",
         "grafica-funcion",
+        "punto",
         "recta-secante-grafica",
         "pendiente",
         "funcion-derivable",
         "recta-tangente",
-        "derivada",
         "limite",
+        "derivada",
         "interpretacion-geometrica-secante",
         "fundamento-de-la-derivada"
       ],
@@ -42467,7 +42567,7 @@
         "signatura",
         "lenguaje-formal",
         "estructura-geometrica",
-        "teoria-modelos",
+        "modelo",
         "geometria-sintetica",
         "hilbert",
         "dominio",
@@ -42582,7 +42682,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Kongruentzia",
-      "description": "Zuzenkien arteko eta angeluen arteko tamaina-berdintasuna adierazten duen oinarrizko erlazioa.",
+      "description": "Geometria sintetikoan, zuzenkien arteko eta angeluen arteko tamaina-berdintasuna adierazten duen oinarrizko erlazioa.",
       "branch": "51A",
       "branches": [
         "51A",
@@ -42599,7 +42699,7 @@
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. liburua, Nozio Orokorrak 4",
+          "locator": "I. liburua, 4. nozio komuna",
           "role": "primary"
         },
         {
@@ -42623,17 +42723,15 @@
         "medida-angular",
         "continuidad",
         "geometria-hilbertiana",
-        "relacion-binaria",
-        "dominio",
         "punto",
-        "conjunto",
-        "espacio",
+        "dominio",
+        "relacion-binaria",
         "plano",
         "triangulo",
         "poligono",
         "vertice",
-        "lado",
         "biyeccion",
+        "lado",
         "congruencia-triangulos"
       ],
       "availableLangs": [
@@ -42660,14 +42758,14 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Multzo disjuntuak",
-      "description": "Elementu komunik partekatzen ez duten bi multzoren edo multzo-familia baten propietatea, binaka disjuntuak (elkarren artean disjuntuak) diren multzoen baldintza nabarmenduz.",
+      "description": "Bi multzo disjuntuak dira haien ebakidura hutsa bada; familia bat bikoteka disjuntua da indize desberdineko edozein bi kide disjuntuak badira.",
       "branch": "03",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Naive Set Theory",
           "author": "Paul Halmos",
-          "locator": "4. Kapitulua",
+          "locator": "4. atala",
           "role": "primary"
         }
       ],
@@ -42711,7 +42809,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Multzoa",
-      "description": "Objektu matematiko bereizgarrien (elementuen) bilduma ongi zehaztua, kidetasunaren oinarrizko erlazioaren pean.",
+      "description": "Elkarrengandik bereizten diren objektu matematikoen (elementuen) bilduma ongi zehaztua, kidetasunaren oinarrizko erlazioaren bidez emana.",
       "branch": "03E",
       "branches": [
         "03",
@@ -42778,7 +42876,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Koherentzia logikoa (Kontsistentzia)",
-      "description": "Teoria formal baten propietatea, proposizio bat eta haren ezeztapena aldi berean ondorioztatzea ezinezkoa dela bermatzen duena (kontraesanik eza).",
+      "description": "Teoria formal baten propietatea: teoria horretatik ezin dira aldi berean formula bat eta haren ezeztapena ondorioztatu.",
       "branch": "03B",
       "branches": [
         "03",
@@ -42807,11 +42905,16 @@
       ],
       "conceptLinks": [
         "teoria-formal",
+        "formula",
+        "negacion",
+        "logica",
         "principio-explosion",
         "teorema",
         "lenguaje-formal",
-        "teoria-modelos",
-        "logica",
+        "axioma",
+        "estructura-geometrica",
+        "modelo",
+        "teorema-correccion",
         "godel",
         "teorema-completitud-godel",
         "teorema-incompletitud-godel",
@@ -42820,10 +42923,15 @@
         "hilbert",
         "concepto-primitivo",
         "modelo-cartesiano",
+        "numero-real",
+        "cuerpo",
+        "espacio",
+        "axioma-completitud",
         "bolyai",
         "lobachevski",
         "sistema-hiperbolico",
         "beltrami",
+        "curvatura",
         "klein",
         "poincare",
         "plano",
@@ -43293,6 +43401,10 @@
       "title": "Dimentsioa",
       "description": "Espazio edo irudi batean puntu baten posizioa zehazteko behar diren askatasun-gradu edo parametro independenteen kopurua.",
       "branch": "51",
+      "branches": [
+        "15A",
+        "54F"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -43336,6 +43448,7 @@
         "semirrecta",
         "triangulo",
         "poligono",
+        "traza",
         "semiplano",
         "teoria-medida-area",
         "region-poligonal",
@@ -43429,7 +43542,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Domeinua",
-      "description": "Egitura matematiko edo teoria formal batean mota jakin bateko objektuak biltzen dituen abiapuntuko multzo ez-hutsa.",
+      "description": "Egitura matematiko edo teoria formal batean mota jakin bateko objektuak biltzen dituen multzo ez-hutsa.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -43447,6 +43560,8 @@
         "conjunto",
         "universo-discurso",
         "conjunto-disjunto",
+        "union",
+        "dominio-funcion",
         "hilbert",
         "geometria-sintetica",
         "punto",
@@ -43693,6 +43808,7 @@
         "axioma-orden-2",
         "axioma-orden-3",
         "axioma-orden-4",
+        "sistema-incidencia",
         "orden",
         "segmento",
         "semirrecta",
@@ -43745,18 +43861,18 @@
         {
           "title": "Model Theory",
           "author": "Wilfrid Hodges",
-          "locator": "1. Kapitulua",
+          "locator": "1. kapitulua",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
         "signatura",
         "dominio",
-        "concepto-primitivo",
-        "modelo",
-        "conjunto",
         "funcion",
+        "concepto-primitivo",
+        "conjunto",
         "relacion",
+        "modelo",
         "hilbert",
         "geometria-sintetica",
         "conjunto-disjunto",
@@ -43815,25 +43931,27 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "Capítulo 8",
+          "locator": "8. atala",
           "role": "primary"
         },
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "I. kapitulua, §1",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "par-ordenado",
         "teoria-conjuntos",
         "analisis-matematico",
         "algebra",
         "dominio-funcion",
         "codominio",
         "imagen",
+        "preimagen",
         "inyectividad",
         "sobreyectividad",
         "biyeccion",
@@ -43906,6 +44024,7 @@
         "axioma",
         "logica",
         "estructura-geometrica",
+        "sistema-euclidiano",
         "conjunto-disjunto",
         "dominio",
         "signatura",
@@ -43934,7 +44053,6 @@
         "distancia",
         "paralelas",
         "axioma-paralelas-euclides",
-        "sistema-euclidiano",
         "axioma-paralelas-hiperbolico",
         "sistema-hiperbolico",
         "continuidad",
@@ -44004,6 +44122,7 @@
         "geometria-analitica",
         "descartes",
         "fermat",
+        "demostracion",
         "algebra",
         "sistema-axiomatico",
         "modelo-cartesiano",
@@ -44323,7 +44442,7 @@
         {
           "title": "Naive Set Theory",
           "author": "Paul R. Halmos",
-          "locator": "4. Kapitulua",
+          "locator": "4. atala",
           "role": "primary"
         },
         {
@@ -44339,6 +44458,7 @@
         "logica",
         "conjuncion",
         "axioma-separacion",
+        "familia-indexada",
         "conmutatividad",
         "asociatividad",
         "idempotencia",
@@ -44365,7 +44485,7 @@
         "interior-triangulo",
         "lado",
         "vertice",
-        "poligono"
+        "poligono-convexo"
       ],
       "availableLangs": [
         "en",
@@ -44391,7 +44511,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Isomorfismoa",
-      "description": "Bi egitura matematikoren arteko bijekzioa, haien sinadura formaleko eragiketa, erlazio eta konstante guztiak kontserbatzen dituena.",
+      "description": "Bi egitura matematikoren arteko bijekzioa, haien signatura formaleko eragiketa, erlazio eta konstante guztiak kontserbatzen dituena.",
       "branch": "03C",
       "branches": [
         "08A",
@@ -44415,10 +44535,10 @@
       "conceptLinks": [
         "signatura",
         "estructura-geometrica",
+        "biyeccion",
         "concepto-primitivo",
         "logica",
         "dominio",
-        "biyeccion",
         "funcion",
         "punto",
         "recta",
@@ -44433,7 +44553,6 @@
         "dimension",
         "continuidad",
         "modelo-cartesiano",
-        "simetria",
         "automorfismo",
         "conjunto",
         "grupo",
@@ -44593,7 +44712,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Logika matematikoa",
-      "description": "Sistema deduktiboak, hizkuntza formalak, sintaxia eta inferentzia-arau baliagarriak aztertzen dituen diziplina formala.",
+      "description": "Sistema deduktiboak, hizkuntza formalak, sintaxia, semantika eta inferentzia-arau baliagarriak aztertzen dituen diziplina formala.",
       "branch": "03B",
       "branches": [
         "03",
@@ -44617,10 +44736,14 @@
       "conceptLinks": [
         "lenguaje-formal",
         "demostracion",
+        "metamatematica",
         "inferencia",
         "teoria-modelos",
         "estructura-geometrica",
         "signatura",
+        "conectiva-logica",
+        "cuantificador",
+        "igualdad-matematica",
         "formula",
         "conjunto",
         "axioma",
@@ -44876,7 +44999,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Zenbaki arruntak",
-      "description": "Zenbatzeko eta sekuentzialki ordenatzeko zenbaki-sistema diskretua, Peanoren postulatuen bidez axiomatikoki karakterizatua.",
+      "description": "Zenbatzeko eta ordenatzeko erabiltzen diren 0, 1, 2, 3, … zenbakiak, Peanoren axiomen bidez karakterizatuak.",
       "branch": "11A",
       "branches": [
         "11A",
@@ -44898,21 +45021,21 @@
         }
       ],
       "conceptLinks": [
-        "aritmetica",
         "conjunto-finito",
+        "aritmetica",
         "peano",
         "dedekind",
-        "sucesor",
-        "estructura-geometrica",
         "teoria-conjuntos",
         "ordinales-von-neumann",
         "conjunto",
         "funcion",
+        "sucesor",
         "inyectividad",
         "metodo-induccion",
         "subconjunto",
         "adicion",
         "multiplicacion",
+        "estructura-algebraica",
         "semianillo",
         "orden-total",
         "buen-orden",
@@ -45111,13 +45234,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "1. kapitulua",
           "role": "secondary"
         }
       ],
@@ -45138,8 +45261,9 @@
         "conmutatividad",
         "elemento-neutro",
         "elemento-inverso",
+        "subconjunto",
         "subconjunto-estable",
-        "clausura-inducida"
+        "operacion-inducida"
       ],
       "availableLangs": [
         "en",

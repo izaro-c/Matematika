@@ -20,7 +20,7 @@ export const Simulation = CocienteIncremental;
 <Capitular letra="E" />l <VisualBind element="secante" color="terracota">**cociente incremental**</VisualBind> (o razón de cambio media) de una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <ConceptLink targetId="numero-real">real</ConceptLink> entre dos puntos de un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink> es el cociente entre la variación de la función y la de su variable independiente: mide cuánto cambia la función, en promedio, por cada unidad de cambio de la variable.
 
 <Definicion title="Definición formal de cociente incremental">
-  Sea $I \subseteq \mathbb{R}$ un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink> de la <ConceptLink targetId="numero-real">recta real</ConceptLink> y sea $f\colon I \longrightarrow \mathbb{R}$ una <VisualBind element="grafica" color="carbon"><ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink></VisualBind>. Fijado un punto base $x \in I$ y dado un incremento no nulo $h \in \mathbb{R} \setminus \{0\}$ tal que $x + h \in I$, el <VisualBind element="secante" color="terracota">**cociente incremental**</VisualBind> de $f$ entre <VisualBind element="pX" color="carbon">$x$</VisualBind> y <VisualBind element="pXh" color="terracota">$x + h$</VisualBind> se define como:
+  Sea $I \subseteq \mathbb{R}$ un <ConceptLink targetId="intervalo" isDependency={true}>intervalo</ConceptLink> de la <ConceptLink targetId="numero-real" isDependency={true}>recta real</ConceptLink> y sea $f\colon I \longrightarrow \mathbb{R}$ una <VisualBind element="grafica" color="carbon"><ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink></VisualBind>. Fijado un punto base $x \in I$ y dado un incremento no nulo $h \in \mathbb{R} \setminus \{0\}$ tal que $x + h \in I$, el <VisualBind element="secante" color="terracota">**cociente incremental**</VisualBind> de $f$ entre <VisualBind element="pX" color="carbon">$x$</VisualBind> y <VisualBind element="pXh" color="terracota">$x + h$</VisualBind> se define como:
   $$
   \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
   $$
@@ -28,7 +28,7 @@ export const Simulation = CocienteIncremental;
   $$
   \frac{f(x_1) - f(x)}{x_1 - x}
   $$
-  donde <VisualBind element="segDy" color="pavo">$\Delta y = f(x + h) - f(x)$</VisualBind> representa la variación absoluta experimentada por la variable dependiente y <VisualBind element="segDx" color="ocre">$\Delta x = h$</VisualBind> representa el incremento de la variable independiente.
+  donde <VisualBind element="segDy" color="pavo">$\Delta y = f(x + h) - f(x)$</VisualBind> representa la variación de la variable dependiente y <VisualBind element="segDx" color="ocre">$\Delta x = h$</VisualBind> representa el incremento de la variable independiente.
 </Definicion>
 
 <Separador />
@@ -36,10 +36,10 @@ export const Simulation = CocienteIncremental;
 <SeccionPropiedades>
   <PropiedadesGrupo title="Interpretación y propiedades analíticas">
     <PropiedadItem id="interpretacion-geometrica-secante" title="Interpretación geométrica como pendiente secante" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
-      Geométricamente, el cociente incremental coincide con la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la <VisualBind element="secante" color="terracota"><ConceptLink targetId="recta-secante-grafica">recta secante</ConceptLink></VisualBind> a la <VisualBind element="grafica" color="carbon"><ConceptLink targetId="grafica-funcion">gráfica</ConceptLink></VisualBind> de la <ConceptLink targetId="funcion">función</ConceptLink> que une los <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pP" color="carbon">$(x, f(x))$</VisualBind> y <VisualBind element="pQ" color="terracota">$(x + h, f(x + h))$</VisualBind>. Si $f$ es <ConceptLink targetId="funcion-derivable">derivable</ConceptLink> en $x$, cuando $h$ tiende a cero esas rectas secantes tienden a la <VisualBind element="tangente" color="musgo"><ConceptLink targetId="recta-tangente">recta tangente</ConceptLink></VisualBind> a la gráfica en $(x, f(x))$.
+      Geométricamente, el cociente incremental coincide con la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la <VisualBind element="secante" color="terracota"><ConceptLink targetId="recta-secante-grafica">recta secante</ConceptLink></VisualBind> que une los <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pP" color="carbon">$(x, f(x))$</VisualBind> y <VisualBind element="pQ" color="terracota">$(x + h, f(x + h))$</VisualBind> de la <VisualBind element="grafica" color="carbon"><ConceptLink targetId="grafica-funcion">gráfica</ConceptLink></VisualBind> de la <ConceptLink targetId="funcion">función</ConceptLink>. Si $f$ es <ConceptLink targetId="funcion-derivable">derivable</ConceptLink> en $x$, cuando $h$ tiende a cero esas rectas secantes tienden a la <VisualBind element="tangente" color="musgo"><ConceptLink targetId="recta-tangente">recta tangente</ConceptLink></VisualBind> a la gráfica en $(x, f(x))$.
     </PropiedadItem>
-    <PropiedadItem id="fundamento-de-la-derivada" title="Fundamento de la derivada instantánea" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
-      El comportamiento asintótico del cociente incremental cuando el incremento tiende a cero define la noción de <ConceptLink targetId="derivada">derivada</ConceptLink>. Si el <ConceptLink targetId="limite">límite</ConceptLink> existe en $\mathbb{R}$, el valor resultante $f'(x)$ representa la tasa de variación instantánea de la función en el punto $x$.
+    <PropiedadItem id="fundamento-de-la-derivada" title="Paso al límite: la derivada" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
+      Si el <ConceptLink targetId="limite">límite</ConceptLink> del cociente incremental cuando $h$ tiende a cero existe en $\mathbb{R}$, es la <ConceptLink targetId="derivada">derivada</ConceptLink> $f'(x)$: la tasa de variación instantánea de la <ConceptLink targetId="funcion">función</ConceptLink> en $x$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -9,7 +9,7 @@ export const metadata = {
   branches: ["03", "51M"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "4. Kapitulua", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "4. atala", role: "primary" },
     { title: "Théorie des ensembles", author: "Nicolas Bourbaki", locator: "II. Kapitulua, §1", role: "secondary" }
   ]
 };
@@ -28,11 +28,11 @@ Eskualde geometriko konposatuak definitzeko balio du, hala nola angelu baten bar
   $$
   <ConceptLink targetId="axioma-separacion" isDependency={true}>Bereizketaren axiomak</ConceptLink> bermatzen du $A \cap B$ multzo bat dela, eta edozein $x$-tarako $x \in A \cap B \iff (x \in A \land x \in B)$ betetzen da.
 
-  $\{A_i\}_{i \in I}$ multzo-familia ez-huts baterako eta edozein $i_0 \in I$ indizerako, haren ebakidura hau da:
+  $\{A_i\}_{i \in I}$ multzo-<ConceptLink targetId="familia-indexada">familia</ConceptLink> ez-huts baterako eta edozein $i_0 \in I$ indizerako, haren ebakidura hau da:
   $$
   \bigcap_{i \in I} A_i = \{x \in A_{i_0} \mid \forall i \in I, \ x \in A_i\}
   $$
-  Emaitza ez dago aukeratutako $i_0$ indizearen mende. Familiak ez-hutsa izan behar du: $I = \emptyset$ bada, objektu orok beteko luke baldintza, eta objektu guztien bilduma ez da multzo bat.
+  Emaitza ez dago aukeratutako $i_0$ indizearen mende. Familiak ez-hutsa izan behar du: $I = \emptyset$ bada, ez dago bereizketa egiteko $A_{i_0}$ multzorik, eta objektu orok betetzen du $\forall i \in I,\ x \in A_i$ baldintza; objektu guztien bilduma ez da multzo bat.
 </Definicion>
 
 <Separador />
@@ -46,5 +46,5 @@ Ebakidurak <ConceptLink targetId="conmutatividad">trukakortasuna</ConceptLink> (
 <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera, bi <ConceptLink targetId="recta">zuzen</ConceptLink> desberdinek <ConceptLink targetId="punto">puntu</ConceptLink> komun bat dute gehienez. Horregatik, haien <ConceptLink targetId="traza">puntu-trazaduren</ConceptLink> ebakidurak bereizten ditu bi zuzen <ConceptLink targetId="coplanaridad">koplanar</ConceptLink> desberdinen bi posizioak. Bi <ConceptLink targetId="secante">zuzen ebakitzailek</ConceptLink>, $\ell_1$ eta $\ell_2$, puntu komun bakarra dute, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$, eta bi zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdinek ez dute bat ere: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
 
 <ConceptLink targetId="conjunto-convexo">Multzo konbexuen</ConceptLink> familia ez-huts baten ebakidura konbexua da: $X$ eta $Y$ bi puntu multzo guztietan badaude, $\overline{XY}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> multzo bakoitzean dago eta, beraz, ebakiduran. <ConceptLink targetId="semiplano">Planoerdi</ConceptLink> irekiak konbexuak dira <ConceptLink targetId="teorema-separacion-plano">planoaren banaketa-teoremaren</ConceptLink> arabera; beraz, haiek ebakiz lortzen diren eskualdeak ere konbexuak dira:
-- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten <ConceptLink targetId="interior-angulo">barnealdea</ConceptLink> bi planoerdi irekiren ebakidura da: alde bakoitzeko, haren <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> mugatzen duena eta beste aldea barnean duena. $Q$ eta $R$, hurrenez hurren, $\ell_1$ eta $\ell_2$ zuzenetako puntuak badira eta $P$ ez badira, orduan $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\ell_1}(R) \cap \mathcal{H}_{\ell_2}(Q)$.
-- <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten <ConceptLink targetId="interior-triangulo">barnealdea</ConceptLink> hiru planoerdi irekiren ebakidura da: <ConceptLink targetId="lado">alde</ConceptLink> bakoitzeko, haren zuzen euskarriak mugatzen duena eta aurkako <ConceptLink targetId="vertice">erpina</ConceptLink> barnean duena. <ConceptLink targetId="poligono">Poligono</ConceptLink> konbexu baten barnealdea modu berean lortzen da, alde bakoitzeko planoerdi batekin.
+- <ConceptLink targetId="angulo">Angelu</ConceptLink> baten <ConceptLink targetId="interior-angulo">barnealdea</ConceptLink> bi planoerdi irekiren ebakidura da: alde bakoitzeko, haren <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> mugatzen duena eta beste aldea, erpina izan ezik, barnean duena: $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\overleftrightarrow{PQ}}(R) \cap \mathcal{H}_{\overleftrightarrow{PR}}(Q)$.
+- <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten <ConceptLink targetId="interior-triangulo">barnealdea</ConceptLink> hiru planoerdi irekiren ebakidura da: <ConceptLink targetId="lado">alde</ConceptLink> bakoitzeko, haren zuzen euskarriak mugatzen duena eta aurkako <ConceptLink targetId="vertice">erpina</ConceptLink> barnean duena. <ConceptLink targetId="poligono-convexo">Poligono konbexu</ConceptLink> baten barnealdea modu berean lortzen da, alde bakoitzeko planoerdi batekin.

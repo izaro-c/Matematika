@@ -4,42 +4,46 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Bijekzioa",
-  description: "Bi multzoren arteko funtzioa, aldi berean injektiboa eta sobrejektiboa dena, banan-banako parekatze alderantzizgarria ezarriz.",
+  description: "Bi multzoren arteko funtzioa, aldi berean injektiboa eta supraiektiboa dena, banan-banako parekatze alderantzizgarria ezarriz.",
   branch: "03E",
   branches: ["03", "08A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "8. Kapitulua", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "I. Kapitulua, §1", role: "secondary" }
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "8. atala", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "secondary" }
   ]
 };
 
 import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
 export const Simulation = BiyeccionSagital;
 
-<Capitular letra="B" />**ijekzio** bat (edo aplikazio bijektibo bat) bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> arteko <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, <ConceptLink targetId="dominio-funcion">domeinuko</ConceptLink> elementu bakoitzari <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bakar bat esleitzen diona, kodomeinuko elementu bakoitza domeinuko elementu bakar baten <ConceptLink targetId="imagen">irudi</ConceptLink> izanik.
+<Capitular letra="B" />**ijekzio** bat (edo aplikazio bijektibo bat) bi <ConceptLink targetId="conjunto" isDependency={true}>multzoren</ConceptLink> arteko <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat da, non <ConceptLink targetId="codominio">kodomeinuko</ConceptLink> elementu bakoitza <ConceptLink targetId="dominio-funcion">domeinuko</ConceptLink> elementu bakar baten <ConceptLink targetId="imagen">irudia</ConceptLink> den.
 
 Horrela, bijekzioak bi multzoetako elementuak banan-banan parekatzen ditu, eta parekatzea kontrako noranzkoan ere egin daiteke: kodomeinuko elementu bakoitzari hura irudi duen domeinuko elementu bakarra esleitzeak <ConceptLink targetId="funcion-inversa">alderantzizko funtzioa</ConceptLink> definitzen du.
 
 <Definicion title="Bijekzioaren definizio formala">
-  Izan bitez <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> bi multzo. <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> funtzio bat **bijekzio** bat da baldin eta soilik baldin bi baldintza hauek betetzen baditu aldi berean:
+  Izan bitez <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> eta <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> bi <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>. <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> bat **bijekzio** bat da baldin eta soilik baldin bi baldintza hauek betetzen baditu aldi berean:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Injektibotasuna</ConceptLink>:** Domeinuko elementu desberdinek irudi desberdinak dituzte:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
      $$
-  2. **<ConceptLink targetId="sobreyectividad" isDependency={true}>Sobrejektibotasuna</ConceptLink>:** Kodomeinuko elementu oro domeinuko gutxienez elementu baten irudia da:
+  2. **<ConceptLink targetId="sobreyectividad" isDependency={true}>Supraiektibotasuna</ConceptLink>:** Kodomeinuko elementu oro domeinuko gutxienez elementu baten irudia da:
      $$
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> <ConceptLink targetId="funcion-inversa">alderantzizko funtzio</ConceptLink> bat existitzen bada non $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$ diren.
+  Modu baliokidean, $f$ bijektiboa da baldin eta soilik baldin <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> <ConceptLink targetId="funcion-inversa">alderantzizko funtzio</ConceptLink> bat existitzen bada, non $f$-rekin duen <ConceptLink targetId="composicion-funciones">konposizioak</ConceptLink> <ConceptLink targetId="funcion-identidad">identitatea</ConceptLink> ematen duen: $f^{-1} \circ f = \operatorname{id}_A$ eta $f \circ f^{-1} = \operatorname{id}_B$.
 </Definicion>
+
+Diagraman, «Alderantzikatu geziak» botoiak bikote bakoitzaren noranzkoa aldatzen du: $f$ bijektiboa denean bakarrik da emaitza $B$-tik $A$-rako $f^{-1}$ funtzio bat.
+
+Elementu-kopuru bera duten <ConceptLink targetId="conjunto-finito">multzo finituen</ConceptLink> artean, funtzio bat injektiboa da baldin eta soilik baldin supraiektiboa bada: diagraman, hiru geziak $B$-n dauden bitartean, ezin da baldintza bat hautsi bestea hautsi gabe.
 
 <Separador />
 
 ### Bijekzioen erabilerak
 
 Adar desberdinetako hiru nozio bijekzioen bidez formulatzen dira:
-- **Tamainaren neurria:** Bi multzok <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> bera dute baldin eta soilik baldin haien artean bijekzio bat existitzen bada ($\lvert A \rvert = \lvert B \rvert$).
+- **Multzo baten tamaina:** Bi multzok <ConceptLink targetId="cardinalidad">kardinaltasun</ConceptLink> bera dute baldin eta soilik baldin haien artean bijekzio bat existitzen bada ($\lvert A \rvert = \lvert B \rvert$).
 - **Egituraren kontserbazioa:** <ConceptLink targetId="isomorfismo">Isomorfismo</ConceptLink> bat <ConceptLink targetId="estructura-geometrica">egituren</ConceptLink> arteko bijekzio bat da, haien <ConceptLink targetId="signatura">signaturako</ConceptLink> erlazio eta eragiketa guztiak ere kontserbatzen dituena.
 - **Figuren kongruentzia:** Geometrian, bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> (eta, oro har, bi <ConceptLink targetId="poligono">poligonoren</ConceptLink>) <ConceptLink targetId="congruencia-triangulos">kongruentzia</ConceptLink> haien <ConceptLink targetId="vertice">erpinen</ConceptLink> arteko korrespondentzia bijektibo baten bidez definitzen da, <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologoen <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> kontserbatzen duena.

@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Logika matematikoa",
-  description: "Sistema deduktiboak, hizkuntza formalak, sintaxia eta inferentzia-arau baliagarriak aztertzen dituen diziplina formala.",
+  description: "Sistema deduktiboak, hizkuntza formalak, sintaxia, semantika eta inferentzia-arau baliagarriak aztertzen dituen diziplina formala.",
   branch: "03B",
   branches: ["03", "03A"],
   hasSimulation: false,
@@ -14,25 +14,25 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />ogika **matematikoa** arrazoibide deduktiboaren baliozkotasuna, <ConceptLink targetId="lenguaje-formal">hizkuntza formalen</ConceptLink> egitura eta teoria matematikoen oinarriak aztertzen dituen diziplina formala da. Enuntziatu matematikoak formulatzeko eta premisa esplizituetatik abiatuta <ConceptLink targetId="demostracion">frogapenak</ConceptLink> eratzeko esparrua eskaintzen du.
+<Capitular letra="L" />**ogika matematikoa** arrazoibide deduktiboaren baliozkotasuna, <ConceptLink targetId="lenguaje-formal">hizkuntza formalen</ConceptLink> egitura eta teoria matematikoen oinarriak aztertzen dituen diziplina formala da. Enuntziatu matematikoak formulatzeko eta premisa esplizituetatik abiatuta <ConceptLink targetId="demostracion">frogapenak</ConceptLink> eratzeko esparrua eskaintzen du.
 
-Azterketa metamatematikoan bi ikuspegi bereizten dira. Ikuspegi sintaktikoak arau gramatikalen eta <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> arabera ikur-kateen manipulazio formala aztertzen du ($\Gamma \vdash \varphi$). Ikuspegi semantikoak, <ConceptLink targetId="teoria-modelos">ereduen teoriak</ConceptLink> jorratua, ikurren interpretazioa <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> batean eta egitura bateko egiazkotasunaren nozioa aztertzen ditu ($\mathcal{M} \models \varphi$).
+Azterketa <ConceptLink targetId="metamatematica">metamatematikoan</ConceptLink> bi ikuspegi bereizten dira. Ikuspegi sintaktikoak arau gramatikalen eta <ConceptLink targetId="inferencia">inferentzia-arauen</ConceptLink> arabera ikur-kateen manipulazio formala aztertzen du ($\Gamma \vdash \varphi$). Ikuspegi semantikoak, <ConceptLink targetId="teoria-modelos">ereduen teoriak</ConceptLink> jorratua, ikurren interpretazioa <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> batean eta egitura bateko egiazkotasunaren nozioa aztertzen ditu ($\mathcal{M} \models \varphi$).
 
 <Definicion title="Lehen mailako sistema deduktibo formala">
   $\sigma$ <ConceptLink targetId="signatura">signatura</ConceptLink> baten gaineko **lehen mailako sistema logiko** batek honako elementu eratzaile hauek ditu:
-  1. $\mathcal{L}_\sigma$ **<ConceptLink targetId="lenguaje-formal">hizkuntza formala</ConceptLink>**: aldagaietatik, konektore logikoetatik ($\neg, \land, \lor, \implies, \iff$), kuantifikatzaileetatik ($\forall, \exists$) eta berdintzatik ($=$) abiatuta eratutako <ConceptLink targetId="formula">formula</ConceptLink> ondo eratuen <ConceptLink targetId="conjunto">multzoa</ConceptLink>, $\sigma$-ren ikur ez-logikoekin konbinatuta.
-  2. **<ConceptLink targetId="axioma">Axioma</ConceptLink> logikoak**: dedukzio orokorra gobernatzen duten formula unibertsalki baliozkoak, kontuan hartutako teoria zehatzetik at.
+  1. $\mathcal{L}_\sigma$ **<ConceptLink targetId="lenguaje-formal">hizkuntza formala</ConceptLink>**: aldagaietatik, <ConceptLink targetId="conectiva-logica">konektore logikoetatik</ConceptLink> ($\neg, \land, \lor, \implies, \iff$), <ConceptLink targetId="cuantificador">kuantifikatzaileetatik</ConceptLink> ($\forall, \exists$) eta <ConceptLink targetId="igualdad-matematica">berdintzatik</ConceptLink> ($=$) abiatuta eratutako <ConceptLink targetId="formula">formula</ConceptLink> ondo eratuen <ConceptLink targetId="conjunto">multzoa</ConceptLink>, $\sigma$-ren ikur ez-logikoekin konbinatuta.
+  2. **<ConceptLink targetId="axioma">Axioma</ConceptLink> logikoak**: dedukzio orokorra gobernatzen duten formula unibertsalki baliozkoak, kontuan hartutako teoria zehatza edozein dela ere.
   3. **<ConceptLink targetId="inferencia">Inferentzia-arauak</ConceptLink>**: finkatutako premisetatik abiatuta formula berriak eratzea ahalbidetzen duten mekanismo algoritmikoak, hala nola <ConceptLink targetId="modus-ponens">*modus ponens*</ConceptLink> arau klasikoa:
      $$
      \frac{\varphi, \quad \varphi \implies \psi}{\psi}
      $$
-  4. **<ConceptLink targetId="demostracion">Frogapena</ConceptLink> eta <ConceptLink targetId="teorema">teorema</ConceptLink>**: $\varphi_1, \dots, \varphi_n$ formula-segida finitu bat, non termino bakoitza axioma bat den edo aurreko terminoetatik inferentzia-arau baten bidez lortzen den; $\varphi_n$ azken terminoari sistemaren teorema formala deritzo.
+  4. **<ConceptLink targetId="demostracion">Frogapena</ConceptLink> eta <ConceptLink targetId="teorema">teorema</ConceptLink>**: $\varphi_1, \dots, \varphi_n$ formula-segida finitu bat, non termino bakoitza axioma logiko bat, $\Gamma$ premisa-multzoko formula bat edo aurreko terminoetatik inferentzia-arau baten bidez lortutakoa den; $\Gamma \vdash \varphi_n$ idazten da, eta $\varphi_n$ $\Gamma$ axiomadun teoriaren teorema bat da.
 </Definicion>
 
 <Separador />
 
 ### Mota anitzeko logika geometriaren oinarrietan
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> gaur egungo formalizazioan, sistema modelatzen da **mota anitzeko logika** (*many-sorted logic*) baten bidez. Esparru honetan bikoteka <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> diren hiru <ConceptLink targetId="dominio">domeinu</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitibo</ConceptLink> batera existitzen dira: $\mathcal{P}$ <ConceptLink targetId="punto">puntuen</ConceptLink> domeinua, $\mathcal{L}$ <ConceptLink targetId="recta">zuzenen</ConceptLink> domeinua eta $\Pi$ <ConceptLink targetId="plano">planoen</ConceptLink> domeinua, non $\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$ eta $\mathcal{L} \cap \Pi = \emptyset$.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> gaur egungo formalizazioan, sistema **mota anitzeko logika** (*many-sorted logic*) baten bidez modelatzen da. Esparru honetan bikoteka <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> diren hiru <ConceptLink targetId="dominio">domeinu</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitibo</ConceptLink> batera existitzen dira: $\mathcal{P}$ <ConceptLink targetId="punto">puntuen</ConceptLink> domeinua, $\mathcal{L}$ <ConceptLink targetId="recta">zuzenen</ConceptLink> domeinua eta $\Pi$ <ConceptLink targetId="plano">planoen</ConceptLink> domeinua, non $\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$ eta $\mathcal{L} \cap \Pi = \emptyset$.
 
 Mota anitzeko tipifikazioak bermatzen du <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> primitiboek —hala nola puntu eta zuzenaren arteko <ConceptLink targetId="incidencia">intzidentziak</ConceptLink> ($\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$) edo puntu eta planoaren artekoak ($\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$)— dagozkien motetako argumentuak soilik jasotzea. Horregatik, $\ell \,\mathbf{I}\, \pi$ ez da hizkuntzaren formula bat: zuzen bat plano batean dagoela puntuen gaineko kuantifikazioaren bidez adierazten da, $\forall P \in \mathcal{P}\ (P \,\mathbf{I}_{\mathcal{P}\mathcal{L}}\, \ell \implies P \,\mathbf{I}_{\mathcal{P}\Pi}\, \pi)$.

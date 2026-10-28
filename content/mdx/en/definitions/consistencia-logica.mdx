@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Logical Consistency",
-  description: "Property of a formal theory guaranteeing the impossibility of deducing simultaneously a proposition and its negation (absence of contradictions).",
+  description: "Property of a formal theory from which a formula and its negation cannot both be deduced.",
   branch: "03B",
   branches: ["03", "03C"],
   hasSimulation: false,
@@ -15,20 +15,20 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />ogical **consistency** (or syntactic consistency) is the property of a <ConceptLink targetId="teoria-formal">formal theory</ConceptLink> from which a formula and its negation cannot both be deduced.
+<Capitular letra="L" />**ogical consistency** (or syntactic consistency) is the property of a <ConceptLink targetId="teoria-formal">formal theory</ConceptLink> from which a <ConceptLink targetId="formula">formula</ConceptLink> and its <ConceptLink targetId="negacion">negation</ConceptLink> cannot both be deduced.
 
-In classical logic, an inconsistent theory proves every formula of its language by the <ConceptLink targetId="principio-explosion">principle of explosion</ConceptLink> (*ex falso quodlibet*). Its <ConceptLink targetId="teorema">theorems</ConceptLink> then no longer distinguish one formula from another.
+In classical <ConceptLink targetId="logica">logic</ConceptLink>, an inconsistent theory proves every formula of its language by the <ConceptLink targetId="principio-explosion">principle of explosion</ConceptLink> (*ex falso quodlibet*). Its <ConceptLink targetId="teorema">theorems</ConceptLink> then no longer distinguish one formula from another.
 
 <Definicion title="Syntactic and semantic consistency">
-  Let $\mathcal{T}$ be a theory with axioms $\Phi$ formulated in a <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$.
+  Let $\mathcal{T}$ be a theory with <ConceptLink targetId="axioma">axioms</ConceptLink> $\Phi$ formulated in a <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$.
   
-  $\mathcal{T}$ is said to be **syntactically consistent** if for no formula $\varphi$ is it possible to formally derive both $\varphi$ and its negation $\neg \varphi$:
+  $\mathcal{T}$ is said to be **syntactically consistent** if for no <ConceptLink targetId="formula">formula</ConceptLink> $\varphi$ is it possible to formally derive both $\varphi$ and its <ConceptLink targetId="negacion">negation</ConceptLink> $\neg \varphi$ (equivalently, $\Phi \nvdash \bot$, where $\bot$ is a contradiction):
   $$
   \mathcal{T} \text{ is consistent} \iff \forall \varphi \in \mathcal{L}_\sigma, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
   $$
-  On the other hand, $\mathcal{T}$ is **semantically consistent** (or satisfiable) if there exists at least one <ConceptLink targetId="teoria-modelos">model</ConceptLink> $\mathcal{M}$ such that $\mathcal{M} \models \mathcal{T}$.
+  On the other hand, $\mathcal{T}$ is **semantically consistent** (or satisfiable) if there exists a <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M}$ such that $\mathcal{M} \models \Phi$, that is, a <ConceptLink targetId="modelo">model</ConceptLink> of $\mathcal{T}$.
   
-  By <ConceptLink targetId="godel">Gödel</ConceptLink>'s <ConceptLink targetId="teorema-completitud-godel">completeness theorem</ConceptLink> in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide:
+  By the <ConceptLink targetId="teorema-correccion">soundness theorem</ConceptLink> and <ConceptLink targetId="godel">Gödel</ConceptLink>'s <ConceptLink targetId="teorema-completitud-godel">completeness theorem</ConceptLink> in first-order <ConceptLink targetId="logica">logic</ConceptLink>, both notions coincide:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -40,5 +40,5 @@ In classical logic, an inconsistent theory proves every formula of its language 
 
 By Gödel's <ConceptLink targetId="teorema-incompletitud-godel">second incompleteness theorem</ConceptLink>, no consistent, recursively axiomatizable formal theory that contains elementary arithmetic can prove its own consistency. Consistency proofs are, in general, relative (<ConceptLink targetId="consistencia-relativa">relative consistency</ConceptLink>): a model of one theory is built inside another, and the first is consistent if the second is.
 
-- **<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>:** In Chapter II of the *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> established the relative consistency of Euclidean geometry by interpreting its <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> terms in a planar Cartesian <ConceptLink targetId="modelo-cartesiano">model</ConceptLink> whose coordinates belong to a countable field $\Omega$ of real algebraic numbers. Any contradiction in the axioms would then carry over to the arithmetic of $\Omega$.
-- **Non-Euclidean geometries:** Historically, neither <ConceptLink targetId="bolyai">Bolyai</ConceptLink> nor <ConceptLink targetId="lobachevski">Lobachevsky</ConceptLink> succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868, using surfaces of constant curvature and a disk model), Felix <ConceptLink targetId="klein">Klein</ConceptLink> (1871), and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) who proved it using Euclidean models, including ones in the <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>; hyperbolic consistency thus reduces to Euclidean consistency.
+- **<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>:** In Chapter II of the *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> interpreted the <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> terms of Euclidean geometry in a <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink> whose coordinates belong to a countable <ConceptLink targetId="cuerpo">field</ConceptLink> $\Omega$ of <ConceptLink targetId="numero-real">real</ConceptLink> algebraic numbers. He works it out in the plane, and the case of <ConceptLink targetId="espacio">space</ConceptLink> is analogous. This proves the relative consistency of axioms I–IV and V.1; to include the <ConceptLink targetId="axioma-completitud">completeness axiom</ConceptLink> (V.2), coordinates are taken in $\mathbb{R}$. Any contradiction in the axioms would carry over to the arithmetic of the coordinate field.
+- **Non-Euclidean geometries:** Historically, neither <ConceptLink targetId="bolyai">Bolyai</ConceptLink> nor <ConceptLink targetId="lobachevski">Lobachevsky</ConceptLink> succeeded in proving the consistency of <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. It was <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868, using surfaces of constant <ConceptLink targetId="curvatura">curvature</ConceptLink> and a disk model), <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871), and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) who proved it using Euclidean models, including ones in the <ConceptLink targetId="plano">plane</ConceptLink>, such as the Poincaré <ConceptLink targetId="modelo-poincare">disk</ConceptLink>; hyperbolic consistency thus reduces to Euclidean consistency.

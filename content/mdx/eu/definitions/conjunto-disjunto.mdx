@@ -4,24 +4,24 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Multzo disjuntuak",
-  description: "Elementu komunik partekatzen ez duten bi multzoren edo multzo-familia baten propietatea, binaka disjuntuak (elkarren artean disjuntuak) diren multzoen baldintza nabarmenduz.",
+  description: "Bi multzo disjuntuak dira haien ebakidura hutsa bada; familia bat bikoteka disjuntua da indize desberdineko edozein bi kide disjuntuak badira.",
   branch: "03",
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul Halmos", locator: "4. Kapitulua", role: "primary" }
+    { title: "Naive Set Theory", author: "Paul Halmos", locator: "4. atala", role: "primary" }
   ]
 };
 
 import { ConjuntosDisjuntos } from '@content/diagrams/Definiciones/ConjuntosDisjuntos';
 export const Simulation = ConjuntosDisjuntos;
 
-<Capitular letra="B" />i $A$ eta $B$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> **disjuntuak** dira haien artean elementu komunik ez badute, hau da, haien <ConceptLink targetId="interseccion" isDependency={true}>ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio" isDependency={true}>multzo hutsa</ConceptLink> bada:
+<Capitular letra="B" />i <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink>, $A$ eta $B$, **disjuntuak** (edo elkar baztertzaileak) dira elementu komunik ez badute, hau da, haien <ConceptLink targetId="interseccion" isDependency={true}>ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio" isDependency={true}>multzo hutsa</ConceptLink> bada:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
 
-<Definicion title="Binaka disjuntuak diren multzoen familia (elkarren artean disjuntuak)">
-  Izan bedi <VisualBind element="familia" color="carbon">$\{A_i\}_{i \in I}$</VisualBind> $I$ multzo batez <ConceptLink targetId="familia-indexada" isDependency={true}>indexatutako multzo-familia</ConceptLink> bat. Familia hori **elkarren artean disjuntua** (edo **binaka disjuntua**) dela esaten da indize desberdineko ($i \neq j$) edozein bi kideren <VisualBind element="interseccionesDosADos" color="mora">$A_i \cap A_j$</VisualBind> ebakidura hutsa bada:
+<Definicion title="Bikoteka disjuntuak diren multzoen familia (elkarren artean disjuntuak)">
+  Izan bedi <VisualBind element="familia" color="carbon">$\{A_i\}_{i \in I}$</VisualBind> $I$ multzo batez <ConceptLink targetId="familia-indexada" isDependency={true}>indexatutako multzo-familia</ConceptLink> bat. Familia hori **elkarren artean disjuntua** (edo **bikoteka disjuntua**) dela esaten da indize desberdineko ($i \neq j$) edozein bi kideren <VisualBind element="interseccionesDosADos" color="mora">$A_i \cap A_j$</VisualBind> ebakidura hutsa bada:
   $$
   \forall i, j \in I \ (i \neq j \implies A_i \cap A_j = \emptyset)
   $$
@@ -33,10 +33,10 @@ $$
   <PropiedadesGrupo title="Propietateak eta bereizketa formalak">
     <PropiedadItem 
       id="disjuncion-dos-a-dos-vs-global" 
-      title="Binaka disjuntuak izatea vs. ebakidura global hutsa"
+      title="Bikoteka disjuntua izatea eta ebakidura global hutsa"
       formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
-      Indize-multzoak gutxienez bi elementu baditu ($\lvert I \rvert \ge 2$), binaka disjuntua izateak ebakidura global hutsa izatea dakar, $\bigcap_{k \in I} A_k \subseteq A_i \cap A_j$ betetzen baita edozein $i \neq j$ indizetarako. Zehazki bi indize daudenean, bi baldintzak baliokideak dira. Alderantzizkoa ez da betetzen hiru indizetik aurrera: <VisualBind element="conjuntoA1" color="terracota">$A_1 = \{1, 2\}$</VisualBind>, <VisualBind element="conjuntoA2" color="pavo">$A_2 = \{2, 3\}$</VisualBind> eta <VisualBind element="conjuntoA3" color="ocre">$A_3 = \{1, 3\}$</VisualBind> multzoen ebakidura globala hutsa da, baina binaka ebakitzen dute elkar, <VisualBind element="interseccionA1A2" color="mora">$A_1 \cap A_2 = \{2\}$</VisualBind>, <VisualBind element="interseccionA1A3" color="mora">$A_1 \cap A_3 = \{1\}$</VisualBind> eta <VisualBind element="interseccionA2A3" color="mora">$A_2 \cap A_3 = \{3\}$</VisualBind> baitira.
+      Indize-multzoak gutxienez bi elementu baditu ($\lvert I \rvert \ge 2$), bikoteka disjuntua izateak ebakidura global hutsa izatea dakar, $\bigcap_{k \in I} A_k \subseteq A_i \cap A_j$ betetzen baita edozein $i \neq j$ indizetarako. Zehazki bi indize daudenean, bi baldintzak baliokideak dira. Alderantzizkoa ez da betetzen hiru indizetik aurrera: <VisualBind element="conjuntoA1" color="terracota">$A_1 = \{1, 2\}$</VisualBind>, <VisualBind element="conjuntoA2" color="pavo">$A_2 = \{2, 3\}$</VisualBind> eta <VisualBind element="conjuntoA3" color="ocre">$A_3 = \{1, 3\}$</VisualBind> multzoen ebakidura globala hutsa da, baina bikoteka ebakitzen dute elkar, <VisualBind element="interseccionA1A2" color="mora">$A_1 \cap A_2 = \{2\}$</VisualBind>, <VisualBind element="interseccionA1A3" color="mora">$A_1 \cap A_3 = \{1\}$</VisualBind> eta <VisualBind element="interseccionA2A3" color="mora">$A_2 \cap A_3 = \{3\}$</VisualBind> baitira.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -44,7 +44,7 @@ $$
       title="Diskurtso-unibertsoaren partizioa domeinutan"
       formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >
-      <ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarra</ConceptLink> formalizatzen duen <ConceptLink targetId="logica">mota anitzeko logikan</ConceptLink>, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> binaka disjuntuak dira eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ <ConceptLink targetId="universo-discurso">diskurtso-unibertsoaren</ConceptLink> <ConceptLink targetId="particion">partizio</ConceptLink> bat osatzen dute.
+      <ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarra</ConceptLink> formalizatzen duen <ConceptLink targetId="logica">mota anitzeko logikan</ConceptLink>, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> bikoteka disjuntuak dira eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ <ConceptLink targetId="universo-discurso">diskurtso-unibertsoaren</ConceptLink> <ConceptLink targetId="particion">partizio</ConceptLink> bat osatzen dute.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

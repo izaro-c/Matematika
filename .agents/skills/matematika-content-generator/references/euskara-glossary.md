@@ -16,6 +16,7 @@ Para asegurar la máxima precisión sintáctica y un registro académico formal 
 | **Rectas cruzadas (alabeadas)** | *zuzen gurutzatu* (sin concordancia) | **`zuzen gurutzatuak`** / **`zuzen alabeatuak`** | Espazioan koplanarrak ez diren eta ebakitzen ez diren zuzenak. |
 | **Planos paralelos** | *plano paralelo* | **`plano paraleloak`** | $\pi_1 \parallel \pi_2 \iff (\pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset)$. |
 | **Inyectividad (lineal / planar)** | *injektibitate* | **`injektibotasun lineala`** / **`injektibotasun planarra`** | $\operatorname{tr}_{\mathcal{L}}$ eta $\operatorname{tr}_{\Pi}$ aplikazioen injektibotasuna. |
+| **Sobreyectiva / biyectiva (función)** | *sobrejektibo*, *suprajektibo* | **`supraiektiboa`** / **`bijektiboa`** (sust. **`supraiektibotasuna`**) | Serie *injektibo / supraiektibo / bijektibo*; nodo `sobreyectividad`. |
 | **Ángulos suplementarios** | *angelu suplementarioak*, *angelu gehigarriak* | **`angelu betegarriak`** | Pareja de ángulos que forman un ángulo llano sobre una recta. |
 | **Ángulos complementarios** | *angelu konplementarioak* | **`angelu osagarriak`** | Pareja de ángulos que suman un ángulo recto. |
 | **Ángulos opuestos por el vértice** | *erpinezko aurkakoak* | **`erpinez aurkako angeluak`** | Ángulos determinados por dos rectas secantes con vértice común. |

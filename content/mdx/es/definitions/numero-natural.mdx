@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Números naturales",
-  description: "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+  description: "Los números 0, 1, 2, 3, … con los que se cuenta y se ordena, caracterizados por los axiomas de Peano.",
   branch: "11A",
   branches: ["11A", "03E"],
   hasSimulation: true,
@@ -17,9 +17,9 @@ export const metadata = {
 import { PeanoSucesor } from '@content/diagrams/Definiciones/PeanoSucesor';
 export const Simulation = PeanoSucesor;
 
-<Capitular letra="L" />os **números naturales** constituyen el sistema numérico discreto sobre el que descansa la <ConceptLink targetId="aritmetica">aritmética</ConceptLink>, formalizando las operaciones primarias de contar los elementos de un <ConceptLink targetId="conjunto-finito">conjunto finito</ConceptLink> y ordenarlos en sucesión.
+<Capitular letra="L" />os **números naturales** son los números $0, 1, 2, 3, \dots$ con los que se cuentan los elementos de un <ConceptLink targetId="conjunto-finito">conjunto finito</ConceptLink> y se ordenan en sucesión; sobre ellos se construye la <ConceptLink targetId="aritmetica">aritmética</ConceptLink>.
 
-Formalizados por <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> y anticipados por <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink>, los naturales pueden concebirse como una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> caracterizada por un elemento inicial y una <ConceptLink targetId="sucesor">función sucesor</ConceptLink>. Asimismo, en <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink> se construyen mediante los <ConceptLink targetId="ordinales-von-neumann">ordinales de von Neumann</ConceptLink>, donde cada número se define como el conjunto de todos los naturales que lo preceden.
+<ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> formuló en 1889 los axiomas que siguen, anticipados por <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink> en 1888. Peano empezaba la sucesión en $1$; aquí, como en <ConceptLink targetId="teoria-conjuntos">teoría de conjuntos</ConceptLink>, $0 \in \mathbb{N}$. En esa teoría los naturales se construyen mediante los <ConceptLink targetId="ordinales-von-neumann">ordinales de von Neumann</ConceptLink>, donde cada número es el conjunto de los naturales que lo preceden.
 
 <Definicion title="Axiomática de Peano para los números naturales">
   Un sistema de **números naturales** es una terna $(\mathbb{N}, 0, S)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> <VisualBind element="conjuntoN" color="carbon">$\mathbb{N}$</VisualBind>, un elemento distinguido <VisualBind element="e0" color="mora">$0 \in \mathbb{N}$</VisualBind> y una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <VisualBind element="flechas" color="terracota">$S \colon \mathbb{N} \to \mathbb{N}$</VisualBind> (denominada <ConceptLink targetId="sucesor">función sucesor</ConceptLink>) tales que:
@@ -37,16 +37,18 @@ Formalizados por <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> y an
      $$
 </Definicion>
 
+En la figura, la flecha que sale de $3$ se puede llevar a $0$ o a $1$. Si $S(3) = 0$, falla el axioma 1; si $S(3) = 1$, falla el axioma 2, porque $S(0) = S(3)$. El botón añade dos elementos $a$ y $b$ con $S(a) = b$ y $S(b) = a$: el conjunto <VisualBind element="regionK" color="pavo">$K$</VisualBind> de los elementos que se alcanzan desde $0$ aplicando $S$ repetidamente contiene a $0$ y es cerrado por $S$, pero no es todo $\mathbb{N}$, así que falla el axioma 3.
+
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="estructura-algebraica-semianillo" titulo="Estructura de semianillo conmutativo">
-    Definiendo la <ConceptLink targetId="adicion">adición</ConceptLink> y la <ConceptLink targetId="multiplicacion">multiplicación</ConceptLink> de forma recursiva a partir del sucesor, la <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $(\mathbb{N}, +, \cdot)$ es un <ConceptLink targetId="semianillo">semianillo</ConceptLink> conmutativo unitario dotado de propiedad cancelativa para la suma.
+  <PropiedadItem id="estructura-algebraica-semianillo" title="Estructura de semianillo conmutativo">
+    Definiendo la <ConceptLink targetId="adicion">adición</ConceptLink> y la <ConceptLink targetId="multiplicacion">multiplicación</ConceptLink> de forma recursiva a partir del sucesor, la <ConceptLink targetId="estructura-algebraica">estructura</ConceptLink> $(\mathbb{N}, +, \cdot)$ es un <ConceptLink targetId="semianillo">semianillo</ConceptLink> conmutativo unitario dotado de propiedad cancelativa para la suma.
   </PropiedadItem>
-  <PropiedadItem id="principio-buen-orden" titulo="Principio del buen orden">
+  <PropiedadItem id="principio-buen-orden" title="Principio del buen orden">
     Todo <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> no vacío de números naturales $A \subseteq \mathbb{N}$ posee un elemento mínimo respecto del <ConceptLink targetId="orden-total">orden</ConceptLink> definido por $m \le n \iff \exists k \in \mathbb{N} \ (m + k = n)$; por tanto, $(\mathbb{N}, \le)$ es un <ConceptLink targetId="buen-orden">conjunto bien ordenado</ConceptLink>.
   </PropiedadItem>
-  <PropiedadItem id="cardinalidad-numerable" titulo="Cardinalidad numerable">
+  <PropiedadItem id="cardinalidad-numerable" title="Cardinalidad numerable">
     El conjunto $\mathbb{N}$ es un <ConceptLink targetId="conjunto-infinito">conjunto infinito</ConceptLink>. Su <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink>, denotada por $\aleph_0 = |\mathbb{N}|$, se llama cardinalidad numerable y, con el <ConceptLink targetId="axioma-eleccion">axioma de elección</ConceptLink>, es la menor cardinalidad infinita.
   </PropiedadItem>
 </SeccionPropiedades>

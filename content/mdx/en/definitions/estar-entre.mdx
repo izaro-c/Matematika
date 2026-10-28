@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Betweenness",
-  description: "Primitive ternary relation formalizing the intermediation of points along a line.",
+  description: "Primitive ternary relation expressing that a point lies between two others on a line.",
   branch: "51A",
   branches: ["51A"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -22,12 +22,12 @@ export const metadata = {
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> among <ConceptLink targetId="punto">points</ConceptLink> expressing that one point lies between two others on a <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="T" />he **betweenness** relation is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> among <ConceptLink targetId="punto">points</ConceptLink> expressing that one point lies between two others on a <ConceptLink targetId="recta">line</ConceptLink>.
 
-Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>. Betweenness is used to define <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and to state the <ConceptLink targetId="separacion">separation</ConceptLink> of a line by one of its points and of a <ConceptLink targetId="plano">plane</ConceptLink> by one of its lines.
+Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them, together with the <ConceptLink targetId="sistema-incidencia">incidence axioms</ConceptLink>, it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>. Betweenness is used to define <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and to state the <ConceptLink targetId="separacion">separation</ConceptLink> of a line by one of its points and of a <ConceptLink targetId="plano">plane</ConceptLink> by one of its lines.
 
 <Definicion title="Primitive betweenness relation">
-In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a <ConceptLink targetId="subconjunto">subset</ConceptLink> $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, where $\mathcal{P}$ is the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points.
+In <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a <ConceptLink targetId="subconjunto">subset</ConceptLink> $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$, where $\mathcal{P}$ and $\mathcal{L}$ are the <ConceptLink targetId="dominio">primitive domains</ConceptLink> of points and lines.
 
 For any <ConceptLink targetId="terna">triple</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind>, the relation is denoted:
 

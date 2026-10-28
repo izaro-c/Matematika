@@ -10,7 +10,7 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen", author: "Georg Cantor", locator: "Journal für die reine und angewandte Mathematik 77 (1874)", role: "primary" },
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulos 21–24", role: "secondary" }
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Secciones 22–25", role: "secondary" }
   ]
 };
 
@@ -23,18 +23,18 @@ export const metadata = {
   $$
   A \sim B \iff \exists f\colon A \longrightarrow B \quad (f \text{ biyectiva})
   $$
-  La equipotencia es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, porque la identidad, la <ConceptLink targetId="funcion-inversa">inversa</ConceptLink> de una biyección y la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de dos biyecciones son biyecciones. Por eso se escribe $\lvert A \rvert = \lvert B \rvert$ cuando $A \sim B$, y $\lvert A \rvert$ se llama **cardinalidad** de $A$.
+  La equipotencia es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, porque la identidad, la <ConceptLink targetId="funcion-inversa">inversa</ConceptLink> de una biyección y la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de dos biyecciones son biyecciones. Por eso se escribe $\lvert A \rvert = \lvert B \rvert$ cuando $A \sim B$, y $\lvert A \rvert$ se llama **cardinalidad** de $A$. Con el <ConceptLink targetId="axioma-eleccion">axioma de elección</ConceptLink>, $\lvert A \rvert$ puede tomarse como el menor <ConceptLink targetId="ordinales-von-neumann">ordinal</ConceptLink> equipotente a $A$.
 
-  El orden entre cardinales se define mediante inyecciones: se escribe $\lvert A \rvert \le \lvert B \rvert$ si existe una <ConceptLink targetId="inyectividad" isDependency={true}>aplicación inyectiva</ConceptLink> de $A$ en $B$, y $\lvert A \rvert < \lvert B \rvert$ si además $A$ y $B$ no son equipotentes.
+  El orden entre cardinales se define mediante <ConceptLink targetId="inyectividad" isDependency={true}>inyecciones</ConceptLink>: se escribe $\lvert A \rvert \le \lvert B \rvert$ si existe una aplicación inyectiva de $A$ en $B$, y $\lvert A \rvert < \lvert B \rvert$ si además $A$ y $B$ no son equipotentes.
 </Definicion>
 
 Dos teoremas dan forma a este orden. El <ConceptLink targetId="teorema-cantor-bernstein">teorema de Cantor-Bernstein-Schröder</ConceptLink> lo hace antisimétrico: si $\lvert A \rvert \le \lvert B \rvert$ y $\lvert B \rvert \le \lvert A \rvert$, entonces $\lvert A \rvert = \lvert B \rvert$. El <ConceptLink targetId="teorema-cantor">teorema de Cantor</ConceptLink> impide que tenga un máximo: para cualquier conjunto $A$, su <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> $\wp(A)$ cumple $\lvert A \rvert < \lvert \wp(A) \rvert$.
 
 <Separador />
 
-### Escala de infinitos en geometría
+### Cardinales en geometría
 
 La cardinalidad permite clasificar los <ConceptLink targetId="dominio">dominios</ConceptLink> geométricos según su tamaño o número de elementos:
-- **<ConceptLink targetId="estructura-geometrica">Estructuras</ConceptLink> finitas:** Conjuntos con cardinal natural $n \in \mathbb{N}$, como los 7 <ConceptLink targetId="punto">puntos</ConceptLink> del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
-- **Infinito numerable:** El cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ de los <ConceptLink targetId="conjunto-numerable">conjuntos numerables</ConceptLink> infinitos, como los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>.
-- **La <ConceptLink targetId="potencia-del-continuo">potencia del continuo</ConceptLink>:** El cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = 2^{\aleph_0}$. Con los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>), la <ConceptLink targetId="traza">traza</ConceptLink> de toda <ConceptLink targetId="recta">recta</ConceptLink> $\ell$ está en biyección con $\mathbb{R}$, así que $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.
+- **Dominios finitos:** Cardinal natural $n \in \mathbb{N}$, como los 7 <ConceptLink targetId="punto">puntos</ConceptLink> del <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> o los 3 puntos del <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>; ambos modelos son <ConceptLink targetId="estructura-geometrica">estructuras</ConceptLink> finitas.
+- **Infinito numerable:** El cardinal $\aleph_0 = \lvert \mathbb{N} \rvert = \lvert \mathbb{Q} \rvert$ de los <ConceptLink targetId="conjunto-numerable">conjuntos numerables</ConceptLink> infinitos, como los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink>. Sin el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink>, la <ConceptLink targetId="traza">traza</ConceptLink> de una <ConceptLink targetId="recta">recta</ConceptLink> puede tener solo $\aleph_0$ puntos: en el modelo con que <ConceptLink targetId="hilbert">Hilbert</ConceptLink> prueba la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink>, las coordenadas recorren un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> numerable.
+- **La <ConceptLink targetId="potencia-del-continuo">potencia del continuo</ConceptLink>:** El cardinal $\mathfrak{c} = \lvert \mathbb{R} \rvert = \lvert \wp(\mathbb{N}) \rvert$ (que se escribe $2^{\aleph_0}$). Con los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>), la <ConceptLink targetId="traza">traza</ConceptLink> de toda <ConceptLink targetId="recta">recta</ConceptLink> $\ell$ está en biyección con $\mathbb{R}$, así que $\lvert \operatorname{tr}(\ell) \rvert = \mathfrak{c}$.

@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Mathematical Logic",
-  description: "Formal discipline studying deductive systems, formal languages, syntax, and valid inference rules.",
+  description: "Formal discipline studying deductive systems, formal languages, syntax, semantics, and valid inference rules.",
   branch: "03B",
   branches: ["03", "03A"],
   hasSimulation: false,
@@ -14,19 +14,19 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="M" />athematical **logic** is the formal discipline that studies the validity of deductive reasoning, the structure of <ConceptLink targetId="lenguaje-formal">formal languages</ConceptLink>, and the foundations of mathematical theories. It provides the framework through which mathematical statements are formulated and <ConceptLink targetId="demostracion">proofs</ConceptLink> are established from explicit premises.
+<Capitular letra="M" />**athematical logic** is the formal discipline that studies the validity of deductive reasoning, the structure of <ConceptLink targetId="lenguaje-formal">formal languages</ConceptLink>, and the foundations of mathematical theories. It provides the framework through which mathematical statements are formulated and <ConceptLink targetId="demostracion">proofs</ConceptLink> are established from explicit premises.
 
-Metamathematical analysis distinguishes two aspects. The syntactic aspect examines the formal manipulation of strings of symbols according to grammatical rules and rules of <ConceptLink targetId="inferencia">inference</ConceptLink> ($\Gamma \vdash \varphi$). The semantic aspect, addressed by <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, investigates the interpretation of symbols within a mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> and the notion of truth in a structure ($\mathcal{M} \models \varphi$).
+<ConceptLink targetId="metamatematica">Metamathematical</ConceptLink> analysis distinguishes two aspects. The syntactic aspect examines the formal manipulation of strings of symbols according to grammatical rules and rules of <ConceptLink targetId="inferencia">inference</ConceptLink> ($\Gamma \vdash \varphi$). The semantic aspect, addressed by <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, investigates the interpretation of symbols within a mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> and the notion of truth in a structure ($\mathcal{M} \models \varphi$).
 
 <Definicion title="Formal first-order deductive system">
   A **first-order logical system** over a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$ comprises the following constituent elements:
-  1. **<ConceptLink targetId="lenguaje-formal">Formal language</ConceptLink>** $\mathcal{L}_\sigma$: the <ConceptLink targetId="conjunto">set</ConceptLink> of well-formed <ConceptLink targetId="formula">formulas</ConceptLink> generated from variables, logical connectives ($\neg, \land, \lor, \implies, \iff$), quantifiers ($\forall, \exists$), and equality ($=$), combined with the non-logical symbols of $\sigma$.
+  1. **<ConceptLink targetId="lenguaje-formal">Formal language</ConceptLink>** $\mathcal{L}_\sigma$: the <ConceptLink targetId="conjunto">set</ConceptLink> of well-formed <ConceptLink targetId="formula">formulas</ConceptLink> generated from variables, <ConceptLink targetId="conectiva-logica">logical connectives</ConceptLink> ($\neg, \land, \lor, \implies, \iff$), <ConceptLink targetId="cuantificador">quantifiers</ConceptLink> ($\forall, \exists$), and <ConceptLink targetId="igualdad-matematica">equality</ConceptLink> ($=$), combined with the non-logical symbols of $\sigma$.
   2. **Logical <ConceptLink targetId="axioma">axioms</ConceptLink>**: universally valid formulas governing general deduction independently of any specific mathematical theory.
   3. **Rules of <ConceptLink targetId="inferencia">inference</ConceptLink>**: algorithmic mechanisms allowing the derivation of new formulas from established premises, such as the classical <ConceptLink targetId="modus-ponens">*modus ponens*</ConceptLink> rule:
      $$
      \frac{\varphi, \quad \varphi \implies \psi}{\psi}
      $$
-  4. **<ConceptLink targetId="demostracion">Proof</ConceptLink> and <ConceptLink targetId="teorema">theorem</ConceptLink>**: a finite sequence of formulas $\varphi_1, \dots, \varphi_n$ where each term is an axiom or is obtained from preceding terms via a rule of inference; the final term $\varphi_n$ is called a formal theorem of the system.
+  4. **<ConceptLink targetId="demostracion">Proof</ConceptLink> and <ConceptLink targetId="teorema">theorem</ConceptLink>**: a finite sequence of formulas $\varphi_1, \dots, \varphi_n$ where each term is a logical axiom, a formula of a set of premises $\Gamma$, or is obtained from preceding terms via a rule of inference; one writes $\Gamma \vdash \varphi_n$, and $\varphi_n$ is a theorem of the theory with axioms $\Gamma$.
 </Definicion>
 
 <Separador />

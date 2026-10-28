@@ -13,7 +13,7 @@ export const metadata = {
     {
       title: "Elementos",
       author: "Euclides",
-      locator: "Libro I, Nociones Comunes 4",
+      locator: "Libro I, Noción común 4",
       role: "primary"
     },
     {
@@ -30,14 +30,14 @@ export const metadata = {
 No se define a partir de ninguna medida: se postula en la <ConceptLink targetId="signatura">signatura</ConceptLink> de la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, y sus propiedades las fija el tercer grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>). Las nociones de <ConceptLink targetId="longitud">longitud</ConceptLink> y de <ConceptLink targetId="medida-angular">medida angular</ConceptLink> se construyen después, a partir de ella y de los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink>.
 
 <Definicion title="Formalización de la congruencia sintética">
-En la signatura de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, la **congruencia** ($\cong$) comprende dos <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas distintas:
+En la signatura de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, la **congruencia** ($\cong$) comprende dos <ConceptLink targetId="relacion">relaciones</ConceptLink> primitivas distintas sobre el <ConceptLink targetId="dominio">dominio</ConceptLink> $\mathcal{P}$ de <ConceptLink targetId="punto">puntos</ConceptLink>:
 
-1. **Congruencia de segmentos**: relación binaria $\cong_{\mathrm{seg}}$ sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados por pares de <ConceptLink targetId="punto">puntos</ConceptLink> distintos del <ConceptLink targetId="dominio">dominio</ConceptLink> $\mathcal{P}$, denotada $\overline{AB} \cong \overline{CD}$ para extremos $A \neq B$ y $C \neq D$.
-2. **Congruencia de ángulos**: relación binaria $\cong_{\angle}$ sobre el conjunto de <ConceptLink targetId="angulo">ángulos</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>, denotada $\angle AOB \cong \angle A'O'B'$; los dos ángulos comparados pueden estar en <ConceptLink targetId="plano">planos</ConceptLink> distintos.
+1. **Congruencia de segmentos**: relación de cuatro argumentos $\cong_{\mathrm{seg}}$, con $\operatorname{ar}(\cong_{\mathrm{seg}}) = \mathcal{P}^4$, denotada $\overline{AB} \cong \overline{CD}$ para $A \neq B$ y $C \neq D$; se lee como una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> entre los <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{AB}$ y $\overline{CD}$.
+2. **Congruencia de ángulos**: relación de seis argumentos $\cong_{\angle}$, con $\operatorname{ar}(\cong_{\angle}) = \mathcal{P}^6$, denotada $\angle AOB \cong \angle A'O'B'$ para $A, O, B$ no colineales y $A', O', B'$ no colineales; se lee como una relación binaria entre <ConceptLink targetId="angulo">ángulos</ConceptLink>, que pueden estar en <ConceptLink targetId="plano">planos</ConceptLink> distintos.
 </Definicion>
 
 <Separador />
 
 <Nota>
-A partir de las relaciones primitivas sobre segmentos y ángulos, la noción se extiende a figuras compuestas como los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink>: dos figuras son congruentes si existe una <ConceptLink targetId="biyeccion">biyección</ConceptLink> entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> que hace congruentes todos sus <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos. Para triángulos, esta extensión es la <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink>.
+A partir de las relaciones primitivas sobre segmentos y ángulos, la noción se extiende a figuras compuestas como los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink>: dos figuras son congruentes si existe una <ConceptLink targetId="biyeccion">biyección</ConceptLink> entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> para la que todos los <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos son congruentes. Para triángulos, esta extensión es la <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink>.
 </Nota>

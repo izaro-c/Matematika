@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Kongruentzia",
-  description: "Zuzenkien arteko eta angeluen arteko tamaina-berdintasuna adierazten duen oinarrizko erlazioa.",
+  description: "Geometria sintetikoan, zuzenkien arteko eta angeluen arteko tamaina-berdintasuna adierazten duen oinarrizko erlazioa.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
@@ -13,7 +13,7 @@ export const metadata = {
     {
       title: "Elementuak",
       author: "Euklides",
-      locator: "I. liburua, Nozio Orokorrak 4",
+      locator: "I. liburua, 4. nozio komuna",
       role: "primary"
     },
     {
@@ -30,14 +30,14 @@ export const metadata = {
 Ez da inolako neurritatik definitzen: <ConceptLink targetId="estructura-geometrica">egitura geometrikoaren</ConceptLink> <ConceptLink targetId="signatura">signaturan</ConceptLink> postulatzen da, eta haren propietateak hirugarren <ConceptLink targetId="axioma">axioma</ConceptLink>-taldeak finkatzen ditu (<ConceptLink targetId="axioma-congruencia-1">III.1 axiomatik</ConceptLink> <ConceptLink targetId="axioma-congruencia-5">III.5 axiomara</ConceptLink>). <ConceptLink targetId="longitud">Luzera</ConceptLink> eta <ConceptLink targetId="medida-angular">angelu-neurria</ConceptLink> geroago eraikitzen dira, kongruentziatik eta <ConceptLink targetId="continuidad">jarraitutasun-axiometatik</ConceptLink> abiatuta.
 
 <Definicion title="Kongruentzia sintetikoaren formalizazioa">
-<ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> signaturan, **kongruentziak** ($\cong$) oinarrizko bi <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> desberdin hartzen ditu barne:
+<ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> signaturan, **kongruentziak** ($\cong$) <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="dominio">domeinuaren</ConceptLink> gaineko oinarrizko bi <ConceptLink targetId="relacion">erlazio</ConceptLink> desberdin hartzen ditu barne:
 
-1. **Zuzenkien kongruentzia**: $\mathcal{P}$ <ConceptLink targetId="dominio">domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinek zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko $\cong_{\mathrm{seg}}$ erlazio bitarra; $\overline{AB} \cong \overline{CD}$ idazten da, $A \neq B$ eta $C \neq D$ muturrekin.
-2. **Angeluen kongruentzia**: <ConceptLink targetId="espacio">espazioko</ConceptLink> <ConceptLink targetId="angulo">angeluen</ConceptLink> multzoaren gaineko $\cong_{\angle}$ erlazio bitarra; $\angle AOB \cong \angle A'O'B'$ idazten da; alderatzen diren bi angeluak <ConceptLink targetId="plano">plano</ConceptLink> desberdinetan egon daitezke.
+1. **Zuzenkien kongruentzia**: lau argumentuko $\cong_{\mathrm{seg}}$ erlazioa, $\operatorname{ar}(\cong_{\mathrm{seg}}) = \mathcal{P}^4$ izanik; $\overline{AB} \cong \overline{CD}$ idazten da, $A \neq B$ eta $C \neq D$ direla, eta $\overline{AB}$ eta $\overline{CD}$ <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> gisa irakurtzen da.
+2. **Angeluen kongruentzia**: sei argumentuko $\cong_{\angle}$ erlazioa, $\operatorname{ar}(\cong_{\angle}) = \mathcal{P}^6$ izanik; $\angle AOB \cong \angle A'O'B'$ idazten da, $A, O, B$ eta $A', O', B'$ ez-kolinealak direla, eta <ConceptLink targetId="angulo">angeluen</ConceptLink> arteko erlazio bitar gisa irakurtzen da; angeluak <ConceptLink targetId="plano">plano</ConceptLink> desberdinetan egon daitezke.
 </Definicion>
 
 <Separador />
 
 <Nota>
-Zuzenkien eta angeluen gaineko oinarrizko erlazioetatik abiatuta, nozioa irudi konposatuetara hedatzen da, hala nola <ConceptLink targetId="triangulo">triangeluetara</ConceptLink> eta <ConceptLink targetId="poligono">poligonoetara</ConceptLink>: bi irudi kongruenteak dira, baldin eta haien <ConceptLink targetId="vertice">erpinen</ConceptLink> artean <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologo guztiak kongruente bihurtzen dituen <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> bat badago. Triangeluetan, hedapen hori <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink> da.
+Zuzenkien eta angeluen gaineko oinarrizko erlazioetatik abiatuta, nozioa irudi konposatuetara hedatzen da, hala nola <ConceptLink targetId="triangulo">triangeluetara</ConceptLink> eta <ConceptLink targetId="poligono">poligonoetara</ConceptLink>: bi irudi kongruenteak dira, baldin eta haien <ConceptLink targetId="vertice">erpinen</ConceptLink> arteko <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> bat badago, non <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologo guztiak kongruenteak baitira. Triangeluetan, hedapen hori <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink> da.
 </Nota>

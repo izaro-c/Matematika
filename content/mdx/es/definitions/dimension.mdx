@@ -6,6 +6,7 @@ export const metadata = {
   title: "Dimensión",
   description: "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
   branch: "51",
+  branches: ["15A", "54F"],
   hasSimulation: false,
   sources: [
     { title: "Dimension Theory", author: "Witold Hurewicz, Henry Wallman", locator: "Capítulo I", role: "primary" },
@@ -17,7 +18,7 @@ export const metadata = {
 
 En la geometría elemental, los objetos se clasifican según sus grados de libertad: el <ConceptLink targetId="punto">punto</ConceptLink> carece de extensión (dimensión 0), la <ConceptLink targetId="recta">recta</ConceptLink> posee una única dirección de desplazamiento (dimensión 1), el <ConceptLink targetId="plano">plano</ConceptLink> admite dos direcciones independientes (dimensión 2) y el <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> admite tres (dimensión 3).
 
-<Definicion title="Definición en Distintas Teorías">
+<Definicion title="Definición en distintas teorías">
   El concepto de dimensión se formaliza de modo distinto en cada rama matemática:
   - **En <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>:** No se define como un número, sino que los <ConceptLink targetId="sistema-incidencia">axiomas de incidencia</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> fijan que el <ConceptLink targetId="espacio">espacio</ConceptLink> es tridimensional. Las cotas inferiores vienen de axiomas existenciales: el <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink> impone $\dim \ge 2$ al exigir al menos 3 puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, y el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink> impone $\dim \ge 3$ al exigir 4 puntos no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>. La cota superior viene del <ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>: dos planos distintos que comparten un punto comparten al menos otro, lo que impide $\dim \ge 4$.
   - **En <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink>:** Es el <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de cualquier <ConceptLink targetId="base-espacio-vectorial">base</ConceptLink> $B$ de un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $V$ sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> $\mathbb{K}$:
@@ -32,6 +33,6 @@ En la geometría elemental, los objetos se clasifican según sus grados de liber
 ### Jerarquía dimensional
 
 - **Dimensión 0:** El <ConceptLink targetId="punto">punto</ConceptLink>.
-- **Dimensión 1:** La <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink>, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y las figuras formadas por segmentos, como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> y el <ConceptLink targetId="poligono">polígono</ConceptLink> (cuya traza es una unión de segmentos).
+- **Dimensión 1:** La <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink>, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y las figuras formadas por segmentos, como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> y el <ConceptLink targetId="poligono">polígono</ConceptLink> (cuya <ConceptLink targetId="traza">traza</ConceptLink> es una unión de segmentos).
 - **Dimensión 2:** El <ConceptLink targetId="plano">plano</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y la <ConceptLink targetId="region-poligonal">región poligonal</ConceptLink>, a la que se asigna <ConceptLink targetId="teoria-medida-area">área</ConceptLink>.
 - **Dimensión 3:** El <ConceptLink targetId="espacio">espacio</ConceptLink> y los sólidos limitados por <ConceptLink targetId="poliedro">poliedros</ConceptLink>.

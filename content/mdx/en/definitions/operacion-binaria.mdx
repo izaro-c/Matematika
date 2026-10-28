@@ -9,8 +9,8 @@ export const metadata = {
   branches: ["08A", "03E"],
   hasSimulation: true,
   sources: [
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
-    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Chapter 1", role: "secondary" }
   ]
 };
 
@@ -20,7 +20,7 @@ export const Simulation = OperacionBinariaTabla;
 <Capitular letra="A" /> **binary operation** (or internal law of composition) on a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> that assigns to each <ConceptLink targetId="par-ordenado">ordered pair</ConceptLink> of elements of the set a unique result belonging to that set. The <ConceptLink targetId="estructura-algebraica">algebraic structures</ConceptLink> of <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>, such as <ConceptLink targetId="semigrupo">semigroups</ConceptLink>, <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink> and <ConceptLink targetId="cuerpo">fields</ConceptLink>, are defined as sets equipped with one or more binary operations.
 
 <Definicion title="Formal definition of binary operation">
-  Let $S$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. An **internal binary operation** on $S$ is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> from the <ConceptLink targetId="producto-cartesiano" isDependency={true}>Cartesian product</ConceptLink> $S \times S$ to $S$
+  Let $S$ be a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A **binary operation** on $S$ is a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> from the <ConceptLink targetId="producto-cartesiano" isDependency={true}>Cartesian product</ConceptLink> $S \times S$ to $S$
   $$
   \begin{aligned}
   *\colon S \times S &\longrightarrow S \\
@@ -30,25 +30,25 @@ export const Simulation = OperacionBinariaTabla;
   that associates with each ordered pair $(a, b) \in S \times S$ a unique element $a * b \in S$.
 </Definicion>
 
-Since the <ConceptLink targetId="codominio">codomain</ConceptLink> of the function is $S$ itself, the operation is closed in $S$:
+Since the <ConceptLink targetId="codominio">codomain</ConceptLink> of the function is $S$ itself, $S$ is closed under the operation:
 $$
 \forall a, b \in S, \quad a * b \in S
 $$
 
-When $S$ is finite, a binary operation can be given by a table. In the figure, $S = \{0, 1, 2\}$ and $a * b$ is the larger of $a$ and $b$. The row of $a$ and the column of $b$ meet in the cell of $a * b$. The nine cells are the pairs of <VisualBind element="productoCartesiano" color="canela">$S \times S$</VisualBind>, and each one has a unique value in <VisualBind element="conjuntoS" color="carbon">$S$</VisualBind>, to which the <VisualBind element="flechaPar" color="terracota">arrow</VisualBind> points. By contrast, ordinary <ConceptLink targetId="adicion">addition</ConceptLink> is not a binary operation on $S$: $1 + 2 =$ <VisualBind element="elementoFuera" color="granada">$3$</VisualBind> and $3 \notin S$.
+When $S$ is finite, a binary operation can be given by a table. In the figure, $S = \{0, 1, 2\}$ and $a * b$ is the larger of $a$ and $b$. The row of $a$ and the column of $b$ meet in the cell of $a * b$. The nine cells are the pairs of <VisualBind element="productoCartesiano" color="canela">$S \times S$</VisualBind>, and each one has a unique value in <VisualBind element="conjuntoS" color="carbon">$S$</VisualBind>. Dragging $a$ and $b$ picks a cell, and the <VisualBind element="flechaPar" color="terracota">arrow</VisualBind> points to its value. Pressing a cell changes its value. If some cell takes the value <VisualBind element="elementoFuera" color="granada">$3$</VisualBind>, as ordinary <ConceptLink targetId="adicion">addition</ConceptLink> would with $1 + 2$, the table no longer defines a binary operation on $S$, because $3 \notin S$.
 
 <Separador />
 
 ### Properties of a binary operation
 
-A binary operation $*$ on $S$ may be <ConceptLink targetId="asociatividad">associative</ConceptLink> or <ConceptLink targetId="conmutatividad">commutative</ConceptLink>, and may have an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> and <ConceptLink targetId="elemento-inverso">inverse elements</ConceptLink> with respect to that identity. Depending on which of these it satisfies, the pair $(S, *)$ is a semigroup (associative), a monoid (associative with identity) or a group (associative, with identity and an inverse for every element).
+A binary operation $*$ on $S$ may be <ConceptLink targetId="asociatividad">associative</ConceptLink> or <ConceptLink targetId="conmutatividad">commutative</ConceptLink>, and may have an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> and <ConceptLink targetId="elemento-inverso">inverse elements</ConceptLink> with respect to that identity.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Algebraic behavior">
-    <PropiedadItem id="clausura-inducida" title="Induced operation on a stable subset">
-      If a non-empty subset $T \subseteq S$ is <ConceptLink targetId="subconjunto-estable">stable</ConceptLink> under $*$ ($a * b \in T$ for all $a, b \in T$), the restriction of $*$ to $T \times T$ is a binary operation $*|_T\colon T \times T \longrightarrow T$ on $T$, the induced operation.
+    <PropiedadItem id="operacion-inducida" title="Induced operation on a stable subset">
+      If a non-empty <ConceptLink targetId="subconjunto">subset</ConceptLink> $T \subseteq S$ is <ConceptLink targetId="subconjunto-estable">stable</ConceptLink> under $*$ ($a * b \in T$ for all $a, b \in T$), the restriction of $*$ to $T \times T$ is a binary operation $*|_T\colon T \times T \longrightarrow T$ on $T$, the induced operation.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

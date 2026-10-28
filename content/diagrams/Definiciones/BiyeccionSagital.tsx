@@ -2134,84 +2134,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
       }
     },
     {
-      "id": "estadoNoInyectiva",
-      "label": "Estado: no inyectiva",
-      "color": "carbon",
-      "layerId": "annotations",
-      "order": 703,
-      "visible": true,
-      "visibleWhen": "and(not(gte(invertir, 0.5)), gt(llegadas3.y, 0.5), not(and(lte(llegadas12.x, 1), lte(llegadas12.y, 1), lte(llegadas3.x, 1))), and(gte(llegadas12.x, 1), gte(llegadas12.y, 1), gte(llegadas3.x, 1)))",
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Estado: no inyectiva",
-        "role": "annotation"
-      },
-      "target": false,
-      "objectType": "annotation",
-      "variant": "panel",
-      "content": {
-        "text": "",
-        "blocks": [
-          {
-            "id": "estado",
-            "text": "No es inyectiva: dos flechas a un $b$.",
-            "color": "granada"
-          }
-        ]
-      },
-      "anchor": {
-        "type": "viewport",
-        "position": [
-          0.5,
-          0
-        ]
-      },
-      "appearance": {
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "estadoNoSobreyectiva",
-      "label": "Estado: no sobreyectiva",
-      "color": "carbon",
-      "layerId": "annotations",
-      "order": 704,
-      "visible": true,
-      "visibleWhen": "and(not(gte(invertir, 0.5)), gt(llegadas3.y, 0.5), and(lte(llegadas12.x, 1), lte(llegadas12.y, 1), lte(llegadas3.x, 1)), not(and(gte(llegadas12.x, 1), gte(llegadas12.y, 1), gte(llegadas3.x, 1))))",
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Estado: no sobreyectiva",
-        "role": "annotation"
-      },
-      "target": false,
-      "objectType": "annotation",
-      "variant": "panel",
-      "content": {
-        "text": "",
-        "blocks": [
-          {
-            "id": "estado",
-            "text": "No es sobreyectiva: un $b$ sin flecha.",
-            "color": "granada"
-          }
-        ]
-      },
-      "anchor": {
-        "type": "viewport",
-        "position": [
-          0.5,
-          0
-        ]
-      },
-      "appearance": {
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
       "id": "estadoInversa",
       "label": "Estado: inversa",
       "color": "carbon",
@@ -2337,17 +2259,7 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         },
         "estadoNinguna": {
           "estado": {
-            "text": "Ez da injektiboa, ezta sobrejektiboa ere."
-          }
-        },
-        "estadoNoInyectiva": {
-          "estado": {
-            "text": "Ez da injektiboa: bi gezi $b$ berean."
-          }
-        },
-        "estadoNoSobreyectiva": {
-          "estado": {
-            "text": "Ez da sobrejektiboa: $b$ bat geziarik gabe."
+            "text": "Ez injektiboa ez supraiektiboa."
           }
         },
         "estadoInversa": {
@@ -2406,16 +2318,6 @@ export const BiyeccionSagitalSpec = createDiagramSpec(
         "estadoNinguna": {
           "estado": {
             "text": "Neither injective nor surjective."
-          }
-        },
-        "estadoNoInyectiva": {
-          "estado": {
-            "text": "Not injective: two arrows into one $b$."
-          }
-        },
-        "estadoNoSobreyectiva": {
-          "estado": {
-            "text": "Not surjective: a $b$ gets no arrow."
           }
         },
         "estadoInversa": {

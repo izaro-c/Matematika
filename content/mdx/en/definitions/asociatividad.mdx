@@ -17,7 +17,7 @@ export const metadata = {
 import { AsociatividadArbol } from '@content/diagrams/Definiciones/AsociatividadArbol';
 export const Simulation = AsociatividadArbol;
 
-<Capitular letra="A" />ssociativity (or the associative property) is the property of a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> whereby, when three elements are combined in a given order, the result does not depend on how they are grouped. Thanks to it, products of several factors are written without parentheses in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
+<Capitular letra="A" />**ssociativity** (or the associative property) is the property of a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> whereby, when three elements are combined in a given order, the result does not depend on how they are grouped. Thanks to it, products of several factors are written without parentheses in <ConceptLink targetId="algebra-abstracta">abstract algebra</ConceptLink>.
 
 <Definicion title="Formal definition of associativity">
   Let $S$ be a <ConceptLink targetId="conjunto">set</ConceptLink> and let $*\colon S \times S \longrightarrow S$ be a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> on $S$. The operation $*$ is said to be **associative** if and only if it satisfies the identity:
@@ -45,7 +45,7 @@ Many familiar operations are associative and others are not; associativity is pa
     <PropiedadItem id="asociatividad-generalizada" title="Generalized associativity theorem">
       If $*$ is an associative <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> on $S$, any product of $n$ elements $a_1 * a_2 * \cdots * a_n$ (with $n \ge 3$) takes the same value under every placement of parentheses that keeps the order of the factors, so the parentheses can be omitted.
     </PropiedadItem>
-    <PropiedadItem id="unicidad-inversos-asociatividad" title="Uniqueness of inverse elements">
+    <PropiedadItem id="unicidad-elemento-inverso" title="Uniqueness of inverse elements">
       If $*$ is associative and has an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> $e$, and an element $a$ admits a left <ConceptLink targetId="elemento-inverso">inverse</ConceptLink> $b$ ($b * a = e$) and a right inverse $c$ ($a * c = e$), the two coincide: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$. In particular, the inverse of $a$, if it exists, is unique.
     </PropiedadItem>
   </PropiedadesGrupo>

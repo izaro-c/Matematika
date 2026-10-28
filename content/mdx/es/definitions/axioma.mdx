@@ -14,21 +14,17 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n **axioma** (o postulado) es un enunciado matemático que se asume como verdadero sin <ConceptLink targetId="demostracion">demostración</ConceptLink> previa dentro del marco de una <ConceptLink targetId="teoria-formal">teoría deductiva formal</ConceptLink>. Los axiomas de una teoría son las premisas de las que se deducen todos sus teoremas.
+<Capitular letra="U" />n **axioma** (o postulado) es un enunciado matemático que se asume como verdadero sin <ConceptLink targetId="demostracion">demostración</ConceptLink> previa dentro del marco de una <ConceptLink targetId="teoria-formal">teoría deductiva formal</ConceptLink>. Los axiomas de una teoría son las premisas de las que se deducen todos sus <ConceptLink targetId="teorema">teoremas</ConceptLink>.
 
-En la concepción axiomática formal, los axiomas no pretenden reflejar evidencias empíricas ni verdades absolutas del mundo físico; su cometido consiste en fijar explícitamente las condiciones, restricciones y relaciones mutuas que deben verificar los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> de la teoría. De este modo, cualquier resultado deducido como <ConceptLink targetId="teorema">teorema</ConceptLink> mediante reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> queda condicionado a los axiomas: se cumple en toda estructura que los satisfaga.
+En la concepción axiomática formal, los axiomas no pretenden reflejar evidencias empíricas ni verdades absolutas del mundo físico; su cometido consiste en fijar explícitamente las condiciones, restricciones y relaciones mutuas que deben verificar los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> de la teoría. De este modo, cualquier resultado deducido como teorema mediante reglas de <ConceptLink targetId="inferencia">inferencia</ConceptLink> queda condicionado a los axiomas: se cumple en todo <ConceptLink targetId="modelo">modelo</ConceptLink> de la teoría.
 
 <Definicion title="Axioma en un sistema formal">
-  Sea $\mathcal{S} = (\sigma, \Phi)$ un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formalizado sobre una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$ con <ConceptLink targetId="lenguaje-formal">lenguaje formal</ConceptLink> $\mathcal{L}_\sigma$. Un **axioma propio** o no lógico de la teoría es una <ConceptLink targetId="formula">fórmula cerrada</ConceptLink> $\alpha$ de $\mathcal{L}_\sigma$ que pertenece al conjunto distinguido $\Phi$ de postulados:
+  Sea $\mathcal{S} = (\sigma, \Phi, \vdash)$ un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formalizado sobre una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$ con <ConceptLink targetId="lenguaje-formal">lenguaje formal</ConceptLink> $\mathcal{L}_\sigma$. Un **axioma propio** o no lógico de la teoría es una <ConceptLink targetId="formula">fórmula cerrada</ConceptLink> $\alpha$ de $\mathcal{L}_\sigma$ que pertenece al conjunto distinguido $\Phi$ de postulados:
   $$
   \alpha \in \Phi
-  $$
-  Una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> $\mathcal{M}$ constituye un <ConceptLink targetId="modelo">modelo</ConceptLink> del sistema si satisface cada uno de los axiomas de $\Phi$:
-  $$
-  \forall \alpha \in \Phi, \quad \mathcal{M} \models \alpha
   $$
 </Definicion>
 
 En los *Grundlagen der Geometrie*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> organizó los axiomas de la geometría en cinco grupos: <ConceptLink targetId="incidencia">incidencia</ConceptLink> (I), <ConceptLink targetId="estar-entre">orden</ConceptLink> (II), <ConceptLink targetId="congruencia">congruencia</ConceptLink> (III), <ConceptLink targetId="paralelas">paralelas</ConceptLink> (IV) y <ConceptLink targetId="continuidad">continuidad</ConceptLink> (V).
 
-Ser consistente e independiente son propiedades del conjunto $\Phi$, no de un axioma aislado. La <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> se exige siempre: de $\Phi$ no puede deducirse a la vez una fórmula y su <ConceptLink targetId="negacion">negación</ConceptLink>. La <ConceptLink targetId="independencia-logica">independencia</ConceptLink>, es decir, que ningún axioma se deduzca de los restantes, es deseable.
+Ser consistente e independiente son propiedades del conjunto $\Phi$, no de un axioma aislado. La <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> se exige siempre: de $\Phi$ no se deduce ninguna fórmula junto con su <ConceptLink targetId="negacion">negación</ConceptLink>. La <ConceptLink targetId="independencia-logica">independencia</ConceptLink>, es decir, que ningún axioma se deduzca de los restantes, es deseable.

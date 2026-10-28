@@ -163,7 +163,7 @@ export const PeanoSucesorSpec = createDiagramSpec(
       },
       "ariaLabels": {
         "conjuntoN": "N multzoa",
-        "regionK": "0-tik iristen diren elementuen K multzoa",
+        "regionK": "0-tik abiatuta S behin eta berriz aplikatuz lortzen diren elementuen K multzoa",
         "e0": "0 elementu berezia",
         "e1": "1 elementua",
         "e2": "2 elementua",

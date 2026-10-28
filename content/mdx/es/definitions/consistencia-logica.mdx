@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Consistencia lógica",
-  description: "Propiedad de una teoría formal que garantiza la imposibilidad de deducir simultáneamente una proposición y su negación (ausencia de contradicciones).",
+  description: "Propiedad de una teoría formal de la que no se pueden deducir a la vez una fórmula y su negación.",
   branch: "03B",
   branches: ["03", "03C"],
   hasSimulation: false,
@@ -15,20 +15,20 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a **consistencia lógica** (o consistencia sintáctica) es la propiedad de una <ConceptLink targetId="teoria-formal">teoría formal</ConceptLink> de la que no se pueden deducir a la vez una fórmula y su negación.
+<Capitular letra="L" />a **consistencia lógica** (o consistencia sintáctica) es la propiedad de una <ConceptLink targetId="teoria-formal">teoría formal</ConceptLink> de la que no se pueden deducir a la vez una <ConceptLink targetId="formula">fórmula</ConceptLink> y su <ConceptLink targetId="negacion">negación</ConceptLink>.
 
-En la lógica clásica, una teoría inconsistente demuestra cualquier fórmula de su lenguaje por el <ConceptLink targetId="principio-explosion">principio de explosión</ConceptLink> (*ex falso quodlibet*). Sus <ConceptLink targetId="teorema">teoremas</ConceptLink> dejan entonces de distinguir unas fórmulas de otras.
+En la <ConceptLink targetId="logica">lógica</ConceptLink> clásica, una teoría inconsistente demuestra cualquier fórmula de su lenguaje por el <ConceptLink targetId="principio-explosion">principio de explosión</ConceptLink> (*ex falso quodlibet*). Sus <ConceptLink targetId="teorema">teoremas</ConceptLink> dejan entonces de distinguir unas fórmulas de otras.
 
 <Definicion title="Consistencia sintáctica y semántica">
-  Sea $\mathcal{T}$ una teoría con axiomas $\Phi$ formulada en un <ConceptLink targetId="lenguaje-formal">lenguaje formal</ConceptLink> $\mathcal{L}_\sigma$.
+  Sea $\mathcal{T}$ una teoría con <ConceptLink targetId="axioma">axiomas</ConceptLink> $\Phi$ formulada en un <ConceptLink targetId="lenguaje-formal">lenguaje formal</ConceptLink> $\mathcal{L}_\sigma$.
   
-  Se dice que $\mathcal{T}$ es **sintácticamente consistente** si para ninguna fórmula $\varphi$ es posible derivar formalmente tanto $\varphi$ como su negación $\neg \varphi$:
+  Se dice que $\mathcal{T}$ es **sintácticamente consistente** si para ninguna <ConceptLink targetId="formula">fórmula</ConceptLink> $\varphi$ es posible derivar formalmente tanto $\varphi$ como su <ConceptLink targetId="negacion">negación</ConceptLink> $\neg \varphi$ (equivalentemente, $\Phi \nvdash \bot$, donde $\bot$ es una contradicción):
   $$
   \mathcal{T} \text{ es consistente} \iff \forall \varphi \in \mathcal{L}_\sigma, \quad \neg (\Phi \vdash \varphi \land \Phi \vdash \neg \varphi)
   $$
-  Por otra parte, $\mathcal{T}$ es **semánticamente consistente** (o satisfacible) si existe al menos un <ConceptLink targetId="teoria-modelos">modelo</ConceptLink> $\mathcal{M}$ tal que $\mathcal{M} \models \mathcal{T}$.
+  Por otra parte, $\mathcal{T}$ es **semánticamente consistente** (o satisfacible) si existe una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $\mathcal{M}$ tal que $\mathcal{M} \models \Phi$, es decir, un <ConceptLink targetId="modelo">modelo</ConceptLink> de $\mathcal{T}$.
   
-  Por el <ConceptLink targetId="teorema-completitud-godel">teorema de completitud</ConceptLink> de <ConceptLink targetId="godel">Gödel</ConceptLink> en la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, ambas nociones coinciden:
+  Por el <ConceptLink targetId="teorema-correccion">teorema de corrección</ConceptLink> y el <ConceptLink targetId="teorema-completitud-godel">teorema de completitud</ConceptLink> de <ConceptLink targetId="godel">Gödel</ConceptLink> en la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden, ambas nociones coinciden:
   $$
   \Phi \nvdash \bot \iff \exists \mathcal{M} \ (\mathcal{M} \models \Phi)
   $$
@@ -40,5 +40,5 @@ En la lógica clásica, una teoría inconsistente demuestra cualquier fórmula d
 
 Por el <ConceptLink targetId="teorema-incompletitud-godel">segundo teorema de incompletitud</ConceptLink> de Gödel, ninguna teoría formal consistente, recursivamente axiomatizable y que contenga la aritmética elemental puede demostrar su propia consistencia. Las pruebas de consistencia son, en general, relativas (<ConceptLink targetId="consistencia-relativa">consistencia relativa</ConceptLink>): se construye un modelo de una teoría dentro de otra, y la primera es consistente si lo es la segunda.
 
-- **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink>:** En el capítulo II de los *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> estableció la consistencia relativa de la geometría euclidiana interpretando sus términos <ConceptLink targetId="concepto-primitivo">primitivos</ConceptLink> en un <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> plano, cuyas coordenadas pertenecen a un cuerpo numerable $\Omega$ de números algebraicos reales. Toda contradicción de los axiomas se trasladaría entonces a la aritmética de $\Omega$.
-- **Geometrías no euclidianas:** Históricamente, ni <ConceptLink targetId="bolyai">Bolyai</ConceptLink> ni <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink> lograron probar la consistencia de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>. Fueron <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868, mediante superficies de curvatura constante y un modelo en el disco), Felix <ConceptLink targetId="klein">Klein</ConceptLink> (1871) y <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) quienes la probaron mediante modelos euclídeos, incluidos los del <ConceptLink targetId="plano">plano</ConceptLink>, como el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>; así, la consistencia hiperbólica se reduce a la euclidiana.
+- **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink>:** En el capítulo II de los *Grundlagen*, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> interpretó los términos <ConceptLink targetId="concepto-primitivo">primitivos</ConceptLink> de la geometría euclidiana en un <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> cuyas coordenadas pertenecen a un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> numerable $\Omega$ de números algebraicos <ConceptLink targetId="numero-real">reales</ConceptLink>. Lo desarrolla en el plano, y el caso del <ConceptLink targetId="espacio">espacio</ConceptLink> es análogo. Así probó la consistencia relativa de los axiomas I–IV y V.1; para incluir el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink> (V.2) se toman las coordenadas en $\mathbb{R}$. Toda contradicción de los axiomas se trasladaría a la aritmética del cuerpo de coordenadas.
+- **Geometrías no euclidianas:** Históricamente, ni <ConceptLink targetId="bolyai">Bolyai</ConceptLink> ni <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink> lograron probar la consistencia de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>. Fueron <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868, mediante superficies de <ConceptLink targetId="curvatura">curvatura</ConceptLink> constante y un modelo en el disco), <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871) y <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) quienes la probaron mediante modelos euclídeos, incluidos los del <ConceptLink targetId="plano">plano</ConceptLink>, como el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>; así, la consistencia hiperbólica se reduce a la euclidiana.

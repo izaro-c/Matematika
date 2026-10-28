@@ -13,14 +13,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> **geometric structure** is the mathematical specification assigning meaning and interpretation to a formal <ConceptLink targetId="signatura">signature</ConceptLink>: defining initial object <ConceptLink targetId="dominio">domains</ConceptLink> and the <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink> operating among them.
+<Capitular letra="A" /> **geometric structure** is an interpretation of a geometric <ConceptLink targetId="signatura" isDependency={true}>signature</ConceptLink>: it fixes the <ConceptLink targetId="dominio">domains</ConceptLink> of objects (points, lines, planes) and the <ConceptLink targetId="funcion">functions</ConceptLink> and <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink> acting on them. It is a case of the general mathematical structure defined below.
 
-<Definicion title="General Formal Definition">
-  A **mathematical structure** $\mathcal{S}$ (a <ConceptLink targetId="modelo">model</ConceptLink> of a theory if it satisfies its axioms) is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called <ConceptLink targetId="dominio">domains</ConceptLink>), <ConceptLink targetId="funcion">functions</ConceptLink> $\mathcal{F}_l$, and <ConceptLink targetId="relacion">relations</ConceptLink> $\mathcal{R}_j$:
+<Definicion title="General formal definition">
+  A **structure** $\mathcal{S}$ for a <ConceptLink targetId="signatura">signature</ConceptLink> $\Sigma$ assigns to each sort of $\Sigma$ a non-empty <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> $\mathcal{D}_i$ (its <ConceptLink targetId="dominio">domain</ConceptLink>), to each function symbol a <ConceptLink targetId="funcion" isDependency={true}>function</ConceptLink> $\mathcal{F}_l$ and to each relation symbol a <ConceptLink targetId="relacion" isDependency={true}>relation</ConceptLink> $\mathcal{R}_j$, with the arities and sorts fixed by $\Sigma$:
   $$
   \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
-  where each function $\mathcal{F}_l \colon \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \longrightarrow \mathcal{D}_{i_{n+1}}$ operates on the domains and each relation $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ links their elements. In purely relational theories (such as Hilbert's synthetic geometry), the functional inventory is empty ($\mathcal{F} = \emptyset$).
+  where each function $\mathcal{F}_l \colon \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \longrightarrow \mathcal{D}_{i_{n+1}}$ operates on the domains and each relation $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ links their elements. In purely relational theories (such as Hilbert's synthetic geometry), the functional inventory is empty ($p = 0$). A structure that satisfies the axioms of a theory is a <ConceptLink targetId="modelo">model</ConceptLink> of that theory.
 </Definicion>
 
 <Separador />
@@ -43,5 +43,5 @@ $$
 ### Other geometric structures and signatures
 
 - **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, with the signature of the planar part of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, shared by <ConceptLink targetId="geometria-finita">finite geometries</ConceptLink> such as the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink> and by <ConceptLink targetId="geometria-proyectiva">projective</ConceptLink> ones.
-- **<ConceptLink targetId="espacio-metrico">Metric space</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, \mathbb{R}, d)$, where a numerical <ConceptLink targetId="distancia">distance</ConceptLink> function $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ replaces synthetic congruence and order.
-- **<ConceptLink targetId="espacio-vectorial">Vector space</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, based on <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink> over a <ConceptLink targetId="cuerpo">field</ConceptLink>.
+- **<ConceptLink targetId="espacio-metrico">Metric space</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, \mathbb{R}, d)$, where a numerical <ConceptLink targetId="distancia">distance</ConceptLink> function $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ (with $\mathbb{R}$ carrying its addition and order) replaces synthetic congruence and order.
+- **<ConceptLink targetId="espacio-vectorial">Vector space</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, where $+$ is vector addition and $\cdot$ scalar multiplication by a <ConceptLink targetId="cuerpo">field</ConceptLink> $\mathbb{K}$; it is the object of <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink>.

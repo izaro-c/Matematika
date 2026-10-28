@@ -132,7 +132,7 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     category: 'Aljebra' as any,
   },
   propiedad_asociativa: {
-    title: 'Asoziatibitatea (Propietate elkartzailea)',
+    title: 'Elkarkortasuna (Propietate elkarkorra)',
     definition: 'Segidako eragiketetan gaiak taldekatzeko moduak azken emaitza aldatzen ez dueneko propietatea.',
     category: 'Aljebra' as any,
   },

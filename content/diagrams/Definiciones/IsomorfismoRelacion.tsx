@@ -17,13 +17,13 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       -5,
       2.4,
       5,
-      -2.2
+      -2.75
     ],
     "home": [
       -5,
       2.4,
       5,
-      -2.2
+      -2.75
     ],
     "minZoom": 0.6,
     "maxZoom": 3,
@@ -774,9 +774,13 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "target": false,
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": -2.8086,
-        "y": -0.7086
+        "type": "expression",
+        "x": "-2.2414 - 0.5672 * (1 - quitarRM2)",
+        "y": "-0.1414 - 0.5672 * (1 - quitarRM2)",
+        "fallback": [
+          -2.8086,
+          -0.7086
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -815,7 +819,8 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
         "strokeWidth": 2,
         "labelVisible": false,
         "preserveColorOnHighlight": true
-      }
+      },
+      "visibleWhen": "lt(quitarRM2, 0.97)"
     },
     {
       "id": "fallaM2",
@@ -1952,7 +1957,7 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "definition": {
         "type": "expression",
         "x": "or(and(eq(imagenes12.x, 2), eq(imagenes12.y, 1)), and(eq(imagenes12.x, 1), eq(imagenes12.y, 3)))",
-        "y": "or(and(eq(imagenes12.y, 2), eq(imagenes3.x, 1)), and(eq(imagenes12.y, 1), eq(imagenes3.x, 3)))",
+        "y": "or(gt(quitarRM2, 0.5), or(and(eq(imagenes12.y, 2), eq(imagenes3.x, 1)), and(eq(imagenes12.y, 1), eq(imagenes3.x, 3))))",
         "fallback": [
           0,
           0
@@ -1983,8 +1988,8 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "expression",
-        "x": "or(and(eq(imagenes12.x, 2), eq(imagenes12.y, 1)), and(eq(imagenes12.y, 2), eq(imagenes3.x, 1)))",
-        "y": "or(and(eq(imagenes12.x, 1), eq(imagenes12.y, 3)), and(eq(imagenes12.y, 1), eq(imagenes3.x, 3)))",
+        "x": "or(and(eq(imagenes12.x, 2), eq(imagenes12.y, 1)), and(not(gt(quitarRM2, 0.5)), eq(imagenes12.y, 2), eq(imagenes3.x, 1)))",
+        "y": "or(and(eq(imagenes12.x, 1), eq(imagenes12.y, 3)), and(not(gt(quitarRM2, 0.5)), eq(imagenes12.y, 1), eq(imagenes3.x, 3)))",
         "fallback": [
           0,
           0
@@ -2356,6 +2361,40 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       }
     },
     {
+      "id": "quitarRM2",
+      "label": "Quitar $(a_2, a_3)$ de $R^{\\mathcal{M}}$",
+      "color": "mora",
+      "layerId": "annotations",
+      "order": 500,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "primary",
+        "ariaLabel": "Quitar el par (a₂, a₃) de R en 𝓜, o devolverlo"
+      },
+      "target": false,
+      "objectType": "control",
+      "variant": "button",
+      "position": [
+        -4.85,
+        -2.2
+      ],
+      "range": {
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      },
+      "value": 0,
+      "action": {
+        "to": 1,
+        "durationMs": 600,
+        "easing": "ease-in-out",
+        "behavior": "toggle"
+      }
+    },
+    {
       "id": "estadoSinImagen",
       "label": "Estado: algún elemento sin imagen",
       "color": "carbon",
@@ -2440,7 +2479,7 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "layerId": "annotations",
       "order": 702,
       "visible": true,
-      "visibleWhen": "and(gt(estado.x, 0.5), not(and(gt(conservaM.x, 0.5), gt(conservaM.y, 0.5), gt(reflejaN.x, 0.5), gt(reflejaN.y, 0.5))))",
+      "visibleWhen": "and(gt(estado.x, 0.5), not(and(gt(conservaM.x, 0.5), gt(conservaM.y, 0.5))))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -2510,6 +2549,45 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "appearance": {
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "estadoSoloIda",
+      "label": "Estado: se cumple ⇒ pero no ⇐",
+      "color": "carbon",
+      "layerId": "annotations",
+      "order": 704,
+      "visible": true,
+      "visibleWhen": "and(gt(estado.x, 0.5), gt(conservaM.x, 0.5), gt(conservaM.y, 0.5), not(and(gt(reflejaN.x, 0.5), gt(reflejaN.y, 0.5))))",
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Estado: se cumple ⇒ pero no ⇐",
+        "role": "annotation"
+      },
+      "target": false,
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
+          {
+            "id": "estado",
+            "text": "Cumple $\\Rightarrow$, no $\\Leftarrow$: no es isomorfismo.",
+            "color": "granada"
+          }
+        ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0.5,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [],
@@ -2522,7 +2600,8 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "labels": {
         "reposof1": "Irudirik gabe: $a_1$",
         "reposof2": "Irudirik gabe: $a_2$",
-        "reposof3": "Irudirik gabe: $a_3$"
+        "reposof3": "Irudirik gabe: $a_3$",
+        "quitarRM2": "Kendu $(a_2, a_3)$ $R^{\\mathcal{M}}$-tik"
       },
       "ariaLabels": {
         "conjuntoM": "𝓜 egituraren M domeinua",
@@ -2544,7 +2623,9 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
         "estadoSinImagen": "Egoera: elementuren bat irudirik gabe",
         "estadoNoBiyeccion": "Egoera: ez da bijekzioa",
         "estadoNoConserva": "Egoera: R kontserbatzen ez duen bijekzioa",
-        "estadoIsomorfismo": "Egoera: isomorfismoa"
+        "estadoIsomorfismo": "Egoera: isomorfismoa",
+        "quitarRM2": "Kendu (a₂, a₃) bikotea 𝓜-ko R-tik, edo itzuli",
+        "estadoSoloIda": "Egoera: ⇒ betetzen da, baina ⇐ ez"
       },
       "blocks": {
         "estadoSinImagen": {
@@ -2566,6 +2647,11 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
           "estado": {
             "text": "Isomorfismoa: $R$ kontserbatzen da."
           }
+        },
+        "estadoSoloIda": {
+          "estado": {
+            "text": "$\\Rightarrow$ bai, baina $\\Leftarrow$ ez: ez da isomorfismoa."
+          }
         }
       }
     },
@@ -2575,7 +2661,8 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
       "labels": {
         "reposof1": "No image: $a_1$",
         "reposof2": "No image: $a_2$",
-        "reposof3": "No image: $a_3$"
+        "reposof3": "No image: $a_3$",
+        "quitarRM2": "Remove $(a_2, a_3)$ from $R^{\\mathcal{M}}$"
       },
       "ariaLabels": {
         "conjuntoM": "Domain M of the structure 𝓜",
@@ -2597,7 +2684,9 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
         "estadoSinImagen": "Status: some element has no image",
         "estadoNoBiyeccion": "Status: not a bijection",
         "estadoNoConserva": "Status: bijection that does not preserve R",
-        "estadoIsomorfismo": "Status: isomorphism"
+        "estadoIsomorfismo": "Status: isomorphism",
+        "quitarRM2": "Remove the pair (a₂, a₃) from R in 𝓜, or put it back",
+        "estadoSoloIda": "Status: ⇒ holds but ⇐ fails"
       },
       "blocks": {
         "estadoSinImagen": {
@@ -2618,6 +2707,11 @@ export const IsomorfismoRelacionSpec = createDiagramSpec(
         "estadoIsomorfismo": {
           "estado": {
             "text": "Isomorphism: $R$ is preserved."
+          }
+        },
+        "estadoSoloIda": {
+          "estado": {
+            "text": "$\\Rightarrow$ holds, $\\Leftarrow$ fails: not an isomorphism."
           }
         }
       }

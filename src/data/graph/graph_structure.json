@@ -67,16 +67,6 @@
     "lado",
     "cateto",
     "circunferencia",
-    "cociente-incremental",
-    "concepto-primitivo",
-    "congruencia-triangulos",
-    "interseccion",
-    "conjunto-disjunto",
-    "consistencia-logica",
-    "espacio",
-    "continuidad",
-    "cuadrilatero",
-    "cuadrado",
     "elemento-neutro",
     "elemento-inverso",
     "grupo",
@@ -87,18 +77,28 @@
     "numero-racional",
     "demo-completitud-reales",
     "completitud-reales",
+    "espacio",
+    "continuidad",
     "numero-real",
+    "cociente-incremental",
+    "concepto-primitivo",
+    "congruencia-triangulos",
+    "interseccion",
+    "conjunto-disjunto",
+    "consistencia-logica",
+    "cuadrilatero",
+    "cuadrado",
     "limite",
     "derivada",
     "dimension",
     "distancia",
     "dominio",
+    "signatura",
     "estructura-geometrica",
     "geometria-hilbertiana",
     "geometria-sintetica",
     "hipotenusa",
     "interior-triangulo",
-    "signatura",
     "isomorfismo",
     "logica",
     "segmento-unidad",
@@ -773,7 +773,8 @@
       "description": "Razón de cambio promedio de una función real en un intervalo, definida por el cociente entre la variación de la variable dependiente y la de la variable independiente.",
       "proofs": [],
       "directDependencies": [
-        "funcion"
+        "funcion",
+        "numero-real"
       ]
     },
     "colinealidad": {
@@ -828,7 +829,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Conjuntos disjuntos",
-      "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
+      "description": "Dos conjuntos son disjuntos si su intersección es vacía; una familia es disjunta dos a dos si lo son cualesquiera dos de sus miembros con índices distintos.",
       "proofs": [],
       "directDependencies": [
         "conjunto",
@@ -849,7 +850,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Consistencia lógica",
-      "description": "Propiedad de una teoría formal que garantiza la imposibilidad de deducir simultáneamente una proposición y su negación (ausencia de contradicciones).",
+      "description": "Propiedad de una teoría formal de la que no se pueden deducir a la vez una fórmula y su negación.",
       "proofs": [],
       "directDependencies": []
     },
@@ -962,7 +963,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Dominio",
-      "description": "Conjunto no vacío de partida que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
+      "description": "Conjunto no vacío que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
       "proofs": [],
       "directDependencies": [
         "conjunto"
@@ -1020,7 +1021,11 @@
       "title": "Estructura geométrica",
       "description": "Interpretación de una signatura formal: dominios no vacíos de objetos con las funciones y relaciones que interpretan sus símbolos.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "signatura",
+        "conjunto",
+        "funcion"
+      ]
     },
     "funcion": {
       "id": "funcion",
@@ -1038,7 +1043,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Geometría hilbertiana",
-      "description": "Axiomatización de la geometría euclídea publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
+      "description": "Axiomatización de la geometría euclidiana publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
       "proofs": [],
       "directDependencies": [
         "punto",
@@ -1130,9 +1135,9 @@
       "description": "Biyección entre dos estructuras matemáticas que preserva todas las operaciones, relaciones y constantes de su signatura formal.",
       "proofs": [],
       "directDependencies": [
+        "biyeccion",
         "estructura-geometrica",
-        "signatura",
-        "biyeccion"
+        "signatura"
       ]
     },
     "lado": {
@@ -1165,7 +1170,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Lógica matemática",
-      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis y las reglas de inferencia válidas.",
+      "description": "Disciplina formal que estudia los sistemas deductivos, los lenguajes formales, la sintaxis, la semántica y las reglas de inferencia válidas.",
       "proofs": [],
       "directDependencies": []
     },
@@ -1217,7 +1222,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Números naturales",
-      "description": "Sistema numérico discreto para el conteo y la ordenación secuencial, caracterizado axiomáticamente mediante los postulados de Peano.",
+      "description": "Los números 0, 1, 2, 3, … con los que se cuenta y se ordena, caracterizados por los axiomas de Peano.",
       "proofs": [],
       "directDependencies": [
         "conjunto",

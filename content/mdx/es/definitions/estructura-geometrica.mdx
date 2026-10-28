@@ -13,14 +13,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na **estructura geométrica** es la especificación matemática que asigna significado e interpretación a una <ConceptLink targetId="signatura">signatura</ConceptLink> formal: define los <ConceptLink targetId="dominio">dominios</ConceptLink> de objetos de partida y las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> que operan entre ellos.
+<Capitular letra="U" />na **estructura geométrica** es una interpretación de una <ConceptLink targetId="signatura" isDependency={true}>signatura</ConceptLink> geométrica: fija los <ConceptLink targetId="dominio">dominios</ConceptLink> de objetos (puntos, rectas, planos) y las <ConceptLink targetId="funcion">funciones</ConceptLink> y <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> que actúan sobre ellos. Es un caso de la estructura matemática general que se define a continuación.
 
-<Definicion title="Definición Formal General">
-  Una **estructura matemática** $\mathcal{S}$ (un <ConceptLink targetId="modelo">modelo</ConceptLink> de una teoría si satisface sus axiomas) está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados <ConceptLink targetId="dominio">dominios</ConceptLink>), <ConceptLink targetId="funcion">funciones</ConceptLink> $\mathcal{F}_l$ y <ConceptLink targetId="relacion">relaciones</ConceptLink> $\mathcal{R}_j$:
+<Definicion title="Definición formal general">
+  Una **estructura** $\mathcal{S}$ para una <ConceptLink targetId="signatura">signatura</ConceptLink> $\Sigma$ asigna a cada tipo de $\Sigma$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> no vacío $\mathcal{D}_i$ (su <ConceptLink targetId="dominio">dominio</ConceptLink>), a cada símbolo de función una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> $\mathcal{F}_l$ y a cada símbolo de relación una <ConceptLink targetId="relacion" isDependency={true}>relación</ConceptLink> $\mathcal{R}_j$, con las aridades y tipos que fija $\Sigma$:
   $$
   \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
-  donde cada función $\mathcal{F}_l \colon \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \longrightarrow \mathcal{D}_{i_{n+1}}$ opera sobre los dominios y cada relación $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ vincula sus elementos. En teorías puramente relacionales (como la geometría sintética de Hilbert), el repertorio de funciones es vacío ($\mathcal{F} = \emptyset$).
+  donde cada función $\mathcal{F}_l \colon \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \longrightarrow \mathcal{D}_{i_{n+1}}$ opera sobre los dominios y cada relación $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ vincula sus elementos. En teorías puramente relacionales (como la geometría sintética de Hilbert), el repertorio de funciones es vacío ($p = 0$). Una estructura que satisface los axiomas de una teoría es un <ConceptLink targetId="modelo">modelo</ConceptLink> de esa teoría.
 </Definicion>
 
 <Separador />
@@ -43,5 +43,5 @@ $$
 ### Otras estructuras y signaturas geométricas
 
 - **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, con la signatura de la parte plana del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, común a <ConceptLink targetId="geometria-finita">geometrías finitas</ConceptLink> como el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> y a las <ConceptLink targetId="geometria-proyectiva">proyectivas</ConceptLink>.
-- **<ConceptLink targetId="espacio-metrico">Espacio métrico</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, \mathbb{R}, d)$, donde una función de <ConceptLink targetId="distancia">distancia</ConceptLink> numérica $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ sustituye a las relaciones sintéticas de congruencia y orden.
-- **<ConceptLink targetId="espacio-vectorial">Espacio vectorial</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, fundamentado en el <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink> sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink>.
+- **<ConceptLink targetId="espacio-metrico">Espacio métrico</ConceptLink>:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, \mathbb{R}, d)$, donde una función de <ConceptLink targetId="distancia">distancia</ConceptLink> numérica $d \colon \mathcal{P} \times \mathcal{P} \longrightarrow \mathbb{R}$ (con $\mathbb{R}$ dotado de su suma y su orden) sustituye a las relaciones sintéticas de congruencia y orden.
+- **<ConceptLink targetId="espacio-vectorial">Espacio vectorial</ConceptLink>:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, donde $+$ es la suma de vectores y $\cdot$ el producto por escalares de un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> $\mathbb{K}$; es el objeto del <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink>.

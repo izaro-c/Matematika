@@ -13,7 +13,7 @@ export const metadata = {
     {
       title: "Elements",
       author: "Euclid",
-      locator: "Book I, Common Notions 4",
+      locator: "Book I, Common Notion 4",
       role: "primary"
     },
     {
@@ -30,14 +30,14 @@ export const metadata = {
 It is not defined from any measure: it is postulated in the <ConceptLink targetId="signatura">signature</ConceptLink> of the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, and its properties are fixed by the third group of <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> through <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>). The notions of <ConceptLink targetId="longitud">length</ConceptLink> and <ConceptLink targetId="medida-angular">angle measure</ConceptLink> are built later, from it and the <ConceptLink targetId="continuidad">axioms of continuity</ConceptLink>.
 
 <Definicion title="Formalization of Synthetic Congruence">
-In the signature of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, **congruence** ($\cong$) comprises two distinct primitive <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>:
+In the signature of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, **congruence** ($\cong$) comprises two distinct primitive <ConceptLink targetId="relacion">relations</ConceptLink> on the <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ of <ConceptLink targetId="punto">points</ConceptLink>:
 
-1. **Segment congruence**: a binary relation $\cong_{\mathrm{seg}}$ on the <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> determined by pairs of distinct <ConceptLink targetId="punto">points</ConceptLink> of the <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, denoted $\overline{AB} \cong \overline{CD}$ for endpoints $A \neq B$ and $C \neq D$.
-2. **Angle congruence**: a binary relation $\cong_{\angle}$ on the set of <ConceptLink targetId="angulo">angles</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>, denoted $\angle AOB \cong \angle A'O'B'$; the two angles compared may lie in different <ConceptLink targetId="plano">planes</ConceptLink>.
+1. **Segment congruence**: a four-argument relation $\cong_{\mathrm{seg}}$, with $\operatorname{ar}(\cong_{\mathrm{seg}}) = \mathcal{P}^4$, denoted $\overline{AB} \cong \overline{CD}$ for $A \neq B$ and $C \neq D$; it is read as a <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> between the <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{AB}$ and $\overline{CD}$.
+2. **Angle congruence**: a six-argument relation $\cong_{\angle}$, with $\operatorname{ar}(\cong_{\angle}) = \mathcal{P}^6$, denoted $\angle AOB \cong \angle A'O'B'$ for non-collinear $A, O, B$ and non-collinear $A', O', B'$; it is read as a binary relation between <ConceptLink targetId="angulo">angles</ConceptLink>, which may lie in different <ConceptLink targetId="plano">planes</ConceptLink>.
 </Definicion>
 
 <Separador />
 
 <Nota>
-From the primitive relations on segments and angles, the notion extends to composite figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink>: two figures are congruent if there is a <ConceptLink targetId="biyeccion">bijection</ConceptLink> between their <ConceptLink targetId="vertice">vertices</ConceptLink> making all corresponding <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink> congruent. For triangles, this extension is <ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink>.
+From the primitive relations on segments and angles, the notion extends to composite figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink>: two figures are congruent if there is a <ConceptLink targetId="biyeccion">bijection</ConceptLink> between their <ConceptLink targetId="vertice">vertices</ConceptLink> under which all corresponding <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink> are congruent. For triangles, this extension is <ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink>.
 </Nota>

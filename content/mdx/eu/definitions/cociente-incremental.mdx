@@ -9,18 +9,18 @@ export const metadata = {
   branches: ["26A"],
   hasSimulation: true,
   sources: [
-    { title: "Calculus", author: "Michael Spivak", locator: "Capítulo 9", role: "primary" },
-    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 5", role: "secondary" }
+    { title: "Calculus", author: "Michael Spivak", locator: "9. kapitulua", role: "primary" },
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "5. kapitulua", role: "secondary" }
   ]
 };
 
 import { CocienteIncremental } from '@content/diagrams/Definiciones/CocienteIncremental';
 export const Simulation = CocienteIncremental;
 
-<Capitular letra="G" /><VisualBind element="secante" color="terracota">ehikuntza-zatidura</VisualBind> (edo batez besteko aldakuntza-tasa) <ConceptLink targetId="numero-real">aldagai errealeko</ConceptLink> <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> batek <ConceptLink targetId="intervalo" isDependency={true}>tarte</ConceptLink> bateko bi punturen artean duen aldakuntzaren eta aldagai independentearen aldakuntzaren arteko zatidura da: aldagaiaren aldaketa-unitate bakoitzeko funtzioa batez beste zenbat aldatzen den neurtzen du.
+<Capitular letra="G" /><VisualBind element="secante" color="terracota">**ehikuntza-zatidura**</VisualBind> (edo batez besteko aldakuntza-tasa) <ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink> <ConceptLink targetId="numero-real">erreal</ConceptLink> batek <ConceptLink targetId="intervalo" isDependency={true}>tarte</ConceptLink> bateko bi punturen artean duen aldakuntzaren eta aldagai independentearen aldakuntzaren arteko zatidura da: aldagaiaren aldaketa-unitate bakoitzeko funtzioa batez beste zenbat aldatzen den neurtzen du.
 
 <Definicion title="Gehikuntza-zatiduraren definizio formala">
-  Izan bitez $I \subseteq \mathbb{R}$ <ConceptLink targetId="numero-real">zuzen errealeko</ConceptLink> <ConceptLink targetId="intervalo" isDependency={true}>tarte</ConceptLink> bat eta $f\colon I \longrightarrow \mathbb{R}$ <VisualBind element="grafica" color="carbon"><ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink></VisualBind> bat. $x \in I$ oinarri-puntu bat finkatuta eta zero ez den $h \in \mathbb{R} \setminus \{0\}$ gehikuntza bat emanda non $x + h \in I$, $f$ funtzioaren <VisualBind element="secante" color="terracota">**gehikuntza-zatidura**</VisualBind> <VisualBind element="pX" color="carbon">$x$</VisualBind> eta <VisualBind element="pXh" color="terracota">$x + h$</VisualBind> puntuen artean honela definitzen da:
+  Izan bitez $I \subseteq \mathbb{R}$ <ConceptLink targetId="numero-real" isDependency={true}>zuzen errealeko</ConceptLink> <ConceptLink targetId="intervalo" isDependency={true}>tarte</ConceptLink> bat eta $f\colon I \longrightarrow \mathbb{R}$ <VisualBind element="grafica" color="carbon"><ConceptLink targetId="funcion" isDependency={true}>funtzio</ConceptLink></VisualBind> bat. $x \in I$ oinarri-puntu bat finkatuta eta zero ez den $h \in \mathbb{R} \setminus \{0\}$ gehikuntza bat emanda non $x + h \in I$, $f$ funtzioaren <VisualBind element="secante" color="terracota">**gehikuntza-zatidura**</VisualBind> <VisualBind element="pX" color="carbon">$x$</VisualBind> eta <VisualBind element="pXh" color="terracota">$x + h$</VisualBind> puntuen artean honela definitzen da:
   $$
   \frac{\Delta y}{\Delta x} = \frac{f(x + h) - f(x)}{h}
   $$
@@ -28,7 +28,7 @@ export const Simulation = CocienteIncremental;
   $$
   \frac{f(x_1) - f(x)}{x_1 - x}
   $$
-  non <VisualBind element="segDy" color="pavo">$\Delta y = f(x + h) - f(x)$</VisualBind> adierazpenak mendeko aldagaiak jasandako aldakuntza absolutua adierazten duen eta <VisualBind element="segDx" color="ocre">$\Delta x = h$</VisualBind> adierazpenak aldagai independentearen gehikuntza adierazten duen.
+  non <VisualBind element="segDy" color="pavo">$\Delta y = f(x + h) - f(x)$</VisualBind> adierazpenak mendeko aldagaiaren aldakuntza adierazten duen eta <VisualBind element="segDx" color="ocre">$\Delta x = h$</VisualBind> adierazpenak aldagai independentearen gehikuntza adierazten duen.
 </Definicion>
 
 <Separador />
@@ -36,10 +36,10 @@ export const Simulation = CocienteIncremental;
 <SeccionPropiedades>
   <PropiedadesGrupo title="Interpretazioa eta propietate analitikoak">
     <PropiedadItem id="interpretacion-geometrica-secante" title="Interpretazio geometrikoa ebakitzailearen malda gisa" formula="m_{\mathrm{sec}} = \frac{f(x+h) - f(x)}{h}">
-      Geometrikoki, gehikuntza-zatidura <VisualBind element="pP" color="carbon">$(x, f(x))$</VisualBind> eta <VisualBind element="pQ" color="terracota">$(x + h, f(x + h))$</VisualBind> <ConceptLink targetId="punto">puntuak</ConceptLink> lotzen dituen <ConceptLink targetId="funcion">funtzioaren</ConceptLink> <VisualBind element="grafica" color="carbon"><ConceptLink targetId="grafica-funcion">grafikoko</ConceptLink></VisualBind> <VisualBind element="secante" color="terracota"><ConceptLink targetId="recta-secante-grafica">zuzen ebakitzailearen</ConceptLink></VisualBind> <ConceptLink targetId="pendiente">maldarekin</ConceptLink> bat dator. $f$ funtzioa $x$ puntuan <ConceptLink targetId="funcion-derivable">deribagarria</ConceptLink> bada, $h$ zerorantz doanean zuzen ebakitzaile horiek grafikoak $(x, f(x))$ puntuan duen <VisualBind element="tangente" color="musgo"><ConceptLink targetId="recta-tangente">zuzen ukitzailerantz</ConceptLink></VisualBind> jotzen dute.
+      Geometrikoki, gehikuntza-zatidura <ConceptLink targetId="funcion">funtzioaren</ConceptLink> <VisualBind element="grafica" color="carbon"><ConceptLink targetId="grafica-funcion">grafikoko</ConceptLink></VisualBind> <VisualBind element="pP" color="carbon">$(x, f(x))$</VisualBind> eta <VisualBind element="pQ" color="terracota">$(x + h, f(x + h))$</VisualBind> <ConceptLink targetId="punto">puntuak</ConceptLink> lotzen dituen <VisualBind element="secante" color="terracota"><ConceptLink targetId="recta-secante-grafica">zuzen ebakitzailearen</ConceptLink></VisualBind> <ConceptLink targetId="pendiente">maldarekin</ConceptLink> bat dator. $f$ funtzioa $x$ puntuan <ConceptLink targetId="funcion-derivable">deribagarria</ConceptLink> bada, $h$ zerorantz doanean zuzen ebakitzaile horiek grafikoak $(x, f(x))$ puntuan duen <VisualBind element="tangente" color="musgo"><ConceptLink targetId="recta-tangente">zuzen ukitzailerantz</ConceptLink></VisualBind> jotzen dute.
     </PropiedadItem>
-    <PropiedadItem id="fundamento-de-la-derivada" title="Berehalako deribatuaren oinarria" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
-      Gehikuntza-zatiduraren portaera asintotikoak gehikuntza zerorantz doanean <ConceptLink targetId="derivada">deribatuaren</ConceptLink> kontzeptua definitzen du. Baldin eta <ConceptLink targetId="limite">muga</ConceptLink> $\mathbb{R}$ multzoan existitzen bada, lortutako $f'(x)$ balioak funtzioak $x$ puntuan duen berehalako aldakuntza-tasa adierazten du.
+    <PropiedadItem id="fundamento-de-la-derivada" title="Mugara igarotzea: deribatua" formula="f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}">
+      Gehikuntza-zatidurak $h$ zerorantz doanean duen <ConceptLink targetId="limite">muga</ConceptLink> $\mathbb{R}$ multzoan existitzen bada, muga hori $f'(x)$ <ConceptLink targetId="derivada">deribatua</ConceptLink> da: <ConceptLink targetId="funcion">funtzioak</ConceptLink> $x$ puntuan duen berehalako aldakuntza-tasa.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

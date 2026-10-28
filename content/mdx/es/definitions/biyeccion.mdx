@@ -9,7 +9,7 @@ export const metadata = {
   branches: ["03", "08A"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 8", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Sección 8", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
   ]
 };
@@ -17,12 +17,12 @@ export const metadata = {
 import { BiyeccionSagital } from '@content/diagrams/Definiciones/BiyeccionSagital';
 export const Simulation = BiyeccionSagital;
 
-<Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que asocia cada elemento del <ConceptLink targetId="dominio-funcion">dominio</ConceptLink> con un único elemento del <ConceptLink targetId="codominio">codominio</ConceptLink>, de modo que cada elemento del codominio resulta ser <ConceptLink targetId="imagen">imagen</ConceptLink> de exactamente un elemento del dominio.
+<Capitular letra="U" />na **biyección** (o aplicación biyectiva) es una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> entre dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> tal que cada elemento del <ConceptLink targetId="codominio">codominio</ConceptLink> es <ConceptLink targetId="imagen">imagen</ConceptLink> de exactamente un elemento del <ConceptLink targetId="dominio-funcion">dominio</ConceptLink>.
 
 La biyección empareja así uno a uno los elementos de ambos conjuntos, y el emparejamiento puede recorrerse en sentido contrario: asignar a cada elemento del codominio el único elemento del dominio del que es imagen define la <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink>.
 
 <Definicion title="Definición formal de biyección">
-  Sean <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> y <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> dos conjuntos. Una función <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> es una **biyección** si y solo si satisface simultáneamente dos condiciones:
+  Sean <VisualBind element="conjuntoA" color="carbon">$A$</VisualBind> y <VisualBind element="conjuntoB" color="carbon">$B$</VisualBind> dos <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink>. Una <ConceptLink targetId="funcion" isDependency={true}>función</ConceptLink> <VisualBind element="flechas" color="terracota">$f\colon A \longrightarrow B$</VisualBind> es una **biyección** si y solo si satisface simultáneamente dos condiciones:
   1. **<ConceptLink targetId="inyectividad" isDependency={true}>Inyectividad</ConceptLink>:** Elementos distintos del dominio poseen imágenes distintas:
      $$
      \forall x_1, x_2 \in A, \quad f(x_1) = f(x_2) \implies x_1 = x_2
@@ -32,14 +32,18 @@ La biyección empareja así uno a uno los elementos de ambos conjuntos, y el emp
      \forall y \in B, \quad \exists x \in A \quad (f(x) = y)
      $$
   
-  Equivalentemente, $f$ es biyectiva si y solo si existe una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> tal que $f^{-1} \circ f = \operatorname{id}_A$ y $f \circ f^{-1} = \operatorname{id}_B$.
+  Equivalentemente, $f$ es biyectiva si y solo si existe una <ConceptLink targetId="funcion-inversa">función inversa</ConceptLink> <VisualBind element="flechas-inversas" color="mora">$f^{-1}\colon B \longrightarrow A$</VisualBind> tal que su <ConceptLink targetId="composicion-funciones">composición</ConceptLink> con $f$ da la <ConceptLink targetId="funcion-identidad">identidad</ConceptLink>: $f^{-1} \circ f = \operatorname{id}_A$ y $f \circ f^{-1} = \operatorname{id}_B$.
 </Definicion>
+
+En la figura, el botón «Invertir las flechas» recorre cada par en sentido contrario: solo cuando $f$ es biyectiva el resultado es una función $f^{-1}$ de $B$ en $A$.
+
+Entre <ConceptLink targetId="conjunto-finito">conjuntos finitos</ConceptLink> con el mismo número de elementos, una función es inyectiva si y solo si es sobreyectiva: en la figura, mientras las tres flechas lleguen a $B$, no hay forma de romper una condición sin romper la otra.
 
 <Separador />
 
 ### Usos de las biyecciones
 
 Tres nociones de ramas distintas se formulan mediante biyecciones:
-- **Medida del tamaño:** Dos conjuntos tienen la misma <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> si y solo si existe una biyección entre ellos ($\lvert A \rvert = \lvert B \rvert$).
+- **Tamaño de un conjunto:** Dos conjuntos tienen la misma <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> si y solo si existe una biyección entre ellos ($\lvert A \rvert = \lvert B \rvert$).
 - **Preservación estructural:** Un <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink> es una biyección entre <ConceptLink targetId="estructura-geometrica">estructuras</ConceptLink> que además preserva todas las relaciones y operaciones de su <ConceptLink targetId="signatura">signatura</ConceptLink>.
 - **Congruencia de figuras:** En geometría, la <ConceptLink targetId="congruencia-triangulos">congruencia</ConceptLink> de dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> (y, en general, de dos <ConceptLink targetId="poligono">polígonos</ConceptLink>) se define a través de una correspondencia biyectiva entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> que preserva la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de los <ConceptLink targetId="lado">lados</ConceptLink> y de los <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos.

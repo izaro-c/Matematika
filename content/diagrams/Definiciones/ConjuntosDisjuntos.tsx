@@ -228,13 +228,13 @@ export const ConjuntosDisjuntosSpec = createDiagramSpec(
   "note": "Arrastra 1, 2 y 3: se sombrea cada intersección de dos conjuntos que no es vacía.",
   "translations": {
     "eu": {
-      "title": "Multzo disjuntuak: binaka eta ebakidura globala",
-      "note": "Arrastatu 1, 2 eta 3: hutsa ez den bi multzoren ebakidura bakoitza itzaltzen da.",
+      "title": "Multzo disjuntuak: bikoteka eta ebakidura globala",
+      "note": "Arrastatu 1, 2 eta 3: hutsa ez den bi multzoren ebakidura bakoitza koloreztatzen da.",
       "blocks": {
-        "estadoDisjuntos": { "estado": { "text": "Binaka disjuntuak; $\\bigcap A_i = \\emptyset$." } },
-        "estadoAlgunPar": { "estado": { "text": "Ez dira binaka disjuntuak; $\\bigcap A_i = \\emptyset$." } },
-        "estadoDosADos": { "estado": { "text": "Binaka ebakitzen dira, baina $\\bigcap A_i = \\emptyset$." } },
-        "estadoGlobal": { "estado": { "text": "$\\bigcap A_i \\neq \\emptyset$: binaka ebakitzen dira." } }
+        "estadoDisjuntos": { "estado": { "text": "Bikoteka disjuntuak; $\\bigcap A_i = \\emptyset$." } },
+        "estadoAlgunPar": { "estado": { "text": "Ez dira bikoteka disjuntuak; $\\bigcap A_i = \\emptyset$." } },
+        "estadoDosADos": { "estado": { "text": "Bikoteka ebakitzen dira, baina $\\bigcap A_i = \\emptyset$." } },
+        "estadoGlobal": { "estado": { "text": "$\\bigcap A_i \\neq \\emptyset$: bikoteka ebakitzen dira." } }
       },
       "ariaLabels": {
         "conjuntoA1": "A₁ multzoa",
@@ -246,9 +246,9 @@ export const ConjuntosDisjuntosSpec = createDiagramSpec(
         "x1": "1 elementua: arrastatu A₁, A₂ eta A₃ multzoen barrura edo kanpora",
         "x2": "2 elementua: arrastatu A₁, A₂ eta A₃ multzoen barrura edo kanpora",
         "x3": "3 elementua: arrastatu A₁, A₂ eta A₃ multzoen barrura edo kanpora",
-        "estadoDisjuntos": "Egoera: binaka disjuntuak",
+        "estadoDisjuntos": "Egoera: bikoteka disjuntuak",
         "estadoAlgunPar": "Egoera: bikoteren bat ebakitzen da, ebakidura globala hutsa da",
-        "estadoDosADos": "Egoera: binaka ebakitzen dira, ebakidura globala hutsa da",
+        "estadoDosADos": "Egoera: bikoteka ebakitzen dira, ebakidura globala hutsa da",
         "estadoGlobal": "Egoera: ebakidura globala ez da hutsa"
       }
     },

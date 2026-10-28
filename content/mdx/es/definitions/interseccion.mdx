@@ -9,7 +9,7 @@ export const metadata = {
   branches: ["03", "51M"],
   hasSimulation: true,
   sources: [
-    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 4", role: "primary" },
+    { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Sección 4", role: "primary" },
     { title: "Théorie des ensembles", author: "Nicolas Bourbaki", locator: "Capítulo II, §1", role: "secondary" }
   ]
 };
@@ -17,7 +17,7 @@ export const metadata = {
 import { Interseccion } from '@content/diagrams/Definiciones/Interseccion';
 export const Simulation = Interseccion;
 
-<Capitular letra="L" />a **intersección** es una <ConceptLink targetId="operacion-binaria">operación</ConceptLink> entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne los elementos que pertenecen a la vez a cada uno de ellos. Corresponde al conectivo de <ConceptLink targetId="conjuncion">conjunción</ConceptLink> ($\land$) de la <ConceptLink targetId="logica">lógica</ConceptLink> proposicional: un elemento está en la intersección de dos conjuntos si está en el primero y está en el segundo.
+<Capitular letra="L" />a **intersección** es una <ConceptLink targetId="operacion-binaria">operación</ConceptLink> entre <ConceptLink targetId="conjunto" isDependency={true}>conjuntos</ConceptLink> que reúne los elementos que pertenecen a la vez a cada uno de ellos. Corresponde a la conectiva de <ConceptLink targetId="conjuncion">conjunción</ConceptLink> ($\land$) de la <ConceptLink targetId="logica">lógica</ConceptLink> proposicional: un elemento está en la intersección de dos conjuntos si está en el primero y está en el segundo.
 
 Permite definir regiones geométricas compuestas, como el interior de un ángulo, y describir los puntos comunes a dos figuras.
 
@@ -28,11 +28,11 @@ Permite definir regiones geométricas compuestas, como el interior de un ángulo
   $$
   El <ConceptLink targetId="axioma-separacion" isDependency={true}>axioma de separación</ConceptLink> garantiza que $A \cap B$ es un conjunto, y para todo $x$ se cumple $x \in A \cap B \iff (x \in A \land x \in B)$.
 
-  Para una familia no vacía de conjuntos $\{A_i\}_{i \in I}$ y un índice cualquiera $i_0 \in I$, su intersección es:
+  Para una <ConceptLink targetId="familia-indexada">familia</ConceptLink> no vacía de conjuntos $\{A_i\}_{i \in I}$ y un índice cualquiera $i_0 \in I$, su intersección es:
   $$
   \bigcap_{i \in I} A_i = \{x \in A_{i_0} \mid \forall i \in I, \ x \in A_i\}
   $$
-  El resultado no depende del índice $i_0$ elegido. La familia ha de ser no vacía: si $I = \emptyset$, todo objeto cumpliría la condición, y la colección de todos los objetos no es un conjunto.
+  El resultado no depende del índice $i_0$ elegido. La familia ha de ser no vacía: si $I = \emptyset$, no hay ningún $A_{i_0}$ del que separar, y la condición $\forall i \in I,\ x \in A_i$ la cumple todo objeto; la colección de todos los objetos no es un conjunto.
 </Definicion>
 
 <Separador />
@@ -46,5 +46,5 @@ La intersección cumple la <ConceptLink targetId="conmutatividad">conmutatividad
 Por el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas tienen a lo sumo un <ConceptLink targetId="punto">punto</ConceptLink> común. Por eso, la intersección de sus <ConceptLink targetId="traza">trazas</ConceptLink> distingue las dos posiciones de dos rectas <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> distintas. Dos <ConceptLink targetId="secante">rectas secantes</ConceptLink> $\ell_1$ y $\ell_2$ tienen un único punto común, $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$, y dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> distintas no tienen ninguno: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$.
 
 La intersección de una familia no vacía de <ConceptLink targetId="conjunto-convexo">conjuntos convexos</ConceptLink> es convexa: si dos puntos $X$ e $Y$ están en todos ellos, el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{XY}$ está contenido en cada uno y, por tanto, en la intersección. Los <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos son convexos por el <ConceptLink targetId="teorema-separacion-plano">teorema de separación del plano</ConceptLink>, así que también lo son las regiones que se obtienen al cortarlos:
-- El <ConceptLink targetId="interior-angulo">interior</ConceptLink> de un <ConceptLink targetId="angulo">ángulo</ConceptLink> es la intersección de dos semiplanos abiertos: para cada lado, el limitado por su <ConceptLink targetId="recta-soporte">recta soporte</ConceptLink> que contiene al otro lado. Si $Q$ y $R$ son puntos de $\ell_1$ y de $\ell_2$ distintos de $P$, entonces $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\ell_1}(R) \cap \mathcal{H}_{\ell_2}(Q)$.
-- El <ConceptLink targetId="interior-triangulo">interior</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es la intersección de tres semiplanos abiertos: para cada <ConceptLink targetId="lado">lado</ConceptLink>, el limitado por su recta soporte que contiene al <ConceptLink targetId="vertice">vértice</ConceptLink> opuesto. El de un <ConceptLink targetId="poligono">polígono</ConceptLink> convexo se obtiene igual, con un semiplano por lado.
+- El <ConceptLink targetId="interior-angulo">interior</ConceptLink> de un <ConceptLink targetId="angulo">ángulo</ConceptLink> es la intersección de dos semiplanos abiertos: para cada lado, el limitado por su <ConceptLink targetId="recta-soporte">recta soporte</ConceptLink> que contiene al otro lado salvo el vértice: $\operatorname{Int}(\angle QPR) = \mathcal{H}_{\overleftrightarrow{PQ}}(R) \cap \mathcal{H}_{\overleftrightarrow{PR}}(Q)$.
+- El <ConceptLink targetId="interior-triangulo">interior</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es la intersección de tres semiplanos abiertos: para cada <ConceptLink targetId="lado">lado</ConceptLink>, el limitado por su recta soporte que contiene al <ConceptLink targetId="vertice">vértice</ConceptLink> opuesto. El de un <ConceptLink targetId="poligono-convexo">polígono convexo</ConceptLink> se obtiene igual, con un semiplano por lado.

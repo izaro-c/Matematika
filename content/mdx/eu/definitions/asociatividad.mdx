@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Elkartze-propietatea",
-  description: "Eragiketa bitar baten propietatea, zeinaren bidez eragigaien elkarketak ez baitu azken emaitza aldatzen.",
+  description: "Eragiketa bitar baten propietatea: eragigaiak nola elkartzen diren aldatuta ere, azken emaitza ez da aldatzen.",
   branch: "08A",
   branches: ["08A"],
   hasSimulation: true,
@@ -17,10 +17,10 @@ export const metadata = {
 import { AsociatividadArbol } from '@content/diagrams/Definiciones/AsociatividadArbol';
 export const Simulation = AsociatividadArbol;
 
-<Capitular letra="E" />lkartze-propietatea (edo elkartutasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> baten propietatea da: hiru elementu ordena jakin batean eragitean, emaitza bera da, haiek nola elkartzen diren gorabehera. Horri esker, <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> zenbait faktoreren biderkadurak parentesirik gabe idazten dira.
+<Capitular letra="E" />**lkartze-propietatea** (edo elkarkortasuna) <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> baten propietatea da: hiru elementu ordena jakin batean eragitean, emaitza bera da, haiek nola elkartzen diren gorabehera. Horri esker, <ConceptLink targetId="algebra-abstracta">aljebra abstraktuan</ConceptLink> zenbait faktoreren biderkadurak parentesirik gabe idazten dira.
 
 <Definicion title="Elkartze-propietatearen definizio formala">
-  Izan bedi $S$ <ConceptLink targetId="conjunto">multzo</ConceptLink> bat eta izan bedi $*\colon S \times S \longrightarrow S$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bat. $*$ eragiketa **elkartzailea** dela esaten da baldin eta soilik baldin honako identitatea betetzen badu:
+  Izan bedi $S$ <ConceptLink targetId="conjunto">multzo</ConceptLink> bat eta izan bedi $S$-ren gaineko $*\colon S \times S \longrightarrow S$ <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> bat. $*$ eragiketa **elkarkorra** dela esaten da baldin eta soilik baldin honako identitatea betetzen badu:
   $$
   \forall a, b, c \in S, \quad (a * b) * c = a * (b * c)
   $$
@@ -32,21 +32,21 @@ Irudian, hiru eragigaiek beti ordena bera dute, eta <VisualBind element="parente
 
 ### Egitura aljebraikoak eta kontraadibideak
 
-Ohiko eragiketa asko elkartzaileak dira eta beste batzuk ez; elkartze-propietatea zenbait <ConceptLink targetId="estructura-algebraica">egitura aljebraikoren</ConceptLink> definizioaren parte da:
+Ohiko eragiketa asko elkarkorrak dira eta beste batzuk ez; elkartze-propietatea zenbait <ConceptLink targetId="estructura-algebraica">egitura aljebraikoren</ConceptLink> definizioaren parte da:
 
-- **Eragiketa elkartzaile estandarrak:** <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; <ConceptLink targetId="multiplicacion-matrices">matrizeen biderketa</ConceptLink>; eta multzo batetik multzo berera doazen <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
-- **Eragiketa ez-elkartzaileak:** <ConceptLink targetId="sustraccion">Kenketa</ConceptLink> $\mathbb{R}$ multzoan ez da elkartzailea, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; ez dira elkartzaileak, halaber, <ConceptLink targetId="division">zatiketa</ConceptLink> $\mathbb{R} \setminus \{0\}$ multzoan eta <ConceptLink targetId="producto-vectorial">biderketa bektoriala</ConceptLink> $\mathbb{R}^3$ espazioan.
-- **Hierarkia aljebraikoa:** Eragiketa bitar elkartzaile bat duen multzoa <ConceptLink targetId="semigrupo">semitalde</ConceptLink> bat da; <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> duen semitaldea, <ConceptLink targetId="monoide">monoide</ConceptLink> bat; eta elementu bakoitzak <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> onartzen duen monoidea, <ConceptLink targetId="grupo">talde</ConceptLink> bat.
+- **Eragiketa elkarkor estandarrak:** <ConceptLink targetId="adicion">Batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink> $\mathbb{Z}$ <ConceptLink targetId="numero-entero">zenbaki osoetan</ConceptLink> eta $\mathbb{R}$ <ConceptLink targetId="numero-real">zenbaki errealetan</ConceptLink>; <ConceptLink targetId="multiplicacion-matrices">matrizeen biderketa</ConceptLink>; eta multzo batetik multzo berera doazen <ConceptLink targetId="composicion-funciones">funtzioen konposizioa</ConceptLink>.
+- **Eragiketa ez-elkarkorrak:** <ConceptLink targetId="sustraccion">Kenketa</ConceptLink> $\mathbb{R}$ multzoan ez da elkarkorra, $(8 - 4) - 2 = 2 \neq 6 = 8 - (4 - 2)$ baita; ez dira elkarkorrak, halaber, <ConceptLink targetId="division">zatiketa</ConceptLink> $\mathbb{R} \setminus \{0\}$ multzoan eta <ConceptLink targetId="producto-vectorial">biderkadura bektoriala</ConceptLink> $\mathbb{R}^3$ espazioan.
+- **Hierarkia aljebraikoa:** Eragiketa bitar elkarkor bat duen multzoa <ConceptLink targetId="semigrupo">semitalde</ConceptLink> bat da; <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> duen semitaldea, <ConceptLink targetId="monoide">monoide</ConceptLink> bat; eta elementu bakoitzak <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> duen monoidea, <ConceptLink targetId="grupo">talde</ConceptLink> bat.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Ondorio deduktiboak">
     <PropiedadItem id="asociatividad-generalizada" title="Elkartze-propietate orokortuaren teorema">
-      $*$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> elkartzailea bada, $n$ elementuren edozein $a_1 * a_2 * \cdots * a_n$ biderkadurak ($n \ge 3$ izanik) balio bera hartzen du parentesiak nola kokatzen diren gorabehera, faktoreen ordena aldatzen ez bada; beraz, parentesiak ken daitezke.
+      $*$ $S$-ren gaineko <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> elkarkorra bada, $n$ elementuren edozein $a_1 * a_2 * \cdots * a_n$ biderkadurak ($n \ge 3$ izanik) balio bera hartzen du parentesiak nola kokatzen diren gorabehera, faktoreen ordena aldatzen ez bada; beraz, parentesiak ken daitezke.
     </PropiedadItem>
-    <PropiedadItem id="unicidad-inversos-asociatividad" title="Alderantzizko elementuen bakartasuna">
-      $*$ elkartzailea bada eta $e$ <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> badu, eta $a$ elementu batek ezkerreko $b$ <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> ($b * a = e$) eta eskuineko $c$ alderantzizkoa ($a * c = e$) onartzen baditu, biak bat datoz: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$. Bereziki, $a$-ren alderantzizkoa, baldin badago, bakarra da.
+    <PropiedadItem id="unicidad-elemento-inverso" title="Alderantzizko elementuen bakartasuna">
+      $*$ elkarkorra bada eta $e$ <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> badu, eta $a$ elementu batek $b$ <ConceptLink targetId="elemento-inverso">ezker-alderantzizkoa</ConceptLink> ($b * a = e$) eta $c$ eskuin-alderantzizkoa ($a * c = e$) baditu, biak bat datoz: $b = b * e = b * (a * c) = (b * a) * c = e * c = c$. Bereziki, $a$-ren alderantzizkoa, baldin badago, bakarra da.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
