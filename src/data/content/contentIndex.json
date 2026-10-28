@@ -7844,9 +7844,8 @@
         "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
-        "grupo",
         "monoide",
-        "algebra-abstracta",
+        "grupo",
         "conjunto",
         "asociatividad",
         "unicidad-elemento-inverso"
@@ -7900,9 +7899,8 @@
         "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
-        "grupo",
         "monoide",
-        "algebra-abstracta",
+        "grupo",
         "conjunto",
         "asociatividad",
         "unicidad-elemento-inverso"
@@ -30396,9 +30394,8 @@
         "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
-        "grupo",
         "monoide",
-        "algebra-abstracta",
+        "grupo",
         "conjunto",
         "asociatividad",
         "unicidad-elemento-inverso"
@@ -43624,9 +43621,8 @@
         "estructura-algebraica",
         "elemento-neutro",
         "operacion-binaria",
-        "grupo",
         "monoide",
-        "algebra-abstracta",
+        "grupo",
         "conjunto",
         "asociatividad",
         "unicidad-elemento-inverso"
