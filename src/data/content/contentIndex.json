@@ -7841,6 +7841,7 @@
         }
       ],
       "conceptLinks": [
+        "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
         "grupo",
@@ -7896,6 +7897,7 @@
         }
       ],
       "conceptLinks": [
+        "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
         "grupo",
@@ -30391,6 +30393,7 @@
         }
       ],
       "conceptLinks": [
+        "estructura-algebraica",
         "operacion-binaria",
         "elemento-neutro",
         "grupo",
@@ -43618,8 +43621,9 @@
         }
       ],
       "conceptLinks": [
-        "operacion-binaria",
+        "estructura-algebraica",
         "elemento-neutro",
+        "operacion-binaria",
         "grupo",
         "monoide",
         "algebra-abstracta",

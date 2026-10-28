@@ -14,20 +14,20 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n **elemento inverso** (o elemento simétrico) de un elemento dado en una estructura algebraica es aquel que, al ser operado con él mediante una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> dotada de <ConceptLink targetId="elemento-neutro" isDependency={true}>elemento neutro</ConceptLink>, produce como resultado dicho neutro. La existencia generalizada de inversos constituye el axioma distintivo que diferencia a los <ConceptLink targetId="grupo">grupos</ConceptLink> de los <ConceptLink targetId="monoide">monoides</ConceptLink> y fundamenta la reversibilidad de transformaciones en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>.
+<Capitular letra="U" />n **elemento inverso** (o elemento simétrico) de un elemento dado en una <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> es aquel que, al ser operado con él mediante una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> dotada de <ConceptLink targetId="elemento-neutro" isDependency={true}>elemento neutro</ConceptLink>, produce como resultado dicho neutro. La existencia de inverso para todo elemento constituye el axioma distintivo que diferencia a los <ConceptLink targetId="grupo">grupos</ConceptLink> de los <ConceptLink targetId="monoide">monoides</ConceptLink> y fundamenta la reversibilidad de transformaciones en el <ConceptLink targetId="algebra-abstracta">álgebra abstracta</ConceptLink>.
 
 <Definicion title="Definición formal de elemento inverso">
   Sea $(S, *)$ un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> y provisto de un <ConceptLink targetId="elemento-neutro" isDependency={true}>elemento neutro</ConceptLink> bilateral $e \in S$. Dado un elemento $a \in S$, se dice que un elemento $a' \in S$ es un **inverso bilateral** de $a$ si y solo si cumple:
   $$
   a * a' = e \quad \land \quad a' * a = e
   $$
-  Si únicamente se verifica $a * a_R = e$, entonces $a_R \in S$ es un inverso por la derecha de $a$; si se cumple $a_L * a = e$, entonces $a_L \in S$ es un inverso por la izquierda de $a$. Cuando un elemento admite inverso bilateral, se dice que es un elemento simetrizable o invertible.
+  Si $a * a_R = e$, se dice que $a_R \in S$ es un inverso por la derecha de $a$; si $a_L * a = e$, se dice que $a_L \in S$ es un inverso por la izquierda de $a$. Cuando un elemento admite inverso bilateral, se dice que es un elemento simetrizable o invertible.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Unicidad e involución">
+  <PropiedadesGrupo title="Unicidad">
     <PropiedadItem id="unicidad-elemento-inverso" title="Unicidad del elemento inverso bajo asociatividad" formula="a * b = e \land c * a = e \implies b = c">
       Si la <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> $*$ satisface la propiedad de <ConceptLink targetId="asociatividad">asociatividad</ConceptLink>, el elemento inverso de cualquier elemento invertible $a \in S$ es único. En efecto, si $b \in S$ es un inverso por la derecha de $a$ ($a * b = e$) y $c \in S$ es un inverso por la izquierda de $a$ ($c * a = e$), entonces:
       $$
