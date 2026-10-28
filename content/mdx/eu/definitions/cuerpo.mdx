@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Gorputza",
-  description: "Egitura aljebraikoa, bi eragiketa bitar bateragarri (batuketa eta biderketa) dituena, banatze-propietateak lotutako bi talde abeldar osatuz.",
+  description: "Bi eragiketa bitar (batuketa eta biderketa) dituen egitura aljebraikoa: biek talde abeldarrak osatzen dituzte (biderketak, zero ez diren elementuetan), eta biderketa banakorra da batuketarekiko.",
   branch: "12",
   branches: ["12", "08A"],
   hasSimulation: false,
@@ -16,13 +16,13 @@ export const metadata = {
 
 <Capitular letra="G" />**orputza** barneko bi eragiketa bitar bateragarriz hornitutako <ConceptLink targetId="estructura-algebraica">egitura aljebraiko</ConceptLink> bat da —<ConceptLink targetId="adicion">batuketa</ConceptLink> eta <ConceptLink targetId="multiplicacion">biderketa</ConceptLink>—, $\mathbb{Q}$ <ConceptLink targetId="numero-racional">arrazionalak</ConceptLink>, $\mathbb{R}$ <ConceptLink targetId="numero-real">errealak</ConceptLink> eta $\mathbb{C}$ <ConceptLink targetId="numero-complejo">konplexuak</ConceptLink> bezalako zenbaki-sistema klasikoen propietate aritmetikoak orokortzen dituena.
 
-Gorputz batean batu, kendu, biderkatu eta zero ez den edozein elementuz zatitu daiteke, ohiko propietate elkarkorrak, trukakorrak eta banatzaileak betez.
+Gorputz batean batu, kendu, biderkatu eta zero ez den edozein elementuz zatitu daiteke, ohiko propietate <ConceptLink targetId="asociatividad">elkarkorrak</ConceptLink>, <ConceptLink targetId="conmutatividad">trukakorrak</ConceptLink> eta <ConceptLink targetId="distributividad">banakorrak</ConceptLink> betez.
 
 <Definicion title="Gorputzaren egitura formala">
   **Gorputz** bat $(\mathbb{K}, +, \cdot)$ hirukote bat da, hutsik ez dagoen $\mathbb{K}$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> batek eta $+ \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ eta $\cdot \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ barneko bi <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitarrek</ConceptLink> osatua, non:
-  1. $(\mathbb{K}, +)$ <ConceptLink targetId="grupo" isDependency={true}>talde</ConceptLink> abeldar bat den, bere <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> $0$ bidez adierazita.
+  1. $(\mathbb{K}, +)$ <ConceptLink targetId="grupo" isDependency={true}>talde</ConceptLink> <ConceptLink targetId="grupo-abeliano" isDependency={true}>abeldar</ConceptLink> bat den, bere <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> $0$ bidez adierazita.
   2. $(\mathbb{K} \setminus \{0\}, \cdot)$ talde abeldar bat den, bere elementu neutroa $1$ bidez adierazita, $1 \neq 0$ izanik.
-  3. Biderketa banakorra den batuketarekiko ezkerretik zein eskuinetik:
+  3. Biderketa <ConceptLink targetId="distributividad" isDependency={true}>banakorra</ConceptLink> den batuketarekiko ezkerretik zein eskuinetik:
      $$
      \forall a, b, c \in \mathbb{K}, \quad a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \land \quad (a + b) \cdot c = (a \cdot c) + (b \cdot c)
      $$
@@ -34,4 +34,4 @@ Gorputz batean batu, kendu, biderkatu eta zero ez den edozein elementuz zatitu d
 
 Gorputz batek batuketarekin eta elementu positiboen biderketarekin bateragarria den <ConceptLink targetId="orden-total">ordena osoko</ConceptLink> erlazio bat duenean, *<ConceptLink targetId="cuerpo-ordenado">gorputz ordenatu</ConceptLink>* deritzo.
 
-$\mathbb{R}$ zenbaki errealen gorputza da gorenenaren propietatea edo <ConceptLink targetId="completitud-reales">zenbaki errealen osotasuna</ConceptLink> betetzen duen gorputz ordenatu arkimedestar bakarra. Egitura-osotasun horri esker $\mathbb{R}^n$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiar</ConceptLink> analitikoa eraiki daiteke, <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> sintetikoki <ConceptLink targetId="axioma-completitud">V.2 axioman</ConceptLink> postulatutako <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> aljebraikoki oinarrituz.
+<ConceptLink targetId="isomorfismo">Isomorfismo</ConceptLink> bat salbu, $\mathbb{R}$ zenbaki errealen gorputza da gorenaren propietatea, hau da, <ConceptLink targetId="completitud-reales">zenbaki errealen osotasuna</ConceptLink>, betetzen duen gorputz ordenatu arkimedestar bakarra. $\mathbb{R}$ gorputzaren gainean eraikitzen da <ConceptLink targetId="modelo-cartesiano">eredu kartesiarra</ConceptLink>, eta <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> sintetikoki postulatutako bi <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> betetzen ditu: <ConceptLink targetId="axioma-arquimedes">V.1 axioma</ConceptLink>, $\mathbb{R}$ arkimedestarra delako, eta <ConceptLink targetId="axioma-completitud">V.2 axioma</ConceptLink>, $\mathbb{R}$ osoa delako.

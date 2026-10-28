@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Cuerpo",
-  description: "Estructura algebraica con dos operaciones binarias compatibles (adición y multiplicación) que forman sendos grupos abelianos distributivos.",
+  description: "Estructura algebraica con dos operaciones binarias, adición y multiplicación, que forman grupos abelianos (la multiplicación, sobre los elementos no nulos) y cumplen la ley distributiva.",
   branch: "12",
   branches: ["12", "08A"],
   hasSimulation: false,
@@ -16,13 +16,13 @@ export const metadata = {
 
 <Capitular letra="U" />n **cuerpo** es una <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> dotada de dos operaciones binarias internas compatibles —<ConceptLink targetId="adicion">adición</ConceptLink> y <ConceptLink targetId="multiplicacion">multiplicación</ConceptLink>— que generaliza las propiedades aritméticas de los sistemas numéricos clásicos como los <ConceptLink targetId="numero-racional">racionales</ConceptLink> $\mathbb{Q}$, los <ConceptLink targetId="numero-real">reales</ConceptLink> $\mathbb{R}$ y los <ConceptLink targetId="numero-complejo">complejos</ConceptLink> $\mathbb{C}$.
 
-En un cuerpo es posible sumar, restar, multiplicar y dividir por cualquier elemento no nulo, satisfaciéndose las propiedades asociativas, conmutativas y distributivas estándar.
+En un cuerpo es posible sumar, restar, multiplicar y dividir por cualquier elemento no nulo, satisfaciéndose las propiedades <ConceptLink targetId="asociatividad">asociativas</ConceptLink>, <ConceptLink targetId="conmutatividad">conmutativas</ConceptLink> y <ConceptLink targetId="distributividad">distributivas</ConceptLink> estándar.
 
 <Definicion title="Estructura formal de cuerpo">
   Un **cuerpo** es una terna $(\mathbb{K}, +, \cdot)$ formada por un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> $\mathbb{K}$ no vacío y dos <ConceptLink targetId="operacion-binaria" isDependency={true}>operaciones binarias</ConceptLink> internas $+ \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ y $\cdot \colon \mathbb{K} \times \mathbb{K} \to \mathbb{K}$ tales que:
-  1. $(\mathbb{K}, +)$ es un <ConceptLink targetId="grupo" isDependency={true}>grupo</ConceptLink> abeliano cuyo <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> se denota $0$.
+  1. $(\mathbb{K}, +)$ es un <ConceptLink targetId="grupo" isDependency={true}>grupo</ConceptLink> <ConceptLink targetId="grupo-abeliano" isDependency={true}>abeliano</ConceptLink> cuyo <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> se denota $0$.
   2. $(\mathbb{K} \setminus \{0\}, \cdot)$ es un grupo abeliano cuyo elemento neutro se denota $1$, con $1 \neq 0$.
-  3. La multiplicación es distributiva respecto de la adición a izquierda y a derecha:
+  3. La multiplicación es <ConceptLink targetId="distributividad" isDependency={true}>distributiva</ConceptLink> respecto de la adición a izquierda y a derecha:
      $$
      \forall a, b, c \in \mathbb{K}, \quad a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \land \quad (a + b) \cdot c = (a \cdot c) + (b \cdot c)
      $$
@@ -34,4 +34,4 @@ En un cuerpo es posible sumar, restar, multiplicar y dividir por cualquier eleme
 
 Cuando un cuerpo está provisto de una relación de <ConceptLink targetId="orden-total">orden total</ConceptLink> compatible con la adición y la multiplicación de elementos positivos, se denomina *<ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink>*.
 
-El cuerpo de los números reales $\mathbb{R}$ es el único cuerpo ordenado arquimediano que satisface la propiedad del supremo o <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>. Esta completitud estructural permite construir el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> analítico $\mathbb{R}^n$, fundamentando los axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> postulados sintéticamente por <ConceptLink targetId="hilbert">Hilbert</ConceptLink> en el <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>.
+Salvo <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink>, el cuerpo de los números reales $\mathbb{R}$ es el único cuerpo ordenado arquimediano que satisface la propiedad del supremo, es decir, la <ConceptLink targetId="completitud-reales">completitud de los números reales</ConceptLink>. Sobre $\mathbb{R}$ se construye el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>, que satisface los dos axiomas de <ConceptLink targetId="continuidad">continuidad</ConceptLink> postulados sintéticamente por <ConceptLink targetId="hilbert">Hilbert</ConceptLink>: el <ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink>, porque $\mathbb{R}$ es arquimediano, y el <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>, porque $\mathbb{R}$ es completo.

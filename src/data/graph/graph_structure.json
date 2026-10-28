@@ -915,7 +915,7 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Cuerpo",
-      "description": "Estructura algebraica con dos operaciones binarias compatibles (adición y multiplicación) que forman sendos grupos abelianos distributivos.",
+      "description": "Estructura algebraica con dos operaciones binarias, adición y multiplicación, que forman grupos abelianos (la multiplicación, sobre los elementos no nulos) y cumplen la ley distributiva.",
       "proofs": [],
       "directDependencies": [
         "conjunto",
