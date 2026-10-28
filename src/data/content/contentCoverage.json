@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 114,
-      "exported": 76
+      "none": 113,
+      "exported": 77
     },
     "theoremLike": {
       "total": 21,
@@ -931,9 +931,11 @@
       "type": "definicion",
       "title": "Taldea",
       "filePath": "eu/definitions/grupo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

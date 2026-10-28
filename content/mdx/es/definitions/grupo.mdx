@@ -6,12 +6,15 @@ export const metadata = {
   title: "Grupo",
   description: "Estructura algebraica formada por un conjunto y una operación binaria asociativa con elemento neutro en la que todo elemento tiene inverso.",
   branch: "20",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "On the theory of groups, as depending on the symbolic equation θⁿ = 1", author: "Arthur Cayley", locator: "Philosophical Magazine 7 (1854)", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §2", role: "secondary" }
   ]
 };
+
+import { GrupoTabla } from '@content/diagrams/Definiciones/GrupoTabla';
+export const Simulation = GrupoTabla;
 
 <Capitular letra="U" />n grupo es un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> <ConceptLink targetId="asociatividad">asociativa</ConceptLink> que tiene <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> y en la que todo elemento tiene <ConceptLink targetId="elemento-inverso">inverso</ConceptLink>. Es la <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> que describe la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de <ConceptLink targetId="transformacion">transformaciones</ConceptLink> reversibles: las <ConceptLink targetId="isometria">isometrías</ConceptLink> del <ConceptLink targetId="plano">plano</ConceptLink>, las <ConceptLink targetId="simetria">simetrías</ConceptLink> de una figura o las <ConceptLink targetId="permutacion">permutaciones</ConceptLink> de un conjunto finito forman grupos.
 
@@ -30,6 +33,10 @@ export const metadata = {
 </Definicion>
 
 Que la operación tome valores en $G$ (la llamada *clausura*) forma parte de la definición de operación binaria en $G$; el axioma del neutro garantiza además que $G \neq \emptyset$.
+
+En la figura, $G = \{0, 1, 2\}$ y la <VisualBind element="tablaOperacion" color="terracota">tabla</VisualBind> da $a \cdot b$ en el cruce de la fila de $a$ con la columna de $b$. La tabla inicial es la de la <ConceptLink targetId="aritmetica-modular">suma módulo</ConceptLink> $3$, que es un grupo. Al pulsar una casilla cambia su valor y la figura vuelve a comprobar los tres axiomas. Cuando hay neutro $e$, se colorean las <VisualBind element="casillasNeutro" color="pavo">casillas que valen</VisualBind> $e$: $b$ es inverso de $a$ cuando las casillas $a \cdot b$ y $b \cdot a$ valen las dos $e$, y si a un elemento le falta el inverso, se marca su <VisualBind element="filasSinInverso" color="granada">fila</VisualBind>.
+
+Por ejemplo, si $2 \cdot 2$ pasa a valer $0$, se conservan el neutro y los inversos, pero falla la asociatividad: $(2 \cdot 2) \cdot 1 = 1$ y $2 \cdot (2 \cdot 1) = 2$. Sin ella, $2$ tiene dos inversos: $1$ y $2$.
 
 <Separador />
 
@@ -61,7 +68,7 @@ Los grupos se distinguen según la <ConceptLink targetId="conmutatividad">conmut
       Para todo $a, b, c \in G$: $(a \cdot b = a \cdot c \implies b = c)$ y $(b \cdot a = c \cdot a \implies b = c)$; basta multiplicar por $a^{-1}$ a la izquierda o a la derecha.
     </PropiedadItem>
     <PropiedadItem id="inverso-producto-grupo" title="Inverso de un producto">
-      Para todo $a, b \in G$: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+      Para todo $a, b \in G$: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$. Por la unicidad del inverso, basta ver que $b^{-1} \cdot a^{-1}$ es inverso de $a \cdot b$: por la <ConceptLink targetId="asociatividad">asociatividad</ConceptLink>, $(a \cdot b) \cdot (b^{-1} \cdot a^{-1}) = a \cdot (b \cdot b^{-1}) \cdot a^{-1} = a \cdot a^{-1} = e$, y del mismo modo en el otro orden.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

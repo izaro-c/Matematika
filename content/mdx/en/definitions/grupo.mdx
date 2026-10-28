@@ -6,12 +6,15 @@ export const metadata = {
   title: "Group",
   description: "Algebraic structure formed by a set and an associative binary operation with an identity element in which every element has an inverse.",
   branch: "20",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "On the theory of groups, as depending on the symbolic equation θⁿ = 1", author: "Arthur Cayley", locator: "Philosophical Magazine 7 (1854)", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §2", role: "secondary" }
   ]
 };
+
+import { GrupoTabla } from '@content/diagrams/Definiciones/GrupoTabla';
+export const Simulation = GrupoTabla;
 
 <Capitular letra="A" /> group is a <ConceptLink targetId="conjunto">set</ConceptLink> equipped with an <ConceptLink targetId="asociatividad">associative</ConceptLink> <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> that has an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> and in which every element has an <ConceptLink targetId="elemento-inverso">inverse</ConceptLink>. It is the <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> that describes the <ConceptLink targetId="composicion-funciones">composition</ConceptLink> of reversible <ConceptLink targetId="transformacion">transformations</ConceptLink>: the <ConceptLink targetId="isometria">isometries</ConceptLink> of the <ConceptLink targetId="plano">plane</ConceptLink>, the <ConceptLink targetId="simetria">symmetries</ConceptLink> of a figure and the <ConceptLink targetId="permutacion">permutations</ConceptLink> of a finite set all form groups.
 
@@ -30,6 +33,10 @@ export const metadata = {
 </Definicion>
 
 That the operation takes values in $G$ (so-called *closure*) is part of the definition of a binary operation on $G$; the identity axiom also guarantees that $G \neq \emptyset$.
+
+In the figure, $G = \{0, 1, 2\}$ and the <VisualBind element="tablaOperacion" color="terracota">table</VisualBind> gives $a \cdot b$ where the row of $a$ meets the column of $b$. The initial table is that of <ConceptLink targetId="aritmetica-modular">addition modulo</ConceptLink> $3$, which is a group. Pressing a cell changes its value, and the figure checks the three axioms again. When there is an identity $e$, the <VisualBind element="casillasNeutro" color="pavo">cells equal to</VisualBind> $e$ are coloured: $b$ is an inverse of $a$ when the cells $a \cdot b$ and $b \cdot a$ are both $e$, and if an element has no inverse, its <VisualBind element="filasSinInverso" color="granada">row</VisualBind> is marked.
+
+For instance, if $2 \cdot 2$ is changed to $0$, the identity and the inverses remain, but associativity fails: $(2 \cdot 2) \cdot 1 = 1$ and $2 \cdot (2 \cdot 1) = 2$. Without it, $2$ has two inverses: $1$ and $2$.
 
 <Separador />
 
@@ -61,7 +68,7 @@ Groups are distinguished by the <ConceptLink targetId="conmutatividad">commutati
       For all $a, b, c \in G$: $(a \cdot b = a \cdot c \implies b = c)$ and $(b \cdot a = c \cdot a \implies b = c)$; it suffices to multiply by $a^{-1}$ on the left or on the right.
     </PropiedadItem>
     <PropiedadItem id="inverso-producto-grupo" title="Inverse of a product">
-      For all $a, b \in G$: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+      For all $a, b \in G$: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$. By the uniqueness of the inverse, it suffices to check that $b^{-1} \cdot a^{-1}$ is an inverse of $a \cdot b$: by <ConceptLink targetId="asociatividad">associativity</ConceptLink>, $(a \cdot b) \cdot (b^{-1} \cdot a^{-1}) = a \cdot (b \cdot b^{-1}) \cdot a^{-1} = a \cdot a^{-1} = e$, and likewise in the other order.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -8971,7 +8971,7 @@
       "title": "Group",
       "description": "Algebraic structure formed by a set and an associative binary operation with an identity element in which every element has an inverse.",
       "branch": "20",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "On the theory of groups, as depending on the symbolic equation θⁿ = 1",
@@ -8999,6 +8999,7 @@
         "plano",
         "simetria",
         "permutacion",
+        "aritmetica-modular",
         "conmutatividad",
         "cardinalidad",
         "grupo-abeliano",
@@ -9040,7 +9041,7 @@
       "title": "Grupo",
       "description": "Estructura algebraica formada por un conjunto y una operación binaria asociativa con elemento neutro en la que todo elemento tiene inverso.",
       "branch": "20",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "On the theory of groups, as depending on the symbolic equation θⁿ = 1",
@@ -9068,6 +9069,7 @@
         "plano",
         "simetria",
         "permutacion",
+        "aritmetica-modular",
         "conmutatividad",
         "cardinalidad",
         "grupo-abeliano",
@@ -30948,7 +30950,7 @@
       "title": "Grupo",
       "description": "Estructura algebraica formada por un conjunto y una operación binaria asociativa con elemento neutro en la que todo elemento tiene inverso.",
       "branch": "20",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "On the theory of groups, as depending on the symbolic equation θⁿ = 1",
@@ -30976,6 +30978,7 @@
         "plano",
         "simetria",
         "permutacion",
+        "aritmetica-modular",
         "conmutatividad",
         "cardinalidad",
         "grupo-abeliano",
@@ -44176,7 +44179,7 @@
       "title": "Taldea",
       "description": "Multzo batek eta eragiketa bitar elkarkor batek osatutako egitura aljebraikoa, elementu neutroa duena eta non elementu orok alderantzizkoa duen.",
       "branch": "20",
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "On the theory of groups, as depending on the symbolic equation θⁿ = 1",
@@ -44204,6 +44207,7 @@
         "isometria",
         "simetria",
         "permutacion",
+        "aritmetica-modular",
         "conmutatividad",
         "cardinalidad",
         "grupo-abeliano",

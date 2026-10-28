@@ -6,12 +6,15 @@ export const metadata = {
   title: "Taldea",
   description: "Multzo batek eta eragiketa bitar elkarkor batek osatutako egitura aljebraikoa, elementu neutroa duena eta non elementu orok alderantzizkoa duen.",
   branch: "20",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "On the theory of groups, as depending on the symbolic equation θⁿ = 1", author: "Arthur Cayley", locator: "Philosophical Magazine 7 (1854)", role: "primary" },
     { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §2", role: "secondary" }
   ]
 };
+
+import { GrupoTabla } from '@content/diagrams/Definiciones/GrupoTabla';
+export const Simulation = GrupoTabla;
 
 <Capitular letra="T" />aldea <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> <ConceptLink targetId="asociatividad">elkarkor</ConceptLink> batez hornitutako <ConceptLink targetId="conjunto">multzoa</ConceptLink> da, <ConceptLink targetId="elemento-neutro">elementu neutroa</ConceptLink> duena eta non elementu orok <ConceptLink targetId="elemento-inverso">alderantzizkoa</ConceptLink> duen. <ConceptLink targetId="transformacion">Transformazio</ConceptLink> itzulgarrien <ConceptLink targetId="composicion-funciones">konposizioa</ConceptLink> deskribatzen duen <ConceptLink targetId="estructura-algebraica">egitura aljebraikoa</ConceptLink> da: <ConceptLink targetId="plano">planoko</ConceptLink> <ConceptLink targetId="isometria">isometriek</ConceptLink>, irudi baten <ConceptLink targetId="simetria">simetriek</ConceptLink> eta multzo finitu baten <ConceptLink targetId="permutacion">permutazioek</ConceptLink> taldeak osatzen dituzte.
 
@@ -30,6 +33,10 @@ export const metadata = {
 </Definicion>
 
 Eragiketaren balioak $G$-n egotea (*itxitura* deritzona) $G$-ko eragiketa bitarraren definizioaren parte da; gainera, elementu neutroaren axiomak $G \neq \emptyset$ dela bermatzen du.
+
+Irudian, $G = \{0, 1, 2\}$ da, eta <VisualBind element="tablaOperacion" color="terracota">taulak</VisualBind> $a \cdot b$ ematen du, $a$-ren errenkada eta $b$-ren zutabea gurutzatzen diren laukian. Hasierako taula $3$ <ConceptLink targetId="aritmetica-modular">moduluko batuketarena</ConceptLink> da, eta talde bat da. Lauki bat sakatzean haren balioa aldatzen da, eta irudiak hiru axiomak egiaztatzen ditu berriro. $e$ elementu neutroa dagoenean, $e$ balio duten <VisualBind element="casillasNeutro" color="pavo">laukiak</VisualBind> koloreztatzen dira: $b$ $a$-ren alderantzizkoa da $a \cdot b$ eta $b \cdot a$ laukiek biek $e$ balio dutenean, eta elementu batek alderantzizkorik ez badu, haren <VisualBind element="filasSinInverso" color="granada">errenkada</VisualBind> markatzen da.
+
+Adibidez, $2 \cdot 2$ laukiak $0$ balio badu, neutroa eta alderantzizkoak mantentzen dira, baina elkarkortasunak huts egiten du: $(2 \cdot 2) \cdot 1 = 1$ eta $2 \cdot (2 \cdot 1) = 2$. Elkarkortasunik gabe, $2$-k bi alderantzizko ditu: $1$ eta $2$.
 
 <Separador />
 
@@ -61,7 +68,7 @@ Taldeak eragiketaren <ConceptLink targetId="conmutatividad">trukakortasunaren</C
       $a, b, c \in G$ guztietarako: $(a \cdot b = a \cdot c \implies b = c)$ eta $(b \cdot a = c \cdot a \implies b = c)$; nahikoa da $a^{-1}$-ez ezkerretik edo eskuinetik biderkatzea.
     </PropiedadItem>
     <PropiedadItem id="inverso-producto-grupo" title="Biderkadura baten alderantzizkoa">
-      $a, b \in G$ guztietarako: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+      $a, b \in G$ guztietarako: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$. Alderantzizkoa bakarra denez, nahikoa da $b^{-1} \cdot a^{-1}$ $a \cdot b$-ren alderantzizkoa dela egiaztatzea: <ConceptLink targetId="asociatividad">elkarkortasunagatik</ConceptLink>, $(a \cdot b) \cdot (b^{-1} \cdot a^{-1}) = a \cdot (b \cdot b^{-1}) \cdot a^{-1} = a \cdot a^{-1} = e$, eta gauza bera beste ordenan.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
