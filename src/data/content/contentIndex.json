@@ -7983,7 +7983,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Elemento neutro",
-      "description": "Elemento distinguido de una estructura algebraica que, al operarse con cualquier otro elemento mediante una operación binaria, lo deja invariante.",
+      "description": "Elemento distinguido de una estructura algebraica que, al operarse con cualquier elemento mediante una operación binaria, lo deja invariante.",
       "branch": "08A",
       "branches": [
         "08A",
@@ -30424,7 +30424,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Elemento neutro",
-      "description": "Elemento distinguido de una estructura algebraica que, al operarse con cualquier otro elemento mediante una operación binaria, lo deja invariante.",
+      "description": "Elemento distinguido de una estructura algebraica que, al operarse con cualquier elemento mediante una operación binaria, lo deja invariante.",
       "branch": "08A",
       "branches": [
         "08A",
@@ -43651,7 +43651,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Elementu neutroa",
-      "description": "Egitura aljebraiko bateko elementu berezia, eragiketa bitar baten bidez beste edozein elementurekin eragitean hura aldatu gabe uzten duena.",
+      "description": "Egitura aljebraiko bateko elementu berezia, eragiketa bitar baten bidez edozein elementurekin eragitean hura aldatu gabe uzten duena.",
       "branch": "08A",
       "branches": [
         "08A",
