@@ -28,6 +28,9 @@ case "$tier" in
   propuestas) subject="revisión diaria: $id — propuestas (revisar)" ;;
   *) echo "Nivel desconocido «$tier»: usa correcciones o propuestas." >&2; exit 2 ;;
 esac
+# run.sh sets REVIEW_ROUND for every session; rounds after the first are verifications.
+round="${REVIEW_ROUND:-1}"
+(( round == 1 )) || subject="$subject · ronda $round"
 
 changed="$(git status --porcelain --untracked-files=all | cut -c4-)"
 [[ -n "$changed" ]] || { echo "Nada que guardar en $tier."; exit 0; }

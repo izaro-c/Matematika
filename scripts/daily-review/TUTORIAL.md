@@ -29,20 +29,24 @@ Esto genera dos archivos en `docs/reports/revision-diaria/` sin llamar al modelo
 scripts/daily-review/run.sh
 ```
 
-Tarda unos minutos. Al terminar imprime una línea como esta:
+Tarda unos minutos por ronda. La página pasa por varias rondas, cada una con un agente nuevo, hasta que una no encuentra nada que cambiar. Al terminar imprime una línea como esta:
 
 ```text
-✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (errores · corregido 1a2b3c4 · propuestas 5d6e7f8, $1.05)
+✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (errores → ok · 3 rondas, converge · corregido 1a2b3c4 · propuestas 5d6e7f8 · corregido 9a8b7c6, $2.40)
 ```
 
-Esa línea dice tres cosas:
+Esa línea dice cuatro cosas:
 
-- **Veredicto** sobre la página antes de los cambios: `ok`, `mejoras` o `errores`.
-- **Resultado**, con hasta dos commits en la rama `revision-diaria`:
+- **Veredicto** sobre la página antes de los cambios y en la última ronda: `ok`, `mejoras` o `errores`. Lo normal es terminar en `ok`.
+- **Rondas** y cómo terminaron:
+  - `converge`: la última ronda no encontró nada que cambiar. Es el final esperado.
+  - `sin converger tras 4 rondas`: cada ronda siguió cambiando algo. Mira con más atención las últimas rondas del informe: o queda un problema de fondo, o dos revisores no se ponen de acuerdo.
+  - `presupuesto agotado` o `ronda N incompleta`: se cortó antes de converger. Lo ya guardado se conserva.
+- **Resultado**, con hasta dos commits por ronda en la rama `revision-diaria` (desde la ronda 2, su asunto termina en «· ronda N»):
   - `corregido <hash>`: las **correcciones**, errores objetivos o normas rotas. Se pueden fusionar con confianza.
   - `propuestas <hash>`: las **propuestas**, mejoras ya aplicadas en las que cabría decidir otra cosa. Este es el commit que tienes que revisar. Además queda apuntado en `PROPUESTAS.md` (paso 4).
   - `sin cambios`: la página no necesitaba nada.
-  - `cambios descartados`: algo no pasó la validación, los hooks o el control de archivos. Se ha borrado todo lo de esa página y el informe explica por qué.
+  - `cambios descartados`: algo no pasó la validación, los hooks o el control de archivos. Se ha borrado todo lo de esa ronda y el informe explica por qué.
 - **Coste** de esa página.
 
 Para revisar varias seguidas: `scripts/daily-review/run.sh 3`. Sale más barato por página que lanzarlas en días distintos, porque comparten la caché de las instrucciones.
@@ -52,7 +56,9 @@ Para revisar varias seguidas: `scripts/daily-review/run.sh 3`. Sale más barato 
 Los informes están en `docs/reports/revision-diaria/<fecha>-<id>.md`:
 
 ```markdown
-<!-- 2026-10-23 · opus/high · $0.85 · 14 turnos · corregido 1a2b3c4 -->
+<!-- 2026-10-23 · opus/high · $2.40 · 31 turnos · errores → ok · 3 rondas, converge · corregido 1a2b3c4 -->
+
+<!-- ronda 1 · opus/high · $1.40 · 18 turnos · corregido 1a2b3c4 -->
 
 ## axioma — rigor ✓ · simpleza △ · modularidad ✓ · enlaces △ · paridad ✗ · diagrama no necesita
 
@@ -66,7 +72,11 @@ Los informes están en `docs/reports/revision-diaria/<fecha>-<id>.md`:
 
 Lee **Propuestas aplicadas — revisar** junto al diff del commit 2: cada punto explica un cambio que ya está hecho. Entre las propuestas puede haber párrafos simplificados, secciones reducidas, afirmaciones matizadas, IDs canónicos nuevos, un diagrama creado o un concepto extraído a su propio nodo.
 
-**Pendiente para la autora** queda casi vacía. Solo recoge lo que el agente no puede resolver sin inventar, como una atribución, fecha o fuente que no se comprueba desde el repositorio.
+Después vienen las rondas de verificación (`# Ronda 2: verificación`, …), con el mismo formato. Cada una lista lo que se le escapó a las anteriores; la última suele decir «Nada.» en todo.
+
+**Pendiente para la autora** queda casi vacía. Recoge lo que el agente no puede resolver sin inventar, como una atribución, fecha o fuente que no se comprueba desde el repositorio. También lo que solo tú puedes decidir: un término en euskera en el que Elhuyar o Wikipedia contradicen el glosario (con sus URLs), o una propuesta de una ronda anterior con la que un verificador no está de acuerdo.
+
+Cuando un término en euskera no está en el glosario o el agente duda de él, lo consulta en Elhuyar, la ZTH y Wikipedia, y cita la URL en el informe. Puedes hacer la misma consulta: `node scripts/daily-review/euskara.mjs es "asociativo"`.
 
 ## 4. Revisar y fusionar las correcciones
 
@@ -170,7 +180,7 @@ Cada página deja una fila en `docs/reports/revision-diaria/costes.tsv`. Para ve
 
 ```bash
 column -t -s$'\t' docs/reports/revision-diaria/costes.tsv
-awk -F'\t' 'NR>1 {s+=$4} END {printf "Total: $%.2f en %d páginas\n", s, NR-1}' docs/reports/revision-diaria/costes.tsv
+awk -F'\t' 'NR>1 {s+=$4; p[$1 $2]=1} END {printf "Total: $%.2f en %d páginas (%d rondas)\n", s, length(p), NR-1}' docs/reports/revision-diaria/costes.tsv
 ```
 
 Los ajustes van como variables de entorno. Si una variable no se indica, se usa el valor entre paréntesis.
@@ -179,9 +189,11 @@ Los ajustes van como variables de entorno. Si una variable no se indica, se usa 
 | --- | --- |
 | `REVIEW_EFFORT` (`high`) | Cuánto razona el modelo. Es lo que más pesa en el coste. Prueba `medium` unos días y compara los informes. |
 | `REVIEW_MODEL` (`opus`) | El modelo. Para rigor matemático, mejor no bajarlo. |
+| `REVIEW_VERIFY_MODEL` (el mismo) | El modelo de las rondas de verificación. Uno distinto aporta otra mirada, pero mejor no bajar de `opus`. |
+| `REVIEW_MAX_ROUNDS` (`4`) | Máximo de rondas por página. Con `1`, el agente funciona como antes, sin verificación. |
 | `REVIEW_PAGES` (`1`) | Páginas por ejecución. Con 2 o 3 cada pocos días se aprovecha la caché. |
-| `REVIEW_MAX_USD` (`8`) | Tope de gasto por página. Si se alcanza, la página se descarta y queda pendiente. |
-| `REVIEW_MAX_TURNS` (`50`) | Tope de turnos por página. Funciona igual. |
+| `REVIEW_MAX_USD` (`15`) | Tope de gasto por página, sumando todas las rondas. Si la ronda 1 lo alcanza, la página se descarta y queda pendiente; si lo alcanza una ronda posterior, se descarta solo esa ronda. |
+| `REVIEW_MAX_TURNS` (`50`) | Tope de turnos por ronda. Funciona igual. |
 
 **En una ejecución manual:**
 
@@ -220,7 +232,7 @@ Las instrucciones del agente están en `scripts/daily-review/prompt.md`, y las n
 | `Ya hay una revisión en curso.` | Otra ejecución sigue en marcha. Espera a que termine. |
 | `El worktree … tiene cambios sin commitear` | Alguien editó en `../Matematika-revision`, o una ejecución se cortó a medias. Mira `git -C ../Matematika-revision status` y descarta con `git -C ../Matematika-revision reset --hard && git -C ../Matematika-revision clean -fd`. |
 | `La rama revision-diaria no se puede rebasar sobre main` | Editaste en `main` una página que el agente también corrigió y aún no has fusionado. Fusiona o descarta sus commits (paso 4) y vuelve a lanzarlo. |
-| `Revisión de <id> incompleta (error_max_turns)` o `(error_max_budget_usd)` | La página agotó el tope de turnos o de gasto. No se ha guardado nada y sigue pendiente. Relánzala con más margen: `REVIEW_MAX_TURNS=60 scripts/daily-review/run.sh`. |
+| `Revisión de <id> incompleta (error_max_turns)` o `(error_max_budget_usd)` | La ronda 1 agotó el tope de turnos o de gasto. No se ha guardado nada y sigue pendiente. Relánzala con más margen: `REVIEW_MAX_TURNS=60 scripts/daily-review/run.sh`. |
 | Resultado `cambios descartados` | El motivo está al final del informe, en «Cambios descartados por el script». Las correcciones que el agente propuso siguen en el informe y puedes aplicarlas a mano. |
 | El timer no se ejecuta | `systemctl --user list-timers` y `journalctl --user -u matematika-revision -e`. Si no has iniciado sesión, revisa `enable-linger` (paso 5). |
 

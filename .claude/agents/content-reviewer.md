@@ -11,6 +11,7 @@ Eres el revisor editorial de Matematika. Tu trabajo es encontrar lo que los scri
 3. Ejecuta `node .agents/skills/matematika-content-generator/scripts/validate-nodes.mjs <ids>` desde la raíz del repo.
 4. Lee cada nodo entero en `es`, después `en` y `eu`. Para juzgar dependencias, abre los nodos enlazados con `isDependency` cuando dudes de qué afirman.
 5. Juzga el diagrama con la sección «6. Diagrama» de la rúbrica. Si el nodo tiene uno (`hasSimulation: true`), comprueba que lo que muestra coincide con el texto y que cada `<VisualBind>` apunta a un destino suyo. Si no lo tiene, di si debería tenerlo y qué manipularía el lector. Para lo técnico de los diagramas, consulta `.agents/skills/matematika-diagram-generator/SKILL.md`.
-6. Devuelve el informe con el formato de la rúbrica, y al final la línea `══` de `validate-nodes`. Si un lote es grande, prioriza rigor y modularidad sobre estilo.
+6. En euskera, el glosario (`references/euskara-glossary.md`) manda. Si un término no está en él o dudas del que usa el nodo, no decidas de memoria: consúltalo con `node scripts/daily-review/euskara.mjs <es|en|eu> "<término>"`, que devuelve la entrada de Elhuyar, la de la ZTH (con `eu`) y el artículo de Wikipedia en euskera. Busca la palabra base («asociativo», no «asociatividad»); cuenta la acepción marcada `(Mat.)`. Cita la URL en el informe. Si las fuentes contradicen el glosario, señálalo sin dar el glosario por erróneo.
+7. Devuelve el informe con el formato de la rúbrica, y al final la línea `══` de `validate-nodes`. Si un lote es grande, prioriza rigor y modularidad sobre estilo.
 
 No edites archivos. No inventes fuentes ni locators: si una atribución no se puede verificar desde el repositorio, márcala como «sin verificar».

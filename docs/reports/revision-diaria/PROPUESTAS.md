@@ -21,3 +21,8 @@ Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. 
 - [ ] `numero-natural` · 2026-10-26 · `7473941b` · [informe](2026-10-26-numero-natural.md)
 - [ ] `operacion-binaria` · 2026-10-26 · `071a5759` · [informe](2026-10-26-operacion-binaria.md)
 - [ ] `asociatividad` · 2026-10-27 · `b390dbc0` · [informe](2026-10-27-asociatividad.md)
+- [ ] `elemento-neutro` · 2026-10-28 · ronda 1 · `08d319b4` · [informe](2026-10-28-elemento-neutro.md)
+- [ ] `elemento-inverso` · 2026-10-28 · ronda 1 · `4cd3e53f` · [informe](2026-10-28-elemento-inverso.md)
+- [ ] `grupo` · 2026-10-28 · ronda 1 · `6ae8d8b2` · [informe](2026-10-28-grupo.md)
+- [ ] `cuerpo` · 2026-10-28 · ronda 1 · `22b9d7dc` · [informe](2026-10-28-cuerpo.md)
+- [ ] `plano` · 2026-10-28 · ronda 1 · `7cba6bb0` · [informe](2026-10-28-plano.md)

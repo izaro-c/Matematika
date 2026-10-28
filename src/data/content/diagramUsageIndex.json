@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "0df933b708b43fa36d1bf391522130092b28694ad2a34069093d45f1cbd643e9",
+  "corpusHash": "f0fdd0dca0a47e8df9c3cbb4b5ec45f69cdab5b380de130ccc75ae4b851787f7",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -40,8 +40,10 @@
     "Cuadrado": "content/diagrams/Definiciones/Cuadrado.tsx",
     "Cuadrilatero": "content/diagrams/Definiciones/Cuadrilatero.tsx",
     "Distancia": "content/diagrams/Definiciones/Distancia.tsx",
+    "ElementoNeutroTabla": "content/diagrams/Definiciones/ElementoNeutroTabla.tsx",
     "EstarEntre": "content/diagrams/Definiciones/EstarEntre.tsx",
     "FuncionSagital": "content/diagrams/Definiciones/FuncionSagital.tsx",
+    "GrupoTabla": "content/diagrams/Definiciones/GrupoTabla.tsx",
     "Interseccion": "content/diagrams/Definiciones/Interseccion.tsx",
     "IsomorfismoRelacion": "content/diagrams/Definiciones/IsomorfismoRelacion.tsx",
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
@@ -1276,6 +1278,38 @@
         "blockId": "distancia:diagram:Distancia"
       }
     ],
+    "ElementoNeutroTabla": [
+      {
+        "contentId": "elemento-neutro",
+        "contentPath": "content/mdx/en/definitions/elemento-neutro.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 683,
+          "end": 728
+        },
+        "blockId": "elemento-neutro:diagram:ElementoNeutroTabla"
+      },
+      {
+        "contentId": "elemento-neutro",
+        "contentPath": "content/mdx/es/definitions/elemento-neutro.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 702,
+          "end": 747
+        },
+        "blockId": "elemento-neutro:diagram:ElementoNeutroTabla"
+      },
+      {
+        "contentId": "elemento-neutro",
+        "contentPath": "content/mdx/eu/definitions/elemento-neutro.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 699,
+          "end": 744
+        },
+        "blockId": "elemento-neutro:diagram:ElementoNeutroTabla"
+      }
+    ],
     "EstarEntre": [
       {
         "contentId": "estar-entre",
@@ -1338,6 +1372,38 @@
           "end": 657
         },
         "blockId": "funcion:diagram:FuncionSagital"
+      }
+    ],
+    "GrupoTabla": [
+      {
+        "contentId": "grupo",
+        "contentPath": "content/mdx/en/definitions/grupo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 672,
+          "end": 708
+        },
+        "blockId": "grupo:diagram:GrupoTabla"
+      },
+      {
+        "contentId": "grupo",
+        "contentPath": "content/mdx/es/definitions/grupo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 677,
+          "end": 713
+        },
+        "blockId": "grupo:diagram:GrupoTabla"
+      },
+      {
+        "contentId": "grupo",
+        "contentPath": "content/mdx/eu/definitions/grupo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 685,
+          "end": 721
+        },
+        "blockId": "grupo:diagram:GrupoTabla"
       }
     ],
     "Interseccion": [
@@ -1612,8 +1678,8 @@
         "contentPath": "content/mdx/es/definitions/plano.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 618,
-          "end": 649
+          "start": 620,
+          "end": 651
         },
         "blockId": "plano:diagram:Plano"
       },
@@ -1622,8 +1688,8 @@
         "contentPath": "content/mdx/eu/definitions/plano.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 638,
-          "end": 669
+          "start": 637,
+          "end": 668
         },
         "blockId": "plano:diagram:Plano"
       }

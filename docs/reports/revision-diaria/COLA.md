@@ -2,15 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 23 / 190
+Revisadas: 28 / 190
 
 ## Pendientes
 
-- [ ] `elemento-neutro` · definitions
-- [ ] `elemento-inverso` · definitions
-- [ ] `grupo` · definitions
-- [ ] `cuerpo` · definitions
-- [ ] `plano` · definitions
 - [ ] `punto` · definitions
 - [ ] `recta` · definitions
 - [ ] `colinealidad` · definitions
@@ -199,3 +194,8 @@ Revisadas: 23 / 190
 - [x] `numero-natural` · 2026-10-26 · errores · corregido 566112cc · propuestas c55b938a · propuestas 7473941b · [informe](2026-10-26-numero-natural.md) · $3.74
 - [x] `operacion-binaria` · 2026-10-26 · errores · corregido 5d2f7d2e · propuestas 071a5759 · [informe](2026-10-26-operacion-binaria.md) · $1.52
 - [x] `asociatividad` · 2026-10-26 · errores · corregido 5739ff11 · propuestas b390dbc0 · [informe](2026-10-27-asociatividad.md) · $4.51
+- [x] `elemento-neutro` · 2026-10-28 · errores → ok · 4 rondas, converge · corregido b5b62d19 · propuestas 08d319b4 · corregido be68a662 · corregido f033ee50 · [informe](2026-10-28-elemento-neutro.md) · $5.32
+- [x] `elemento-inverso` · 2026-10-28 · errores → ok · 3 rondas, converge · corregido f6b5f3e8 · propuestas 4cd3e53f · corregido 8d8fe98b · [informe](2026-10-28-elemento-inverso.md) · $1.34
+- [x] `grupo` · 2026-10-28 · errores → ok · 3 rondas, converge · corregido 9f24242b · propuestas 6ae8d8b2 · corregido 80e83106 · [informe](2026-10-28-grupo.md) · $4.84
+- [x] `cuerpo` · 2026-10-28 · errores → ok · 2 rondas, converge · corregido c7d47bd9 · propuestas 22b9d7dc · [informe](2026-10-28-cuerpo.md) · $2.29
+- [x] `plano` · 2026-10-28 · errores → mejoras · 4 rondas, ronda 4 incompleta (success): descartada; se conservan las anteriores · corregido c2b74da1 · propuestas 7cba6bb0 · corregido 8eaa55cf · corregido 875dcb24 · [informe](2026-10-28-plano.md) · $2.45
