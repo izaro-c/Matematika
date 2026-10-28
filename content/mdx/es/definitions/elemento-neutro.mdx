@@ -14,14 +14,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n **elemento neutro** (o elemento identidad) respecto a una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> es un elemento distinguido de un <ConceptLink targetId="conjunto">conjunto</ConceptLink> que deja inalterado a cualquier otro elemento cuando se opera con él. Constituye el pilar de partida para caracterizar estructuras algebraicas centrales como los <ConceptLink targetId="monoide">monoides</ConceptLink>, los <ConceptLink targetId="grupo">grupos</ConceptLink> y los <ConceptLink targetId="anillo">anillos</ConceptLink>.
+<Capitular letra="U" />n **elemento neutro** (o elemento identidad) respecto a una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> es un elemento distinguido de un <ConceptLink targetId="conjunto">conjunto</ConceptLink> que deja inalterado a todo elemento cuando se opera con él. Su existencia forma parte de la definición de <ConceptLink targetId="monoide">monoide</ConceptLink>, de <ConceptLink targetId="grupo">grupo</ConceptLink> y de <ConceptLink targetId="anillo">anillo</ConceptLink>.
 
 <Definicion title="Definición formal de elemento neutro">
   Sea $S$ un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> $*\colon S \times S \longrightarrow S$. Un elemento $e \in S$ es un **elemento neutro bilateral** (o simplemente neutro) para $*$ si y solo si satisface la doble condición:
   $$
   \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
   $$
-  Si únicamente satisface $e_L * a = a$ para todo $a \in S$, se denomina elemento neutro por la izquierda; si satisface $a * e_R = a$ para todo $a \in S$, se denomina elemento neutro por la derecha. Cuando una estructura algebraica posee un elemento neutro bilateral, se dice que es una estructura con identidad.
+  Un elemento $e_L \in S$ que satisface $e_L * a = a$ para todo $a \in S$ se denomina elemento neutro por la izquierda; un elemento $e_R \in S$ que satisface $a * e_R = a$ para todo $a \in S$, elemento neutro por la derecha. Así, un elemento es neutro bilateral si y solo si es neutro por la izquierda y por la derecha. Cuando una <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> posee un elemento neutro bilateral, se dice que es una estructura con identidad.
 </Definicion>
 
 <Separador />
@@ -29,11 +29,11 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Unicidad y propiedades algebraicas">
     <PropiedadItem id="unicidad-elemento-neutro" title="Unicidad del elemento neutro" formula="e_1 = e_1 * e_2 = e_2">
-      En cualquier estructura $(S, *)$ provista de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink>, el elemento neutro bilateral es único. Si $e_1, e_2 \in S$ son ambos elementos neutros, por ser $e_2$ neutro por la derecha se verifica $e_1 * e_2 = e_1$, y por ser $e_1$ neutro por la izquierda se verifica $e_1 * e_2 = e_2$. Por consiguiente:
+      En cualquier estructura $(S, *)$ provista de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> hay a lo sumo un elemento neutro bilateral. Si $e_1, e_2 \in S$ son ambos elementos neutros, por ser $e_2$ neutro por la derecha se verifica $e_1 * e_2 = e_1$, y por ser $e_1$ neutro por la izquierda se verifica $e_1 * e_2 = e_2$. Por consiguiente:
       $$
       e_1 = e_1 * e_2 = e_2
       $$
-      Esta deducción demuestra además que si una operación posee un neutro por la izquierda $e_L$ y un neutro por la derecha $e_R$, ambos coinciden necesariamente ($e_L = e_L * e_R = e_R$), impidiendo la coexistencia de múltiples neutros unilaterales de distinto lado a menos que no exista neutro bilateral.
+      El mismo cálculo prueba que, si $*$ tiene un neutro por la izquierda $e_L$ y un neutro por la derecha $e_R$, entonces $e_L = e_L * e_R = e_R$, y ese elemento es neutro bilateral. En cambio, puede haber varios neutros de un mismo lado: si $a * b = b$ para todo $a, b \in S$, todo elemento de $S$ es neutro por la izquierda y, si $S$ tiene más de un elemento, ninguno es neutro por la derecha.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

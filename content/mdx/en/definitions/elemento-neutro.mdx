@@ -9,19 +9,19 @@ export const metadata = {
   branches: ["08A", "20A"],
   hasSimulation: false,
   sources: [
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" },
-    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" },
+    { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Chapter 1", role: "secondary" }
   ]
 };
 
-<Capitular letra="A" />n **identity element** (or neutral element) with respect to a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> is a distinguished element of a <ConceptLink targetId="conjunto">set</ConceptLink> that leaves every other element unaltered when operated with it. It serves as the cornerstone for characterizing fundamental algebraic structures such as <ConceptLink targetId="monoide">monoids</ConceptLink>, <ConceptLink targetId="grupo">groups</ConceptLink>, and <ConceptLink targetId="anillo">rings</ConceptLink>.
+<Capitular letra="A" />n **identity element** (or neutral element) with respect to a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> is a distinguished element of a <ConceptLink targetId="conjunto">set</ConceptLink> that leaves every element unaltered when operated with it. Its existence is part of the definition of a <ConceptLink targetId="monoide">monoid</ConceptLink>, a <ConceptLink targetId="grupo">group</ConceptLink> and a <ConceptLink targetId="anillo">ring</ConceptLink>.
 
 <Definicion title="Formal definition of identity element">
   Let $S$ be a <ConceptLink targetId="conjunto">set</ConceptLink> equipped with a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> $*\colon S \times S \longrightarrow S$. An element $e \in S$ is a **two-sided identity element** (or simply identity) for $*$ if and only if it satisfies the two-sided condition:
   $$
   \forall a \in S, \quad e * a = a \quad \land \quad a * e = a
   $$
-  If it satisfies only $e_L * a = a$ for all $a \in S$, it is called a left identity element; if it satisfies $a * e_R = a$ for all $a \in S$, it is called a right identity element. When an algebraic structure has a two-sided identity element, it is said to be a structure with identity.
+  An element $e_L \in S$ that satisfies $e_L * a = a$ for all $a \in S$ is called a left identity element; an element $e_R \in S$ that satisfies $a * e_R = a$ for all $a \in S$, a right identity element. Thus an element is a two-sided identity if and only if it is both a left and a right identity. When an <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> has a two-sided identity element, it is said to be a structure with identity.
 </Definicion>
 
 <Separador />
@@ -29,11 +29,11 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Uniqueness and algebraic properties">
     <PropiedadItem id="unicidad-elemento-neutro" title="Uniqueness of the identity element" formula="e_1 = e_1 * e_2 = e_2">
-      In any structure $(S, *)$ equipped with a <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink>, the two-sided identity element is unique. If $e_1, e_2 \in S$ are both identity elements, since $e_2$ is a right identity we have $e_1 * e_2 = e_1$, and since $e_1$ is a left identity we have $e_1 * e_2 = e_2$. Consequently:
+      In any structure $(S, *)$ equipped with a <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> there is at most one two-sided identity element. If $e_1, e_2 \in S$ are both identity elements, since $e_2$ is a right identity we have $e_1 * e_2 = e_1$, and since $e_1$ is a left identity we have $e_1 * e_2 = e_2$. Consequently:
       $$
       e_1 = e_1 * e_2 = e_2
       $$
-      This deduction further demonstrates that if an operation possesses a left identity $e_L$ and a right identity $e_R$, they necessarily coincide ($e_L = e_L * e_R = e_R$), precluding the coexistence of distinct one-sided identities of opposite sides unless no two-sided identity exists.
+      The same computation shows that, if $*$ has a left identity $e_L$ and a right identity $e_R$, then $e_L = e_L * e_R = e_R$, and this element is a two-sided identity. On the other hand, there may be several identities on the same side: if $a * b = b$ for all $a, b \in S$, every element of $S$ is a left identity and, if $S$ has more than one element, none is a right identity.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

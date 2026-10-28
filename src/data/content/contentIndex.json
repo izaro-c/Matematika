@@ -7940,13 +7940,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "Chapter I, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "Chapter 1",
           "role": "secondary"
         }
       ],
@@ -7956,6 +7956,7 @@
         "monoide",
         "grupo",
         "anillo",
+        "estructura-algebraica",
         "unicidad-elemento-neutro"
       ],
       "availableLangs": [
@@ -8009,6 +8010,7 @@
         "monoide",
         "grupo",
         "anillo",
+        "estructura-algebraica",
         "unicidad-elemento-neutro"
       ],
       "availableLangs": [
@@ -30449,6 +30451,7 @@
         "monoide",
         "grupo",
         "anillo",
+        "estructura-algebraica",
         "unicidad-elemento-neutro"
       ],
       "availableLangs": [
@@ -43659,13 +43662,13 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         },
         {
           "title": "A Survey of Modern Algebra",
           "author": "Garrett Birkhoff, Saunders Mac Lane",
-          "locator": "Capítulo 1",
+          "locator": "1. kapitulua",
           "role": "secondary"
         }
       ],
@@ -43675,6 +43678,7 @@
         "monoide",
         "grupo",
         "anillo",
+        "estructura-algebraica",
         "unicidad-elemento-neutro"
       ],
       "availableLangs": [
