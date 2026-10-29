@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> homogeneous binary relation is **transitive** if the relational link necessarily propagates through chained intermediate elements.
+<Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **transitive** if, whenever an element is related to a second and the second to a third, the first is related to the third.
 
-It constitutes the formal property that permits the transfer of equalities, equivalences, and orderings, ensuring that indirect comparisons retain the same logical validity as direct ones.
+It is one of the three conditions that define an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, together with <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> and <ConceptLink targetId="relacion-simetrica">symmetry</ConceptLink>, and one of those that define a <ConceptLink targetId="orden-parcial">partial order</ConceptLink>, together with reflexivity and <ConceptLink targetId="relacion-antisimetrica">antisymmetry</ConceptLink>.
 
 <Definicion title="Formal definition of transitive relation">
   Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> on $A$. The relation $R$ is **transitive** if and only if:
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
-  In terms of relational composition, denoting by $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ the composition of $R$ with itself, transitivity is equivalent to the inclusion:
+  In terms of <ConceptLink targetId="composicion-relaciones">relational composition</ConceptLink>, denoting by $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ the composition of $R$ with itself, transitivity is equivalent to the inclusion:
   $$
   R \circ R \subseteq R
   $$
@@ -35,4 +35,4 @@ It constitutes the formal property that permits the transfer of equalities, equi
 
 - **Congruence of segments:** The transitivity of the <ConceptLink targetId="congruencia">congruence</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) is not postulated in this form: <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink> postulates that two segments congruent to a third are congruent to each other, and transitivity is deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> from this axiom and the <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>.
 - **Transitivity of parallelism:** In a single <ConceptLink targetId="plano">plane</ConceptLink>, two <ConceptLink targetId="recta">lines</ConceptLink> parallel to a third line are parallel to each other ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). This result is a <ConceptLink targetId="teorema">theorem</ConceptLink> derived from <ConceptLink targetId="playfair">Playfair</ConceptLink>'s parallel postulate (<ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>), conferring upon Euclidean <ConceptLink targetId="paralelas">parallelism</ConceptLink> the full status of an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
-- **Order structures:** In ordered sets, transitivity ensures the coherence of inequality chains ($x < y \land y < z \implies x < z$).
+- **Order relations:** Every <ConceptLink targetId="orden">order</ConceptLink> relation is transitive by definition, which allows inequalities to be chained ($x < y \land y < z \implies x < z$).

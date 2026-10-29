@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na relación binaria homogénea es **transitiva** si el vínculo relacional se propaga necesariamente a través de elementos intermedios encadenados.
+<Capitular letra="U" />na <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> homogénea es **transitiva** si, siempre que un elemento está relacionado con un segundo y este con un tercero, el primero está relacionado con el tercero.
 
-Constituye la propiedad formal que permite transferir igualdades, equivalencias y ordenaciones, asegurando que las comparaciones indirectas conserven la misma validez lógica que las directas.
+Es una de las tres condiciones que definen una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>, junto con la <ConceptLink targetId="relacion-reflexiva">reflexividad</ConceptLink> y la <ConceptLink targetId="relacion-simetrica">simetría</ConceptLink>, y una de las que definen un <ConceptLink targetId="orden-parcial">orden parcial</ConceptLink>, junto con la reflexividad y la <ConceptLink targetId="relacion-antisimetrica">antisimetría</ConceptLink>.
 
 <Definicion title="Definición formal de relación transitiva">
   Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> sobre $A$. La relación $R$ es **transitiva** si y solo si:
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
-  En términos de composición relacional, denotando por $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ a la composición de $R$ consigo misma, la transitividad equivale a la inclusión:
+  En términos de <ConceptLink targetId="composicion-relaciones">composición relacional</ConceptLink>, denotando por $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ a la composición de $R$ consigo misma, la transitividad equivale a la inclusión:
   $$
   R \circ R \subseteq R
   $$
@@ -35,4 +35,4 @@ Constituye la propiedad formal que permite transferir igualdades, equivalencias 
 
 - **Congruencia de segmentos:** La transitividad de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) no se postula en esta forma: el <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink> postula que dos segmentos congruentes con un tercero son congruentes entre sí, y la transitividad se deduce como <ConceptLink targetId="teorema">teorema</ConceptLink> de este axioma y de la <ConceptLink targetId="relacion-reflexiva">reflexividad</ConceptLink> del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>.
 - **Transitividad del paralelismo:** En un mismo <ConceptLink targetId="plano">plano</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> paralelas a una tercera son paralelas entre sí ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Este resultado es un <ConceptLink targetId="teorema">teorema</ConceptLink> derivado del postulado de las paralelas de <ConceptLink targetId="playfair">Playfair</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>), confiriendo al <ConceptLink targetId="paralelas">paralelismo</ConceptLink> euclídeo el estatus completo de <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
-- **Estructuras de orden:** En los conjuntos ordenados, la transitividad garantiza la coherencia de las cadenas de desigualdades ($x < y \land y < z \implies x < z$).
+- **Relaciones de orden:** Toda relación de <ConceptLink targetId="orden">orden</ConceptLink> es transitiva por definición, lo que permite encadenar desigualdades ($x < y \land y < z \implies x < z$).

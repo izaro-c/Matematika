@@ -13085,20 +13085,25 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
+        "relacion-equivalencia",
+        "relacion-reflexiva",
+        "relacion-simetrica",
+        "orden-parcial",
+        "relacion-antisimetrica",
+        "conjunto",
+        "composicion-relaciones",
         "congruencia",
         "segmento",
         "axioma-congruencia-2",
         "teorema",
-        "relacion-reflexiva",
         "axioma-congruencia-1",
         "plano",
         "recta",
         "playfair",
         "axioma-paralelas-euclides",
         "paralelas",
-        "relacion-equivalencia"
+        "orden"
       ],
       "availableLangs": [
         "en",
@@ -13146,20 +13151,25 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
+        "relacion-equivalencia",
+        "relacion-reflexiva",
+        "relacion-simetrica",
+        "orden-parcial",
+        "relacion-antisimetrica",
+        "conjunto",
+        "composicion-relaciones",
         "congruencia",
         "segmento",
         "axioma-congruencia-2",
         "teorema",
-        "relacion-reflexiva",
         "axioma-congruencia-1",
         "plano",
         "recta",
         "playfair",
         "axioma-paralelas-euclides",
         "paralelas",
-        "relacion-equivalencia"
+        "orden"
       ],
       "availableLangs": [
         "en",
@@ -33099,20 +33109,25 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
+        "relacion-equivalencia",
+        "relacion-reflexiva",
+        "relacion-simetrica",
+        "orden-parcial",
+        "relacion-antisimetrica",
+        "conjunto",
+        "composicion-relaciones",
         "congruencia",
         "segmento",
         "axioma-congruencia-2",
         "teorema",
-        "relacion-reflexiva",
         "axioma-congruencia-1",
         "plano",
         "recta",
         "playfair",
         "axioma-paralelas-euclides",
         "paralelas",
-        "relacion-equivalencia"
+        "orden"
       ],
       "availableLangs": [
         "en",
@@ -46369,20 +46384,25 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
+        "relacion-equivalencia",
+        "relacion-reflexiva",
+        "relacion-simetrica",
+        "orden-parcial",
+        "relacion-antisimetrica",
+        "conjunto",
+        "composicion-relaciones",
         "segmento",
         "congruencia",
         "axioma-congruencia-2",
         "axioma-congruencia-1",
-        "relacion-reflexiva",
         "teorema",
         "plano",
         "recta",
         "playfair",
         "axioma-paralelas-euclides",
         "paralelas",
-        "relacion-equivalencia"
+        "orden"
       ],
       "availableLangs": [
         "en",

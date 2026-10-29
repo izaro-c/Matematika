@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />rlazio bitar homogeneo bat **iragankorra** da baldin eta erlazio-lotura nahitaez hedatzen bada kateatutako tarteko elementuen bidez.
+<Capitular letra="E" /><ConceptLink targetId="relacion-binaria">rlazio bitar</ConceptLink> homogeneo bat **iragankorra** da baldin eta, elementu batek bigarren batekin eta honek hirugarren batekin erlazioa duen bakoitzean, lehenengoak hirugarrenarekin ere erlazioa badu.
 
-Berdintzak, baliokidetasunak eta ordenazioak transferitzea ahalbidetzen duen propietate formala osatzen du, zeharkako konparaketek zuzenekoen baliozkotasun logiko bera mantentzen dutela bermatuz.
+<ConceptLink targetId="relacion-equivalencia">Baliokidetasun-erlazio</ConceptLink> bat definitzen duten hiru baldintzetako bat da, <ConceptLink targetId="relacion-reflexiva">erreflexibotasunarekin</ConceptLink> eta <ConceptLink targetId="relacion-simetrica">simetriarekin</ConceptLink> batera, baita <ConceptLink targetId="orden-parcial">ordena partzial</ConceptLink> bat definitzen dutenetako bat ere, erreflexibotasunarekin eta <ConceptLink targetId="relacion-antisimetrica">antisimetriarekin</ConceptLink> batera.
 
 <Definicion title="Erlazio iragankorraren definizio formala">
   Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat. $R$ erlazioa **iragankorra** da baldin eta soilik baldin:
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
-  Erlazio-konposizioaren bidez, $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ $R$-k bere buruarekin duen konposizioa adieraziz, iragankortasuna inklusio honen baliokidea da:
+  <ConceptLink targetId="composicion-relaciones">Erlazio-konposizioaren</ConceptLink> bidez, $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ $R$-k bere buruarekin duen konposizioa adieraziz, iragankortasuna inklusio honen baliokidea da:
   $$
   R \circ R \subseteq R
   $$
@@ -35,4 +35,4 @@ Berdintzak, baliokidetasunak eta ordenazioak transferitzea ahalbidetzen duen pro
 
 - **Zuzenkien kongruentzia:** <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> iragankortasuna ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) ez da forma horretan postulatzen: <ConceptLink targetId="axioma-congruencia-2">III.2 axiomak</ConceptLink> postulatzen du hirugarren batekin kongruenteak diren bi zuzenki elkarren artean kongruenteak direla, eta iragankortasuna axioma horretatik eta <ConceptLink targetId="axioma-congruencia-1">III.1 axiomaren</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibotasunetik</ConceptLink> ondorioztatzen da, <ConceptLink targetId="teorema">teorema</ConceptLink> gisa.
 - **Paralelotasunaren iragankortasuna:** <ConceptLink targetId="plano">Plano</ConceptLink> berean, hirugarren batekiko paraleloak diren bi <ConceptLink targetId="recta">zuzen</ConceptLink> paraleloak dira elkarren artean ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Emaitza hau <ConceptLink targetId="playfair">Playfairren</ConceptLink> paraleloen postulatutik (<ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink>) eratorritako <ConceptLink targetId="teorema">teorema</ConceptLink> bat da, plano euklidearreko <ConceptLink targetId="paralelas">paralelotasunari</ConceptLink> <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> estatus osoa emanez.
-- **Ordena-egiturak:** Multzo ordenatuetan, iragankortasunak desberdintza-kateen koherentzia bermatzen du ($x < y \land y < z \implies x < z$).
+- **Ordena-erlazioak:** <ConceptLink targetId="orden">Ordena-erlazio</ConceptLink> oro iragankorra da definizioz, eta horri esker desberdintzak kateatu daitezke ($x < y \land y < z \implies x < z$).
