@@ -33,3 +33,5 @@ Cada línea es el commit de una página que incluye propuestas, ya aplicadas (en
 - [ ] `relacion-simetrica` · 2026-10-29 · ronda 1 · `6a9b82b0` · [informe](2026-10-29-relacion-simetrica.md)
 - [ ] `relacion-transitiva` · 2026-10-29 · ronda 1 · `a79c70b1` · [informe](2026-10-29-relacion-transitiva.md)
 - [ ] `relacion-equivalencia` · 2026-10-29 · ronda 1 · `23d51600` · [informe](2026-10-29-relacion-equivalencia.md)
+- [ ] `numero-entero` · 2026-10-29 · ronda 1 · `d53905d4` · [informe](2026-10-29-numero-entero.md)
+- [ ] `numero-racional` · 2026-10-29 · ronda 1 · `5fe28818` · [informe](2026-10-29-numero-racional.md)

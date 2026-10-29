@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 37 / 190
+Revisadas: 39 / 190
 
 ## Pendientes
 
-- [ ] `numero-entero` · definitions
-- [ ] `numero-racional` · definitions
 - [ ] `secante` · definitions
 - [ ] `segmento` · definitions
 - [ ] `circunferencia` · definitions
@@ -199,3 +197,5 @@ Revisadas: 37 / 190
 - [x] `relacion-simetrica` · 2026-10-29 · errores → ok · 3 rondas, converge · corregido d3984b33 · propuestas 6a9b82b0 · corregido 1d81ff6a · [informe](2026-10-29-relacion-simetrica.md) · $1.69
 - [x] `relacion-transitiva` · 2026-10-29 · errores → ok · 2 rondas, converge · corregido 505eb6a7 · propuestas a79c70b1 · [informe](2026-10-29-relacion-transitiva.md) · $1.65
 - [x] `relacion-equivalencia` · 2026-10-29 · errores → mejoras · 2 rondas, converge · corregido 53660230 · propuestas 23d51600 · [informe](2026-10-29-relacion-equivalencia.md) · $3.39
+- [x] `numero-entero` · 2026-10-29 · errores → errores · 4 rondas, sin converger tras 4 rondas · corregido · propuestas · corregido r2 · corregido r3 · corregido r4 → commit d53905d4 en main · [informe](2026-10-29-numero-entero.md) · $5.53
+- [x] `numero-racional` · 2026-10-29 · errores → errores · 3 rondas, ronda 3 incompleta (success): descartada; se conservan las anteriores · corregido · propuestas · corregido r2 → commit 5fe28818 en main · [informe](2026-10-29-numero-racional.md) · $5.63

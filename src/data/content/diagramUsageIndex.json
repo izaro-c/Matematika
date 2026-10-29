@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "c97c8f734de51e69a9107e6a80284862b76ade76f74b20a5486bed46c50660ac",
+  "corpusHash": "3499c627329bfd35c5fcc9ce09e902d4930a76008d2f5839f270978d627af197",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -47,6 +47,8 @@
     "Interseccion": "content/diagrams/Definiciones/Interseccion.tsx",
     "IsomorfismoRelacion": "content/diagrams/Definiciones/IsomorfismoRelacion.tsx",
     "Lado": "content/diagrams/Definiciones/Lado.tsx",
+    "NumeroEnteroPares": "content/diagrams/Definiciones/NumeroEnteroPares.tsx",
+    "NumeroRacionalPares": "content/diagrams/Definiciones/NumeroRacionalPares.tsx",
     "OperacionBinariaTabla": "content/diagrams/Definiciones/OperacionBinariaTabla.tsx",
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
@@ -1504,6 +1506,70 @@
           "end": 798
         },
         "blockId": "lado:diagram:Lado"
+      }
+    ],
+    "NumeroEnteroPares": [
+      {
+        "contentId": "numero-entero",
+        "contentPath": "content/mdx/en/definitions/numero-entero.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 650,
+          "end": 693
+        },
+        "blockId": "numero-entero:diagram:NumeroEnteroPares"
+      },
+      {
+        "contentId": "numero-entero",
+        "contentPath": "content/mdx/es/definitions/numero-entero.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 668,
+          "end": 711
+        },
+        "blockId": "numero-entero:diagram:NumeroEnteroPares"
+      },
+      {
+        "contentId": "numero-entero",
+        "contentPath": "content/mdx/eu/definitions/numero-entero.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 663,
+          "end": 706
+        },
+        "blockId": "numero-entero:diagram:NumeroEnteroPares"
+      }
+    ],
+    "NumeroRacionalPares": [
+      {
+        "contentId": "numero-racional",
+        "contentPath": "content/mdx/en/definitions/numero-racional.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 685,
+          "end": 730
+        },
+        "blockId": "numero-racional:diagram:NumeroRacionalPares"
+      },
+      {
+        "contentId": "numero-racional",
+        "contentPath": "content/mdx/es/definitions/numero-racional.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 703,
+          "end": 748
+        },
+        "blockId": "numero-racional:diagram:NumeroRacionalPares"
+      },
+      {
+        "contentId": "numero-racional",
+        "contentPath": "content/mdx/eu/definitions/numero-racional.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 698,
+          "end": 743
+        },
+        "blockId": "numero-racional:diagram:NumeroRacionalPares"
       }
     ],
     "OperacionBinariaTabla": [
