@@ -1,0 +1,213 @@
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
+
+/* @matematika-diagram-spec:start */
+export const NumeroEnteroParesSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Números enteros: cada clase es una diagonal de N × N",
+  "componentId": "numero-entero-pares",
+  "category": "Definiciones",
+  "mode": "diagram",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [-4.3, 2.0, 3.6, -1.95],
+    "home": [-4.3, 2.0, 3.6, -1.95],
+    "minZoom": 0.6,
+    "maxZoom": 3,
+    "padding": 0.06
+  },
+  "layers": [
+    { "id": "classes", "label": "Clases", "order": 0, "visible": true, "locked": false },
+    { "id": "pairs", "label": "Pares", "order": 1, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Rótulos", "order": 2, "visible": true, "locked": false }
+  ],
+  "groups": [
+    {
+      "id": "malla",
+      "label": "Pares de N × N",
+      "memberIds": ["p00", "p01", "p02", "p10", "p11", "p12", "p20", "p21", "p22", "p30", "p31", "p32", "p40", "p41", "p42", "p50", "p51", "p52"],
+      "visible": true,
+      "locked": false,
+      "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Pares (a, b) de N × N" },
+      "target": true,
+      "targetId": "malla",
+      "color": "carbon"
+    },
+    {
+      "id": "clase0",
+      "label": "Clase [(0, 0)], el entero 0",
+      "memberIds": ["diag0", "p00", "p11", "p22"],
+      "visible": true,
+      "locked": false,
+      "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(0, 0)], el entero 0" },
+      "target": true,
+      "targetId": "clase0",
+      "color": "mora"
+    },
+    {
+      "id": "clase2",
+      "label": "Clase [(2, 0)], el entero 2",
+      "memberIds": ["diag2", "p20", "p31", "p42"],
+      "visible": true,
+      "locked": false,
+      "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(2, 0)], el entero 2" },
+      "target": true,
+      "targetId": "clase2",
+      "color": "terracota"
+    },
+    {
+      "id": "claseMenos2",
+      "label": "Clase [(0, 2)], el entero −2",
+      "memberIds": ["diagM2", "p02"],
+      "visible": true,
+      "locked": false,
+      "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(0, 2)], el entero −2" },
+      "target": true,
+      "targetId": "claseMenos2",
+      "color": "pavo"
+    }
+  ],
+  "objects": [
+    { "id": "fM2", "label": "−2", "color": "pavo", "layerId": "annotations", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -2.3, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 16, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "fM1", "label": "−1", "color": "carbon", "layerId": "annotations", "order": 2, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -1.3, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 14, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "f0", "label": "0", "color": "mora", "layerId": "annotations", "order": 3, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -0.3, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 16, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "f1", "label": "1", "color": "carbon", "layerId": "annotations", "order": 4, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 0.7, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 14, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "f2", "label": "2", "color": "terracota", "layerId": "annotations", "order": 5, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 1.7, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 16, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "f3", "label": "3", "color": "carbon", "layerId": "annotations", "order": 6, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.7, "y": 1.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 14, "labelPosition": "top", "preserveColorOnHighlight": true } },
+    { "id": "f4", "label": "4", "color": "carbon", "layerId": "annotations", "order": 7, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.7, "y": 0.4 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 14, "labelPosition": "rt", "preserveColorOnHighlight": true } },
+    { "id": "f5", "label": "5", "color": "carbon", "layerId": "annotations", "order": 8, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.7, "y": -0.6 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 14, "labelPosition": "rt", "preserveColorOnHighlight": true } },
+    { "id": "p00", "label": "(0, 0)", "color": "mora", "layerId": "pairs", "order": 100, "visible": true, "locked": true, "groupIds": ["malla", "clase0"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (0, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -2.7, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p01", "label": "(0, 1)", "color": "carbon", "layerId": "pairs", "order": 101, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (0, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -2.7, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p02", "label": "(0, 2)", "color": "pavo", "layerId": "pairs", "order": 102, "visible": true, "locked": true, "groupIds": ["malla", "claseMenos2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (0, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -2.7, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p10", "label": "(1, 0)", "color": "carbon", "layerId": "pairs", "order": 103, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (1, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -1.7, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p11", "label": "(1, 1)", "color": "mora", "layerId": "pairs", "order": 104, "visible": true, "locked": true, "groupIds": ["malla", "clase0"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (1, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -1.7, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p12", "label": "(1, 2)", "color": "carbon", "layerId": "pairs", "order": 105, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (1, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -1.7, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p20", "label": "(2, 0)", "color": "terracota", "layerId": "pairs", "order": 106, "visible": true, "locked": true, "groupIds": ["malla", "clase2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (2, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -0.7, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p21", "label": "(2, 1)", "color": "carbon", "layerId": "pairs", "order": 107, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (2, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -0.7, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p22", "label": "(2, 2)", "color": "mora", "layerId": "pairs", "order": 108, "visible": true, "locked": true, "groupIds": ["malla", "clase0"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (2, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -0.7, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p30", "label": "(3, 0)", "color": "carbon", "layerId": "pairs", "order": 109, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (3, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 0.3, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p31", "label": "(3, 1)", "color": "terracota", "layerId": "pairs", "order": 110, "visible": true, "locked": true, "groupIds": ["malla", "clase2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (3, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 0.3, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p32", "label": "(3, 2)", "color": "carbon", "layerId": "pairs", "order": 111, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (3, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 0.3, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p40", "label": "(4, 0)", "color": "carbon", "layerId": "pairs", "order": 112, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (4, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 1.3, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p41", "label": "(4, 1)", "color": "carbon", "layerId": "pairs", "order": 113, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (4, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 1.3, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p42", "label": "(4, 2)", "color": "terracota", "layerId": "pairs", "order": 114, "visible": true, "locked": true, "groupIds": ["malla", "clase2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (4, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 1.3, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 4, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p50", "label": "(5, 0)", "color": "carbon", "layerId": "pairs", "order": 115, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (5, 0)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.3, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p51", "label": "(5, 1)", "color": "carbon", "layerId": "pairs", "order": 116, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (5, 1)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.3, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "p52", "label": "(5, 2)", "color": "carbon", "layerId": "pairs", "order": 117, "visible": true, "locked": true, "groupIds": ["malla"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Par (5, 2)" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.3, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 3, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diagM2", "label": "Clase −2", "color": "pavo", "layerId": "classes", "order": 50, "visible": true, "locked": true, "groupIds": ["claseMenos2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(0, 2)], el entero −2" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p02", "fM2"] }, "appearance": { "strokeWidth": 2.6, "strokeOpacity": 0.9, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diagM1", "label": "Clase −1", "color": "canela", "layerId": "classes", "order": 51, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase del entero −1" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p01", "fM1"] }, "appearance": { "strokeWidth": 1.6, "strokeOpacity": 0.6, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag0", "label": "Clase 0", "color": "mora", "layerId": "classes", "order": 52, "visible": true, "locked": true, "groupIds": ["clase0"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(0, 0)], el entero 0" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p00", "f0"] }, "appearance": { "strokeWidth": 2.6, "strokeOpacity": 0.9, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag1", "label": "Clase 1", "color": "canela", "layerId": "classes", "order": 53, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase del entero 1" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p10", "f1"] }, "appearance": { "strokeWidth": 1.6, "strokeOpacity": 0.6, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag2", "label": "Clase 2", "color": "terracota", "layerId": "classes", "order": 54, "visible": true, "locked": true, "groupIds": ["clase2"], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase [(2, 0)], el entero 2" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p20", "f2"] }, "appearance": { "strokeWidth": 2.6, "strokeOpacity": 0.9, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag3", "label": "Clase 3", "color": "canela", "layerId": "classes", "order": 55, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase del entero 3" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p30", "f3"] }, "appearance": { "strokeWidth": 1.6, "strokeOpacity": 0.6, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag4", "label": "Clase 4", "color": "canela", "layerId": "classes", "order": 56, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase del entero 4" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p40", "f4"] }, "appearance": { "strokeWidth": 1.6, "strokeOpacity": 0.6, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "diag5", "label": "Clase 5", "color": "canela", "layerId": "classes", "order": 57, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "secondary", "ariaLabel": "Clase del entero 5" }, "target": false, "objectType": "path", "geometry": { "type": "segment", "points": ["p50", "f5"] }, "appearance": { "strokeWidth": 1.6, "strokeOpacity": 0.6, "labelVisible": false, "preserveColorOnHighlight": true } },
+    { "id": "ta0", "label": "0", "color": "carbon", "layerId": "annotations", "order": 200, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -2.7, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ta1", "label": "1", "color": "carbon", "layerId": "annotations", "order": 201, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -1.7, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ta2", "label": "2", "color": "carbon", "layerId": "annotations", "order": 202, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -0.7, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ta3", "label": "3", "color": "carbon", "layerId": "annotations", "order": 203, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 0.3, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ta4", "label": "4", "color": "carbon", "layerId": "annotations", "order": 204, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 1.3, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ta5", "label": "5", "color": "carbon", "layerId": "annotations", "order": 205, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 2.3, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "ejeA", "label": "a", "color": "carbon", "layerId": "annotations", "order": 206, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": 3.1, "y": -1.3 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 15, "labelPosition": "bot", "preserveColorOnHighlight": true } },
+    { "id": "tb0", "label": "0", "color": "carbon", "layerId": "annotations", "order": 207, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -3.0, "y": -1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "lft", "preserveColorOnHighlight": true } },
+    { "id": "tb1", "label": "1", "color": "carbon", "layerId": "annotations", "order": 208, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -3.0, "y": 0 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "lft", "preserveColorOnHighlight": true } },
+    { "id": "tb2", "label": "2", "color": "carbon", "layerId": "annotations", "order": 209, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -3.0, "y": 1 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 13, "labelPosition": "lft", "preserveColorOnHighlight": true } },
+    { "id": "ejeB", "label": "b", "color": "carbon", "layerId": "annotations", "order": 210, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": false, "role": "construction" }, "target": false, "objectType": "point", "definition": { "type": "coordinates", "x": -3.0, "y": 1.7 }, "mobility": { "type": "fixed" }, "appearance": { "size": 0, "labelVisible": true, "labelSize": 15, "labelPosition": "lft", "preserveColorOnHighlight": true } }
+  ],
+  "relations": [],
+  "steps": [],
+  "note": "Cada diagonal reúne los pares (a, b) con la misma diferencia a − b: es un número entero.",
+  "translations": {
+    "eu": {
+      "title": "Zenbaki osoak: klase bakoitza N × N multzoaren diagonal bat da",
+      "note": "Diagonal bakoitzak a − b diferentzia bera duten (a, b) bikoteak biltzen ditu: zenbaki oso bat da.",
+      "labels": {
+        "malla": "N × N multzoko bikoteak",
+        "clase0": "[(0, 0)] klasea, 0 zenbaki osoa",
+        "clase2": "[(2, 0)] klasea, 2 zenbaki osoa",
+        "claseMenos2": "[(0, 2)] klasea, −2 zenbaki osoa"
+      },
+      "ariaLabels": {
+        "malla": "N × N multzoko (a, b) bikoteak",
+        "clase0": "[(0, 0)] klasea, 0 zenbaki osoa",
+        "clase2": "[(2, 0)] klasea, 2 zenbaki osoa",
+        "claseMenos2": "[(0, 2)] klasea, −2 zenbaki osoa",
+        "diagM2": "[(0, 2)] klasea, −2 zenbaki osoa",
+        "diagM1": "−1 zenbaki osoaren klasea",
+        "diag0": "[(0, 0)] klasea, 0 zenbaki osoa",
+        "diag1": "1 zenbaki osoaren klasea",
+        "diag2": "[(2, 0)] klasea, 2 zenbaki osoa",
+        "diag3": "3 zenbaki osoaren klasea",
+        "diag4": "4 zenbaki osoaren klasea",
+        "diag5": "5 zenbaki osoaren klasea",
+        "p00": "(0, 0) bikotea",
+        "p01": "(0, 1) bikotea",
+        "p02": "(0, 2) bikotea",
+        "p10": "(1, 0) bikotea",
+        "p11": "(1, 1) bikotea",
+        "p12": "(1, 2) bikotea",
+        "p20": "(2, 0) bikotea",
+        "p21": "(2, 1) bikotea",
+        "p22": "(2, 2) bikotea",
+        "p30": "(3, 0) bikotea",
+        "p31": "(3, 1) bikotea",
+        "p32": "(3, 2) bikotea",
+        "p40": "(4, 0) bikotea",
+        "p41": "(4, 1) bikotea",
+        "p42": "(4, 2) bikotea",
+        "p50": "(5, 0) bikotea",
+        "p51": "(5, 1) bikotea",
+        "p52": "(5, 2) bikotea"
+      }
+    },
+    "en": {
+      "title": "Integers: each class is a diagonal of N × N",
+      "note": "Each diagonal gathers the pairs (a, b) with the same difference a − b: it is an integer.",
+      "labels": {
+        "malla": "Pairs of N × N",
+        "clase0": "Class [(0, 0)], the integer 0",
+        "clase2": "Class [(2, 0)], the integer 2",
+        "claseMenos2": "Class [(0, 2)], the integer −2"
+      },
+      "ariaLabels": {
+        "malla": "Pairs (a, b) of N × N",
+        "clase0": "Class [(0, 0)], the integer 0",
+        "clase2": "Class [(2, 0)], the integer 2",
+        "claseMenos2": "Class [(0, 2)], the integer −2",
+        "diagM2": "Class [(0, 2)], the integer −2",
+        "diagM1": "Class of the integer −1",
+        "diag0": "Class [(0, 0)], the integer 0",
+        "diag1": "Class of the integer 1",
+        "diag2": "Class [(2, 0)], the integer 2",
+        "diag3": "Class of the integer 3",
+        "diag4": "Class of the integer 4",
+        "diag5": "Class of the integer 5",
+        "p00": "Pair (0, 0)",
+        "p01": "Pair (0, 1)",
+        "p02": "Pair (0, 2)",
+        "p10": "Pair (1, 0)",
+        "p11": "Pair (1, 1)",
+        "p12": "Pair (1, 2)",
+        "p20": "Pair (2, 0)",
+        "p21": "Pair (2, 1)",
+        "p22": "Pair (2, 2)",
+        "p30": "Pair (3, 0)",
+        "p31": "Pair (3, 1)",
+        "p32": "Pair (3, 2)",
+        "p40": "Pair (4, 0)",
+        "p41": "Pair (4, 1)",
+        "p42": "Pair (4, 2)",
+        "p50": "Pair (5, 0)",
+        "p51": "Pair (5, 1)",
+        "p52": "Pair (5, 2)"
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
+
+export const NumeroEnteroPares = () => <DiagramRenderer spec={NumeroEnteroParesSpec} />;

@@ -10525,7 +10525,7 @@
         "11A",
         "13F"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -10536,33 +10536,38 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "Chapter I, §1",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
+        "numero-natural",
         "numero-negativo",
         "aritmetica",
         "adicion",
         "grupo-grothendieck",
         "semianillo",
-        "numero-natural",
+        "conjunto-cociente",
         "producto-cartesiano",
         "relacion-equivalencia",
         "clase-equivalencia",
         "operacion-binaria",
+        "grupo-abeliano",
         "grupo",
         "elemento-neutro",
         "elemento-inverso",
-        "grupo-abeliano",
+        "grupo-ciclico",
         "ecuacion-lineal",
+        "conmutatividad",
         "dominio-integridad",
         "dominio-ideales-principales",
         "teorema-fundamental-aritmetica",
         "numero-primo",
         "orden-total",
-        "grupo-abeliano-aditivo",
-        "orden-total-discreto"
+        "multiplicacion",
+        "enteros-grupo-ciclico",
+        "enteros-dominio-integridad",
+        "enteros-orden-discreto"
       ],
       "availableLangs": [
         "en",
@@ -10594,7 +10599,7 @@
         "11A",
         "13F"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -10610,28 +10615,33 @@
         }
       ],
       "conceptLinks": [
+        "numero-natural",
         "numero-negativo",
         "aritmetica",
         "adicion",
         "grupo-grothendieck",
         "semianillo",
-        "numero-natural",
+        "conjunto-cociente",
         "producto-cartesiano",
         "relacion-equivalencia",
         "clase-equivalencia",
         "operacion-binaria",
         "grupo",
+        "grupo-abeliano",
         "elemento-neutro",
         "elemento-inverso",
-        "grupo-abeliano",
+        "grupo-ciclico",
         "ecuacion-lineal",
         "dominio-integridad",
+        "conmutatividad",
         "dominio-ideales-principales",
         "teorema-fundamental-aritmetica",
         "numero-primo",
         "orden-total",
-        "grupo-abeliano-aditivo",
-        "orden-total-discreto"
+        "multiplicacion",
+        "enteros-grupo-ciclico",
+        "enteros-dominio-integridad",
+        "enteros-orden-discreto"
       ],
       "availableLangs": [
         "en",
@@ -31847,7 +31857,7 @@
         "11A",
         "13F"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -31863,28 +31873,33 @@
         }
       ],
       "conceptLinks": [
+        "numero-natural",
         "numero-negativo",
         "aritmetica",
         "adicion",
         "grupo-grothendieck",
         "semianillo",
-        "numero-natural",
+        "conjunto-cociente",
         "producto-cartesiano",
         "relacion-equivalencia",
         "clase-equivalencia",
         "operacion-binaria",
         "grupo",
+        "grupo-abeliano",
         "elemento-neutro",
         "elemento-inverso",
-        "grupo-abeliano",
+        "grupo-ciclico",
         "ecuacion-lineal",
         "dominio-integridad",
+        "conmutatividad",
         "dominio-ideales-principales",
         "teorema-fundamental-aritmetica",
         "numero-primo",
         "orden-total",
-        "grupo-abeliano-aditivo",
-        "orden-total-discreto"
+        "multiplicacion",
+        "enteros-grupo-ciclico",
+        "enteros-dominio-integridad",
+        "enteros-orden-discreto"
       ],
       "availableLangs": [
         "en",
@@ -45129,13 +45144,13 @@
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Zenbaki osoak",
-      "description": "Zenbaki arruntei batuketaren alderantzizkoak edo zenbaki negatiboak gehituz lortzen den eraztun trukatzaile ordenatu diskretua.",
+      "description": "Zenbaki arruntei batuketaren alderantzizkoak edo zenbaki negatiboak gehituz lortzen den eraztun trukakor ordenatu diskretua.",
       "branch": "11A",
       "branches": [
         "11A",
         "13F"
       ],
-      "hasSimulation": false,
+      "hasSimulation": true,
       "sources": [
         {
           "title": "Stetigkeit und irrationale Zahlen",
@@ -45146,33 +45161,38 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
-          "locator": "Capítulo I, §1",
+          "locator": "I. kapitulua, §1",
           "role": "secondary"
         }
       ],
       "conceptLinks": [
+        "numero-natural",
         "numero-negativo",
         "aritmetica",
         "adicion",
-        "numero-natural",
         "semianillo",
         "grupo-grothendieck",
         "producto-cartesiano",
+        "conjunto-cociente",
         "relacion-equivalencia",
         "clase-equivalencia",
         "operacion-binaria",
         "grupo",
+        "grupo-abeliano",
         "elemento-neutro",
         "elemento-inverso",
-        "grupo-abeliano",
+        "grupo-ciclico",
         "ecuacion-lineal",
         "dominio-integridad",
+        "conmutatividad",
         "dominio-ideales-principales",
         "teorema-fundamental-aritmetica",
         "numero-primo",
+        "multiplicacion",
         "orden-total",
-        "grupo-abeliano-aditivo",
-        "orden-total-discreto"
+        "enteros-grupo-ciclico",
+        "enteros-dominio-integridad",
+        "enteros-orden-discreto"
       ],
       "availableLangs": [
         "en",

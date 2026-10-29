@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 109,
-      "exported": 81
+      "none": 108,
+      "exported": 82
     },
     "theoremLike": {
       "total": 21,
@@ -1084,9 +1084,11 @@
       "type": "definicion",
       "title": "Zenbaki osoak",
       "filePath": "eu/definitions/numero-entero.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

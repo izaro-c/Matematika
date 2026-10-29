@@ -4,45 +4,50 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Zenbaki osoak",
-  description: "Zenbaki arruntei batuketaren alderantzizkoak edo zenbaki negatiboak gehituz lortzen den eraztun trukatzaile ordenatu diskretua.",
+  description: "Zenbaki arruntei batuketaren alderantzizkoak edo zenbaki negatiboak gehituz lortzen den eraztun trukakor ordenatu diskretua.",
   branch: "11A",
   branches: ["11A", "13F"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+    { title: "Algebra", author: "Serge Lang", locator: "I. kapitulua, §1", role: "secondary" }
   ]
 };
 
-<Capitular letra="Z" />enbaki **osoak** zenbaki arruntek, haien batuketarekiko alderantzizko negatiboek edo <ConceptLink targetId="numero-negativo">zenbaki negatiboek</ConceptLink> eta zeroak osatzen duten zenbaki-sistema aljebraiko diskretua dira, <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ri <ConceptLink targetId="adicion">batuketa</ConceptLink>rekiko alderanzgarritasun osoa emanez.
+import { NumeroEnteroPares } from '@content/diagrams/Definiciones/NumeroEnteroPares';
+export const Simulation = NumeroEnteroPares;
 
-Ohiko moduan $\mathbb{Z}$ ikurraz izendatuak (alemanezko *Zahlen* hitzetik), zenbaki osoak aljebraikoki <ConceptLink targetId="numero-natural" isDependency={true}>zenbaki arrunt</ConceptLink>en <ConceptLink targetId="semianillo">semieraztun</ConceptLink>aren simetrizazio edo <ConceptLink targetId="grupo-grothendieck">Grothendiecken talde</ConceptLink> gisa sortzen dira, $\mathbb{N}$-n kantitate txikiagoei kantitate handiagoak zuzenean kentzeko ezintasun intrintsekoa gaindituz.
+<Capitular letra="Z" />enbaki **osoak** <ConceptLink targetId="numero-natural" isDependency={true}>zenbaki arruntek</ConceptLink> eta zero ez diren zenbaki arrunten batuketarekiko alderantzizkoek, edo <ConceptLink targetId="numero-negativo">zenbaki negatiboek</ConceptLink>, osatzen duten zenbaki-sistema aljebraiko diskretua dira, <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ri <ConceptLink targetId="adicion">batuketa</ConceptLink>rekiko alderantzizgarritasun osoa emanez.
+
+Ohiko moduan $\mathbb{Z}$ ikurraz izendatuak (alemanezko *Zahlen* hitzetik), zenbaki osoak aljebraikoki zenbaki arrunten <ConceptLink targetId="semianillo">semieraztun</ConceptLink>aren simetrizazio edo <ConceptLink targetId="grupo-grothendieck">Grothendiecken talde</ConceptLink> gisa sortzen dira, $\mathbb{N}$-n kantitate txikiagoei kantitate handiagoak zuzenean kentzeko ezintasun intrintsekoa gaindituz.
 
 <Definicion title="Zenbaki osoen eraikuntza formala">
-  **Zenbaki oso**en $\mathbb{Z}$ multzoa $\mathbb{N} \times \mathbb{N}$ <ConceptLink targetId="producto-cartesiano">biderkadura kartesiarra</ConceptLink>ren zatidura-multzo gisa definitzen da, bi zenbaki arrunt bikote haien batura gurutzatua berdina denean identifikatzen dituen <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink>aren pean:
+  **Zenbaki oso**en $\mathbb{Z}$ multzoa <VisualBind element="malla" color="carbon">$\mathbb{N} \times \mathbb{N}$</VisualBind> <ConceptLink targetId="producto-cartesiano" isDependency={true}>biderkadura kartesiarra</ConceptLink>ren <ConceptLink targetId="conjunto-cociente" isDependency={true}>zatidura-multzo</ConceptLink> gisa definitzen da, <ConceptLink targetId="numero-natural">zenbaki arrunten</ConceptLink> bi bikote haien batura gurutzatua berdina denean identifikatzen dituen <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink>aren pean:
   $$
   (a, b) \sim (c, d) \iff a + d = b + c
   $$
-  $[(a, b)]$ <ConceptLink targetId="clase-equivalencia">baliokidetasun-klaseak</ConceptLink> $a - b$ diferentzia formalizatzen du. Zatidura-multzo honen gainean baliokidetasun-erlazioarekin bateragarriak diren bi <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> definitzen dira:
+  $[(a, b)]$ <ConceptLink targetId="clase-equivalencia">baliokidetasun-klaseak</ConceptLink> $a - b$ diferentzia formalizatzen du. $n$ zenbaki arrunt bakoitza $[(n, 0)]$ klasearekin identifikatzen da, eta haren aurkakoa $[(0, n)]$ klasearekin; klase oro bi forma horietako batekoa da, $(a, b) \sim (a - b, 0)$ baita $a \geq b$ bada, eta $(a, b) \sim (0, b - a)$ $a < b$ bada. Zatidura-multzo honen gainean baliokidetasun-erlazioarekin bateragarriak diren bi <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> definitzen dira:
   $$
   [(a, b)] + [(c, d)] = [(a + c, b + d)]
   $$
   $$
   [(a, b)] \cdot [(c, d)] = [(a \cdot c + b \cdot d, a \cdot d + b \cdot c)]
   $$
-  Eragiketa hauen pean, $(\mathbb{Z}, +)$ egitura <ConceptLink targetId="grupo" isDependency={true}>talde</ConceptLink> abeldar bat da, $0 = [(0, 0)]$ <ConceptLink targetId="elemento-neutro">elementu neutroarekin</ConceptLink> eta $-[(a, b)] = [(b, a)]$ batuketarekiko <ConceptLink targetId="elemento-inverso">alderantzizko elementuarekin</ConceptLink>.
+  Eragiketa hauen pean, $(\mathbb{Z}, +)$ egitura <ConceptLink targetId="grupo" isDependency={true}>talde</ConceptLink> <ConceptLink targetId="grupo-abeliano">abeldar</ConceptLink> bat da, <VisualBind element="clase0" color="mora">$0 = [(0, 0)]$</VisualBind> <ConceptLink targetId="elemento-neutro">elementu neutroarekin</ConceptLink> eta $-[(a, b)] = [(b, a)]$ batuketarekiko <ConceptLink targetId="elemento-inverso">alderantzizko elementuarekin</ConceptLink>.
 </Definicion>
+
+Irudian, klase bakoitza bikoteen diagonal bat da: <VisualBind element="clase2" color="terracota">$[(2, 0)] = \{(2, 0), (3, 1), (4, 2), \dots\}$</VisualBind> $2$ zenbaki osoa da, eta <VisualBind element="claseMenos2" color="pavo">$[(0, 2)]$</VisualBind> haren aurkakoa, $-2$.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="grupo-abeliano-aditivo" title="Talde abeldar gehigarria">
-    $(\mathbb{Z}, +)$ egitura <ConceptLink targetId="grupo-abeliano">talde abeldar</ConceptLink> zikliko infinitua da, $1 = [(1, 0)]$ unitate-elementuak sortua, $\mathbb{Z}$-n $a + x = b$ erako <ConceptLink targetId="ecuacion-lineal">ekuazio lineal</ConceptLink> aditibo orok soluzio bakarra duela bermatuz.
+  <PropiedadItem id="enteros-grupo-ciclico" title="Talde abeldar batukorra">
+    $(\mathbb{Z}, +)$ egitura <ConceptLink targetId="grupo-abeliano">talde abeldar</ConceptLink> <ConceptLink targetId="grupo-ciclico">zikliko</ConceptLink> infinitua da, $1 = [(1, 0)]$ unitate-elementuak sortua, $\mathbb{Z}$-n $a + x = b$ erako <ConceptLink targetId="ecuacion-lineal">ekuazio lineal</ConceptLink> batukor orok soluzio bakarra duela bermatuz.
   </PropiedadItem>
-  <PropiedadItem id="dominio-integridad" title="Osotasun-eremua eta faktorizazioa">
-    $(\mathbb{Z}, +, \cdot)$ egitura <ConceptLink targetId="dominio-integridad">osotasun-eremu</ConceptLink> trukatzaile unitarioa eta <ConceptLink targetId="dominio-ideales-principales">ideal nagusien eremua</ConceptLink> da, <ConceptLink targetId="teorema-fundamental-aritmetica">aritmetikaren oinarrizko teorema</ConceptLink> betez <ConceptLink targetId="numero-primo">faktore lehenetan</ConceptLink> modu bakarrean deskonposatzeko.
+  <PropiedadItem id="enteros-dominio-integridad" title="Osotasun-eremua eta faktorizazioa">
+    $(\mathbb{Z}, +, \cdot)$ egitura <ConceptLink targetId="dominio-integridad">osotasun-eremu</ConceptLink> <ConceptLink targetId="conmutatividad">trukakor</ConceptLink> unitarioa eta <ConceptLink targetId="dominio-ideales-principales">ideal nagusien eremua</ConceptLink> da, <ConceptLink targetId="teorema-fundamental-aritmetica">aritmetikaren oinarrizko teorema</ConceptLink> betez <ConceptLink targetId="numero-primo">faktore lehenetan</ConceptLink> modu bakarrean deskonposatzeko.
   </PropiedadItem>
-  <PropiedadItem id="orden-total-discreto" title="Ordena lineal diskretua">
-    $\mathbb{Z}$ multzoak batuketarekin eta elementu positiboekiko biderketarekin bateragarria den <ConceptLink targetId="orden-total">ordena osoaren</ConceptLink> erlazioa du, non $z$ zenbaki oso bakoitzak berehalako $z + 1$ ondorengo bat eta berehalako $z - 1$ aurreko bat dituen.
+  <PropiedadItem id="enteros-orden-discreto" title="Ordena lineal diskretua">
+    $\mathbb{Z}$ multzoak <ConceptLink targetId="adicion">batuketa</ConceptLink>rekin eta elementu positiboekiko <ConceptLink targetId="multiplicacion">biderketa</ConceptLink>rekin bateragarria den <ConceptLink targetId="orden-total">ordena osoaren</ConceptLink> erlazioa du, $[(a, b)] \leq [(c, d)] \iff a + d \leq b + c$, non $z$ zenbaki oso bakoitzak berehalako $z + 1$ ondorengo bat eta berehalako $z - 1$ aurreko bat dituen.
   </PropiedadItem>
 </SeccionPropiedades>

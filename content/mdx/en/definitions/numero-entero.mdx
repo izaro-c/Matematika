@@ -7,42 +7,47 @@ export const metadata = {
   description: "Discrete ordered commutative ring extending the natural numbers by incorporating additive inverses or negative numbers.",
   branch: "11A",
   branches: ["11A", "13F"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "secondary" }
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "secondary" }
   ]
 };
 
-<Capitular letra="T" />he **integers** constitute the discrete algebraic numerical system consisting of the natural numbers, their corresponding additive inverses or <ConceptLink targetId="numero-negativo">negative numbers</ConceptLink>, and zero, providing <ConceptLink targetId="aritmetica">arithmetic</ConceptLink> with complete invertibility under <ConceptLink targetId="adicion">addition</ConceptLink>.
+import { NumeroEnteroPares } from '@content/diagrams/Definiciones/NumeroEnteroPares';
+export const Simulation = NumeroEnteroPares;
 
-Conventionally designated by the symbol $\mathbb{Z}$ (from the German *Zahlen*), the integers arise algebraically as the symmetrization or <ConceptLink targetId="grupo-grothendieck">Grothendieck group</ConceptLink> of the <ConceptLink targetId="semianillo">semiring</ConceptLink> of <ConceptLink targetId="numero-natural" isDependency={true}>natural numbers</ConceptLink>, resolving the intrinsic impossibility of freely subtracting larger quantities from smaller ones in $\mathbb{N}$.
+<Capitular letra="T" />he **integers** constitute the discrete algebraic numerical system consisting of the <ConceptLink targetId="numero-natural" isDependency={true}>natural numbers</ConceptLink> and the additive inverses of the nonzero natural numbers, or <ConceptLink targetId="numero-negativo">negative numbers</ConceptLink>, providing <ConceptLink targetId="aritmetica">arithmetic</ConceptLink> with complete invertibility under <ConceptLink targetId="adicion">addition</ConceptLink>.
+
+Conventionally designated by the symbol $\mathbb{Z}$ (from the German *Zahlen*), the integers arise algebraically as the symmetrization or <ConceptLink targetId="grupo-grothendieck">Grothendieck group</ConceptLink> of the <ConceptLink targetId="semianillo">semiring</ConceptLink> of natural numbers, resolving the intrinsic impossibility of freely subtracting larger quantities from smaller ones in $\mathbb{N}$.
 
 <Definicion title="Formal Construction of the Integers">
-  The set of **integers** $\mathbb{Z}$ is defined as the quotient set of the <ConceptLink targetId="producto-cartesiano">Cartesian product</ConceptLink> $\mathbb{N} \times \mathbb{N}$ under the <ConceptLink targetId="relacion-equivalencia" isDependency={true}>equivalence relation</ConceptLink> identifying two pairs of natural numbers whenever their cross sums coincide:
+  The set of **integers** $\mathbb{Z}$ is defined as the <ConceptLink targetId="conjunto-cociente" isDependency={true}>quotient set</ConceptLink> of the <ConceptLink targetId="producto-cartesiano" isDependency={true}>Cartesian product</ConceptLink> <VisualBind element="malla" color="carbon">$\mathbb{N} \times \mathbb{N}$</VisualBind> under the <ConceptLink targetId="relacion-equivalencia" isDependency={true}>equivalence relation</ConceptLink> identifying two pairs of <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> whenever their cross sums coincide:
   $$
   (a, b) \sim (c, d) \iff a + d = b + c
   $$
-  The <ConceptLink targetId="clase-equivalencia">equivalence class</ConceptLink> $[(a, b)]$ formalizes the difference $a - b$. On this quotient set, two <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operations</ConceptLink> compatible with the equivalence relation are defined:
+  The <ConceptLink targetId="clase-equivalencia">equivalence class</ConceptLink> $[(a, b)]$ formalizes the difference $a - b$. Each natural number $n$ is identified with $[(n, 0)]$ and its opposite with $[(0, n)]$; every class has one of these two forms, since $(a, b) \sim (a - b, 0)$ if $a \geq b$ and $(a, b) \sim (0, b - a)$ if $a < b$. On this quotient set, two <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operations</ConceptLink> compatible with the equivalence relation are defined:
   $$
   [(a, b)] + [(c, d)] = [(a + c, b + d)]
   $$
   $$
   [(a, b)] \cdot [(c, d)] = [(a \cdot c + b \cdot d, a \cdot d + b \cdot c)]
   $$
-  Under these operations, the structure $(\mathbb{Z}, +)$ is an abelian <ConceptLink targetId="grupo" isDependency={true}>group</ConceptLink> with <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> $0 = [(0, 0)]$ and <ConceptLink targetId="elemento-inverso">additive inverse</ConceptLink> $-[(a, b)] = [(b, a)]$.
+  Under these operations, the structure $(\mathbb{Z}, +)$ is an <ConceptLink targetId="grupo-abeliano">abelian</ConceptLink> <ConceptLink targetId="grupo" isDependency={true}>group</ConceptLink> with <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> <VisualBind element="clase0" color="mora">$0 = [(0, 0)]$</VisualBind> and <ConceptLink targetId="elemento-inverso">additive inverse</ConceptLink> $-[(a, b)] = [(b, a)]$.
 </Definicion>
+
+In the figure, each class is a diagonal of pairs: <VisualBind element="clase2" color="terracota">$[(2, 0)] = \{(2, 0), (3, 1), (4, 2), \dots\}$</VisualBind> is the integer $2$, and <VisualBind element="claseMenos2" color="pavo">$[(0, 2)]$</VisualBind> is its opposite, $-2$.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="grupo-abeliano-aditivo" title="Additive abelian group">
-    The structure $(\mathbb{Z}, +)$ is an infinite cyclic <ConceptLink targetId="grupo-abeliano">abelian group</ConceptLink> generated by the unit element $1 = [(1, 0)]$, ensuring that every additive <ConceptLink targetId="ecuacion-lineal">linear equation</ConceptLink> of the form $a + x = b$ has a unique solution in $\mathbb{Z}$.
+  <PropiedadItem id="enteros-grupo-ciclico" title="Additive abelian group">
+    The structure $(\mathbb{Z}, +)$ is an infinite <ConceptLink targetId="grupo-ciclico">cyclic</ConceptLink> <ConceptLink targetId="grupo-abeliano">abelian group</ConceptLink> generated by the unit element $1 = [(1, 0)]$, ensuring that every additive <ConceptLink targetId="ecuacion-lineal">linear equation</ConceptLink> of the form $a + x = b$ has a unique solution in $\mathbb{Z}$.
   </PropiedadItem>
-  <PropiedadItem id="dominio-integridad" title="Integral domain and factorization">
-    The structure $(\mathbb{Z}, +, \cdot)$ is a unital commutative <ConceptLink targetId="dominio-integridad">integral domain</ConceptLink> and a <ConceptLink targetId="dominio-ideales-principales">principal ideal domain</ConceptLink>, satisfying the <ConceptLink targetId="teorema-fundamental-aritmetica">fundamental theorem of arithmetic</ConceptLink> for unique factorization into <ConceptLink targetId="numero-primo">prime factors</ConceptLink>.
+  <PropiedadItem id="enteros-dominio-integridad" title="Integral domain and factorization">
+    The structure $(\mathbb{Z}, +, \cdot)$ is a unital <ConceptLink targetId="conmutatividad">commutative</ConceptLink> <ConceptLink targetId="dominio-integridad">integral domain</ConceptLink> and a <ConceptLink targetId="dominio-ideales-principales">principal ideal domain</ConceptLink>, satisfying the <ConceptLink targetId="teorema-fundamental-aritmetica">fundamental theorem of arithmetic</ConceptLink> for unique factorization into <ConceptLink targetId="numero-primo">prime factors</ConceptLink>.
   </PropiedadItem>
-  <PropiedadItem id="orden-total-discreto" title="Discrete linear order">
-    The set $\mathbb{Z}$ possesses a <ConceptLink targetId="orden-total">total order</ConceptLink> relation compatible with addition and multiplication by positive elements, wherein every integer $z$ has an immediate successor $z + 1$ and an immediate predecessor $z - 1$.
+  <PropiedadItem id="enteros-orden-discreto" title="Discrete linear order">
+    The set $\mathbb{Z}$ possesses a <ConceptLink targetId="orden-total">total order</ConceptLink> relation, $[(a, b)] \leq [(c, d)] \iff a + d \leq b + c$, compatible with <ConceptLink targetId="adicion">addition</ConceptLink> and <ConceptLink targetId="multiplicacion">multiplication</ConceptLink> by positive elements, wherein every integer $z$ has an immediate successor $z + 1$ and an immediate predecessor $z - 1$.
   </PropiedadItem>
 </SeccionPropiedades>
