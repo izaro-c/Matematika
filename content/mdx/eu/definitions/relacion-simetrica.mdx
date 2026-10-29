@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" /><ConceptLink targetId="relacion-binaria">rlazio bitar</ConceptLink> homogeneo bat **simetrikoa** da baldin eta edozein bi elementu lotzen dituen lotura elkarrekikoa bada eta haren terminoak enuntziatzen diren ordenaren mendekoa ez bada.
+<Capitular letra="E" /><ConceptLink targetId="relacion-binaria">rlazio bitar</ConceptLink> homogeneo bat **simetrikoa** da baldin eta, elementu batek beste batekin erlazioa duen bakoitzean, bigarrenak ere lehenengoarekin erlazioa badu.
 
-Ez da nahastu behar figura baten <ConceptLink targetId="simetria">simetria geometrikoarekin</ConceptLink>: hemen simetria erlazio baten propietatea da, ez figura batena.
+<ConceptLink targetId="relacion-equivalencia">Baliokidetasun-erlazio</ConceptLink> bat definitzen duten hiru baldintzetako bat da, <ConceptLink targetId="relacion-reflexiva">erreflexibotasunarekin</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">iragankortasunarekin</ConceptLink> batera. Ez da nahastu behar figura baten <ConceptLink targetId="simetria">simetria geometrikoarekin</ConceptLink>: hemen simetria erlazio baten propietatea da, ez figura batena.
 
 <Definicion title="Erlazio simetrikoaren definizio formala">
   Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat. $R$ erlazioa **simetrikoa** da baldin eta soilik baldin:
   $$
   \forall x, y \in A, \quad x \, R \, y \implies y \, R \, x
   $$
-  Termino aljebraikoetan, $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ $R$-ren alderantzizko edo transposatutako erlazioa adieraziz, simetria berdintza honen baliokidea da:
+  Termino aljebraikoetan, $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ $R$-ren <ConceptLink targetId="relacion-inversa">alderantzizko</ConceptLink> edo transposatutako erlazioa adieraziz, simetria berdintza honen baliokidea da:
   $$
   R = R^{-1}
   $$
@@ -33,8 +33,8 @@ Ez da nahastu behar figura baten <ConceptLink targetId="simetria">simetria geome
 
 ### Presentzia geometriaren axiometan eta teoretan
 
-Erlazio-simetriak modu erabakigarrian parte hartzen du hainbat geruza deduktibotan:
+Geometriako hiru erlazio dira simetrikoak:
 
 - **Bitartekotasunaren simetria:** <ConceptLink targetId="axioma-orden-1">II.1 axiomak</ConceptLink> postulatzen du <ConceptLink targetId="punto">puntuen</ConceptLink> arteko <ConceptLink targetId="estar-entre">bitartekotasun-erlazioa</ConceptLink> muturrekiko simetrikoa dela: $A * B * C$ bada, orduan $C * B * A$ da.
-- **Dedukzioa kongruentzian:** <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentzian</ConceptLink>, propietate simetrikoa ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) ez da modu isolatuan postulatzen, baizik eta <ConceptLink targetId="teorema">teorema</ConceptLink> gisa frogatzen da <ConceptLink targetId="axioma-congruencia-1">III.1 axiomaren</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibotasuna</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2 axiomaren</ConceptLink> <ConceptLink targetId="relacion-transitiva">iragankortasuna</ConceptLink> konbinatuz.
+- **Dedukzioa kongruentzian:** <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentzian</ConceptLink>, propietate simetrikoa ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) ez da modu isolatuan postulatzen, baizik eta <ConceptLink targetId="teorema">teorema</ConceptLink> gisa frogatzen da <ConceptLink targetId="axioma-congruencia-1">III.1 axiomaren</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibotasuna</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2 axiomaren</ConceptLink> <ConceptLink targetId="relacion-transitiva">iragankortasuna</ConceptLink> konbinatuz: $\overline{AB} \cong \overline{CD}$ eta $\overline{AB} \cong \overline{AB}$ izanik, III.2 axiomak $\overline{CD} \cong \overline{AB}$ ematen du.
 - **Paralelotasuna:** <ConceptLink targetId="recta">Zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanarren</ConceptLink> arteko <ConceptLink targetId="paralelas">paralelotasun-erlazioa</ConceptLink> simetrikoa da ($\ell \parallel m \implies m \parallel \ell$), haren definizioa ez baita aldatzen $\ell$ eta $m$ trukatzean: $\ell = m$ berdintza eta $\operatorname{tr}(\ell) \cap \operatorname{tr}(m) = \emptyset$ baldintza ez dira zuzenen ordenaren mendekoak. <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink> iragankorra ere bada; erreflexiboa ere badenez, <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazio</ConceptLink> bat da.

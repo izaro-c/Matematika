@@ -14,16 +14,16 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **symmetric** if the link connecting any two elements is reciprocal and does not depend on the order in which its terms are stated.
+<Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **symmetric** if, whenever one element is related to another, the second is also related to the first.
 
-It must not be confused with the geometric <ConceptLink targetId="simetria">symmetry</ConceptLink> of a figure: here symmetry is a property of a relation, not of a figure.
+It is one of the three conditions that define an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, together with <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> and <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink>. It must not be confused with the geometric <ConceptLink targetId="simetria">symmetry</ConceptLink> of a figure: here symmetry is a property of a relation, not of a figure.
 
 <Definicion title="Formal definition of symmetric relation">
   Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> on $A$. The relation $R$ is **symmetric** if and only if:
   $$
   \forall x, y \in A, \quad x \, R \, y \implies y \, R \, x
   $$
-  In algebraic terms, denoting by $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ the inverse or transpose relation of $R$, symmetry is equivalent to the equality:
+  In algebraic terms, denoting by $R^{-1} = \{(y, x) \mid (x, y) \in R\}$ the <ConceptLink targetId="relacion-inversa">inverse</ConceptLink> or transpose relation of $R$, symmetry is equivalent to the equality:
   $$
   R = R^{-1}
   $$
@@ -33,8 +33,8 @@ It must not be confused with the geometric <ConceptLink targetId="simetria">symm
 
 ### Presence in geometric axioms and theorems
 
-Relational symmetry intervenes decisively across several deductive strata:
+Three relations of geometry are symmetric:
 
 - **Symmetry of betweenness:** <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> postulates that the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation among <ConceptLink targetId="punto">points</ConceptLink> is symmetric with respect to its endpoints: if $A * B * C$, then $C * B * A$.
-- **Derivation in congruence:** In the <ConceptLink targetId="congruencia">congruence</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink>, the symmetric property ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) is not postulated independently, but rather proven as a <ConceptLink targetId="teorema">theorem</ConceptLink> by combining the <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> with the <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink>.
+- **Derivation in congruence:** In the <ConceptLink targetId="congruencia">congruence</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink>, the symmetric property ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) is not postulated independently, but rather proven as a <ConceptLink targetId="teorema">theorem</ConceptLink> by combining the <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> with the <ConceptLink targetId="relacion-transitiva">transitivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink>: from $\overline{AB} \cong \overline{CD}$ and $\overline{AB} \cong \overline{AB}$, Axiom III.2 yields $\overline{CD} \cong \overline{AB}$.
 - **Parallelism:** The <ConceptLink targetId="paralelas">parallelism</ConceptLink> relation between <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> <ConceptLink targetId="recta">lines</ConceptLink> is symmetric ($\ell \parallel m \implies m \parallel \ell$) because its definition does not change when $\ell$ and $m$ are swapped: the equality $\ell = m$ and the condition $\operatorname{tr}(\ell) \cap \operatorname{tr}(m) = \emptyset$ do not depend on the order of the lines. In <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> it is also transitive; since it is reflexive as well, it is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
