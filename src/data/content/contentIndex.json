@@ -12821,6 +12821,11 @@
         }
       ],
       "conceptLinks": [
+        "relacion-equivalencia",
+        "relacion-simetrica",
+        "relacion-transitiva",
+        "orden-parcial",
+        "relacion-antisimetrica",
         "conjunto",
         "relacion-binaria",
         "geometria-hilbertiana",
@@ -12832,7 +12837,6 @@
         "recta",
         "paralelas",
         "axioma-paralelas-euclides",
-        "relacion-equivalencia",
         "sistema-euclidiano"
       ],
       "availableLangs": [
@@ -12881,6 +12885,11 @@
         }
       ],
       "conceptLinks": [
+        "relacion-equivalencia",
+        "relacion-simetrica",
+        "relacion-transitiva",
+        "orden-parcial",
+        "relacion-antisimetrica",
         "conjunto",
         "relacion-binaria",
         "geometria-hilbertiana",
@@ -12892,7 +12901,6 @@
         "recta",
         "paralelas",
         "axioma-paralelas-euclides",
-        "relacion-equivalencia",
         "sistema-euclidiano"
       ],
       "availableLangs": [
@@ -32925,6 +32933,11 @@
         }
       ],
       "conceptLinks": [
+        "relacion-equivalencia",
+        "relacion-simetrica",
+        "relacion-transitiva",
+        "orden-parcial",
+        "relacion-antisimetrica",
         "conjunto",
         "relacion-binaria",
         "geometria-hilbertiana",
@@ -32936,7 +32949,6 @@
         "recta",
         "paralelas",
         "axioma-paralelas-euclides",
-        "relacion-equivalencia",
         "sistema-euclidiano"
       ],
       "availableLangs": [
@@ -46174,6 +46186,11 @@
         }
       ],
       "conceptLinks": [
+        "relacion-equivalencia",
+        "relacion-simetrica",
+        "relacion-transitiva",
+        "orden-parcial",
+        "relacion-antisimetrica",
         "conjunto",
         "relacion-binaria",
         "geometria-hilbertiana",
@@ -46185,7 +46202,6 @@
         "recta",
         "paralelas",
         "axioma-paralelas-euclides",
-        "relacion-equivalencia",
         "sistema-euclidiano"
       ],
       "availableLangs": [
