@@ -12823,11 +12823,17 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "geometria-hilbertiana",
         "axioma-congruencia-1",
+        "segmento",
         "congruencia",
         "axioma-congruencia-4",
+        "angulo",
+        "recta",
         "paralelas",
-        "relacion-equivalencia"
+        "axioma-paralelas-euclides",
+        "relacion-equivalencia",
+        "sistema-euclidiano"
       ],
       "availableLangs": [
         "en",
@@ -12877,11 +12883,17 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "geometria-hilbertiana",
         "axioma-congruencia-1",
+        "segmento",
         "congruencia",
         "axioma-congruencia-4",
+        "angulo",
+        "recta",
         "paralelas",
-        "relacion-equivalencia"
+        "axioma-paralelas-euclides",
+        "relacion-equivalencia",
+        "sistema-euclidiano"
       ],
       "availableLangs": [
         "en",
@@ -32915,11 +32927,17 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "geometria-hilbertiana",
         "axioma-congruencia-1",
+        "segmento",
         "congruencia",
         "axioma-congruencia-4",
+        "angulo",
+        "recta",
         "paralelas",
-        "relacion-equivalencia"
+        "axioma-paralelas-euclides",
+        "relacion-equivalencia",
+        "sistema-euclidiano"
       ],
       "availableLangs": [
         "en",
@@ -46158,11 +46176,17 @@
       "conceptLinks": [
         "conjunto",
         "relacion-binaria",
+        "geometria-hilbertiana",
         "axioma-congruencia-1",
+        "segmento",
         "congruencia",
         "axioma-congruencia-4",
+        "angulo",
+        "recta",
         "paralelas",
-        "relacion-equivalencia"
+        "axioma-paralelas-euclides",
+        "relacion-equivalencia",
+        "sistema-euclidiano"
       ],
       "availableLangs": [
         "en",

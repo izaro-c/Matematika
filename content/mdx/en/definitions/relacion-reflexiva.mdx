@@ -16,10 +16,10 @@ export const metadata = {
 
 <Capitular letra="A" /> homogeneous binary relation is **reflexive** if every element of the set upon which it operates is related to itself.
 
-It represents one of the most pervasive elementary conditions in the formalization of mathematical structures, serving as an indispensable prerequisite for the notion of equivalence as well as for partial and total order relations.
+It represents one of the most pervasive elementary conditions in the formalization of mathematical structures, serving as a prerequisite for the notion of equivalence as well as for partial and total order relations.
 
 <Definicion title="Formal definition of reflexive relation">
-  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> on $A$. The relation $R$ is **reflexive** if and only if:
+  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> on $A$. The relation $R$ is **reflexive** if and only if:
   $$
   \forall x \in A, \quad x \, R \, x \quad (\text{that is, } (x, x) \in R)
   $$
@@ -33,7 +33,7 @@ It represents one of the most pervasive elementary conditions in the formalizati
 
 ### Manifestations in formal geometry
 
-In the deductive foundations of Hilbertian geometry, reflexivity is postulated or derived as an indispensable property of comparison relations:
+In the deductive foundations of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, reflexivity is postulated or derived as a property of comparison relations:
 
-- **Congruence of segments and angles:** <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> stipulates that every segment is congruent to itself ($\overline{AB} \cong \overline{AB}$), endowing the <ConceptLink targetId="congruencia">congruence</ConceptLink> of segments with a reflexive character. Similarly, in <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>, every proper angle is congruent to itself ($\angle AOB \cong \angle AOB$).
-- **Parallelism of lines:** In modern geometry, every line is considered <ConceptLink targetId="paralelas">parallel</ConceptLink> to itself by identity ($\ell \parallel \ell$), which ensures that parallelism in the Euclidean plane satisfies the reflexivity required of every <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
+- **Congruence of segments and angles:** <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> stipulates that every <ConceptLink targetId="segmento">segment</ConceptLink> is congruent to itself ($\overline{AB} \cong \overline{AB}$), endowing the <ConceptLink targetId="congruencia">congruence</ConceptLink> of segments with a reflexive character. Similarly, in <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>, every proper <ConceptLink targetId="angulo">angle</ConceptLink> is congruent to itself ($\angle AOB \cong \angle AOB$).
+- **Parallelism of lines:** Every <ConceptLink targetId="recta">line</ConceptLink> is <ConceptLink targetId="paralelas">parallel</ConceptLink> to itself by definition ($\ell \parallel \ell$), without appeal to the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>. Parallelism thus satisfies the reflexivity required of every <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>; in <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, where that axiom also provides transitivity, it is one.
