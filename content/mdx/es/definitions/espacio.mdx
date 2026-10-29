@@ -13,7 +13,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />l término **espacio** designa dos nociones relacionadas que conviene distinguir. En sentido lógico, es el <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink> de la geometría: la totalidad de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>, que Hilbert llama «elementos de la geometría del espacio». Como figura, es el conjunto de todos los puntos, del que las demás figuras son subconjuntos.
+<Capitular letra="E" />l término **espacio** designa dos nociones relacionadas que conviene distinguir. En sentido lógico, es el <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink> de la geometría: la totalidad de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>, que <ConceptLink targetId="hilbert">Hilbert</ConceptLink> llama «elementos de la geometría del espacio». Como figura, es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los puntos, del que las demás figuras son <ConceptLink targetId="subconjunto">subconjuntos</ConceptLink>.
 
 El espacio ocupa el nivel superior de la jerarquía de <ConceptLink targetId="dimension">dimensiones</ConceptLink> elemental: punto (0), recta (1), plano (2) y espacio (3). Sus propiedades no se presuponen; las fijan los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> adoptado.
 
@@ -24,16 +24,16 @@ El espacio ocupa el nivel superior de la jerarquía de <ConceptLink targetId="di
 
   La tridimensionalidad del espacio queda fijada por dos condiciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
   - **Cota inferior:** existen al menos cuatro puntos no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> (<ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink>).
-  - **Cota superior:** si dos planos distintos comparten un punto, comparten al menos otro (<ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>); por tanto, dos planos distintos que se cortan lo hacen en una recta y no en un único punto, lo que excluye una cuarta dimensión.
+  - **Cota superior:** si dos planos distintos comparten un punto, comparten al menos otro (<ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>). Por el <ConceptLink targetId="teorema-interseccion-planos">teorema de intersección de planos</ConceptLink>, que se deduce de este axioma, dos planos distintos que se cortan lo hacen en una recta y no en un único punto, lo que excluye una cuarta dimensión.
 </Definicion>
 
 <Separador />
 
-### Variedades de espacios geométricos y sus signaturas
+### Variedades de espacios geométricos y sus <ConceptLink targetId="signatura">signaturas</ConceptLink>
 
 - <ConceptLink targetId="espacio-incidencia">**Espacio de incidencia**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, estructura mínima gobernada únicamente por la incidencia (<ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>).
 - <ConceptLink targetId="espacio-absoluto">**Espacio absoluto**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})$, que satisface además los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink>, <ConceptLink targetId="congruencia">congruencia</ConceptLink> y <ConceptLink targetId="continuidad">continuidad</ConceptLink> (<ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>).
-- <ConceptLink targetId="espacio-euclidiano">**Espacio euclidiano**</ConceptLink>: espacio absoluto $\mathcal{S}_{\text{euc}}$ tal que $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}\}$: por un punto exterior a una recta pasa a lo sumo una paralela (<ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Espacio euclidiano**</ConceptLink>: espacio absoluto $\mathcal{S}_{\text{euc}}$ tal que $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}\}$: por un punto exterior a una recta pasa a lo sumo una <ConceptLink targetId="paralelas">paralela</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>).
 - <ConceptLink targetId="espacio-hiperbolico">**Espacio hiperbólico**</ConceptLink>: espacio absoluto $\mathcal{S}_{\text{hip}}$ tal que $\mathcal{S}_{\text{hip}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}_{\text{hip}}\}$: por un punto exterior a una recta pasan al menos dos paralelas (<ConceptLink targetId="axioma-paralelas-hiperbolico">Axioma IV<sub>hip</sub></ConceptLink>).
 - <ConceptLink targetId="espacio-proyectivo">**Espacio proyectivo**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, estructura de incidencia en la que dos rectas <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> distintas siempre se cortan en un punto.
 

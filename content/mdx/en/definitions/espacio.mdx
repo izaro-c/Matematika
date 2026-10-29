@@ -13,7 +13,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="T" />he term **space** denotes two related notions that should be kept apart. In the logical sense, it is the <ConceptLink targetId="universo-discurso">universe of discourse</ConceptLink> of geometry: the totality of <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>, which Hilbert calls the "elements of the geometry of space". As a figure, it is the set of all points, of which all other figures are subsets.
+<Capitular letra="T" />he term **space** denotes two related notions that should be kept apart. In the logical sense, it is the <ConceptLink targetId="universo-discurso">universe of discourse</ConceptLink> of geometry: the totality of <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>, which <ConceptLink targetId="hilbert">Hilbert</ConceptLink> calls the "elements of the geometry of space". As a figure, it is the <ConceptLink targetId="conjunto">set</ConceptLink> of all points, of which all other figures are <ConceptLink targetId="subconjunto">subsets</ConceptLink>.
 
 Space occupies the top level of the elementary hierarchy of <ConceptLink targetId="dimension">dimensions</ConceptLink>: point (0), line (1), plane (2), and space (3). Its properties are not presupposed; they are fixed by the <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>.
 
@@ -24,16 +24,16 @@ Space occupies the top level of the elementary hierarchy of <ConceptLink targetI
 
   The three-dimensionality of space is fixed by two <ConceptLink targetId="incidencia">incidence</ConceptLink> conditions:
   - **Lower bound:** there exist at least four non-<ConceptLink targetId="coplanaridad">coplanar</ConceptLink> points (<ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink>).
-  - **Upper bound:** if two distinct planes share a point, they share at least one more (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>); hence two distinct intersecting planes meet in a line and not in a single point, which rules out a fourth dimension.
+  - **Upper bound:** if two distinct planes share a point, they share at least one more (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>). By the <ConceptLink targetId="teorema-interseccion-planos">plane intersection theorem</ConceptLink>, which follows from this axiom, two distinct intersecting planes meet in a line and not in a single point, which rules out a fourth dimension.
 </Definicion>
 
 <Separador />
 
-### Varieties of geometric spaces and their signatures
+### Varieties of geometric spaces and their <ConceptLink targetId="signatura">signatures</ConceptLink>
 
 - <ConceptLink targetId="espacio-incidencia">**Incidence space**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, minimal structure governed solely by incidence (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
 - <ConceptLink targetId="espacio-absoluto">**Absolute space**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})$, which further satisfies the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> (<ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>).
-- <ConceptLink targetId="espacio-euclidiano">**Euclidean space**</ConceptLink>: an absolute space $\mathcal{S}_{\text{euc}}$ such that $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}\}$: through a point not on a line there passes at most one parallel (<ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Euclidean space**</ConceptLink>: an absolute space $\mathcal{S}_{\text{euc}}$ such that $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}\}$: through a point not on a line there passes at most one <ConceptLink targetId="paralelas">parallel</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>).
 - <ConceptLink targetId="espacio-hiperbolico">**Hyperbolic space**</ConceptLink>: an absolute space $\mathcal{S}_{\text{hip}}$ such that $\mathcal{S}_{\text{hip}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}_{\text{hip}}\}$: through a point not on a line there pass at least two parallels (<ConceptLink targetId="axioma-paralelas-hiperbolico">Axiom IV<sub>hyp</sub></ConceptLink>).
 - <ConceptLink targetId="espacio-proyectivo">**Projective space**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, an incidence structure in which two distinct <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> lines always meet in a point.
 
