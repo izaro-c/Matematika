@@ -14,33 +14,31 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="B" />**aliokidetasun-erlazio** bat irizpide jakin baten peko bereizezintasunaren edo berdintzaren kontzeptu abstraktua formalizatzen duen erlazio bitar homogeneo bat da, erreflexibotasuna, simetria eta iragankortasuna aldi berean bilduz.
+<Capitular letra="B" />**aliokidetasun-erlazioa** multzo baten gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibo</ConceptLink>, <ConceptLink targetId="relacion-simetrica">simetriko</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">iragankor</ConceptLink> bat da. Irizpide baten araberako berdintza formalizatzen du: erlazionatutako bi elementu bereizezinak dira irizpide horren arabera.
 
-Objektuen ezaugarri partikularrak abstrakzioz baztertzea ahalbidetzen du, haiek klase homogeneotan multzokatzeko, berdintza hertsia sailkapen matematikorako nozio modular bihurtuz.
+Elementuak elkarren artean baliokideak diren elementuen klasetan biltzen ditu, eta klase bakoitza objektu berri gisa erabil daiteke: horrela eraikitzen dira <ConceptLink targetId="numero-entero">zenbaki osoak</ConceptLink> <ConceptLink targetId="numero-natural">zenbaki arrunten</ConceptLink> bikoteetatik eta <ConceptLink targetId="numero-racional">zenbaki arrazionalak</ConceptLink> zenbaki osoen bikoteetatik.
 
 <Definicion title="Baliokidetasun-erlazioaren definizio formala">
-  Izan bedi $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $A$-ren gaineko $\sim \ \subseteq A \times A$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat **baliokidetasun-erlazio** bat da baldin eta soilik baldin hiru propietate axiomatikoak betetzen baditu:
+  Izan bedi $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $A$-ren gaineko $\sim \ \subseteq A \times A$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat **baliokidetasun-erlazio** bat da baldin eta soilik baldin hiru baldintza hauek betetzen baditu:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Erreflexibotasuna</ConceptLink>:** Elementu orok bere buruarekin erlazioa du:
      $$
      \forall x \in A, \quad x \sim x
      $$
-  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetria</ConceptLink>:** Lotura norabide bikoa eta elkarrekikoa da:
+  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetria</ConceptLink>:** Elementu batek beste batekin erlazioa badu, bigarrenak lehenengoarekin erlazioa du:
      $$
      \forall x, y \in A, \quad x \sim y \implies y \sim x
      $$
-  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Iragankortasuna</ConceptLink>:** Lotura tarteko elementuen bidez transmititzen da:
+  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Iragankortasuna</ConceptLink>:** Elementu batek bigarren batekin eta honek hirugarren batekin erlazioa badu, lehenengoak hirugarrenarekin erlazioa du:
      $$
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  $x \in A$ elementu bat emanda, haren **baliokidetasun-klasea** $[x]_\sim = \{y \in A \mid x \sim y\}$ azpimultzoa da. Baliokidetasun-klase guztien multzoak $A / \sim \ = \{[x]_\sim \mid x \in A\}$ **zatidura-multzoa** osatzen du, zeinak $A$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> perfektu bat sortzen baitu, $A$ estaltzen duten eta bikoteka <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> diren azpimultzo ez-hutsetan.
+  $x \in A$ elementu bat emanda, haren **<ConceptLink targetId="clase-equivalencia">baliokidetasun-klasea</ConceptLink>** $[x]_\sim = \{y \in A \mid x \sim y\}$ <ConceptLink targetId="subconjunto">azpimultzoa</ConceptLink> da. $A / \sim \ = \{[x]_\sim \mid x \in A\}$ **<ConceptLink targetId="conjunto-cociente">zatidura-multzoa</ConceptLink>** $A$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> bat da. Erreflexibotasunagatik, $x \in [x]_\sim$; beraz, klase bat ere ez da hutsa, eta klase guztiek $A$ estaltzen dute. Simetriagatik eta iragankortasunagatik, elementu komun bat duten bi klase berdinak dira; beraz, bi klase desberdin <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> dira.
 </Definicion>
 
 <Separador />
 
-### Aplikazio nagusiak geometrian
+### Adibideak geometrian
 
-Teoria geometrikoen eraikuntzan, baliokidetasun-erlazioek espazioaren egitura antolatzen dute:
-
-- **Kongruentziaren egitura:** <ConceptLink targetId="segmento">Zuzenkietan</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink> axiometan oinarritua) eta <ConceptLink targetId="angulo">angeluetan</ConceptLink> (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia">angeluen kongruentziaren baliokidetasun-teoremaren</ConceptLink> arabera) definitutako $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa baliokidetasun-erlazio bat da; baliokidetasun-klase bakoitzak emandako zuzenki edo angelu batekin kongruenteak diren zuzenkiak edo angeluak biltzen ditu.
-- **Paraleloen sortak:** <ConceptLink targetId="sistema-euclidiano">Plano euklidearrean</ConceptLink>, $\parallel$ <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> baliokidetasun-erlazio bat da <ConceptLink targetId="recta">zuzenen</ConceptLink> multzoaren gainean, eta haren iragankortasuna <ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink> ondorioztatzen da; $[\ell]_\parallel$ baliokidetasun-klase bakoitzak norabide bat zehazten du planoan (zuzen paraleloen sorta bat).
+- **Kongruentzia:** <ConceptLink targetId="segmento">Zuzenkietan</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink> axiometan oinarritua) eta <ConceptLink targetId="angulo">angeluetan</ConceptLink> (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia">angeluen kongruentziaren baliokidetasun-teoremaren</ConceptLink> arabera) definitutako $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa baliokidetasun-erlazio bat da; baliokidetasun-klase bakoitzak emandako zuzenki edo angelu batekin kongruenteak diren zuzenkiak edo angeluak biltzen ditu.
+- **Paraleloen sortak:** <ConceptLink targetId="sistema-euclidiano">Plano euklidearrean</ConceptLink>, $\parallel$ <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> baliokidetasun-erlazio bat da <ConceptLink targetId="recta">zuzenen</ConceptLink> multzoaren gainean, eta haren iragankortasuna <ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink> ondorioztatzen da; $[\ell]_\parallel$ baliokidetasun-klase bakoitzak <ConceptLink targetId="direccion">norabide</ConceptLink> bat zehazten du planoan (zuzen paraleloen sorta bat).

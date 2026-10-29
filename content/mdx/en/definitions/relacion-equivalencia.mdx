@@ -14,33 +14,31 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="A" />n **equivalence relation** is a homogeneous binary relation that formalizes the abstract concept of indistinguishability or equality under a given criterion, simultaneously combining reflexivity, symmetry, and transitivity.
+<Capitular letra="A" />n **equivalence relation** is a <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> on a set that is <ConceptLink targetId="relacion-reflexiva">reflexive</ConceptLink>, <ConceptLink targetId="relacion-simetrica">symmetric</ConceptLink> and <ConceptLink targetId="relacion-transitiva">transitive</ConceptLink>. It formalizes equality under a criterion: two related elements are indistinguishable by that criterion.
 
-It enables the abstraction of particular features of objects to group them into homogeneous classes, transforming strict equality into a modular notion of mathematical classification.
+It groups the elements into classes of mutually equivalent elements, and each class can be treated as a new object: this is how the <ConceptLink targetId="numero-entero">integers</ConceptLink> are built from pairs of <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> and the <ConceptLink targetId="numero-racional">rational numbers</ConceptLink> from pairs of integers.
 
 <Definicion title="Formal definition of equivalence relation">
-  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $\sim \ \subseteq A \times A$ is an **equivalence relation** on $A$ if and only if it satisfies the three axiomatic properties:
+  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $\sim \ \subseteq A \times A$ is an **equivalence relation** on $A$ if and only if it meets these three conditions:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Reflexivity</ConceptLink>:** Every element is related to itself:
      $$
      \forall x \in A, \quad x \sim x
      $$
-  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Symmetry</ConceptLink>:** The relationship is bidirectional and reciprocal:
+  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Symmetry</ConceptLink>:** If one element is related to another, the second is related to the first:
      $$
      \forall x, y \in A, \quad x \sim y \implies y \sim x
      $$
-  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Transitivity</ConceptLink>:** The relationship is transmitted through intermediate elements:
+  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Transitivity</ConceptLink>:** If one element is related to a second and the second to a third, the first is related to the third:
      $$
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  Given an element $x \in A$, its **equivalence class** is the subset $[x]_\sim = \{y \in A \mid x \sim y\}$. The set of all equivalence classes forms the **quotient set** $A / \sim \ = \{[x]_\sim \mid x \in A\}$, which generates a perfect <ConceptLink targetId="particion">partition</ConceptLink> of $A$ into non-empty, pairwise <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> subsets covering $A$.
+  Given an element $x \in A$, its **<ConceptLink targetId="clase-equivalencia">equivalence class</ConceptLink>** is the <ConceptLink targetId="subconjunto">subset</ConceptLink> $[x]_\sim = \{y \in A \mid x \sim y\}$. The **<ConceptLink targetId="conjunto-cociente">quotient set</ConceptLink>** $A / \sim \ = \{[x]_\sim \mid x \in A\}$ is a <ConceptLink targetId="particion">partition</ConceptLink> of $A$. By reflexivity, $x \in [x]_\sim$, so no class is empty and together they cover $A$. By symmetry and transitivity, two classes with a common element are equal, so two distinct classes are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Core applications in geometry
+### Examples in geometry
 
-In the construction of geometric theories, equivalence relations organize the structure of space:
-
-- **Structure of congruence:** Geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> $\cong$ on <ConceptLink targetId="segmento">segments</ConceptLink> (grounded in axioms <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) and on <ConceptLink targetId="angulo">angles</ConceptLink> (by the <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">equivalence theorem of angle congruence</ConceptLink>) is an equivalence relation; each equivalence class gathers the segments, or the angles, congruent to a given one.
-- **Pencils of parallels:** In the <ConceptLink targetId="sistema-euclidiano">Euclidean plane</ConceptLink>, <ConceptLink targetId="paralelas">parallelism</ConceptLink> $\parallel$ is an equivalence relation on the set of <ConceptLink targetId="recta">lines</ConceptLink>, whose transitivity follows from <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>; each equivalence class $[\ell]_\parallel$ defines a direction in the plane (a parallel pencil of lines).
+- **Congruence:** Geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> $\cong$ on <ConceptLink targetId="segmento">segments</ConceptLink> (grounded in axioms <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) and on <ConceptLink targetId="angulo">angles</ConceptLink> (by the <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">equivalence theorem of angle congruence</ConceptLink>) is an equivalence relation; each equivalence class gathers the segments, or the angles, congruent to a given one.
+- **Pencils of parallels:** In the <ConceptLink targetId="sistema-euclidiano">Euclidean plane</ConceptLink>, <ConceptLink targetId="paralelas">parallelism</ConceptLink> $\parallel$ is an equivalence relation on the set of <ConceptLink targetId="recta">lines</ConceptLink>, whose transitivity follows from <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>; each equivalence class $[\ell]_\parallel$ defines a <ConceptLink targetId="direccion">direction</ConceptLink> in the plane (a parallel pencil of lines).

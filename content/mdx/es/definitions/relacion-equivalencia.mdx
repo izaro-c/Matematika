@@ -14,33 +14,31 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na **relación de equivalencia** es una relación binaria homogénea que formaliza el concepto abstracto de indistinguibilidad o igualdad bajo un determinado criterio, reuniendo de manera simultánea la reflexividad, la simetría y la transitividad.
+<Capitular letra="U" />na **relación de equivalencia** es una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre un conjunto que es <ConceptLink targetId="relacion-reflexiva">reflexiva</ConceptLink>, <ConceptLink targetId="relacion-simetrica">simétrica</ConceptLink> y <ConceptLink targetId="relacion-transitiva">transitiva</ConceptLink>. Formaliza la igualdad bajo un criterio: dos elementos relacionados son indistinguibles para ese criterio.
 
-Permite abstraer características particulares de los objetos para agruparlos en clases homogéneas, convirtiendo la igualdad estricta en una noción modular de clasificación matemática.
+Agrupa los elementos en clases de elementos equivalentes entre sí, y cada clase puede tratarse como un objeto nuevo: así se construyen los <ConceptLink targetId="numero-entero">números enteros</ConceptLink> a partir de pares de <ConceptLink targetId="numero-natural">números naturales</ConceptLink> y los <ConceptLink targetId="numero-racional">números racionales</ConceptLink> a partir de pares de enteros.
 
 <Definicion title="Definición formal de relación de equivalencia">
-  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>. Una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $\sim \ \subseteq A \times A$ es una **relación de equivalencia** sobre $A$ si y solo si satisface las tres propiedades axiomáticas:
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>. Una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $\sim \ \subseteq A \times A$ es una **relación de equivalencia** sobre $A$ si y solo si cumple estas tres condiciones:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Reflexividad</ConceptLink>:** Todo elemento está relacionado consigo mismo:
      $$
      \forall x \in A, \quad x \sim x
      $$
-  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetría</ConceptLink>:** El vínculo es bidireccional y recíproco:
+  2. **<ConceptLink targetId="relacion-simetrica" isDependency={true}>Simetría</ConceptLink>:** Si un elemento está relacionado con otro, el segundo está relacionado con el primero:
      $$
      \forall x, y \in A, \quad x \sim y \implies y \sim x
      $$
-  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Transitividad</ConceptLink>:** El vínculo se transmite a través de elementos intermedios:
+  3. **<ConceptLink targetId="relacion-transitiva" isDependency={true}>Transitividad</ConceptLink>:** Si un elemento está relacionado con un segundo y este con un tercero, el primero está relacionado con el tercero:
      $$
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  Dado un elemento $x \in A$, su **clase de equivalencia** es el subconjunto $[x]_\sim = \{y \in A \mid x \sim y\}$. El conjunto de todas las clases de equivalencia constituye el **conjunto cociente** $A / \sim \ = \{[x]_\sim \mid x \in A\}$, el cual produce una <ConceptLink targetId="particion">partición</ConceptLink> perfecta de $A$ en subconjuntos no vacíos y mutuamente <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> dos a dos que recubren $A$.
+  Dado un elemento $x \in A$, su **<ConceptLink targetId="clase-equivalencia">clase de equivalencia</ConceptLink>** es el <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> $[x]_\sim = \{y \in A \mid x \sim y\}$. El **<ConceptLink targetId="conjunto-cociente">conjunto cociente</ConceptLink>** $A / \sim \ = \{[x]_\sim \mid x \in A\}$ es una <ConceptLink targetId="particion">partición</ConceptLink> de $A$. Por la reflexividad, $x \in [x]_\sim$, así que ninguna clase es vacía y entre todas recubren $A$. Por la simetría y la transitividad, dos clases con un elemento común coinciden, así que dos clases distintas son <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Aplicaciones nucleares en geometría
+### Ejemplos en geometría
 
-En la construcción de las teorías geométricas, las relaciones de equivalencia organizan la estructura del espacio:
-
-- **Estructura de la congruencia:** La <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica $\cong$ sobre <ConceptLink targetId="segmento">segmentos</ConceptLink> (fundamentada en los axiomas <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) y sobre <ConceptLink targetId="angulo">ángulos</ConceptLink> (por el <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">teorema de equivalencia de la congruencia angular</ConceptLink>) es una relación de equivalencia; cada clase de equivalencia reúne los segmentos, o los ángulos, congruentes con uno dado.
-- **Haces de paralelas:** En el <ConceptLink targetId="sistema-euclidiano">plano euclídeo</ConceptLink>, el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> $\parallel$ es una relación de equivalencia sobre el conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>, cuya transitividad se deduce del <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>; cada clase de equivalencia $[\ell]_\parallel$ define una dirección en el plano (un haz de rectas paralelas).
+- **Congruencia:** La <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica $\cong$ sobre <ConceptLink targetId="segmento">segmentos</ConceptLink> (fundamentada en los axiomas <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) y sobre <ConceptLink targetId="angulo">ángulos</ConceptLink> (por el <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">teorema de equivalencia de la congruencia angular</ConceptLink>) es una relación de equivalencia; cada clase de equivalencia reúne los segmentos, o los ángulos, congruentes con uno dado.
+- **Haces de paralelas:** En el <ConceptLink targetId="sistema-euclidiano">plano euclídeo</ConceptLink>, el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> $\parallel$ es una relación de equivalencia sobre el conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>, cuya transitividad se deduce del <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>; cada clase de equivalencia $[\ell]_\parallel$ define una <ConceptLink targetId="direccion">dirección</ConceptLink> en el plano (un haz de rectas paralelas).

@@ -12705,11 +12705,17 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
         "relacion-reflexiva",
         "relacion-simetrica",
         "relacion-transitiva",
+        "numero-entero",
+        "numero-natural",
+        "numero-racional",
+        "conjunto",
+        "clase-equivalencia",
+        "subconjunto",
+        "conjunto-cociente",
         "particion",
         "conjunto-disjunto",
         "congruencia",
@@ -12721,7 +12727,8 @@
         "sistema-euclidiano",
         "paralelas",
         "recta",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "direccion"
       ],
       "availableLangs": [
         "en",
@@ -12769,11 +12776,17 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
         "relacion-reflexiva",
         "relacion-simetrica",
         "relacion-transitiva",
+        "numero-entero",
+        "numero-natural",
+        "numero-racional",
+        "conjunto",
+        "clase-equivalencia",
+        "subconjunto",
+        "conjunto-cociente",
         "particion",
         "conjunto-disjunto",
         "congruencia",
@@ -12785,7 +12798,8 @@
         "sistema-euclidiano",
         "paralelas",
         "recta",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "direccion"
       ],
       "availableLangs": [
         "en",
@@ -32931,11 +32945,17 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
         "relacion-reflexiva",
         "relacion-simetrica",
         "relacion-transitiva",
+        "numero-entero",
+        "numero-natural",
+        "numero-racional",
+        "conjunto",
+        "clase-equivalencia",
+        "subconjunto",
+        "conjunto-cociente",
         "particion",
         "conjunto-disjunto",
         "congruencia",
@@ -32947,7 +32967,8 @@
         "sistema-euclidiano",
         "paralelas",
         "recta",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "direccion"
       ],
       "availableLangs": [
         "en",
@@ -46212,11 +46233,17 @@
         }
       ],
       "conceptLinks": [
-        "conjunto",
         "relacion-binaria",
         "relacion-reflexiva",
         "relacion-simetrica",
         "relacion-transitiva",
+        "numero-entero",
+        "numero-natural",
+        "numero-racional",
+        "conjunto",
+        "clase-equivalencia",
+        "subconjunto",
+        "conjunto-cociente",
         "particion",
         "conjunto-disjunto",
         "segmento",
@@ -46228,7 +46255,8 @@
         "sistema-euclidiano",
         "paralelas",
         "recta",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "direccion"
       ],
       "availableLangs": [
         "en",
