@@ -19,7 +19,7 @@ export const metadata = {
 It constitutes the formal property that permits the transfer of equalities, equivalences, and orderings, ensuring that indirect comparisons retain the same logical validity as direct ones.
 
 <Definicion title="Formal definition of transitive relation">
-  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> on $A$. The relation $R$ is **transitive** if and only if:
+  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> and let $R \subseteq A \times A$ be a <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> on $A$. The relation $R$ is **transitive** if and only if:
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
@@ -31,10 +31,8 @@ It constitutes the formal property that permits the transfer of equalities, equi
 
 <Separador />
 
-### Fundamental role in congruence and parallelism
+### Transitivity in congruence and parallelism
 
-Transitivity serves as a cornerstone in fundamental geometric deductions:
-
-- **Postulation in congruence:** In synthetic foundations, the transitivity of segment <ConceptLink targetId="congruencia">congruence</ConceptLink> ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) is neither self-evident nor deducible from reflexivity: it must be expressly postulated in <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink>.
-- **Transitivity of parallelism:** In a single plane, two lines parallel to a third line are parallel to each other ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). This result is a pivotal <ConceptLink targetId="teorema">theorem</ConceptLink> derived from Playfair's parallel postulate (<ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>), conferring upon Euclidean <ConceptLink targetId="paralelas">parallelism</ConceptLink> the full status of an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
+- **Congruence of segments:** The transitivity of the <ConceptLink targetId="congruencia">congruence</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) is not postulated in this form: <ConceptLink targetId="axioma-congruencia-2">Axiom III.2</ConceptLink> postulates that two segments congruent to a third are congruent to each other, and transitivity is deduced as a <ConceptLink targetId="teorema">theorem</ConceptLink> from this axiom and the <ConceptLink targetId="relacion-reflexiva">reflexivity</ConceptLink> of <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>.
+- **Transitivity of parallelism:** In a single <ConceptLink targetId="plano">plane</ConceptLink>, two <ConceptLink targetId="recta">lines</ConceptLink> parallel to a third line are parallel to each other ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). This result is a <ConceptLink targetId="teorema">theorem</ConceptLink> derived from <ConceptLink targetId="playfair">Playfair</ConceptLink>'s parallel postulate (<ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>), conferring upon Euclidean <ConceptLink targetId="paralelas">parallelism</ConceptLink> the full status of an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
 - **Order structures:** In ordered sets, transitivity ensures the coherence of inequality chains ($x < y \land y < z \implies x < z$).

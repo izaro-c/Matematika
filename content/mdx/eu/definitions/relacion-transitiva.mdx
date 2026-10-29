@@ -19,7 +19,7 @@ export const metadata = {
 Berdintzak, baliokidetasunak eta ordenazioak transferitzea ahalbidetzen duen propietate formala osatzen du, zeharkako konparaketek zuzenekoen baliozkotasun logiko bera mantentzen dutela bermatuz.
 
 <Definicion title="Erlazio iragankorraren definizio formala">
-  Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat. $R$ erlazioa **iragankorra** da baldin eta soilik baldin:
+  Izan bitez $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat eta $R \subseteq A \times A$ $A$-ren gaineko <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat. $R$ erlazioa **iragankorra** da baldin eta soilik baldin:
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
@@ -31,10 +31,8 @@ Berdintzak, baliokidetasunak eta ordenazioak transferitzea ahalbidetzen duen pro
 
 <Separador />
 
-### Funtsezko eginkizuna kongruentzian eta paralelotasunean
+### Iragankortasuna kongruentzian eta paralelotasunean
 
-Iragankortasuna oinarrizko harria da funtsezko dedukzio geometrikoetan:
-
-- **Postulatzea kongruentzian:** Oinarri sintetikoan, zuzenkien <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> iragankortasuna ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) ez da berez ebidentea, ezta erreflexibotasunetik ondorioztagarria ere: berariaz postulatu behar da <ConceptLink targetId="axioma-congruencia-2">III.2 axioman</ConceptLink>.
-- **Paralelotasunaren iragankortasuna:** Plano berean, hirugarren batekiko paraleloak diren bi zuzen paraleloak dira elkarren artean ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Emaitza hau Playfairren paraleloen postulutik (<ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink>) eratorritako <ConceptLink targetId="teorema">teorema</ConceptLink> nagusi bat da, plano euklidearreko <ConceptLink targetId="paralelas">paralelotasunari</ConceptLink> <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> estatus osoa emanez.
+- **Zuzenkien kongruentzia:** <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> iragankortasuna ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) ez da forma horretan postulatzen: <ConceptLink targetId="axioma-congruencia-2">III.2 axiomak</ConceptLink> postulatzen du hirugarren batekin kongruenteak diren bi zuzenki elkarren artean kongruenteak direla, eta iragankortasuna axioma horretatik eta <ConceptLink targetId="axioma-congruencia-1">III.1 axiomaren</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibotasunetik</ConceptLink> ondorioztatzen da, <ConceptLink targetId="teorema">teorema</ConceptLink> gisa.
+- **Paralelotasunaren iragankortasuna:** <ConceptLink targetId="plano">Plano</ConceptLink> berean, hirugarren batekiko paraleloak diren bi <ConceptLink targetId="recta">zuzen</ConceptLink> paraleloak dira elkarren artean ($\ell \parallel m \land m \parallel n \implies \ell \parallel n$). Emaitza hau <ConceptLink targetId="playfair">Playfairren</ConceptLink> paraleloen postulatutik (<ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink>) eratorritako <ConceptLink targetId="teorema">teorema</ConceptLink> bat da, plano euklidearreko <ConceptLink targetId="paralelas">paralelotasunari</ConceptLink> <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> estatus osoa emanez.
 - **Ordena-egiturak:** Multzo ordenatuetan, iragankortasunak desberdintza-kateen koherentzia bermatzen du ($x < y \land y < z \implies x < z$).
