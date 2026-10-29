@@ -9,10 +9,13 @@
 # never touched except for the queue and the reports. Each page goes through rounds: round 1
 # reviews and fixes it; every later round is a new agent that verifies the result with fresh
 # eyes and fixes what is still wrong, until one round changes nothing (REVIEW_MAX_ROUNDS
-# caps it). Per round, up to two commits made by the agent through checkpoint.sh:
-# «correcciones» (certain fixes) and «propuestas (revisar)» (judgment calls, also listed in
-# PROPUESTAS.md). After each round this script re-checks that round's diff and discards it if
-# it fails validate-nodes or touches files outside content/.
+# caps it). Per round, up to two checkpoint commits made by the agent through checkpoint.sh:
+# «correcciones» (certain fixes) and «propuestas (revisar)» (judgment calls). After each round
+# this script re-checks that round's diff and discards it if it fails validate-nodes or
+# touches files outside content/. When the page is done its checkpoints are squashed into
+# one commit, which is fast-forwarded onto main (REVIEW_TO_MAIN=0 leaves it on the branch).
+# If main cannot take it (diverged, or your checkout has local changes in those files), it
+# stays on the branch and the next run retries before reviewing anything.
 #
 # Cost levers (env): REVIEW_MODEL (opus), REVIEW_VERIFY_MODEL (same), REVIEW_EFFORT (high),
 # REVIEW_MAX_ROUNDS (4), REVIEW_MAX_TURNS (50, per round), REVIEW_MAX_USD (15, per page,
@@ -34,6 +37,7 @@ MAX_ROUNDS="${REVIEW_MAX_ROUNDS:-4}"
 VERIFY_MODEL="${REVIEW_VERIFY_MODEL:-$MODEL}"
 WT="${REVIEW_WORKTREE:-$(dirname "$ROOT")/Matematika-revision}"
 BRANCH="${REVIEW_BRANCH:-revision-diaria}"
+TO_MAIN="${REVIEW_TO_MAIN:-1}"
 OUT_DIR="$ROOT/docs/reports/revision-diaria"
 PROPOSALS="$OUT_DIR/PROPUESTAS.md"
 WORK="$(mktemp -d)"
@@ -60,12 +64,57 @@ cd "$WT"
 [[ -z "$(git status --porcelain)" ]] || die "El worktree $WT tiene cambios sin commitear; revísalos antes de seguir."
 git rebase --quiet main || { git rebase --abort; die "La rama $BRANCH no se puede rebasar sobre main sin conflictos; resuélvelo a mano en $WT."; }
 
+# Fast-forwards main to this branch. Prints the reason it could not, or nothing.
+land() {
+  local wt
+  git rebase --quiet main > /dev/null 2>&1 || { git rebase --abort 2> /dev/null; echo "conflicto al rebasar sobre main"; return; }
+  # Where main is checked out, merge there so that checkout's files follow; merge refuses
+  # rather than overwrite local changes. If it is checked out nowhere, move the ref.
+  wt="$(git worktree list --porcelain | awk '/^worktree /{p=substr($0,10)} $0=="branch refs/heads/main"{print p}')"
+  if [[ -n "$wt" ]]; then
+    git -C "$wt" merge --ff-only --quiet "$BRANCH" > "$WORK/land.txt" 2>&1 \
+      || echo "main no admite el fast-forward en $wt: $(head -3 "$WORK/land.txt" | tr '\n' ' ')"
+  else
+    git update-ref refs/heads/main HEAD "$(git rev-parse main)" 2> /dev/null || echo "no se pudo mover main"
+  fi
+}
+
+# Commits left by a run that could not land them: each is already one validated page.
+if [[ "$TO_MAIN" == 1 && -z "${REVIEW_DRY_RUN:-}" && -n "$(git rev-list main..HEAD)" ]]; then
+  why="$(land)"
+  [[ -z "$why" ]] || die "La rama $BRANCH tiene commits que no llegan a main ($why). Resuélvelo antes de revisar más páginas."
+  echo "Llevados a main los commits pendientes de $BRANCH."
+fi
+
+# Squashes the page's checkpoint commits since <from> into one, keeping each checkpoint's
+# tier and summary in the message.
+squash_page() { # <from> <id> <report>
+  local hash subject label body lines="" tiers=""
+  while read -r hash; do
+    subject="$(git log -1 --format=%s "$hash")"
+    label="${subject#*— }"
+    body="$(git log -1 --format=%b "$hash" | grep -v '^Informe: ' | sed '/^$/d' || true)"
+    lines+="- ${label}: ${body:-sin resumen}"$'\n'
+    case "$label" in
+      propuestas*) tiers+=" propuestas" ;;
+      *) tiers+=" correcciones" ;;
+    esac
+  done < <(git rev-list --reverse "$1..HEAD")
+  if [[ "$tiers" != *propuestas* ]]; then subject="revisión diaria: $2 — correcciones"
+  elif [[ "$tiers" != *correcciones* ]]; then subject="revisión diaria: $2 — propuestas (revisar)"
+  else subject="revisión diaria: $2 — correcciones y propuestas (revisar)"
+  fi
+  git reset --quiet --soft "$1"
+  # Every checkpoint already passed the hooks and recheck; the squashed tree is the same.
+  git commit --quiet --no-verify -m "$subject" -m "${lines%$'\n'}" -m "Informe: docs/reports/revision-diaria/$3"
+}
+
 node "$TOOLS/queue.mjs" sync
 node "$TOOLS/system-prompt.mjs" > "$WORK/system.md"
 mkdir -p "$OUT_DIR"
 [[ -f "$OUT_DIR/costes.tsv" ]] || printf "fecha\tid\tmodelo\tusd\tturnos\tinput\tcache_read\tcache_write\toutput\tronda\n" > "$OUT_DIR/costes.tsv"
 head -1 "$OUT_DIR/costes.tsv" | grep -q 'ronda' || sed -i '1s/$/\tronda/' "$OUT_DIR/costes.tsv"
-[[ -f "$PROPOSALS" ]] || printf '# Propuestas aplicadas por revisar\n\nCada línea es un commit «propuestas (revisar)» de la rama `%s`. Marca la casilla cuando lo hayas revisado y fusionado (o descartado).\n\n' "$BRANCH" > "$PROPOSALS"
+[[ -f "$PROPOSALS" ]] || printf '# Propuestas aplicadas por revisar\n\nCada línea es el commit de una página que incluye propuestas, ya aplicadas (en `main`, salvo que diga otra cosa el informe). Marca la casilla cuando las hayas revisado; deshaz a mano las que no te convenzan.\n\n' > "$PROPOSALS"
 
 # Runs one review session on $WORK/packet.md. Every round is a fresh agent with no memory
 # of the others: the only thing it learns from earlier rounds is what the packet says.
@@ -125,7 +174,8 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
 
   # Round 1 reviews and fixes; each later round is a new agent that verifies the result
   # and fixes what is still wrong. The page is done when a round finds nothing to change.
-  spent=0; turns=0; parts=(); first_verdict=""; verdict=""; stop=""
+  spent=0; turns=0; parts=(); first_verdict=""; verdict=""; stop=""; proposal_rounds=()
+  page_start="$(git rev-parse HEAD)"
   : > "$WORK/report.md"
   : > "$WORK/previous.md"
   for (( round = 1; round <= MAX_ROUNDS; round++ )); do
@@ -184,14 +234,14 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
         stop="ronda $round descartada por el script"
       else
         round_parts=()
-        while read -r hash subject; do
+        suffix=""; (( round == 1 )) || suffix=" r$round"
+        while read -r subject; do
           case "$subject" in
-            *"— correcciones"*) round_parts+=("corregido $hash") ;;
-            *"— propuestas (revisar)"*) round_parts+=("propuestas $hash")
-              echo "- [ ] \`$id\` · $date · ronda $round · \`$hash\` · [informe]($report)" >> "$PROPOSALS" ;;
-            *) round_parts+=("commit $hash") ;;
+            *"— correcciones"*) round_parts+=("corregido$suffix") ;;
+            *"— propuestas (revisar)"*) round_parts+=("propuestas$suffix"); proposal_rounds+=("$round") ;;
+            *) round_parts+=("commit$suffix") ;;
           esac
-        done < <(git log --reverse --format='%h %s' "$round_start..HEAD")
+        done < <(git log --reverse --format='%s' "$round_start..HEAD")
         outcome="$(IFS=,; echo "${round_parts[*]}" | sed 's/,/ · /g')"
         parts+=("${round_parts[@]}")
       fi
@@ -214,6 +264,19 @@ for id in $(node "$TOOLS/queue.mjs" next "$N"); do
 
   total="$(awk -v s="$spent" 'BEGIN { printf "%.2f", s }')"
   outcome="$( ((${#parts[@]})) && (IFS=,; echo "${parts[*]}" | sed 's/,/ · /g') || echo "sin cambios")"
+  if [[ "$(git rev-parse HEAD)" != "$page_start" ]]; then
+    squash_page "$page_start" "$id" "$report"
+    where="en $BRANCH"
+    if [[ "$TO_MAIN" == 1 ]]; then
+      why="$(land)"
+      if [[ -z "$why" ]]; then where="en main"; else where="en $BRANCH, no llegó a main: $why"; echo "$why" >&2; fi
+    fi
+    hash="$(git rev-parse --short HEAD)"
+    outcome="$outcome → commit $hash $where"
+    if ((${#proposal_rounds[@]})); then
+      echo "- [ ] \`$id\` · $date · ronda $(IFS=,; echo "${proposal_rounds[*]}") · \`$hash\` · [informe]($report)" >> "$PROPOSALS"
+    fi
+  fi
   summary="$first_verdict → $verdict · $rounds rondas, $stop · $outcome"
   {
     echo "<!-- $date · $MODEL/$EFFORT · \$$total · $turns turnos · $summary -->"

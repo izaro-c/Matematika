@@ -32,7 +32,7 @@ scripts/daily-review/run.sh
 Tarda unos minutos por ronda. La página pasa por varias rondas, cada una con un agente nuevo, hasta que una no encuentra nada que cambiar. Al terminar imprime una línea como esta:
 
 ```text
-✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (errores → ok · 3 rondas, converge · corregido 1a2b3c4 · propuestas 5d6e7f8 · corregido 9a8b7c6, $2.40)
+✓ axioma → docs/reports/revision-diaria/2026-10-23-axioma.md (errores → ok · 3 rondas, converge · corregido · propuestas · corregido r2 → commit 1a2b3c4 en main, $2.40)
 ```
 
 Esa línea dice cuatro cosas:
@@ -42,9 +42,10 @@ Esa línea dice cuatro cosas:
   - `converge`: la última ronda no encontró nada que cambiar. Es el final esperado.
   - `sin converger tras 4 rondas`: cada ronda siguió cambiando algo. Mira con más atención las últimas rondas del informe: o queda un problema de fondo, o dos revisores no se ponen de acuerdo.
   - `presupuesto agotado` o `ronda N incompleta`: se cortó antes de converger. Lo ya guardado se conserva.
-- **Resultado**, con hasta dos commits por ronda en la rama `revision-diaria` (desde la ronda 2, su asunto termina en «· ronda N»):
-  - `corregido <hash>`: las **correcciones**, errores objetivos o normas rotas. Se pueden fusionar con confianza.
-  - `propuestas <hash>`: las **propuestas**, mejoras ya aplicadas en las que cabría decidir otra cosa. Este es el commit que tienes que revisar. Además queda apuntado en `PROPUESTAS.md` (paso 4).
+- **Resultado**: qué guardó cada ronda (desde la ronda 2, con «rN») y el commit único de la página:
+  - `corregido`: **correcciones**, errores objetivos o normas rotas.
+  - `propuestas`: **propuestas**, mejoras ya aplicadas en las que cabría decidir otra cosa. Son lo que tienes que revisar; la página queda apuntada en `PROPUESTAS.md` (paso 4).
+  - `→ commit <hash> en main`: todo lo de la página, en un solo commit que ya está en `main`. Si pone `en revision-diaria, no llegó a main: …`, se ha quedado en la rama (paso 4).
   - `sin cambios`: la página no necesitaba nada.
   - `cambios descartados`: algo no pasó la validación, los hooks o el control de archivos. Se ha borrado todo lo de esa ronda y el informe explica por qué.
 - **Coste** de esa página.
@@ -56,21 +57,21 @@ Para revisar varias seguidas: `scripts/daily-review/run.sh 3`. Sale más barato 
 Los informes están en `docs/reports/revision-diaria/<fecha>-<id>.md`:
 
 ```markdown
-<!-- 2026-10-23 · opus/high · $2.40 · 31 turnos · errores → ok · 3 rondas, converge · corregido 1a2b3c4 -->
+<!-- 2026-10-23 · opus/high · $2.40 · 31 turnos · errores → ok · 3 rondas, converge · corregido → commit 1a2b3c4 en main -->
 
-<!-- ronda 1 · opus/high · $1.40 · 18 turnos · corregido 1a2b3c4 -->
+<!-- ronda 1 · opus/high · $1.40 · 18 turnos · corregido -->
 
 ## axioma — rigor ✓ · simpleza △ · modularidad ✓ · enlaces △ · paridad ✗ · diagrama no necesita
 
-### Correcciones                  ← commit 1: errores, con la cita de antes y después
-### Propuestas aplicadas — revisar ← commit 2: mejoras discutibles, con su razón y la alternativa descartada
+### Correcciones                  ← errores, con la cita de antes y después
+### Propuestas aplicadas — revisar ← mejoras discutibles, con su razón y la alternativa descartada
 ### Pendiente para la autora      ← solo lo que exige un dato que no está en el repositorio
 ### Avisos de los scripts         ← cada WARN, corregido o descartado con su razón
 ### Diagrama                      ← estado del diagrama, o por qué debería (o no) tenerlo
 ### Resumen
 ```
 
-Lee **Propuestas aplicadas — revisar** junto al diff del commit 2: cada punto explica un cambio que ya está hecho. Entre las propuestas puede haber párrafos simplificados, secciones reducidas, afirmaciones matizadas, IDs canónicos nuevos, un diagrama creado o un concepto extraído a su propio nodo.
+Lee **Propuestas aplicadas — revisar** junto al diff del commit de la página: cada punto explica un cambio que ya está hecho. Entre las propuestas puede haber párrafos simplificados, secciones reducidas, afirmaciones matizadas, IDs canónicos nuevos, un diagrama creado o un concepto extraído a su propio nodo.
 
 Después vienen las rondas de verificación (`# Ronda 2: verificación`, …), con el mismo formato. Cada una lista lo que se le escapó a las anteriores; la última suele decir «Nada.» en todo.
 
@@ -78,54 +79,32 @@ Después vienen las rondas de verificación (`# Ronda 2: verificación`, …), c
 
 Cuando un término en euskera no está en el glosario o el agente duda de él, lo consulta en Elhuyar, la ZTH y Wikipedia, y cita la URL en el informe. Puedes hacer la misma consulta: `node scripts/daily-review/euskara.mjs es "asociativo"`.
 
-## 4. Revisar y fusionar las correcciones
+## 4. Revisar lo que ha llegado a `main`
 
-Las correcciones nunca llegan solas a `main`: esperan en la rama `revision-diaria`.
+Cada página revisada deja **un solo commit en `main`**, con todo lo que cambiaron sus rondas. El asunto dice qué lleva (`— correcciones`, `— propuestas (revisar)` o `— correcciones y propuestas (revisar)`) y el cuerpo, una línea por nivel y ronda con su resumen.
 
-**Ver qué hay pendiente de fusionar:**
+El script lo lleva a `main` por fast-forward. Si tienes `main` abierta en tu copia, actualiza también sus archivos; si tienes cambios sin guardar en alguno de los archivos que toca el commit, no los pisa: el commit se queda en la rama `revision-diaria` y la siguiente ejecución lo reintenta antes de revisar nada. Para traerlo tú: guarda o descarta tus cambios en esos archivos y haz `git merge --ff-only revision-diaria`.
 
-```bash
-git log --oneline main..revision-diaria
-```
-
-**Ver un commit concreto:**
+**Ver qué ha hecho:**
 
 ```bash
+git log --oneline --grep='^revisión diaria' -10
 git show 1a2b3c4 -- content          # solo el contenido, sin los índices regenerados
-git diff main...revision-diaria -- content/mdx/es   # todo lo pendiente, solo en castellano
+git show 1a2b3c4 -- content/mdx/es   # solo en castellano
 ```
 
-**Ver solo las propuestas pendientes:**
+**Ver las propuestas pendientes de revisar:** están en `docs/reports/revision-diaria/PROPUESTAS.md`, una casilla por página con su commit y su informe. Márcala cuando las hayas revisado.
+
+**Deshacer lo que no te convenza:**
 
 ```bash
-git log --oneline --grep='propuestas (revisar)' main..revision-diaria
+git revert 1a2b3c4              # la página entera
+git revert -n 1a2b3c4 && git restore -p --staged --worktree .   # solo parte: quédate con lo que quieras deshacer y haz tú el commit
 ```
 
-También están en `docs/reports/revision-diaria/PROPUESTAS.md`, una casilla por commit de propuestas con su informe. Márcala cuando lo hayas revisado.
+O simplemente edita encima en `main`, como cualquier otro cambio. Si `contentIndex.json` da conflicto, regenéralo en vez de resolverlo a mano: `npm run generate-index && git add src/data/content/contentIndex.json`.
 
-**Fusionar.** Elige una de estas vías:
-
-```bash
-git cherry-pick 1a2b3c4      # solo los commits que te convencen
-git merge revision-diaria    # todo lo pendiente de una vez
-```
-
-Una forma cómoda de trabajar:
-
-1. Fusiona todas las correcciones juntas: `git cherry-pick $(git log --reverse --format=%h --grep='— correcciones' main..revision-diaria)`.
-2. Revisa las propuestas una a una. Si de una propuesta te gusta solo una parte, aplícala sin hacer commit (`git cherry-pick -n <hash>`), deshaz lo que no quieras (`git restore -p`) y haz tú el commit.
-
-Si `contentIndex.json` da conflicto al fusionar, regenéralo en vez de resolverlo a mano: `npm run generate-index && git add src/data/content/contentIndex.json`.
-
-**Rechazar un commit:** basta con no fusionarlo. Cuando hayas fusionado lo que quieras, deja la rama limpia para que lo rechazado no reaparezca:
-
-```bash
-git -C ../Matematika-revision reset --hard main
-```
-
-Hazlo solo cuando no haya una revisión en marcha. Los commits que ya fusionaste con `cherry-pick` no se pierden: ya están en `main`.
-
-**Retocar una corrección antes de fusionarla:** fusiónala y edita encima en `main`, como cualquier otro cambio.
+**Preferir revisar antes de fusionar:** lanza con `REVIEW_TO_MAIN=0` y los commits se quedan en la rama (`git log --oneline main..revision-diaria`), uno por página, para fusionarlos tú con `git cherry-pick <hash>`. Si después vuelves al modo normal, la primera ejecución lleva a `main` todo lo que quede en la rama: antes, fusiona lo que quieras y deja la rama limpia con `git -C ../Matematika-revision reset --hard main` (sin una revisión en marcha).
 
 **Aprobar.** El agente nunca toca `docs/progreso-reescritura.md`: el visto bueno sigue siendo tuyo. Si una corrección del agente te convence para aprobar la página, actualiza ese registro como siempre.
 
@@ -152,12 +131,10 @@ Los timers de usuario solo funcionan mientras tienes la sesión abierta. Para qu
 
 ### Tu rutina diaria
 
-1. `git log --oneline main..revision-diaria`: qué ha hecho hoy.
-2. Fusiona las correcciones.
-3. Revisa las propuestas con su informe y marca su casilla en `PROPUESTAS.md`.
-4. Deja la rama limpia (paso 4).
+1. `git log --oneline -3`: qué ha llegado hoy a `main`.
+2. Revisa las propuestas con su informe, deshaz lo que no te convenza y marca su casilla en `PROPUESTAS.md` (paso 4).
 
-Si un día no puedes, no pasa nada. Los commits se acumulan en la rama, y la siguiente ejecución la pone al día sobre `main` antes de trabajar.
+Si un día no puedes, no pasa nada: las correcciones ya están en `main` y las propuestas esperan en `PROPUESTAS.md`.
 
 ## 6. Manejar la cola
 
@@ -222,7 +199,7 @@ Con 3 páginas, conviene que el timer pase a días alternos: `OnCalendar=Mon,Wed
 Las instrucciones del agente están en `scripts/daily-review/prompt.md`, y las normas se leen en cada ejecución de las skills de `.agents/skills/`. Por tanto:
 
 - **Mejorar una norma del proyecto:** edita la skill. El agente la aplica desde la siguiente revisión.
-- **Cambiar el comportamiento del revisor:** edita `prompt.md`. Por ejemplo, para mover un tipo de cambio de un commit a otro, cambia las listas de «Nivel 1» y «Nivel 2» del «Paso 2».
+- **Cambiar el comportamiento del revisor:** edita `prompt.md`. Por ejemplo, para mover un tipo de cambio de un nivel a otro, cambia las listas de «Nivel 1» y «Nivel 2» del «Paso 2».
 - **Cambiar cuándo debe haber diagrama:** sección «Criterio de diagrama» de `prompt.md`.
 
 ## 9. Problemas frecuentes
@@ -231,7 +208,8 @@ Las instrucciones del agente están en `scripts/daily-review/prompt.md`, y las n
 | --- | --- |
 | `Ya hay una revisión en curso.` | Otra ejecución sigue en marcha. Espera a que termine. |
 | `El worktree … tiene cambios sin commitear` | Alguien editó en `../Matematika-revision`, o una ejecución se cortó a medias. Mira `git -C ../Matematika-revision status` y descarta con `git -C ../Matematika-revision reset --hard && git -C ../Matematika-revision clean -fd`. |
-| `La rama revision-diaria no se puede rebasar sobre main` | Editaste en `main` una página que el agente también corrigió y aún no has fusionado. Fusiona o descarta sus commits (paso 4) y vuelve a lanzarlo. |
+| `La rama revision-diaria no se puede rebasar sobre main` | Editaste en `main` una página que el agente también corrigió y su commit no llegó a `main`. Fusiónalo a mano o descártalo (`git -C ../Matematika-revision reset --hard main`) y vuelve a lanzarlo. |
+| `La rama revision-diaria tiene commits que no llegan a main` | Un commit de una ejecución anterior no pudo llegar a `main`, normalmente por cambios sin guardar en tu copia en los mismos archivos. Guárdalos o descártalos y vuelve a lanzarlo, o tráelo tú con `git merge --ff-only revision-diaria`. |
 | `Revisión de <id> incompleta (error_max_turns)` o `(error_max_budget_usd)` | La ronda 1 agotó el tope de turnos o de gasto. No se ha guardado nada y sigue pendiente. Relánzala con más margen: `REVIEW_MAX_TURNS=60 scripts/daily-review/run.sh`. |
 | Resultado `cambios descartados` | El motivo está al final del informe, en «Cambios descartados por el script». Las correcciones que el agente propuso siguen en el informe y puedes aplicarlas a mano. |
 | El timer no se ejecuta | `systemctl --user list-timers` y `journalctl --user -u matematika-revision -e`. Si no has iniciado sesión, revisa `enable-linger` (paso 5). |

@@ -1,6 +1,6 @@
 # Propuestas aplicadas por revisar
 
-Cada línea es un commit «propuestas (revisar)» de la rama `revision-diaria`. Marca la casilla cuando lo hayas revisado y fusionado (o descartado).
+Cada línea es el commit de una página que incluye propuestas, ya aplicadas (en `main`, salvo que diga otra cosa el informe). Marca la casilla cuando las hayas revisado; deshaz a mano las que no te convenzan. Las líneas anteriores al 2026-10-29 son commits «propuestas (revisar)» sueltos de la rama `revision-diaria`.
 
 - [ ] `congruencia` · 2026-10-23 · `77c46375` · [informe](2026-10-23-congruencia.md)
 - [ ] `consistencia-logica` · 2026-10-23 · `439b14e7` · [informe](2026-10-23-consistencia-logica.md)
