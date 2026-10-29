@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "f0fdd0dca0a47e8df9c3cbb4b5ec45f69cdab5b380de130ccc75ae4b851787f7",
+  "corpusHash": "c97c8f734de51e69a9107e6a80284862b76ade76f74b20a5486bed46c50660ac",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -55,6 +55,10 @@
     "Plano": "content/diagrams/Definiciones/Plano.tsx",
     "Punto": "content/diagrams/Definiciones/Punto.tsx",
     "Recta": "content/diagrams/Definiciones/Recta.tsx",
+    "RelacionEquivalencia": "content/diagrams/Definiciones/RelacionEquivalencia.tsx",
+    "RelacionReflexiva": "content/diagrams/Definiciones/RelacionReflexiva.tsx",
+    "RelacionSimetrica": "content/diagrams/Definiciones/RelacionSimetrica.tsx",
+    "RelacionTransitiva": "content/diagrams/Definiciones/RelacionTransitiva.tsx",
     "Secante": "content/diagrams/Definiciones/Secante.tsx",
     "Segmento": "content/diagrams/Definiciones/Segmento.tsx",
     "Semiplano": "content/diagrams/Definiciones/Semiplano.tsx",
@@ -1720,8 +1724,8 @@
         "contentPath": "content/mdx/eu/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 641,
-          "end": 672
+          "start": 639,
+          "end": 670
         },
         "blockId": "punto:diagram:Punto"
       }
@@ -1756,6 +1760,134 @@
           "end": 685
         },
         "blockId": "recta:diagram:Recta"
+      }
+    ],
+    "RelacionEquivalencia": [
+      {
+        "contentId": "relacion-equivalencia",
+        "contentPath": "content/mdx/en/definitions/relacion-equivalencia.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 689,
+          "end": 735
+        },
+        "blockId": "relacion-equivalencia:diagram:RelacionEquivalencia"
+      },
+      {
+        "contentId": "relacion-equivalencia",
+        "contentPath": "content/mdx/es/definitions/relacion-equivalencia.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 700,
+          "end": 746
+        },
+        "blockId": "relacion-equivalencia:diagram:RelacionEquivalencia"
+      },
+      {
+        "contentId": "relacion-equivalencia",
+        "contentPath": "content/mdx/eu/definitions/relacion-equivalencia.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 702,
+          "end": 748
+        },
+        "blockId": "relacion-equivalencia:diagram:RelacionEquivalencia"
+      }
+    ],
+    "RelacionReflexiva": [
+      {
+        "contentId": "relacion-reflexiva",
+        "contentPath": "content/mdx/en/definitions/relacion-reflexiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 635,
+          "end": 678
+        },
+        "blockId": "relacion-reflexiva:diagram:RelacionReflexiva"
+      },
+      {
+        "contentId": "relacion-reflexiva",
+        "contentPath": "content/mdx/es/definitions/relacion-reflexiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 652,
+          "end": 695
+        },
+        "blockId": "relacion-reflexiva:diagram:RelacionReflexiva"
+      },
+      {
+        "contentId": "relacion-reflexiva",
+        "contentPath": "content/mdx/eu/definitions/relacion-reflexiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 658,
+          "end": 701
+        },
+        "blockId": "relacion-reflexiva:diagram:RelacionReflexiva"
+      }
+    ],
+    "RelacionSimetrica": [
+      {
+        "contentId": "relacion-simetrica",
+        "contentPath": "content/mdx/en/definitions/relacion-simetrica.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 663,
+          "end": 706
+        },
+        "blockId": "relacion-simetrica:diagram:RelacionSimetrica"
+      },
+      {
+        "contentId": "relacion-simetrica",
+        "contentPath": "content/mdx/es/definitions/relacion-simetrica.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 677,
+          "end": 720
+        },
+        "blockId": "relacion-simetrica:diagram:RelacionSimetrica"
+      },
+      {
+        "contentId": "relacion-simetrica",
+        "contentPath": "content/mdx/eu/definitions/relacion-simetrica.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 687,
+          "end": 730
+        },
+        "blockId": "relacion-simetrica:diagram:RelacionSimetrica"
+      }
+    ],
+    "RelacionTransitiva": [
+      {
+        "contentId": "relacion-transitiva",
+        "contentPath": "content/mdx/en/definitions/relacion-transitiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 693,
+          "end": 737
+        },
+        "blockId": "relacion-transitiva:diagram:RelacionTransitiva"
+      },
+      {
+        "contentId": "relacion-transitiva",
+        "contentPath": "content/mdx/es/definitions/relacion-transitiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 709,
+          "end": 753
+        },
+        "blockId": "relacion-transitiva:diagram:RelacionTransitiva"
+      },
+      {
+        "contentId": "relacion-transitiva",
+        "contentPath": "content/mdx/eu/definitions/relacion-transitiva.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 725,
+          "end": 769
+        },
+        "blockId": "relacion-transitiva:diagram:RelacionTransitiva"
       }
     ],
     "Secante": [

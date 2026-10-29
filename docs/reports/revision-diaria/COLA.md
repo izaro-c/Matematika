@@ -2,19 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 28 / 190
+Revisadas: 37 / 190
 
 ## Pendientes
 
-- [ ] `punto` · definitions
-- [ ] `recta` · definitions
-- [ ] `colinealidad` · definitions
-- [ ] `espacio` · definitions
-- [ ] `continuidad` · definitions
-- [ ] `relacion-reflexiva` · definitions
-- [ ] `relacion-simetrica` · definitions
-- [ ] `relacion-transitiva` · definitions
-- [ ] `relacion-equivalencia` · definitions
 - [ ] `numero-entero` · definitions
 - [ ] `numero-racional` · definitions
 - [ ] `secante` · definitions
@@ -199,3 +190,12 @@ Revisadas: 28 / 190
 - [x] `grupo` · 2026-10-28 · errores → ok · 3 rondas, converge · corregido 9f24242b · propuestas 6ae8d8b2 · corregido 80e83106 · [informe](2026-10-28-grupo.md) · $4.84
 - [x] `cuerpo` · 2026-10-28 · errores → ok · 2 rondas, converge · corregido c7d47bd9 · propuestas 22b9d7dc · [informe](2026-10-28-cuerpo.md) · $2.29
 - [x] `plano` · 2026-10-28 · errores → mejoras · 4 rondas, ronda 4 incompleta (success): descartada; se conservan las anteriores · corregido c2b74da1 · propuestas 7cba6bb0 · corregido 8eaa55cf · corregido 875dcb24 · [informe](2026-10-28-plano.md) · $2.45
+- [x] `punto` · 2026-10-29 · mejoras → ok · 2 rondas, converge · corregido 756db00a · [informe](2026-10-29-punto.md) · $1.19
+- [x] `recta` · 2026-10-29 · errores → ok · 2 rondas, converge · corregido f7e7c54c · propuestas 02822724 · [informe](2026-10-29-recta.md) · $1.31
+- [x] `colinealidad` · 2026-10-29 · errores → ok · 2 rondas, converge · corregido d98b6685 · corregido ed58f50a · [informe](2026-10-29-colinealidad.md) · $1.39
+- [x] `espacio` · 2026-10-29 · errores → ok · 2 rondas, converge · corregido 9daa4f0e · propuestas 5a49e8ef · [informe](2026-10-29-espacio.md) · $1.63
+- [x] `continuidad` · 2026-10-29 · errores → errores · 1 rondas, converge · sin cambios · [informe](2026-10-29-continuidad.md) · $1.89
+- [x] `relacion-reflexiva` · 2026-10-29 · errores → ok · 4 rondas, converge · corregido 5ce35865 · propuestas 8a9eb910 · corregido 6767142c · propuestas 87332cca · corregido 859a00e4 · [informe](2026-10-29-relacion-reflexiva.md) · $2.41
+- [x] `relacion-simetrica` · 2026-10-29 · errores → ok · 3 rondas, converge · corregido d3984b33 · propuestas 6a9b82b0 · corregido 1d81ff6a · [informe](2026-10-29-relacion-simetrica.md) · $1.69
+- [x] `relacion-transitiva` · 2026-10-29 · errores → ok · 2 rondas, converge · corregido 505eb6a7 · propuestas a79c70b1 · [informe](2026-10-29-relacion-transitiva.md) · $1.65
+- [x] `relacion-equivalencia` · 2026-10-29 · errores → mejoras · 2 rondas, converge · corregido 53660230 · propuestas 23d51600 · [informe](2026-10-29-relacion-equivalencia.md) · $3.39
