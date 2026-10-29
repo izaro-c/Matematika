@@ -30,25 +30,25 @@ export const Simulation = Colinealidad;
 
 <Capitular letra="K" />**olinealtasuna** <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink>-multzo batek betetzen duen <ConceptLink targetId="incidencia" isDependency={true}>intzidentzia</ConceptLink>-erlazioa da, puntu horiek guztiekin intziditzen duen <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat existitzean datzana.
 
-<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>ren arabera, bi puntu desberdinek zuzen bakarra zehazten dute eta, beraz, beti dira elkarren artean kolinealak. Kontzeptu horrek hiru puntu edo gehiagoren kasuan hartzen du garrantzia berezia: puntu ez-kolinealen hirukoteak existitzeak bermatzen du <ConceptLink targetId="plano">planoa</ConceptLink> zuzen batera ez murriztea (<ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink>), <ConceptLink targetId="espacio">espazioan</ConceptLink> planoak zehaztea ahalbidetzen du (<ConceptLink targetId="axioma-incidencia-4">I.4 axioma</ConceptLink>) eta ezinbesteko baldintza da <ConceptLink targetId="triangulo">triangelua</ConceptLink> zein <ConceptLink targetId="angulo">angelua</ConceptLink> definitzeko.
+<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>ren arabera, bi puntu desberdinek zuzen bakarra zehazten dute eta, beraz, beti dira elkarren artean kolinealak. Kontzeptu horrek hiru puntu edo gehiagoren kasuan hartzen du garrantzia berezia: <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink>k puntu ez-kolinealen hirukoteak existitzen direla postulatzen du, eta, beraz, ez dago puntu guztiekin intziditzen duen zuzenik; <ConceptLink targetId="axioma-incidencia-4">I.4 axioma</ConceptLink>ren arabera, hirukote ez-kolineal bakoitzetik <ConceptLink targetId="plano">plano</ConceptLink> bat igarotzen da <ConceptLink targetId="espacio">espazioan</ConceptLink>, eta ez-kolinealtasuna ezinbesteko baldintza da <ConceptLink targetId="triangulo">triangelua</ConceptLink> zein <ConceptLink targetId="angulo">angelua</ConceptLink> definitzeko.
 
 <Definicion title="Kolinealtasunaren eta ez-kolinealtasunaren definizio formala">
 Izan bedi $(\mathcal{P}, \mathcal{L}, \mathbf{I})$ <ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink> bat, non $\mathcal{P} \cap \mathcal{L} = \emptyset$ den. Puntuen $\{P_1, P_2, \dots, P_n\} \subset \mathcal{P}$ multzo ez-huts bat **kolineala** da baldin eta puntu bakoitzarekin intziditzen duen $\ell \in \mathcal{L}$ zuzen bat existitzen bada:
 
 $$
-\operatorname{col}(P_1, P_2, \dots, P_n) \iff \exists \ell \in \mathcal{L} \; \forall i \in \{1, \dots, n\} \, (P_i \,\mathbf{I}\, \ell)
+\operatorname{Col}(P_1, P_2, \dots, P_n) \iff \exists \ell \in \mathcal{L} \; \forall i \in \{1, \dots, n\} \, (P_i \,\mathbf{I}\, \ell)
 $$
 
-Bereziki, <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> hiru puntu kolinealak dira <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> zuzenarekiko baldin eta soilik baldin hirurak harekin intziditzen badira:
+Bereziki, <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> puntuak kolinealak dira baldin eta soilik baldin hirurekin intziditzen duen zuzen bat existitzen bada (irudian, <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> zuzena):
 
 $$
-\operatorname{col}(A, B, C) \iff \exists \ell \in \mathcal{L} \, (A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land C \,\mathbf{I}\, \ell)
+\operatorname{Col}(A, B, C) \iff \exists \ell \in \mathcal{L} \, (A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land C \,\mathbf{I}\, \ell)
 $$
 
-Alderantziz, $A$, $B$ eta <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuak **ez-kolinealak** dira baldin eta hirurekin batera intziditzen duen $\mathcal{L}$-ko zuzenik existitzen ez bada:
+Aitzitik, $A$, $B$ eta <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuak **ez-kolinealak** dira baldin eta hirurekin batera intziditzen duen $\mathcal{L}$-ko zuzenik existitzen ez bada:
 
 $$
-\neg\operatorname{col}(A, B, D) \iff \forall \ell \in \mathcal{L} \, \neg(A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land D \,\mathbf{I}\, \ell)
+\neg\operatorname{Col}(A, B, D) \iff \forall \ell \in \mathcal{L} \, \neg(A \,\mathbf{I}\, \ell \land B \,\mathbf{I}\, \ell \land D \,\mathbf{I}\, \ell)
 $$
 </Definicion>
 
@@ -59,17 +59,17 @@ $$
     <PropiedadItem 
       id="determinacion-plano-no-colinealidad" 
       title="Planoaren determinazioa ez-kolinealtasunaren bidez"
-      formula="\neg\operatorname{col}(A, B, C) \implies \exists! \pi \in \Pi \, (A\,\mathbf{I}\,\pi \land B\,\mathbf{I}\,\pi \land C\,\mathbf{I}\,\pi)"
+      formula="\neg\operatorname{Col}(A, B, C) \implies \exists! \pi \in \Pi \, (A\,\mathbf{I}\,\pi \land B\,\mathbf{I}\,\pi \land C\,\mathbf{I}\,\pi)"
     >
-      Hiru puntu ez-kolinealek modu bakarrean zehazten dute <ConceptLink targetId="plano">plano</ConceptLink> bat espazioan <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera, egitura dimentsio bakarrera kolapsatzea eragotziz.
+      Hiru puntu ez-kolinealek modu bakarrean zehazten dute <ConceptLink targetId="plano">plano</ConceptLink> bat <ConceptLink targetId="espacio">espazioan</ConceptLink> <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera.
     </PropiedadItem>
 
     <PropiedadItem 
       id="colinealidad-orden-lineal" 
       title="Bitartekotasunak eragindako kolinealtasuna"
-      formula="A * B * C \implies \operatorname{col}(A, B, C)"
+      formula="A * B * C \implies \operatorname{Col}(A, B, C)"
     >
-      <ConceptLink targetId="estar-entre">Bitartekotasun</ConceptLink>-erlazioak puntuak zuzen berekoak izatea eskatzen du <ConceptLink targetId="axioma-orden-1">II.1 axioma</ConceptLink>ren arabera; puntu bat beste biren artean badago, hirurak nahitaez kolinealak dira.
+      <ConceptLink targetId="estar-entre">Bitartekotasun</ConceptLink>-erlazioak puntuak zuzen berarekin intziditzea eskatzen du <ConceptLink targetId="axioma-orden-1">II.1 axioma</ConceptLink>ren arabera; puntu bat beste biren artean badago, hirurak nahitaez kolinealak dira.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
