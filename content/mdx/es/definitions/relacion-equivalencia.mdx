@@ -19,7 +19,7 @@ export const metadata = {
 Permite abstraer características particulares de los objetos para agruparlos en clases homogéneas, convirtiendo la igualdad estricta en una noción modular de clasificación matemática.
 
 <Definicion title="Definición formal de relación de equivalencia">
-  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>. Una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> $\sim \ \subseteq A \times A$ es una **relación de equivalencia** sobre $A$ si y solo si satisface las tres propiedades axiomáticas:
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink>. Una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> $\sim \ \subseteq A \times A$ es una **relación de equivalencia** sobre $A$ si y solo si satisface las tres propiedades axiomáticas:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Reflexividad</ConceptLink>:** Todo elemento está relacionado consigo mismo:
      $$
      \forall x \in A, \quad x \sim x
@@ -42,5 +42,5 @@ Permite abstraer características particulares de los objetos para agruparlos en
 
 En la construcción de las teorías geométricas, las relaciones de equivalencia organizan la estructura del espacio:
 
-- **Estructura de la congruencia:** La <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica $\cong$ sobre segmentos (fundamentada en los axiomas <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) y sobre ángulos es una relación de equivalencia; cada clase de equivalencia representa la longitud intrínseca del segmento o la apertura del ángulo.
-- **Haces de paralelas:** En el plano euclídeo, el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> $\parallel$ es una relación de equivalencia sobre el conjunto de rectas; cada clase de equivalencia $[\ell]_\parallel$ define una dirección en el plano (un haz de rectas paralelas).
+- **Estructura de la congruencia:** La <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica $\cong$ sobre <ConceptLink targetId="segmento">segmentos</ConceptLink> (fundamentada en los axiomas <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) y sobre <ConceptLink targetId="angulo">ángulos</ConceptLink> (por el <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">teorema de equivalencia de la congruencia angular</ConceptLink>) es una relación de equivalencia; cada clase de equivalencia reúne los segmentos, o los ángulos, congruentes con uno dado.
+- **Haces de paralelas:** En el <ConceptLink targetId="sistema-euclidiano">plano euclídeo</ConceptLink>, el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> $\parallel$ es una relación de equivalencia sobre el conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>, cuya transitividad se deduce del <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>; cada clase de equivalencia $[\ell]_\parallel$ define una dirección en el plano (un haz de rectas paralelas).

@@ -12713,9 +12713,15 @@
         "particion",
         "conjunto-disjunto",
         "congruencia",
+        "segmento",
         "axioma-congruencia-1",
         "axioma-congruencia-2",
-        "paralelas"
+        "angulo",
+        "teorema-congruencia-angulos-equivalencia",
+        "sistema-euclidiano",
+        "paralelas",
+        "recta",
+        "axioma-paralelas-euclides"
       ],
       "availableLangs": [
         "en",
@@ -12771,9 +12777,15 @@
         "particion",
         "conjunto-disjunto",
         "congruencia",
+        "segmento",
         "axioma-congruencia-1",
         "axioma-congruencia-2",
-        "paralelas"
+        "angulo",
+        "teorema-congruencia-angulos-equivalencia",
+        "sistema-euclidiano",
+        "paralelas",
+        "recta",
+        "axioma-paralelas-euclides"
       ],
       "availableLangs": [
         "en",
@@ -32927,9 +32939,15 @@
         "particion",
         "conjunto-disjunto",
         "congruencia",
+        "segmento",
         "axioma-congruencia-1",
         "axioma-congruencia-2",
-        "paralelas"
+        "angulo",
+        "teorema-congruencia-angulos-equivalencia",
+        "sistema-euclidiano",
+        "paralelas",
+        "recta",
+        "axioma-paralelas-euclides"
       ],
       "availableLangs": [
         "en",
@@ -46201,10 +46219,16 @@
         "relacion-transitiva",
         "particion",
         "conjunto-disjunto",
+        "segmento",
         "axioma-congruencia-1",
         "axioma-congruencia-2",
+        "angulo",
+        "teorema-congruencia-angulos-equivalencia",
         "congruencia",
-        "paralelas"
+        "sistema-euclidiano",
+        "paralelas",
+        "recta",
+        "axioma-paralelas-euclides"
       ],
       "availableLangs": [
         "en",

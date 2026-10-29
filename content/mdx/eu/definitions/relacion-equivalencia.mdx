@@ -19,7 +19,7 @@ export const metadata = {
 Objektuen ezaugarri partikularrak abstrakzioz baztertzea ahalbidetzen du, haiek klase homogeneotan multzokatzeko, berdintza hertsia sailkapen matematikorako nozio modular bihurtuz.
 
 <Definicion title="Baliokidetasun-erlazioaren definizio formala">
-  Izan bedi $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $A$-ren gaineko $\sim \ \subseteq A \times A$ <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> bat **baliokidetasun-erlazio** bat da baldin eta soilik baldin hiru propietate axiomatikoak betetzen baditu:
+  Izan bedi $A$ <ConceptLink targetId="conjunto" isDependency={true}>multzo</ConceptLink> bat. $A$-ren gaineko $\sim \ \subseteq A \times A$ <ConceptLink targetId="relacion-binaria" isDependency={true}>erlazio bitar</ConceptLink> bat **baliokidetasun-erlazio** bat da baldin eta soilik baldin hiru propietate axiomatikoak betetzen baditu:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Erreflexibotasuna</ConceptLink>:** Elementu orok bere buruarekin erlazioa du:
      $$
      \forall x \in A, \quad x \sim x
@@ -42,5 +42,5 @@ Objektuen ezaugarri partikularrak abstrakzioz baztertzea ahalbidetzen du, haiek 
 
 Teoria geometrikoen eraikuntzan, baliokidetasun-erlazioek espazioaren egitura antolatzen dute:
 
-- **Kongruentziaren egitura:** Zuzenkietan (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink> axiometan oinarritua) eta angeluetan definitutako $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa baliokidetasun-erlazio bat da; baliokidetasun-klase bakoitzak zuzenkiaren berezko luzera edo angeluaren irekidura adierazten du.
-- **Paraleloen sortak:** Plano euklidearrean, $\parallel$ <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> baliokidetasun-erlazio bat da zuzenen multzoaren gainean; $[\ell]_\parallel$ baliokidetasun-klase bakoitzak norabide bat zehazten du planoan (zuzen paraleloen sorta bat).
+- **Kongruentziaren egitura:** <ConceptLink targetId="segmento">Zuzenkietan</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink> axiometan oinarritua) eta <ConceptLink targetId="angulo">angeluetan</ConceptLink> (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia">angeluen kongruentziaren baliokidetasun-teoremaren</ConceptLink> arabera) definitutako $\cong$ <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa baliokidetasun-erlazio bat da; baliokidetasun-klase bakoitzak emandako zuzenki edo angelu batekin kongruenteak diren zuzenkiak edo angeluak biltzen ditu.
+- **Paraleloen sortak:** <ConceptLink targetId="sistema-euclidiano">Plano euklidearrean</ConceptLink>, $\parallel$ <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> baliokidetasun-erlazio bat da <ConceptLink targetId="recta">zuzenen</ConceptLink> multzoaren gainean, eta haren iragankortasuna <ConceptLink targetId="axioma-paralelas-euclides">IV. axiomatik</ConceptLink> ondorioztatzen da; $[\ell]_\parallel$ baliokidetasun-klase bakoitzak norabide bat zehazten du planoan (zuzen paraleloen sorta bat).

@@ -19,7 +19,7 @@ export const metadata = {
 It enables the abstraction of particular features of objects to group them into homogeneous classes, transforming strict equality into a modular notion of mathematical classification.
 
 <Definicion title="Formal definition of equivalence relation">
-  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> $\sim \ \subseteq A \times A$ is an **equivalence relation** on $A$ if and only if it satisfies the three axiomatic properties:
+  Let $A$ be a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink>. A <ConceptLink targetId="relacion-binaria" isDependency={true}>binary relation</ConceptLink> $\sim \ \subseteq A \times A$ is an **equivalence relation** on $A$ if and only if it satisfies the three axiomatic properties:
   1. **<ConceptLink targetId="relacion-reflexiva" isDependency={true}>Reflexivity</ConceptLink>:** Every element is related to itself:
      $$
      \forall x \in A, \quad x \sim x
@@ -42,5 +42,5 @@ It enables the abstraction of particular features of objects to group them into 
 
 In the construction of geometric theories, equivalence relations organize the structure of space:
 
-- **Structure of congruence:** Geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> $\cong$ on segments (grounded in axioms <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) and on angles is an equivalence relation; each equivalence class represents the intrinsic length of the segment or the opening of the angle.
-- **Sheaves of parallels:** In the Euclidean plane, <ConceptLink targetId="paralelas">parallelism</ConceptLink> $\parallel$ is an equivalence relation on the set of lines; each equivalence class $[\ell]_\parallel$ defines a direction in the plane (a parallel pencil of lines).
+- **Structure of congruence:** Geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> $\cong$ on <ConceptLink targetId="segmento">segments</ConceptLink> (grounded in axioms <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>) and on <ConceptLink targetId="angulo">angles</ConceptLink> (by the <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">equivalence theorem of angle congruence</ConceptLink>) is an equivalence relation; each equivalence class gathers the segments, or the angles, congruent to a given one.
+- **Pencils of parallels:** In the <ConceptLink targetId="sistema-euclidiano">Euclidean plane</ConceptLink>, <ConceptLink targetId="paralelas">parallelism</ConceptLink> $\parallel$ is an equivalence relation on the set of <ConceptLink targetId="recta">lines</ConceptLink>, whose transitivity follows from <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>; each equivalence class $[\ell]_\parallel$ defines a direction in the plane (a parallel pencil of lines).
