@@ -29,7 +29,7 @@ Space occupies the top level of the elementary hierarchy of <ConceptLink targetI
 
 <Separador />
 
-### Varieties of geometric spaces and their <ConceptLink targetId="signatura">signatures</ConceptLink>
+### Types of geometric spaces and their <ConceptLink targetId="signatura">signatures</ConceptLink>
 
 - <ConceptLink targetId="espacio-incidencia">**Incidence space**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, minimal structure governed solely by incidence (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
 - <ConceptLink targetId="espacio-absoluto">**Absolute space**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})$, which further satisfies the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> (<ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>).
@@ -40,15 +40,7 @@ Space occupies the top level of the elementary hierarchy of <ConceptLink targetI
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Logical and Structural Foundations">
-    <PropiedadItem 
-      id="universo-vs-dominios" 
-      title="Universe of Discourse vs. Typed Domains"
-      formula="\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi \implies \mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
-    >
-      In the universe of discourse $\mathcal{U}$, the sets $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the typed <ConceptLink targetId="dominio">domains</ConceptLink> (<ConceptLink targetId="sort">sorts</ConceptLink>) over which the quantifiers of the theory range, and they are <ConceptLink targetId="conjunto-disjunto">pairwise disjoint</ConceptLink>. Only $\mathcal{P}$ is space as a figure.
-    </PropiedadItem>
-
+  <PropiedadesGrupo title="Consequences of Incidence">
     <PropiedadItem 
       id="teorema-interseccion-planos" 
       title="Plane Intersection Theorem"
