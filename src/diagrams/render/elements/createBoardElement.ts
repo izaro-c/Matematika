@@ -125,7 +125,7 @@ export function nativeLabelPlacementOptions(
   };
 }
 
-/** Punta de flecha de grabado (muesca, tipo 2 de JSXGraph) en los extremos pedidos. */
+/** Punta de flecha de grabado (muesca, tipo 2 de JSXGraph) en los extremos pedidos de un segmento o un arco. */
 function segmentArrowOptions(arrow: PathArrow | undefined) {
   if (!arrow) return {};
   const head = { type: 2, size: 5, highlightSize: 5 };
@@ -277,10 +277,14 @@ export function createElement(
         case 'arc': {
           const refs = rendered(geometry.points);
           if (!refs) return null;
-          const directedRefs: [typeof refs[number], typeof refs[number], typeof refs[number]] = geometry.direction === 'clockwise'
+          const clockwise = geometry.direction === 'clockwise';
+          const directedRefs: [typeof refs[number], typeof refs[number], typeof refs[number]] = clockwise
             ? [refs[0], refs[2], refs[1]]
             : [refs[0], refs[1], refs[2]];
-          return createArc(board, directedRefs, lineOptions, theme);
+          // JSXGraph recorre el arco en sentido antihorario: en sentido horario el extremo final es su primer punto.
+          const arrow = item.appearance?.arrow;
+          const directedArrow = clockwise && arrow !== 'both' && arrow ? (arrow === 'end' ? 'start' : 'end') : arrow;
+          return createArc(board, directedRefs, { ...lineOptions, ...segmentArrowOptions(directedArrow) }, theme);
         }
         case 'function':
         case 'parametric': {

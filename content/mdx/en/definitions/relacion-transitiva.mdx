@@ -7,12 +7,15 @@ export const metadata = {
   description: "Property of a binary relation according to which if an element is related to a second and the second to a third, the first is related to the third.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 7", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Chapter 3", role: "secondary" }
   ]
 };
+
+import { RelacionTransitiva } from '@content/diagrams/Definiciones/RelacionTransitiva';
+export const Simulation = RelacionTransitiva;
 
 <Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **transitive** if, whenever an element is related to a second and the second to a third, the first is related to the third.
 
@@ -23,7 +26,7 @@ It is one of the three conditions that define an <ConceptLink targetId="relacion
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
-  In terms of <ConceptLink targetId="composicion-relaciones">relational composition</ConceptLink>, denoting by $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ the composition of $R$ with itself, transitivity is equivalent to the inclusion:
+  In terms of <ConceptLink targetId="composicion-relaciones">relational composition</ConceptLink>, denoting by <VisualBind element="compuesta" color="mora">$R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$</VisualBind> the composition of $R$ with itself, transitivity is equivalent to the inclusion:
   $$
   R \circ R \subseteq R
   $$

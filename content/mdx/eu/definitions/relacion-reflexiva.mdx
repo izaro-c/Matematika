@@ -7,12 +7,15 @@ export const metadata = {
   description: "Erlazio bitar baten propietatea, zeinaren arabera multzo bateko elementu orok bere buruarekin erlazioa duen.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "3. Kapitulua", role: "secondary" }
   ]
 };
+
+import { RelacionReflexiva } from '@content/diagrams/Definiciones/RelacionReflexiva';
+export const Simulation = RelacionReflexiva;
 
 <Capitular letra="E" /><ConceptLink targetId="relacion-binaria">rlazio bitar</ConceptLink> homogeneo bat **erreflexiboa** da baldin eta hura definituta dagoen <ConceptLink targetId="conjunto">multzoko</ConceptLink> elementu orok bere buruarekin erlazioa badu.
 
@@ -23,7 +26,7 @@ export const metadata = {
   $$
   \forall x \in A, \quad x \, R \, x \quad (\text{hau da, } (x, x) \in R)
   $$
-  Multzo-teoriaren terminoetan, $\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$ diagonala edo $A$-ren gaineko <ConceptLink targetId="relacion-identidad">identitate-erlazioa</ConceptLink> adieraziz, erreflexibotasuna <ConceptLink targetId="subconjunto">inklusio</ConceptLink> honen baliokidea da:
+  Multzo-teoriaren terminoetan, <VisualBind element="diagonal" color="mora">$\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$</VisualBind> diagonala edo $A$-ren gaineko <ConceptLink targetId="relacion-identidad">identitate-erlazioa</ConceptLink> adieraziz, erreflexibotasuna <ConceptLink targetId="subconjunto">inklusio</ConceptLink> honen baliokidea da:
   $$
   \Delta_A \subseteq R
   $$

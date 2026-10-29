@@ -18,7 +18,7 @@ No explores el repositorio. Lee un archivo solo para resolver una duda concreta:
 3. **El diagrama, si existe:**
    - Corrección matemática de la construcción: cada objeto se define como dice el texto (un punto «en el segmento» está restringido al segmento y no a la recta; una intersección es la de los objetos correctos). Al arrastrar los puntos libres, ¿puede la figura llegar a una configuración que el enunciado excluye (puntos colineales, orden invertido, triángulo degenerado)?
    - Coherencia con el MDX: cada objeto con nombre propio del enunciado formal tiene su `<VisualBind>`; los colores coinciden con los del diagrama; ningún elemento del diagrama contradice el texto.
-   - Pedagogía: interactividad útil, pasos que siguen la prueba, figura base visible en todos los pasos, foco con `emphasis`.
+   - Pedagogía: la figura hace visible el concepto; si es interactiva, la interacción enseña algo; pasos que siguen la prueba, figura base visible en todos los pasos, foco con `emphasis`.
    - Estilo: paleta oficial y normas de estilo; traducciones `es`/`en`/`eu` del diagrama completas y fieles.
 4. **Si no hay diagrama**, decide si debería tenerlo con el criterio de abajo.
 

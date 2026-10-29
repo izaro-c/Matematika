@@ -7,12 +7,15 @@ export const metadata = {
   description: "Propiedad de una relación binaria según la cual si un elemento está relacionado con otro, el segundo está relacionado con el primero.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Capítulo 3", role: "secondary" }
   ]
 };
+
+import { RelacionSimetrica } from '@content/diagrams/Definiciones/RelacionSimetrica';
+export const Simulation = RelacionSimetrica;
 
 <Capitular letra="U" />na <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> homogénea es **simétrica** si, siempre que un elemento está relacionado con otro, el segundo también está relacionado con el primero.
 

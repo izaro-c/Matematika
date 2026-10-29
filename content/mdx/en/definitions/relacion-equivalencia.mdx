@@ -7,12 +7,15 @@ export const metadata = {
   description: "Reflexive, symmetric, and transitive binary relation that partitions a set into disjoint equivalence classes.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 7", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Chapter 1", role: "secondary" }
   ]
 };
+
+import { RelacionEquivalencia } from '@content/diagrams/Definiciones/RelacionEquivalencia';
+export const Simulation = RelacionEquivalencia;
 
 <Capitular letra="A" />n **equivalence relation** is a <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> on a set that is <ConceptLink targetId="relacion-reflexiva">reflexive</ConceptLink>, <ConceptLink targetId="relacion-simetrica">symmetric</ConceptLink> and <ConceptLink targetId="relacion-transitiva">transitive</ConceptLink>. It formalizes equality under a criterion: two related elements are indistinguishable by that criterion.
 
@@ -33,7 +36,7 @@ It groups the elements into classes of mutually equivalent elements, and each cl
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  Given an element $x \in A$, its **<ConceptLink targetId="clase-equivalencia">equivalence class</ConceptLink>** is the <ConceptLink targetId="subconjunto">subset</ConceptLink> $[x]_\sim = \{y \in A \mid x \sim y\}$. The **<ConceptLink targetId="conjunto-cociente">quotient set</ConceptLink>** $A / \sim \ = \{[x]_\sim \mid x \in A\}$ is a <ConceptLink targetId="particion">partition</ConceptLink> of $A$. By reflexivity, $x \in [x]_\sim$, so no class is empty and together they cover $A$. By symmetry and transitivity, two classes with a common element are equal, so two distinct classes are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink>.
+  Given an element $x \in A$, its **<ConceptLink targetId="clase-equivalencia">equivalence class</ConceptLink>** is the <ConceptLink targetId="subconjunto">subset</ConceptLink> <VisualBind element="clase1" color="terracota">$[x]_\sim = \{y \in A \mid x \sim y\}$</VisualBind>. The **<ConceptLink targetId="conjunto-cociente">quotient set</ConceptLink>** <VisualBind element="cociente" color="carbon">$A / \sim \ = \{[x]_\sim \mid x \in A\}$</VisualBind> is a <ConceptLink targetId="particion">partition</ConceptLink> of $A$. By reflexivity, $x \in [x]_\sim$, so no class is empty and together they cover $A$. By symmetry and transitivity, two classes with a common element are equal, so two distinct classes are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink>.
 </Definicion>
 
 <Separador />

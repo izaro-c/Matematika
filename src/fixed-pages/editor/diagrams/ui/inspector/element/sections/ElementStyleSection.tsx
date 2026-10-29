@@ -246,7 +246,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         </Callout>
       )}
 
-      {kind === 'segment' && element.objectType === 'path' && (
+      {(kind === 'segment' || kind === 'arc') && element.objectType === 'path' && (
         <div className="pt-2 border-t border-carbon/10">
           <label htmlFor={`arrow-${element.id}`} className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
             {t('editor.diagramInspector.arrowHead')}

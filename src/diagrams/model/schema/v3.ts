@@ -100,7 +100,7 @@ export type PathArrow = 'start' | 'end' | 'both';
 
 export interface PathAppearance {
   dashed?: boolean;
-  /** Punta de flecha en los extremos de un segmento. */
+  /** Punta de flecha en los extremos de un segmento, o de un arco (inicio y final en su sentido de recorrido). */
   arrow?: PathArrow;
   strokeWidth?: number;
   strokeOpacity?: number;

@@ -7,12 +7,15 @@ export const metadata = {
   description: "Erlazio bitar erreflexibo, simetriko eta iragankorra, multzo bat baliokidetasun-klase disjuntutan banatzen duena.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "1. Kapitulua", role: "secondary" }
   ]
 };
+
+import { RelacionEquivalencia } from '@content/diagrams/Definiciones/RelacionEquivalencia';
+export const Simulation = RelacionEquivalencia;
 
 <Capitular letra="B" />**aliokidetasun-erlazioa** multzo baten gaineko <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> <ConceptLink targetId="relacion-reflexiva">erreflexibo</ConceptLink>, <ConceptLink targetId="relacion-simetrica">simetriko</ConceptLink> eta <ConceptLink targetId="relacion-transitiva">iragankor</ConceptLink> bat da. Irizpide baten araberako berdintza formalizatzen du: erlazionatutako bi elementu bereizezinak dira irizpide horren arabera.
 
@@ -33,7 +36,7 @@ Elementuak elkarren artean baliokideak diren elementuen klasetan biltzen ditu, e
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  $x \in A$ elementu bat emanda, haren **<ConceptLink targetId="clase-equivalencia">baliokidetasun-klasea</ConceptLink>** $[x]_\sim = \{y \in A \mid x \sim y\}$ <ConceptLink targetId="subconjunto">azpimultzoa</ConceptLink> da. $A / \sim \ = \{[x]_\sim \mid x \in A\}$ **<ConceptLink targetId="conjunto-cociente">zatidura-multzoa</ConceptLink>** $A$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> bat da. Erreflexibotasunagatik, $x \in [x]_\sim$; beraz, klase bat ere ez da hutsa, eta klase guztiek $A$ estaltzen dute. Simetriagatik eta iragankortasunagatik, elementu komun bat duten bi klase berdinak dira; beraz, bi klase desberdin <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> dira.
+  $x \in A$ elementu bat emanda, haren **<ConceptLink targetId="clase-equivalencia">baliokidetasun-klasea</ConceptLink>** <VisualBind element="clase1" color="terracota">$[x]_\sim = \{y \in A \mid x \sim y\}$</VisualBind> <ConceptLink targetId="subconjunto">azpimultzoa</ConceptLink> da. <VisualBind element="cociente" color="carbon">$A / \sim \ = \{[x]_\sim \mid x \in A\}$</VisualBind> **<ConceptLink targetId="conjunto-cociente">zatidura-multzoa</ConceptLink>** $A$ multzoaren <ConceptLink targetId="particion">partizio</ConceptLink> bat da. Erreflexibotasunagatik, $x \in [x]_\sim$; beraz, klase bat ere ez da hutsa, eta klase guztiek $A$ estaltzen dute. Simetriagatik eta iragankortasunagatik, elementu komun bat duten bi klase berdinak dira; beraz, bi klase desberdin <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> dira.
 </Definicion>
 
 <Separador />

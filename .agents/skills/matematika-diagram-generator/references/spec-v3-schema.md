@@ -70,10 +70,11 @@ El punto solo ocupa la posición de uno de esos puntos (entre 1 y 16, distintos 
   },
   "appearance": {
     "strokeWidth": 2.5,
-    "arrow": "end" // opcional, solo en `segment`: "start" | "end" | "both"
+    "arrow": "end" // opcional, en `segment` y `arc`: "start" | "end" | "both"
   }
 }
 ```
+- En un `arc` (`points: [centro, inicio, fin]`, radio = distancia centro–inicio), `start` y `end` son los extremos en el sentido de `direction`: con `clockwise` la punta `end` sigue en el punto `fin`. Así se dibuja un lazo $(x, x)$ de una relación: un arco de unos 300° que sale del elemento y vuelve a él con punta al final (ver `scripts/generate-relaciones.mjs`). En el editor visual, la punta de un arco se elige en el inspector, como la de un segmento.
 
 ### `angle`
 ```json

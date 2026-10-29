@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 113,
-      "exported": 77
+      "none": 109,
+      "exported": 81
     },
     "theoremLike": {
       "total": 21,
@@ -1295,9 +1295,11 @@
       "type": "definicion",
       "title": "Baliokidetasun-erlazioa",
       "filePath": "eu/definitions/relacion-equivalencia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -1308,9 +1310,11 @@
       "type": "definicion",
       "title": "Erlazio erreflexiboa",
       "filePath": "eu/definitions/relacion-reflexiva.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -1321,9 +1325,11 @@
       "type": "definicion",
       "title": "Erlazio simetrikoa",
       "filePath": "eu/definitions/relacion-simetrica.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -1334,9 +1340,11 @@
       "type": "definicion",
       "title": "Erlazio iragankorra",
       "filePath": "eu/definitions/relacion-transitiva.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

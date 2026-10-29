@@ -7,12 +7,15 @@ export const metadata = {
   description: "Property of a binary relation according to which every element of a set is related to itself.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 7", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Chapter 3", role: "secondary" }
   ]
 };
+
+import { RelacionReflexiva } from '@content/diagrams/Definiciones/RelacionReflexiva';
+export const Simulation = RelacionReflexiva;
 
 <Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **reflexive** if every element of the <ConceptLink targetId="conjunto">set</ConceptLink> upon which it operates is related to itself.
 
@@ -23,7 +26,7 @@ It is one of the three conditions that define an <ConceptLink targetId="relacion
   $$
   \forall x \in A, \quad x \, R \, x \quad (\text{that is, } (x, x) \in R)
   $$
-  In set-theoretic terms, denoting by $\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$ the diagonal or <ConceptLink targetId="relacion-identidad">identity relation</ConceptLink> on $A$, reflexivity is equivalent to the <ConceptLink targetId="subconjunto">inclusion</ConceptLink>:
+  In set-theoretic terms, denoting by <VisualBind element="diagonal" color="mora">$\Delta_A = \{(x, x) \in A \times A \mid x \in A\}$</VisualBind> the diagonal or <ConceptLink targetId="relacion-identidad">identity relation</ConceptLink> on $A$, reflexivity is equivalent to the <ConceptLink targetId="subconjunto">inclusion</ConceptLink>:
   $$
   \Delta_A \subseteq R
   $$

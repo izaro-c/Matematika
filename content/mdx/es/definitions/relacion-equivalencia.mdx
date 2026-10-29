@@ -7,12 +7,15 @@ export const metadata = {
   description: "Relación binaria reflexiva, simétrica y transitiva que particiona un conjunto en clases de equivalencia disjuntas.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
     { title: "A Survey of Modern Algebra", author: "Garrett Birkhoff, Saunders Mac Lane", locator: "Capítulo 1", role: "secondary" }
   ]
 };
+
+import { RelacionEquivalencia } from '@content/diagrams/Definiciones/RelacionEquivalencia';
+export const Simulation = RelacionEquivalencia;
 
 <Capitular letra="U" />na **relación de equivalencia** es una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre un conjunto que es <ConceptLink targetId="relacion-reflexiva">reflexiva</ConceptLink>, <ConceptLink targetId="relacion-simetrica">simétrica</ConceptLink> y <ConceptLink targetId="relacion-transitiva">transitiva</ConceptLink>. Formaliza la igualdad bajo un criterio: dos elementos relacionados son indistinguibles para ese criterio.
 
@@ -33,7 +36,7 @@ Agrupa los elementos en clases de elementos equivalentes entre sí, y cada clase
      \forall x, y, z \in A, \quad (x \sim y \land y \sim z) \implies x \sim z
      $$
   
-  Dado un elemento $x \in A$, su **<ConceptLink targetId="clase-equivalencia">clase de equivalencia</ConceptLink>** es el <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> $[x]_\sim = \{y \in A \mid x \sim y\}$. El **<ConceptLink targetId="conjunto-cociente">conjunto cociente</ConceptLink>** $A / \sim \ = \{[x]_\sim \mid x \in A\}$ es una <ConceptLink targetId="particion">partición</ConceptLink> de $A$. Por la reflexividad, $x \in [x]_\sim$, así que ninguna clase es vacía y entre todas recubren $A$. Por la simetría y la transitividad, dos clases con un elemento común coinciden, así que dos clases distintas son <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>.
+  Dado un elemento $x \in A$, su **<ConceptLink targetId="clase-equivalencia">clase de equivalencia</ConceptLink>** es el <ConceptLink targetId="subconjunto">subconjunto</ConceptLink> <VisualBind element="clase1" color="terracota">$[x]_\sim = \{y \in A \mid x \sim y\}$</VisualBind>. El **<ConceptLink targetId="conjunto-cociente">conjunto cociente</ConceptLink>** <VisualBind element="cociente" color="carbon">$A / \sim \ = \{[x]_\sim \mid x \in A\}$</VisualBind> es una <ConceptLink targetId="particion">partición</ConceptLink> de $A$. Por la reflexividad, $x \in [x]_\sim$, así que ninguna clase es vacía y entre todas recubren $A$. Por la simetría y la transitividad, dos clases con un elemento común coinciden, así que dos clases distintas son <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>.
 </Definicion>
 
 <Separador />

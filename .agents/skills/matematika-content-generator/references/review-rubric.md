@@ -44,19 +44,28 @@ Un `ERROR` ya es un fallo: no hace falta repetirlo en el informe. Los `WARN` de 
 
 ## 6. Diagrama
 
-Un diagrama merece existir cuando manipularlo enseña algo que el texto solo afirma: por qué hace falta una hipótesis, qué se conserva al mover un punto, qué condición se rompe y dónde, cómo avanza una prueba. Lo que decide es esa manipulación, no la rama de la matemática.
+Un diagrama merece existir cuando ayuda al lector a entender o a ver el concepto: hace visible lo que la fórmula solo enuncia. La pregunta es «¿qué ve el lector en la figura que no ve en la fórmula?», no «¿qué puede arrastrar?». La interactividad es un añadido cuando enseña algo (por qué hace falta una hipótesis, qué se conserva al mover un punto, cómo avanza una prueba), no un requisito. **Que no se te ocurra una interacción útil no es motivo para descartar el diagrama:** en ese caso, propón una figura estática.
+
+Hay tres formas, de más simple a más compleja. Elige la más simple que enseñe lo que importa:
+
+1. **Figura estática** (`"mode": "diagram"`, objetos fijos). Sirve para lo que se entiende mirando: un ejemplo que cumple la definición junto a otro que no la cumple, con lo que falta marcado en `granada`; una partición en clases; la estructura de un objeto. Es pequeña y se puede escribir a mano. Modelos: `Definiciones/RelacionReflexiva.tsx` (sí / no lado a lado) y `Definiciones/RelacionEquivalencia.tsx` (clases que parten un conjunto).
+2. **Figura con pasos o botones.** Sirve cuando el concepto tiene un orden: una construcción, los pasos de una prueba, un antes y un después.
+3. **Figura manipulable.** Sirve cuando el lector aprende rompiendo condiciones o moviendo puntos: diagramas de flechas con puntas arrastrables (`FuncionSagital.tsx`), conjuntos arrastrables con panel de resultado (`Interseccion.tsx`), tablas con casillas pulsables (`OperacionBinariaTabla.tsx`).
 
 - **Suele merecerlo:**
   - Definiciones de objetos geométricos, axiomas con figura, teoremas con figura y sus demostraciones (un paso del diagrama por cada paso de la prueba).
-  - Definiciones con condiciones que el lector puede romper una a una: función (totalidad y unicidad), inyectividad, sobreyectividad, biyección, función inversa, composición, relaciones de equivalencia sobre conjuntos finitos. Se ilustran con un diagrama de flechas entre conjuntos donde el lector arrastra las flechas y ve qué condición falla. El modelo es `content/diagrams/Definiciones/FuncionSagital.tsx`.
-  - Operaciones entre conjuntos (intersección, unión, diferencia): conjuntos como regiones arrastrables con elementos dentro, y un panel que calcula el resultado. El modelo es `content/diagrams/Definiciones/Interseccion.tsx`.
+  - Definiciones de propiedades de relaciones y funciones (reflexiva, simétrica, transitiva, equivalencia, inyectiva, sobreyectiva, biyección, inversa, composición). Como mínimo, una figura estática con un ejemplo y un contraejemplo. Si además el lector puede romper las condiciones una a una, mejor.
+  - Operaciones entre conjuntos (intersección, unión, diferencia, complemento, producto cartesiano).
+  - Estructuras algebraicas sobre conjuntos finitos (tabla de la operación, neutro, inversos).
+  - Conceptos con una imagen canónica, aunque no sean geométricos: una partición, una sucesión que converge, el grafo de una función, un orden como diagrama de Hasse.
   - Métodos de prueba cuya mecánica se puede animar, como el dominó de la inducción.
 - **No suele merecerlo:**
-  - Conceptos lógicos o metamatemáticos sin nada que manipular (signatura, concepto primitivo), sistemas axiomáticos y biografías.
-  - Métodos de prueba que otro nodo ya ilustra.
-  - Una página cuyo diagrama sería una figura estática que repite la definición.
+  - Conceptos lógicos o metamatemáticos que no tienen ninguna imagen propia (signatura, concepto primitivo, consistencia), sistemas axiomáticos y biografías.
+  - Una página cuyo único dibujo posible ya está en otra página con el mismo contenido. Si la figura cambia de foco (aquí se marca la simetría y allí la equivalencia), no es repetición.
+  - Una figura decorativa en la que no se ve nada que la página explique.
 - Una demostración reutiliza o extiende con pasos el diagrama de su teorema; no crea uno paralelo.
-- El sistema de diagramas no es solo geométrico: tiene flechas, posiciones discretas (`on-points`), botones y paneles de estado. Que un concepto sea «de teoría de conjuntos» o «no geométrico» no basta para descartarlo. Si concluyes «no necesita», di qué manipulación probaste a imaginar y por qué no enseña nada nuevo.
+- Que una figura parecida sirva también a una página hermana no es motivo para dejar esta sin diagrama. Cada página de una familia (reflexiva, simétrica, transitiva) puede tener su figura, centrada en su propiedad.
+- Si concluyes «no necesita», di qué figura (estática o no) probaste a imaginar y qué le faltaría al lector para verla útil. «No hay nada que manipular» no basta.
 
 ## Formato del informe
 

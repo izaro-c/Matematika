@@ -7,12 +7,15 @@ export const metadata = {
   description: "Propiedad de una relación binaria según la cual si un elemento está relacionado con un segundo y este con un tercero, el primero está relacionado con el tercero.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Capítulo 7", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Capítulo 3", role: "secondary" }
   ]
 };
+
+import { RelacionTransitiva } from '@content/diagrams/Definiciones/RelacionTransitiva';
+export const Simulation = RelacionTransitiva;
 
 <Capitular letra="U" />na <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> homogénea es **transitiva** si, siempre que un elemento está relacionado con un segundo y este con un tercero, el primero está relacionado con el tercero.
 
@@ -23,7 +26,7 @@ Es una de las tres condiciones que definen una <ConceptLink targetId="relacion-e
   $$
   \forall x, y, z \in A, \quad (x \, R \, y \land y \, R \, z) \implies x \, R \, z
   $$
-  En términos de <ConceptLink targetId="composicion-relaciones">composición relacional</ConceptLink>, denotando por $R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$ a la composición de $R$ consigo misma, la transitividad equivale a la inclusión:
+  En términos de <ConceptLink targetId="composicion-relaciones">composición relacional</ConceptLink>, denotando por <VisualBind element="compuesta" color="mora">$R \circ R = \{(x, z) \mid \exists y \in A \ (x \, R \, y \land y \, R \, z)\}$</VisualBind> a la composición de $R$ consigo misma, la transitividad equivale a la inclusión:
   $$
   R \circ R \subseteq R
   $$

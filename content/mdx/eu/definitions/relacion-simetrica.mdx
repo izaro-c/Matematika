@@ -7,12 +7,15 @@ export const metadata = {
   description: "Erlazio bitar baten propietatea, zeinaren arabera elementu batek beste batekin erlazioa badu, bigarrenak lehenengoarekin ere erlazioa duen.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "7. Kapitulua", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "3. Kapitulua", role: "secondary" }
   ]
 };
+
+import { RelacionSimetrica } from '@content/diagrams/Definiciones/RelacionSimetrica';
+export const Simulation = RelacionSimetrica;
 
 <Capitular letra="E" /><ConceptLink targetId="relacion-binaria">rlazio bitar</ConceptLink> homogeneo bat **simetrikoa** da baldin eta, elementu batek beste batekin erlazioa duen bakoitzean, bigarrenak ere lehenengoarekin erlazioa badu.
 

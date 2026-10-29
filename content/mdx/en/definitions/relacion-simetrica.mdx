@@ -7,12 +7,15 @@ export const metadata = {
   description: "Property of a binary relation according to which if an element is related to another, the second is related to the first.",
   branch: "03E",
   branches: ["03", "51M"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Naive Set Theory", author: "Paul R. Halmos", locator: "Chapter 7", role: "primary" },
     { title: "Axiomatic Set Theory", author: "Patrick Suppes", locator: "Chapter 3", role: "secondary" }
   ]
 };
+
+import { RelacionSimetrica } from '@content/diagrams/Definiciones/RelacionSimetrica';
+export const Simulation = RelacionSimetrica;
 
 <Capitular letra="A" /> homogeneous <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> is **symmetric** if, whenever one element is related to another, the second is also related to the first.
 

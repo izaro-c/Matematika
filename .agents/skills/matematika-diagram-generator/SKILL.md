@@ -1,9 +1,9 @@
 ---
 name: matematika-diagram-generator
-description: Use whenever creating, modifying, refactoring, fixing or reviewing interactive geometric diagrams in Matematika under content/diagrams/ (v3 DiagramSpec), and whenever binding diagram targets to MDX content (<VisualBind>, <Simulation>, steps). Ensures strict TypeScript/v3 schema compliance, bidirectional visual editor compatibility (lossless / clean envelope), pedagogic clarity with interactive constructions, and trilingual sync (Castellano, Euskara Batua, English).
+description: Use whenever creating, modifying, refactoring, fixing or reviewing diagrams in Matematika under content/diagrams/ (v3 DiagramSpec) — interactive constructions and static figures alike (geometry, arrow diagrams between sets, relations, partitions, tables), and whenever binding diagram targets to MDX content (<VisualBind>, <Simulation>, steps). Ensures strict TypeScript/v3 schema compliance, bidirectional visual editor compatibility (lossless / clean envelope), pedagogic clarity (static figures when looking is enough, interaction when it teaches something), and trilingual sync (Castellano, Euskara Batua, English).
 ---
 
-# Generador y Estándar de Diagramas Interactivos — Matematika
+# Generador y Estándar de Diagramas — Matematika
 
 Motor interactivo y declarativo de representaciones geométricas y analíticas 2D, y de diagramas de flechas entre conjuntos, para la enciclopedia deductiva Matematika, compatible con el **Editor Visual** del proyecto y renderizado en JSXGraph / React.
 
@@ -22,6 +22,8 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
    | Conjuntos como regiones arrastrables, su intersección y un panel que la calcula | `content/diagrams/Definiciones/Interseccion.tsx` |
    | Semiplanos sombreados (`area` · `half-plane`) | `content/diagrams/Definiciones/Semiplano.tsx` |
    | Tabla de Cayley o de verdad con casillas pulsables (botón `cycle`) y flecha del par elegido (§5 G) | `content/diagrams/Definiciones/OperacionBinariaTabla.tsx` |
+   | Figura estática: ejemplo y contraejemplo lado a lado, lazos y flechas de una relación (§5 H) | `content/diagrams/Definiciones/RelacionReflexiva.tsx`, `RelacionTransitiva.tsx` |
+   | Figura estática: partición en clases como regiones tintadas (§5 H) | `content/diagrams/Definiciones/RelacionEquivalencia.tsx` |
 
 3. El bloque entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` es **JSON estricto**: comillas dobles, sin comentarios, sin comas finales. El editor visual lo reescribe; cualquier cosa que no sea JSON hace que el diagrama deje de ser editable.
 4. Escribe el archivo completo, sin marcadores tipo `...` ni `// resto igual`.
@@ -34,7 +36,7 @@ Motor interactivo y declarativo de representaciones geométricas y analíticas 2
 | Principio | Regla Innegociable |
 |---|---|
 | **1. Compatibilidad Visual Exacta (`visual-exact`)** | Los diagramas deben ser compatibles con el Editor Visual de Matematika. Importación canónica obligatoria desde **`@/diagrams/public`** (`import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';`). Deben usar la especificación **`v3`** envuelta entre `/* @matematika-diagram-spec:start */` y `/* @matematika-diagram-spec:end */` con `createDiagramSpec(JSON_VALIDO)` y exportar `<DiagramRenderer spec={...Spec} />`. |
-| **2. Interactividad Pedagógica** | Salvo necesidad puramente estática, los diagramas deben permitir la exploración activa del alumno: puntos móviles arrastrables con restricciones coherentes (`free`, `on-support`, `on-points`, `intersection`, `midpoint`, `projection`). |
+| **2. Claridad Pedagógica** | El diagrama existe para que el lector entienda y vea el concepto. La interactividad se añade cuando enseña algo: arrastrar un punto muestra qué se conserva, romper una condición muestra por qué hace falta. Si mirar basta, haz una figura estática (§5 H). No dejes una página sin diagrama solo porque no encuentras una interacción útil. Cuando haya movimiento, las restricciones deben ser coherentes (`free`, `on-support`, `on-points`, `intersection`, `midpoint`, `projection`). |
 | **3. Persistencia de la Figura Base** | En demostraciones y teoremas divididos por pasos (`steps`): **NUNCA ocultar la figura base**. La figura completa debe mantenerse visible (`visibleTargets`) y el foco cognitivo debe dirigirse mediante resaltes de énfasis (`objectStates: { id: { emphasis: 'primary' } }`). |
 | **4. Sincronización Estricta con MDX** | Todos los elementos resaltables en el texto mediante `<VisualBind element="ID" color="COLOR">` deben corresponderse exactamente 1:1 con un `id` o `targetId` definido en el diagrama (con `target: true`). Mismos identificadores y colores en **Castellano**, **Euskara** e **Inglés**. |
 | **5. Paleta de Diseño Oficial** | Utilizar exclusivamente los tokens de color del sistema: `carbon`, `terracota`, `canela`, `mora`, `ocre`, `pavo`, `granada`, `musgo`. |
@@ -152,7 +154,7 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
 
 2. **Tipos de objetos geométricos (`objectType`):**
    - `point`: coordenadas directas, punto medio (`midpoint`), intersección (`intersection`), proyección perpendicular (`projection`).
-   - `path`: segmentos (`segment`, con punta de flecha opcional `appearance.arrow`: `start` | `end` | `both`), rectas (`line`), semirrectas (`ray`), polígonos (`polygon`), circunferencias (`circle`), arcos (`arc`).
+   - `path`: segmentos (`segment`), rectas (`line`), semirrectas (`ray`), polígonos (`polygon`), circunferencias (`circle`), arcos (`arc`). Segmentos y arcos admiten punta de flecha (`appearance.arrow`: `start` | `end` | `both`); un arco con punta es una flecha curva o un lazo. No hay un tipo «flecha» aparte: la punta es un atributo del trazado.
    - `angle`: medido entre tres puntos, con marcador de arco o cuadrado (`marker: 'square'`).
    - `region`: descomposiciones de áreas. `area`: semiplanos (`half-plane`) e intersecciones de regiones (`intersection`), ver [spec-v3-schema.md](./references/spec-v3-schema.md#area).
 
@@ -277,6 +279,17 @@ Para operaciones sobre conjuntos finitos y conectivas lógicas: el alumno cambia
 - **Leer la tabla:** cada casilla es una variable (`c01`). Elige el par con dos asas `on-points` fuera de la tabla, una para la fila y otra para la columna (no sobre las casillas: el botón HTML tapa el puntero). Calcula el valor elegido en un punto `expression` oculto (`eq(par.x,0)*eq(par.y,1)*c01 + …`) y pon los recuentos (casillas fuera del conjunto, asimetrías…) en otros puntos ocultos.
 - **Señalar el fallo:** un polígono `granada` por celda con `visibleWhen: eq(cij, valorMalo)` y un panel de estado arriba, como en §5 F.
 - En el editor visual el botón sigue siendo funcional: pulsarlo cambia el valor en la vista previa, no el valor guardado. Para editar la casilla, selecciónala en la lista de objetos («Deslizadores»).
+
+### H. Figuras estáticas
+Para conceptos que se entienden mirando: un ejemplo que cumple la definición junto a otro que no la cumple, la partición de un conjunto en clases, la estructura de un objeto. Una figura estática es pequeña (decenas de objetos) y no necesita puntos ocultos de cálculo ni paneles condicionales.
+
+- **Modo:** `"mode": "diagram"`. Todos los puntos con `mobility: { "type": "fixed" }` y `"locked": true`. Sin `visibleWhen`.
+- **Sí / no lado a lado:** dos mitades separadas por un filete discontinuo `canela`, el mismo ejemplo en las dos y una sola diferencia. Rótulo arriba de cada mitad (punto sin tamaño con etiqueta, `labelPosition: "top"`, `labelOffset: [0, -11]`): `musgo` en la que cumple, `granada` en la que no, y en esta diga qué falta («No transitiva: falta (a, c)»). Lo que falta se dibuja discontinuo y en `granada`. Lo que caracteriza la propiedad (los lazos, el atajo $a \to c$) va en `mora` en la mitad que cumple.
+- **Relaciones sobre un conjunto finito:** elementos como puntos fijos (`size: 4`). Un par $(x, y)$ es un `segment` con `arrow: "end"` entre dos puntos ocultos, recortado 0,17 en cada extremo. Dos flechas recíprocas van desplazadas en paralelo (unos 0,13) para que se vean las dos. Si siempre van juntas, usa una sola con `arrow: "both"`. Un lazo $(x, x)$ es una flecha que sale del elemento y vuelve a él: un `arc` con `arrow: "end"`, de radio 0,3, con el centro hacia fuera de la figura y una abertura de unos 32° a cada lado del elemento. No uses una circunferencia cerrada: sin punta, el lector no la lee como flecha. La etiqueta del elemento va al lado libre (`labelPosition`: `bot`, `rt`…), no sobre el lazo.
+- **Clases o subconjuntos:** un `circle` por clase con `fillOpacity: 0.1` y `strokeOpacity: 0.55`, un color de la paleta por clase y el rótulo de la clase encima (`[a] = {a, b, c}`).
+- **`<VisualBind>`:** publica como `group` con `target: true` lo que nombra una fórmula del texto ($\Delta_A$ = los lazos, $R \circ R$ = el atajo, $A/\sim$ = las clases). Solo si la parte resaltada es exactamente lo que la fórmula denota.
+- **Encuadre:** contenido cerca de 2:1 como en §5 F, y que quepa a la derecha de los botones de zoom en móvil.
+- **Generador:** `scripts/generate-relaciones.mjs` produce las cuatro figuras de relaciones. Para figuras parecidas, cópialo y cambia los datos. No hace falta escribir el JSON a mano.
 
 ---
 
