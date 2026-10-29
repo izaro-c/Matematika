@@ -7,19 +7,22 @@ export const metadata = {
   description: "Cuerpo ordenado arquimediano formado por todas las fracciones de enteros, denso en la recta pero carente de completitud analítica.",
   branch: "11A",
   branches: ["11A", "12"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
     { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
   ]
 };
 
-<Capitular letra="L" />os **números racionales** constituyen el <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> de <ConceptLink targetId="fraccion">fracciones</ConceptLink> formado por todos los cocientes expresables entre dos números enteros, formalizando la <ConceptLink targetId="conmensurabilidad">conmensurabilidad</ConceptLink> geométrica y la <ConceptLink targetId="division">división</ConceptLink> exacta entre cantidades no nulas.
+import { NumeroRacionalPares } from '@content/diagrams/Definiciones/NumeroRacionalPares';
+export const Simulation = NumeroRacionalPares;
+
+<Capitular letra="L" />os **números racionales** constituyen el <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink> de <ConceptLink targetId="fraccion">fracciones</ConceptLink> formado por todos los cocientes de dos números enteros con divisor no nulo, formalizando la <ConceptLink targetId="conmensurabilidad">conmensurabilidad</ConceptLink> geométrica y la <ConceptLink targetId="division">división</ConceptLink> exacta entre cantidades no nulas.
 
 Identificados universalmente con la letra $\mathbb{Q}$ (del italiano *quoziente*), los racionales surgen algebraicamente como el <ConceptLink targetId="cuerpo-fracciones">cuerpo de fracciones</ConceptLink> del <ConceptLink targetId="dominio-integridad">dominio de integridad</ConceptLink> de los <ConceptLink targetId="numero-entero" isDependency={true}>números enteros</ConceptLink>, dotando a la <ConceptLink targetId="aritmetica">aritmética</ConceptLink> de <ConceptLink targetId="elemento-inverso">inversos multiplicativos</ConceptLink> para todo elemento no nulo. No obstante, como demostró históricamente el descubrimiento pitagórico de magnitudes <ConceptLink targetId="inconmensurabilidad">inconmensurables</ConceptLink> como $\sqrt{2}$, los racionales presentan lagunas o discontinuidades que impiden identificar la <ConceptLink targetId="recta">recta geométrica</ConceptLink> continua únicamente con $\mathbb{Q}$.
 
 <Definicion title="Construcción formal de los números racionales">
-  El conjunto de los **números racionales** $\mathbb{Q}$ se define como el conjunto cociente del <ConceptLink targetId="producto-cartesiano">producto cartesiano</ConceptLink> $\mathbb{Z} \times (\mathbb{Z} \setminus \{0\})$ bajo la <ConceptLink targetId="relacion-equivalencia" isDependency={true}>relación de equivalencia</ConceptLink> que identifica dos fracciones cuando su producto cruzado coincide:
+  El conjunto de los **números racionales** $\mathbb{Q}$ se define como el <ConceptLink targetId="conjunto-cociente" isDependency={true}>conjunto cociente</ConceptLink> del <ConceptLink targetId="producto-cartesiano" isDependency={true}>producto cartesiano</ConceptLink> <VisualBind element="pares" color="carbon">$\mathbb{Z} \times (\mathbb{Z} \setminus \{0\})$</VisualBind> bajo la <ConceptLink targetId="relacion-equivalencia" isDependency={true}>relación de equivalencia</ConceptLink> que identifica dos fracciones cuando su producto cruzado coincide:
   $$
   (a, b) \sim (c, d) \iff a \cdot d = b \cdot c
   $$
@@ -30,19 +33,21 @@ Identificados universalmente con la letra $\mathbb{Q}$ (del italiano *quoziente*
   $$
   \frac{a}{b} \cdot \frac{c}{d} = \frac{a \cdot c}{b \cdot d}
   $$
-  Dotada de estas operaciones, la estructura $(\mathbb{Q}, +, \cdot)$ es un <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> conmutativo con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> aditivo $\frac{0}{1} = 0$, unidad multiplicativa $\frac{1}{1} = 1$ e inverso multiplicativo $\left(\frac{a}{b}\right)^{-1} = \frac{b}{a}$ para todo $a \neq 0$.
+  Las dos fórmulas no dependen de los representantes elegidos, y $b \cdot d \neq 0$ porque $b \neq 0$ y $d \neq 0$ en el <ConceptLink targetId="dominio-integridad">dominio de integridad</ConceptLink> $\mathbb{Z}$. Dotada de estas operaciones, la estructura $(\mathbb{Q}, +, \cdot)$ es un <ConceptLink targetId="cuerpo" isDependency={true}>cuerpo</ConceptLink> <ConceptLink targetId="conmutatividad">conmutativo</ConceptLink> con <ConceptLink targetId="elemento-neutro">elemento neutro</ConceptLink> aditivo $\frac{0}{1} = 0$, unidad multiplicativa $\frac{1}{1} = 1$ e inverso multiplicativo $\left(\frac{a}{b}\right)^{-1} = \frac{b}{a}$ para todo $a \neq 0$. Como $(a, b) \sim (-a, -b)$, toda clase tiene un representante con $b > 0$; para $b, d > 0$ se define $\frac{a}{b} < \frac{c}{d} \iff a \cdot d < b \cdot c$, y esta definición tampoco depende de los representantes elegidos. Con este orden, $\mathbb{Q}$ es un <ConceptLink targetId="cuerpo-ordenado">cuerpo ordenado</ConceptLink>.
 </Definicion>
+
+En la figura, el par $(a, b)$ ocupa la columna $b$ y la fila $a$. La igualdad $a \cdot d = b \cdot c$ dice que $(b, a)$ y $(d, c)$ están alineados con el origen, así que cada clase reúne los pares de una misma recta por el origen: <VisualBind element="claseUnMedio" color="terracota">$\frac{1}{2} = \{(1, 2), (2, 4), (-1, -2), \dots\}$</VisualBind>, <VisualBind element="claseMenosUno" color="pavo">$-1 = [(-1, 1)]$</VisualBind> y <VisualBind element="claseCero" color="mora">$0 = [(0, 1)]$</VisualBind>. La columna <VisualBind element="excluidos" color="granada">$b = 0$</VisualBind> queda vacía: ningún par tiene denominador nulo.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadItem id="cuerpo-conmutativo-fracciones" title="Cuerpo de fracciones y característica cero">
-    La estructura $(\mathbb{Q}, +, \cdot)$ es el cuerpo de fracciones canónico de $\mathbb{Z}$, constituyendo el menor cuerpo de <ConceptLink targetId="caracteristica-cuerpo">característica cero</ConceptLink> en el sentido de que está contenido como <ConceptLink targetId="subcuerpo">subcuerpo</ConceptLink> primo en cualquier otro cuerpo de característica cero.
+    La estructura $(\mathbb{Q}, +, \cdot)$ es el cuerpo de fracciones canónico de $\mathbb{Z}$, constituyendo el menor cuerpo de <ConceptLink targetId="caracteristica-cuerpo">característica cero</ConceptLink>: todo cuerpo de característica cero tiene un <ConceptLink targetId="subcuerpo">subcuerpo</ConceptLink> primo <ConceptLink targetId="isomorfismo">isomorfo</ConceptLink> a $\mathbb{Q}$.
   </PropiedadItem>
   <PropiedadItem id="cuerpo-ordenado-arquimediano" title="Propiedad arquimediana">
-    El cuerpo $\mathbb{Q}$ es arquimediano respecto de su <ConceptLink targetId="orden-total">orden usual</ConceptLink>: dados dos números racionales positivos cualesquiera $x, y \in \mathbb{Q}$ con $x > 0$, existe siempre un <ConceptLink targetId="numero-natural">número natural</ConceptLink> $n \in \mathbb{N}$ tal que $n \cdot x > y$, satisfaciendo el <ConceptLink targetId="axioma-arquimedes">principio de Arquímedes</ConceptLink>.
+    El cuerpo $\mathbb{Q}$ es arquimediano respecto de su <ConceptLink targetId="orden-total">orden usual</ConceptLink>: para todo $x, y \in \mathbb{Q}$ con $x > 0$ existe un <ConceptLink targetId="numero-natural">número natural</ConceptLink> $n \in \mathbb{N}$ tal que $n \cdot x > y$, satisfaciendo el <ConceptLink targetId="propiedad-arquimediana">principio de Arquímedes</ConceptLink>.
   </PropiedadItem>
   <PropiedadItem id="densidad-lineal-incompletitud" title="Densidad lineal e incompletitud analítica">
-    El orden de $\mathbb{Q}$ es <ConceptLink targetId="conjunto-denso">denso</ConceptLink> en sí mismo, pero no satisface la propiedad del supremo: existen <ConceptLink targetId="conjunto">subconjuntos</ConceptLink> no vacíos acotados superiormente (como $\{q \in \mathbb{Q} : q^2 < 2\}$) que carecen de cota superior mínima en $\mathbb{Q}$, motivando la compleción hacia los <ConceptLink targetId="numero-real">números reales</ConceptLink>.
+    El orden de $\mathbb{Q}$ es <ConceptLink targetId="conjunto-denso">denso</ConceptLink>, pero no satisface la <ConceptLink targetId="axioma-supremo">propiedad del supremo</ConceptLink>: existen <ConceptLink targetId="conjunto">subconjuntos</ConceptLink> no vacíos <ConceptLink targetId="cota-superior">acotados superiormente</ConceptLink> (como $\{q \in \mathbb{Q} : q^2 < 2\}$) que carecen de cota superior mínima en $\mathbb{Q}$, motivando la compleción hacia los <ConceptLink targetId="numero-real">números reales</ConceptLink>.
   </PropiedadItem>
 </SeccionPropiedades>

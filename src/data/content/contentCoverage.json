@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 108,
-      "exported": 82
+      "none": 107,
+      "exported": 83
     },
     "theoremLike": {
       "total": 21,
@@ -1114,9 +1114,11 @@
       "type": "definicion",
       "title": "Zenbaki arrazionalak",
       "filePath": "eu/definitions/numero-racional.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,

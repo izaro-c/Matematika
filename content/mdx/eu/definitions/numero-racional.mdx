@@ -7,19 +7,22 @@ export const metadata = {
   description: "Zenbaki osoen zatiki guztiek osatutako gorputz ordenatu arkimedearra, zuzenean trinkoa baina osotasun analitikorik gabea.",
   branch: "11A",
   branches: ["11A", "12"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
-    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "Capítulo 1", role: "secondary" }
+    { title: "Principles of Mathematical Analysis", author: "Walter Rudin", locator: "1. kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="Z" />enbaki **arrazionalak** bi zenbaki osoren arteko zatidura adierazgarri guztiek osatutako <ConceptLink targetId="fraccion">zatikien</ConceptLink> <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatua</ConceptLink> dira, aldi berean <ConceptLink targetId="conmensurabilidad">neurkidetasun</ConceptLink> geometrikoa eta zero ez diren kantitateen arteko <ConceptLink targetId="division">zatiketa</ConceptLink> zehatza formalizatuz.
+import { NumeroRacionalPares } from '@content/diagrams/Definiciones/NumeroRacionalPares';
+export const Simulation = NumeroRacionalPares;
+
+<Capitular letra="Z" />enbaki **arrazionalak** bi zenbaki osoren arteko zatidura guztiek (zatitzailea zero ez dutenek) osatutako <ConceptLink targetId="fraccion">zatikien</ConceptLink> <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatua</ConceptLink> dira, aldi berean <ConceptLink targetId="conmensurabilidad">neurkidetasun</ConceptLink> geometrikoa eta zero ez diren kantitateen arteko <ConceptLink targetId="division">zatiketa</ConceptLink> zehatza formalizatuz.
 
 Nazioartean $\mathbb{Q}$ letraz izendatuak (italierazko *quoziente* hitzetik), arrazionalak aljebraikoki <ConceptLink targetId="numero-entero" isDependency={true}>zenbaki oso</ConceptLink>en <ConceptLink targetId="dominio-integridad">osotasun-eremuaren</ConceptLink> <ConceptLink targetId="cuerpo-fracciones">zatikien gorputz</ConceptLink> gisa sortzen dira, <ConceptLink targetId="aritmetica">aritmetika</ConceptLink>ri zero ez den elementu ororen biderketarekiko <ConceptLink targetId="elemento-inverso">alderantzizkoak</ConceptLink> emanez. Dena den, $\sqrt{2}$ bezalako magnitude <ConceptLink targetId="inconmensurabilidad">neurkideezinen</ConceptLink> aurkikuntza pitagorikoak historikoki frogatu zuen moduan, arrazionalek hutsuneak edo etenak dituzte, <ConceptLink targetId="recta">zuzen geometriko</ConceptLink> jarraitua $\mathbb{Q}$ hutsarekin identifikatzea eragotziz.
 
 <Definicion title="Zenbaki arrazionalen eraikuntza formala">
-  **Zenbaki arrazional**en $\mathbb{Q}$ multzoa $\mathbb{Z} \times (\mathbb{Z} \setminus \{0\})$ <ConceptLink targetId="producto-cartesiano">biderkadura kartesiarra</ConceptLink>ren zatidura-multzo gisa definitzen da, bi zatiki haien biderkadura gurutzatua berdina denean identifikatzen dituen <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink>aren pean:
+  **Zenbaki arrazional**en $\mathbb{Q}$ multzoa <VisualBind element="pares" color="carbon">$\mathbb{Z} \times (\mathbb{Z} \setminus \{0\})$</VisualBind> <ConceptLink targetId="producto-cartesiano" isDependency={true}>biderkadura kartesiarra</ConceptLink>ren <ConceptLink targetId="conjunto-cociente" isDependency={true}>zatidura-multzo</ConceptLink> gisa definitzen da, bi zatiki haien biderkadura gurutzatua berdina denean identifikatzen dituen <ConceptLink targetId="relacion-equivalencia" isDependency={true}>baliokidetasun-erlazio</ConceptLink>aren pean:
   $$
   (a, b) \sim (c, d) \iff a \cdot d = b \cdot c
   $$
@@ -30,19 +33,21 @@ Nazioartean $\mathbb{Q}$ letraz izendatuak (italierazko *quoziente* hitzetik), a
   $$
   \frac{a}{b} \cdot \frac{c}{d} = \frac{a \cdot c}{b \cdot d}
   $$
-  Eragiketa hauez hornitua, $(\mathbb{Q}, +, \cdot)$ egitura <ConceptLink targetId="cuerpo" isDependency={true}>gorputz</ConceptLink> trukatzaile bat da, $\frac{0}{1} = 0$ batuketaren <ConceptLink targetId="elemento-neutro">elementu neutroarekin</ConceptLink>, $\frac{1}{1} = 1$ biderketaren unitatearekin eta $a \neq 0$ ororako $\left(\frac{a}{b}\right)^{-1} = \frac{b}{a}$ biderketaren alderantzizkoarekin.
+  Bi formulak ez dira aukeratutako ordezkarien menpekoak, eta $b \cdot d \neq 0$ da, $b \neq 0$ eta $d \neq 0$ baitira $\mathbb{Z}$ <ConceptLink targetId="dominio-integridad">osotasun-eremuan</ConceptLink>. Eragiketa hauez hornitua, $(\mathbb{Q}, +, \cdot)$ egitura <ConceptLink targetId="cuerpo" isDependency={true}>gorputz</ConceptLink> <ConceptLink targetId="conmutatividad">trukakor</ConceptLink> bat da, $\frac{0}{1} = 0$ batuketaren <ConceptLink targetId="elemento-neutro">elementu neutroarekin</ConceptLink>, $\frac{1}{1} = 1$ biderketaren unitatearekin eta $a \neq 0$ ororako $\left(\frac{a}{b}\right)^{-1} = \frac{b}{a}$ biderketaren alderantzizkoarekin. $(a, b) \sim (-a, -b)$ denez, klase orok du $b > 0$ duen ordezkari bat; $b, d > 0$ izanik, $\frac{a}{b} < \frac{c}{d} \iff a \cdot d < b \cdot c$ definitzen da, eta definizio hori ere ez da aukeratutako ordezkarien menpekoa. Ordena horrekin, $\mathbb{Q}$ <ConceptLink targetId="cuerpo-ordenado">gorputz ordenatua</ConceptLink> da.
 </Definicion>
+
+Irudian, $(a, b)$ bikotea $b$ zutabean eta $a$ errenkadan dago. $a \cdot d = b \cdot c$ berdintzak esan nahi du $(b, a)$ eta $(d, c)$ jatorriarekin lerrokatuta daudela; beraz, klase bakoitzak jatorritik igarotzen den zuzen bereko bikoteak biltzen ditu: <VisualBind element="claseUnMedio" color="terracota">$\frac{1}{2} = \{(1, 2), (2, 4), (-1, -2), \dots\}$</VisualBind>, <VisualBind element="claseMenosUno" color="pavo">$-1 = [(-1, 1)]$</VisualBind> eta <VisualBind element="claseCero" color="mora">$0 = [(0, 1)]$</VisualBind>. <VisualBind element="excluidos" color="granada">$b = 0$</VisualBind> zutabea hutsik dago: ez dago izendatzailea zero duen bikoterik.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadItem id="cuerpo-conmutativo-fracciones" title="Zatikien gorputza eta zero ezaugarria">
-    $(\mathbb{Q}, +, \cdot)$ egitura $\mathbb{Z}$-ren zatikien gorputz kanonikoa da, <ConceptLink targetId="caracteristica-cuerpo">zero ezaugarriko</ConceptLink> gorputzik txikiena osatuz, zero ezaugarriko beste edozein gorputzetan <ConceptLink targetId="subcuerpo">azpigorputz</ConceptLink> lehen gisa txertatuta baitago.
+  <PropiedadItem id="cuerpo-conmutativo-fracciones" title="Zatikien gorputza eta zero karakteristika">
+    $(\mathbb{Q}, +, \cdot)$ egitura $\mathbb{Z}$-ren zatikien gorputz kanonikoa da, <ConceptLink targetId="caracteristica-cuerpo">zero karakteristikako</ConceptLink> gorputzik txikiena osatuz: zero karakteristikako gorputz orok $\mathbb{Q}$-rekin <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den <ConceptLink targetId="subcuerpo">azpigorputz</ConceptLink> lehen bat du.
   </PropiedadItem>
   <PropiedadItem id="cuerpo-ordenado-arquimediano" title="Propietate arkimedearra">
-    $\mathbb{Q}$ gorputza arkimedearra da bere ohiko <ConceptLink targetId="orden-total">ordenarekiko</ConceptLink>: edozein bi $x, y \in \mathbb{Q}$ zenbaki arrazional positibo emanda ($x > 0$), beti existitzen da $n \in \mathbb{N}$ <ConceptLink targetId="numero-natural">zenbaki arrunt</ConceptLink> bat non $n \cdot x > y$ den, <ConceptLink targetId="axioma-arquimedes">Arkimedesen printzipioa</ConceptLink> betez.
+    $\mathbb{Q}$ gorputza arkimedearra da bere ohiko <ConceptLink targetId="orden-total">ordenarekiko</ConceptLink>: $x > 0$ betetzen duten $x, y \in \mathbb{Q}$ guztietarako, existitzen da $n \in \mathbb{N}$ <ConceptLink targetId="numero-natural">zenbaki arrunt</ConceptLink> bat non $n \cdot x > y$ den, <ConceptLink targetId="propiedad-arquimediana">Arkimedesen printzipioa</ConceptLink> betez.
   </PropiedadItem>
   <PropiedadItem id="densidad-lineal-incompletitud" title="Dentsitate lineala eta osatugabetasun analitikoa">
-    $\mathbb{Q}$-ren ordena bere baitan <ConceptLink targetId="conjunto-denso">trinkoa</ConceptLink> da, baina ez du betetzen supremoaren propietatea: badaude goitik bornatutako <ConceptLink targetId="conjunto">azpimultzo</ConceptLink> ez-hutsak ($\{q \in \mathbb{Q} : q^2 < 2\}$ esaterako) $\mathbb{Q}$-n goi-borne minimorik ez dutenak, <ConceptLink targetId="numero-real">zenbaki erreal</ConceptLink>etaranzko osatzea eraginez.
+    $\mathbb{Q}$-ren ordena <ConceptLink targetId="conjunto-denso">trinkoa</ConceptLink> da, baina ez du betetzen <ConceptLink targetId="axioma-supremo">supremoaren propietatea</ConceptLink>: badaude <ConceptLink targetId="cota-superior">goitik bornatutako</ConceptLink> <ConceptLink targetId="conjunto">azpimultzo</ConceptLink> ez-hutsak ($\{q \in \mathbb{Q} : q^2 < 2\}$ esaterako) $\mathbb{Q}$-n goi-borne minimorik ez dutenak, <ConceptLink targetId="numero-real">zenbaki erreal</ConceptLink>etaranzko osatzea eraginez.
   </PropiedadItem>
 </SeccionPropiedades>
