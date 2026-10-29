@@ -14,12 +14,12 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />na relación binaria homogénea es **simétrica** si el vínculo que une a dos elementos cualesquiera es recíproco y no depende del orden en que se enuncien sus términos.
+<Capitular letra="U" />na <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> homogénea es **simétrica** si el vínculo que une a dos elementos cualesquiera es recíproco y no depende del orden en que se enuncien sus términos.
 
-No debe confundirse esta propiedad lógica abstracta con la noción de <ConceptLink targetId="simetria">simetría geométrica</ConceptLink> de una figura (que denota una isometría o transformación que deja invariable un subconjunto de puntos): aquí se trata estrictamente de la reversibilidad de una relación formal.
+No debe confundirse con la <ConceptLink targetId="simetria">simetría geométrica</ConceptLink> de una figura: aquí la simetría es una propiedad de una relación, no de una figura.
 
 <Definicion title="Definición formal de relación simétrica">
-  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> sobre $A$. La relación $R$ es **simétrica** si y solo si:
+  Sea $A$ un <ConceptLink targetId="conjunto" isDependency={true}>conjunto</ConceptLink> y sea $R \subseteq A \times A$ una <ConceptLink targetId="relacion-binaria" isDependency={true}>relación binaria</ConceptLink> sobre $A$. La relación $R$ es **simétrica** si y solo si:
   $$
   \forall x, y \in A, \quad x \, R \, y \implies y \, R \, x
   $$
@@ -35,6 +35,6 @@ No debe confundirse esta propiedad lógica abstracta con la noción de <ConceptL
 
 La simetría relacional interviene de forma determinante en los diversos estratos deductivos:
 
-- **Simetría de la intermediación:** En el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> del orden lineal, se postula que la relación de estar entre puntos es simétrica respecto a sus extremos: si $A * B * C$, entonces necesariamente $C * B * A$.
-- **Deducción en la congruencia:** En la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de segmentos, la propiedad simétrica ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) no se postula aisladamente, sino que se demuestra como un <ConceptLink targetId="teorema">teorema</ConceptLink> riguroso combinando la reflexividad del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> con la transitividad del <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>.
-- **Paralelismo:** La relación de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre rectas coplanares es simétrica ($\ell \parallel m \implies m \parallel \ell$) por la conmutatividad intrínseca de la disyunción y del corte conjuntista, rasgo definitorio de toda <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
+- **Simetría de la intermediación:** El <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> postula que la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> entre <ConceptLink targetId="punto">puntos</ConceptLink> es simétrica respecto a sus extremos: si $A * B * C$, entonces $C * B * A$.
+- **Deducción en la congruencia:** En la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink>, la propiedad simétrica ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) no se postula aisladamente, sino que se demuestra como un <ConceptLink targetId="teorema">teorema</ConceptLink> combinando la <ConceptLink targetId="relacion-reflexiva">reflexividad</ConceptLink> del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> con la <ConceptLink targetId="relacion-transitiva">transitividad</ConceptLink> del <ConceptLink targetId="axioma-congruencia-2">Axioma III.2</ConceptLink>.
+- **Paralelismo:** La relación de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> es simétrica ($\ell \parallel m \implies m \parallel \ell$) porque su definición no cambia al intercambiar $\ell$ y $m$: la igualdad $\ell = m$ y la condición $\operatorname{tr}(\ell) \cap \operatorname{tr}(m) = \emptyset$ no dependen del orden de las rectas. En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> también es transitiva; como además es reflexiva, es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.

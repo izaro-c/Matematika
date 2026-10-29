@@ -12953,15 +12953,23 @@
         }
       ],
       "conceptLinks": [
+        "relacion-binaria",
         "simetria",
         "conjunto",
-        "relacion-binaria",
         "axioma-orden-1",
+        "estar-entre",
+        "punto",
         "congruencia",
+        "segmento",
         "teorema",
+        "relacion-reflexiva",
         "axioma-congruencia-1",
+        "relacion-transitiva",
         "axioma-congruencia-2",
         "paralelas",
+        "coplanaridad",
+        "recta",
+        "sistema-euclidiano",
         "relacion-equivalencia"
       ],
       "availableLangs": [
@@ -13010,15 +13018,23 @@
         }
       ],
       "conceptLinks": [
+        "relacion-binaria",
         "simetria",
         "conjunto",
-        "relacion-binaria",
         "axioma-orden-1",
+        "estar-entre",
+        "punto",
         "congruencia",
+        "segmento",
         "teorema",
+        "relacion-reflexiva",
         "axioma-congruencia-1",
+        "relacion-transitiva",
         "axioma-congruencia-2",
         "paralelas",
+        "recta",
+        "coplanaridad",
+        "sistema-euclidiano",
         "relacion-equivalencia"
       ],
       "availableLangs": [
@@ -33003,15 +33019,23 @@
         }
       ],
       "conceptLinks": [
+        "relacion-binaria",
         "simetria",
         "conjunto",
-        "relacion-binaria",
         "axioma-orden-1",
+        "estar-entre",
+        "punto",
         "congruencia",
+        "segmento",
         "teorema",
+        "relacion-reflexiva",
         "axioma-congruencia-1",
+        "relacion-transitiva",
         "axioma-congruencia-2",
         "paralelas",
+        "recta",
+        "coplanaridad",
+        "sistema-euclidiano",
         "relacion-equivalencia"
       ],
       "availableLangs": [
@@ -46258,15 +46282,23 @@
         }
       ],
       "conceptLinks": [
+        "relacion-binaria",
         "simetria",
         "conjunto",
-        "relacion-binaria",
         "axioma-orden-1",
+        "punto",
+        "estar-entre",
+        "segmento",
         "congruencia",
         "teorema",
         "axioma-congruencia-1",
+        "relacion-reflexiva",
         "axioma-congruencia-2",
+        "relacion-transitiva",
+        "recta",
+        "coplanaridad",
         "paralelas",
+        "sistema-euclidiano",
         "relacion-equivalencia"
       ],
       "availableLangs": [
