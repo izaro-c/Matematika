@@ -8,17 +8,15 @@ Para usarlo paso a paso, ve al [TUTORIAL.md](TUTORIAL.md).
 
 - **En su propio worktree** (`../Matematika-revision`, rama `revision-diaria`). Se crea en la primera ejecución y se rebasa sobre `main` antes de cada una. Tu copia de trabajo no se toca, salvo la cola y los informes.
 - **Por rondas, con un agente nuevo en cada una.** La ronda 1 revisa y corrige la página. Cada ronda siguiente la hace otra sesión, sin memoria de las anteriores: recibe la página ya corregida y los informes previos, la revisa desde cero, comprueba los cambios anteriores y corrige lo que se les escapó. La página termina cuando una ronda no cambia nada («converge»), o al llegar a `REVIEW_MAX_ROUNDS` (4) o al tope de gasto. Para que las rondas no se deshagan unas a otras, una ronda de verificación solo revierte un cambio anterior si es un error; si discrepa de una propuesta, lo anota para la autora.
-- **Hasta dos commits por ronda**, hechos por el propio agente con `checkpoint.sh`, que valida antes de guardar (a partir de la ronda 2, el asunto lleva «· ronda N»):
-  - `revisión diaria: <id> — correcciones`: errores objetivos y normas rotas.
-  - `revisión diaria: <id> — propuestas (revisar)`: mejoras discutibles, ya aplicadas. Se apuntan además en `docs/reports/revision-diaria/PROPUESTAS.md` para revisarlas.
-  Revisas la rama y fusionas lo que te convenza (ver [TUTORIAL.md](TUTORIAL.md), paso 4).
+- **Hasta dos guardados por ronda**, hechos por el propio agente con `checkpoint.sh`, que valida antes de guardar: `correcciones` (errores objetivos y normas rotas) y `propuestas` (mejoras discutibles, ya aplicadas).
+- **Un solo commit por página, directo a `main`.** Al terminar las rondas, `run.sh` junta los guardados de la página en un commit (`revisión diaria: <id> — correcciones`, `— propuestas (revisar)` o `— correcciones y propuestas (revisar)`), con el resumen de cada nivel y ronda en el mensaje, y lo lleva a `main` por fast-forward: si `main` está abierta en tu copia, hace `merge --ff-only` allí, que se niega antes que pisar cambios locales en esos archivos. Si `main` no lo admite, el commit se queda en la rama y la siguiente ejecución lo reintenta antes de revisar nada (y se para si sigue sin poder). Con `REVIEW_TO_MAIN=0` los commits se quedan en la rama, como antes. Los commits con propuestas se apuntan en `docs/reports/revision-diaria/PROPUESTAS.md` para revisarlas después (ver [TUTORIAL.md](TUTORIAL.md), paso 4).
 - **Descarta la ronda entera** si, al terminar, `validate-nodes` falla o algún commit toca algo fuera de `content/mdx`, `content/diagrams` y los índices que regeneran `prebuild` y `validate-nodes` (incluido `graph_structure.json`). Las rondas anteriores se conservan, y el informe se guarda igualmente, con el motivo. Si falla la ronda 1, la página sigue pendiente.
 - **Límites del agente:** solo puede editar `content/mdx/**` y `content/diagrams/**`, y ejecutar `validate-nodes`, `verify-diagram`, `checkpoint.sh` y `euskara.mjs`. En la web solo puede leer Elhuyar y Wikipedia. No puede hacer commits por su cuenta. Crea como mucho un nodo nuevo por revisión, y solo para extraer un concepto definido inline. Lo que exige un dato que no está en el repositorio (fuentes, fechas, atribuciones) no lo aplica: lo deja en «Pendiente para la autora».
 
 | Archivo | Qué hace |
 | --- | --- |
-| `run.sh [n]` | Prepara el worktree y revisa las `n` primeras páginas pendientes, cada una por rondas hasta que converge. Tras cada ronda vuelve a validar, descarta la ronda si falla y añade su parte al informe. |
-| `checkpoint.sh` | Lo usa el agente para guardar cada nivel (`correcciones`, `propuestas`) como commit, o descartar lo no guardado. |
+| `run.sh [n]` | Prepara el worktree y revisa las `n` primeras páginas pendientes, cada una por rondas hasta que converge. Tras cada ronda vuelve a validar, descarta la ronda si falla y añade su parte al informe. Al final de cada página hace su commit único y lo lleva a `main`. |
+| `checkpoint.sh` | Lo usa el agente para guardar cada nivel (`correcciones`, `propuestas`) como commit provisional, que `run.sh` junta después en el de la página, o descartar lo no guardado. |
 | `common.sh` | Funciones compartidas por `run.sh` y `checkpoint.sh`. |
 | `queue.mjs` | Cola en `docs/reports/revision-diaria/COLA.md` (`sync`, `next`, `done`, `reopen <id>`, `status`). |
 | `euskara.mjs <es\|en\|eu> <término>` | Consulta un término en el diccionario Elhuyar, la ZTH (diccionario de ciencia y técnica de Elhuyar) y Wikipedia, y devuelve solo la entrada. El agente lo usa cuando un término en euskera no está en el glosario o duda de él. |
@@ -45,7 +43,7 @@ REVIEW_DRY_RUN=1 scripts/daily-review/run.sh   # genera prompt y paquete sin lla
 node scripts/daily-review/queue.mjs reopen teorema-pitagoras   # volver a revisar una página
 ```
 
-Variables: `REVIEW_PAGES` (1), `REVIEW_MODEL` (opus), `REVIEW_VERIFY_MODEL` (el mismo; modelo de las rondas 2 y siguientes), `REVIEW_EFFORT` (high), `REVIEW_MAX_ROUNDS` (4), `REVIEW_MAX_TURNS` (50 por ronda), `REVIEW_MAX_USD` (15 por página, sumando todas las rondas), `REVIEW_WORKTREE`, `REVIEW_BRANCH`, `REVIEW_CLAUDE` (binario, para pruebas). Si la ronda 1 falla o se queda sin turnos, se descartan sus cambios y la página sigue pendiente. Si falla una ronda posterior, solo se descarta esa ronda.
+Variables: `REVIEW_PAGES` (1), `REVIEW_MODEL` (opus), `REVIEW_VERIFY_MODEL` (el mismo; modelo de las rondas 2 y siguientes), `REVIEW_EFFORT` (high), `REVIEW_MAX_ROUNDS` (4), `REVIEW_MAX_TURNS` (50 por ronda), `REVIEW_MAX_USD` (15 por página, sumando todas las rondas), `REVIEW_TO_MAIN` (1; con 0 no toca `main`), `REVIEW_WORKTREE`, `REVIEW_BRANCH`, `REVIEW_CLAUDE` (binario, para pruebas). Si la ronda 1 falla o se queda sin turnos, se descartan sus cambios y la página sigue pendiente. Si falla una ronda posterior, solo se descarta esa ronda.
 
 Si la rama no se puede rebasar sobre `main` (por ejemplo, editaste en `main` la misma página que corrigió el agente), el script se detiene y lo dice. Resuélvelo en el worktree o descarta la rama: `git -C ../Matematika-revision reset --hard main`.
 
