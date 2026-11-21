@@ -13257,13 +13257,13 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §1 y §2",
+          "locator": "Chapter I, §1 and §2",
           "role": "primary"
         },
         {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Definición 23",
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Definition 23",
           "role": "secondary"
         }
       ],
@@ -13277,9 +13277,7 @@
         "teorema-angulos-alternos-internos",
         "teorema-tales",
         "incidencia",
-        "traza",
-        "unicidad-punto-corte-secantes",
-        "simetria-relacion-secante"
+        "traza"
       ],
       "availableLangs": [
         "en",
@@ -13305,7 +13303,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Secante",
-      "description": "Relación de incidencia entre rectas coplanares que se cortan exactamente en un único punto, o recta transversal que interseca a una familia de rectas.",
+      "description": "Relación de incidencia entre rectas coplanares que se cortan en un único punto, o recta transversal que interseca a una familia de rectas.",
       "branch": "51A",
       "branches": [
         "51A"
@@ -13341,9 +13339,7 @@
         "teorema-angulos-alternos-internos",
         "teorema-tales",
         "incidencia",
-        "traza",
-        "unicidad-punto-corte-secantes",
-        "simetria-relacion-secante"
+        "traza"
       ],
       "availableLangs": [
         "en",
@@ -33222,7 +33218,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Secante",
-      "description": "Relación de incidencia entre rectas coplanares que se cortan exactamente en un único punto, o recta transversal que interseca a una familia de rectas.",
+      "description": "Relación de incidencia entre rectas coplanares que se cortan en un único punto, o recta transversal que interseca a una familia de rectas.",
       "branch": "51A",
       "branches": [
         "51A"
@@ -33258,9 +33254,7 @@
         "teorema-angulos-alternos-internos",
         "teorema-tales",
         "incidencia",
-        "traza",
-        "unicidad-punto-corte-secantes",
-        "simetria-relacion-secante"
+        "traza"
       ],
       "availableLangs": [
         "en",
@@ -46520,7 +46514,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Zuzen ebakitzailea",
-      "description": "Zehazki puntu bakar batean elkar ebakitzen duten zuzen koplanarren arteko intzidentzia-erlazioa, edo zuzen-familia bat ebakitzen duen zeharreko zuzena.",
+      "description": "Puntu bakar batean elkar ebakitzen duten zuzen koplanarren arteko intzidentzia-erlazioa, edo zuzen-familia bat ebakitzen duen zeharkako zuzena.",
       "branch": "51A",
       "branches": [
         "51A"
@@ -46536,13 +46530,13 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §1 y §2",
+          "locator": "I. kapitulua, §1 eta §2",
           "role": "primary"
         },
         {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Definición 23",
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "I. liburua, 23. definizioa",
           "role": "secondary"
         }
       ],
@@ -46556,9 +46550,7 @@
         "teorema-angulos-alternos-internos",
         "teorema-tales",
         "incidencia",
-        "traza",
-        "unicidad-punto-corte-secantes",
-        "simetria-relacion-secante"
+        "traza"
       ],
       "availableLangs": [
         "en",

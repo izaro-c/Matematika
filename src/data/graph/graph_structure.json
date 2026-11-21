@@ -1439,7 +1439,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Secante",
-      "description": "Relación de incidencia entre rectas coplanares que se cortan exactamente en un único punto, o recta transversal que interseca a una familia de rectas.",
+      "description": "Relación de incidencia entre rectas coplanares que se cortan en un único punto, o recta transversal que interseca a una familia de rectas.",
       "proofs": [],
       "directDependencies": [
         "recta",

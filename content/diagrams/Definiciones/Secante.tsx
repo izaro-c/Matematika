@@ -222,7 +222,7 @@ export const SecanteSpec = createDiagramSpec(
     },
     {
       "id": "lineL1",
-      "label": "l₁",
+      "label": "ℓ₁",
       "color": "terracota",
       "layerId": "geometry",
       "order": 20,
@@ -256,7 +256,7 @@ export const SecanteSpec = createDiagramSpec(
     },
     {
       "id": "lineL2",
-      "label": "l₂",
+      "label": "ℓ₂",
       "color": "carbon",
       "layerId": "geometry",
       "order": 21,
@@ -500,31 +500,31 @@ export const SecanteSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra los puntos de control para modificar la inclinación de las rectas secantes l₁ y l₂ o cambiar la posición de la secante transversal t.",
+  "note": "Arrastra los puntos de control para modificar la inclinación de las rectas secantes ℓ₁ y ℓ₂ o cambiar la posición de la secante transversal t.",
   "translations": {
     "eu": {
-      "title": "Zuzen ebakitzaileak eta zeharrekoa",
-      "note": "Arrastatu kontrol-puntuak l₁ eta l₂ zuzen ebakitzaileen inklinazioa aldatzeko edo t zeharreko zuzenaren posizioa aldatzeko.",
+      "title": "Zuzen ebakitzaileak eta zeharkakoa",
+      "note": "Arrastatu kontrol-puntuak ℓ₁ eta ℓ₂ zuzen ebakitzaileen inklinazioa aldatzeko edo t zeharkako zuzenaren posizioa aldatzeko.",
       "ariaLabels": {
         "pA": "Mugitu l1 zuzenaren A puntua",
         "pB": "Mugitu l1 zuzenaren B puntua",
         "pC": "Mugitu l2 zuzenaren C puntua",
         "pD": "Mugitu l2 zuzenaren D puntua",
-        "pE": "Mugitu t zeharreko zuzenaren E puntua",
-        "pF": "Mugitu t zeharreko zuzenaren F puntua",
+        "pE": "Mugitu t zeharkako zuzenaren E puntua",
+        "pF": "Mugitu t zeharkako zuzenaren F puntua",
         "lineL1": "l1 zuzena",
         "lineL2": "l2 zuzena",
-        "lineT": "t zeharreko zuzena",
+        "lineT": "t zeharkako zuzena",
         "pP": "l1 eta l2 zuzenen P ebakidura-puntua",
         "pP1": "t eta l1 zuzenen P1 ebakidura-puntua",
         "pP2": "t eta l2 zuzenen P2 ebakidura-puntua",
         "gSecantes": "l1 eta l2 zuzen ebakitzaileen parea",
-        "gTransversal": "t zeharreko zuzena bere ebakidura-puntuekin"
+        "gTransversal": "t zeharkako zuzena bere ebakidura-puntuekin"
       }
     },
     "en": {
       "title": "Secant Lines and Transversal",
-      "note": "Drag the control points to adjust the slope of secant lines l₁ and l₂ or shift the transversal line t.",
+      "note": "Drag the control points to adjust the slope of secant lines ℓ₁ and ℓ₂ or shift the transversal line t.",
       "ariaLabels": {
         "pA": "Move point A of line l1",
         "pB": "Move point B of line l1",
