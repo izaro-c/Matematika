@@ -11,18 +11,6 @@ export const SegmentoSpec = createDiagramSpec(
   "mode": "simulation",
   "axis": false,
   "grid": false,
-  "header": {
-    "readingsMode": "custom",
-    "readings": [
-      {
-        "id": "header-reading-1",
-        "sourceIds": [
-          "length"
-        ],
-        "presentation": "label-value"
-      }
-    ]
-  },
   "viewport": {
     "bounds": [
       -5,
@@ -194,38 +182,6 @@ export const SegmentoSpec = createDiagramSpec(
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
-    },
-    {
-      "id": "length",
-      "label": "Longitud de AB",
-      "color": "mora",
-      "layerId": "geometry",
-      "order": 2,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Longitud AB",
-        "role": "secondary"
-      },
-      "target": false,
-      "objectType": "path",
-      "geometry": {
-        "type": "dimension",
-        "points": [
-          "A",
-          "B"
-        ],
-        "offset": 0,
-        "unit": "u"
-      },
-      "appearance": {
-        "strokeWidth": 0,
-        "labelVisible": false,
-        "highlightStrokeWidth": 0,
-        "preserveColorOnHighlight": true
-      }
     }
   ],
   "relations": [],
@@ -238,9 +194,8 @@ export const SegmentoSpec = createDiagramSpec(
       "ariaLabels": {
         "A": "Mugitu A puntua",
         "B": "Mugitu B puntua",
-        "carrier": "l euskarri-zuzena",
-        "segment": "AB segmentua",
-        "length": "AB luzera"
+        "carrier": "l zuzen euskarria",
+        "segment": "AB zuzenkia"
       }
     },
     "en": {
@@ -250,8 +205,7 @@ export const SegmentoSpec = createDiagramSpec(
         "A": "Move point A",
         "B": "Move point B",
         "carrier": "Supporting line l",
-        "segment": "Segment AB",
-        "length": "Length AB"
+        "segment": "Segment AB"
       }
     }
   }
