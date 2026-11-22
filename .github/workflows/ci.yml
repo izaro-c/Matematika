@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  NODE_VERSION: 'lts/*'
+  NODE_VERSION: '24' # lts/* pasó a Node 26: localStorage nativo tapa el de jsdom y npm no ejecuta postinstall (Chrome de puppeteer)
 
 jobs:
   # lint + typecheck + todos los tests + depcruise + validación de referencias, grafo y cobertura de contenido
