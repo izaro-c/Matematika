@@ -23,6 +23,7 @@ export const enLanguage: LanguageConfig = {
     grafo: 'graph',
     axiomas: 'axioms',
     construccion: 'construction',
+    legal: 'legal-notice',
   },
   dictionary: {
     contentTypes: {
@@ -2318,6 +2319,56 @@ export const enLanguage: LanguageConfig = {
         matematico: 'Mathematician',
         'sistema-axiomatico': 'Axiomatic system',
         'plan-de-estudio': 'Study plan',
+      },
+    },
+    legal: {
+      title: 'Legal notice and privacy',
+      updated: 'Last updated: 22 November 2026',
+      footer: {
+        legal: 'Legal notice',
+        contact: 'Contact',
+        license: 'Licence',
+      },
+      linkLabels: {
+        mit: 'MIT',
+        ccbysa: 'CC BY-SA 4.0',
+        repo: 'github.com/izaro-c/Matematika',
+        githubPrivacy: 'privacy statement',
+        googlePrivacy: 'Google\'s privacy policy',
+        aepd: 'Spanish Data Protection Agency (AEPD)',
+      },
+      sections: {
+        notice: {
+          heading: 'Legal notice',
+          paragraphs: [
+            'Matematika is a non-profit mathematics encyclopedia published in a personal capacity by Izaro. It sells nothing, shows no advertising and has no commercial activity.',
+            'Contact: {email}.',
+            'The content is offered for educational purposes. Care is taken to keep it correct, but it may contain mistakes; if you find one, please write to the contact address.',
+            'Links to external sites are given for reference; Matematika is not responsible for their content.',
+          ],
+        },
+        licenses: {
+          heading: 'Licences',
+          paragraphs: [
+            'The source code is published under the {mit} licence, and the encyclopedia\'s texts and diagrams (the repository\'s content/ folder) under the {ccbysa} licence. You may copy and adapt them as long as you credit the author and share the result under the same licence.',
+            'Source code: {repo}.',
+          ],
+        },
+        privacy: {
+          heading: 'Privacy',
+          paragraphs: [
+            'Matematika has no user accounts, forms or analytics, and collects no personal data.',
+            'The site is hosted on GitHub Pages. GitHub logs the IP address of each visit to serve and protect the site; GitHub is responsible for that processing under its {githubPrivacy}.',
+            'Fonts are loaded from Google Fonts, so your browser sends your IP address to Google when requesting them. This is governed by {googlePrivacy}.',
+            'If you write to the contact address, your email address and message are used only to reply to you and are not shared with anyone. You can ask for them to be deleted at any time. If you believe your rights have not been respected, you can lodge a complaint with the {aepd}.',
+          ],
+        },
+        cookies: {
+          heading: 'Cookies and local storage',
+          paragraphs: [
+            'Matematika does not use cookies. It keeps only your preferences in your browser\'s local storage (localStorage): light or dark theme, language, reading progress, exercise answers and the graph view. This data never leaves your device, and you can delete it from your browser settings.',
+          ],
+        },
       },
     },
   },

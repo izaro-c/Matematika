@@ -32,6 +32,7 @@ const EditorPage = import.meta.env.DEV || import.meta.env.VITE_ENABLE_EDITOR ===
   ? lazy(() => import("@/fixed-pages/editor/ui/page/EditorPage").then(m => ({ default: m.EditorPage })))
   : null;
 const GraphPage = lazy(() => import("@/fixed-pages/graph/GraphPage").then(m => ({ default: m.GraphPage })));
+const LegalPage = lazy(() => import("@/fixed-pages/legal/LegalPage").then(m => ({ default: m.LegalPage })));
 const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 
 /**
@@ -264,6 +265,13 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
           <>
             <SeoHead title={t('graph', 'axiomaticDependencies')} description={t('metadata', 'connectionNetworkSubtitle')} type="website" />
             <AxiomGraphPage />
+          </>
+        );
+      case 'legal':
+        return (
+          <>
+            <SeoHead title={t('legal', 'title')} description={langConfig.dictionary.legal.sections.notice.paragraphs[0]} type="website" />
+            <LegalPage />
           </>
         );
       case 'metodo':

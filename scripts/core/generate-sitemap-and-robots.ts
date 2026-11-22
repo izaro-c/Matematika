@@ -93,6 +93,7 @@ export function getAllRoutes(): SitemapRoute[] {
     { canonicalKey: 'grafo', priority: '0.8' },
     { canonicalKey: 'axiomas', priority: '0.8' },
     { canonicalKey: 'metodo', priority: '0.8' },
+    { canonicalKey: 'legal', priority: '0.3' },
   ];
 
   for (const page of staticPages) {

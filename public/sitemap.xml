@@ -182,6 +182,36 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/metodo" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/es/aviso-legal</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/lege-oharra" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/legal-notice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/lege-oharra</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/lege-oharra" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/legal-notice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/en/legal-notice</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/lege-oharra" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/legal-notice" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/aviso-legal" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/system/sistema-absoluto</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>

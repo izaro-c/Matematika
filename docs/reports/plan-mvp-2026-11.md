@@ -39,7 +39,7 @@ Para regenerar las cifras: `npx tsx scripts/core/validate-cross-references.ts > 
 | 0 | Decisiones de la autora | — | Autora | ☐ |
 | 1 | CI en verde y despliegue condicionado | — | Agente | ☑ 2026-11-22 |
 | 2 | Editor fuera del build público | 0 | Agente | ☑ 2026-11-22 |
-| 3 | Legal, contacto y licencias | 0 | Agente | ☐ |
+| 3 | Legal, contacto y licencias | 0 | Agente | ☑ 2026-11-22 |
 | 4 | Clasificar los 570 IDs que faltan | 0 | Agente → Autora aprueba | ☐ |
 | 5 | Podar enlaces | 4 | Agente | ☐ |
 | 6 | Nodos: relaciones y orden | 4 | Agente (contenido) | ☐ |
@@ -79,9 +79,9 @@ No es una sesión de agente. Responder aquí debajo, porque los pasos 2, 3, 4 y 
 6. **Analítica**: ninguna, o una sin cookies (Cloudflare Web Analytics o GoatCounter).
 
 Respuestas:
-1. Izaro (y si se necesita nombre completo, Izaro Cuerdo Larraza).
+1. Izaro (solo el nombre; sin NIF: proyecto sin actividad económica).
 2. correo matematikaentziklopedia@gmail.com
-3. No tengo ninguna licencia
+3. No tengo ninguna licencia → elegido en el paso 3: código MIT y contenido CC BY-SA 4.0
 4. El editor se quita del build público por ahora
 5. a
 6. Sin cookies
@@ -301,3 +301,4 @@ No son sesiones de agente.
 
 - **Paso 1 (2026-11-22).** El componente estaba bien: el test usaba la rama `15`, que dejó de estar vacía cuando `dimension` pasó a `15A` (ce326b16, 28-oct). Ahora usa `geometria-algebraica` (→ 14), hija directa de «Álgebra y Teoría de Números» y fuera del MVP; si algún día recibe entradas, el test volverá a fallar por el mismo motivo. `deploy.yml` se lanza por `workflow_run` del CI (solo `push` a `main` con `success`) o a mano, y hace checkout del `head_sha` que pasó el CI. Del CI solo fallaba «Full Check»; `npm run full-check` pasa en local (35 avisos de lint, 0 errores). En GitHub fallaba además otra cosa: `lts/*` pasó a Node 26, con `localStorage` nativo (tapa el de jsdom: ~40 tests) y un npm que no ejecuta `postinstall` (puppeteer sin Chrome → falla el prerender del build). Los dos workflows fijan ahora Node 24; subir de versión es una tarea aparte (`--no-webstorage` o similar en vitest y permitir el script de puppeteer).
 - **Paso 2 (2026-11-22).** El editor solo se registra si `import.meta.env.DEV || import.meta.env.VITE_ENABLE_EDITOR === 'true'`; sin él, `/:lang/editor` cae en «no encontrado» y el atajo `g e` desaparece. Con Vite 8 (Rolldown) la condición tiene que ir **en línea** junto al `import()` en `AppRouter.tsx`: con una constante importada de otro módulo se quitaba la ruta pero el chunk de 6,8 MB se seguía emitiendo huérfano. `src/app/routes/editorEnabled.ts` repite la condición para el resto del código (de momento, el atajo de teclado). Para un build con editor: `VITE_ENABLE_EDITOR=true npm run build`. `deploy.yml` ya no pasa `VITE_EDITOR_API_URL`; la autora puede borrar ese secreto en GitHub si no lo usa en otro sitio. `robots.txt` mantiene `Disallow: /editor` (inofensivo). No hay test que fije el 404 en producción porque vitest corre con `DEV=true`; la comprobación es `ls dist/assets | grep -iE 'editor|monaco'` tras el build.
+- **Paso 3 (2026-11-22).** Página única `LegalPage` (`src/fixed-pages/legal/`) con cuatro secciones (aviso legal, licencias, privacidad, cookies; anclas `#notice`, `#licenses`, `#privacy`, `#cookies`). Ruta por el segmento canónico `legal` (`aviso-legal` / `lege-oharra` / `legal-notice`), textos en `dictionary.legal` de cada idioma; los marcadores `{email}`, `{mit}`… de los párrafos se pintan como enlaces. Está en `getAllRoutes()`, así que sitemap y prerender la recogen. El pie de la home enlaza aviso legal, contacto (`mailto:`) y licencia (`#licenses`). **No existe un pie común en las páginas de contenido**: la LSSI pide el aviso accesible desde cualquier página; queda pendiente (¿enlace en el menú de la TopBar o un colofón común?) para el paso 13 o 14. La política menciona que **Google Fonts** recibe la IP del visitante; autoalojar las fuentes eliminaría ese párrafo (mejora fuera del MVP). Si el paso 16 instala analítica sin cookies, actualizar la sección «Privacidad» y `docs/checklist-pre-despliegue.md` §3.3. Euskera de la página y del pie (`Kontaktua`, «bere kabuz», `lizentziapean`) pendiente de revisión nativa.

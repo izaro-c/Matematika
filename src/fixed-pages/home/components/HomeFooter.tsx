@@ -2,6 +2,7 @@ import { Link } from 'wouter';
 import { Logo } from "@/components/ui/Logo";
 import { UI } from '@/design';
 import { useI18n } from '@/i18n';
+import { CONTACT_EMAIL } from '@/fixed-pages/legal/LegalPage';
 
 const footerLinkClass = `${UI.btn} ${UI.btnGhost} px-5 py-2.5 text-xs`;
 
@@ -30,6 +31,13 @@ export const HomeFooter = () => {
           <div className="w-6 h-px bg-carbon/20" aria-hidden="true" />
         </div>
       </div>
+      <nav aria-label={t('legal', 'title')} className="max-w-5xl mx-auto px-8 pb-8 -mt-4 flex flex-wrap justify-center gap-x-1 text-sm font-serif italic text-ink-muted">
+        <Link href={getLocalizedPath('/aviso-legal')} className="inline-block py-2.5 px-1 underline-offset-2 hover:underline">{t('legal', 'footer', 'legal')}</Link>
+        <span aria-hidden="true" className="py-2.5">·</span>
+        <a href={`mailto:${CONTACT_EMAIL}`} className="inline-block py-2.5 px-1 underline-offset-2 hover:underline">{t('legal', 'footer', 'contact')}</a>
+        <span aria-hidden="true" className="py-2.5">·</span>
+        <Link href={`${getLocalizedPath('/aviso-legal')}#licenses`} className="inline-block py-2.5 px-1 underline-offset-2 hover:underline">{t('legal', 'footer', 'license')}</Link>
+      </nav>
     </footer>
   );
 };

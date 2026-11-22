@@ -17,6 +17,7 @@ export interface RouteSegmentMap {
   grafo: string;
   axiomas: string;
   construccion: string;
+  legal: string;
 }
 
 export interface ContentTypeI18n {
@@ -2327,6 +2328,21 @@ export interface TranslationDictionary {
       'plan-de-estudio': string;
     };
   };
+  legal: LegalI18n;
+}
+
+export interface LegalSectionI18n {
+  heading: string;
+  /** Párrafos; admiten los marcadores `{email}` y los de `legal.linkLabels` (p. ej. `{mit}`), que se pintan como enlaces. */
+  paragraphs: string[];
+}
+
+export interface LegalI18n {
+  title: string;
+  updated: string;
+  footer: { legal: string; contact: string; license: string };
+  linkLabels: { mit: string; ccbysa: string; repo: string; githubPrivacy: string; googlePrivacy: string; aepd: string };
+  sections: { notice: LegalSectionI18n; licenses: LegalSectionI18n; privacy: LegalSectionI18n; cookies: LegalSectionI18n };
 }
 
 export interface LanguageConfig {

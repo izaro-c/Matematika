@@ -19,6 +19,7 @@
 @import "./styles/ac-library.css" layer(components);
 @import "./styles/ac-bookmark.css" layer(components);
 @import "./styles/ac-notfound.css" layer(components);
+@import "./styles/ac-legal.css" layer(components);
 @import "./styles/ac-vocab.css" layer(components);
 @import "./styles/ac-marginalia.css" layer(components);
 @import "./styles/ac-branch.css" layer(components);

@@ -112,3 +112,11 @@ src/
 ├── shared/         # Componentes base, UI atómica, wrappers de JSXGraph e i18n
 └── data/           # Índices generados y estructuras del grafo
 ```
+
+---
+
+## Licencias y contacto
+
+- **Código**: [MIT](LICENSE).
+- **Contenido** (`content/`: textos, diagramas y datos de la enciclopedia): [CC BY-SA 4.0](content/LICENSE).
+- **Contacto**: matematikaentziklopedia@gmail.com. Aviso legal y privacidad en [`/es/aviso-legal`](https://izaro-c.github.io/Matematika/es/aviso-legal).

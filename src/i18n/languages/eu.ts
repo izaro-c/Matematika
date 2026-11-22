@@ -23,6 +23,7 @@ export const euLanguage: LanguageConfig = {
     grafo: 'grafoa',
     axiomas: 'axiomak',
     construccion: 'eraikuntzan',
+    legal: 'lege-oharra',
   },
   dictionary: {
     contentTypes: {
@@ -2318,6 +2319,56 @@ export const euLanguage: LanguageConfig = {
         matematico: 'Matematikaria',
         'sistema-axiomatico': 'Sistema axiomatikoa',
         'plan-de-estudio': 'Ikasketa-plana',
+      },
+    },
+    legal: {
+      title: 'Lege-oharra eta pribatutasuna',
+      updated: 'Azken eguneraketa: 2026ko azaroaren 22a',
+      footer: {
+        legal: 'Lege-oharra',
+        contact: 'Kontaktua',
+        license: 'Lizentzia',
+      },
+      linkLabels: {
+        mit: 'MIT',
+        ccbysa: 'CC BY-SA 4.0',
+        repo: 'github.com/izaro-c/Matematika',
+        githubPrivacy: 'pribatutasun-adierazpenaren',
+        googlePrivacy: 'Googleren pribatutasun-politikak',
+        aepd: 'Datuak Babesteko Espainiako Agentzian',
+      },
+      sections: {
+        notice: {
+          heading: 'Lege-oharra',
+          paragraphs: [
+            'Matematika irabazi-asmorik gabeko matematika-entziklopedia da, eta Izarok argitaratzen du, bere kabuz. Ez du ezer saltzen, ez du publizitaterik erakusten eta ez du jarduera ekonomikorik.',
+            'Harremanetarako: {email}.',
+            'Edukia hezkuntza-helburuekin eskaintzen da. Haren zuzentasuna zaintzen da, baina akatsak izan ditzake; bat aurkitzen baduzu, idatzi harremanetarako helbidera.',
+            'Kanpoko guneetarako estekak erreferentzia gisa eskaintzen dira; Matematika ez da haien edukiaren erantzule.',
+          ],
+        },
+        licenses: {
+          heading: 'Lizentziak',
+          paragraphs: [
+            'Iturburu-kodea {mit} lizentziapean argitaratzen da, eta entziklopediaren testuak eta diagramak (biltegiko content/ karpeta), {ccbysa} lizentziapean. Kopiatu eta egokitu ditzakezu, egilea aipatzen baduzu eta emaitza lizentzia berarekin partekatzen baduzu.',
+            'Iturburu-kodea: {repo}.',
+          ],
+        },
+        privacy: {
+          heading: 'Pribatutasuna',
+          paragraphs: [
+            'Matematikak ez du erabiltzaile-konturik, formulariorik ez analitikarik, eta ez du datu pertsonalik biltzen.',
+            'Webgunea GitHub Pages zerbitzuan dago ostatatuta. GitHubek bisita bakoitzaren IP helbidea erregistratzen du gunea zerbitzatzeko eta babesteko; tratamendu horren erantzulea GitHub da, bere {githubPrivacy} arabera.',
+            'Letra-tipoak Google Fontsetik kargatzen dira; beraz, nabigatzaileak zure IP helbidea bidaltzen dio Googleri haiek eskatzean. Hori {googlePrivacy} arautzen du.',
+            'Harremanetarako helbidera idazten baduzu, zure helbide elektronikoa eta mezua erantzuteko baino ez dira erabiltzen, eta ez zaizkio inori lagatzen. Noiznahi eska dezakezu ezabatzeko. Zure eskubideak errespetatu ez direla uste baduzu, erreklamazioa aurkez dezakezu {aepd}.',
+          ],
+        },
+        cookies: {
+          heading: 'Cookieak eta tokiko biltegiratzea',
+          paragraphs: [
+            'Matematikak ez du cookierik erabiltzen. Nabigatzailearen tokiko biltegian (localStorage) zure hobespenak baino ez ditu gordetzen: gai argia edo iluna, hizkuntza, irakurketaren aurrerapena, ariketen erantzunak eta grafoaren ikuspegia. Datu horiek ez dira zure gailutik ateratzen, eta nabigatzailearen ezarpenetatik ezaba ditzakezu.',
+          ],
+        },
       },
     },
   },

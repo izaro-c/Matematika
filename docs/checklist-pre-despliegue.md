@@ -10,16 +10,16 @@ Este documento evalúa el estado del proyecto **Matematika** frente a la lista d
 
 | Bloque | Total Ítems | ✅ Cumplido | 🟡 Parcial / Externo | ❌ Pendiente | ⚪ No Aplica (Jamstack) |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **1. Contenido y Textos** | 4 | 0 | 2 | 2 | 0 |
+| **1. Contenido y Textos** | 4 | 3 | 1 | 0 | 0 |
 | **2. Seguridad** | 6 | 2 | 1 | 0 | 3 |
-| **3. Cumplimiento Legal (RGPD/LOPD)** | 4 | 1 | 0 | 2 | 1 |
+| **3. Cumplimiento Legal (RGPD/LOPD)** | 4 | 2 | 0 | 1 | 1 |
 | **4. Rendimiento** | 3 | 3 | 0 | 0 | 0 |
 | **5. SEO Básico** | 6 | 5 | 1 | 0 | 0 |
 | **6. Funcionalidad** | 4 | 3 | 0 | 0 | 1 |
 | **7. Accesibilidad** | 3 | 3 | 0 | 0 | 0 |
 | **8. Analítica y Monitorización** | 3 | 0 | 1 | 1 | 1 |
 | **9. Última Revisión antes de Publicar** | 3 | 2 | 1 | 0 | 0 |
-| **TOTAL** | **36** | **19 (53%)** | **6 (17%)** | **5 (14%)** | **6 (17%)** |
+| **TOTAL** | **36** | **23 (64%)** | **5 (14%)** | **2 (6%)** | **6 (17%)** |
 
 ---
 
@@ -36,27 +36,21 @@ Este documento evalúa el estado del proyecto **Matematika** frente a la lista d
   - Opcional: Configurar `cspell` en `package.json` para validar futuros commits.
 
 ### 1.2 Textos legales completos (Aviso Legal, Privacidad, Cookies)
-- **Estado**: ❌ **Pendiente (Bloqueante Legal para España/UE)**
+- **Estado**: ✅ **Cumplido (2026-11-22, paso 3 del plan MVP)**
 - **Diagnóstico**:
-  - Actualmente **no existen rutas, páginas ni enlaces** para Aviso Legal, Política de Privacidad ni Política de Cookies en `src/app/routes/AppRouter.tsx` ni en `HomeFooter.tsx`.
-  - La Ley 34/2002 (LSSI-CE) y el RGPD exigen que cualquier prestador de servicios de la sociedad de la información accesible al público en España cuente con estos textos accesibles desde cualquier página del sitio (típicamente en el pie de página).
-- **Acción recomendada**:
-  1. Crear las páginas estáticas `/es/aviso-legal`, `/es/privacidad`, `/es/cookies` (y sus variantes en euskera `/eu/lege-oharra`, `/eu/pribatutasuna`, `/eu/cookie-politika`).
-  2. Añadir enlaces permanentes en `HomeFooter.tsx` y en el menú global de navegación.
+  - Una sola página con aviso legal, licencias, privacidad y cookies: `/es/aviso-legal`, `/eu/lege-oharra`, `/en/legal-notice` (`src/fixed-pages/legal/LegalPage.tsx`, textos en `legal` de `src/i18n/languages/*.ts`). Está en el sitemap y se prerenderiza.
+  - Cookies: no hay; el párrafo explica qué guarda `localStorage` (tema, idioma, progreso, ejercicios, vista del grafo).
+  - Enlazada desde el pie de la home. **Falta**: las páginas de contenido no tienen pie común; ver «Notas» del plan MVP.
 
 ### 1.3 Información de contacto visible (email, teléfono o formulario funcional)
-- **Estado**: ❌ **Pendiente**
+- **Estado**: ✅ **Cumplido (2026-11-22)**
 - **Diagnóstico**:
-  - En la página principal (`HomePage.tsx`), el encabezado (`TopBar.tsx`) y el pie de página (`HomeFooter.tsx`) no figura ninguna dirección de correo de contacto, enlace institucional ni vía de comunicación con el titular del proyecto.
-- **Acción recomendada**:
-  - Incluir en el footer un enlace `mailto:` o un enlace al perfil de GitHub / formulario de contacto institucional del autor/organización.
+  - `matematikaentziklopedia@gmail.com` en el aviso legal y como enlace `mailto:` «Contacto» en el pie de la home.
 
 ### 1.4 Datos del titular / empresa (nombre, NIF/CIF, dirección si aplica)
-- **Estado**: 🟡 **Pendiente de definir por el titular**
+- **Estado**: ✅ **Cumplido (2026-11-22)**
 - **Diagnóstico**:
-  - Si el proyecto se publica a título personal/académico sin actividad económica, la LSSI-CE modula la exigencia del NIF mercantil, pero el RGPD sigue requiriendo identificar al responsable del tratamiento. Si hay una entidad o autónomo promotor, deben figurar Nombre completo / Razón social, NIF y dirección física en el Aviso Legal.
-- **Acción recomendada**:
-  - Definir la titularidad que figurará en el Aviso Legal (e.g., Proyecto de Software Libre educativo / Nombre del desarrollador / Entidad).
+  - Proyecto personal sin actividad económica: el aviso legal identifica a la titular (Izaro) y el correo de contacto, sin NIF ni dirección.
 
 ---
 
@@ -130,10 +124,10 @@ Este documento evalúa el estado del proyecto **Matematika** frente a la lista d
   - No se inyecta ningún script de terceros (ni Meta Pixel, ni Hotjar, ni GA4) en `index.html`.
 
 ### 3.3 Política de Privacidad detallada
-- **Estado**: ❌ **Pendiente**
+- **Estado**: ✅ **Cumplido (2026-11-22)**
 - **Diagnóstico**:
-  - Aunque no se recojan datos de formularios, los servidores web (GitHub Pages) registran direcciones IP técnicas en sus access logs.
-  - Es preceptivo contar con una página `/privacidad` que transparente que la web no recopila datos de usuario ni usa rastreadores comerciales.
+  - Sección «Privacidad» de la página legal: sin cuentas, formularios ni analítica; registros de IP de GitHub Pages; IP enviada a Google al cargar Google Fonts; uso del correo de contacto; reclamación ante la AEPD.
+  - Si en el paso 16 se instala analítica sin cookies, hay que añadirla a esta sección.
 
 ### 3.4 Condiciones de venta y derecho de desistimiento (si vende online)
 - **Estado**: ⚪ **No Aplica**
