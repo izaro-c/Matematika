@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
+import { EDITOR_ENABLED } from '@/app/routes/editorEnabled';
 
 function isEditing(): boolean {
   const el = document.activeElement;
@@ -16,7 +17,7 @@ const NAV_ACTIONS: Record<string, string> = {
   h: '/',
   g: '/grafo',
   a: '/axiomas',
-  e: '/editor',
+  ...(EDITOR_ENABLED ? { e: '/editor' } : {}),
   s: '/diccionario',
 };
 

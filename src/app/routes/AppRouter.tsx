@@ -26,7 +26,11 @@ const DemoPage = lazy(() => import("@/content-pages/screens/DemoPage").then(m =>
 const NotFoundPage = lazy(() => import("@/content-pages/screens/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
 const ConstructionPage = lazy(() => import("@/content-pages/screens/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
 
-const EditorPage = lazy(() => import("@/fixed-pages/editor/ui/page/EditorPage").then(m => ({ default: m.EditorPage })));
+// Dentro de la rama condicional para que el build público no incluya el chunk del editor.
+// La condición va en línea (no EDITOR_ENABLED): Rolldown solo descarta el import() si la ve al escanear.
+const EditorPage = import.meta.env.DEV || import.meta.env.VITE_ENABLE_EDITOR === 'true'
+  ? lazy(() => import("@/fixed-pages/editor/ui/page/EditorPage").then(m => ({ default: m.EditorPage })))
+  : null;
 const GraphPage = lazy(() => import("@/fixed-pages/graph/GraphPage").then(m => ({ default: m.GraphPage })));
 const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 
@@ -343,17 +347,21 @@ export const AppRouter = () => {
   return (
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
-        {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas - NUNCA INDEXAR) */}
+        {/* EDITORES (solo en desarrollo o con VITE_ENABLE_EDITOR; NUNCA INDEXAR) */}
         {/* /editor/... sin idioma → /:lang/editor/... (conserva subruta y parámetros) */}
-        <Route path="/editor/*?">
-          {(params) => <EditorLanguageRedirect lang={lang} rest={params['*']} />}
-        </Route>
-        <Route path="/:lang/editor/*?">
-          <SeoHead title={t('editor.landing.docHeroTitle')} noindex={true} />
-          <MathProvider>
-            <EditorPage />
-          </MathProvider>
-        </Route>
+        {EditorPage && (
+          <Route path="/editor/*?">
+            {(params) => <EditorLanguageRedirect lang={lang} rest={params['*']} />}
+          </Route>
+        )}
+        {EditorPage && (
+          <Route path="/:lang/editor/*?">
+            <SeoHead title={t('editor.landing.docHeroTitle')} noindex={true} />
+            <MathProvider>
+              <EditorPage />
+            </MathProvider>
+          </Route>
+        )}
 
         {/* HOME PRINCIPAL */}
         <Route path="/">
