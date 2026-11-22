@@ -38,7 +38,7 @@ describe('BranchPage (tomos y vocabulario)', () => {
   });
 
   it('una rama sin entradas lo dice y remite a su rama madre', () => {
-    renderBranch('15');
+    renderBranch('geometria-algebraica');
 
     const note = screen.getByText(/Aún no hay entradas en esta rama\./);
     expect(within(note).getByRole('link', { name: 'Álgebra y Teoría de Números' })).toBeTruthy();
