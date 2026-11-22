@@ -2,12 +2,10 @@
 
 <!-- Mantenida por scripts/daily-review/queue.mjs. Puedes reordenar a mano las líneas pendientes: el agente toma siempre las primeras. -->
 
-Revisadas: 39 / 190
+Revisadas: 41 / 190
 
 ## Pendientes
 
-- [ ] `secante` · definitions
-- [ ] `segmento` · definitions
 - [ ] `circunferencia` · definitions
 - [ ] `cuadrilatero` · definitions
 - [ ] `segmento-unidad` · definitions
@@ -199,3 +197,5 @@ Revisadas: 39 / 190
 - [x] `relacion-equivalencia` · 2026-10-29 · errores → mejoras · 2 rondas, converge · corregido 53660230 · propuestas 23d51600 · [informe](2026-10-29-relacion-equivalencia.md) · $3.39
 - [x] `numero-entero` · 2026-10-29 · errores → errores · 4 rondas, sin converger tras 4 rondas · corregido · propuestas · corregido r2 · corregido r3 · corregido r4 → commit d53905d4 en main · [informe](2026-10-29-numero-entero.md) · $5.53
 - [x] `numero-racional` · 2026-10-29 · errores → errores · 3 rondas, ronda 3 incompleta (success): descartada; se conservan las anteriores · corregido · propuestas · corregido r2 → commit 5fe28818 en main · [informe](2026-10-29-numero-racional.md) · $5.63
+- [x] `secante` · 2026-11-21 · errores → errores · 4 rondas, sin converger tras 4 rondas · corregido · propuestas · corregido r2 · corregido r3 · propuestas r3 · corregido r4 → commit 2f56bf17 en main · [informe](2026-11-21-secante.md) · $2.95
+- [x] `segmento` · 2026-11-21 · errores → ok · 2 rondas, converge · corregido · propuestas → commit 6d463b89 en main · [informe](2026-11-21-segmento.md) · $1.18

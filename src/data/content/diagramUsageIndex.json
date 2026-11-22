@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "3499c627329bfd35c5fcc9ce09e902d4930a76008d2f5839f270978d627af197",
+  "corpusHash": "da19481036b70d213d4b8b2f1410b296c5c50c213cccd7b1f9408eaa197189b7",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -1962,8 +1962,8 @@
         "contentPath": "content/mdx/en/definitions/secante.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 762,
-          "end": 795
+          "start": 759,
+          "end": 792
         },
         "blockId": "secante:diagram:Secante"
       },
@@ -1972,8 +1972,8 @@
         "contentPath": "content/mdx/es/definitions/secante.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 780,
-          "end": 813
+          "start": 768,
+          "end": 801
         },
         "blockId": "secante:diagram:Secante"
       },
@@ -1982,8 +1982,8 @@
         "contentPath": "content/mdx/eu/definitions/secante.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 792,
-          "end": 825
+          "start": 793,
+          "end": 826
         },
         "blockId": "secante:diagram:Secante"
       }

@@ -35,3 +35,5 @@ Cada línea es el commit de una página que incluye propuestas, ya aplicadas (en
 - [ ] `relacion-equivalencia` · 2026-10-29 · ronda 1 · `23d51600` · [informe](2026-10-29-relacion-equivalencia.md)
 - [ ] `numero-entero` · 2026-10-29 · ronda 1 · `d53905d4` · [informe](2026-10-29-numero-entero.md)
 - [ ] `numero-racional` · 2026-10-29 · ronda 1 · `5fe28818` · [informe](2026-10-29-numero-racional.md)
+- [ ] `secante` · 2026-11-21 · ronda 1,3 · `2f56bf17` · [informe](2026-11-21-secante.md)
+- [ ] `segmento` · 2026-11-21 · ronda 1 · `6d463b89` · [informe](2026-11-21-segmento.md)
